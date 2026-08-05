@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Radar Brasil 2027 — Mapa Interativo Offline</title>
-<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=lORvZ7n-IO-fONUDi9_NI3X20L4Kza7z8nWGKnZKVTQENodkSj62yxlwvAK3AiJLeGlqHKMXGUwqqR_Lwyi0MsAeVqRDWSgPVNzZi0S4YiF5y33qNvwQJRf0J_oeTkRWYHJ_p3wCjbcXofOcnh1VANa_NaVespvLMjayTlmop_vZX4RJEK2ZbVzTZxmYqfhD29lmhDRwEZw7c0OTSq6ZtT508FgFvbXzZ1HVUlLOuFt_PQsFx823lUP31vrHwkyMPWIrLQr2Eut8Eq-95_P15R3ZgAMf2jXG7Em-PPb7gklksWT5P-rWeMwvSWqhprX_jUUcBUbVgYjXHgt3c0mTbauMOuJvjZzM6uwZyuTuTVHRP_7kAyzmyMghVtk7x6Pw" charset="UTF-8"></script><style>
+<style>
 :root{--bg:#f4f7f6;--panel:#fff;--text:#14211d;--muted:#65736d;--border:#dce5e1;--accent:#0b7a4b}
 *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
 header{background:#073f2b;color:#fff;padding:16px 20px} header h1{margin:0;font-size:22px} header p{margin:5px 0 0;color:#d9eee5;font-size:13px}
@@ -85,8 +85,8 @@ select,input{width:100%;margin-top:4px;border:1px solid var(--border);border-rad
 </main>
 </div>
 <script>
-const EVENTS=[{"ID": "EVT-0001", "Status": "Confirmado", "UF": "SP", "Cidade": "São Paulo", "Categoria": "Fan Fest", "Público": 5000, "Latitude": -23.5874, "Longitude": -46.6576, "Ano": 2026, "DataBR": "01/09/2026", "Região": "Sudeste"}, {"ID": "EVT-0002", "Status": "Planejado", "UF": "RJ", "Cidade": "Rio de Janeiro", "Categoria": "Workshop", "Público": 800, "Latitude": -22.977, "Longitude": -43.39, "Ano": 2026, "DataBR": "15/09/2026", "Região": "Sudeste"}, {"ID": "EVT-0003", "Status": "Realizado", "UF": "BA", "Cidade": "Salvador", "Categoria": "Clínica esportiva", "Público": 600, "Latitude": -12.9788, "Longitude": -38.5044, "Ano": 2026, "DataBR": "20/08/2026", "Região": "Nordeste"}, {"ID": "EVT-0004", "Status": "Confirmado", "UF": "PE", "Cidade": "Recife", "Categoria": "Ativação patrocinador", "Público": 1200, "Latitude": -8.0631, "Longitude": -34.8711, "Ano": 2026, "DataBR": "05/10/2026", "Região": "Nordeste"}, {"ID": "EVT-0005", "Status": "Planejado", "UF": "DF", "Cidade": "Brasília", "Categoria": "Seminário", "Público": 450, "Latitude": -15.7989, "Longitude": -47.8828, "Ano": 2026, "DataBR": "12/11/2026", "Região": "Centro-Oeste"}];
-const AGENDA=[{"Categoria": "Amistosos da Seleção", "DataBR": "05/10/2026", "Status": "Planejado", "Ano": 2026}, {"Categoria": "Amistosos da Seleção", "DataBR": "24/11/2026", "Status": "Planejado", "Ano": 2026}, {"Categoria": "Amistosos da Seleção", "DataBR": "26/02/2027", "Status": "Planejado", "Ano": 2027}, {"Categoria": "Data FIFA / Convocação", "DataBR": "05/04/2027", "Status": "Planejado", "Ano": 2027}, {"Categoria": "Sorteio Oficial", "DataBR": "01/12/2026", "Status": "Planejado", "Ano": 2026}, {"Categoria": "Centro de Treinamento", "DataBR": "01/12/2026", "Status": "Planejado", "Ano": 2026}, {"Categoria": "Preparação da Seleção", "DataBR": "01/05/2027", "Status": "Planejado", "Ano": 2027}];
+let EVENTS=[];
+let AGENDA=[];
 const COLORS={Confirmado:'#168a57',Planejado:'#d79b00',Realizado:'#3465d9'};
 const stage=document.getElementById('mapStage'), tip=document.getElementById('tooltip');
 // Posições exatas medidas sobre a imagem completa de 727 × 702 pixels.
@@ -112,11 +112,11 @@ function pos(e){
 }
 function values(field){return [...new Set(EVENTS.map(e=>e[field]))].sort()}
 function fill(id,vals,label){document.getElementById(id).innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option>${v}</option>`).join('')}
-fill('status',values('Status'),'Todos');fill('categoria',values('Categoria'),'Todas');fill('regiao',values('Região'),'Todas');fill('uf',values('UF'),'Todas');fill('ano',values('Ano'),'Todos');
+
 function val(id){return document.getElementById(id).value}
 function ok(e){
  const q=val('busca').trim().toLowerCase();
- return (!val('status')||e.Status===val('status'))&&(!val('categoria')||e.Categoria===val('categoria'))&&(!val('regiao')||e.Região===val('regiao'))&&(!val('uf')||e.UF===val('uf'))&&(!val('ano')||String(e.Ano)===val('ano'))&&(!q||(`${e.Cidade} ${e.Categoria} ${e.ID}`).toLowerCase().includes(q));
+ return (!val('status')||e.Status===val('status'))&&(!val('categoria')||e.Categoria===val('categoria'))&&(!val('regiao')||e.Regiao===val('regiao'))&&(!val('uf')||e.UF===val('uf'))&&(!val('ano')||String(e.Ano)===val('ano'))&&(!q||(`${e.Cidade} ${e.Categoria} ${e.ID}`).toLowerCase().includes(q));
 }
 function render(){
  stage.querySelectorAll('.marker').forEach(x=>x.remove());
@@ -124,15 +124,15 @@ function render(){
  list.forEach(e=>{
    const [x,y]=pos(e);
    const m=document.createElement('button');m.className='marker';m.type='button';
-   const size=Math.max(15,Math.min(34,13+Math.sqrt(e.Público)/5));
+   const size=Math.max(15,Math.min(34,13+Math.sqrt(e.Publico)/5));
    m.style.cssText=`left:${x}%;top:${y}%;width:${size}px;height:${size}px;background:${COLORS[e.Status]||'#7a8791'}`;
    m.setAttribute('aria-label',`${e.Cidade} — ${e.Categoria}`);
-   const show=()=>{tip.innerHTML=`<b>${e.Cidade} — ${e.UF}</b><br>${e.Categoria}<br>Status: ${e.Status}<br>Data: ${e.DataBR}<br>Público: ${e.Público.toLocaleString('pt-BR')}`;tip.style.display='block';tip.style.left=Math.min(x+3,68)+'%';tip.style.top=Math.max(y-8,2)+'%'};
+   const show=()=>{tip.innerHTML=`<b>${e.Cidade} — ${e.UF}</b><br>${e.Categoria}<br>Status: ${e.Status}<br>Data: ${e.DataBR}<br>Público: ${e.Publico.toLocaleString('pt-BR')}`;tip.style.display='block';tip.style.left=Math.min(x+3,68)+'%';tip.style.top=Math.max(y-8,2)+'%'};
    m.addEventListener('mouseenter',show);m.addEventListener('focus',show);m.addEventListener('mouseleave',()=>tip.style.display='none');m.addEventListener('blur',()=>tip.style.display='none');m.addEventListener('click',show);
    stage.appendChild(m);
  });
  document.getElementById('mEventos').textContent=list.length;
- document.getElementById('mPublico').textContent=list.reduce((s,e)=>s+e.Público,0).toLocaleString('pt-BR');
+ document.getElementById('mPublico').textContent=list.reduce((s,e)=>s+e.Publico,0).toLocaleString('pt-BR');
  document.getElementById('mCidades').textContent=new Set(list.map(e=>e.Cidade)).size;
  document.getElementById('mEstados').textContent=new Set(list.map(e=>e.UF)).size;
  const ag=AGENDA.filter(a=>(!val('status')||a.Status===val('status'))&&(!val('ano')||String(a.Ano)===val('ano'))&&(!val('categoria')||a.Categoria===val('categoria')));
@@ -141,6 +141,45 @@ function render(){
 document.getElementById('aplicar').addEventListener('click',render);
 document.getElementById('limpar').addEventListener('click',()=>{['status','categoria','regiao','uf','ano','busca'].forEach(id=>document.getElementById(id).value='');render()});
 document.getElementById('busca').addEventListener('keydown',e=>{if(e.key==='Enter')render()});
-render();
+async function carregarDados(){
+  const statusMsg=document.createElement('div');
+  statusMsg.id='statusCarregamento';
+  statusMsg.style.cssText='position:fixed;right:12px;bottom:12px;background:#073f2b;color:white;padding:9px 12px;border-radius:9px;font-size:12px;z-index:100';
+  statusMsg.textContent='Carregando dados...';
+  document.body.appendChild(statusMsg);
+
+  try{
+    const resposta=await fetch('./dados.json?ts='+Date.now(),{cache:'no-store'});
+    if(!resposta.ok) throw new Error('HTTP '+resposta.status);
+    const todos=await resposta.json();
+
+    EVENTS=todos.filter(e =>
+      e.Latitude !== null && e.Longitude !== null &&
+      e.Latitude !== '' && e.Longitude !== '' &&
+      Number.isFinite(Number(e.Latitude)) && Number.isFinite(Number(e.Longitude))
+    ).map(e=>({...e,Latitude:Number(e.Latitude),Longitude:Number(e.Longitude),Publico:Number(e.Publico||0)}));
+
+    AGENDA=todos.filter(e => !(
+      e.Latitude !== null && e.Longitude !== null &&
+      e.Latitude !== '' && e.Longitude !== '' &&
+      Number.isFinite(Number(e.Latitude)) && Number.isFinite(Number(e.Longitude))
+    )).map(e=>({Categoria:e.Categoria,DataBR:e.DataBR||e.Data,Status:e.Status,Ano:e.Ano}));
+
+    fill('status',values('Status'),'Todos');
+    fill('categoria',values('Categoria'),'Todas');
+    fill('regiao',values('Regiao'),'Todas');
+    fill('uf',values('UF'),'Todas');
+    fill('ano',values('Ano'),'Todos');
+    render();
+    statusMsg.textContent='Dados atualizados';
+    setTimeout(()=>statusMsg.remove(),1800);
+  }catch(erro){
+    console.error(erro);
+    statusMsg.style.background='#8b1e1e';
+    statusMsg.textContent='Erro ao carregar dados.json';
+    document.getElementById('agenda').innerHTML='<div class="item"><strong>Falha na atualização</strong><span>Verifique se index.html e dados.json estão publicados na mesma pasta.</span></div>';
+  }
+}
+carregarDados();
 </script>
 </body></html>
