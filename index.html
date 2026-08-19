@@ -149,7 +149,7 @@ async function carregarDados(){
   document.body.appendChild(statusMsg);
 
   try{
-    const resposta=await fetch('./dados.json?ts='+Date.now(),{cache:'no-store'});
+    const resposta=await fetch('https://raw.githubusercontent.com/robertovitor/radar-brasil-2027/main/dados.json?ts='+Date.now(),{cache:'no-store'});
     if(!resposta.ok) throw new Error('HTTP '+resposta.status);
     const todos=await resposta.json();
 
