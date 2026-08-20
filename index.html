@@ -40,7 +40,7 @@ select,input{width:100%;margin-top:4px;border:1px solid var(--border);border-rad
 .tooltip{position:absolute;display:none;z-index:30;background:#fff;border:1px solid var(--border);border-radius:10px;padding:9px;width:210px;box-shadow:0 8px 20px rgba(0,0,0,.18);font-size:12px;pointer-events:none}
 .region{position:absolute;z-index:4;transform:translate(-50%,-50%);background:rgba(7,63,43,.78);color:#fff;padding:4px 7px;border-radius:7px;font-size:10px;pointer-events:none}
 .agenda{padding:14px} .agenda-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}
-.item{border:1px solid var(--border);border-radius:10px;padding:10px;background:#fbfdfc} .item strong{display:block;font-size:13px} .item span{font-size:12px;color:var(--muted)}
+.item{border:1px solid var(--border);border-radius:10px;padding:10px;background:#fbfdfc} .item strong{display:block;font-size:13px;margin-bottom:4px} .item span{display:block;font-size:12px;color:var(--muted);line-height:1.45}.item a{display:inline-block;margin-top:6px;font-size:12px;color:var(--accent);font-weight:bold;text-decoration:none}.item a:hover{text-decoration:underline}
 .note{font-size:11px;color:var(--muted);margin-top:10px}
 @media(max-width:820px){
   .layout{grid-template-columns:1fr;padding:8px}
@@ -81,12 +81,11 @@ select,input{width:100%;margin-top:4px;border:1px solid var(--border);border-rad
       <div id="tooltip" class="tooltip"></div>
     </div>
   </section>
-  <section class="panel agenda"><h2 style="font-size:16px;margin:0 0 10px">Agenda nacional sem cidade definida</h2><div id="agenda" class="agenda-grid"></div></section>
+  <section class="panel agenda"><h2 id="agendaTitulo" style="font-size:16px;margin:0 0 10px">Eventos encontrados</h2><div id="agenda" class="agenda-grid"></div></section>
 </main>
 </div>
 <script>
 let EVENTS=[];
-let AGENDA=[];
 const COLORS={Confirmado:'#168a57',Planejado:'#d79b00',Realizado:'#3465d9'};
 const stage=document.getElementById('mapStage'), tip=document.getElementById('tooltip');
 // Posições exatas medidas sobre a imagem completa de 727 × 702 pixels.
@@ -118,25 +117,38 @@ function ok(e){
  const q=val('busca').trim().toLowerCase();
  return (!val('status')||e.Status===val('status'))&&(!val('categoria')||e.Categoria===val('categoria'))&&(!val('regiao')||e.Regiao===val('regiao'))&&(!val('uf')||e.UF===val('uf'))&&(!val('ano')||String(e.Ano)===val('ano'))&&(!q||(`${e.Cidade} ${e.Categoria} ${e.ID}`).toLowerCase().includes(q));
 }
+function hasCoords(e){
+ return e.Latitude !== null && e.Longitude !== null &&
+   e.Latitude !== '' && e.Longitude !== '' &&
+   Number.isFinite(Number(e.Latitude)) && Number.isFinite(Number(e.Longitude));
+}
+function esc(v){
+ return String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
 function render(){
  stage.querySelectorAll('.marker').forEach(x=>x.remove());
  const list=EVENTS.filter(ok);
- list.forEach(e=>{
+ list.filter(hasCoords).forEach(e=>{
    const [x,y]=pos(e);
    const m=document.createElement('button');m.className='marker';m.type='button';
    const size=Math.max(15,Math.min(34,13+Math.sqrt(e.Publico)/5));
    m.style.cssText=`left:${x}%;top:${y}%;width:${size}px;height:${size}px;background:${COLORS[e.Status]||'#7a8791'}`;
    m.setAttribute('aria-label',`${e.Cidade} — ${e.Categoria}`);
-   const show=()=>{tip.innerHTML=`<b>${e.Cidade} — ${e.UF}</b><br>${e.Categoria}<br>Status: ${e.Status}<br>Data: ${e.DataBR}<br>Público: ${e.Publico.toLocaleString('pt-BR')}`;tip.style.display='block';tip.style.left=Math.min(x+3,68)+'%';tip.style.top=Math.max(y-8,2)+'%'};
+   const show=()=>{tip.innerHTML=`<b>${esc(e.Cidade)} — ${esc(e.UF)}</b><br>${esc(e.Categoria)}<br>Status: ${esc(e.Status)}<br>Data: ${esc(e.DataBR)}<br>Público: ${e.Publico.toLocaleString('pt-BR')}`;tip.style.display='block';tip.style.left=Math.min(x+3,68)+'%';tip.style.top=Math.max(y-8,2)+'%'};
    m.addEventListener('mouseenter',show);m.addEventListener('focus',show);m.addEventListener('mouseleave',()=>tip.style.display='none');m.addEventListener('blur',()=>tip.style.display='none');m.addEventListener('click',show);
    stage.appendChild(m);
  });
  document.getElementById('mEventos').textContent=list.length;
  document.getElementById('mPublico').textContent=list.reduce((s,e)=>s+e.Publico,0).toLocaleString('pt-BR');
- document.getElementById('mCidades').textContent=new Set(list.map(e=>e.Cidade)).size;
- document.getElementById('mEstados').textContent=new Set(list.map(e=>e.UF)).size;
- const ag=AGENDA.filter(a=>(!val('status')||a.Status===val('status'))&&(!val('ano')||String(a.Ano)===val('ano'))&&(!val('categoria')||a.Categoria===val('categoria')));
- document.getElementById('agenda').innerHTML=ag.length?ag.map(a=>`<div class="item"><strong>${a.Categoria}</strong><span>${a.DataBR} · ${a.Status}</span></div>`).join(''):'<span style="color:#65736d;font-size:13px">Nenhum item.</span>';
+ document.getElementById('mCidades').textContent=new Set(list.map(e=>e.Cidade).filter(Boolean)).size;
+ document.getElementById('mEstados').textContent=new Set(list.map(e=>e.UF).filter(Boolean)).size;
+ document.getElementById('agendaTitulo').textContent=`Eventos encontrados (${list.length})`;
+ document.getElementById('agenda').innerHTML=list.length?list.map(e=>{
+   const cidade=e.Cidade||'Cidade não definida';
+   const local=e.Local&&e.Local!=='A definir'?e.Local:'Local não definido';
+   const link=/^https?:\/\//i.test(e.Link||'')?`<a href="${esc(e.Link)}" target="_blank" rel="noopener">Abrir fonte</a>`:'';
+   return `<div class="item"><strong>${esc(e.DataBR||e.Data)} · ${esc(e.Categoria)}</strong><span>${esc(cidade)} — ${esc(e.UF)} · ${esc(e.Status)}</span><span>${esc(local)}</span>${link}</div>`;
+ }).join(''):'<span style="color:#65736d;font-size:13px">Nenhum evento corresponde aos filtros selecionados.</span>';
 }
 document.getElementById('aplicar').addEventListener('click',render);
 document.getElementById('limpar').addEventListener('click',()=>{['status','categoria','regiao','uf','ano','busca'].forEach(id=>document.getElementById(id).value='');render()});
@@ -153,17 +165,12 @@ async function carregarDados(){
     if(!resposta.ok) throw new Error('HTTP '+resposta.status);
     const todos=await resposta.json();
 
-    EVENTS=todos.filter(e =>
-      e.Latitude !== null && e.Longitude !== null &&
-      e.Latitude !== '' && e.Longitude !== '' &&
-      Number.isFinite(Number(e.Latitude)) && Number.isFinite(Number(e.Longitude))
-    ).map(e=>({...e,Latitude:Number(e.Latitude),Longitude:Number(e.Longitude),Publico:Number(e.Publico||0)}));
-
-    AGENDA=todos.filter(e => !(
-      e.Latitude !== null && e.Longitude !== null &&
-      e.Latitude !== '' && e.Longitude !== '' &&
-      Number.isFinite(Number(e.Latitude)) && Number.isFinite(Number(e.Longitude))
-    )).map(e=>({Categoria:e.Categoria,DataBR:e.DataBR||e.Data,Status:e.Status,Ano:e.Ano}));
+    EVENTS=todos.map(e=>({
+      ...e,
+      Latitude:e.Latitude===null||e.Latitude===''?null:Number(e.Latitude),
+      Longitude:e.Longitude===null||e.Longitude===''?null:Number(e.Longitude),
+      Publico:Number(e.Publico||0)
+    }));
 
     fill('status',values('Status'),'Todos');
     fill('categoria',values('Categoria'),'Todas');
