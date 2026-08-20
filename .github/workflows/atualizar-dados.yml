@@ -1,0 +1,48 @@
+name: Atualizar dados.json pelo OneDrive
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: atualizar-dados-json
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependências
+        run: pip install openpyxl==3.1.5 requests==2.32.5
+
+      - name: Atualizar dados.json
+        env:
+          ONEDRIVE_URL: "https://1drv.ms/x/c/667c2081a82725d1/IQACOaaMhCDcQ7De2pxs-ODsAQ27qbTntBWquVTe5xM7ir0?e=zhAekw"
+        run: python scripts/atualizar_dados.py
+
+      - name: Publicar somente se houver mudança
+        run: |
+          if git diff --quiet -- dados.json; then
+            echo "Nenhuma alteração encontrada."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- dados.json
+          git commit -m "Atualiza dados.json pela planilha do OneDrive"
+          git push
