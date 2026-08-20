@@ -14,7 +14,9 @@ from openpyxl import load_workbook
 
 SOURCE_URL = os.environ["SOURCE_URL"]
 OUTPUT = Path(os.environ.get("OUTPUT_FILE", "dados.json"))
+NEWS_OUTPUT = Path(os.environ.get("NEWS_OUTPUT_FILE", "noticias.json"))
 SHEET = "02_Eventos"
+NEWS_SHEET = "06_Noticias"
 FIELDS = [
     "ID", "Status", "Data", "DataBR", "UF", "Cidade", "Categoria",
     "Organizador", "Publico", "Patrocinador", "Local", "Latitude",
@@ -196,7 +198,59 @@ def main():
         raise RuntimeError("Há IDs de eventos duplicados; dados.json não será alterado.")
 
     OUTPUT.write_text(json.dumps(events, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"{len(events)} eventos gravados em {OUTPUT}")
+
+    if NEWS_SHEET not in workbook.sheetnames:
+        raise RuntimeError(f"A aba {NEWS_SHEET!r} não foi encontrada.")
+    news_sheet = workbook[NEWS_SHEET]
+    news_wanted = {
+        "data": "Data", "titulo": "Titulo", "tema": "Tema",
+        "cidadeuf": "CidadeUF", "veiculo": "Veiculo", "link": "Link",
+        "sentimento": "Sentimento", "impacto": "Impacto", "resumo": "Resumo",
+    }
+    news_header = None
+    news_columns = {}
+    for row_number, row in enumerate(
+        news_sheet.iter_rows(min_row=1, max_row=30, values_only=True), 1
+    ):
+        found = {
+            news_wanted[normalized(value)]: index
+            for index, value in enumerate(row)
+            if normalized(value) in news_wanted
+        }
+        if all(field in found for field in news_wanted.values()):
+            news_header, news_columns = row_number, found
+            break
+    if news_header is None:
+        raise RuntimeError("Cabeçalho da aba 06_Noticias não reconhecido.")
+
+    news = []
+    for row in news_sheet.iter_rows(min_row=news_header + 1, values_only=True):
+        title = row[news_columns["Titulo"]]
+        if title is None or not str(title).strip():
+            continue
+        date = as_date(row[news_columns["Data"]])
+        item = {
+            "Data": date.isoformat(),
+            "DataBR": date.strftime("%d/%m/%Y"),
+            "Titulo": str(title).strip(),
+            "Tema": str(row[news_columns["Tema"]] or "").strip(),
+            "CidadeUF": str(row[news_columns["CidadeUF"]] or "").strip(),
+            "Veiculo": str(row[news_columns["Veiculo"]] or "").strip(),
+            "Link": str(row[news_columns["Link"]] or "").strip(),
+            "Sentimento": str(row[news_columns["Sentimento"]] or "").strip(),
+            "Impacto": str(row[news_columns["Impacto"]] or "").strip(),
+            "Resumo": str(row[news_columns["Resumo"]] or "").strip(),
+        }
+        news.append(item)
+    news.sort(key=lambda item: item["Data"], reverse=True)
+    NEWS_OUTPUT.write_text(
+        json.dumps(news, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print(
+        f"{len(events)} eventos gravados em {OUTPUT}; "
+        f"{len(news)} notícias gravadas em {NEWS_OUTPUT}"
+    )
 
 
 if __name__ == "__main__":
