@@ -35,7 +35,7 @@ jobs:
 
       - name: Atualizar dados.json
         env:
-          ONEDRIVE_URL: "https://1drv.ms/x/c/667c2081a82725d1/IQACOaaMhCDcQ7De2pxs-ODsAQ27qbTntBWquVTe5xM7ir0?e=gWwhNd"
+          ONEDRIVE_URL: "https://1drv.ms/x/c/667c2081a82725d1/IQQCOaaMhCDcQ7De2pxs-ODsAVno_e5B5nt3WzbJcbbzR5M?em=2&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True"
         run: python scripts/atualizar_dados.py
 
       - name: Publicar somente se houver mudança
