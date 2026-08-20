@@ -170,7 +170,7 @@ function render(){
    m.style.cssText=`left:${x}%;top:${y}%;width:${size}px;height:${size}px;background:${COLORS[e.Status]||'#7a8791'}`;
    m.setAttribute('aria-label',`${e.Cidade} — ${e.Categoria}`);
    const show=()=>{tip.innerHTML=`<b>${esc(e.Cidade)} — ${esc(e.UF)}</b><br>${esc(e.Categoria)}<br>Status: ${esc(e.Status)}<br>Data: ${esc(e.DataBR)}<br>Público: ${e.Publico.toLocaleString('pt-BR')}`;tip.style.display='block';tip.style.left=Math.min(x+3,68)+'%';tip.style.top=Math.max(y-8,2)+'%'};
-   m.addEventListener('mouseenter',show);m.addEventListener('focus',show);m.addEventListener('mouseleave',()=>tip.style.display='none');m.addEventListener('blur',()=>tip.style.display='none');m.addEventListener('click',show);
+   m.addEventListener('mouseenter',show);m.addEventListener('focus',show);m.addEventListener('mouseleave',()=>tip.style.display='none');m.addEventListener('blur',()=>tip.style.display='none');m.addEventListener('click',()=>{document.getElementById('busca').value=e.Cidade;tip.style.display='none';render();document.getElementById('eventAgenda').scrollIntoView({behavior:'smooth',block:'start'});});
    stage.appendChild(m);
  });
  document.getElementById('mEventos').textContent=list.length;
