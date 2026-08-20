@@ -44,17 +44,48 @@ def download_candidates(url):
 
 def download_xlsx():
     errors = []
-    for url in download_candidates(SOURCE_URL):
+    session = requests.Session()
+    session.headers.update({
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                      "AppleWebKit/537.36 Chrome/131.0 Safari/537.36",
+        "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
+    })
+
+    # O link incorporado precisa ser aberto primeiro para o OneDrive
+    # resgatar o compartilhamento e criar os cookies temporários.
+    try:
+        landing = session.get(SOURCE_URL, timeout=90, allow_redirects=True)
+        landing.raise_for_status()
+        if landing.content.startswith(b"PK"):
+            return landing.content
+    except Exception as exc:
+        landing = None
+        errors.append(f"abertura do link incorporado: {exc}")
+
+    candidates = download_candidates(SOURCE_URL)
+    if landing is not None:
+        query = dict(parse_qsl(urlsplit(landing.url).query, keep_blank_values=True))
+        resid = query.get("resid")
+        cid = query.get("cid")
+        if resid:
+            params = {"resid": resid}
+            if cid:
+                params["cid"] = cid
+            if query.get("authkey"):
+                params["authkey"] = query["authkey"]
+            candidates.insert(0, "https://onedrive.live.com/download?" + urlencode(params))
+
+    for url in candidates:
         try:
-            response = requests.get(
-                url,
-                timeout=90,
-                allow_redirects=True,
-                headers={"User-Agent": "Mozilla/5.0"},
+            headers = {"Referer": landing.url if landing is not None else SOURCE_URL}
+            response = session.get(
+                url, timeout=90, allow_redirects=True, headers=headers
             )
             response.raise_for_status()
             if not response.content.startswith(b"PK"):
-                raise ValueError("a resposta não é um arquivo XLSX")
+                raise ValueError(
+                    f"a resposta não é XLSX ({response.headers.get('content-type', 'tipo desconhecido')})"
+                )
             return response.content
         except Exception as exc:
             errors.append(f"{url}: {exc}")
