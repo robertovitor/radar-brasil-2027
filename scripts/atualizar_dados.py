@@ -22,6 +22,22 @@ FIELDS = [
 ]
 MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
           "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
+REGIONS = {
+    "AC": "Norte", "AP": "Norte", "AM": "Norte", "PA": "Norte",
+    "RO": "Norte", "RR": "Norte", "TO": "Norte",
+    "AL": "Nordeste", "BA": "Nordeste", "CE": "Nordeste",
+    "MA": "Nordeste", "PB": "Nordeste", "PE": "Nordeste",
+    "PI": "Nordeste", "RN": "Nordeste", "SE": "Nordeste",
+    "DF": "Centro-Oeste", "GO": "Centro-Oeste",
+    "MT": "Centro-Oeste", "MS": "Centro-Oeste",
+    "ES": "Sudeste", "MG": "Sudeste", "RJ": "Sudeste", "SP": "Sudeste",
+    "PR": "Sul", "RS": "Sul", "SC": "Sul", "BR": "Nacional",
+}
+SOURCE_REQUIRED = [
+    "ID", "Status", "Data", "UF", "Cidade", "Categoria", "Organizador",
+    "Publico", "Patrocinador", "Local", "Latitude", "Longitude",
+    "Link", "Observacoes",
+]
 
 
 def normalized(value):
@@ -132,17 +148,21 @@ def main():
     sheet = workbook[SHEET]
 
     wanted = {normalized(field): field for field in FIELDS}
+    wanted.update({
+        "publicoestimado": "Publico",
+        "linkfonte": "Link",
+    })
     header_row = None
     columns = {}
     for row_number, row in enumerate(sheet.iter_rows(min_row=1, max_row=50, values_only=True), 1):
         found = {wanted[normalized(value)]: index for index, value in enumerate(row)
                  if normalized(value) in wanted}
-        if all(name in found for name in ("ID", "Status", "Data")) and len(found) >= 15:
+        if all(name in found for name in SOURCE_REQUIRED):
             header_row, columns = row_number, found
             break
     if header_row is None:
         raise RuntimeError("Cabeçalho da aba 02_Eventos não reconhecido.")
-    missing = [field for field in FIELDS if field not in columns]
+    missing = [field for field in SOURCE_REQUIRED if field not in columns]
     if missing:
         raise RuntimeError("Campos obrigatórios ausentes: " + ", ".join(missing))
 
@@ -151,7 +171,10 @@ def main():
         event_id = row[columns["ID"]]
         if event_id is None or not str(event_id).strip():
             continue
-        event = {field: row[columns[field]] for field in FIELDS}
+        event = {
+            field: row[columns[field]] if field in columns else None
+            for field in FIELDS
+        }
         date = as_date(event["Data"])
         for field in ("ID", "Status", "UF", "Cidade", "Categoria", "Organizador",
                       "Patrocinador", "Local", "Link", "Observacoes", "Regiao"):
@@ -163,6 +186,7 @@ def main():
         event["Longitude"] = as_number(event["Longitude"])
         event["Mes"] = MONTHS[date.month - 1]
         event["Ano"] = date.year
+        event["Regiao"] = REGIONS.get(event["UF"].upper(), "")
         events.append({field: event[field] for field in FIELDS})
 
     if not events:
