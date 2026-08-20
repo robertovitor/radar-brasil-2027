@@ -73,6 +73,7 @@ select,input{width:100%;margin-top:4px;border:1px solid var(--border);border-rad
     <label>Região<select id="regiao"></select></label>
     <label>UF<select id="uf"></select></label>
     <label>Ano<select id="ano"></select></label>
+    <label>Mês<select id="mes"></select></label>
     <label>Busca<input id="busca" placeholder="Cidade ou evento"></label>
   </div>
   <div class="actions"><button class="primary" id="aplicar">Aplicar</button><button class="secondary" id="limpar">Limpar</button></div>
@@ -122,6 +123,7 @@ select,input{width:100%;margin-top:4px;border:1px solid var(--border);border-rad
 let EVENTS=[];
 let NEWS=[];
 const COLORS={Confirmado:'#168a57',Planejado:'#d79b00',Realizado:'#3465d9'};
+const MONTH_ORDER=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const stage=document.getElementById('mapStage'), tip=document.getElementById('tooltip');
 // Posições exatas medidas sobre a imagem completa de 727 × 702 pixels.
 const MAP_W = 727;
@@ -150,7 +152,7 @@ function fill(id,vals,label){document.getElementById(id).innerHTML=`<option valu
 function val(id){return document.getElementById(id).value}
 function ok(e){
  const q=val('busca').trim().toLowerCase();
- return (!val('status')||e.Status===val('status'))&&(!val('categoria')||e.Categoria===val('categoria'))&&(!val('regiao')||e.Regiao===val('regiao'))&&(!val('uf')||e.UF===val('uf'))&&(!val('ano')||String(e.Ano)===val('ano'))&&(!q||(`${e.Cidade} ${e.Categoria} ${e.ID}`).toLowerCase().includes(q));
+ return (!val('status')||e.Status===val('status'))&&(!val('categoria')||e.Categoria===val('categoria'))&&(!val('regiao')||e.Regiao===val('regiao'))&&(!val('uf')||e.UF===val('uf'))&&(!val('ano')||String(e.Ano)===val('ano'))&&(!val('mes')||e.Mes===val('mes'))&&(!q||(`${e.Cidade} ${e.Categoria} ${e.ID}`).toLowerCase().includes(q));
 }
 function hasCoords(e){
  return e.Latitude !== null && e.Longitude !== null &&
@@ -186,7 +188,7 @@ function render(){
  }).join(''):'<span style="color:#65736d;font-size:13px">Nenhum evento corresponde aos filtros selecionados.</span>';
 }
 document.getElementById('aplicar').addEventListener('click',render);
-document.getElementById('limpar').addEventListener('click',()=>{['status','categoria','regiao','uf','ano','busca'].forEach(id=>document.getElementById(id).value='');render()});
+document.getElementById('limpar').addEventListener('click',()=>{['status','categoria','regiao','uf','ano','mes','busca'].forEach(id=>document.getElementById(id).value='');render()});
 document.getElementById('busca').addEventListener('keydown',e=>{if(e.key==='Enter')render()});
 function newsValues(field){return [...new Set(NEWS.map(n=>n[field]).filter(Boolean))].sort()}
 function newsOk(n){
@@ -270,6 +272,7 @@ async function carregarDados(){
     fill('regiao',values('Regiao'),'Todas');
     fill('uf',values('UF'),'Todas');
     fill('ano',values('Ano'),'Todos');
+    fill('mes',MONTH_ORDER.filter(m=>EVENTS.some(e=>e.Mes===m)),'Todos');
     render();
     statusMsg.textContent='Dados atualizados';
     setTimeout(()=>statusMsg.remove(),1800);
