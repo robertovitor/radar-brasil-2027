@@ -1,6 +1,10 @@
 name: Atualizar dados.json pelo OneDrive
 
 on:
+  push:
+    paths:
+      - "scripts/atualizar_dados.py"
+      - ".github/workflows/atualizar-dados.yml"
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:
