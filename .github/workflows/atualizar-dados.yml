@@ -1,6 +1,12 @@
-name: Atualizar dados.json pelo OneDrive
+name: Atualizar dados.json pelo Dropbox
 
 on:
+  push:
+    paths:
+      - "scripts/atualizar_dados.py"
+      - ".github/workflows/atualizar-dados.yml"
+  schedule:
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -29,7 +35,7 @@ jobs:
 
       - name: Atualizar dados.json
         env:
-          ONEDRIVE_URL: "https://1drv.ms/x/c/667c2081a82725d1/IQQCOaaMhCDcQ7De2pxs-ODsAVno_e5B5nt3WzbJcbbzR5M?em=2&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True"
+          SOURCE_URL: "https://www.dropbox.com/scl/fi/qayb7xd8qzr0rn5ga9f10/Radar_Brasil_2027_v6_1_Ago2026.xlsx?rlkey=0rr5fqaj11eajkati8uso5chr&st=4g43p3cg&dl=0"
         run: python scripts/atualizar_dados.py
 
       - name: Publicar somente se houver mudança
@@ -41,5 +47,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- dados.json
-          git commit -m "Atualiza dados.json pela planilha do OneDrive"
+          git commit -m "Atualiza dados.json pela planilha do Dropbox"
           git push
