@@ -33,7 +33,11 @@ def normalized(value):
 def download_candidates(url):
     parts = urlsplit(url)
     query = dict(parse_qsl(parts.query, keep_blank_values=True))
-    query["download"] = "1"
+    if "dropbox.com" in parts.netloc:
+        query["dl"] = "1"
+        query.pop("download", None)
+    else:
+        query["download"] = "1"
     direct = urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(query), parts.fragment))
     token = base64.urlsafe_b64encode(url.encode()).decode().rstrip("=")
     candidates = [direct]
