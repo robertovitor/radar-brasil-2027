@@ -12,7 +12,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 import requests
 from openpyxl import load_workbook
 
-SOURCE_URL = os.environ["ONEDRIVE_URL"]
+SOURCE_URL = os.environ["SOURCE_URL"]
 OUTPUT = Path(os.environ.get("OUTPUT_FILE", "dados.json"))
 SHEET = "02_Eventos"
 FIELDS = [
@@ -36,10 +36,12 @@ def download_candidates(url):
     query["download"] = "1"
     direct = urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(query), parts.fragment))
     token = base64.urlsafe_b64encode(url.encode()).decode().rstrip("=")
-    return [
-        direct,
-        f"https://api.onedrive.com/v1.0/shares/u!{token}/root/content",
-    ]
+    candidates = [direct]
+    if "1drv.ms" in parts.netloc or "onedrive.live.com" in parts.netloc:
+        candidates.append(
+            f"https://api.onedrive.com/v1.0/shares/u!{token}/root/content"
+        )
+    return candidates
 
 
 def download_xlsx():
@@ -51,8 +53,8 @@ def download_xlsx():
         "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
     })
 
-    # O link incorporado precisa ser aberto primeiro para o OneDrive
-    # resgatar o compartilhamento e criar os cookies temporários.
+    # Abre primeiro o compartilhamento e preserva eventuais cookies
+    # antes de solicitar o download direto.
     try:
         landing = session.get(SOURCE_URL, timeout=90, allow_redirects=True)
         landing.raise_for_status()
