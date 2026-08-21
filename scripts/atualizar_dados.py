@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import base64
 import datetime as dt
 import json
 import os
@@ -7,12 +6,10 @@ import re
 import sys
 import unicodedata
 from pathlib import Path
-from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
-import requests
 from openpyxl import load_workbook
 
-SOURCE_URL = os.environ["SOURCE_URL"]
+SOURCE_FILE = Path(os.environ.get("SOURCE_FILE", "Radar_Brasil_2027.xlsx"))
 OUTPUT = Path(os.environ.get("OUTPUT_FILE", "dados.json"))
 NEWS_OUTPUT = Path(os.environ.get("NEWS_OUTPUT_FILE", "noticias.json"))
 SHEET = "02_Eventos"
@@ -48,74 +45,6 @@ def normalized(value):
     return re.sub(r"[^a-z0-9]", "", text.lower())
 
 
-def download_candidates(url):
-    parts = urlsplit(url)
-    query = dict(parse_qsl(parts.query, keep_blank_values=True))
-    if "dropbox.com" in parts.netloc:
-        query["dl"] = "1"
-        query.pop("download", None)
-    else:
-        query["download"] = "1"
-    direct = urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(query), parts.fragment))
-    token = base64.urlsafe_b64encode(url.encode()).decode().rstrip("=")
-    candidates = [direct]
-    if "1drv.ms" in parts.netloc or "onedrive.live.com" in parts.netloc:
-        candidates.append(
-            f"https://api.onedrive.com/v1.0/shares/u!{token}/root/content"
-        )
-    return candidates
-
-
-def download_xlsx():
-    errors = []
-    session = requests.Session()
-    session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                      "AppleWebKit/537.36 Chrome/131.0 Safari/537.36",
-        "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
-    })
-
-    # Abre primeiro o compartilhamento e preserva eventuais cookies
-    # antes de solicitar o download direto.
-    try:
-        landing = session.get(SOURCE_URL, timeout=90, allow_redirects=True)
-        landing.raise_for_status()
-        if landing.content.startswith(b"PK"):
-            return landing.content
-    except Exception as exc:
-        landing = None
-        errors.append(f"abertura do link incorporado: {exc}")
-
-    candidates = download_candidates(SOURCE_URL)
-    if landing is not None:
-        query = dict(parse_qsl(urlsplit(landing.url).query, keep_blank_values=True))
-        resid = query.get("resid")
-        cid = query.get("cid")
-        if resid:
-            params = {"resid": resid}
-            if cid:
-                params["cid"] = cid
-            if query.get("authkey"):
-                params["authkey"] = query["authkey"]
-            candidates.insert(0, "https://onedrive.live.com/download?" + urlencode(params))
-
-    for url in candidates:
-        try:
-            headers = {"Referer": landing.url if landing is not None else SOURCE_URL}
-            response = session.get(
-                url, timeout=90, allow_redirects=True, headers=headers
-            )
-            response.raise_for_status()
-            if not response.content.startswith(b"PK"):
-                raise ValueError(
-                    f"a resposta não é XLSX ({response.headers.get('content-type', 'tipo desconhecido')})"
-                )
-            return response.content
-        except Exception as exc:
-            errors.append(f"{url}: {exc}")
-    raise RuntimeError("Não foi possível baixar a planilha:\n" + "\n".join(errors))
-
-
 def as_date(value):
     if isinstance(value, dt.datetime):
         return value.date()
@@ -142,9 +71,9 @@ def as_number(value, default=None):
 
 
 def main():
-    temp = Path("/tmp/radar_brasil_2027.xlsx")
-    temp.write_bytes(download_xlsx())
-    workbook = load_workbook(temp, read_only=True, data_only=True)
+    if not SOURCE_FILE.is_file():
+        raise RuntimeError(f"A planilha {SOURCE_FILE} não foi encontrada no repositório.")
+    workbook = load_workbook(SOURCE_FILE, read_only=True, data_only=True)
     if SHEET not in workbook.sheetnames:
         raise RuntimeError(f"A aba {SHEET!r} não foi encontrada.")
     sheet = workbook[SHEET]
