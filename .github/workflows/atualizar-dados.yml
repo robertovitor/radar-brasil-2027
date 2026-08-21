@@ -1,12 +1,11 @@
-name: Atualizar dados.json pelo Dropbox
+name: Atualizar site pela planilha do GitHub
 
 on:
   push:
     paths:
+      - "Radar_Brasil_2027.xlsx"
       - "scripts/atualizar_dados.py"
       - ".github/workflows/atualizar-dados.yml"
-  schedule:
-    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -31,11 +30,11 @@ jobs:
           python-version: "3.12"
 
       - name: Instalar dependências
-        run: pip install openpyxl==3.1.5 requests==2.32.5
+        run: pip install openpyxl==3.1.5
 
       - name: Atualizar dados.json
         env:
-          SOURCE_URL: "https://www.dropbox.com/scl/fi/qayb7xd8qzr0rn5ga9f10/Radar_Brasil_2027_v6_1_Ago2026.xlsx?rlkey=0rr5fqaj11eajkati8uso5chr&st=4g43p3cg&dl=0"
+          SOURCE_FILE: "Radar_Brasil_2027.xlsx"
         run: python scripts/atualizar_dados.py
 
       - name: Publicar somente se houver mudança
@@ -47,5 +46,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- dados.json noticias.json
-          git commit -m "Atualiza dados e notícias pela planilha do Dropbox"
+          git commit -m "Atualiza dados e notícias pela planilha do GitHub"
           git push
