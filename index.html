@@ -164,7 +164,7 @@ function esc(v){
 }
 function render(){
  stage.querySelectorAll('.marker').forEach(x=>x.remove());
- const list=EVENTS.filter(ok);
+ const list=EVENTS.filter(ok).sort((a,b)=>String(a.Data).localeCompare(String(b.Data))||String(a.ID).localeCompare(String(b.ID)));
  list.filter(hasCoords).forEach(e=>{
    const [x,y]=pos(e);
    const m=document.createElement('button');m.className='marker';m.type='button';
