@@ -49,6 +49,7 @@ select,input{width:100%;margin-top:4px;border:1px solid var(--border);border-rad
 .news-panel{padding:18px}.news-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}.news-head h2{margin:0;font-size:20px}.news-head p{margin:5px 0 0;color:var(--muted);font-size:13px}
 .news-metrics{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr));gap:8px;min-width:390px}.news-metric{border:1px solid var(--border);border-radius:10px;padding:9px 11px;background:#fbfdfc}.news-metric small{display:block;color:var(--muted);font-size:11px}.news-metric strong{font-size:20px}
 .news-filters{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr)) minmax(180px,1.4fr);gap:9px;margin-bottom:16px}
+.news-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin:-4px 0 16px}.news-action-primary,.news-action-secondary{padding:10px 14px}.news-action-primary{background:var(--accent);color:#fff}.news-action-secondary{background:#edf3f0;color:#073f2b}
 .news-feature{border:1px solid #b9d8ca;border-radius:14px;padding:18px;background:linear-gradient(135deg,#eef8f3,#fff);margin-bottom:12px}.news-feature .news-title{font-size:21px}
 .news-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.news-card{border:1px solid var(--border);border-radius:12px;padding:14px;background:#fbfdfc;display:flex;flex-direction:column;min-height:210px}
 .news-meta{font-size:11px;color:var(--muted);margin-bottom:8px}.news-title{font-size:15px;line-height:1.3;margin:0 0 8px}.news-summary{font-size:13px;line-height:1.45;color:#3d4b45;margin:0 0 12px;flex:1}
@@ -119,8 +120,30 @@ select,input{width:100%;margin-top:4px;border:1px solid var(--border);border-rad
       <label>Impacto<select id="noticiaImpacto"></select></label>
       <label>Busca<input id="noticiaBusca" placeholder="Título, resumo ou veículo"></label>
     </div>
+    <div class="news-actions" aria-label="Ações de notícias">
+      <button class="news-action-primary" id="openNewsAlertForm" type="button">Receber notícias</button>
+      <button class="news-action-secondary" id="openNewsSuggestionForm" type="button">Sugerir notícia</button>
+    </div>
     <div id="newsFeature"></div>
     <div id="newsGrid" class="news-grid"></div>
+    <div class="alert-modal" id="newsAlertModal" hidden>
+      <section class="alert-dialog" role="dialog" aria-modal="true" aria-labelledby="newsAlertDialogTitle">
+        <div class="alert-dialog-head">
+          <h2 id="newsAlertDialogTitle">Receba novas notícias por e-mail</h2>
+          <button class="alert-close" id="closeNewsAlertForm" type="button" aria-label="Fechar formulário">×</button>
+        </div>
+        <iframe class="alert-frame airtable-embed" src="https://airtable.com/embed/appB3SvKrUP82i5V7/pagdjhyj4MALPIIxu/form" title="Cadastro para receber notícias por e-mail" loading="lazy"></iframe>
+      </section>
+    </div>
+    <div class="alert-modal" id="newsSuggestionModal" hidden>
+      <section class="alert-dialog" role="dialog" aria-modal="true" aria-labelledby="newsSuggestionDialogTitle">
+        <div class="alert-dialog-head">
+          <h2 id="newsSuggestionDialogTitle">Sugerir uma notícia</h2>
+          <button class="alert-close" id="closeNewsSuggestionForm" type="button" aria-label="Fechar formulário">×</button>
+        </div>
+        <iframe class="alert-frame airtable-embed" src="https://airtable.com/embed/appB3SvKrUP82i5V7/pag8IOmw21WzVUkUv/form" title="Formulário para sugerir uma notícia" loading="lazy"></iframe>
+      </section>
+    </div>
   </section>
 </main>
 </div>
@@ -188,6 +211,22 @@ openSuggestionForm.addEventListener('click',()=>setSuggestionModal(true));
 closeSuggestionForm.addEventListener('click',()=>setSuggestionModal(false));
 suggestionModal.addEventListener('click',event=>{if(event.target===suggestionModal)setSuggestionModal(false)});
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!suggestionModal.hidden)setSuggestionModal(false)});
+function configureModal(modalId,openId,closeId){
+ const modal=document.getElementById(modalId);
+ const openButton=document.getElementById(openId);
+ const closeButton=document.getElementById(closeId);
+ const setOpen=open=>{
+  modal.hidden=!open;
+  document.body.style.overflow=open?'hidden':'';
+  if(open) closeButton.focus(); else openButton.focus();
+ };
+ openButton.addEventListener('click',()=>setOpen(true));
+ closeButton.addEventListener('click',()=>setOpen(false));
+ modal.addEventListener('click',event=>{if(event.target===modal)setOpen(false)});
+ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!modal.hidden)setOpen(false)});
+}
+configureModal('newsAlertModal','openNewsAlertForm','closeNewsAlertForm');
+configureModal('newsSuggestionModal','openNewsSuggestionForm','closeNewsSuggestionForm');
 // Posições exatas medidas sobre a imagem completa de 727 × 702 pixels.
 const MAP_W = 727;
 const MAP_H = 702;
