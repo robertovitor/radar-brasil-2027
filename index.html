@@ -55,7 +55,8 @@ select,input{width:100%;margin-top:4px;border:1px solid var(--border);border-rad
 .badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}.badge{font-size:10px;font-weight:bold;border-radius:999px;padding:4px 7px;background:#e7eeeb;color:#405048}.badge.positivo{background:#dff3e8;color:#09653c}.badge.neutro{background:#e7edf5;color:#34516f}.badge.negativo{background:#f8dddd;color:#922b2b}.badge.alto{background:#fff0c7;color:#815c00}
 .news-link{align-self:flex-start;color:var(--accent);font-size:12px;font-weight:bold;text-decoration:none}.news-link:hover{text-decoration:underline}
 
-.suggestion-footer{padding:14px}.notification-box,.suggestion-box{max-width:980px;margin:0 auto;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px}.notification-box{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:14px;background:#fffbea;border-color:#ead36b}.notification-box h2,.suggestion-box h2{margin:0 0 6px;font-size:18px}.notification-box p,.suggestion-box p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}.notification-button{display:inline-block;flex:none;border-radius:9px;padding:11px 16px;background:var(--accent);color:#fff;font-size:13px;font-weight:bold;text-decoration:none}.notification-button:hover{background:#08633d}.suggestion-box p{margin-bottom:14px}.suggestion-frame{width:100%;min-height:590px;border:1px solid var(--border);border-radius:12px;background:#fff}.suggestion-link{display:inline-block;margin-top:10px;color:var(--accent);font-size:12px;font-weight:bold;text-decoration:none}.suggestion-link:hover{text-decoration:underline}
+.suggestion-footer{padding:14px}.notification-box,.suggestion-box{max-width:980px;margin:0 auto;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px}.notification-box{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:14px;background:#fffbea;border-color:#ead36b}.notification-box h2,.suggestion-box h2{margin:0 0 6px;font-size:18px}.notification-box p,.suggestion-box p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}.notification-button{display:inline-block;flex:none;border-radius:9px;padding:11px 16px;background:var(--accent);color:#fff;font-size:13px;font-weight:bold}.notification-button:hover{background:#08633d}.suggestion-box p{margin-bottom:14px}.suggestion-frame{width:100%;min-height:590px;border:1px solid var(--border);border-radius:12px;background:#fff}.suggestion-link{display:inline-block;margin-top:10px;color:var(--accent);font-size:12px;font-weight:bold;text-decoration:none}.suggestion-link:hover{text-decoration:underline}
+.alert-modal{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:18px;background:rgba(7,35,27,.62)}.alert-modal[hidden]{display:none}.alert-dialog{width:min(100%,560px);max-height:92vh;overflow:hidden;background:#fff;border-radius:16px;box-shadow:0 18px 55px rgba(0,0,0,.32)}.alert-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border)}.alert-dialog-head h2{margin:0;font-size:17px}.alert-close{width:36px;height:36px;padding:0;border-radius:50%;background:#edf3f0;color:#073f2b;font-size:22px;line-height:1}.alert-frame{display:block;width:100%;height:min(650px,calc(92vh - 65px));border:0;background:#fff}
 @media(max-width:1000px){.news-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.news-filters{grid-template-columns:repeat(2,minmax(130px,1fr))}.news-head{display:block}.news-metrics{min-width:0;margin-top:12px}}
 @media(max-width:820px){
   .header-inner{display:block}.view-tabs{margin-top:12px;width:max-content}
@@ -128,8 +129,17 @@ select,input{width:100%;margin-top:4px;border:1px solid var(--border);border-rad
       <h2 id="notificationTitle">Deseja ser notificado a cada novo evento?</h2>
       <p>Cadastre seu e-mail para receber novos eventos e um lembrete um dia antes.</p>
     </div>
-    <a class="notification-button" href="https://airtable.com/appB3SvKrUP82i5V7/pagcEb4va1uJZQ9nX/form" target="_blank" rel="noopener">Quero receber alertas</a>
+    <button class="notification-button" id="openAlertForm" type="button">Quero receber alertas</button>
   </section>
+  <div class="alert-modal" id="alertModal" hidden>
+    <section class="alert-dialog" role="dialog" aria-modal="true" aria-labelledby="alertDialogTitle">
+      <div class="alert-dialog-head">
+        <h2 id="alertDialogTitle">Receba alertas por e-mail</h2>
+        <button class="alert-close" id="closeAlertForm" type="button" aria-label="Fechar formulário">×</button>
+      </div>
+      <iframe class="alert-frame airtable-embed" src="https://airtable.com/embed/appB3SvKrUP82i5V7/pagcEb4va1uJZQ9nX/form" title="Cadastro para receber alertas por e-mail" loading="lazy"></iframe>
+    </section>
+  </div>
   <section class="suggestion-box" aria-labelledby="suggestionTitle">
     <h2 id="suggestionTitle">Não encontrou algum evento?</h2>
     <p>Digite ou cole abaixo a fonte ou o link. A sugestão será pesquisada e somente será incluída no Radar se atender aos critérios e puder ser confirmada.</p>
@@ -143,6 +153,18 @@ let NEWS=[];
 const COLORS={Planejado:'#d79b00',Realizado:'#3465d9'};
 const MONTH_ORDER=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const stage=document.getElementById('mapStage'), tip=document.getElementById('tooltip');
+const alertModal=document.getElementById('alertModal');
+const openAlertForm=document.getElementById('openAlertForm');
+const closeAlertForm=document.getElementById('closeAlertForm');
+function setAlertModal(open){
+ alertModal.hidden=!open;
+ document.body.style.overflow=open?'hidden':'';
+ if(open) closeAlertForm.focus(); else openAlertForm.focus();
+}
+openAlertForm.addEventListener('click',()=>setAlertModal(true));
+closeAlertForm.addEventListener('click',()=>setAlertModal(false));
+alertModal.addEventListener('click',event=>{if(event.target===alertModal)setAlertModal(false)});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!alertModal.hidden)setAlertModal(false)});
 // Posições exatas medidas sobre a imagem completa de 727 × 702 pixels.
 const MAP_W = 727;
 const MAP_H = 702;
