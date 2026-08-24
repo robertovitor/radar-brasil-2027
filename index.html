@@ -147,7 +147,7 @@ select,input{width:100%;margin-top:4px;border:1px solid var(--border);border-rad
   </section>
 </main>
 </div>
-<footer class="suggestion-footer">
+<footer class="suggestion-footer" id="eventFooter">
   <section class="notification-box" aria-labelledby="notificationTitle">
     <div>
       <h2 id="notificationTitle">Deseja ser notificado a cada novo evento?</h2>
@@ -335,6 +335,7 @@ function showView(view){
  document.getElementById('eventMap').hidden=news;
  document.getElementById('eventAgenda').hidden=news;
  document.getElementById('newsPanel').hidden=!news;
+ document.getElementById('eventFooter').hidden=news;
  document.getElementById('pageLayout').classList.toggle('news-mode',news);
  document.getElementById('tabEventos').classList.toggle('active',!news);
  document.getElementById('tabNoticias').classList.toggle('active',news);
