@@ -158,6 +158,15 @@ function pos(e){
 }
 function values(field){return [...new Set(EVENTS.map(e=>e[field]))].sort()}
 function fill(id,vals,label){document.getElementById(id).innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option>${v}</option>`).join('')}
+function todayInBrazil(){
+ const parts=new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+ const value=Object.fromEntries(parts.map(part=>[part.type,part.value]));
+ return `${value.year}-${value.month}-${value.day}`;
+}
+function currentStatus(event,today){
+ const status=event.Status==='Confirmado'?'Planejado':event.Status;
+ return status==='Planejado'&&event.Data&&event.Data<today?'Realizado':status;
+}
 
 function val(id){return document.getElementById(id).value}
 function ok(e){
@@ -255,9 +264,11 @@ async function carregarDados(){
     const resposta=await fetch('./dados.json?ts='+Date.now(),{cache:'no-store'});
     if(!resposta.ok) throw new Error('HTTP '+resposta.status);
     const todos=await resposta.json();
+    const hojeBrasil=todayInBrazil();
 
     EVENTS=todos.map(e=>({
       ...e,
+      Status:currentStatus(e,hojeBrasil),
       Latitude:e.Latitude===null||e.Latitude===''?null:Number(e.Latitude),
       Longitude:e.Longitude===null||e.Longitude===''?null:Number(e.Longitude),
       Publico:Number(e.Publico||0)
