@@ -15,7 +15,7 @@ NEWS_OUTPUT = Path(os.environ.get("NEWS_OUTPUT_FILE", "noticias.json"))
 SHEET = "02_Eventos"
 NEWS_SHEET = "06_Noticias"
 FIELDS = [
-    "ID", "Status", "Data", "DataBR", "UF", "Cidade", "Categoria",
+    "ID", "Titulo", "Status", "Data", "DataBR", "UF", "Cidade", "Categoria",
     "Organizador", "Publico", "Patrocinador", "Local", "Latitude",
     "Longitude", "Link", "Observacoes", "Mes", "Ano", "Regiao",
 ]
@@ -70,6 +70,18 @@ def as_number(value, default=None):
     return int(number) if float(number).is_integer() else float(number)
 
 
+def fallback_title(event):
+    """Cria um título legível quando a planilha ainda não tiver a coluna Titulo."""
+    observation = str(event.get("Observacoes") or "").strip()
+    first_sentence = re.split(r"(?<=[.!?])\s+", observation, maxsplit=1)[0]
+    first_sentence = first_sentence.rstrip(". ")
+    if first_sentence:
+        return first_sentence[:140].rstrip()
+    category = str(event.get("Categoria") or "Evento").strip()
+    city = str(event.get("Cidade") or "").strip()
+    return f"{category} — {city}" if city else category
+
+
 def main():
     if not SOURCE_FILE.is_file():
         raise RuntimeError(f"A planilha {SOURCE_FILE} não foi encontrada no repositório.")
@@ -97,6 +109,17 @@ def main():
     if missing:
         raise RuntimeError("Campos obrigatórios ausentes: " + ", ".join(missing))
 
+    existing_titles = {}
+    if OUTPUT.is_file():
+        try:
+            existing_titles = {
+                str(item.get("ID", "")): str(item.get("Titulo", "")).strip()
+                for item in json.loads(OUTPUT.read_text(encoding="utf-8"))
+                if item.get("ID") and item.get("Titulo")
+            }
+        except (OSError, ValueError, TypeError):
+            existing_titles = {}
+
     events = []
     for row in sheet.iter_rows(min_row=header_row + 1, values_only=True):
         event_id = row[columns["ID"]]
@@ -108,8 +131,10 @@ def main():
         }
         date = as_date(event["Data"])
         for field in ("ID", "Status", "UF", "Cidade", "Categoria", "Organizador",
-                      "Patrocinador", "Local", "Link", "Observacoes", "Regiao"):
+                      "Titulo", "Patrocinador", "Local", "Link", "Observacoes", "Regiao"):
             event[field] = "" if event[field] is None else str(event[field]).strip()
+        if not event["Titulo"]:
+            event["Titulo"] = existing_titles.get(event["ID"]) or fallback_title(event)
         event["Data"] = date.isoformat()
         event["DataBR"] = date.strftime("%d/%m/%Y")
         event["Publico"] = as_number(event["Publico"], 0)
