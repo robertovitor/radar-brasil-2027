@@ -133,6 +133,8 @@ def main():
         for field in ("ID", "Status", "UF", "Cidade", "Categoria", "Organizador",
                       "Titulo", "Patrocinador", "Local", "Link", "Observacoes", "Regiao"):
             event[field] = "" if event[field] is None else str(event[field]).strip()
+        if event["Status"] == "Confirmado":
+            event["Status"] = "Planejado"
         if not event["Titulo"]:
             event["Titulo"] = existing_titles.get(event["ID"]) or fallback_title(event)
         event["Data"] = date.isoformat()
