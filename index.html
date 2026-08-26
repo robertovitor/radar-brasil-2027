@@ -197,13 +197,18 @@ function ensureModalFrame(modal){
  if(frame.dataset.loaded==='true') return;
  dialog.classList.add('is-loading');
  dialog.setAttribute('aria-busy','true');
+ const loadingStarted=Date.now();
  const ready=()=>{
-  frame.dataset.loaded='true';
-  dialog.classList.remove('is-loading');
-  dialog.removeAttribute('aria-busy');
+  const elapsed=Date.now()-loadingStarted;
+  const delay=Math.max(900,2500-elapsed);
+  setTimeout(()=>{
+   frame.dataset.loaded='true';
+   dialog.classList.remove('is-loading');
+   dialog.removeAttribute('aria-busy');
+  },delay);
  };
  frame.addEventListener('load',ready,{once:true});
- if(!frame.src) frame.src=frame.dataset.src;
+ if(!frame.getAttribute('src')) frame.src=frame.dataset.src;
 }
 function setAlertModal(open){
  if(open) ensureModalFrame(alertModal);
