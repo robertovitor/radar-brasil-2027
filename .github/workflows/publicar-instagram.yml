@@ -51,13 +51,19 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Exigir confirmação explícita
+      - name: Resolver solicitação de publicação
         if: env.MODE == 'publish'
         env:
           CONFIRMACAO_WORKFLOW: ${{ github.event.inputs.confirmar_publicacao }}
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
-            confirmacao="$(tr -d '\r\n[:space:]' < instagram/publicar-agora.txt)"
+            solicitacao="$(tr -d '\r' < instagram/publicar-agora.txt)"
+            confirmacao="$(printf '%s' "$solicitacao" | awk '{print $1}')"
+            post_file="$(printf '%s' "$solicitacao" | cut -d' ' -f2- | xargs)"
+            if [ -z "$post_file" ]; then
+              post_file="instagram/fila/post-inaugural.json"
+            fi
+            echo "POST_FILE=$post_file" >> "$GITHUB_ENV"
           else
             confirmacao="$CONFIRMACAO_WORKFLOW"
           fi
@@ -65,6 +71,10 @@ jobs:
             echo "Publicação bloqueada: confirmação explícita ausente."
             exit 1
           fi
+          case "$POST_FILE" in
+            instagram/fila/*.json) ;;
+            *) echo "Publicação bloqueada: arquivo fora de instagram/fila."; exit 1 ;;
+          esac
 
       - name: Validar ou publicar
         env:
@@ -75,7 +85,9 @@ jobs:
           python scripts/publicar_instagram.py \
             --post "$POST_FILE" \
             --ledger instagram/publicados.json \
-            --mode "$MODE"
+            --mode "$MODE" \
+            --min-hours-between 4 \
+            --max-per-24h 2
 
       - name: Registrar publicação sem duplicidade
         if: env.MODE == 'publish'
