@@ -1,0 +1,73 @@
+name: Publicar no Instagram
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_file:
+        description: Arquivo JSON aprovado
+        required: true
+        default: instagram/fila/post-inaugural.json
+        type: string
+      mode:
+        description: Tipo de execução
+        required: true
+        default: validate
+        type: choice
+        options:
+          - validate
+          - dry-run
+          - publish
+      confirmar_publicacao:
+        description: Para publicar, digite PUBLICAR
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: instagram-publisher
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Exigir confirmação explícita
+        if: inputs.mode == 'publish' && inputs.confirmar_publicacao != 'PUBLICAR'
+        run: |
+          echo "Publicação bloqueada: informe PUBLICAR no campo de confirmação."
+          exit 1
+
+      - name: Validar ou publicar
+        env:
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_GRAPH_VERSION: v25.0
+        run: |
+          python scripts/publicar_instagram.py             --post "${{ inputs.post_file }}"             --ledger instagram/publicados.json             --mode "${{ inputs.mode }}"
+
+      - name: Registrar publicação sem duplicidade
+        if: inputs.mode == 'publish'
+        run: |
+          if git diff --quiet -- instagram/publicados.json; then
+            echo "O registro não mudou; nenhuma gravação necessária."
+            exit 0
+          fi
+          git config user.name "radar-instagram-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add instagram/publicados.json
+          git commit -m "Registra publicação no Instagram"
+          git pull --rebase origin main
+          git push origin HEAD:main
