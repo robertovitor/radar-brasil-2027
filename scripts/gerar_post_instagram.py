@@ -146,7 +146,7 @@ def news_candidates(items: list[dict], today: dt.date, published: set[str]):
             "caption": (
                 f"📰 {title}\n\n{summary}\n\n"
                 f"Fonte: {clean(item.get('Veiculo'))}\n"
-                f"Saiba mais: {clean(item.get('Link'))}\n\n"
+                "Saiba mais pelo link da Bio\n\n"
                 "#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino"
             ),
             "source_type": "noticia",
@@ -181,7 +181,7 @@ def event_candidates(items: list[dict], today: dt.date, published: set[str]):
                 f"Quando: {clean(item.get('DataBR')) or date.strftime('%d/%m/%Y')}\n"
                 f"Onde: {place or 'Local a definir'}\n\n"
                 f"{clean(item.get('Observacoes'))}\n\n"
-                f"Mais informações: {clean(item.get('Link'))}\n\n"
+                "Saiba mais pelo link da Bio\n\n"
                 "#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino"
             ),
             "source_type": "evento",
