@@ -273,6 +273,29 @@ function pos(e){
 }
 function values(field){return [...new Set(EVENTS.map(e=>e[field]))].sort()}
 function fill(id,vals,label){document.getElementById(id).innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option>${v}</option>`).join('')}
+const CATEGORY_GROUPS=[
+ 'Jogos e Competições',
+ 'Seleções Brasileiras',
+ 'Ativações e Experiências',
+ 'Planejamento, Governança e Operações',
+ 'Legado e Participação Pública',
+ 'Encontros, Painéis e Capacitação',
+ 'Lançamentos e Marcos Oficiais',
+ 'Premiações e Reconhecimentos',
+ 'Outros'
+];
+function categoryGroup(category){
+ const value=String(category||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+ if(/premia/.test(value)) return 'Premiações e Reconhecimentos';
+ if(/selec|amistoso|data fifa|convocacao|centro de treinamento|preparacao/.test(value)) return 'Seleções Brasileiras';
+ if(/jogo|torneio|final da copa/.test(value)) return 'Jogos e Competições';
+ if(/ativacao|tour|mostra cultural|promocao internacional/.test(value)) return 'Ativações e Experiências';
+ if(/legado|consulta publica|mobilidade|inclusivo/.test(value)) return 'Legado e Participação Pública';
+ if(/painel|seminario|workshop|summit|forum|palestra|encontro e paineis/.test(value)) return 'Encontros, Painéis e Capacitação';
+ if(/lancamento|sorteio|marco operacional/.test(value)) return 'Lançamentos e Marcos Oficiais';
+ if(/reuniao|visita tecnica|vistoria|oficina estrategica|missao tecnica|planejamento|governanca|seguranca/.test(value)) return 'Planejamento, Governança e Operações';
+ return 'Outros';
+}
 function todayInBrazil(){
  const parts=new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
  const value=Object.fromEntries(parts.map(part=>[part.type,part.value]));
@@ -286,7 +309,7 @@ function currentStatus(event,today){
 function val(id){return document.getElementById(id).value}
 function ok(e){
  const q=val('busca').trim().toLowerCase();
- return (!val('status')||e.Status===val('status'))&&(!val('categoria')||e.Categoria===val('categoria'))&&(!val('regiao')||e.Regiao===val('regiao'))&&(!val('uf')||e.UF===val('uf'))&&(!val('ano')||String(e.Ano)===val('ano'))&&(!val('mes')||e.Mes===val('mes'))&&(!q||(`${e.Titulo||''} ${e.Cidade} ${e.Categoria} ${e.ID}`).toLowerCase().includes(q));
+ return (!val('status')||e.Status===val('status'))&&(!val('categoria')||categoryGroup(e.Categoria)===val('categoria'))&&(!val('regiao')||e.Regiao===val('regiao'))&&(!val('uf')||e.UF===val('uf'))&&(!val('ano')||String(e.Ano)===val('ano'))&&(!val('mes')||e.Mes===val('mes'))&&(!q||(`${e.Titulo||''} ${e.Cidade} ${e.Categoria} ${e.ID}`).toLowerCase().includes(q));
 }
 function hasCoords(e){
  return e.Latitude !== null && e.Longitude !== null &&
@@ -406,7 +429,7 @@ async function carregarDados(){
 
     fill('status',values('Status'),'Todos');
     document.getElementById('status').value='Planejado';
-    fill('categoria',values('Categoria'),'Todas');
+    fill('categoria',CATEGORY_GROUPS.filter(group=>EVENTS.some(e=>categoryGroup(e.Categoria)===group)),'Todas');
     fill('regiao',values('Regiao'),'Todas');
     fill('uf',values('UF'),'Todas');
     fill('ano',values('Ano'),'Todos');
