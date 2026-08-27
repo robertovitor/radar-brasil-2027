@@ -16,18 +16,25 @@ import urllib.parse
 import urllib.request
 
 GRAPH_VERSION = os.getenv("INSTAGRAM_GRAPH_VERSION", "v25.0")
-GRAPH_ROOT = f"https://graph.facebook.com/{GRAPH_VERSION}"
+FACEBOOK_GRAPH_ROOT = f"https://graph.facebook.com/{GRAPH_VERSION}"
+INSTAGRAM_GRAPH_ROOT = f"https://graph.instagram.com/{GRAPH_VERSION}"
 
 
 class InstagramError(RuntimeError):
     pass
 
 
-def request_json(method: str, path: str, token: str, params: dict | None = None) -> dict:
+def request_json(
+    method: str,
+    path: str,
+    token: str,
+    params: dict | None = None,
+    graph_root: str = FACEBOOK_GRAPH_ROOT,
+) -> dict:
     data = dict(params or {})
     data["access_token"] = token
     encoded = urllib.parse.urlencode(data).encode()
-    url = f"{GRAPH_ROOT}/{path.lstrip('/')}"
+    url = f"{graph_root}/{path.lstrip('/')}"
     req = urllib.request.Request(
         url if method == "POST" else f"{url}?{encoded.decode()}",
         data=encoded if method == "POST" else None,
@@ -48,26 +55,38 @@ def request_json(method: str, path: str, token: str, params: dict | None = None)
             raise InstagramError(f"Meta API HTTP {exc.code}: {body[:500]}") from None
 
 
-def discover_instagram_user(token: str) -> tuple[str, str]:
+def discover_instagram_user(token: str) -> tuple[str, str, str]:
     configured = os.getenv("INSTAGRAM_USER_ID", "").strip()
-    if configured:
-        profile = request_json("GET", configured, token, {"fields": "id,username"})
-        return configured, profile.get("username", "")
 
-    # Token obtido via Instagram Login.
+    # Token emitido pelo produto "Instagram API with Instagram Login".
     try:
-        profile = request_json("GET", "me", token, {"fields": "id,username,account_type"})
-        if profile.get("id") and profile.get("username"):
-            return str(profile["id"]), str(profile["username"])
+        profile = request_json(
+            "GET",
+            configured or "me",
+            token,
+            {"fields": "id,user_id,username,account_type"},
+            graph_root=INSTAGRAM_GRAPH_ROOT,
+        )
+        instagram_id = profile.get("user_id") or profile.get("id")
+        if instagram_id:
+            return INSTAGRAM_GRAPH_ROOT, str(instagram_id), str(profile.get("username", ""))
     except InstagramError:
         pass
 
-    # Token obtido via Facebook Login e Página vinculada.
+    # Token emitido pelo produto "Instagram API with Facebook Login".
+    if configured:
+        profile = request_json(
+            "GET", configured, token, {"fields": "id,username"},
+            graph_root=FACEBOOK_GRAPH_ROOT,
+        )
+        return FACEBOOK_GRAPH_ROOT, configured, str(profile.get("username", ""))
+
     pages = request_json(
         "GET",
         "me/accounts",
         token,
         {"fields": "id,name,instagram_business_account{id,username}", "limit": "100"},
+        graph_root=FACEBOOK_GRAPH_ROOT,
     )
     accounts = []
     for page in pages.get("data", []):
@@ -77,14 +96,15 @@ def discover_instagram_user(token: str) -> tuple[str, str]:
     if not accounts:
         raise InstagramError(
             "Nenhuma conta profissional do Instagram foi encontrada no token. "
-            "Vincule o perfil a uma Página ou defina o secret INSTAGRAM_USER_ID."
+            "Confirme o produto de login e as permissões de publicação."
         )
     if len(accounts) > 1:
         names = ", ".join(username or user_id for user_id, username in accounts)
         raise InstagramError(
             f"O token acessa mais de uma conta ({names}); defina INSTAGRAM_USER_ID."
         )
-    return accounts[0]
+    user_id, username = accounts[0]
+    return FACEBOOK_GRAPH_ROOT, user_id, username
 
 
 def load_json(path: pathlib.Path, default):
@@ -117,9 +137,12 @@ def validate_post(post: dict, require_approval: bool) -> None:
         raise InstagramError("Post bloqueado: defina approved como true após revisão editorial.")
 
 
-def wait_until_ready(container_id: str, token: str) -> None:
+def wait_until_ready(container_id: str, token: str, graph_root: str) -> None:
     for _ in range(20):
-        status = request_json("GET", container_id, token, {"fields": "status_code,status"})
+        status = request_json(
+            "GET", container_id, token, {"fields": "status_code,status"},
+            graph_root=graph_root,
+        )
         code = status.get("status_code")
         if code == "FINISHED":
             return
@@ -151,7 +174,7 @@ def main() -> int:
     if any(item.get("key") == key for item in published):
         raise InstagramError(f"Duplicidade bloqueada: {key} já consta em {args.ledger}.")
 
-    user_id, username = discover_instagram_user(token)
+    graph_root, user_id, username = discover_instagram_user(token)
     print(f"Conta validada: @{username or user_id}; chave: {key}; modo: {args.mode}")
 
     if args.mode in {"validate", "dry-run"}:
@@ -163,13 +186,15 @@ def main() -> int:
         f"{user_id}/media",
         token,
         {"image_url": post["image_url"], "caption": post["caption"]},
+        graph_root=graph_root,
     )
     creation_id = container.get("id")
     if not creation_id:
         raise InstagramError("A Meta não retornou o ID do contêiner.")
-    wait_until_ready(str(creation_id), token)
+    wait_until_ready(str(creation_id), token, graph_root)
     published_media = request_json(
-        "POST", f"{user_id}/media_publish", token, {"creation_id": creation_id}
+        "POST", f"{user_id}/media_publish", token, {"creation_id": creation_id},
+        graph_root=graph_root,
     )
     media_id = published_media.get("id")
     if not media_id:
