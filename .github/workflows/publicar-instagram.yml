@@ -22,6 +22,9 @@ on:
         required: false
         default: ""
         type: string
+  push:
+    paths:
+      - instagram/validar-agora.txt
 
 permissions:
   contents: write
@@ -34,6 +37,9 @@ jobs:
   publicar:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      POST_FILE: ${{ github.event.inputs.post_file || 'instagram/fila/post-inaugural.json' }}
+      MODE: ${{ github.event.inputs.mode || 'validate' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -45,7 +51,7 @@ jobs:
           python-version: "3.12"
 
       - name: Exigir confirmação explícita
-        if: inputs.mode == 'publish' && inputs.confirmar_publicacao != 'PUBLICAR'
+        if: env.MODE == 'publish' && github.event.inputs.confirmar_publicacao != 'PUBLICAR'
         run: |
           echo "Publicação bloqueada: informe PUBLICAR no campo de confirmação."
           exit 1
@@ -56,10 +62,10 @@ jobs:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_GRAPH_VERSION: v25.0
         run: |
-          python scripts/publicar_instagram.py             --post "${{ inputs.post_file }}"             --ledger instagram/publicados.json             --mode "${{ inputs.mode }}"
+          python scripts/publicar_instagram.py             --post "$POST_FILE"             --ledger instagram/publicados.json             --mode "$MODE"
 
       - name: Registrar publicação sem duplicidade
-        if: inputs.mode == 'publish'
+        if: env.MODE == 'publish'
         run: |
           if git diff --quiet -- instagram/publicados.json; then
             echo "O registro não mudou; nenhuma gravação necessária."
