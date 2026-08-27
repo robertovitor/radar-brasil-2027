@@ -25,6 +25,7 @@ on:
   push:
     paths:
       - instagram/validar-agora.txt
+      - instagram/publicar-agora.txt
 
 permissions:
   contents: write
@@ -39,7 +40,7 @@ jobs:
     timeout-minutes: 10
     env:
       POST_FILE: ${{ github.event.inputs.post_file || 'instagram/fila/post-inaugural.json' }}
-      MODE: ${{ github.event.inputs.mode || 'validate' }}
+      MODE: ${{ github.event_name == 'push' && 'publish' || github.event.inputs.mode || 'validate' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -51,10 +52,19 @@ jobs:
           python-version: "3.12"
 
       - name: Exigir confirmação explícita
-        if: env.MODE == 'publish' && github.event.inputs.confirmar_publicacao != 'PUBLICAR'
+        if: env.MODE == 'publish'
+        env:
+          CONFIRMACAO_WORKFLOW: ${{ github.event.inputs.confirmar_publicacao }}
         run: |
-          echo "Publicação bloqueada: informe PUBLICAR no campo de confirmação."
-          exit 1
+          if [ "${{ github.event_name }}" = "push" ]; then
+            confirmacao="$(tr -d '\r\n[:space:]' < instagram/publicar-agora.txt)"
+          else
+            confirmacao="$CONFIRMACAO_WORKFLOW"
+          fi
+          if [ "$confirmacao" != "PUBLICAR" ]; then
+            echo "Publicação bloqueada: confirmação explícita ausente."
+            exit 1
+          fi
 
       - name: Validar ou publicar
         env:
@@ -62,7 +72,10 @@ jobs:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_GRAPH_VERSION: v25.0
         run: |
-          python scripts/publicar_instagram.py             --post "$POST_FILE"             --ledger instagram/publicados.json             --mode "$MODE"
+          python scripts/publicar_instagram.py \
+            --post "$POST_FILE" \
+            --ledger instagram/publicados.json \
+            --mode "$MODE"
 
       - name: Registrar publicação sem duplicidade
         if: env.MODE == 'publish'
