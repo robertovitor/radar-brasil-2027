@@ -186,6 +186,7 @@ let EVENTS=[];
 let NEWS=[];
 const COLORS={Planejado:'#d79b00',Realizado:'#3465d9'};
 const MONTH_ORDER=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const BRAZIL_UFS=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
 const stage=document.getElementById('mapStage'), tip=document.getElementById('tooltip');
 const alertModal=document.getElementById('alertModal');
 const openAlertForm=document.getElementById('openAlertForm');
@@ -431,7 +432,7 @@ async function carregarDados(){
     document.getElementById('status').value='Planejado';
     fill('categoria',CATEGORY_GROUPS.filter(group=>EVENTS.some(e=>categoryGroup(e.Categoria)===group)),'Todas');
     fill('regiao',values('Regiao'),'Todas');
-    fill('uf',values('UF'),'Todas');
+    fill('uf',BRAZIL_UFS.filter(uf=>EVENTS.some(e=>e.UF===uf)),'Todas');
     fill('ano',values('Ano'),'Todos');
     fill('mes',MONTH_ORDER.filter(m=>EVENTS.some(e=>e.Mes===m)),'Todos');
     render();
