@@ -87,7 +87,7 @@ jobs:
             --ledger instagram/publicados.json \
             --mode "$MODE" \
             --min-hours-between 4 \
-            --max-per-24h 2
+            --max-per-24h 4
 
       - name: Registrar publicação sem duplicidade
         if: env.MODE == 'publish'
