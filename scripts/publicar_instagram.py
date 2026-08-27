@@ -137,6 +137,9 @@ def main() -> int:
     args = parser.parse_args()
 
     token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "").strip()
+    if token.startswith("INSTAGRAM_ACCESS_TOKEN="):
+        token = token.split("=", 1)[1].strip()
+    token = token.strip().strip('"').strip("'").strip()
     if not token:
         raise InstagramError("Secret INSTAGRAM_ACCESS_TOKEN ausente.")
 
