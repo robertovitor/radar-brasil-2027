@@ -157,6 +157,8 @@ def main() -> int:
     parser.add_argument("--post", required=True, type=pathlib.Path)
     parser.add_argument("--ledger", default="instagram/publicados.json", type=pathlib.Path)
     parser.add_argument("--mode", choices=("validate", "dry-run", "publish"), default="validate")
+    parser.add_argument("--min-hours-between", type=float, default=0)
+    parser.add_argument("--max-per-24h", type=int, default=0)
     args = parser.parse_args()
 
     token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "").strip()
@@ -173,6 +175,35 @@ def main() -> int:
     published = ledger.get("published", [])
     if any(item.get("key") == key for item in published):
         raise InstagramError(f"Duplicidade bloqueada: {key} já consta em {args.ledger}.")
+
+    if args.mode == "publish" and published:
+        now = dt.datetime.now(dt.timezone.utc)
+        recent_times = []
+        for item in published:
+            raw = str(item.get("published_at", "")).strip()
+            if not raw:
+                continue
+            try:
+                parsed = dt.datetime.fromisoformat(raw.replace("Z", "+00:00"))
+                if parsed.tzinfo is None:
+                    parsed = parsed.replace(tzinfo=dt.timezone.utc)
+                recent_times.append(parsed.astimezone(dt.timezone.utc))
+            except ValueError:
+                continue
+        if args.max_per_24h > 0:
+            in_last_day = [value for value in recent_times if now - value < dt.timedelta(hours=24)]
+            if len(in_last_day) >= args.max_per_24h:
+                raise InstagramError(
+                    f"Limite editorial atingido: {len(in_last_day)} publicação(ões) nas últimas 24 horas."
+                )
+        if args.min_hours_between > 0 and recent_times:
+            elapsed = now - max(recent_times)
+            minimum = dt.timedelta(hours=args.min_hours_between)
+            if elapsed < minimum:
+                remaining = minimum - elapsed
+                raise InstagramError(
+                    f"Intervalo editorial ainda não cumprido; aguarde cerca de {remaining}."
+                )
 
     graph_root, user_id, username = discover_instagram_user(token)
     print(f"Conta validada: @{username or user_id}; chave: {key}; modo: {args.mode}")
