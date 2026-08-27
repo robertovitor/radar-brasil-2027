@@ -2,8 +2,8 @@ name: Publicar automaticamente no Instagram
 
 on:
   schedule:
-    # 09:30 e 18:30 no horário de Brasília.
-    - cron: "30 12,21 * * *"
+    # 08:00, 12:00, 18:00 e 22:00 no horário de Brasília (UTC-3).
+    - cron: "0 1,11,15,21 * * *"
   workflow_dispatch:
 
 permissions:
@@ -44,7 +44,7 @@ jobs:
             --ledger instagram/publicados.json \
             --mode publish \
             --min-hours-between 4 \
-            --max-per-24h 2
+            --max-per-24h 4
 
       - name: Registrar fila e publicação
         if: steps.selecionar.outputs.found == 'true'
