@@ -27,10 +27,24 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Instalar gerador de artes
+        run: pip install pillow==11.3.0
+
       - name: Selecionar conteúdo relevante e inédito
         id: selecionar
         run: |
           python scripts/gerar_post_instagram.py --github-output "$GITHUB_OUTPUT"
+
+      - name: Disponibilizar arte e post
+        if: steps.selecionar.outputs.found == 'true'
+        run: |
+          git config user.name "radar-instagram-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add instagram/artes instagram/fila/automatica
+          git commit -m "Cria arte exclusiva para publicação no Instagram"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          sleep 15
 
       - name: Publicar conteúdo selecionado
         if: steps.selecionar.outputs.found == 'true'
@@ -51,7 +65,7 @@ jobs:
         run: |
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add instagram/fila/automatica instagram/publicados.json
+          git add instagram/publicados.json
           git commit -m "Publica conteúdo relevante no Instagram"
           git pull --rebase origin main
           git push origin HEAD:main
