@@ -86,7 +86,7 @@ jobs:
             --post "$POST_FILE" \
             --ledger instagram/publicados.json \
             --mode "$MODE" \
-            --min-hours-between 0 \
+            --min-hours-between 4 \
             --max-per-24h 4
 
       - name: Registrar publicação sem duplicidade
