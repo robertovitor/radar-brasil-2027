@@ -2,9 +2,13 @@ name: Publicar automaticamente no Instagram
 
 on:
   schedule:
-    # 08:00, 12:00, 18:00 e 22:00 no horário de Brasília (UTC-3).
-    - cron: "0 1,11,15,21 * * *"
+    # Janelas de 08h, 12h, 18h e 22h em Brasília.
+    # Usa minuto 07 para evitar a faixa de maior atraso/descarte do GitHub no minuto 00.
+    - cron: "7 1,11,15,21 * * *"
   workflow_dispatch:
+  push:
+    paths:
+      - instagram/executar-automatico.txt
 
 permissions:
   contents: write
