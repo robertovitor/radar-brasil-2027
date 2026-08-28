@@ -22,10 +22,6 @@ on:
         required: false
         default: ""
         type: string
-  push:
-    paths:
-      - instagram/validar-agora.txt
-      - instagram/publicar-agora.txt
 
 permissions:
   contents: write
@@ -40,7 +36,7 @@ jobs:
     timeout-minutes: 10
     env:
       POST_FILE: ${{ github.event.inputs.post_file || 'instagram/fila/post-inaugural.json' }}
-      MODE: ${{ github.event_name == 'push' && 'publish' || github.event.inputs.mode || 'validate' }}
+      MODE: ${{ github.event.inputs.mode || 'validate' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -56,17 +52,7 @@ jobs:
         env:
           CONFIRMACAO_WORKFLOW: ${{ github.event.inputs.confirmar_publicacao }}
         run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
-            solicitacao="$(tr -d '\r' < instagram/publicar-agora.txt)"
-            confirmacao="$(printf '%s' "$solicitacao" | awk '{print $1}')"
-            post_file="$(printf '%s' "$solicitacao" | cut -d' ' -f2- | xargs)"
-            if [ -z "$post_file" ]; then
-              post_file="instagram/fila/post-inaugural.json"
-            fi
-            echo "POST_FILE=$post_file" >> "$GITHUB_ENV"
-          else
-            confirmacao="$CONFIRMACAO_WORKFLOW"
-          fi
+          confirmacao="$CONFIRMACAO_WORKFLOW"
           if [ "$confirmacao" != "PUBLICAR" ]; then
             echo "Publicação bloqueada: confirmação explícita ausente."
             exit 1
