@@ -141,7 +141,7 @@ def create_art(path: pathlib.Path, item: dict) -> None:
 
 
 def news_candidates(items: list[dict], today: dt.date, published: set[str]):
-    """Seleciona notícias recentes ainda inéditas, exceto seleções de base."""
+    """Seleciona notícias inéditas, priorizando as publicadas nos últimos 14 dias."""
     for item in items:
         title = clean(item.get("Titulo"))
         summary = clean(item.get("Resumo"))
@@ -151,7 +151,6 @@ def news_candidates(items: list[dict], today: dt.date, published: set[str]):
             not title
             or key in published
             or not date
-            or (today - date).days > 14
             or date > today
             or is_base_selection(item)
         ):
@@ -166,6 +165,7 @@ def news_candidates(items: list[dict], today: dt.date, published: set[str]):
                 "#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino"
             ),
             "source_type": "noticia",
+            "fresh": 1 if (today - date).days <= 14 else 0,
             "priority": {"alto": 3, "medio": 2, "baixo": 1}.get(normalized(item.get("Impacto")), 1),
             "title": title,
             "art_detail": f"{clean(item.get('CidadeUF'))} • Fonte: {clean(item.get('Veiculo'))}",
@@ -173,7 +173,7 @@ def news_candidates(items: list[dict], today: dt.date, published: set[str]):
 
 
 def event_candidates(items: list[dict], today: dt.date, published: set[str]):
-    """Seleciona eventos futuros ainda inéditos, exceto seleções de base."""
+    """Seleciona eventos inéditos, priorizando os futuros e ainda não realizados."""
     for item in items:
         title = clean(item.get("Titulo"))
         event_id = clean(item.get("ID") or title)
@@ -184,8 +184,6 @@ def event_candidates(items: list[dict], today: dt.date, published: set[str]):
             not title
             or key in published
             or not date
-            or date < today
-            or "realizado" in status
             or is_base_selection(item)
         ):
             continue
@@ -204,6 +202,7 @@ def event_candidates(items: list[dict], today: dt.date, published: set[str]):
                 "#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino"
             ),
             "source_type": "evento",
+            "fresh": 1 if date >= today and "realizado" not in status else 0,
             "priority": 2,
             "title": title,
             "art_detail": (
@@ -253,7 +252,7 @@ def main() -> int:
 
     candidates = list(news_candidates(load(args.news, []), today, published))
     candidates += list(event_candidates(load(args.events, []), today, published))
-    candidates.sort(key=lambda item: (-item["priority"], -item["date"].toordinal(), item["source_type"], item["key"]))
+    candidates.sort(key=lambda item: (-item["fresh"], -item["priority"], -item["date"].toordinal(), item["source_type"], item["key"]))
     candidates = candidates[:1]
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
