@@ -135,4 +135,49 @@
     if(Array.isArray(window.EVENTS)&&window.EVENTS.length){clearInterval(ready);const planned=window.EVENTS.filter(e=>e.Status==='Planejado'&&e.Data).sort((a,b)=>a.Data.localeCompare(b.Data))[0];const d=planned?parseDate(planned.Data):new Date();if(d)viewDate=new Date(d.getFullYear(),d.getMonth(),1);renderCalendar();}
   },250);
   setTimeout(()=>clearInterval(ready),10000);
+
+  // Simplifica o filtro de Tema das Notícias sem alterar o campo Tema dos dados.
+  const NEWS_THEME_GROUPS=[
+    'Seleção Brasileira',
+    'Seleções de Base',
+    'Cidades-sede, Estádios e Infraestrutura',
+    'Organização, Governança e Legislação',
+    'Marketing, Patrocínios e Negócios',
+    'Ativações, Voluntariado e Experiência',
+    'Legado, Inclusão e Impacto Social',
+    'Outros'
+  ];
+  function newsThemeGroup(theme){
+    const v=String(theme||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+    if(/selec(oes|ao) de base|sub[ -]?(15|16|17|18|19|20|23)/.test(v))return'Seleções de Base';
+    if(/selecao brasileira|data fifa|amistoso|convocacao|preparacao da selecao/.test(v))return'Seleção Brasileira';
+    if(/cidade.?sede|estadio|arena|infraestrutura|mobilidade|operacao|workshop de cidades/.test(v))return'Cidades-sede, Estádios e Infraestrutura';
+    if(/governanca|legislacao|tribut|politica publica|beneficio fiscal|fifa|cbf|organizacao|planejamento institucional/.test(v))return'Organização, Governança e Legislação';
+    if(/marketing|patrocin|negocio|audiencia|marca|comercial|direitos de transmissao|midia/.test(v))return'Marketing, Patrocínios e Negócios';
+    if(/ativacao|tour da taca|voluntari|fan fest|experiencia|torcedor|promocao|engajamento/.test(v))return'Ativações, Voluntariado e Experiência';
+    if(/legado|inclus|mulher|seguranca|social|sustent|diversidade|protecao/.test(v))return'Legado, Inclusão e Impacto Social';
+    return'Outros';
+  }
+  const originalNewsOk=window.newsOk;
+  window.newsOk=function(n){
+    const selected=document.getElementById('noticiaTema')?.value||'';
+    if(!selected)return originalNewsOk(n);
+    const select=document.getElementById('noticiaTema');
+    const saved=select.value;
+    select.value='';
+    const base=originalNewsOk(n);
+    select.value=saved;
+    return base&&newsThemeGroup(n.Tema)===selected;
+  };
+  const newsFilterReady=setInterval(()=>{
+    const select=document.getElementById('noticiaTema');
+    if(!select||select.options.length<2||!Array.isArray(NEWS)||!NEWS.length)return;
+    clearInterval(newsFilterReady);
+    const groups=NEWS_THEME_GROUPS.filter(group=>NEWS.some(n=>newsThemeGroup(n.Tema)===group));
+    select.replaceChildren();
+    const all=document.createElement('option');all.value='';all.textContent='Todos';select.appendChild(all);
+    groups.forEach(group=>{const option=document.createElement('option');option.value=group;option.textContent=group;select.appendChild(option)});
+    renderNews();
+  },250);
+  setTimeout(()=>clearInterval(newsFilterReady),10000);
 })();
