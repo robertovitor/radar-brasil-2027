@@ -8,7 +8,7 @@
   .calendar-head button{background:#edf3f0;color:#073f2b;padding:8px 10px}.calendar-head button:hover{background:#dce9e3}
   .calendar-title{font-size:16px;text-align:center;margin:0;color:#14211d}
   .calendar-today{font-size:11px!important;padding:8px!important}
-  .calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+  .calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
   .calendar-weekdays{border-bottom:1px solid var(--border);background:#f8faf9}
   .calendar-weekdays span{text-align:center;padding:8px 2px;font-size:10px;font-weight:bold;color:var(--muted)}
   .calendar-day{position:relative;min-width:0;min-height:92px;padding:5px;border-right:1px solid #edf2ef;border-bottom:1px solid #edf2ef;background:#fff;color:var(--text);cursor:pointer;overflow:hidden}
@@ -18,10 +18,23 @@
   .event-label{display:block;width:100%;min-width:0;padding:4px 5px;border-radius:5px;background:#fff1c9;color:#604600;font-size:9px;font-weight:bold;line-height:1.15;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .event-label.realizado{background:#e2e9fb;color:#274681}.event-label:hover{filter:brightness(.96)}
   .more-events{font-size:9px;font-weight:bold;color:var(--muted);padding:1px 3px}
-  .mobile-dots{display:none;gap:3px;flex-wrap:wrap;margin-top:5px}.day-dot{width:7px;height:7px;border-radius:50%;background:#d79b00}.day-dot.realizado{background:#3465d9}
+  .mobile-dots{display:none}
   .calendar-note{padding:9px 11px;font-size:11px;color:var(--muted);background:#fbfdfc}.calendar-note strong{color:#073f2b}
   @media(max-width:1180px){.map-panel{grid-template-columns:1fr}.event-calendar{max-width:760px;width:100%;margin:0 auto}.calendar-day{min-height:88px}}
-  @media(max-width:620px){.calendar-day{min-height:55px;padding:4px}.day-labels{display:none}.mobile-dots{display:flex}.calendar-head{grid-template-columns:auto 1fr auto}.calendar-today{grid-column:1/-1}.calendar-title{font-size:14px}}
+  @media(max-width:620px){
+    .event-calendar{overflow-x:auto}
+    .calendar-head{position:sticky;left:0;grid-template-columns:auto 1fr auto;padding:8px;min-width:560px;background:#fff;z-index:2}
+    .calendar-today{grid-column:1/-1;padding:7px!important}
+    .calendar-title{font-size:14px}
+    .calendar-weekdays,.calendar-grid{min-width:560px}
+    .calendar-day{min-height:82px;padding:4px}
+    .calendar-weekdays span{font-size:9px;padding:6px 1px}
+    .day-number{width:22px;height:22px;font-size:10px}
+    .day-labels{display:grid;gap:2px;margin-top:3px}
+    .event-label{font-size:8px;padding:3px 4px;line-height:1.1}
+    .more-events{font-size:8px;padding:0 2px}
+    .calendar-note{min-width:560px;font-size:10px}
+  }
   `;
   document.head.appendChild(style);
 
@@ -108,7 +121,6 @@
         });
         if(events.length>2){const more=document.createElement('span');more.className='more-events';more.textContent=`+${events.length-2} evento${events.length-2===1?'':'s'}`;labels.appendChild(more)}
         cell.appendChild(labels);
-        const dots=document.createElement('div');dots.className='mobile-dots';events.slice(0,4).forEach(event=>{const dot=document.createElement('span');dot.className='day-dot'+(event.Status==='Realizado'?' realizado':'');dots.appendChild(dot)});cell.appendChild(dots);
       }
       cell.addEventListener('click',()=>selectDay(d,key));
       cell.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();selectDay(d,key)}});
