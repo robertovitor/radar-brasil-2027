@@ -32,6 +32,20 @@ REGIONS = {
     "ES": "Sudeste", "MG": "Sudeste", "RJ": "Sudeste", "SP": "Sudeste",
     "PR": "Sul", "RS": "Sul", "SC": "Sul", "BR": "Nacional",
 }
+# Coordenadas centrais usadas somente quando o evento brasileiro não possui
+# latitude/longitude específicas na planilha. Locais indefinidos ficam sem ponto.
+CITY_COORDINATES = {
+    ("Belo Horizonte", "MG"): (-19.9167, -43.9345),
+    ("Brasília", "DF"): (-15.7939, -47.8828),
+    ("Fortaleza", "CE"): (-3.7319, -38.5267),
+    ("João Pessoa", "PB"): (-7.1150, -34.8641),
+    ("Porto Alegre", "RS"): (-30.0346, -51.2177),
+    ("Recife", "PE"): (-8.0476, -34.8770),
+    ("Rio de Janeiro", "RJ"): (-22.9068, -43.1729),
+    ("Salvador", "BA"): (-12.9777, -38.5016),
+    ("São Paulo", "SP"): (-23.5505, -46.6333),
+    ("Teresópolis", "RJ"): (-22.4167, -42.9782),
+}
 SOURCE_REQUIRED = [
     "ID", "Status", "Data", "UF", "Cidade", "Categoria", "Organizador",
     "Publico", "Patrocinador", "Local", "Latitude", "Longitude",
@@ -142,6 +156,9 @@ def main():
         event["Publico"] = as_number(event["Publico"], 0)
         event["Latitude"] = as_number(event["Latitude"])
         event["Longitude"] = as_number(event["Longitude"])
+        fallback_coordinates = CITY_COORDINATES.get((event["Cidade"], event["UF"].upper()))
+        if fallback_coordinates and (event["Latitude"] is None or event["Longitude"] is None):
+            event["Latitude"], event["Longitude"] = fallback_coordinates
         event["Mes"] = MONTHS[date.month - 1]
         event["Ano"] = date.year
         event["Regiao"] = REGIONS.get(event["UF"].upper(), "")
