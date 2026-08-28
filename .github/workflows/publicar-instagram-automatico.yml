@@ -2,8 +2,9 @@ name: Publicar automaticamente no Instagram
 
 on:
   schedule:
-    # Verificação de hora em hora; o script limita a uma publicação e exige 60 minutos.
-    - cron: "7 * * * *"
+    # Reagendado para forçar o registro do cron no GitHub Actions.
+    # Executa uma vez por hora; o script limita a uma publicação e exige 60 minutos.
+    - cron: "17 * * * *"
   workflow_dispatch:
   push:
     paths:
