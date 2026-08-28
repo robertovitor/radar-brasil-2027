@@ -318,7 +318,10 @@ function ok(e){
  return (!val('status')||e.Status===val('status'))&&(!val('categoria')||categoryGroup(e.Categoria)===val('categoria'))&&(!val('regiao')||e.Regiao===val('regiao'))&&(!val('uf')||e.UF===val('uf'))&&(!val('ano')||String(e.Ano)===val('ano'))&&(!val('mes')||e.Mes===val('mes'))&&(!q||(`${e.Titulo||''} ${e.Cidade} ${e.Categoria} ${e.ID}`).toLowerCase().includes(q));
 }
 function hasCoords(e){
- return e.Latitude !== null && e.Longitude !== null &&
+ const city=String(e.Cidade||'').trim().toLowerCase();
+ return BRAZIL_UFS.includes(String(e.UF||'').trim().toUpperCase()) &&
+   city!=='' && city!=='brasil' && !city.includes('definir') &&
+   e.Latitude !== null && e.Longitude !== null &&
    e.Latitude !== '' && e.Longitude !== '' &&
    Number.isFinite(Number(e.Latitude)) && Number.isFinite(Number(e.Longitude));
 }
