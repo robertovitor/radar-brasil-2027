@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Seleciona o item mais relevante e ainda não publicado do Radar Brasil 2027."""
+"""Gera um lote com todo conteúdo inédito elegível do Radar Brasil 2027."""
 
 from __future__ import annotations
 
@@ -9,21 +9,9 @@ import hashlib
 import json
 import pathlib
 import re
+import unicodedata
 
 from PIL import Image, ImageDraw, ImageFont
-
-
-DIRECT_TERMS = (
-    "copa do mundo feminina 2027",
-    "copa feminina 2027",
-    "mundial feminino 2027",
-    "fifa 2027",
-)
-RELEVANT_TERMS = (
-    "cidade-sede", "cidades-sede", "seleção brasileira", "selecao brasileira",
-    "futebol feminino", "fifa", "tour da taça", "tour da taca", "voluntár",
-    "legado", "ativação", "ativacao", "sorteio", "estádio", "estadio",
-)
 
 
 def load(path: pathlib.Path, default):
@@ -44,6 +32,34 @@ def parse_date(value: object) -> dt.date | None:
 
 def clean(value: object) -> str:
     return re.sub(r"\s+", " ", str(value or "")).strip()
+
+
+def normalized(value: object) -> str:
+    text = unicodedata.normalize("NFKD", clean(value).casefold())
+    return "".join(char for char in text if not unicodedata.combining(char))
+
+
+def is_base_selection(item: dict) -> bool:
+    """Exclui seleções de base sem bloquear conteúdo adulto que cite 'seleção'."""
+    text = normalized(" ".join(clean(value) for value in item.values()))
+    direct_markers = (
+        "selecoes de base",
+        "selecao de base",
+        "selecao brasileira feminina de base",
+    )
+    if any(marker in text for marker in direct_markers):
+        return True
+    youth_category = re.search(r"\bsub[ -]?(15|16|17|18|19|20|23)\b", text)
+    selection_context = any(
+        marker in text
+        for marker in (
+            "selecao brasileira",
+            "selecao feminina",
+            "mundial feminino",
+            "copa do mundo feminina sub",
+        )
+    )
+    return bool(youth_category and selection_context)
 
 
 def font(size: int, bold: bool = False):
@@ -68,7 +84,7 @@ def wrapped(draw: ImageDraw.ImageDraw, text: str, chosen_font, width: int) -> li
 
 
 def create_art(path: pathlib.Path, item: dict) -> None:
-    """Cria card quadrado exclusivo e legível para o feed."""
+    """Cria um card próprio para cada notícia ou evento."""
     digest = hashlib.sha256(item["key"].encode()).digest()
     palettes = [
         ((4, 74, 48), (17, 142, 91), (255, 210, 0)),
@@ -91,12 +107,16 @@ def create_art(path: pathlib.Path, item: dict) -> None:
         y = (digest[i + 15] * 5 + i * 181) % 1180 - 100
         draw.ellipse((x - radius, y - radius, x + radius, y + radius), fill=(*accent, 24))
 
-    draw.rounded_rectangle((58, 56, 1022, 1024), radius=38, fill=(0, 0, 0, 72), outline=(255, 255, 255, 45), width=2)
+    draw.rounded_rectangle(
+        (58, 56, 1022, 1024), radius=38, fill=(0, 0, 0, 72),
+        outline=(255, 255, 255, 45), width=2,
+    )
     draw.text((94, 92), "RADAR BRASIL 2027", font=font(48, True), fill=(255, 255, 255, 255))
     label = "NOTÍCIA" if item["source_type"] == "noticia" else "AGENDA"
-    label_width = draw.textbbox((0, 0), label, font=font(29, True))[2]
+    label_font = font(29, True)
+    label_width = draw.textbbox((0, 0), label, font=label_font)[2]
     draw.rounded_rectangle((94, 180, 134 + label_width, 232), radius=22, fill=(*accent, 255))
-    draw.text((114, 188), label, font=font(29, True), fill=(18, 35, 30, 255))
+    draw.text((114, 188), label, font=label_font, fill=(18, 35, 30, 255))
 
     title_font = font(62, True)
     lines = wrapped(draw, item["title"], title_font, 850)
@@ -109,38 +129,34 @@ def create_art(path: pathlib.Path, item: dict) -> None:
         y += title_font.size + 15
 
     draw.line((94, 863, 986, 863), fill=(*accent, 255), width=5)
-    detail_lines = wrapped(draw, item["art_detail"], font(31), 850)
+    detail_font = font(31)
+    detail_lines = wrapped(draw, item["art_detail"], detail_font, 850)
     y = 895
     for line in detail_lines[:2]:
-        draw.text((94, y), line, font=font(31), fill=(255, 255, 255, 235))
+        draw.text((94, y), line, font=detail_font, fill=(255, 255, 255, 235))
         y += 43
     draw.text((94, 980), "@RadarBrasil2027", font=font(25, True), fill=(*accent, 255))
     path.parent.mkdir(parents=True, exist_ok=True)
     image.save(path, "PNG", optimize=True)
 
 
-def relevance(text: str) -> int:
-    lowered = text.casefold()
-    score = sum(12 for term in DIRECT_TERMS if term in lowered)
-    score += sum(2 for term in RELEVANT_TERMS if term in lowered)
-    return score
-
-
 def news_candidates(items: list[dict], today: dt.date, published: set[str]):
+    """Publica todas as notícias recentes ainda inéditas, exceto seleções de base."""
     for item in items:
         title = clean(item.get("Titulo"))
         summary = clean(item.get("Resumo"))
         key = "instagram:noticia:" + clean(item.get("Link") or title).casefold()
         date = parse_date(item.get("Data"))
-        if not title or key in published or not date or (today - date).days > 14:
-            continue
-        impact = clean(item.get("Impacto")).casefold()
-        impact_score = {"alto": 10, "médio": 5, "medio": 5}.get(impact, 0)
-        score = relevance(" ".join((title, summary, clean(item.get("Tema"))))) + impact_score
-        if score < 8:
+        if (
+            not title
+            or key in published
+            or not date
+            or (today - date).days > 14
+            or date > today
+            or is_base_selection(item)
+        ):
             continue
         yield {
-            "score": score + max(0, 7 - (today - date).days),
             "date": date,
             "key": key,
             "caption": (
@@ -156,24 +172,26 @@ def news_candidates(items: list[dict], today: dt.date, published: set[str]):
 
 
 def event_candidates(items: list[dict], today: dt.date, published: set[str]):
+    """Publica todos os eventos futuros ainda inéditos, exceto seleções de base."""
     for item in items:
         title = clean(item.get("Titulo"))
         event_id = clean(item.get("ID") or title)
         key = "instagram:evento:" + event_id.casefold()
         date = parse_date(item.get("Data"))
         status = clean(item.get("Status")).casefold()
-        if not title or key in published or not date or date < today or "realizado" in status:
+        if (
+            not title
+            or key in published
+            or not date
+            or date < today
+            or "realizado" in status
+            or is_base_selection(item)
+        ):
             continue
-        days = (date - today).days
-        if days > 120:
-            continue
-        text = " ".join((title, clean(item.get("Observacoes")), clean(item.get("Categoria"))))
-        score = relevance(text)
-        if score < 4:
-            continue
-        place = ", ".join(filter(None, (clean(item.get("Local")), clean(item.get("Cidade")), clean(item.get("UF")))))
+        place = ", ".join(
+            filter(None, (clean(item.get("Local")), clean(item.get("Cidade")), clean(item.get("UF"))))
+        )
         yield {
-            "score": score + max(0, 12 - days // 7),
             "date": date,
             "key": key,
             "caption": (
@@ -186,8 +204,17 @@ def event_candidates(items: list[dict], today: dt.date, published: set[str]):
             ),
             "source_type": "evento",
             "title": title,
-            "art_detail": f"{clean(item.get('DataBR')) or date.strftime('%d/%m/%Y')} • {clean(item.get('Cidade'))}/{clean(item.get('UF'))}",
+            "art_detail": (
+                f"{clean(item.get('DataBR')) or date.strftime('%d/%m/%Y')} • "
+                f"{clean(item.get('Cidade'))}/{clean(item.get('UF'))}"
+            ),
         }
+
+
+def slug_for(key: str) -> str:
+    readable = re.sub(r"[^a-z0-9]+", "-", normalized(key)).strip("-")[-88:]
+    digest = hashlib.sha256(key.encode()).hexdigest()[:10]
+    return f"{readable}-{digest}" if readable else digest
 
 
 def main() -> int:
@@ -200,19 +227,18 @@ def main() -> int:
     parser.add_argument("--github-output", type=pathlib.Path)
     args = parser.parse_args()
 
-    today = dt.datetime.now(dt.timezone.utc).date()
+    now = dt.datetime.now(dt.timezone.utc)
+    today = now.date()
     ledger = load(args.ledger, {"published": []})
     published = {clean(item.get("key")) for item in ledger.get("published", [])}
     candidates = list(news_candidates(load(args.news, []), today, published))
     candidates += list(event_candidates(load(args.events, []), today, published))
-    candidates.sort(key=lambda item: (item["score"], item["date"]), reverse=True)
+    candidates.sort(key=lambda item: (item["date"], item["source_type"], item["key"]))
 
-    found = bool(candidates)
-    post_path = ""
-    if found:
-        selected = candidates[0]
-        slug = re.sub(r"[^a-z0-9]+", "-", selected["key"].casefold()).strip("-")[-100:]
-        args.output_dir.mkdir(parents=True, exist_ok=True)
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    post_paths: list[str] = []
+    for selected in candidates:
+        slug = slug_for(selected["key"])
         path = args.output_dir / f"{today.isoformat()}-{slug}.json"
         art_path = args.art_dir / f"{today.isoformat()}-{slug}.png"
         create_art(art_path, selected)
@@ -221,19 +247,28 @@ def main() -> int:
             "idempotency_key": selected["key"],
             "approved": True,
             "source_type": selected["source_type"],
-            "image_url": f"https://raw.githubusercontent.com/robertovitor/radar-brasil-2027/main/{art_path.as_posix()}",
+            "image_url": (
+                "https://raw.githubusercontent.com/robertovitor/"
+                f"radar-brasil-2027/main/{art_path.as_posix()}"
+            ),
             "caption": selected["caption"][:2200],
         }
         path.write_text(json.dumps(post, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        post_path = str(path)
-        print(f"Selecionado: {selected['key']} (pontuação {selected['score']})")
+        post_paths.append(path.as_posix())
+
+    batch_path = args.output_dir / "lote-atual.json"
+    if post_paths:
+        batch = {"generated_at": now.isoformat(), "count": len(post_paths), "posts": post_paths}
+        batch_path.write_text(json.dumps(batch, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(f"Lote preparado com {len(post_paths)} publicação(ões).")
     else:
-        print("Nenhuma notícia ou evento relevante e inédito disponível.")
+        print("Nenhuma notícia ou evento inédito elegível disponível.")
 
     if args.github_output:
         with args.github_output.open("a", encoding="utf-8") as output:
-            output.write(f"found={'true' if found else 'false'}\n")
-            output.write(f"post_file={post_path}\n")
+            output.write(f"found={'true' if post_paths else 'false'}\n")
+            output.write(f"batch_file={batch_path.as_posix() if post_paths else ''}\n")
+            output.write(f"count={len(post_paths)}\n")
     return 0
 
 
