@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera um lote com todo conteúdo inédito elegível do Radar Brasil 2027."""
+"""Gera no máximo uma publicação inédita elegível do Radar Brasil 2027."""
 
 from __future__ import annotations
 
@@ -141,7 +141,7 @@ def create_art(path: pathlib.Path, item: dict) -> None:
 
 
 def news_candidates(items: list[dict], today: dt.date, published: set[str]):
-    """Publica todas as notícias recentes ainda inéditas, exceto seleções de base."""
+    """Seleciona notícias recentes ainda inéditas, exceto seleções de base."""
     for item in items:
         title = clean(item.get("Titulo"))
         summary = clean(item.get("Resumo"))
@@ -166,13 +166,14 @@ def news_candidates(items: list[dict], today: dt.date, published: set[str]):
                 "#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino"
             ),
             "source_type": "noticia",
+            "priority": {"alto": 3, "medio": 2, "baixo": 1}.get(normalized(item.get("Impacto")), 1),
             "title": title,
             "art_detail": f"{clean(item.get('CidadeUF'))} • Fonte: {clean(item.get('Veiculo'))}",
         }
 
 
 def event_candidates(items: list[dict], today: dt.date, published: set[str]):
-    """Publica todos os eventos futuros ainda inéditos, exceto seleções de base."""
+    """Seleciona eventos futuros ainda inéditos, exceto seleções de base."""
     for item in items:
         title = clean(item.get("Titulo"))
         event_id = clean(item.get("ID") or title)
@@ -203,6 +204,7 @@ def event_candidates(items: list[dict], today: dt.date, published: set[str]):
                 "#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino"
             ),
             "source_type": "evento",
+            "priority": 2,
             "title": title,
             "art_detail": (
                 f"{clean(item.get('DataBR')) or date.strftime('%d/%m/%Y')} • "
@@ -230,10 +232,29 @@ def main() -> int:
     now = dt.datetime.now(dt.timezone.utc)
     today = now.date()
     ledger = load(args.ledger, {"published": []})
-    published = {clean(item.get("key")) for item in ledger.get("published", [])}
+    published_items = ledger.get("published", [])
+    published = {clean(item.get("key")) for item in published_items}
+    timestamps = []
+    for item in published_items:
+        raw = clean(item.get("published_at"))
+        if raw:
+            try:
+                timestamps.append(dt.datetime.fromisoformat(raw.replace("Z", "+00:00")))
+            except ValueError:
+                pass
+    if timestamps and (now - max(timestamps)).total_seconds() < 3600:
+        print("Intervalo mínimo de 60 minutos ainda não concluído.")
+        if args.github_output:
+            with args.github_output.open("a", encoding="utf-8") as output:
+                output.write("found=false\n")
+                output.write("batch_file=\n")
+                output.write("count=0\n")
+        return 0
+
     candidates = list(news_candidates(load(args.news, []), today, published))
     candidates += list(event_candidates(load(args.events, []), today, published))
-    candidates.sort(key=lambda item: (item["date"], item["source_type"], item["key"]))
+    candidates.sort(key=lambda item: (-item["priority"], -item["date"].toordinal(), item["source_type"], item["key"]))
+    candidates = candidates[:1]
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     post_paths: list[str] = []
@@ -260,7 +281,7 @@ def main() -> int:
     if post_paths:
         batch = {"generated_at": now.isoformat(), "count": len(post_paths), "posts": post_paths}
         batch_path.write_text(json.dumps(batch, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        print(f"Lote preparado com {len(post_paths)} publicação(ões).")
+        print(f"Publicação preparada: {len(post_paths)} item.")
     else:
         print("Nenhuma notícia ou evento inédito elegível disponível.")
 
