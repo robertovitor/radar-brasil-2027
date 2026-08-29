@@ -84,7 +84,6 @@ def wrapped(draw: ImageDraw.ImageDraw, text: str, chosen_font, width: int) -> li
 
 
 def create_art(path: pathlib.Path, item: dict) -> None:
-    """Cria um card próprio para cada notícia ou evento."""
     digest = hashlib.sha256(item["key"].encode()).digest()
     palettes = [
         ((4, 74, 48), (17, 142, 91), (255, 210, 0)),
@@ -107,10 +106,7 @@ def create_art(path: pathlib.Path, item: dict) -> None:
         y = (digest[i + 15] * 5 + i * 181) % 1180 - 100
         draw.ellipse((x - radius, y - radius, x + radius, y + radius), fill=(*accent, 24))
 
-    draw.rounded_rectangle(
-        (58, 56, 1022, 1024), radius=38, fill=(0, 0, 0, 72),
-        outline=(255, 255, 255, 45), width=2,
-    )
+    draw.rounded_rectangle((58, 56, 1022, 1024), radius=38, fill=(0, 0, 0, 72), outline=(255, 255, 255, 45), width=2)
     draw.text((94, 92), "RADAR BRASIL 2027", font=font(48, True), fill=(255, 255, 255, 255))
     label = "NOTÍCIA" if item["source_type"] == "noticia" else "AGENDA"
     label_font = font(29, True)
@@ -141,19 +137,12 @@ def create_art(path: pathlib.Path, item: dict) -> None:
 
 
 def news_candidates(items: list[dict], today: dt.date, published: set[str]):
-    """Seleciona notícias inéditas, priorizando as publicadas nos últimos 14 dias."""
     for item in items:
         title = clean(item.get("Titulo"))
         summary = clean(item.get("Resumo"))
         key = "instagram:noticia:" + clean(item.get("Link") or title).casefold()
         date = parse_date(item.get("Data"))
-        if (
-            not title
-            or key in published
-            or not date
-            or date > today
-            or is_base_selection(item)
-        ):
+        if not title or key in published or not date or date > today or is_base_selection(item):
             continue
         yield {
             "date": date,
@@ -165,7 +154,6 @@ def news_candidates(items: list[dict], today: dt.date, published: set[str]):
                 "#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino"
             ),
             "source_type": "noticia",
-            "fresh": 1 if (today - date).days <= 14 else 0,
             "priority": {"alto": 3, "medio": 2, "baixo": 1}.get(normalized(item.get("Impacto")), 1),
             "title": title,
             "art_detail": f"{clean(item.get('CidadeUF'))} • Fonte: {clean(item.get('Veiculo'))}",
@@ -173,23 +161,14 @@ def news_candidates(items: list[dict], today: dt.date, published: set[str]):
 
 
 def event_candidates(items: list[dict], today: dt.date, published: set[str]):
-    """Seleciona eventos inéditos, priorizando os futuros e ainda não realizados."""
     for item in items:
         title = clean(item.get("Titulo"))
         event_id = clean(item.get("ID") or title)
         key = "instagram:evento:" + event_id.casefold()
         date = parse_date(item.get("Data"))
-        status = clean(item.get("Status")).casefold()
-        if (
-            not title
-            or key in published
-            or not date
-            or is_base_selection(item)
-        ):
+        if not title or key in published or not date or is_base_selection(item):
             continue
-        place = ", ".join(
-            filter(None, (clean(item.get("Local")), clean(item.get("Cidade")), clean(item.get("UF"))))
-        )
+        place = ", ".join(filter(None, (clean(item.get("Local")), clean(item.get("Cidade")), clean(item.get("UF")))))
         yield {
             "date": date,
             "key": key,
@@ -202,7 +181,6 @@ def event_candidates(items: list[dict], today: dt.date, published: set[str]):
                 "#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino"
             ),
             "source_type": "evento",
-            "fresh": 1 if date >= today and "realizado" not in status else 0,
             "priority": 2,
             "title": title,
             "art_detail": (
@@ -210,6 +188,38 @@ def event_candidates(items: list[dict], today: dt.date, published: set[str]):
                 f"{clean(item.get('Cidade'))}/{clean(item.get('UF'))}"
             ),
         }
+
+
+def all_content_keys(events: list[dict], news: list[dict]) -> set[str]:
+    keys: set[str] = set()
+    for item in events:
+        title = clean(item.get("Titulo"))
+        if title and not is_base_selection(item):
+            keys.add("instagram:evento:" + clean(item.get("ID") or title).casefold())
+    for item in news:
+        title = clean(item.get("Titulo"))
+        if title and not is_base_selection(item):
+            keys.add("instagram:noticia:" + clean(item.get("Link") or title).casefold())
+    return keys
+
+
+def update_discovery_state(path: pathlib.Path, current_keys: set[str], published: set[str]) -> set[str]:
+    """Mantém fila de itens recém-divulgados no site até eles serem publicados."""
+    if not path.exists():
+        state = {"known": sorted(current_keys), "pending_new": []}
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        return set()
+
+    state = load(path, {"known": [], "pending_new": []})
+    known = set(state.get("known", []))
+    pending = set(state.get("pending_new", []))
+    pending |= current_keys - known
+    pending -= published
+    known |= current_keys
+    state = {"known": sorted(known), "pending_new": sorted(pending)}
+    path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return pending
 
 
 def slug_for(key: str) -> str:
@@ -223,6 +233,7 @@ def main() -> int:
     parser.add_argument("--events", type=pathlib.Path, default="dados.json")
     parser.add_argument("--news", type=pathlib.Path, default="noticias.json")
     parser.add_argument("--ledger", type=pathlib.Path, default="instagram/publicados.json")
+    parser.add_argument("--discovery-state", type=pathlib.Path, default="instagram/conteudo-conhecido.json")
     parser.add_argument("--output-dir", type=pathlib.Path, default="instagram/fila/automatica")
     parser.add_argument("--art-dir", type=pathlib.Path, default="instagram/artes")
     parser.add_argument("--github-output", type=pathlib.Path)
@@ -230,9 +241,15 @@ def main() -> int:
 
     now = dt.datetime.now(dt.timezone.utc)
     today = now.date()
+    events = load(args.events, [])
+    news = load(args.news, [])
     ledger = load(args.ledger, {"published": []})
     published_items = ledger.get("published", [])
     published = {clean(item.get("key")) for item in published_items}
+
+    current_keys = all_content_keys(events, news)
+    pending_new = update_discovery_state(args.discovery_state, current_keys, published)
+
     timestamps = []
     for item in published_items:
         raw = clean(item.get("published_at"))
@@ -250,9 +267,26 @@ def main() -> int:
                 output.write("count=0\n")
         return 0
 
-    candidates = list(news_candidates(load(args.news, []), today, published))
-    candidates += list(event_candidates(load(args.events, []), today, published))
-    candidates.sort(key=lambda item: (-item["fresh"], -item["priority"], -item["date"].toordinal(), item["source_type"], item["key"]))
+    candidates = list(event_candidates(events, today, published)) + list(news_candidates(news, today, published))
+
+    # Prioridade editorial solicitada:
+    # 1. novos eventos divulgados no site;
+    # 2. novas notícias divulgadas no site;
+    # 3. eventos ainda não publicados, dos mais recentes para os mais antigos;
+    # 4. notícias ainda não publicadas, das mais recentes para as mais antigas.
+    def rank(item: dict):
+        is_new = item["key"] in pending_new
+        if is_new and item["source_type"] == "evento":
+            tier = 1
+        elif is_new and item["source_type"] == "noticia":
+            tier = 2
+        elif item["source_type"] == "evento":
+            tier = 3
+        else:
+            tier = 4
+        return (tier, -item["date"].toordinal(), -item["priority"], item["key"])
+
+    candidates.sort(key=rank)
     candidates = candidates[:1]
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -275,6 +309,7 @@ def main() -> int:
         }
         path.write_text(json.dumps(post, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         post_paths.append(path.as_posix())
+        print(f"Prioridade selecionada: {rank(selected)[0]} | {selected['source_type']} | {selected['title']}")
 
     batch_path = args.output_dir / "lote-atual.json"
     if post_paths:
