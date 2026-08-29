@@ -41,7 +41,19 @@
     rebuildUfs(regiao.value,selectedUf);
     regiao.dataset.geoFixed='true';
 
-    // Executa depois dos listeners antigos para garantir a lista completa solicitada.
+    // O filtro é instantâneo; o botão Aplicar deixa de ser necessário.
+    const aplicar=document.getElementById('aplicar');
+    if(aplicar)aplicar.remove();
+    const actions=document.querySelector('.actions');
+    if(actions)actions.style.gridTemplateColumns='1fr';
+
+    ['status','categoria','ano','mes'].forEach(id=>document.getElementById(id)?.addEventListener('change',()=>{
+      if(typeof render==='function')render();
+    }));
+    document.getElementById('busca')?.addEventListener('input',()=>{
+      if(typeof render==='function')render();
+    });
+
     regiao.addEventListener('change',()=>setTimeout(()=>{
       rebuildUfs(regiao.value,'');
       if(typeof render==='function')render();
