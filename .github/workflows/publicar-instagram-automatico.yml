@@ -2,7 +2,6 @@ name: Publicar automaticamente no Instagram
 
 on:
   schedule:
-    # Reagendado para forçar o registro do cron no GitHub Actions.
     # Executa uma vez por hora; o script limita a uma publicação e exige 60 minutos.
     - cron: "17 * * * *"
   workflow_dispatch:
@@ -37,6 +36,13 @@ jobs:
       - name: Preparar no máximo uma publicação inédita elegível
         id: selecionar
         run: python scripts/gerar_post_instagram.py --github-output "$GITHUB_OUTPUT"
+
+      - name: Alternar card editorial e arte ilustrada temática
+        if: steps.selecionar.outputs.found == 'true'
+        run: |
+          python scripts/aplicar_arte_ilustrada.py \
+            --batch "${{ steps.selecionar.outputs.batch_file }}" \
+            --ledger instagram/publicados.json
 
       - name: Disponibilizar arte e publicação
         if: steps.selecionar.outputs.found == 'true'
