@@ -136,6 +136,77 @@
   },250);
   setTimeout(()=>clearInterval(ready),10000);
 
+  // Mantém Região e UF sincronizados e elimina opções vazias indevidas.
+  const UF_TO_REGION={
+    AC:'Norte',AP:'Norte',AM:'Norte',PA:'Norte',RO:'Norte',RR:'Norte',TO:'Norte',
+    AL:'Nordeste',BA:'Nordeste',CE:'Nordeste',MA:'Nordeste',PB:'Nordeste',PE:'Nordeste',PI:'Nordeste',RN:'Nordeste',SE:'Nordeste',
+    DF:'Centro-Oeste',GO:'Centro-Oeste',MT:'Centro-Oeste',MS:'Centro-Oeste',
+    ES:'Sudeste',MG:'Sudeste',RJ:'Sudeste',SP:'Sudeste',
+    PR:'Sul',RS:'Sul',SC:'Sul'
+  };
+  function regionKey(value){
+    return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z]/g,'');
+  }
+  function matchingRegionOption(region){
+    const select=document.getElementById('regiao');
+    const wanted=regionKey(region);
+    return [...select.options].find(o=>o.value&&regionKey(o.value)===wanted)?.value||'';
+  }
+  function cleanRegionOptions(){
+    const select=document.getElementById('regiao');
+    if(!select)return;
+    [...select.options].forEach((option,index)=>{
+      if(index>0&&!String(option.value||'').trim()&&!String(option.textContent||'').trim())option.remove();
+    });
+  }
+  function availableUfs(region=''){
+    const wanted=regionKey(region);
+    return BRAZIL_UFS.filter(uf=>{
+      if(wanted&&regionKey(UF_TO_REGION[uf])!==wanted)return false;
+      return EVENTS.some(e=>String(e.UF||'').toUpperCase()===uf);
+    });
+  }
+  function rebuildUf(region='',selected=''){
+    const select=document.getElementById('uf');
+    if(!select)return;
+    const options=availableUfs(region);
+    select.replaceChildren();
+    const all=document.createElement('option');all.value='';all.textContent='Todas';select.appendChild(all);
+    options.forEach(uf=>{const option=document.createElement('option');option.value=uf;option.textContent=uf;select.appendChild(option)});
+    select.value=options.includes(selected)?selected:'';
+  }
+  function setupRegionUfLink(){
+    const regiao=document.getElementById('regiao'),uf=document.getElementById('uf');
+    if(!regiao||!uf||regiao.dataset.ufLinked==='true')return;
+    cleanRegionOptions();
+    regiao.dataset.ufLinked='true';
+    regiao.addEventListener('change',()=>{
+      rebuildUf(regiao.value,'');
+      clearCalendarSelection();
+      render();
+    });
+    uf.addEventListener('change',()=>{
+      const selectedUf=uf.value;
+      if(selectedUf){
+        const region=matchingRegionOption(UF_TO_REGION[selectedUf]);
+        if(region)regiao.value=region;
+        rebuildUf(regiao.value,selectedUf);
+      }else{
+        rebuildUf(regiao.value,'');
+      }
+      clearCalendarSelection();
+      render();
+    });
+    const limpar=document.getElementById('limpar');
+    limpar?.addEventListener('click',()=>setTimeout(()=>{cleanRegionOptions();rebuildUf('','');},0));
+  }
+  const regionUfReady=setInterval(()=>{
+    const regiao=document.getElementById('regiao'),uf=document.getElementById('uf');
+    if(!Array.isArray(window.EVENTS)||!window.EVENTS.length||!regiao||regiao.options.length<2||!uf||uf.options.length<2)return;
+    clearInterval(regionUfReady);cleanRegionOptions();setupRegionUfLink();
+  },250);
+  setTimeout(()=>clearInterval(regionUfReady),10000);
+
   // Simplifica o filtro de Tema das Notícias sem alterar o campo Tema dos dados.
   const NEWS_THEME_GROUPS=[
     'Seleção Brasileira',
