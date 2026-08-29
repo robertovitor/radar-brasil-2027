@@ -41,11 +41,12 @@
     rebuildUfs(regiao.value,selectedUf);
     regiao.dataset.geoFixed='true';
 
-    // O filtro é instantâneo; o botão Aplicar deixa de ser necessário.
     const aplicar=document.getElementById('aplicar');
     if(aplicar)aplicar.remove();
     const actions=document.querySelector('.actions');
     if(actions)actions.style.gridTemplateColumns='1fr';
+    const limpar=document.getElementById('limpar');
+    if(limpar){limpar.style.background='#0b7a4b';limpar.style.color='#fff';}
 
     ['status','categoria','ano','mes'].forEach(id=>document.getElementById(id)?.addEventListener('change',()=>{
       if(typeof render==='function')render();
@@ -68,7 +69,7 @@
       }
       if(typeof render==='function')render();
     },0));
-    document.getElementById('limpar')?.addEventListener('click',()=>setTimeout(()=>{
+    limpar?.addEventListener('click',()=>setTimeout(()=>{
       rebuildRegions('');rebuildUfs('','');
     },0));
     return true;
