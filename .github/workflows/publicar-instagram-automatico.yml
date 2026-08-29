@@ -44,16 +44,19 @@ jobs:
             --batch "${{ steps.selecionar.outputs.batch_file }}" \
             --ledger instagram/publicados.json
 
-      - name: Disponibilizar arte e publicação
-        if: steps.selecionar.outputs.found == 'true'
+      - name: Disponibilizar arte, fila de novidades e publicação
         run: |
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add instagram/artes instagram/fila/automatica
-          git commit -m "Cria arte exclusiva para publicação no Instagram"
+          git add instagram/conteudo-conhecido.json instagram/artes instagram/fila/automatica 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Nenhuma alteração de preparação para gravar."
+            exit 0
+          fi
+          git commit -m "Atualiza fila e arte da publicação no Instagram"
           git pull --rebase origin main
           git push origin HEAD:main
-          sleep 15
+          if [ "${{ steps.selecionar.outputs.found }}" = "true" ]; then sleep 15; fi
 
       - name: Publicar somente o item selecionado
         id: publicar
