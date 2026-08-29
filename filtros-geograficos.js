@@ -48,6 +48,14 @@
     const limpar=document.getElementById('limpar');
     if(limpar){limpar.style.background='#0b7a4b';limpar.style.color='#fff';}
 
+    // Mantém os campos no DOM para compatibilidade com o filtro existente, mas os retira da interface.
+    ['noticiaLocal','noticiaSentimento'].forEach(id=>{
+      const field=document.getElementById(id);
+      if(field){field.value='';field.closest('label')?.setAttribute('hidden','');}
+    });
+    const newsFilters=document.querySelector('.news-filters');
+    if(newsFilters)newsFilters.style.gridTemplateColumns='minmax(180px,1fr) minmax(150px,.7fr) minmax(240px,1.4fr)';
+
     ['status','categoria','ano','mes'].forEach(id=>document.getElementById(id)?.addEventListener('change',()=>{
       if(typeof render==='function')render();
     }));
