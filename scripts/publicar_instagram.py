@@ -58,7 +58,6 @@ def request_json(
 def discover_instagram_user(token: str) -> tuple[str, str, str]:
     configured = os.getenv("INSTAGRAM_USER_ID", "").strip()
 
-    # Token emitido pelo produto "Instagram API with Instagram Login".
     try:
         profile = request_json(
             "GET",
@@ -73,7 +72,6 @@ def discover_instagram_user(token: str) -> tuple[str, str, str]:
     except InstagramError:
         pass
 
-    # Token emitido pelo produto "Instagram API with Facebook Login".
     if configured:
         profile = request_json(
             "GET", configured, token, {"fields": "id,username"},
@@ -161,13 +159,6 @@ def main() -> int:
     parser.add_argument("--max-per-24h", type=int, default=0)
     args = parser.parse_args()
 
-    token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "").strip()
-    if token.startswith("INSTAGRAM_ACCESS_TOKEN="):
-        token = token.split("=", 1)[1].strip()
-    token = token.strip().strip('"').strip("'").strip()
-    if not token:
-        raise InstagramError("Secret INSTAGRAM_ACCESS_TOKEN ausente.")
-
     post = load_json(args.post, {})
     validate_post(post, require_approval=args.mode == "publish")
     key = stable_key(post)
@@ -175,6 +166,18 @@ def main() -> int:
     published = ledger.get("published", [])
     if any(item.get("key") == key for item in published):
         raise InstagramError(f"Duplicidade bloqueada: {key} já consta em {args.ledger}.")
+
+    # O modo validate é deliberadamente offline e sem acesso a secrets.
+    if args.mode == "validate":
+        print(f"Validação local concluída; chave: {key}; nenhum secret foi carregado.")
+        return 0
+
+    token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "").strip()
+    if token.startswith("INSTAGRAM_ACCESS_TOKEN="):
+        token = token.split("=", 1)[1].strip()
+    token = token.strip().strip('"').strip("'").strip()
+    if not token:
+        raise InstagramError("Secret INSTAGRAM_ACCESS_TOKEN ausente.")
 
     if args.mode == "publish" and published:
         now = dt.datetime.now(dt.timezone.utc)
@@ -208,7 +211,7 @@ def main() -> int:
     graph_root, user_id, username = discover_instagram_user(token)
     print(f"Conta validada: @{username or user_id}; chave: {key}; modo: {args.mode}")
 
-    if args.mode in {"validate", "dry-run"}:
+    if args.mode == "dry-run":
         print("Teste concluído sem criar publicação.")
         return 0
 
