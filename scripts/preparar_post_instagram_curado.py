@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepara um post usando somente imagem web previamente curada e autorizada."""
+"""Prepara um post do Radar Brasil 2027 com arte automática e opção de foto curada."""
 from __future__ import annotations
 import datetime as dt, hashlib, io, json, pathlib, re, urllib.request, unicodedata
 from PIL import Image, ImageDraw, ImageFont
@@ -39,18 +39,20 @@ def candidates(events,news,published,pending):
         title=clean(x.get('Titulo')); d=date(x.get('Data')); key='instagram:evento:'+clean(x.get('ID') or title).casefold()
         if title and d and key not in published and not base(x):
             place=', '.join(filter(None,[clean(x.get('Local')),clean(x.get('Cidade')),clean(x.get('UF'))]))
-            out.append(dict(key=key,title=title,date=d,type='evento',caption=f"📅 {title}\n\nQuando: {clean(x.get('DataBR')) or d.strftime('%d/%m/%Y')}\nOnde: {place or 'Local a definir'}\n\n{clean(x.get('Observacoes'))}\n\nFonte: {clean(x.get('Organizador')) or 'Radar Brasil 2027'}\n\n#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
+            subtitle=(clean(x.get('DataBR')) or d.strftime('%d/%m/%Y'))+' • '+(place or 'Local a definir')
+            out.append(dict(key=key,title=title,date=d,type='evento',subtitle=subtitle,caption=f"📅 {title}\n\nQuando: {clean(x.get('DataBR')) or d.strftime('%d/%m/%Y')}\nOnde: {place or 'Local a definir'}\n\n{clean(x.get('Observacoes'))}\n\nFonte: {clean(x.get('Organizador')) or 'Radar Brasil 2027'}\n\n#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     for x in news:
         title=clean(x.get('Titulo')); d=date(x.get('Data')); key='instagram:noticia:'+clean(x.get('Link') or title).casefold()
         if title and d and d<=dt.datetime.now(dt.timezone.utc).date() and key not in published and not base(x):
-            out.append(dict(key=key,title=title,date=d,type='noticia',caption=f"📰 {title}\n\n{clean(x.get('Resumo'))}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
+            subtitle=(clean(x.get('Veiculo')) or 'Radar Brasil 2027')+' • '+d.strftime('%d/%m/%Y')
+            out.append(dict(key=key,title=title,date=d,type='noticia',subtitle=subtitle,caption=f"📰 {title}\n\n{clean(x.get('Resumo'))}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     def rank(i):
         new=i['key'] in pending
         tier=1 if new and i['type']=='evento' else 2 if new else 3 if i['type']=='evento' else 4
         return (tier,-i['date'].toordinal(),i['key'])
     return sorted(out,key=rank)
 
-def make_art(url,out,title,kind,credit):
+def make_photo_art(url,out,title,kind,credit):
     req=urllib.request.Request(url,headers={'User-Agent':'RadarBrasil2027/1.0'})
     with urllib.request.urlopen(req,timeout=25) as r: raw=r.read(15_000_000)
     im=Image.open(io.BytesIO(raw)).convert('RGB')
@@ -65,6 +67,35 @@ def make_art(url,out,title,kind,credit):
     if credit: draw.text((250,1017),'Imagem: '+credit,font=font(20),fill=(240,240,240))
     pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True); im.save(out,'JPEG',quality=92,optimize=True)
 
+def make_original_art(out,title,kind,subtitle,key):
+    """Gera arte 1080x1080 original, sem depender de fotografia de terceiros."""
+    seed=int(hashlib.sha256(key.encode()).hexdigest()[:8],16)
+    im=Image.new('RGB',(1080,1080),(8,74,52) if kind=='evento' else (18,56,92))
+    draw=ImageDraw.Draw(im,'RGBA')
+    # Elementos gráficos determinísticos para cada item: cada post recebe uma arte exclusiva.
+    for i in range(7):
+        x=(seed*(i+3)*37)%1080; y=(seed*(i+5)*53)%1080; r=110+((seed>>(i%8))%210)
+        draw.ellipse((x-r,y-r,x+r,y+r),fill=(255,223,0,22+5*i))
+    draw.polygon([(0,0),(1080,0),(1080,260),(0,430)],fill=(0,0,0,42))
+    draw.rectangle((0,0,1080,118),fill=(0,0,0,68))
+    draw.text((48,31),'RADAR BRASIL 2027',font=font(40,True),fill='white')
+    label='EVENTO' if kind=='evento' else 'NOTÍCIA'
+    draw.rounded_rectangle((48,180,250,244),radius=16,fill=(255,223,0,235))
+    draw.text((73,194),label,font=font(25,True),fill=(15,45,35))
+    f=font(58,True); lines=wrap(draw,title,f,960)
+    y=320
+    for line in lines[:6]:
+        draw.text((58,y),line,font=f,fill='white'); y+=72
+    if subtitle:
+        sf=font(30)
+        sublines=wrap(draw,subtitle,sf,940)
+        sy=min(820,y+30)
+        for line in sublines[:3]:
+            draw.text((60,sy),line,font=sf,fill=(245,245,245)); sy+=42
+    draw.rectangle((48,982,1032,986),fill=(255,223,0,220))
+    draw.text((48,1007),'Copa do Mundo Feminina 2027 • Brasil',font=font(24,True),fill='white')
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True); im.save(out,'JPEG',quality=94,optimize=True)
+
 def main():
     events=load('dados.json',[]); news=load('noticias.json',[]); ledger=load('instagram/publicados.json',{'published':[]}); state=load('instagram/conteudo-conhecido.json',{'pending_new':[]}); catalog=load('instagram/imagens-curadas.json',{'items':[]})
     published={clean(x.get('key')) for x in ledger.get('published',[])}; pending=set(state.get('pending_new',[]))
@@ -77,10 +108,18 @@ def main():
     curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and clean(x.get('image_source_url'))}
     for item in candidates(events,news,published,pending):
         c=curated.get(item['key'])
-        if not c: continue
         s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'
-        make_art(clean(c['image_source_url']),art,item['title'],item['type'],clean(c.get('credito')))
-        payload={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'image_source_url':clean(c['image_source_url']),'image_page_url':clean(c.get('source_page_url')),'image_credit':clean(c.get('credito')),'license_note':clean(c.get('licenca'))}
+        image_source_url=''; image_page_url=''; image_credit='Arte original do Radar Brasil 2027'; license_note='Arte gerada automaticamente pelo próprio projeto; sem fotografia de terceiros.'
+        if c:
+            try:
+                make_photo_art(clean(c['image_source_url']),art,item['title'],item['type'],clean(c.get('credito')))
+                image_source_url=clean(c['image_source_url']); image_page_url=clean(c.get('source_page_url')); image_credit=clean(c.get('credito')); license_note=clean(c.get('licenca'))
+            except Exception as exc:
+                print('warning=imagem_curada_indisponivel:'+type(exc).__name__)
+                make_original_art(art,item['title'],item['type'],item.get('subtitle',''),item['key'])
+        else:
+            make_original_art(art,item['title'],item['type'],item.get('subtitle',''),item['key'])
+        payload={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'image_source_url':image_source_url,'image_page_url':image_page_url,'image_credit':image_credit,'license_note':license_note}
         pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True); pathlib.Path(post).write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8'); pathlib.Path(batch).write_text(json.dumps({'posts':[post]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
         print('found=true'); print('batch_file='+batch); return 0
     print('found=false'); return 0
