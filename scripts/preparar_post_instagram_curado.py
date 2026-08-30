@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepara um post do Radar Brasil 2027 com arte automática e opção de foto curada."""
+"""Prepara um post do Radar Brasil 2027 somente com fotografia curada e licenciada."""
 from __future__ import annotations
 import datetime as dt, hashlib, io, json, pathlib, re, urllib.request, unicodedata
 from PIL import Image, ImageDraw, ImageFont
@@ -105,22 +105,25 @@ def main():
         try: stamps.append(dt.datetime.fromisoformat(clean(x.get('published_at')).replace('Z','+00:00')))
         except: pass
     if stamps and (now-max(stamps)).total_seconds()<3600: print('found=false'); return 0
-    curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and clean(x.get('image_source_url'))}
-    for item in candidates(events,news,published,pending):
-        c=curated.get(item['key'])
-        s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'
-        image_source_url=''; image_page_url=''; image_credit='Arte original do Radar Brasil 2027'; license_note='Arte gerada automaticamente pelo próprio projeto; sem fotografia de terceiros.'
-        if c:
-            try:
-                make_photo_art(clean(c['image_source_url']),art,item['title'],item['type'],clean(c.get('credito')))
-                image_source_url=clean(c['image_source_url']); image_page_url=clean(c.get('source_page_url')); image_credit=clean(c.get('credito')); license_note=clean(c.get('licenca'))
-            except Exception as exc:
-                print('warning=imagem_curada_indisponivel:'+type(exc).__name__)
-                make_original_art(art,item['title'],item['type'],item.get('subtitle',''),item['key'])
-        else:
-            make_original_art(art,item['title'],item['type'],item.get('subtitle',''),item['key'])
-        payload={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'image_source_url':image_source_url,'image_page_url':image_page_url,'image_credit':image_credit,'license_note':license_note}
-        pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True); pathlib.Path(post).write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8'); pathlib.Path(batch).write_text(json.dumps({'posts':[post]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-        print('found=true'); print('batch_file='+batch); return 0
+    curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and all(clean(x.get(field)) for field in ('image_source_url','source_page_url','credito','licenca'))}
+    ranked=candidates(events,news,published,pending)
+    if not ranked:
+        print('found=false'); return 0
+    # A prioridade editorial é estrita: sem foto segura para o primeiro item,
+    # o ciclo termina e o conteúdo é preservado para uma nova tentativa.
+    item=ranked[0]
+    c=curated.get(item['key'])
+    if not c:
+        print('warning=imagem_curada_ausente:'+item['key'])
+        print('found=false'); return 0
+    s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'
+    try:
+        make_photo_art(clean(c['image_source_url']),art,item['title'],item['type'],clean(c.get('credito')))
+    except Exception as exc:
+        print('warning=imagem_curada_indisponivel:'+type(exc).__name__)
+        print('found=false'); return 0
+    payload={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'image_source_url':clean(c['image_source_url']),'image_page_url':clean(c['source_page_url']),'image_credit':clean(c['credito']),'license_note':clean(c['licenca'])}
+    pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True); pathlib.Path(post).write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\\n',encoding='utf-8'); pathlib.Path(batch).write_text(json.dumps({'posts':[post]},ensure_ascii=False,indent=2)+'\\n',encoding='utf-8')
+    print('found=true'); print('batch_file='+batch); return 0
     print('found=false'); return 0
 if __name__=='__main__': raise SystemExit(main())
