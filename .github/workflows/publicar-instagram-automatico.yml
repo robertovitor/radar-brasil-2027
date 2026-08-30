@@ -2,7 +2,7 @@ name: Publicar automaticamente no Instagram
 
 on:
   schedule:
-    - cron: "17 * * * *"
+    - cron: "*/15 * * * *"
   workflow_dispatch:
   push:
     paths:
