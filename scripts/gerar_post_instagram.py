@@ -287,11 +287,37 @@ def main() -> int:
         return (tier, -item["date"].toordinal(), -item["priority"], item["key"])
 
     candidates.sort(key=rank)
-    candidates = candidates[:1]
 
+    # Um item só está pronto para publicação quando o JSON e sua arte referenciada
+    # já existiam no repositório antes deste ciclo. A preparação e a publicação
+    # ficam, portanto, separadas em execuções distintas.
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    ready_by_key: dict[str, pathlib.Path] = {}
+    for queued_path in sorted(args.output_dir.glob("*.json")):
+        if queued_path.name == "lote-atual.json":
+            continue
+        queued = load(queued_path, {})
+        queued_key = clean(queued.get("idempotency_key"))
+        image_url = clean(queued.get("image_url"))
+        marker = "/main/"
+        art_path = pathlib.Path(image_url.split(marker, 1)[1]) if marker in image_url else None
+        if queued_key and art_path and art_path.exists():
+            ready_by_key[queued_key] = queued_path
+
     post_paths: list[str] = []
-    for selected in candidates:
+    prepared_only = False
+    selected = next((item for item in candidates if item["key"] in ready_by_key), None)
+
+    if selected:
+        queued_path = ready_by_key[selected["key"]]
+        post_paths.append(queued_path.as_posix())
+        print(
+            f"Prioridade selecionada: {rank(selected)[0]} | "
+            f"{selected['source_type']} | {selected['title']}"
+        )
+        print("Arte e JSON já estavam salvos; item liberado para publicação.")
+    elif candidates:
+        selected = candidates[0]
         slug = slug_for(selected["key"])
         path = args.output_dir / f"{today.isoformat()}-{slug}.json"
         art_path = args.art_dir / f"{today.isoformat()}-{slug}.png"
@@ -308,14 +334,20 @@ def main() -> int:
             "caption": selected["caption"][:2200],
         }
         path.write_text(json.dumps(post, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        post_paths.append(path.as_posix())
-        print(f"Prioridade selecionada: {rank(selected)[0]} | {selected['source_type']} | {selected['title']}")
+        prepared_only = True
+        print(
+            f"Prioridade preparada: {rank(selected)[0]} | "
+            f"{selected['source_type']} | {selected['title']}"
+        )
+        print("JSON e arte salvos; publicação ficará para um ciclo posterior.")
 
     batch_path = args.output_dir / "lote-atual.json"
     if post_paths:
         batch = {"generated_at": now.isoformat(), "count": len(post_paths), "posts": post_paths}
         batch_path.write_text(json.dumps(batch, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(f"Publicação preparada: {len(post_paths)} item.")
+    elif prepared_only:
+        print("Item preparado, mas ainda não liberado para publicação neste ciclo.")
     else:
         print("Nenhuma notícia ou evento inédito elegível disponível.")
 
