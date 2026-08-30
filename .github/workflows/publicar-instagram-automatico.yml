@@ -38,13 +38,6 @@ jobs:
         id: selecionar
         run: python scripts/gerar_post_instagram.py --github-output "$GITHUB_OUTPUT"
 
-      - name: Alternar card editorial e arte ilustrada temática
-        if: steps.selecionar.outputs.found == 'true'
-        run: |
-          python scripts/aplicar_arte_ilustrada.py \
-            --batch "${{ steps.selecionar.outputs.batch_file }}" \
-            --ledger instagram/publicados.json
-
       - name: Disponibilizar arte, fila de novidades e publicação
         run: |
           git config user.name "radar-instagram-bot"
