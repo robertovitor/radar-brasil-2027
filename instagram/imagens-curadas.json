@@ -1,5 +1,15 @@
 {
   "version": 2,
   "description": "Imagens selecionadas na internet para posts do Radar Brasil 2027. Somente itens com reutilizacao_permitida=true podem ser publicados.",
-  "items": []
+  "items": [
+    {
+      "idempotency_key": "instagram:evento:evt-0055",
+      "image_source_url": "https://str1.lnmimg.net/img/2026/03/05/0ca942a66a36fff74547ffa0d977f9d4.webp",
+      "source_page_url": "https://www.circulandoaqui.com.br/noticia/64634/premio-tv-brasil-petrobras-para-elas-valoriza-mulheres-no-futebol",
+      "credito": "Rovena Rosa / Agência Brasil",
+      "licenca": "Reutilização gratuita para uso não comercial, conforme as regras públicas da Foto Agência/Agência Brasil, com crédito obrigatório. A imagem está identificada como produção da Agência Brasil, sem indicação de parceiro ou direitos reservados.",
+      "reutilizacao_permitida": true,
+      "justificativa": "Fotografia do lançamento do Prêmio TV Brasil Petrobras Para Elas, diretamente relacionada à premiação e às protagonistas do futebol feminino."
+    }
+  ]
 }
