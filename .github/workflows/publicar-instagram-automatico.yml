@@ -2,14 +2,13 @@ name: Publicar automaticamente no Instagram
 
 on:
   schedule:
-    # Executa uma vez por hora; o script limita a uma publicação e exige 60 minutos.
     - cron: "17 * * * *"
   workflow_dispatch:
   push:
     paths:
       - instagram/executar-automatico.txt
+      - instagram/imagens-curadas.json
 
-# Único workflow autorizado a publicar no Instagram.
 permissions:
   contents: write
 
@@ -20,38 +19,37 @@ concurrency:
 jobs:
   selecionar-e-publicar:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           ref: main
           fetch-depth: 0
-
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: "3.12"
-
-      - name: Instalar gerador de artes
+      - name: Instalar processamento de imagens
         run: pip install pillow==11.3.0
-
-      - name: Preparar no máximo uma publicação inédita elegível
+      - name: Selecionar conteúdo e imagem curada
         id: selecionar
-        run: python scripts/gerar_post_instagram.py --github-output "$GITHUB_OUTPUT"
-
-      - name: Disponibilizar arte, fila de novidades e publicação
+        shell: bash
+        run: |
+          output="$(python scripts/preparar_post_instagram_curado.py)"
+          echo "$output"
+          found="$(echo "$output" | sed -n 's/^found=//p' | tail -1)"
+          batch="$(echo "$output" | sed -n 's/^batch_file=//p' | tail -1)"
+          echo "found=${found:-false}" >> "$GITHUB_OUTPUT"
+          echo "batch_file=$batch" >> "$GITHUB_OUTPUT"
+      - name: Salvar imagem e fila aprovadas
+        if: steps.selecionar.outputs.found == 'true'
         run: |
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add instagram/conteudo-conhecido.json instagram/artes instagram/fila/automatica 2>/dev/null || true
-          if git diff --cached --quiet; then
-            echo "Nenhuma alteração de preparação para gravar."
-            exit 0
-          fi
-          git commit -m "Atualiza fila e arte da publicação no Instagram"
+          git add instagram/artes instagram/fila/automatica
+          git commit -m "Prepara post com imagem curada"
           git pull --rebase origin main
           git push origin HEAD:main
-          if [ "${{ steps.selecionar.outputs.found }}" = "true" ]; then sleep 15; fi
-
+          sleep 15
       - name: Publicar somente o item selecionado
         id: publicar
         if: steps.selecionar.outputs.found == 'true'
@@ -60,27 +58,17 @@ jobs:
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_GRAPH_VERSION: v25.0
-        run: |
-          python scripts/publicar_lote_instagram.py \
-            --batch "${{ steps.selecionar.outputs.batch_file }}" \
-            --ledger instagram/publicados.json
-
-      - name: Registrar a publicação concluída
+        run: python scripts/publicar_lote_instagram.py --batch "${{ steps.selecionar.outputs.batch_file }}" --ledger instagram/publicados.json
+      - name: Registrar publicação confirmada
         if: always() && steps.selecionar.outputs.found == 'true'
         run: |
-          if git diff --quiet -- instagram/publicados.json; then
-            echo "O registro não mudou; nenhuma gravação necessária."
-            exit 0
-          fi
+          if git diff --quiet -- instagram/publicados.json; then exit 0; fi
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
           git add instagram/publicados.json
-          git commit -m "Registra lote publicado no Instagram"
+          git commit -m "Registra publicação no Instagram"
           git pull --rebase origin main
           git push origin HEAD:main
-
-      - name: Sinalizar falha de publicação
+      - name: Sinalizar falha
         if: always() && steps.publicar.outcome == 'failure'
-        run: |
-          echo "Uma ou mais publicações do lote falharam; os sucessos foram preservados."
-          exit 1
+        run: exit 1
