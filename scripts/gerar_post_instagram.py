@@ -149,9 +149,9 @@ def news_candidates(items: list[dict], today: dt.date, published: set[str]):
             "key": key,
             "caption": (
                 f"📰 {title}\n\n{summary}\n\n"
-                f"Fonte: {clean(item.get('Veiculo'))}\n"
-                "Saiba mais pelo link da Bio\n\n"
-                "#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino"
+                f"Fonte: {clean(item.get('Veiculo'))}\n\n"
+                "#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino\n\n"
+                "Saiba mais pelo link da Bio"
             ),
             "source_type": "noticia",
             "priority": {"alto": 3, "medio": 2, "baixo": 1}.get(normalized(item.get("Impacto")), 1),
@@ -177,8 +177,9 @@ def event_candidates(items: list[dict], today: dt.date, published: set[str]):
                 f"Quando: {clean(item.get('DataBR')) or date.strftime('%d/%m/%Y')}\n"
                 f"Onde: {place or 'Local a definir'}\n\n"
                 f"{clean(item.get('Observacoes'))}\n\n"
-                "Saiba mais pelo link da Bio\n\n"
-                "#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino"
+                f"Fonte: {clean(item.get('Organizador')) or 'Radar Brasil 2027'}\n\n"
+                "#RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino\n\n"
+                "Saiba mais pelo link da Bio"
             ),
             "source_type": "evento",
             "priority": 2,
