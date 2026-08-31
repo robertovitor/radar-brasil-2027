@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radar Brasil 2027 — Links do Instagram</title>
+<meta name="description" content="Últimas publicações do Radar Brasil 2027 no Instagram, com acesso direto às notícias e eventos.">
+<style>
+:root{--bg:#f4f7f6;--panel:#fff;--text:#14211d;--muted:#65736d;--border:#dce5e1;--accent:#0b7a4b;--yellow:#ffdf00}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+header{background:var(--yellow);color:#073f2b;padding:24px 18px;text-align:center}header h1{margin:0;font-size:25px}header p{margin:7px 0 0;font-size:14px;color:#24533f}
+main{width:min(760px,100%);margin:0 auto;padding:18px}.intro{background:#eef8f3;border:1px solid #b9d8ca;border-radius:14px;padding:15px;margin-bottom:14px;text-align:center}.intro strong{display:block;font-size:16px;margin-bottom:5px}.intro span{font-size:13px;color:var(--muted)}
+.list{display:grid;gap:12px}.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:0 2px 7px rgba(0,0,0,.04)}.card.latest{border:2px solid #0b7a4b}.tag{display:inline-block;font-size:10px;font-weight:bold;padding:4px 8px;border-radius:999px;background:#e7eeeb;color:#405048;margin-bottom:9px}.tag.latest{background:var(--yellow);color:#073f2b;margin-left:5px}.title{font-size:17px;line-height:1.35;margin:0 0 8px}.meta{font-size:12px;color:var(--muted);line-height:1.45;margin-bottom:9px}.summary{font-size:13px;line-height:1.5;color:#3d4b45;margin:0 0 13px}.button{display:block;text-align:center;text-decoration:none;background:var(--accent);color:#fff;border-radius:10px;padding:12px 14px;font-weight:bold;font-size:14px}.secondary{margin-top:9px;background:#edf3f0;color:#073f2b}.status{text-align:center;padding:28px;color:var(--muted)}footer{text-align:center;padding:10px 18px 28px}.home{color:var(--accent);font-weight:bold;text-decoration:none;font-size:13px}
+</style>
+</head>
+<body>
+<header><h1>Radar Brasil 2027</h1><p>Links das últimas publicações do Instagram</p></header>
+<main>
+<section class="intro"><strong>Procurando o conteúdo do último post?</strong><span>Ele aparece sempre em primeiro lugar nesta página.</span></section>
+<div id="status" class="status">Carregando publicações…</div>
+<section id="list" class="list" hidden></section>
+</main>
+<footer><a class="home" href="./index.html">Abrir o Radar Brasil 2027 completo</a></footer>
+<script>
+const clean=v=>String(v??'').trim();
+const lower=v=>clean(v).toLowerCase();
+const esc=v=>clean(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDate=v=>{if(!v)return'';try{return new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short',timeZone:'America/Sao_Paulo'}).format(new Date(v))}catch{return''}};
+function resolveItem(pub,events,news){
+  const key=lower(pub.key);
+  if(key.startsWith('instagram:evento:')){
+    const id=key.slice('instagram:evento:'.length);
+    const x=events.find(e=>lower(e.ID)===id);
+    if(!x)return null;
+    const place=[x.Local,x.Cidade,x.UF].map(clean).filter(Boolean).join(', ');
+    return {type:'Evento',title:x.Titulo,meta:[x.DataBR||x.Data,place].filter(Boolean).join(' • '),summary:x.Observacoes||'',url:x.Link||'',pub};
+  }
+  if(key.startsWith('instagram:noticia:')){
+    const link=key.slice('instagram:noticia:'.length);
+    const x=news.find(n=>lower(n.Link)===link);
+    if(!x)return null;
+    return {type:'Notícia',title:x.Titulo,meta:[x.Veiculo,x.DataBR||x.Data,x.CidadeUF].map(clean).filter(Boolean).join(' • '),summary:x.Resumo||'',url:x.Link||'',pub};
+  }
+  return null;
+}
+async function load(){
+  try{
+    const bust='?v='+Date.now();
+    const [ledger,events,news]=await Promise.all([
+      fetch('./instagram/publicados.json'+bust,{cache:'no-store'}).then(r=>r.json()),
+      fetch('./dados.json'+bust,{cache:'no-store'}).then(r=>r.json()),
+      fetch('./noticias.json'+bust,{cache:'no-store'}).then(r=>r.json())
+    ]);
+    const items=(ledger.published||[]).slice().sort((a,b)=>new Date(b.published_at)-new Date(a.published_at)).map(p=>resolveItem(p,events,news)).filter(Boolean).slice(0,20);
+    const list=document.getElementById('list');
+    if(!items.length){document.getElementById('status').textContent='Nenhuma publicação encontrada.';return;}
+    list.innerHTML=items.map((x,i)=>`<article class="card ${i===0?'latest':''}"><div><span class="tag">${esc(x.type)}</span>${i===0?'<span class="tag latest">ÚLTIMO POST</span>':''}</div><h2 class="title">${esc(x.title)}</h2><div class="meta">${esc(x.meta)}${x.pub.published_at?' • publicado no Instagram em '+esc(fmtDate(x.pub.published_at)):''}</div>${x.summary?`<p class="summary">${esc(x.summary)}</p>`:''}${x.url?`<a class="button" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">Abrir conteúdo completo</a>`:''}<a class="button secondary" href="./index.html">Ver no Radar Brasil 2027</a></article>`).join('');
+    document.getElementById('status').hidden=true;list.hidden=false;
+  }catch(e){document.getElementById('status').textContent='Não foi possível carregar as publicações agora. Tente novamente em instantes.';}
+}
+load();
+</script>
+</body>
+</html>
