@@ -5,6 +5,9 @@ import datetime as dt, hashlib, io, json, pathlib, re, urllib.request, unicodeda
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT='https://raw.githubusercontent.com/robertovitor/radar-brasil-2027/main/'
+SAFE_LEFT=150
+SAFE_RIGHT=930
+SAFE_WIDTH=SAFE_RIGHT-SAFE_LEFT
 
 def load(p, default):
     p=pathlib.Path(p)
@@ -59,12 +62,24 @@ def make_photo_art(url,out,title,kind,credit):
     w,h=im.size; side=min(w,h); left=(w-side)//2; top=(h-side)//2
     im=im.crop((left,top,left+side,top+side)).resize((1080,1080),Image.Resampling.LANCZOS)
     draw=ImageDraw.Draw(im,'RGBA')
-    draw.rectangle((0,0,1080,115),fill=(0,0,0,120)); draw.text((42,30),'RADAR BRASIL 2027',font=font(40,True),fill='white')
-    draw.rectangle((0,720,1080,1080),fill=(0,0,0,155)); f=font(48,True); lines=wrap(draw,title,f,980)
-    y=755
-    for line in lines[:4]: draw.text((48,y),line,font=f,fill='white'); y+=58
-    label='EVENTO' if kind=='evento' else 'NOTÍCIA'; draw.text((48,1015),label,font=font(25,True),fill=(255,223,0))
-    if credit: draw.text((250,1017),'Imagem: '+credit,font=font(20),fill=(240,240,240))
+    draw.rectangle((0,0,1080,125),fill=(0,0,0,135))
+    draw.text((SAFE_LEFT,32),'RADAR BRASIL 2027',font=font(36,True),fill='white')
+    draw.rectangle((0,680,1080,1080),fill=(0,0,0,180))
+    f=font(42,True); lines=wrap(draw,title,f,SAFE_WIDTH)
+    while len(lines)>4 and f.size>30:
+        f=font(f.size-2,True); lines=wrap(draw,title,f,SAFE_WIDTH)
+    y=720
+    step=f.size+12
+    for line in lines[:4]:
+        draw.text((SAFE_LEFT,y),line,font=f,fill='white')
+        y+=step
+    label='EVENTO' if kind=='evento' else 'NOTÍCIA'
+    draw.text((SAFE_LEFT,1012),label,font=font(22,True),fill=(255,223,0))
+    if credit:
+        credit_text='Imagem: '+credit
+        cf=font(16)
+        credit_lines=wrap(draw,credit_text,cf,SAFE_WIDTH-145)
+        draw.text((SAFE_LEFT+145,1017),credit_lines[0] if credit_lines else '',font=cf,fill=(240,240,240))
     pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True); im.save(out,'JPEG',quality=92,optimize=True)
 
 def make_original_art(out,title,kind,subtitle,key):
@@ -72,28 +87,29 @@ def make_original_art(out,title,kind,subtitle,key):
     seed=int(hashlib.sha256(key.encode()).hexdigest()[:8],16)
     im=Image.new('RGB',(1080,1080),(8,74,52) if kind=='evento' else (18,56,92))
     draw=ImageDraw.Draw(im,'RGBA')
-    # Elementos gráficos determinísticos para cada item: cada post recebe uma arte exclusiva.
     for i in range(7):
         x=(seed*(i+3)*37)%1080; y=(seed*(i+5)*53)%1080; r=110+((seed>>(i%8))%210)
         draw.ellipse((x-r,y-r,x+r,y+r),fill=(255,223,0,22+5*i))
     draw.polygon([(0,0),(1080,0),(1080,260),(0,430)],fill=(0,0,0,42))
-    draw.rectangle((0,0,1080,118),fill=(0,0,0,68))
-    draw.text((48,31),'RADAR BRASIL 2027',font=font(40,True),fill='white')
+    draw.rectangle((0,0,1080,125),fill=(0,0,0,90))
+    draw.text((SAFE_LEFT,32),'RADAR BRASIL 2027',font=font(36,True),fill='white')
     label='EVENTO' if kind=='evento' else 'NOTÍCIA'
-    draw.rounded_rectangle((48,180,250,244),radius=16,fill=(255,223,0,235))
-    draw.text((73,194),label,font=font(25,True),fill=(15,45,35))
-    f=font(58,True); lines=wrap(draw,title,f,960)
+    draw.rounded_rectangle((SAFE_LEFT,180,SAFE_LEFT+202,244),radius=16,fill=(255,223,0,235))
+    draw.text((SAFE_LEFT+25,194),label,font=font(25,True),fill=(15,45,35))
+    f=font(48,True); lines=wrap(draw,title,f,SAFE_WIDTH)
+    while len(lines)>6 and f.size>34:
+        f=font(f.size-2,True); lines=wrap(draw,title,f,SAFE_WIDTH)
     y=320
     for line in lines[:6]:
-        draw.text((58,y),line,font=f,fill='white'); y+=72
+        draw.text((SAFE_LEFT,y),line,font=f,fill='white'); y+=f.size+12
     if subtitle:
-        sf=font(30)
-        sublines=wrap(draw,subtitle,sf,940)
+        sf=font(26)
+        sublines=wrap(draw,subtitle,sf,SAFE_WIDTH)
         sy=min(820,y+30)
         for line in sublines[:3]:
-            draw.text((60,sy),line,font=sf,fill=(245,245,245)); sy+=42
-    draw.rectangle((48,982,1032,986),fill=(255,223,0,220))
-    draw.text((48,1007),'Copa do Mundo Feminina 2027 • Brasil',font=font(24,True),fill='white')
+            draw.text((SAFE_LEFT,sy),line,font=sf,fill=(245,245,245)); sy+=38
+    draw.rectangle((SAFE_LEFT,982,SAFE_RIGHT,986),fill=(255,223,0,220))
+    draw.text((SAFE_LEFT,1007),'Copa do Mundo Feminina 2027 • Brasil',font=font(21,True),fill='white')
     pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True); im.save(out,'JPEG',quality=94,optimize=True)
 
 def main():
@@ -109,8 +125,6 @@ def main():
     ranked=candidates(events,news,published,pending)
     if not ranked:
         print('found=false'); return 0
-    # Tenta até dez candidatos na ordem editorial. Ausência ou falha de
-    # imagem bloqueia somente o candidato atual, nunca os seguintes.
     item=None; c=None; art=''; post=''; batch='instagram/fila/automatica/lote-atual.json'
     for candidate in ranked[:10]:
         candidate_curated=curated.get(candidate['key'])
