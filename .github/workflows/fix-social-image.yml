@@ -1,4 +1,4 @@
-name: Corrigir imagem de compartilhamento social
+name: Ajustar banner principal do site
 
 on:
   push:
@@ -12,34 +12,41 @@ permissions:
   contents: write
 
 jobs:
-  corrigir:
+  ajustar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           ref: main
           fetch-depth: 0
-      - name: Adicionar banner responsivo ao site
+      - name: Mover banner para acima do cabeçalho
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          css = '''\n.hero-banner{padding:14px 14px 0}.hero-banner-inner{max-width:1500px;margin:0 auto}.hero-banner img{display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 6px 20px rgba(0,0,0,.12)}\n@media(max-width:820px){.hero-banner{padding:8px 8px 0}.hero-banner img{border-radius:10px}}\n'''
-          if '.hero-banner{' not in s:
-              s = s.replace('</style>', css + '</style>', 1)
-          banner = '<section class="hero-banner" aria-label="Radar Brasil 2027"><div class="hero-banner-inner"><img src="./radar-social-1200x630-v2.jpg" alt="Radar Brasil 2027 — O Mundo Se Conecta"></div></section>'
-          if 'class="hero-banner"' not in s:
-              marker = '</header>'
-              if marker not in s:
-                  raise SystemExit('Cabeçalho não encontrado em index.html')
-              s = s.replace(marker, marker + banner, 1)
+          banner_re = re.compile(r'<section class="hero-banner".*?</section>', re.S)
+          m = banner_re.search(s)
+          if not m:
+              raise SystemExit('Banner atual não encontrado')
+          banner = m.group(0)
+          s = s[:m.start()] + s[m.end():]
+          body = re.search(r'<body[^>]*>', s, re.I)
+          if not body:
+              raise SystemExit('Tag body não encontrada')
+          pos = body.end()
+          s = s[:pos] + banner + s[pos:]
+          s = re.sub(r'\.hero-banner\{[^}]*\}', '.hero-banner{padding:0;background:#f4c400}', s, count=1)
+          s = re.sub(r'\.hero-banner-inner\{[^}]*\}', '.hero-banner-inner{max-width:1500px;margin:0 auto}', s, count=1)
+          s = re.sub(r'\.hero-banner img\{[^}]*\}', '.hero-banner img{display:block;width:100%;height:auto;margin:0 auto}', s, count=1)
+          s = s.replace('@media(max-width:820px){.hero-banner{padding:8px 8px 0}.hero-banner img{border-radius:10px}}', '@media(max-width:820px){.hero-banner{padding:0}.hero-banner img{width:100%;height:auto}}')
           p.write_text(s, encoding='utf-8')
           PY
-      - name: Commitar banner
+      - name: Commitar ajuste
         run: |
           git config user.name "radar-site-bot"
           git config user.email "actions@users.noreply.github.com"
           git add index.html
-          git commit -m "Adiciona banner social ao cabeçalho do site"
+          git commit -m "Move banner para acima do cabeçalho"
           git push origin HEAD:main
