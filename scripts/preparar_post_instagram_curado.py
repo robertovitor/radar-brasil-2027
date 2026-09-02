@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepara um post do Radar Brasil 2027 com foto curada, busca licenciada automática e arte textual como último fallback."""
+"""Prepara um post do Radar Brasil 2027 com foto curada, busca licenciada automática e arte visual como último fallback."""
 from __future__ import annotations
 import datetime as dt, hashlib, html, io, json, pathlib, re, urllib.parse, urllib.request, unicodedata
 from PIL import Image, ImageDraw, ImageFont
@@ -72,17 +72,35 @@ def http_json(url,timeout=20):
     with urllib.request.urlopen(req,timeout=timeout) as r:
         return json.loads(r.read().decode('utf-8'))
 
-def commons_queries(text):
+def distinct_terms(text):
     words=[w for w in re.findall(r'[a-z0-9áàâãéêíóôõúç-]+',clean(text).casefold()) if len(w)>2 and norm(w) not in STOPWORDS]
-    # Mantém termos mais distintivos e gera buscas progressivamente mais amplas.
-    uniq=[]
+    uniq=[]; seen=set()
     for w in words:
-        if norm(w) not in {norm(x) for x in uniq}: uniq.append(w)
+        n=norm(w)
+        if n not in seen:
+            uniq.append(w); seen.add(n)
+    return uniq
+
+def commons_queries(text):
+    """Gera buscas em camadas: específica, entidades, local e futebol feminino."""
+    uniq=distinct_terms(text)
     queries=[]
-    if uniq: queries.append(' '.join(uniq[:9]))
-    if len(uniq)>6: queries.append(' '.join(uniq[:6]))
-    if len(uniq)>3: queries.append(' '.join(uniq[:4]))
-    return queries[:3]
+    def add(q):
+        q=clean(q)
+        if q and norm(q) not in {norm(x) for x in queries}: queries.append(q)
+    if uniq:
+        add(' '.join(uniq[:10]))
+        add(' '.join(uniq[:7]))
+        add(' '.join(uniq[:5]))
+        add(' '.join(uniq[:3]))
+        for term in uniq[:5]:
+            add(term+' football')
+            add(term+' women football')
+    add('Brazil women football')
+    add('women football Brazil stadium')
+    add('football Brazil stadium')
+    add('women soccer Brazil')
+    return queries[:14]
 
 def license_allowed(meta):
     lic=' '.join([
@@ -105,8 +123,9 @@ def commons_license(meta):
 def find_commons_image(search_context):
     for query in commons_queries(search_context):
         params={
-            'action':'query','generator':'search','gsrsearch':query+' filetype:bitmap','gsrnamespace':'6','gsrlimit':'8',
-            'prop':'imageinfo','iiprop':'url|mime|size|extmetadata','format':'json','formatversion':'2'
+            'action':'query','generator':'search','gsrsearch':query+' filetype:bitmap','gsrnamespace':'6','gsrlimit':'20',
+            'prop':'imageinfo','iiprop':'url|mime|size|extmetadata','iiurlwidth':'1600',
+            'format':'json','formatversion':'2'
         }
         try: data=http_json(COMMONS_API+'?'+urllib.parse.urlencode(params))
         except Exception as exc:
@@ -118,20 +137,12 @@ def find_commons_image(search_context):
             width=int(info.get('width') or 0); height=int(info.get('height') or 0)
             meta=info.get('extmetadata') or {}
             if mime not in ('image/jpeg','image/png','image/webp'): continue
-            if width<600 or height<400: continue
+            if width<700 or height<450: continue
             if not license_allowed(meta): continue
             url=clean(info.get('thumburl') or info.get('url'))
             if not url: continue
             page='https://commons.wikimedia.org/wiki/'+urllib.parse.quote(clean(p.get('title')).replace(' ','_'),safe=':/()_-')
-            return {
-                'image_source_url':url,
-                'source_page_url':page,
-                'credito':commons_credit(meta),
-                'licenca':commons_license(meta),
-                'reutilizacao_permitida':True,
-                'auto_found':True,
-                'query':query,
-            }
+            return {'image_source_url':url,'source_page_url':page,'credito':commons_credit(meta),'licenca':commons_license(meta),'reutilizacao_permitida':True,'auto_found':True,'query':query}
     return None
 
 def make_photo_art(url,out,title,kind,credit):
@@ -143,11 +154,11 @@ def make_photo_art(url,out,title,kind,credit):
     draw=ImageDraw.Draw(im,'RGBA')
     draw.rectangle((0,0,1080,125),fill=(0,0,0,135))
     draw.text((SAFE_LEFT,32),'RADAR BRASIL 2027',font=font(36,True),fill='white')
-    draw.rectangle((0,680,1080,1080),fill=(0,0,0,180))
-    f=font(42,True); lines=wrap(draw,title,f,SAFE_WIDTH)
-    while len(lines)>4 and f.size>30:
+    draw.rectangle((0,700,1080,1080),fill=(0,0,0,172))
+    f=font(40,True); lines=wrap(draw,title,f,SAFE_WIDTH)
+    while len(lines)>4 and f.size>28:
         f=font(f.size-2,True); lines=wrap(draw,title,f,SAFE_WIDTH)
-    y=720; step=f.size+12
+    y=735; step=f.size+11
     for line in lines[:4]:
         draw.text((SAFE_LEFT,y),line,font=f,fill='white'); y+=step
     label='EVENTO' if kind=='evento' else 'NOTÍCIA'
@@ -159,29 +170,34 @@ def make_photo_art(url,out,title,kind,credit):
     pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True); im.save(out,'JPEG',quality=92,optimize=True)
 
 def make_original_art(out,title,kind,subtitle,key):
-    """Gera arte 1080x1080 original, sem depender de fotografia de terceiros."""
+    """Fallback visual original: composição gráfica esportiva, sem foto de terceiros."""
+    import math
     seed=int(hashlib.sha256(key.encode()).hexdigest()[:8],16)
     im=Image.new('RGB',(1080,1080),(8,74,52) if kind=='evento' else (18,56,92))
     draw=ImageDraw.Draw(im,'RGBA')
-    for i in range(7):
-        x=(seed*(i+3)*37)%1080; y=(seed*(i+5)*53)%1080; r=110+((seed>>(i%8))%210)
-        draw.ellipse((x-r,y-r,x+r,y+r),fill=(255,223,0,22+5*i))
-    draw.polygon([(0,0),(1080,0),(1080,260),(0,430)],fill=(0,0,0,42))
+    draw.rectangle((0,560,1080,1080),fill=(12,105,65,255))
+    for x in range(0,1081,180): draw.line((x,560,540,1080),fill=(255,255,255,28),width=4)
+    draw.ellipse((310,650,770,1110),outline=(255,255,255,70),width=6)
+    draw.line((540,560,540,1080),fill=(255,255,255,65),width=5)
+    bx=790+(seed%70); by=270+((seed>>8)%90); br=125
+    draw.ellipse((bx-br,by-br,bx+br,by+br),fill=(245,245,235,235),outline=(20,40,35,170),width=8)
+    draw.regular_polygon((bx,by,45),5,rotation=18,fill=(25,55,48,220))
+    for ang in (18,90,162,234,306):
+        x1=bx+42*math.cos(math.radians(ang)); y1=by+42*math.sin(math.radians(ang)); x2=bx+105*math.cos(math.radians(ang)); y2=by+105*math.sin(math.radians(ang))
+        draw.line((x1,y1,x2,y2),fill=(25,55,48,180),width=7)
     draw.rectangle((0,0,1080,125),fill=(0,0,0,90))
     draw.text((SAFE_LEFT,32),'RADAR BRASIL 2027',font=font(36,True),fill='white')
     label='EVENTO' if kind=='evento' else 'NOTÍCIA'
     draw.rounded_rectangle((SAFE_LEFT,180,SAFE_LEFT+202,244),radius=16,fill=(255,223,0,235))
     draw.text((SAFE_LEFT+25,194),label,font=font(25,True),fill=(15,45,35))
-    f=font(48,True); lines=wrap(draw,title,f,SAFE_WIDTH)
-    while len(lines)>6 and f.size>34:
-        f=font(f.size-2,True); lines=wrap(draw,title,f,SAFE_WIDTH)
-    y=320
-    for line in lines[:6]:
-        draw.text((SAFE_LEFT,y),line,font=f,fill='white'); y+=f.size+12
+    f=font(42,True); lines=wrap(draw,title,f,560)
+    while len(lines)>6 and f.size>30:
+        f=font(f.size-2,True); lines=wrap(draw,title,f,560)
+    y=300
+    for line in lines[:6]: draw.text((SAFE_LEFT,y),line,font=f,fill='white'); y+=f.size+10
     if subtitle:
-        sf=font(26); sublines=wrap(draw,subtitle,sf,SAFE_WIDTH); sy=min(820,y+30)
-        for line in sublines[:3]:
-            draw.text((SAFE_LEFT,sy),line,font=sf,fill=(245,245,245)); sy+=38
+        sf=font(24); sublines=wrap(draw,subtitle,sf,SAFE_WIDTH); sy=900
+        for line in sublines[:2]: draw.text((SAFE_LEFT,sy),line,font=sf,fill=(245,245,245)); sy+=34
     draw.rectangle((SAFE_LEFT,982,SAFE_RIGHT,986),fill=(255,223,0,220))
     draw.text((SAFE_LEFT,1007),'Copa do Mundo Feminina 2027 • Brasil',font=font(21,True),fill='white')
     pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True); im.save(out,'JPEG',quality=94,optimize=True)
@@ -199,30 +215,23 @@ def main():
     ranked=candidates(events,news,published,pending)
     if not ranked:
         print('found=false'); print('reason=no_eligible_item'); return 0
-
     item=ranked[0]; c=curated.get(item['key'])
     s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'
-    source_mode='fallback_textual'
-
+    source_mode='fallback_visual'
     if not c:
         c=find_commons_image(item.get('search_context') or item['title'])
         if c: print('auto_image_found='+clean(c.get('query')))
-
     if c:
         try:
             make_photo_art(clean(c['image_source_url']),art,item['title'],item['type'],clean(c.get('credito')))
             source_mode='auto_commons_photo' if c.get('auto_found') else 'curated_photo'
         except Exception as exc:
-            print('photo_failed='+item['key']+':'+type(exc).__name__)
-            make_original_art(art,item['title'],item['type'],item['subtitle'],item['key'])
-    else:
-        make_original_art(art,item['title'],item['type'],item['subtitle'],item['key'])
-
+            print('photo_failed='+item['key']+':'+type(exc).__name__); make_original_art(art,item['title'],item['type'],item['subtitle'],item['key'])
+    else: make_original_art(art,item['title'],item['type'],item['subtitle'],item['key'])
     if source_mode in ('curated_photo','auto_commons_photo'):
         payload={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'image_source_url':clean(c['image_source_url']),'image_page_url':clean(c['source_page_url']),'image_credit':clean(c['credito']),'license_note':clean(c['licenca']),'visual_mode':source_mode}
     else:
-        payload={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'image_source_url':'','image_page_url':'','image_credit':'Arte própria do Radar Brasil 2027','license_note':'fallback_textual','visual_mode':'fallback_textual'}
-
+        payload={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'image_source_url':'','image_page_url':'','image_credit':'Arte própria do Radar Brasil 2027','license_note':'fallback_visual_original','visual_mode':'fallback_visual'}
     pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True)
     pathlib.Path(post).write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     pathlib.Path(batch).write_text(json.dumps({'posts':[post]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
