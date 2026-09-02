@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepara um post do Radar Brasil 2027 somente com fotografia curada e licenciada."""
+"""Prepara um post do Radar Brasil 2027 com foto curada quando houver e arte textual como fallback obrigatório."""
 from __future__ import annotations
 import datetime as dt, hashlib, io, json, pathlib, re, urllib.request, unicodedata
 from PIL import Image, ImageDraw, ImageFont
@@ -120,31 +120,42 @@ def main():
     for x in ledger.get('published',[]):
         try: stamps.append(dt.datetime.fromisoformat(clean(x.get('published_at')).replace('Z','+00:00')))
         except: pass
-    if stamps and (now-max(stamps)).total_seconds()<3600: print('found=false'); return 0
+    if stamps and (now-max(stamps)).total_seconds()<3600:
+        print('found=false'); print('reason=minimum_interval'); return 0
     curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and all(clean(x.get(field)) for field in ('image_source_url','source_page_url','credito','licenca'))}
     ranked=candidates(events,news,published,pending)
     if not ranked:
-        print('found=false'); return 0
-    item=None; c=None; art=''; post=''; batch='instagram/fila/automatica/lote-atual.json'
-    for candidate in ranked[:10]:
-        candidate_curated=curated.get(candidate['key'])
-        if not candidate_curated:
-            print('blocked_image='+candidate['key'])
-            continue
-        candidate_slug=slug(candidate['key'])
-        candidate_art=f'instagram/artes/{candidate_slug}.jpg'
+        print('found=false'); print('reason=no_eligible_item'); return 0
+
+    item=ranked[0]
+    c=curated.get(item['key'])
+    s=slug(item['key'])
+    art=f'instagram/artes/{s}.jpg'
+    post=f'instagram/fila/automatica/{s}.json'
+    batch='instagram/fila/automatica/lote-atual.json'
+    source_mode='fallback_textual'
+
+    if c:
         try:
-            make_photo_art(clean(candidate_curated['image_source_url']),candidate_art,candidate['title'],candidate['type'],clean(candidate_curated.get('credito')))
+            make_photo_art(clean(c['image_source_url']),art,item['title'],item['type'],clean(c.get('credito')))
+            source_mode='curated_photo'
         except Exception as exc:
-            print('blocked_image='+candidate['key']+':'+type(exc).__name__)
-            continue
-        item=candidate; c=candidate_curated; s=candidate_slug; art=candidate_art
-        post=f'instagram/fila/automatica/{s}.json'
-        break
-    if item is None:
-        print('found=false'); return 0
-    payload={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'image_source_url':clean(c['image_source_url']),'image_page_url':clean(c['source_page_url']),'image_credit':clean(c['credito']),'license_note':clean(c['licenca'])}
-    pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True); pathlib.Path(post).write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8'); pathlib.Path(batch).write_text(json.dumps({'posts':[post]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    print('found=true'); print('batch_file='+batch); return 0
-    print('found=false'); return 0
+            print('photo_failed='+item['key']+':'+type(exc).__name__)
+            make_original_art(art,item['title'],item['type'],item['subtitle'],item['key'])
+    else:
+        make_original_art(art,item['title'],item['type'],item['subtitle'],item['key'])
+
+    if source_mode=='curated_photo':
+        payload={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'image_source_url':clean(c['image_source_url']),'image_page_url':clean(c['source_page_url']),'image_credit':clean(c['credito']),'license_note':clean(c['licenca']),'visual_mode':'curated_photo'}
+    else:
+        payload={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'image_source_url':'','image_page_url':'','image_credit':'Arte própria do Radar Brasil 2027','license_note':'fallback_textual','visual_mode':'fallback_textual'}
+
+    pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True)
+    pathlib.Path(post).write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    pathlib.Path(batch).write_text(json.dumps({'posts':[post]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print('visual_mode='+source_mode)
+    print('found=true')
+    print('batch_file='+batch)
+    return 0
+
 if __name__=='__main__': raise SystemExit(main())
