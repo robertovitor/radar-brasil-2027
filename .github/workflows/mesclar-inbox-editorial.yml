@@ -1,0 +1,41 @@
+name: Mesclar inbox editorial
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'editorial/inbox.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mesclar-inbox-editorial
+  cancel-in-progress: false
+
+jobs:
+  mesclar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Mesclar itens aprovados
+        run: python scripts/mesclar_inbox_editorial.py
+      - name: Publicar alterações
+        run: |
+          if git diff --quiet -- dados.json noticias.json editorial/inbox.json; then
+            echo 'Nenhuma inclusão nova.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add dados.json noticias.json editorial/inbox.json
+          git commit -m 'Incorpora pesquisa editorial ao Radar'
+          git pull --rebase origin main
+          git push origin main
