@@ -19,16 +19,17 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-      - name: Atualizar URLs da imagem social
+      - name: Criar nova versão da imagem social e atualizar metatags
         run: |
+          cp radar-social-1200x630.jpg radar-social-1200x630-v2.jpg
           python - <<'PY'
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          old = 'https://robertovitor.github.io/radar-brasil-2027/radar-social-1200x630.jpg'
-          new = 'https://radarcopafeminina2027.com.br/radar-social-1200x630.jpg'
+          old = 'https://radarcopafeminina2027.com.br/radar-social-1200x630.jpg'
+          new = 'https://radarcopafeminina2027.com.br/radar-social-1200x630-v2.jpg'
           if old not in s:
-              raise SystemExit('URL antiga não encontrada em index.html')
+              raise SystemExit('URL atual da imagem não encontrada em index.html')
           s = s.replace(old, new)
           p.write_text(s, encoding='utf-8')
           PY
@@ -36,6 +37,6 @@ jobs:
         run: |
           git config user.name "radar-site-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add index.html
-          git commit -m "Corrige imagem social para o domínio oficial"
+          git add index.html radar-social-1200x630-v2.jpg
+          git commit -m "Renova imagem de compartilhamento social"
           git push origin HEAD:main
