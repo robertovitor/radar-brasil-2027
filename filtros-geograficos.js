@@ -17,11 +17,15 @@
   const ALL_UFS=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
   const key=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z]/g,'');
 
-  // Complemento responsivo da aba Notícias. A grade definida por JavaScript
-  // precisa acompanhar o breakpoint mobile para não forçar colunas largas.
+  // Complemento responsivo da aba Notícias e do banner de abertura.
   const responsiveStyle=document.createElement('style');
   responsiveStyle.textContent=`
+    @media(min-width:821px) and (max-height:850px){
+      .hero-banner-inner{display:flex;justify-content:center;align-items:center;max-width:1500px}
+      .hero-banner img{width:auto!important;max-width:100%;height:calc(100vh - 110px)!important;max-height:630px;object-fit:contain;margin:0 auto}
+    }
     @media(max-width:820px){
+      .hero-banner img{width:100%;height:auto;max-height:none;object-fit:contain}
       .layout.news-mode{padding:8px}
       .layout.news-mode .content{width:100%;max-width:none;min-width:0}
       .news-panel{padding:14px;min-width:0;overflow:hidden}
