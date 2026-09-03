@@ -25,17 +25,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Mesclar itens aprovados
+      - name: Mesclar itens aprovados e enfileirar novidades
         run: python scripts/mesclar_inbox_editorial.py
       - name: Publicar alterações
         run: |
-          if git diff --quiet -- dados.json noticias.json editorial/inbox.json; then
+          if git diff --quiet -- dados.json noticias.json editorial/inbox.json instagram/conteudo-conhecido.json; then
             echo 'Nenhuma inclusão nova.'
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add dados.json noticias.json editorial/inbox.json
-          git commit -m 'Incorpora pesquisa editorial ao Radar'
+          git add dados.json noticias.json editorial/inbox.json instagram/conteudo-conhecido.json
+          git commit -m 'Incorpora pesquisa editorial ao Radar e enfileira canais'
           git pull --rebase origin main
           git push origin main
