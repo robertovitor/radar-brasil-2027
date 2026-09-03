@@ -1,12 +1,11 @@
 name: Mesclar inbox editorial
 
 on:
-  schedule:
-    - cron: '0 * * * *'
   push:
     branches: [main]
     paths:
       - 'editorial/inbox.json'
+      - 'editorial/executar-automatico.txt'
   workflow_dispatch:
 
 permissions:
