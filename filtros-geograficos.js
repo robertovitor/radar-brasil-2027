@@ -17,6 +17,26 @@
   const ALL_UFS=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
   const key=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z]/g,'');
 
+  // Identidade editorial independente: substitui a nomenclatura anterior pela marca Mundial Feminino 2027.
+  function applyBranding(){
+    document.title='Radar Brasil 2027 | Mundial Feminino 2027';
+    const hero=document.querySelector('.hero-banner img');
+    if(hero){hero.src='./Radar%20Brasil%202027_%20O%20Mundo%20Se%20Conecta.png';hero.alt='Radar Brasil 2027 — Mundial Feminino 2027 — O Mundo Se Conecta';}
+    const headerText=document.querySelector('header .header-inner > div > p');
+    if(headerText)headerText.textContent='Monitoramento de eventos e notícias do Mundial Feminino 2027';
+    const newsIntro=document.querySelector('.news-head p');
+    if(newsIntro)newsIntro.textContent='Notícias e sinais relevantes sobre o Mundial Feminino 2027.';
+    const metaUpdates={
+      'meta[name="description"]':'Eventos, notícias e ativações do Mundial Feminino 2027 no Brasil. Acompanhe tudo em um só lugar.',
+      'meta[property="og:title"]':'Radar Brasil 2027 | Mundial Feminino 2027',
+      'meta[property="og:description"]':'Eventos, notícias e ativações do Mundial Feminino 2027 no Brasil. Acompanhe tudo em um só lugar.',
+      'meta[name="twitter:title"]':'Radar Brasil 2027 | Mundial Feminino 2027',
+      'meta[name="twitter:description"]':'Eventos, notícias e ativações do Mundial Feminino 2027 no Brasil.'
+    };
+    Object.entries(metaUpdates).forEach(([selector,value])=>{const el=document.querySelector(selector);if(el)el.setAttribute('content',value);});
+  }
+  applyBranding();
+
   // Complemento responsivo da aba Notícias e do banner de abertura.
   const responsiveStyle=document.createElement('style');
   responsiveStyle.textContent=`
@@ -80,7 +100,6 @@
     const limpar=document.getElementById('limpar');
     if(limpar){limpar.style.background='#0b7a4b';limpar.style.color='#fff';}
 
-    // Mantém os campos no DOM para compatibilidade com o filtro existente, mas os retira da interface.
     ['noticiaLocal','noticiaSentimento'].forEach(id=>{
       const field=document.getElementById(id);
       if(field){field.value='';field.closest('label')?.setAttribute('hidden','');}
