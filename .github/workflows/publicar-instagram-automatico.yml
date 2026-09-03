@@ -29,11 +29,11 @@ jobs:
           python-version: "3.12"
       - name: Instalar processamento de imagens
         run: pip install pillow==11.3.0
-      - name: Selecionar conteúdo e imagem curada
+      - name: Selecionar conteúdo sem repetir imagem
         id: selecionar
         shell: bash
         run: |
-          output="$(python scripts/preparar_post_instagram_curado.py)"
+          output="$(python scripts/preparar_post_instagram_sem_repetir_imagem.py)"
           echo "$output"
           found="$(echo "$output" | sed -n 's/^found=//p' | tail -1)"
           batch="$(echo "$output" | sed -n 's/^batch_file=//p' | tail -1)"
@@ -45,7 +45,7 @@ jobs:
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
           git add instagram/artes instagram/fila/automatica
-          git commit -m "Prepara post com imagem curada"
+          git commit -m "Prepara post com imagem única"
           git pull --rebase origin main
           git push origin HEAD:main
           sleep 15
