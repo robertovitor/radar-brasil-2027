@@ -1,4 +1,47 @@
 {
-  "eventos": [],
+  "eventos": [
+    {
+      "ID": "EVT-0092",
+      "Titulo": "Women's International Football Summit 2026 no Museu do Amanhã",
+      "Status": "Planejado",
+      "Data": "2026-09-14",
+      "DataBR": "14/09/2026",
+      "UF": "RJ",
+      "Cidade": "Rio de Janeiro",
+      "Categoria": "Summit / negócios do futebol feminino",
+      "Organizador": "WIFS / Confut",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "Museu do Amanhã",
+      "Latitude": -22.8943,
+      "Longitude": -43.1794,
+      "Link": "https://womanifs.com/",
+      "Observacoes": "Primeira edição do Women's International Football Summit (WIFS), confirmada para 14 e 15/09/2026 no Museu do Amanhã, no Rio de Janeiro. O encontro reúne clubes, federações, marcas, executivos, atletas e lideranças para discutir desenvolvimento, negócios, liderança e crescimento do futebol feminino, em um momento diretamente ligado à preparação do ecossistema brasileiro para a Copa do Mundo Feminina FIFA 2027.",
+      "Mes": "Set",
+      "Ano": 2026,
+      "Regiao": "Sudeste"
+    },
+    {
+      "ID": "EVT-0093",
+      "Titulo": "Seleção Brasileira Feminina fará amistoso na Arena Pernambuco em outubro",
+      "Status": "Planejado",
+      "Data": "2026-10-01",
+      "DataBR": "01/10/2026",
+      "UF": "PE",
+      "Cidade": "Recife",
+      "Categoria": "Amistosos da Seleção",
+      "Organizador": "CBF / Seleção Brasileira Feminina / Arena Pernambuco",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "Arena Pernambuco",
+      "Latitude": -8.0407,
+      "Longitude": -35.0081,
+      "Link": "https://jc.uol.com.br/blog-do-torcedor/futebol/selecao-brasileira/2026/09/02/arena-de-pernambuco-recebera-jogo-da-selecao-feminina-em-outubro.html",
+      "Observacoes": "A diretora da Arena Pernambuco confirmou que a Seleção Brasileira Feminina disputará um amistoso no estádio em outubro de 2026. A data exata e o adversário ainda não foram divulgados. O jogo integra a preparação da Seleção e ocorre em uma das arenas da Copa do Mundo Feminina FIFA 2027, que passa por troca de gramado e adequações exigidas pela FIFA. O dia 01/10 foi usado apenas como data técnica para ordenação até a confirmação da data oficial.",
+      "Mes": "Out",
+      "Ano": 2026,
+      "Regiao": "Nordeste"
+    }
+  ],
   "noticias": []
 }
