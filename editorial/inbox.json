@@ -1,4 +1,39 @@
 {
-  "eventos": [],
-  "noticias": []
+  "eventos": [
+    {
+      "ID": "EVT-0094",
+      "Titulo": "Marta e Alice Carvalho apresentam cinebiografia da jogadora na CCXP26",
+      "Status": "Planejado",
+      "Data": "2026-12-06",
+      "DataBR": "06/12/2026",
+      "UF": "SP",
+      "Cidade": "São Paulo",
+      "Categoria": "Cultura / futebol feminino",
+      "Organizador": "CCXP / Conspiração / Globo Filmes / TV Globo / Fox In The Snow",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "São Paulo Expo",
+      "Latitude": null,
+      "Longitude": null,
+      "Link": "https://oglobo.globo.com/cultura/noticia/2026/09/02/marta-e-alice-carvalho-sao-confirmadas-em-painel-da-ccxp.ghtml",
+      "Observacoes": "Painel confirmado para 06/12/2026, último dia da CCXP26, com a presença de Marta e da atriz Alice Carvalho, que interpreta a jogadora em sua cinebiografia. O longa tem estreia prevista para abril de 2027, ano da Copa do Mundo Feminina no Brasil, ampliando a visibilidade cultural do futebol feminino no período de preparação para o torneio.",
+      "Mes": "Dez",
+      "Ano": 2026,
+      "Regiao": "Sudeste"
+    }
+  ],
+  "noticias": [
+    {
+      "Data": "2026-09-02",
+      "DataBR": "02/09/2026",
+      "Titulo": "SporTV estreia Aquecimento Delas com bancada feminina dedicada ao futebol feminino",
+      "Tema": "Mídia / futebol feminino / cobertura esportiva",
+      "CidadeUF": "Brasil",
+      "Veiculo": "O Globo",
+      "Link": "https://oglobo.globo.com/play/noticia/2026/09/02/nota-10-a-estreia-do-aquecimento-delas-no-sportv.ghtml",
+      "Sentimento": "Positivo",
+      "Impacto": "Médio",
+      "Resumo": "O SporTV lançou o programa Aquecimento Delas, dedicado ao futebol feminino e apresentado por uma bancada formada por Ana Thais Matos, Renata Mendonça, Mariana Spinelli e Luana Maluf. A iniciativa amplia o espaço permanente de análise e cobertura da modalidade na televisão esportiva em um período de crescente atenção ao futebol feminino antes da Copa do Mundo de 2027 no Brasil."
+    }
+  ]
 }
