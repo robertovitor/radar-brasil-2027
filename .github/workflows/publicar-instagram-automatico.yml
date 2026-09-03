@@ -1,10 +1,9 @@
 name: Publicar automaticamente no Instagram
 
 on:
-  schedule:
-    - cron: "15 * * * *"
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
       - instagram/executar-automatico.txt
       - instagram/imagens-curadas.json
