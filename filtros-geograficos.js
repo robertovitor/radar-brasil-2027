@@ -17,7 +17,6 @@
   const ALL_UFS=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
   const key=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z]/g,'');
 
-  // Identidade editorial independente: substitui a nomenclatura anterior pela marca Mundial Feminino 2027.
   function applyBranding(){
     document.title='Radar Brasil 2027 | Mundial Feminino 2027';
     const hero=document.querySelector('.hero-banner img');
@@ -37,15 +36,13 @@
   }
   applyBranding();
 
-  // Complemento responsivo da aba Notícias e do banner de abertura.
   const responsiveStyle=document.createElement('style');
   responsiveStyle.textContent=`
-    @media(min-width:821px) and (max-height:850px){
-      .hero-banner-inner{display:flex;justify-content:center;align-items:center;max-width:1500px}
-      .hero-banner img{width:auto!important;max-width:100%;height:calc(100vh - 110px)!important;max-height:630px;object-fit:contain;margin:0 auto}
-    }
+    .hero-banner{width:100%;padding:0;overflow:hidden}
+    .hero-banner-inner{width:100%;max-width:none!important;margin:0!important}
+    .hero-banner img{display:block;width:100%!important;height:auto!important;max-width:none!important;max-height:none!important;object-fit:cover;margin:0!important;cursor:pointer}
     @media(max-width:820px){
-      .hero-banner img{width:100%;height:auto;max-height:none;object-fit:contain}
+      .hero-banner img{width:100%!important;height:auto!important;max-height:none!important;object-fit:contain}
       .layout.news-mode{padding:8px}
       .layout.news-mode .content{width:100%;max-width:none;min-width:0}
       .news-panel{padding:14px;min-width:0;overflow:hidden}
@@ -68,6 +65,22 @@
     }
   `;
   document.head.appendChild(responsiveStyle);
+
+  function setupHeroClick(){
+    const hero=document.querySelector('.hero-banner');
+    const img=hero?.querySelector('img');
+    const target=document.querySelector('header');
+    if(!hero||!img||!target||hero.dataset.scrollReady==='true')return;
+    const go=()=>target.scrollIntoView({behavior:'smooth',block:'start'});
+    hero.dataset.scrollReady='true';
+    hero.style.cursor='pointer';
+    hero.setAttribute('role','button');
+    hero.setAttribute('tabindex','0');
+    hero.setAttribute('aria-label','Ir para o Radar Brasil 2027 e seus filtros');
+    hero.addEventListener('click',go);
+    hero.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});
+  }
+  setupHeroClick();
 
   function rebuildRegions(selected=''){
     const select=document.getElementById('regiao');if(!select)return;
@@ -140,6 +153,6 @@
     },0));
     return true;
   }
-  const timer=setInterval(()=>{if(setup())clearInterval(timer)},200);
+  const timer=setInterval(()=>{setupHeroClick();if(setup())clearInterval(timer)},200);
   setTimeout(()=>clearInterval(timer),10000);
 })();
