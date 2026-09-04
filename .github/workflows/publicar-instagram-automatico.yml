@@ -64,14 +64,14 @@ jobs:
                   last = last.replace(tzinfo=dt.timezone.utc)
 
               elapsed = (dt.datetime.now(dt.timezone.utc) - last.astimezone(dt.timezone.utc)).total_seconds()
-              remaining = max(0, int(3600 - elapsed + 1))
+              remaining = max(0, int(300 - elapsed + 1))
               print(f"interval_elapsed_seconds={max(0, int(elapsed))}")
               print(f"interval_wait_seconds={remaining}")
               if remaining:
                   time.sleep(remaining)
           except Exception as exc:
               print(f"interval_wait_error={exc}")
-              print("A seleção normal manterá o bloqueio de segurança de 60 minutos.")
+              print("A seleção normal manterá o bloqueio de segurança de 5 minutos.")
           PY
       - name: Selecionar conteúdo sem repetir imagem
         id: selecionar
