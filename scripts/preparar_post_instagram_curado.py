@@ -236,12 +236,25 @@ def main():
     curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and all(clean(x.get(field)) for field in ('image_source_url','source_page_url','credito','licenca'))}
     ranked=candidates(events,news,published,pending)
     if not ranked: print('found=false'); print('reason=no_eligible_item'); return 0
-    item=ranked[0]; c=curated.get(item['key']); s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'; source_mode='fallback_visual'; semantic_ok=True; semantic_reason='text_art_no_external_photo'
-    if c and c.get('semantic_image_ok') is not True:
-        print('curated_image_rejected=semantic_image_ok_missing_or_false'); c=None
-    if not c:
-        c=find_commons_image(item)
-        if c: print('auto_image_found='+clean(c.get('query')))
+    # Prioriza conteúdo que possua fotografia real válida. Só usa a arte textual
+    # quando nenhum dos itens elegíveis tiver imagem segura e não repetida.
+    fallback_item=ranked[0]; item=None; c=None
+    for candidate in ranked:
+        candidate_image=curated.get(candidate['key'])
+        if candidate_image and candidate_image.get('semantic_image_ok') is not True:
+            print('curated_image_rejected=semantic_image_ok_missing_or_false:'+candidate['key']); candidate_image=None
+        if not candidate_image:
+            candidate_image=find_commons_image(candidate)
+            if candidate_image: print('auto_image_found='+clean(candidate_image.get('query')))
+        if candidate_image:
+            item=candidate; c=candidate_image
+            print('real_photo_candidate_selected='+item['key'])
+            break
+        print('real_photo_unavailable='+candidate['key'])
+    if item is None:
+        item=fallback_item
+        print('fallback_visual_selected_after_exhausting_candidates='+item['key'])
+    s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'; source_mode='fallback_visual'; semantic_ok=True; semantic_reason='text_art_no_external_photo'
     if c:
         try:
             readable,font_size,line_count=make_photo_art(clean(c['image_source_url']),art,item['title'],item['type'],clean(c.get('credito'))); source_mode='auto_commons_photo' if c.get('auto_found') else 'curated_photo'; semantic_reason=clean(c.get('semantic_reason')) or 'curated_semantic_gate'
