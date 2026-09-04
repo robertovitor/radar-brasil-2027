@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Camada v2: busca semântica por entidade e fallback textual limpo, sem cortar título."""
+"""Camada v2: busca semântica contextual, priorizando imagem real antes do fallback textual."""
 from __future__ import annotations
-import hashlib, pathlib, re
+import hashlib, json, pathlib, re
 from PIL import Image, ImageDraw
 import preparar_post_instagram_curado as base
 import preparar_post_instagram_sem_repetir_imagem as smart
@@ -28,13 +28,12 @@ smart.base.fit_title = fit_title_complete
 
 
 def make_clean_fallback(out, title, kind, subtitle, key):
-    """Fallback inspirado no layout antigo: limpo, alto contraste e título integral."""
+    """Último recurso: arte textual limpa quando nenhuma imagem externa adequada for encontrada."""
     seed = int(hashlib.sha256(key.encode()).hexdigest()[:8], 16)
     bg = (5, 69, 48) if kind == 'evento' else (12, 61, 84)
     im = Image.new('RGB', (1080, 1080), bg)
     draw = ImageDraw.Draw(im, 'RGBA')
 
-    # Fundo discreto: círculos grandes com baixa opacidade, sem competir com o texto.
     circles = [(-80, 420, 280), (110, 620, 360), (390, 80, 220), (650, 420, 310), (650, 730, 260)]
     for i, (x, y, r) in enumerate(circles):
         shift = (seed >> (i * 3)) % 45
@@ -56,7 +55,6 @@ def make_clean_fallback(out, title, kind, subtitle, key):
         draw.text((safe_left, y), line, font=f, fill='white')
         y += step
 
-    # Metadado só aparece se houver espaço; título sempre tem prioridade.
     if subtitle and y < 850:
         sf = base.font(23)
         sublines = base.wrap(draw, subtitle, sf, width)
@@ -75,37 +73,116 @@ def make_clean_fallback(out, title, kind, subtitle, key):
 base.make_original_art = make_clean_fallback
 smart.base.make_original_art = make_clean_fallback
 
-# Busca semântica explícita por entidade central antes das consultas contextuais longas.
+# Consulta original continua disponível como última expansão.
 _original_variants = smart.query_variants
 
+EVENT_MARKERS = (
+    'desfile', 'evento', 'festival', 'cerimonia', 'cerimônia', 'congresso', 'painel',
+    'seminario', 'seminário', 'feira', 'exposicao', 'exposição', 'encontro', 'forum',
+    'fórum', 'ativacao', 'ativação', 'lancamento', 'lançamento', 'celebracao', 'celebração'
+)
+LOCATION_MARKERS = (
+    'brasilia', 'brasília', 'esplanada', 'rio de janeiro', 'sao paulo', 'são paulo',
+    'salvador', 'belo horizonte', 'recife', 'fortaleza', 'porto alegre', 'belem', 'belém'
+)
+
+
 def semantic_entity_variants(item):
+    """Gera buscas do assunto para o contexto específico; futebol feminino entra depois, não antes."""
     title = base.clean(item.get('title'))
     context = base.clean(item.get('search_context'))
+    combined = base.clean(title + ' ' + context)
+    norm_combined = base.norm(combined)
     variants = []
+
     def add(q):
         q = base.clean(q)
         if q and base.norm(q) not in {base.norm(x) for x in variants}:
             variants.append(q)
 
-    # Pessoas/entidades no começo do título ganham consultas diretas.
+    terms = base.distinct_terms(title)
+
+    # 1) Assunto principal quase literal: melhor para eventos, locais e instituições.
+    if terms:
+        add(' '.join(terms[:6]))
+        add(' '.join(terms[:4]))
+
+    # 2) Eventos públicos/cívicos: preserve evento + data/tema + local antes de futebol.
+    is_event = any(base.norm(m) in norm_combined for m in EVENT_MARKERS)
+    if is_event:
+        event_terms = [t for t in terms if base.norm(t) not in {'copa','mundo','feminina','feminino','2027','destaca'}]
+        if event_terms:
+            add(' '.join(event_terms[:6]))
+            add(' '.join(event_terms[:4]) + ' Brasil')
+        # Caso emblemático e também regra útil para eventos cívicos semelhantes.
+        if '7 setembro' in norm_combined or ('setembro' in norm_combined and 'desfile' in norm_combined):
+            add('Desfile 7 de Setembro Brasília')
+            add('7 de Setembro Esplanada dos Ministérios Brasília')
+            add('desfile cívico Brasília')
+
+    # 3) Preserve locais reconhecíveis como consulta própria/contextual.
+    found_locations = [m for m in LOCATION_MARKERS if base.norm(m) in norm_combined]
+    if found_locations and terms:
+        add(' '.join(terms[:3]) + ' ' + found_locations[0])
+
+    # 4) Pessoas/entidades: só acrescenta futebol feminino quando isso realmente ajuda.
     words = re.findall(r"[A-Za-zÀ-ÿ0-9'-]+", title)
-    stop = {'Copa','Mundo','Mundial','Brasil','Brasileira','Feminina','Feminino','Radar','Notícia','Evento'}
+    stop = {'Copa','Mundo','Mundial','Brasil','Brasileira','Feminina','Feminino','Radar','Notícia','Evento','Desfile','Setembro'}
     proper = [w for w in words[:12] if w[:1].isupper() and w not in stop and len(w) > 3]
-    if proper:
+    if proper and not is_event:
         entity = ' '.join(proper[:2])
         add(entity + ' futebol feminino')
-        add(entity + ' jogadora Brasil')
-        add(entity + ' seleção brasileira feminina')
-    # Para nomes muito conhecidos escritos sem padrão de maiúsculas, preserve os primeiros termos relevantes.
-    terms = base.distinct_terms(title)
-    if terms:
-        add(' '.join(terms[:2]) + ' futebol feminino')
-        add(' '.join(terms[:3]) + ' Brasil')
+        add(entity + ' Brasil')
+
+    # 5) Expansões antigas ficam por último.
     for q in _original_variants(item):
         add(q)
-    return variants[:7]
+    return variants[:8]
+
 
 smart.query_variants = semantic_entity_variants
 
+
+def normalize_image_gate(batch_path='instagram/fila/automatica/lote-atual.json'):
+    """Fallback textual nunca pode fingir que uma imagem semântica externa foi encontrada."""
+    batch = pathlib.Path(batch_path)
+    if not batch.exists():
+        return
+    try:
+        data = json.loads(batch.read_text(encoding='utf-8'))
+    except Exception:
+        return
+
+    changed = False
+    rows = data if isinstance(data, list) else data.get('items', []) if isinstance(data, dict) else []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        post_path = row.get('post_file') or row.get('file') or row.get('path')
+        if not post_path:
+            continue
+        p = pathlib.Path(str(post_path))
+        if not p.exists():
+            continue
+        try:
+            post = json.loads(p.read_text(encoding='utf-8'))
+        except Exception:
+            continue
+        has_external = bool(base.clean(post.get('image_source_url')) or base.clean(post.get('image_page_url')))
+        fallback = base.clean(post.get('visual_mode')) == 'fallback_visual'
+        if fallback or not has_external:
+            if post.get('SEMANTIC_IMAGE_OK') is not False:
+                post['SEMANTIC_IMAGE_OK'] = False
+                changed = True
+            post['SEMANTIC_IMAGE_SEARCH_DONE'] = True
+            post['TEXT_FALLBACK'] = True
+            post['semantic_reason'] = post.get('semantic_reason') or 'external_image_not_found_after_search'
+            p.write_text(json.dumps(post, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    if changed:
+        print('semantic_image_gate_corrected=true')
+
+
 if __name__ == '__main__':
-    raise SystemExit(smart.main())
+    result = smart.main()
+    normalize_image_gate()
+    raise SystemExit(result)
