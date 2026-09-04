@@ -47,26 +47,23 @@
       display:block!important;
       padding:0!important;
       overflow:hidden!important;
-      background:#071b17;
+      background:linear-gradient(90deg,#c9b32a 0%,#43847a 14%,#07503b 35%,#07503b 65%,#4c856d 86%,#d8bd28 100%)!important;
       isolation:isolate;
     }
     .hero-banner::before{
       content:'';
       position:absolute;
-      inset:-24px;
-      z-index:-1;
-      background-image:linear-gradient(rgba(7,27,23,.28),rgba(7,27,23,.28)),url('./Radar%20Brasil%202027_%20O%20Mundo%20Se%20Conecta.png');
-      background-size:cover;
-      background-position:center center;
-      filter:blur(18px) saturate(.9) brightness(.72);
-      transform:scale(1.08);
+      inset:0;
+      z-index:0;
+      background:linear-gradient(90deg,rgba(223,195,35,.92) 0%,rgba(74,137,126,.68) 16%,rgba(7,74,55,.16) 31%,rgba(7,74,55,.08) 69%,rgba(83,139,111,.68) 84%,rgba(226,196,38,.92) 100%);
+      pointer-events:none;
     }
     .hero-banner-inner{
       position:relative;
       z-index:1;
       width:100%!important;
-      height:min(34vw,460px)!important;
-      min-height:260px!important;
+      height:min(24vw,322px)!important;
+      min-height:182px!important;
       max-width:none!important;
       margin:0!important;
       display:flex!important;
@@ -80,11 +77,13 @@
       width:auto!important;
       height:100%!important;
       max-width:100%!important;
-      max-height:460px!important;
+      max-height:322px!important;
       object-fit:contain!important;
       object-position:center center!important;
       margin:0 auto!important;
       cursor:pointer;
+      position:relative;
+      z-index:2;
     }
     .hero-actions{display:none!important;}
 
