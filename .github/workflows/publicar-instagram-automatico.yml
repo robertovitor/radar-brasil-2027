@@ -35,7 +35,39 @@ jobs:
         id: selecionar
         shell: bash
         run: |
-          output="$(python scripts/preparar_post_instagram_sem_repetir_imagem.py)"
+          if [[ "${{ github.event_name }}" == "push" && "${{ contains(github.event.head_commit.message, '[manual-bypass-interval]') }}" == "true" ]]; then
+            output="$(python - <<'PY'
+          import datetime as dt
+          import json
+          import sys
+          sys.path.insert(0, 'scripts')
+          import preparar_post_instagram_sem_repetir_imagem as wrapper
+
+          original_load = wrapper.base.load
+          def load_with_manual_interval_bypass(path, default):
+              data = original_load(path, default)
+              if str(path) != 'instagram/publicados.json' or not isinstance(data, dict):
+                  return data
+              cloned = json.loads(json.dumps(data))
+              for row in cloned.get('published', []):
+                  stamp = str(row.get('published_at') or '').strip()
+                  if not stamp:
+                      continue
+                  try:
+                      value = dt.datetime.fromisoformat(stamp.replace('Z', '+00:00'))
+                      row['published_at'] = (value - dt.timedelta(hours=2)).isoformat()
+                  except Exception:
+                      pass
+              return cloned
+
+          wrapper.base.load = load_with_manual_interval_bypass
+          print('minimum_interval_bypass=manual_once')
+          raise SystemExit(wrapper.main())
+          PY
+            )"
+          else
+            output="$(python scripts/preparar_post_instagram_sem_repetir_imagem.py)"
+          fi
           echo "$output"
           found="$(echo "$output" | sed -n 's/^found=//p' | tail -1)"
           batch="$(echo "$output" | sed -n 's/^batch_file=//p' | tail -1)"
