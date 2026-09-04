@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
-"""Executa o preparador do Instagram bloqueando qualquer imagem já usada em posts publicados."""
+"""Seleciona imagem pública/licenciada relevante, evitando repetição e excesso de requisições."""
 from __future__ import annotations
 
 import json
 import pathlib
 import urllib.error
 import urllib.parse
+import urllib.request
 
 import preparar_post_instagram_curado as base
+
+OPENVERSE_API = 'https://api.openverse.org/v1/images/'
+ALLOWED_OPENVERSE_LICENSES = {'cc0', 'by', 'by-sa', 'pdm'}
+REQUEST_BUDGET = {'openverse': 6, 'commons': 3}
+SOURCE_BLOCKED = {'openverse': False, 'commons': False}
+CACHE = {}
 
 
 def clean_url(value):
@@ -19,7 +26,6 @@ def clean_url(value):
 
 
 def image_identity(value):
-    """Normaliza URLs do Commons para a identidade do arquivo, ignorando tamanho do thumbnail."""
     url = clean_url(value)
     if not url:
         return ''
@@ -61,6 +67,184 @@ def candidate_identities(source_url='', source_page_url=''):
     return {x for x in (image_identity(source_url), image_identity(source_page_url)) if x}
 
 
+def compact_query(item):
+    context = item.get('search_context') or item.get('title') or ''
+    terms = base.distinct_terms(context)
+    # Mantém nomes próprios, cidade, estádio, entidade e tema. Evita consultas gigantes.
+    q = ' '.join(terms[:7]).strip()
+    if not q:
+        q = base.clean(item.get('title'))
+    return q
+
+
+def http_json(url, source):
+    if SOURCE_BLOCKED[source] or REQUEST_BUDGET[source] <= 0:
+        return None
+    REQUEST_BUDGET[source] -= 1
+    req = urllib.request.Request(url, headers={
+        'User-Agent': 'RadarBrasil2027/2.0 (contact: GitHub robertovitor/radar-brasil-2027)',
+        'Accept': 'application/json',
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=18) as response:
+            return json.loads(response.read().decode('utf-8'))
+    except urllib.error.HTTPError as exc:
+        print(f'{source}_search_failed=HTTPError:{exc.code}')
+        if exc.code in (429, 403):
+            SOURCE_BLOCKED[source] = True
+        return None
+    except Exception as exc:
+        print(f'{source}_search_failed={type(exc).__name__}')
+        return None
+
+
+def text_tokens(value):
+    return {base.norm(x) for x in base.distinct_terms(value)}
+
+
+def female_signal(text):
+    n = base.norm(text)
+    return any(base.norm(marker) in n for marker in base.FEMALE_MARKERS)
+
+
+def male_blocked(text):
+    n = base.norm(text)
+    return any(base.norm(marker) in n for marker in base.MALE_BLOCKERS)
+
+
+def openverse_score(item, result):
+    title = base.clean(result.get('title'))
+    tags = ' '.join(base.clean(t.get('name')) for t in (result.get('tags') or []) if isinstance(t, dict))
+    creator = base.clean(result.get('creator'))
+    haystack = ' '.join([title, tags, creator])
+    if male_blocked(haystack):
+        return -100
+    item_tokens = text_tokens((item.get('search_context') or '') + ' ' + item.get('title', ''))
+    image_tokens = text_tokens(haystack)
+    overlap = len(item_tokens & image_tokens)
+    score = overlap * 5
+    if female_signal(haystack):
+        score += 8
+    if item.get('type') == 'evento' and overlap >= 2:
+        score += 3
+    if result.get('width') and result.get('height'):
+        try:
+            if int(result['width']) >= 900 and int(result['height']) >= 600:
+                score += 2
+        except Exception:
+            pass
+    return score
+
+
+def find_openverse_image(item, used):
+    if SOURCE_BLOCKED['openverse'] or REQUEST_BUDGET['openverse'] <= 0:
+        return None
+    query = compact_query(item)
+    cache_key = 'openverse:' + base.norm(query)
+    if cache_key in CACHE:
+        data = CACHE[cache_key]
+    else:
+        params = {
+            'q': query,
+            'page_size': '20',
+            'mature': 'false',
+        }
+        data = http_json(OPENVERSE_API + '?' + urllib.parse.urlencode(params), 'openverse')
+        CACHE[cache_key] = data
+    if not data:
+        return None
+
+    ranked = []
+    for result in data.get('results') or []:
+        license_id = base.clean(result.get('license')).casefold()
+        if license_id not in ALLOWED_OPENVERSE_LICENSES:
+            continue
+        url = base.clean(result.get('url') or result.get('thumbnail'))
+        page = base.clean(result.get('foreign_landing_url'))
+        if not url or not page:
+            continue
+        identities = candidate_identities(url, page)
+        if identities & used:
+            continue
+        score = openverse_score(item, result)
+        if score < 8:
+            continue
+        ranked.append((score, result, url, page))
+
+    if not ranked:
+        return None
+    ranked.sort(key=lambda x: x[0], reverse=True)
+    score, result, url, page = ranked[0]
+    creator = base.clean(result.get('creator')) or 'Autor não informado'
+    license_id = base.clean(result.get('license')).upper()
+    license_version = base.clean(result.get('license_version'))
+    lic = (license_id + (' ' + license_version if license_version else '')).strip()
+    print('openverse_image_found=' + query)
+    print('openverse_relevance_score=' + str(score))
+    return {
+        'image_source_url': url,
+        'source_page_url': page,
+        'credito': creator,
+        'licenca': lic or 'Licença aberta via Openverse',
+        'reutilizacao_permitida': True,
+        'auto_found': True,
+        'query': query,
+        'semantic_reason': 'openverse_context_match',
+    }
+
+
+def find_commons_image(item, used):
+    if SOURCE_BLOCKED['commons'] or REQUEST_BUDGET['commons'] <= 0:
+        return None
+    query = compact_query(item)
+    params = {
+        'action': 'query',
+        'generator': 'search',
+        'gsrsearch': query + ' filetype:bitmap',
+        'gsrnamespace': '6',
+        'gsrlimit': '8',
+        'prop': 'imageinfo',
+        'iiprop': 'url|mime|size|extmetadata',
+        'format': 'json',
+        'formatversion': '2',
+    }
+    data = http_json(base.COMMONS_API + '?' + urllib.parse.urlencode(params), 'commons')
+    if not data:
+        return None
+    pages = (data.get('query') or {}).get('pages') or []
+    for page in pages:
+        info = (page.get('imageinfo') or [{}])[0]
+        mime = base.clean(info.get('mime')).casefold()
+        width = int(info.get('width') or 0)
+        height = int(info.get('height') or 0)
+        meta = info.get('extmetadata') or {}
+        if mime not in ('image/jpeg', 'image/png', 'image/webp') or width < 700 or height < 450:
+            continue
+        if not base.license_allowed(meta):
+            continue
+        ok, reason = base.semantic_image_ok(item, page, meta, query)
+        if not ok:
+            continue
+        url = base.clean(info.get('url'))
+        if not url:
+            continue
+        source_page = 'https://commons.wikimedia.org/wiki/' + urllib.parse.quote(base.clean(page.get('title')).replace(' ', '_'), safe=':/()_-')
+        if candidate_identities(url, source_page) & used:
+            continue
+        print('commons_image_found=' + query)
+        return {
+            'image_source_url': url,
+            'source_page_url': source_page,
+            'credito': base.commons_credit(meta),
+            'licenca': base.commons_license(meta),
+            'reutilizacao_permitida': True,
+            'auto_found': True,
+            'query': query,
+            'semantic_reason': reason,
+        }
+    return None
+
+
 def main():
     used = used_image_identities()
 
@@ -80,66 +264,18 @@ def main():
 
     original_find = base.find_commons_image
 
-    def find_unique_commons_image(item):
-        search_context = item.get('search_context') or item['title']
-        # Volta ao padrão que funcionava: poucas consultas e poucos resultados.
-        # Mantém os gates novos de semântica feminina, licença e não repetição.
-        queries = base.commons_queries(search_context)[:3]
-        for query in queries:
-            params = {
-                'action': 'query',
-                'generator': 'search',
-                'gsrsearch': query + ' filetype:bitmap',
-                'gsrnamespace': '6',
-                'gsrlimit': '8',
-                'prop': 'imageinfo',
-                'iiprop': 'url|mime|size|extmetadata',
-                'format': 'json',
-                'formatversion': '2',
-            }
-            try:
-                data = base.http_json(base.COMMONS_API + '?' + urllib.parse.urlencode(params))
-            except urllib.error.HTTPError as exc:
-                print(f'commons_search_failed=HTTPError:{exc.code}')
-                continue
-            except Exception as exc:
-                print('commons_search_failed=' + type(exc).__name__)
-                continue
-            pages = (data.get('query') or {}).get('pages') or []
-            for page in pages:
-                info = (page.get('imageinfo') or [{}])[0]
-                mime = base.clean(info.get('mime')).casefold()
-                width = int(info.get('width') or 0)
-                height = int(info.get('height') or 0)
-                meta = info.get('extmetadata') or {}
-                if mime not in ('image/jpeg', 'image/png', 'image/webp') or width < 700 or height < 450 or not base.license_allowed(meta):
-                    continue
-                ok, reason = base.semantic_image_ok(item, page, meta, query)
-                if not ok:
-                    continue
-                url = base.clean(info.get('url'))
-                if not url:
-                    continue
-                source_page = 'https://commons.wikimedia.org/wiki/' + urllib.parse.quote(base.clean(page.get('title')).replace(' ', '_'), safe=':/()_-')
-                identities = candidate_identities(url, source_page)
-                if identities & used:
-                    print('image_rejected=already_used_file:' + base.clean(page.get('title')))
-                    continue
-                return {
-                    'image_source_url': url,
-                    'source_page_url': source_page,
-                    'credito': base.commons_credit(meta),
-                    'licenca': base.commons_license(meta),
-                    'reutilizacao_permitida': True,
-                    'auto_found': True,
-                    'query': query,
-                    'semantic_reason': reason,
-                }
-        return None
+    def find_smart_public_image(item):
+        # 1) Openverse agrega imagens abertas de múltiplas fontes da internet.
+        image = find_openverse_image(item, used)
+        if image:
+            return image
+        # 2) Commons é fallback secundário, com orçamento pequeno para evitar 429.
+        return find_commons_image(item, used)
 
-    base.find_commons_image = find_unique_commons_image
+    base.find_commons_image = find_smart_public_image
     try:
         result = base.main()
+        print('image_search_budget_remaining=' + json.dumps(REQUEST_BUDGET, sort_keys=True))
         batch = pathlib.Path('instagram/fila/automatica/lote-atual.json')
         if batch.exists():
             try:
