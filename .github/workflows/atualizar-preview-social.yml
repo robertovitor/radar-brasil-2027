@@ -28,8 +28,8 @@ jobs:
           PY
       - name: Validar preview atualizado
         run: |
-          grep -F 'Radar%20Brasil%202027_%20O%20Mundo%20Se%20Conecta.png?v=20260904-2' index.html
-          ! grep -F 'radar-social-1200x630-v2.jpg' index.html
+          grep -F 'meta property="og:image" content="https://radarfutebolfeminino2027.com.br/Radar%20Brasil%202027_%20O%20Mundo%20Se%20Conecta.png?v=20260904-2"' index.html
+          grep -F 'meta name="twitter:image" content="https://radarfutebolfeminino2027.com.br/Radar%20Brasil%202027_%20O%20Mundo%20Se%20Conecta.png?v=20260904-2"' index.html
       - name: Commit
         run: |
           git config user.name 'github-actions[bot]'
