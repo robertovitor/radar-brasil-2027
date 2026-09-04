@@ -166,8 +166,11 @@ def semantic_image_ok(item,page,meta,query):
     overlap=item_terms & desc_terms
     institutional=any(norm(x) in item_text for x in INSTITUTIONAL_MARKERS)
     if institutional:
-        ok=female and len(overlap)>=2
-        return ok,('institutional_direct_match' if ok else 'institutional_requires_text_art')
+        # Para pautas institucionais, uma foto real do local, estádio, órgão ou
+        # equipamento citado é válida mesmo sem pessoas. Bloqueadores de futebol
+        # masculino continuam sendo aplicados acima.
+        ok=len(overlap)>=2
+        return ok,('institutional_or_venue_direct_match' if ok else 'institutional_requires_text_art')
     football_context=any(x in item_text for x in ('futebol','selecao','jogo','amistoso','torneio','copa','mundial'))
     if football_context and not female: return False,'female_context_missing'
     ok=len(overlap)>=2
