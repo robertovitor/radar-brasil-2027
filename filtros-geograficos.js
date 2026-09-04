@@ -90,18 +90,18 @@
 
     .map-panel{background:#fff!important;}
     .map-stage{
-      background:#fff!important;
-      box-shadow:inset 0 0 0 1px rgba(7,63,43,.10);
+      background:#eef3f1!important;
+      box-shadow:none!important;
     }
     .map-stage>img{
-      filter:sepia(.38) saturate(7) hue-rotate(92deg) brightness(.72) contrast(1.06)!important;
-      opacity:.96;
+      filter:none!important;
+      opacity:1!important;
     }
     .region{
-      background:rgba(7,63,43,.88)!important;
-      color:#ffdf00!important;
-      border:1px solid rgba(255,223,0,.45);
-      box-shadow:0 2px 8px rgba(0,0,0,.12);
+      background:rgba(7,63,43,.78)!important;
+      color:#fff!important;
+      border:0!important;
+      box-shadow:none!important;
     }
 
     @media(max-width:820px){
