@@ -1,0 +1,39 @@
+name: Atualizar preview social
+
+on:
+  push:
+    paths:
+      - '.github/workflows/atualizar-preview-social.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trocar imagem do preview social
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = 'https://radarfutebolfeminino2027.com.br/radar-social-1200x630-v2.jpg'
+          new = 'https://radarfutebolfeminino2027.com.br/Radar%20Brasil%202027_%20O%20Mundo%20Se%20Conecta.png?v=20260904-2'
+          if old not in s:
+              raise SystemExit('URL antiga da imagem social não encontrada')
+          s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Validar preview atualizado
+        run: |
+          grep -F 'Radar%20Brasil%202027_%20O%20Mundo%20Se%20Conecta.png?v=20260904-2' index.html
+          ! grep -F 'radar-social-1200x630-v2.jpg' index.html
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Atualiza imagem do preview social' || exit 0
+          git push
