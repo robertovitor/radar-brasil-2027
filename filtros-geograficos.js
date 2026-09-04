@@ -38,11 +38,78 @@
 
   const responsiveStyle=document.createElement('style');
   responsiveStyle.textContent=`
-    .hero-banner{width:100%;padding:0;overflow:hidden}
-    .hero-banner-inner{width:100%;max-width:none!important;margin:0!important}
-    .hero-banner img{display:block;width:100%!important;height:auto!important;max-width:none!important;max-height:none!important;object-fit:cover;margin:0!important;cursor:pointer}
+    .hero-banner{
+      width:100%;
+      height:100svh!important;
+      min-height:100svh!important;
+      display:grid!important;
+      grid-template-rows:minmax(0,1fr) auto!important;
+      padding:0!important;
+      overflow:hidden!important;
+      background:#071b17;
+    }
+    .hero-banner-inner{
+      width:100%!important;
+      height:auto!important;
+      min-height:0!important;
+      max-width:none!important;
+      margin:0!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      overflow:hidden!important;
+    }
+    .hero-banner img{
+      display:block;
+      width:100%!important;
+      height:100%!important;
+      max-width:100%!important;
+      max-height:100%!important;
+      object-fit:contain!important;
+      object-position:center center!important;
+      margin:0!important;
+      cursor:pointer;
+    }
+    .hero-actions{
+      flex:none!important;
+      height:auto!important;
+      min-height:64px!important;
+      position:relative!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      padding:8px 16px!important;
+      background:#071b17!important;
+      z-index:2;
+    }
     @media(max-width:820px){
-      .hero-banner img{width:100%!important;height:auto!important;max-height:none!important;object-fit:contain}
+      .hero-banner{
+        height:100svh!important;
+        min-height:100svh!important;
+        overflow:hidden!important;
+      }
+      .hero-banner-inner{
+        width:100%!important;
+        height:auto!important;
+        min-height:0!important;
+        display:flex!important;
+        overflow:hidden!important;
+      }
+      .hero-banner img{
+        width:100%!important;
+        height:100%!important;
+        max-width:100%!important;
+        max-height:100%!important;
+        object-fit:contain!important;
+        object-position:center center!important;
+      }
+      .hero-actions{
+        min-height:64px!important;
+        padding:8px 12px!important;
+      }
+      .hero-button{
+        width:min(100%,320px)!important;
+      }
       .layout.news-mode{padding:8px}
       .layout.news-mode .content{width:100%;max-width:none;min-width:0}
       .news-panel{padding:14px;min-width:0;overflow:hidden}
