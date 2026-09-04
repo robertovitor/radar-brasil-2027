@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import pathlib
-import re
+import urllib.error
 import urllib.parse
 
 import preparar_post_instagram_curado as base
@@ -25,16 +25,13 @@ def image_identity(value):
         return ''
     p = urllib.parse.urlsplit(url)
     path = urllib.parse.unquote(p.path)
-    # source_page_url: /wiki/File:Nome.jpg
     if '/wiki/' in path:
         title = path.split('/wiki/', 1)[1].replace('_', ' ')
         return 'commons:' + title.casefold()
-    # thumb URL: /wikipedia/commons/thumb/a/ab/Nome.jpg/1600px-Nome.jpg
     if '/thumb/' in path:
         before_size = path.rsplit('/', 1)[0]
         filename = before_size.rsplit('/', 1)[-1]
         return 'commons-file:' + filename.casefold()
-    # original Commons URL: /wikipedia/commons/a/ab/Nome.jpg
     filename = path.rsplit('/', 1)[-1]
     return (p.netloc.lower() + ':' + filename.casefold()) if filename else url
 
@@ -67,7 +64,6 @@ def candidate_identities(source_url='', source_page_url=''):
 def main():
     used = used_image_identities()
 
-    # Desativa imagens curadas cuja fotografia/arquivo já apareceu em qualquer post publicado.
     catalog_path = pathlib.Path('instagram/imagens-curadas.json')
     original_catalog = catalog_path.read_text(encoding='utf-8') if catalog_path.exists() else None
     if original_catalog is not None:
@@ -86,15 +82,26 @@ def main():
 
     def find_unique_commons_image(item):
         search_context = item.get('search_context') or item['title']
-        for query in base.commons_queries(search_context):
+        # Volta ao padrão que funcionava: poucas consultas e poucos resultados.
+        # Mantém os gates novos de semântica feminina, licença e não repetição.
+        queries = base.commons_queries(search_context)[:3]
+        for query in queries:
             params = {
-                'action': 'query', 'generator': 'search',
-                'gsrsearch': query + ' filetype:bitmap', 'gsrnamespace': '6', 'gsrlimit': '20',
-                'prop': 'imageinfo', 'iiprop': 'url|mime|size|extmetadata', 'iiurlwidth': '1600',
-                'format': 'json', 'formatversion': '2'
+                'action': 'query',
+                'generator': 'search',
+                'gsrsearch': query + ' filetype:bitmap',
+                'gsrnamespace': '6',
+                'gsrlimit': '8',
+                'prop': 'imageinfo',
+                'iiprop': 'url|mime|size|extmetadata',
+                'format': 'json',
+                'formatversion': '2',
             }
             try:
                 data = base.http_json(base.COMMONS_API + '?' + urllib.parse.urlencode(params))
+            except urllib.error.HTTPError as exc:
+                print(f'commons_search_failed=HTTPError:{exc.code}')
+                continue
             except Exception as exc:
                 print('commons_search_failed=' + type(exc).__name__)
                 continue
@@ -110,7 +117,7 @@ def main():
                 ok, reason = base.semantic_image_ok(item, page, meta, query)
                 if not ok:
                     continue
-                url = base.clean(info.get('thumburl') or info.get('url'))
+                url = base.clean(info.get('url'))
                 if not url:
                     continue
                 source_page = 'https://commons.wikimedia.org/wiki/' + urllib.parse.quote(base.clean(page.get('title')).replace(' ', '_'), safe=':/()_-')
@@ -133,7 +140,6 @@ def main():
     base.find_commons_image = find_unique_commons_image
     try:
         result = base.main()
-        # Gate adicional: nunca deixe um post preparado com foto já publicada.
         batch = pathlib.Path('instagram/fila/automatica/lote-atual.json')
         if batch.exists():
             try:
