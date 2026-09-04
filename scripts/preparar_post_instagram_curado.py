@@ -232,7 +232,7 @@ def main():
     for x in ledger.get('published',[]):
         try: stamps.append(dt.datetime.fromisoformat(clean(x.get('published_at')).replace('Z','+00:00')))
         except: pass
-    if stamps and (now-max(stamps)).total_seconds()<3600: print('found=false'); print('reason=minimum_interval'); return 0
+    if stamps and (now-max(stamps)).total_seconds()<300: print('found=false'); print('reason=minimum_interval'); return 0
     curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and all(clean(x.get(field)) for field in ('image_source_url','source_page_url','credito','licenca'))}
     ranked=candidates(events,news,published,pending)
     if not ranked: print('found=false'); print('reason=no_eligible_item'); return 0
