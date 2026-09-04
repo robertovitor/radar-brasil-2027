@@ -1,0 +1,52 @@
+/* Ajuste final do cabeçalho: desktop compacto, mobile preservado */
+body .hero-banner{
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  display:block!important;
+  overflow:hidden!important;
+  background:#071b17!important;
+}
+body .hero-banner .hero-banner-inner{
+  width:100%!important;
+  height:min(34vw,460px)!important;
+  min-height:260px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+body .hero-banner .hero-banner-inner img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:460px!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+}
+body .hero-banner .hero-actions{
+  display:none!important;
+}
+@media(max-width:820px){
+  body .hero-banner{
+    height:auto!important;
+    min-height:0!important;
+    overflow:visible!important;
+  }
+  body .hero-banner .hero-banner-inner{
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    display:block!important;
+    overflow:visible!important;
+  }
+  body .hero-banner .hero-banner-inner img{
+    width:100%!important;
+    height:auto!important;
+    max-width:100%!important;
+    max-height:none!important;
+    object-fit:contain!important;
+    object-position:center top!important;
+  }
+}
