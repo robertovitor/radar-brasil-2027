@@ -34,23 +34,14 @@
       object-position:center top!important;
     }
     @media(max-width:820px){
-      .hero-banner,
-      .hero-banner-inner{
-        height:auto!important;
-        min-height:0!important;
-      }
-      .hero-banner img{
-        width:100%!important;
-        height:auto!important;
-        object-fit:contain!important;
-        object-position:center top!important;
-      }
+      .hero-banner,.hero-banner-inner{height:auto!important;min-height:0!important}
+      .hero-banner img{width:100%!important;height:auto!important;object-fit:contain!important;object-position:center top!important}
     }
   `;
   document.head.appendChild(style);
   const hero=document.querySelector('.hero-banner img');
   if(hero){
-    hero.src='./cabecalho.png?v=20260905c';
-    hero.alt='Radar Brasil 2027';
+    hero.src='./cabecalho.png?v=20260905d';
+    hero.alt='Radar Brasil 2027 — Todo o futebol feminino, em todo o Brasil';
   }
 })();
