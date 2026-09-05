@@ -62,8 +62,39 @@ jobs:
           PY
       - name: Atualizar estado antes da seleção
         run: git pull --rebase origin main
+      - name: Verificar cooldown da Meta
+        id: meta_cooldown
+        shell: bash
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import json
+          import os
+          from pathlib import Path
+          path = Path("instagram/meta-rate-limit.json")
+          blocked = False
+          blocked_until = ""
+          if path.exists():
+              try:
+                  state = json.loads(path.read_text(encoding="utf-8"))
+                  raw = str(state.get("blocked_until") or "").strip()
+                  if state.get("active") and raw:
+                      until = dt.datetime.fromisoformat(raw.replace("Z", "+00:00"))
+                      if until.tzinfo is None:
+                          until = until.replace(tzinfo=dt.timezone.utc)
+                      blocked = dt.datetime.now(dt.timezone.utc) < until.astimezone(dt.timezone.utc)
+                      blocked_until = until.astimezone(dt.timezone.utc).isoformat()
+              except Exception as exc:
+                  print(f"meta_cooldown_check_warning={exc}")
+          print(f"meta_cooldown_active={str(blocked).lower()}")
+          if blocked_until:
+              print(f"meta_cooldown_until={blocked_until}")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"blocked={str(blocked).lower()}\n")
+          PY
       - name: Selecionar conteúdo com busca semântica e título completo
         id: selecionar
+        if: steps.meta_cooldown.outputs.blocked != 'true'
         shell: bash
         run: |
           output="$(python scripts/preparar_post_instagram_v2.py)"
@@ -108,7 +139,19 @@ jobs:
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_GRAPH_VERSION: v25.0
+          META_RATE_LIMIT_STATE: instagram/meta-rate-limit.json
+          META_RATE_LIMIT_COOLDOWN_MINUTES: "60"
         run: python scripts/publicar_lote_instagram.py --batch "${{ steps.selecionar.outputs.batch_file }}" --ledger instagram/publicados.json
+      - name: Persistir estado de rate limit da Meta
+        if: always() && steps.selecionar.outputs.found == 'true'
+        run: |
+          if [ -z "$(git status --porcelain -- instagram/meta-rate-limit.json)" ]; then exit 0; fi
+          git config user.name "radar-instagram-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add instagram/meta-rate-limit.json
+          git commit -m "Atualiza cooldown de rate limit da Meta"
+          git pull --rebase origin main
+          git push origin HEAD:main
       - name: Registrar publicação confirmada ou reconciliada
         if: always() && steps.selecionar.outputs.found == 'true'
         run: |
