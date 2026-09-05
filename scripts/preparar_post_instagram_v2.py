@@ -16,16 +16,82 @@ smart.REQUEST_BUDGET['commons'] = max(8, smart.REQUEST_BUDGET.get('commons', 0))
 base.MAX_TITLE_LINES = 4
 smart.base.MAX_TITLE_LINES = 4
 
+# Metadados da versão realmente desenhada. O título editorial completo continua
+# intacto na legenda; somente a chamada visual pode ser condensada.
+TITLE_RENDER_META = {}
+
+
+TITLE_COMPRESSION_RULES = (
+    (r'\bCopa do Mundo Feminina da FIFA Brasil 2027\b', 'Copa Feminina 2027'),
+    (r'\bCopa do Mundo Feminina FIFA 2027\b', 'Copa Feminina 2027'),
+    (r'\bCopa do Mundo Feminina de 2027\b', 'Copa Feminina 2027'),
+    (r'\bCopa do Mundo Feminina 2027\b', 'Copa Feminina 2027'),
+    (r'\bDistrito Federal\b', 'DF'),
+    (r'\bgrupo de trabalho da Justiça e Cidadania\b', 'grupo de Justiça e Cidadania'),
+    (r'\bpara ações da Copa Feminina 2027\b', 'para a Copa 2027'),
+    (r'\bpara ações relacionadas à Copa Feminina 2027\b', 'para a Copa 2027'),
+    (r'\bpara a realização da Copa Feminina 2027\b', 'para a Copa 2027'),
+    (r'\brelacionadas? à Copa Feminina 2027\b', 'da Copa 2027'),
+)
+
+
+def compact_title_candidates(title):
+    """Produz reduções conservadoras, sem cortar palavras nem usar reticências."""
+    original = base.clean(title)
+    candidates = [original]
+    current = original
+    for pattern, replacement in TITLE_COMPRESSION_RULES:
+        reduced = base.clean(re.sub(pattern, replacement, current, flags=re.I))
+        if reduced != current:
+            current = reduced
+            if current not in candidates:
+                candidates.append(current)
+
+    # Limpezas editoriais seguras e genéricas, aplicadas só depois das regras
+    # específicas. Elas removem redundâncias, nunca entidades ou fatos.
+    generic = base.clean(re.sub(r'\bpara (?:as )?ações (?:relacionadas )?(?:à|da)\b', 'para', current, flags=re.I))
+    generic = base.clean(re.sub(r'\bcom foco (?:no|na|nos|nas)\b', 'para', generic, flags=re.I))
+    if generic and generic not in candidates:
+        candidates.append(generic)
+    return candidates
+
 
 def fit_title_complete(draw, title, width, start_size=88, min_size=58, max_lines=4):
-    title = base.clean(title)
-    for size in range(start_size, min_size - 1, -2):
-        f = base.font(size, True)
-        lines = base.wrap(draw, title, f, width)
-        if len(lines) <= max_lines:
-            return f, lines, True
+    original = base.clean(title)
+    best = None
+    for candidate in compact_title_candidates(original):
+        for size in range(start_size, min_size - 1, -2):
+            f = base.font(size, True)
+            lines = base.wrap(draw, candidate, f, width)
+            if len(lines) <= max_lines:
+                option = (f, lines, candidate)
+                if best is None or f.size > best[0].size:
+                    best = option
+                # 70 px é o piso preferencial. Assim que uma redução conservadora
+                # o alcança, preservamos o máximo possível do título original.
+                if f.size >= 70:
+                    best = option
+                    break
+        if best and best[0].size >= 70:
+            break
+    if best:
+        f, lines, candidate = best
+        TITLE_RENDER_META[original] = {
+            'original_title': original,
+            'art_title': candidate,
+            'title_shortened': candidate != original,
+        }
+        if candidate != original:
+            print('title_shortened_automatically=true')
+            print('art_title=' + candidate)
+        return f, lines, True
     f = base.font(min_size, True)
-    lines = base.wrap(draw, title, f, width)
+    lines = base.wrap(draw, original, f, width)
+    TITLE_RENDER_META[original] = {
+        'original_title': original,
+        'art_title': original,
+        'title_shortened': False,
+    }
     return f, lines, len(lines) <= max_lines
 
 
@@ -45,7 +111,7 @@ def make_clean_fallback(out, title, kind, subtitle, key):
         shift = (seed >> (i * 3)) % 45
         draw.ellipse((x+shift-r, y-r, x+shift+r, y+r), fill=(178, 183, 55, 42))
 
-    safe_left, safe_right = 90, 990
+    safe_left, safe_right = 115, 965
     width = safe_right - safe_left
     draw.text((safe_left, 38), 'RADAR BRASIL 2027', font=base.font(36, True), fill='white')
     draw.line((0, 124, 1080, 124), fill=(255,255,255,35), width=2)
@@ -169,6 +235,11 @@ def normalize_image_gate(batch_path='instagram/fila/automatica/lote-atual.json')
             post = json.loads(p.read_text(encoding='utf-8'))
         except Exception:
             continue
+        original_title = base.clean((post.get('caption') or '').split('\n', 1)[0].lstrip('📅📰 '))
+        render_meta = TITLE_RENDER_META.get(original_title)
+        if render_meta:
+            post.update(render_meta)
+            changed = True
         has_external = bool(base.clean(post.get('image_source_url')) or base.clean(post.get('image_page_url')))
         fallback = base.clean(post.get('visual_mode')) == 'fallback_visual'
         if fallback or not has_external:
