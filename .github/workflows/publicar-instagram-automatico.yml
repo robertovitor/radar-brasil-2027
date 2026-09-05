@@ -56,8 +56,10 @@ jobs:
               if remaining: time.sleep(remaining)
           except Exception as exc:
               print(f"interval_wait_error={exc}")
-              print("A seleção normal manterá o bloqueio de segurança de 5 minutos.")
+              print("A seleção normal manterá o bloqueio de segurança.")
           PY
+      - name: Atualizar estado antes da seleção
+        run: git pull --rebase origin main
       - name: Selecionar conteúdo com busca semântica e título completo
         id: selecionar
         shell: bash
@@ -80,7 +82,21 @@ jobs:
             git commit -m "Prepara post com imagem única"
             git pull --rebase origin main
             git push origin HEAD:main
-            sleep 15
+          fi
+      - name: Reservar publicação antes de chamar a Meta
+        if: steps.selecionar.outputs.found == 'true'
+        run: |
+          git pull --rebase origin main
+          python scripts/reservar_publicacao_instagram.py reserve --batch "${{ steps.selecionar.outputs.batch_file }}"
+          git config user.name "radar-instagram-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add instagram/reservas-publicacao.json
+          if git diff --cached --quiet; then
+            echo "reservation_commit_skipped=no_changes"
+          else
+            git commit -m "Reserva post antes da publicação no Instagram"
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
       - name: Publicar somente o item selecionado
         id: publicar
@@ -91,16 +107,33 @@ jobs:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_GRAPH_VERSION: v25.0
         run: python scripts/publicar_lote_instagram.py --batch "${{ steps.selecionar.outputs.batch_file }}" --ledger instagram/publicados.json
-      - name: Registrar publicação confirmada
+      - name: Registrar publicação confirmada ou reconciliada
         if: always() && steps.selecionar.outputs.found == 'true'
         run: |
           if git diff --quiet -- instagram/publicados.json; then exit 0; fi
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
           git add instagram/publicados.json
-          git commit -m "Registra publicação no Instagram"
+          git commit -m "Registra publicação confirmada no Instagram"
           git pull --rebase origin main
           git push origin HEAD:main
-      - name: Sinalizar falha
+      - name: Limpar reserva somente após sucesso confirmado
+        if: always() && steps.selecionar.outputs.found == 'true' && steps.publicar.outcome == 'success'
+        run: |
+          git pull --rebase origin main
+          python scripts/reservar_publicacao_instagram.py clear --batch "${{ steps.selecionar.outputs.batch_file }}"
+          git config user.name "radar-instagram-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add instagram/reservas-publicacao.json
+          if git diff --cached --quiet; then
+            echo "reservation_clear_commit_skipped=no_changes"
+          else
+            git commit -m "Libera reserva após publicação confirmada"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Sinalizar falha sem liberar a trava idempotente
         if: always() && steps.publicar.outcome == 'failure'
-        run: exit 1
+        run: |
+          echo "A publicação falhou; a reserva foi mantida para impedir duplicação até a próxima reconciliação."
+          exit 1
