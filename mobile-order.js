@@ -24,31 +24,40 @@
     rail.style.margin='0';
 
     if(newsMode){
-      const newsFilters=newsPanel.querySelector('.news-filters');
-      const newsActions=newsPanel.querySelector('.news-actions');
-      const anchor=newsActions||newsFilters;
-      if(anchor){anchor.insertAdjacentElement('afterend',rail)}else{newsPanel.prepend(rail)}
+      // Mobile Notícias: Últimas notícias primeiro, antes dos filtros e do conteúdo.
+      if(rail.parentElement!==newsPanel || newsPanel.firstElementChild!==rail){
+        newsPanel.insertBefore(rail,newsPanel.firstElementChild);
+      }
       return;
     }
 
-    // Mobile Eventos: Filtros → Mapa → Calendário → Próximos eventos → Conteúdo.
+    // Mobile Eventos: Próximos eventos primeiro, depois filtros, mapa, calendário e conteúdo.
+    if(rail.parentElement!==layout || layout.firstElementChild!==rail){
+      layout.insertBefore(rail,layout.firstElementChild);
+    }
+
+    if(sidebar&&rail.nextElementSibling!==sidebar){
+      rail.insertAdjacentElement('afterend',sidebar);
+    }
+
+    if(content&&sidebar&&sidebar.nextElementSibling!==content){
+      sidebar.insertAdjacentElement('afterend',content);
+    }
+
     if(map&&map.parentElement===content&&content.firstElementChild!==map){
       content.insertBefore(map,content.firstElementChild);
     }
 
     if(calendar&&map){
-      if(calendar.parentElement!==content){
-        map.insertAdjacentElement('afterend',calendar);
-      }else if(map.nextElementSibling!==calendar){
+      if(calendar.parentElement!==content || map.nextElementSibling!==calendar){
         map.insertAdjacentElement('afterend',calendar);
       }
-      calendar.insertAdjacentElement('afterend',rail);
-    }else if(map){
-      map.insertAdjacentElement('afterend',rail);
     }
 
-    if(agenda&&rail.nextElementSibling!==agenda){
-      rail.insertAdjacentElement('afterend',agenda);
+    if(agenda&&calendar&&calendar.nextElementSibling!==agenda){
+      calendar.insertAdjacentElement('afterend',agenda);
+    }else if(agenda&&map&&!calendar&&map.nextElementSibling!==agenda){
+      map.insertAdjacentElement('afterend',agenda);
     }
   };
 
