@@ -97,12 +97,18 @@ jobs:
         if: steps.meta_cooldown.outputs.blocked != 'true'
         shell: bash
         run: |
-          output="$(python scripts/preparar_post_instagram_v2.py)"
+          set +e
+          output="$(python scripts/preparar_post_instagram_v2.py 2>&1)"
+          status=$?
+          set -e
           echo "$output"
           found="$(echo "$output" | sed -n 's/^found=//p' | tail -1)"
           batch="$(echo "$output" | sed -n 's/^batch_file=//p' | tail -1)"
           echo "found=${found:-false}" >> "$GITHUB_OUTPUT"
           echo "batch_file=$batch" >> "$GITHUB_OUTPUT"
+          if [ "$status" -ne 0 ]; then
+            exit "$status"
+          fi
       - name: Salvar imagem e fila aprovadas
         if: steps.selecionar.outputs.found == 'true'
         run: |
