@@ -52,7 +52,7 @@ jobs:
               last = max(dt.datetime.fromisoformat(str(stamp).replace("Z", "+00:00")) for stamp in stamps)
               if last.tzinfo is None: last = last.replace(tzinfo=dt.timezone.utc)
               elapsed = (dt.datetime.now(dt.timezone.utc) - last.astimezone(dt.timezone.utc)).total_seconds()
-              remaining = max(0, int(300 - elapsed + 1))
+              remaining = max(0, int(3600 - elapsed + 1))
               print(f"interval_elapsed_seconds={max(0, int(elapsed))}")
               print(f"interval_wait_seconds={remaining}")
               if remaining: time.sleep(remaining)
@@ -76,10 +76,14 @@ jobs:
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
           git add instagram/artes instagram/fila/automatica
-          git commit -m "Prepara post com imagem única"
-          git pull --rebase origin main
-          git push origin HEAD:main
-          sleep 15
+          if git diff --cached --quiet; then
+            echo "prepare_commit_skipped=no_changes"
+          else
+            git commit -m "Prepara post com imagem única"
+            git pull --rebase origin main
+            git push origin HEAD:main
+            sleep 15
+          fi
       - name: Publicar somente o item selecionado
         id: publicar
         if: steps.selecionar.outputs.found == 'true'
