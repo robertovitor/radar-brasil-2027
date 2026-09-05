@@ -273,8 +273,25 @@ def make_original_art(out,title,kind,subtitle,key):
     return readable and f.size>=MIN_TITLE_FONT and len(lines)<=MAX_TITLE_LINES, f.size, len(lines)
 
 def main():
-    events=load('dados.json',[]); news=load('noticias.json',[]); ledger=load('instagram/publicados.json',{'published':[]}); state=load('instagram/conteudo-conhecido.json',{'pending_new':[]}); catalog=load('instagram/imagens-curadas.json',{'items':[]}); blocked=load('instagram/bloqueados-publicacao.json',{'blocked_keys':[]})
-    published={clean(x.get('key')) for x in ledger.get('published',[])}|{clean(x) for x in blocked.get('blocked_keys',[])}; pending=[clean(key) for key in state.get('pending_new',[])]; now=dt.datetime.now(dt.timezone.utc); stamps=[]
+    events=load('dados.json',[]); news=load('noticias.json',[]); ledger=load('instagram/publicados.json',{'published':[]}); state=load('instagram/conteudo-conhecido.json',{'pending_new':[]}); catalog=load('instagram/imagens-curadas.json',{'items':[]}); blocked=load('instagram/bloqueados-publicacao.json',{'blocked_keys':[]}); reservations=load('instagram/reservas-publicacao.json',{'reservations':[]})
+    now=dt.datetime.now(dt.timezone.utc)
+    active_reservations=set()
+    reservation_ttl=dt.timedelta(hours=2)
+    for row in reservations.get('reservations',[]):
+        if not isinstance(row,dict):
+            continue
+        key=clean(row.get('key'))
+        raw=clean(row.get('last_attempt_at') or row.get('reserved_at'))
+        try:
+            stamp=dt.datetime.fromisoformat(raw.replace('Z','+00:00'))
+            if stamp.tzinfo is None: stamp=stamp.replace(tzinfo=dt.timezone.utc)
+            if now-stamp.astimezone(dt.timezone.utc) < reservation_ttl:
+                active_reservations.add(key)
+        except (ValueError,TypeError):
+            # Reserva sem timestamp válido permanece bloqueada: falhar fechado evita duplicação.
+            if key: active_reservations.add(key)
+    published={clean(x.get('key')) for x in ledger.get('published',[])}|{clean(x) for x in blocked.get('blocked_keys',[])}|active_reservations
+    pending=[clean(key) for key in state.get('pending_new',[])]; stamps=[]
     for x in ledger.get('published',[]):
         try: stamps.append(dt.datetime.fromisoformat(clean(x.get('published_at')).replace('Z','+00:00')))
         except: pass
