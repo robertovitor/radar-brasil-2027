@@ -45,7 +45,7 @@ def make_clean_fallback(out, title, kind, subtitle, key):
         shift = (seed >> (i * 3)) % 45
         draw.ellipse((x+shift-r, y-r, x+shift+r, y+r), fill=(178, 183, 55, 42))
 
-    safe_left, safe_right = 115, 965
+    safe_left, safe_right = 90, 990
     width = safe_right - safe_left
     draw.text((safe_left, 38), 'RADAR BRASIL 2027', font=base.font(36, True), fill='white')
     draw.line((0, 124, 1080, 124), fill=(255,255,255,35), width=2)
