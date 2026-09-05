@@ -167,20 +167,22 @@ def wait_until_ready(container_id: str, token: str, graph_root: str) -> None:
     raise InstagramError("Tempo esgotado aguardando o processamento da imagem.")
 
 
-def recent_remote_media(user_id: str, token: str, graph_root: str) -> list[dict]:
+def recent_remote_media(user_id: str, token: str, graph_root: str, strict: bool = False) -> list[dict]:
     try:
         data = request_json("GET", f"{user_id}/media", token, {"fields": "id,caption,timestamp", "limit": "25"}, graph_root=graph_root)
         return [x for x in data.get("data", []) if isinstance(x, dict)]
     except InstagramError as exc:
+        if strict:
+            raise InstagramError(f"Reconciliação remota obrigatória falhou: {exc}", code=exc.code, subcode=exc.subcode) from exc
         print(f"remote_reconciliation_warning={exc}")
         return []
 
 
-def reconcile_existing(post: dict, user_id: str, token: str, graph_root: str) -> str | None:
+def reconcile_existing(post: dict, user_id: str, token: str, graph_root: str, strict: bool = False) -> str | None:
     caption = str(post.get("caption") or "").strip()
     title = post_title(post)
     now = dt.datetime.now(dt.timezone.utc)
-    for item in recent_remote_media(user_id, token, graph_root):
+    for item in recent_remote_media(user_id, token, graph_root, strict=strict):
         remote_caption = str(item.get("caption") or "").strip()
         raw_ts = str(item.get("timestamp") or "").strip()
         if raw_ts:
@@ -246,7 +248,7 @@ def publish_with_retry(user_id: str, creation_id: str, token: str, graph_root: s
             if existing:
                 return existing
             raise
-    existing = reconcile_existing(post, user_id, token, graph_root)
+    existing = reconcile_existing(post, user_id, token, graph_root, strict=strict_reconciliation)
     if existing:
         return existing
     raise last_error or InstagramError("Falha desconhecida em media_publish.")
@@ -257,6 +259,7 @@ def main() -> int:
     parser.add_argument("--post", required=True, type=pathlib.Path)
     parser.add_argument("--ledger", default="instagram/publicados.json", type=pathlib.Path)
     parser.add_argument("--blocked", default="instagram/bloqueados-publicacao.json", type=pathlib.Path)
+    parser.add_argument("--reservations", default="instagram/reservas-publicacao.json", type=pathlib.Path)
     parser.add_argument("--mode", choices=("validate", "dry-run", "publish"), default="validate")
     parser.add_argument("--min-hours-between", type=float, default=0)
     parser.add_argument("--max-per-24h", type=int, default=0)
@@ -268,6 +271,12 @@ def main() -> int:
     ledger = load_json(args.ledger, {"published": []})
     published = ledger.get("published", [])
     blocked = load_json(args.blocked, {"blocked_keys": []})
+    reservations = load_json(args.reservations, {"reservations": []})
+    reservation = next(
+        (row for row in reservations.get("reservations", []) if isinstance(row, dict) and str(row.get("key") or "") == key),
+        None,
+    )
+    strict_reconciliation = bool(reservation and reservation.get("requires_strict_reconciliation"))
     if key in {str(value).strip() for value in blocked.get("blocked_keys", [])}:
         raise InstagramError(f"Publicação bloqueada preventivamente: {key}.")
     if any(item.get("key") == key for item in published):
