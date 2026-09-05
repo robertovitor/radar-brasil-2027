@@ -139,9 +139,13 @@ def candidates(events,news,published,pending,prior_titles=()):
             subtitle=(clean(x.get('Veiculo')) or 'Radar Brasil 2027')+' • '+d.strftime('%d/%m/%Y')
             search_context=' '.join(filter(None,[title,clean(x.get('Tema')),clean(x.get('CidadeUF')),clean(x.get('Veiculo'))]))
             out.append(dict(key=key,title=title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,caption=f"📰 {title}\n\n{clean(x.get('Resumo'))}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
+    pending_order={clean(key):idx for idx,key in enumerate(pending)}
     def rank(i):
-        new=i['key'] in pending
-        tier=1 if new and i['type']=='evento' else 2 if new else 3 if i['type']=='evento' else 4
+        if i['key'] in pending_order:
+            # pending_new é autoritativa: a incorporação mais recente (última chave)
+            # precede qualquer backlog, independentemente da data editorial ou tipo.
+            return (1,-pending_order[i['key']],i['key'])
+        tier=2 if i['type']=='evento' else 3
         return (tier,-i['date'].toordinal(),i['key'])
     return sorted(out,key=rank)
 
@@ -270,11 +274,11 @@ def make_original_art(out,title,kind,subtitle,key):
 
 def main():
     events=load('dados.json',[]); news=load('noticias.json',[]); ledger=load('instagram/publicados.json',{'published':[]}); state=load('instagram/conteudo-conhecido.json',{'pending_new':[]}); catalog=load('instagram/imagens-curadas.json',{'items':[]}); blocked=load('instagram/bloqueados-publicacao.json',{'blocked_keys':[]})
-    published={clean(x.get('key')) for x in ledger.get('published',[])}|{clean(x) for x in blocked.get('blocked_keys',[])}; pending=set(state.get('pending_new',[])); now=dt.datetime.now(dt.timezone.utc); stamps=[]
+    published={clean(x.get('key')) for x in ledger.get('published',[])}|{clean(x) for x in blocked.get('blocked_keys',[])}; pending=[clean(key) for key in state.get('pending_new',[])]; now=dt.datetime.now(dt.timezone.utc); stamps=[]
     for x in ledger.get('published',[]):
         try: stamps.append(dt.datetime.fromisoformat(clean(x.get('published_at')).replace('Z','+00:00')))
         except: pass
-    if stamps and (now-max(stamps)).total_seconds()<300: print('found=false'); print('reason=minimum_interval'); return 0
+    if stamps and (now-max(stamps)).total_seconds()<3600: print('found=false'); print('reason=minimum_interval'); return 0
     curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and all(clean(x.get(field)) for field in ('image_source_url','source_page_url','credito','licenca'))}
     ranked=candidates(events,news,published,pending,published_titles(ledger))
     if not ranked: print('found=false'); print('reason=no_eligible_item'); return 0
