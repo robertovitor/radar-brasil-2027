@@ -55,10 +55,17 @@ def main():
     fresh_events = merge(ROOT/'dados.json', inbox.get('eventos', []), 'eventos')
     fresh_news = merge(ROOT/'noticias.json', inbox.get('noticias', []), 'noticias')
     update_instagram_state(fresh_events, fresh_news)
-    if fresh_events or fresh_news:
+    incoming_events = inbox.get('eventos', [])
+    incoming_news = inbox.get('noticias', [])
+    processed = len(incoming_events) + len(incoming_news)
+    if processed:
+        # O inbox é uma fila de entrada, não um arquivo de pendências. Itens já
+        # existentes nos JSON finais também foram processados e devem sair da fila.
         INBOX.write_text(json.dumps({'eventos': [], 'noticias': []}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    discarded = processed - len(fresh_events) - len(fresh_news)
     print(f'eventos_incluidos={len(fresh_events)}')
     print(f'noticias_incluidas={len(fresh_news)}')
+    print(f'itens_descartados_como_duplicados={discarded}')
     print(f'instagram_pendentes_adicionados={len(fresh_events)+len(fresh_news)}')
     return 0
 
