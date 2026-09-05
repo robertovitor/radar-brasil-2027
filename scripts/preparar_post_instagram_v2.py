@@ -6,12 +6,12 @@ from PIL import Image, ImageDraw
 import preparar_post_instagram_curado as base
 import preparar_post_instagram_sem_repetir_imagem as smart
 
-# Título completo é obrigatório. Pode usar até 5 linhas, mas nunca reticências/corte.
-base.MAX_TITLE_LINES = 5
-smart.base.MAX_TITLE_LINES = 5
+# Título completo é obrigatório. Use no máximo 4 linhas, sem reticências ou corte.
+base.MAX_TITLE_LINES = 4
+smart.base.MAX_TITLE_LINES = 4
 
 
-def fit_title_complete(draw, title, width, start_size=88, min_size=58, max_lines=5):
+def fit_title_complete(draw, title, width, start_size=88, min_size=58, max_lines=4):
     title = base.clean(title)
     for size in range(start_size, min_size - 1, -2):
         f = base.font(size, True)
@@ -48,7 +48,7 @@ def make_clean_fallback(out, title, kind, subtitle, key):
     draw.rounded_rectangle((safe_left, 170, safe_left+205, 228), radius=14, fill=(255, 220, 0, 255))
     draw.text((safe_left+22, 184), label, font=base.font(24, True), fill=(20,45,35))
 
-    f, lines, readable = fit_title_complete(draw, title, width, start_size=82, min_size=58, max_lines=5)
+    f, lines, readable = fit_title_complete(draw, title, width, start_size=82, min_size=58, max_lines=4)
     y = 300
     step = f.size + 10
     for line in lines:
@@ -67,7 +67,7 @@ def make_clean_fallback(out, title, kind, subtitle, key):
     draw.text((safe_left, 1012), 'Copa do Mundo Feminina 2027 • Brasil', font=base.font(20, True), fill='white')
     pathlib.Path(out).parent.mkdir(parents=True, exist_ok=True)
     im.save(out, 'JPEG', quality=94, optimize=True)
-    return readable and f.size >= 58 and len(lines) <= 5, f.size, len(lines)
+    return readable and f.size >= 58 and len(lines) <= 4, f.size, len(lines)
 
 
 base.make_original_art = make_clean_fallback
