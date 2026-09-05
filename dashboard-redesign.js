@@ -2,10 +2,10 @@
   const css=document.createElement('style');
   css.textContent=`
   body{background:#f7f9f8!important}
-  .hero-banner{position:relative!important;background:linear-gradient(90deg,#d7bf2b 0%,#43847a 15%,#07503b 35%,#07503b 65%,#4c856d 85%,#dec32c 100%)!important;overflow:hidden!important}
-  .hero-banner::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(226,199,43,.9),rgba(71,135,124,.55) 18%,rgba(6,75,55,.06) 34%,rgba(6,75,55,.06) 66%,rgba(77,139,111,.55) 82%,rgba(229,201,45,.9));pointer-events:none}
-  .hero-banner-inner{height:min(22vw,300px)!important;min-height:170px!important;display:flex!important;align-items:center!important;justify-content:center!important;position:relative;z-index:1}
-  .hero-banner img{height:100%!important;width:auto!important;max-width:100%!important;object-fit:contain!important;object-position:center!important}
+  .hero-banner{position:relative!important;width:100%!important;height:auto!important;min-height:0!important;background:#fff!important;overflow:hidden!important;padding:0!important}
+  .hero-banner::before{display:none!important}
+  .hero-banner-inner{width:100%!important;height:auto!important;min-height:0!important;max-width:none!important;margin:0!important;display:block!important;position:relative;z-index:1;overflow:hidden!important;background:#fff!important}
+  .hero-banner img{display:block!important;width:100%!important;height:auto!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:center top!important;margin:0!important}
   .hero-actions{display:none!important}
   header{background:#fff!important;color:#14211d!important;padding:10px 18px!important;border-bottom:1px solid #e5ebe8;box-shadow:0 4px 16px rgba(15,45,35,.04);position:relative;z-index:20}
   .header-inner{max-width:1480px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important}
@@ -29,12 +29,12 @@
   .news-panel{padding:18px!important}.news-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.news-feature{margin-bottom:14px!important}
   .dashboard-rail{display:grid;gap:16px;position:sticky;top:14px}.rail-card{background:#fff;border:1px solid #e1e8e5;border-radius:16px;padding:16px;box-shadow:0 8px 24px rgba(12,44,33,.035)}.rail-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.rail-head h3{margin:0;font-size:18px}.rail-head button{background:transparent;color:#087345;padding:4px 0;font-size:12px}.rail-list{display:grid}.rail-item{display:grid;grid-template-columns:58px 1fr;gap:12px;padding:12px 0;border-top:1px solid #edf1ef}.rail-item:first-child{border-top:0}.rail-date{display:grid;place-items:center;background:#f2f6f4;border-radius:10px;padding:7px 4px;text-align:center;font-weight:800;line-height:1.05}.rail-date b{font-size:20px}.rail-date span{font-size:10px}.rail-copy strong{display:block;font-size:13px;line-height:1.3;margin-bottom:4px}.rail-copy small{display:block;color:#6a7771;line-height:1.35}.rail-status{display:inline-block;margin-top:6px;background:#e3f3ea;color:#17613e;border-radius:8px;padding:4px 7px;font-size:10px;font-weight:700}.news-rail-item{display:grid;grid-template-columns:1fr;gap:4px;padding:12px 0;border-top:1px solid #edf1ef}.news-rail-item:first-child{border-top:0}.news-rail-item strong{font-size:13px;line-height:1.35}.news-rail-item small{color:#6a7771}.news-rail-item a{font-size:11px;color:#087345;font-weight:700;text-decoration:none}
   @media(max-width:1180px){.layout,.layout.news-mode{grid-template-columns:minmax(240px,290px) minmax(0,1fr)!important}.dashboard-rail{grid-column:1/-1;position:static;grid-template-columns:repeat(2,minmax(0,1fr))}.news-grid{grid-template-columns:1fr!important}}
-  @media(max-width:820px){.hero-banner::before{display:none}.hero-banner-inner{height:auto!important;min-height:0!important;display:block!important}.hero-banner img{width:100%!important;height:auto!important;max-height:none!important}.header-inner{display:block!important}.view-tabs{overflow-x:auto!important;justify-content:flex-start!important;flex-wrap:nowrap!important;padding-bottom:2px!important}.layout,.layout.news-mode{grid-template-columns:1fr!important;padding:10px!important}.sidebar{position:static}.dashboard-rail{grid-template-columns:1fr}.news-grid{grid-template-columns:1fr!important}.map-stage{max-width:100%!important}}
+  @media(max-width:820px){.hero-banner-inner{height:auto!important;min-height:0!important;display:block!important}.hero-banner img{width:100%!important;height:auto!important;max-height:none!important}.header-inner{display:block!important}.view-tabs{overflow-x:auto!important;justify-content:flex-start!important;flex-wrap:nowrap!important;padding-bottom:2px!important}.layout,.layout.news-mode{grid-template-columns:1fr!important;padding:10px!important}.sidebar{position:static}.dashboard-rail{grid-template-columns:1fr}.news-grid{grid-template-columns:1fr!important}.map-stage{max-width:100%!important}}
   `;
   document.head.appendChild(css);
 
   const hero=document.querySelector('.hero-banner img');
-  if(hero){hero.src='./Radar%20Brasil%202027_%20O%20Mundo%20Se%20Conecta.png';hero.alt='Radar Brasil 2027 — Mundial Feminino 2027 — O Mundo Se Conecta';}
+  if(hero){hero.src='./cabecalho.png?v=20260905b';hero.alt='Radar Brasil 2027';}
   document.querySelector('.hero-actions')?.remove();
 
   const tabs=document.querySelector('.view-tabs');
