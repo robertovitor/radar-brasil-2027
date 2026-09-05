@@ -6,6 +6,12 @@ from PIL import Image, ImageDraw
 import preparar_post_instagram_curado as base
 import preparar_post_instagram_sem_repetir_imagem as smart
 
+# Hotfix de disponibilidade: Openverse está respondendo 401 no runner.
+# Não desperdiçar tentativas nem degradar a execução; usar Commons como fonte externa principal.
+smart.SOURCE_BLOCKED['openverse'] = True
+smart.REQUEST_BUDGET['openverse'] = 0
+smart.REQUEST_BUDGET['commons'] = max(8, smart.REQUEST_BUDGET.get('commons', 0))
+
 # Título completo é obrigatório. Use no máximo 4 linhas, sem reticências ou corte.
 base.MAX_TITLE_LINES = 4
 smart.base.MAX_TITLE_LINES = 4
@@ -102,30 +108,25 @@ def semantic_entity_variants(item):
 
     terms = base.distinct_terms(title)
 
-    # 1) Assunto principal quase literal: melhor para eventos, locais e instituições.
     if terms:
         add(' '.join(terms[:6]))
         add(' '.join(terms[:4]))
 
-    # 2) Eventos públicos/cívicos: preserve evento + data/tema + local antes de futebol.
     is_event = any(base.norm(m) in norm_combined for m in EVENT_MARKERS)
     if is_event:
         event_terms = [t for t in terms if base.norm(t) not in {'copa','mundo','feminina','feminino','2027','destaca'}]
         if event_terms:
             add(' '.join(event_terms[:6]))
             add(' '.join(event_terms[:4]) + ' Brasil')
-        # Caso emblemático e também regra útil para eventos cívicos semelhantes.
         if '7 setembro' in norm_combined or ('setembro' in norm_combined and 'desfile' in norm_combined):
             add('Desfile 7 de Setembro Brasília')
             add('7 de Setembro Esplanada dos Ministérios Brasília')
             add('desfile cívico Brasília')
 
-    # 3) Preserve locais reconhecíveis como consulta própria/contextual.
     found_locations = [m for m in LOCATION_MARKERS if base.norm(m) in norm_combined]
     if found_locations and terms:
         add(' '.join(terms[:3]) + ' ' + found_locations[0])
 
-    # 4) Pessoas/entidades: só acrescenta futebol feminino quando isso realmente ajuda.
     words = re.findall(r"[A-Za-zÀ-ÿ0-9'-]+", title)
     stop = {'Copa','Mundo','Mundial','Brasil','Brasileira','Feminina','Feminino','Radar','Notícia','Evento','Desfile','Setembro'}
     proper = [w for w in words[:12] if w[:1].isupper() and w not in stop and len(w) > 3]
@@ -134,7 +135,6 @@ def semantic_entity_variants(item):
         add(entity + ' futebol feminino')
         add(entity + ' Brasil')
 
-    # 5) Expansões antigas ficam por último.
     for q in _original_variants(item):
         add(q)
     return variants[:8]
