@@ -1,4 +1,26 @@
 {
-  "eventos": [],
+  "eventos": [
+    {
+      "ID": "EVT-20260907-DESFILE-COPA2027",
+      "Titulo": "Desfile de 7 de Setembro em Brasília destaca a Copa Feminina 2027",
+      "Status": "Planejado",
+      "Data": "2026-09-07",
+      "DataBR": "07/09/2026",
+      "UF": "DF",
+      "Cidade": "Brasília",
+      "Categoria": "Ativação institucional",
+      "Organizador": "Governo Federal / Presidência da República",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "Esplanada dos Ministérios",
+      "Latitude": -15.7939,
+      "Longitude": -47.8828,
+      "Link": "https://www1.folha.uol.com.br/blogs/brasilia-hoje/2026/09/lula-vai-usar-mote-a-forca-que-une-o-brasil-para-desfile-de-7-de-setembro.shtml",
+      "Observacoes": "Desfile cívico-militar previsto para 07/09/2026, às 9h, na Esplanada dos Ministérios. A Copa do Mundo Feminina de 2027 será um dos três eixos temáticos da programação, ao lado de soberania nacional e enfrentamento à violência contra as mulheres, configurando uma ativação institucional de grande visibilidade pública ligada ao torneio.",
+      "Mes": "Set",
+      "Ano": 2026,
+      "Regiao": "Centro-Oeste"
+    }
+  ],
   "noticias": []
 }
