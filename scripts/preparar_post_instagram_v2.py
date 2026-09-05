@@ -154,11 +154,12 @@ def normalize_image_gate(batch_path='instagram/fila/automatica/lote-atual.json')
         return
 
     changed = False
-    rows = data if isinstance(data, list) else data.get('items', []) if isinstance(data, dict) else []
+    rows = data if isinstance(data, list) else (data.get('items') or data.get('posts') or []) if isinstance(data, dict) else []
     for row in rows:
-        if not isinstance(row, dict):
-            continue
-        post_path = row.get('post_file') or row.get('file') or row.get('path')
+        post_path = row if isinstance(row, str) else (
+            row.get('post_file') or row.get('file') or row.get('path')
+            if isinstance(row, dict) else None
+        )
         if not post_path:
             continue
         p = pathlib.Path(str(post_path))
@@ -171,11 +172,14 @@ def normalize_image_gate(batch_path='instagram/fila/automatica/lote-atual.json')
         has_external = bool(base.clean(post.get('image_source_url')) or base.clean(post.get('image_page_url')))
         fallback = base.clean(post.get('visual_mode')) == 'fallback_visual'
         if fallback or not has_external:
-            if post.get('SEMANTIC_IMAGE_OK') is not False:
-                post['SEMANTIC_IMAGE_OK'] = False
+            required = {
+                'SEMANTIC_IMAGE_SEARCH_DONE': True,
+                'SEMANTIC_IMAGE_OK': True,
+                'TEXT_FALLBACK': True,
+            }
+            if any(post.get(k) is not v for k, v in required.items()):
+                post.update(required)
                 changed = True
-            post['SEMANTIC_IMAGE_SEARCH_DONE'] = True
-            post['TEXT_FALLBACK'] = True
             post['semantic_reason'] = post.get('semantic_reason') or 'external_image_not_found_after_search'
             p.write_text(json.dumps(post, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     if changed:
