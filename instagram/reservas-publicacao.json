@@ -1,3 +1,12 @@
 {
-  "reservations": []
+  "reservations": [
+    {
+      "key": "instagram:noticia:https://www.sinj.df.gov.br/sinj/textoarquivodiario.aspx?id_file=afb86271-9977-31e0-ae59-86b99234ddbb",
+      "post_file": "instagram/fila/automatica/j-textoarquivodiario-aspx-id-file-afb86271-9977-31e0-ae59-86b99234ddbb-e64399a9ba.json",
+      "reserved_at": "2026-09-05T16:00:06.099423+00:00",
+      "last_attempt_at": "2026-09-05T16:00:06.099423+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false
+    }
+  ]
 }
