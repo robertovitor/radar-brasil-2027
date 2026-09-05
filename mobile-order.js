@@ -11,7 +11,7 @@
 
   const place=()=>{
     const mobile=mq.matches;
-    const newsMode=newsPanel && !newsPanel.hidden;
+    const newsMode=!!(newsPanel && !newsPanel.hidden);
     const calendar=document.getElementById('eventCalendar');
 
     if(!mobile){
@@ -24,9 +24,16 @@
     rail.style.margin='0';
 
     if(newsMode){
-      // Mobile Notícias: Últimas notícias primeiro, antes dos filtros e do conteúdo.
-      if(rail.parentElement!==newsPanel || newsPanel.firstElementChild!==rail){
-        newsPanel.insertBefore(rail,newsPanel.firstElementChild);
+      // No mobile, Últimas notícias deve ser o primeiro bloco da área principal.
+      if(rail.parentElement!==layout || layout.firstElementChild!==rail){
+        layout.insertBefore(rail,layout.firstElementChild);
+      }
+      // Garante que o painel de notícias venha logo depois e que elementos de eventos não fiquem na frente.
+      if(newsPanel.parentElement!==layout){
+        layout.insertBefore(newsPanel,content);
+      }
+      if(rail.nextElementSibling!==newsPanel){
+        rail.insertAdjacentElement('afterend',newsPanel);
       }
       return;
     }
@@ -35,25 +42,18 @@
     if(rail.parentElement!==layout || layout.firstElementChild!==rail){
       layout.insertBefore(rail,layout.firstElementChild);
     }
-
     if(sidebar&&rail.nextElementSibling!==sidebar){
       rail.insertAdjacentElement('afterend',sidebar);
     }
-
     if(content&&sidebar&&sidebar.nextElementSibling!==content){
       sidebar.insertAdjacentElement('afterend',content);
     }
-
     if(map&&map.parentElement===content&&content.firstElementChild!==map){
       content.insertBefore(map,content.firstElementChild);
     }
-
-    if(calendar&&map){
-      if(calendar.parentElement!==content || map.nextElementSibling!==calendar){
-        map.insertAdjacentElement('afterend',calendar);
-      }
+    if(calendar&&map&&(calendar.parentElement!==content || map.nextElementSibling!==calendar)){
+      map.insertAdjacentElement('afterend',calendar);
     }
-
     if(agenda&&calendar&&calendar.nextElementSibling!==agenda){
       calendar.insertAdjacentElement('afterend',agenda);
     }else if(agenda&&map&&!calendar&&map.nextElementSibling!==agenda){
@@ -65,12 +65,8 @@
   document.getElementById('tabNoticias')?.addEventListener('click',()=>setTimeout(place,0));
   mq.addEventListener?.('change',place);
   window.addEventListener('resize',place,{passive:true});
-
-  const observer=new MutationObserver(()=>place());
+  const observer=new MutationObserver(place);
   if(newsPanel)observer.observe(newsPanel,{attributes:true,attributeFilter:['hidden']});
   if(map)observer.observe(map,{childList:true});
-
-  setTimeout(place,0);
-  setTimeout(place,400);
-  setTimeout(place,1200);
+  setTimeout(place,0);setTimeout(place,300);setTimeout(place,900);
 })();
