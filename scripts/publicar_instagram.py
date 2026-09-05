@@ -248,7 +248,7 @@ def publish_with_retry(user_id: str, creation_id: str, token: str, graph_root: s
             if existing:
                 return existing
             raise
-    existing = reconcile_existing(post, user_id, token, graph_root, strict=strict_reconciliation)
+    existing = reconcile_existing(post, user_id, token, graph_root)
     if existing:
         return existing
     raise last_error or InstagramError("Falha desconhecida em media_publish.")
@@ -324,7 +324,7 @@ def main() -> int:
         print("Teste concluído sem criar publicação.")
         return 0
 
-    existing = reconcile_existing(post, user_id, token, graph_root)
+    existing = reconcile_existing(post, user_id, token, graph_root, strict=strict_reconciliation)
     if existing:
         append_ledger(args, published, key, existing, reconciled=True)
         print(f"Publicação já existia na Meta e foi reconciliada: media_id={existing}")
