@@ -5,15 +5,18 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import difflib
 import hashlib
 import json
 import os
 import pathlib
+import re
 import sys
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import unicodedata
 
 GRAPH_VERSION = os.getenv("INSTAGRAM_GRAPH_VERSION", "v25.0")
 FACEBOOK_GRAPH_ROOT = f"https://graph.facebook.com/{GRAPH_VERSION}"
@@ -123,6 +126,70 @@ def stable_key(post: dict) -> str:
     return hashlib.sha256(canonical.encode()).hexdigest()
 
 
+DEDUP_IGNORED = {
+    "copa", "mundo", "mundial", "feminina", "feminino", "fifa", "2027", "brasil",
+    "noticia", "evento", "para", "com", "sem", "uma", "das", "dos", "que", "como",
+    "novo", "nova", "confirma", "prepara", "preparam", "destaca", "adequacoes",
+}
+
+
+def normalize_text(value: str) -> str:
+    value = unicodedata.normalize("NFKD", str(value or "").casefold())
+    return "".join(char for char in value if not unicodedata.combining(char))
+
+
+def post_title(post: dict) -> str:
+    caption = str(post.get("caption") or "").strip()
+    if not caption:
+        return ""
+    return re.sub(r"^[^\wÀ-ÿ]+", "", caption.splitlines()[0]).strip()
+
+
+def title_tokens(value: str) -> set[str]:
+    return {
+        token[:7]
+        for token in re.findall(r"[a-z0-9]+", normalize_text(value))
+        if len(token) >= 3 and token not in DEDUP_IGNORED
+    }
+
+
+def same_topic(a: str, b: str) -> bool:
+    na, nb = normalize_text(a), normalize_text(b)
+    if not na or not nb:
+        return False
+    if na == nb:
+        return True
+    ta, tb = title_tokens(a), title_tokens(b)
+    if len(ta) < 3 or len(tb) < 3:
+        return False
+    shared = len(ta & tb)
+    coverage = shared / min(len(ta), len(tb))
+    union = shared / len(ta | tb)
+    sequence = difflib.SequenceMatcher(None, " ".join(sorted(ta)), " ".join(sorted(tb))).ratio()
+    return (shared >= 3 and coverage >= 0.80) or (
+        shared >= 4 and (coverage >= 0.62 or union >= 0.50 or sequence >= 0.72)
+    )
+
+
+def guard_semantic_duplicate(post: dict, published: list[dict]) -> None:
+    current = post_title(post)
+    if not current:
+        return
+    for item in published:
+        path = pathlib.Path(str(item.get("post_file") or ""))
+        if not path.exists():
+            continue
+        try:
+            previous = load_json(path, {})
+        except (json.JSONDecodeError, OSError):
+            continue
+        old_title = post_title(previous)
+        if old_title and same_topic(current, old_title):
+            raise InstagramError(
+                f"Duplicidade semântica bloqueada: '{current}' repete a pauta '{old_title}'."
+            )
+
+
 def validate_post(post: dict, require_approval: bool) -> None:
     missing = [field for field in ("image_url", "caption") if not str(post.get(field, "")).strip()]
     if missing:
@@ -154,6 +221,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--post", required=True, type=pathlib.Path)
     parser.add_argument("--ledger", default="instagram/publicados.json", type=pathlib.Path)
+    parser.add_argument("--blocked", default="instagram/bloqueados-publicacao.json", type=pathlib.Path)
     parser.add_argument("--mode", choices=("validate", "dry-run", "publish"), default="validate")
     parser.add_argument("--min-hours-between", type=float, default=0)
     parser.add_argument("--max-per-24h", type=int, default=0)
@@ -164,8 +232,12 @@ def main() -> int:
     key = stable_key(post)
     ledger = load_json(args.ledger, {"published": []})
     published = ledger.get("published", [])
+    blocked = load_json(args.blocked, {"blocked_keys": []})
+    if key in {str(value).strip() for value in blocked.get("blocked_keys", [])}:
+        raise InstagramError(f"Publicação bloqueada preventivamente: {key}.")
     if any(item.get("key") == key for item in published):
         raise InstagramError(f"Duplicidade bloqueada: {key} já consta em {args.ledger}.")
+    guard_semantic_duplicate(post, published)
 
     # O modo validate é deliberadamente offline e sem acesso a secrets.
     if args.mode == "validate":
