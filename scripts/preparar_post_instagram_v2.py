@@ -32,6 +32,8 @@ TITLE_COMPRESSION_RULES = (
     (r'\bpara ações relacionadas à Copa Feminina 2027\b', 'para a Copa 2027'),
     (r'\bpara a realização da Copa Feminina 2027\b', 'para a Copa 2027'),
     (r'\brelacionadas? à Copa Feminina 2027\b', 'da Copa 2027'),
+    (r'\bcom foco em ampliar (?:a )?estrutura\b', ''),
+    (r'\bcom foco em fortalecer (?:a )?estrutura\b', ''),
 )
 
 
