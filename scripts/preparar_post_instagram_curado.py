@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Prepara um post do Radar Brasil 2027 com gates obrigatórios de semântica visual e legibilidade."""
 from __future__ import annotations
-import datetime as dt, hashlib, html, io, json, pathlib, re, urllib.parse, urllib.request, unicodedata
+import datetime as dt, difflib, hashlib, html, io, json, pathlib, re, urllib.parse, urllib.request, unicodedata
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT='https://raw.githubusercontent.com/robertovitor/radar-brasil-2027/main/'
@@ -18,6 +18,11 @@ ALLOWED_LICENSE_MARKERS=(
 STOPWORDS={
     'a','o','as','os','de','da','do','das','dos','e','em','na','no','nas','nos','para','por','com','sem','um','uma',
     'copa','mundo','mundial','feminina','feminino','fifa','2027','brasil','brasileira','brasileiro','radar','noticia','evento'
+}
+DEDUP_STOPWORDS=STOPWORDS|{
+    'sobre','ate','até','apos','após','seu','sua','seus','suas','que','como','mais','menos',
+    'novo','nova','novos','novas','confirma','confirmam','prepara','preparam','destaca',
+    'adequacao','adequacoes','adequação','adequações','evento','notícia','noticia'
 }
 MALE_BLOCKERS=(
     'cristiano ronaldo','neymar','lionel messi','copa da russia','russia 2018','world cup 2018',
@@ -63,6 +68,40 @@ def wrap(draw,text,f,w):
     if cur: out.append(cur)
     return out
 
+def title_from_post(post):
+    caption=str(post.get('caption') or '').strip()
+    if not caption: return ''
+    return re.sub(r'^[^\wÀ-ÿ]+','',caption.splitlines()[0]).strip()
+
+def dedup_tokens(value):
+    ignored={norm(x) for x in DEDUP_STOPWORDS}
+    tokens=[]
+    for raw in re.findall(r'[a-z0-9áàâãéêíóôõúç]+',clean(value).casefold()):
+        token=norm(raw)
+        if len(token)<3 or token in ignored: continue
+        tokens.append(token[:7])
+    return set(tokens)
+
+def duplicate_title(a,b):
+    na=norm(a); nb=norm(b)
+    if not na or not nb: return False
+    if na==nb: return True
+    ta=dedup_tokens(a); tb=dedup_tokens(b)
+    if len(ta)<3 or len(tb)<3: return False
+    shared=len(ta&tb); coverage=shared/min(len(ta),len(tb)); union=shared/len(ta|tb)
+    sequence=difflib.SequenceMatcher(None,' '.join(sorted(ta)),' '.join(sorted(tb))).ratio()
+    return (shared>=3 and coverage>=0.80) or (shared>=4 and (coverage>=0.62 or union>=0.50 or sequence>=0.72))
+
+def published_titles(ledger):
+    titles=[]
+    for row in ledger.get('published',[]):
+        p=pathlib.Path(clean(row.get('post_file')))
+        if not p.exists(): continue
+        try: title=title_from_post(json.loads(p.read_text(encoding='utf-8')))
+        except Exception: continue
+        if title: titles.append(title)
+    return titles
+
 def fit_title(draw,title,width,start_size=86,min_size=MIN_TITLE_FONT,max_lines=MAX_TITLE_LINES):
     size=start_size
     while size>=min_size:
@@ -85,18 +124,18 @@ def fit_title(draw,title,width,start_size=86,min_size=MIN_TITLE_FONT,max_lines=M
         words=words[:-1]
     return f,['Radar Brasil 2027'],False
 
-def candidates(events,news,published,pending):
+def candidates(events,news,published,pending,prior_titles=()):
     out=[]
     for x in events:
         title=clean(x.get('Titulo')); d=date(x.get('Data')); key='instagram:evento:'+clean(x.get('ID') or title).casefold()
-        if title and d and key not in published and not base(x):
+        if title and d and key not in published and not base(x) and not any(duplicate_title(title,old) for old in prior_titles):
             place=', '.join(filter(None,[clean(x.get('Local')),clean(x.get('Cidade')),clean(x.get('UF'))]))
             subtitle=(clean(x.get('DataBR')) or d.strftime('%d/%m/%Y'))+' • '+(place or 'Local a definir')
             search_context=' '.join(filter(None,[title,clean(x.get('Cidade')),clean(x.get('UF')),clean(x.get('Local')),clean(x.get('Organizador'))]))
             out.append(dict(key=key,title=title,date=d,type='evento',subtitle=subtitle,search_context=search_context,caption=f"📅 {title}\n\nQuando: {clean(x.get('DataBR')) or d.strftime('%d/%m/%Y')}\nOnde: {place or 'Local a definir'}\n\n{clean(x.get('Observacoes'))}\n\nFonte: {clean(x.get('Organizador')) or 'Radar Brasil 2027'}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     for x in news:
         title=clean(x.get('Titulo')); d=date(x.get('Data')); key='instagram:noticia:'+clean(x.get('Link') or title).casefold()
-        if title and d and d<=dt.datetime.now(dt.timezone.utc).date() and key not in published and not base(x):
+        if title and d and d<=dt.datetime.now(dt.timezone.utc).date() and key not in published and not base(x) and not any(duplicate_title(title,old) for old in prior_titles):
             subtitle=(clean(x.get('Veiculo')) or 'Radar Brasil 2027')+' • '+d.strftime('%d/%m/%Y')
             search_context=' '.join(filter(None,[title,clean(x.get('Tema')),clean(x.get('CidadeUF')),clean(x.get('Veiculo'))]))
             out.append(dict(key=key,title=title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,caption=f"📰 {title}\n\n{clean(x.get('Resumo'))}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
@@ -230,14 +269,14 @@ def make_original_art(out,title,kind,subtitle,key):
     return readable and f.size>=MIN_TITLE_FONT and len(lines)<=MAX_TITLE_LINES, f.size, len(lines)
 
 def main():
-    events=load('dados.json',[]); news=load('noticias.json',[]); ledger=load('instagram/publicados.json',{'published':[]}); state=load('instagram/conteudo-conhecido.json',{'pending_new':[]}); catalog=load('instagram/imagens-curadas.json',{'items':[]})
-    published={clean(x.get('key')) for x in ledger.get('published',[])}; pending=set(state.get('pending_new',[])); now=dt.datetime.now(dt.timezone.utc); stamps=[]
+    events=load('dados.json',[]); news=load('noticias.json',[]); ledger=load('instagram/publicados.json',{'published':[]}); state=load('instagram/conteudo-conhecido.json',{'pending_new':[]}); catalog=load('instagram/imagens-curadas.json',{'items':[]}); blocked=load('instagram/bloqueados-publicacao.json',{'blocked_keys':[]})
+    published={clean(x.get('key')) for x in ledger.get('published',[])}|{clean(x) for x in blocked.get('blocked_keys',[])}; pending=set(state.get('pending_new',[])); now=dt.datetime.now(dt.timezone.utc); stamps=[]
     for x in ledger.get('published',[]):
         try: stamps.append(dt.datetime.fromisoformat(clean(x.get('published_at')).replace('Z','+00:00')))
         except: pass
     if stamps and (now-max(stamps)).total_seconds()<300: print('found=false'); print('reason=minimum_interval'); return 0
     curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and all(clean(x.get(field)) for field in ('image_source_url','source_page_url','credito','licenca'))}
-    ranked=candidates(events,news,published,pending)
+    ranked=candidates(events,news,published,pending,published_titles(ledger))
     if not ranked: print('found=false'); print('reason=no_eligible_item'); return 0
     # Prioriza conteúdo que possua fotografia real válida. Só usa a arte textual
     # quando nenhum dos itens elegíveis tiver imagem segura e não repetida.
