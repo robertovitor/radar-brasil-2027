@@ -20,6 +20,8 @@ import unicodedata
 GRAPH_VERSION = os.getenv("INSTAGRAM_GRAPH_VERSION", "v25.0")
 FACEBOOK_GRAPH_ROOT = f"https://graph.facebook.com/{GRAPH_VERSION}"
 INSTAGRAM_GRAPH_ROOT = f"https://graph.instagram.com/{GRAPH_VERSION}"
+RATE_LIMIT_STATE = pathlib.Path(os.getenv("META_RATE_LIMIT_STATE", "instagram/meta-rate-limit.json"))
+RATE_LIMIT_COOLDOWN_MINUTES = max(15, int(os.getenv("META_RATE_LIMIT_COOLDOWN_MINUTES", "60")))
 
 
 class InstagramError(RuntimeError):
@@ -27,6 +29,68 @@ class InstagramError(RuntimeError):
         super().__init__(message)
         self.code = code
         self.subcode = subcode
+
+
+def is_rate_limit_error(exc: InstagramError) -> bool:
+    return exc.code == 4 or exc.subcode == 2207051
+
+
+def mark_meta_rate_limit(exc: InstagramError) -> None:
+    now = dt.datetime.now(dt.timezone.utc)
+    blocked_until = now + dt.timedelta(minutes=RATE_LIMIT_COOLDOWN_MINUTES)
+    RATE_LIMIT_STATE.parent.mkdir(parents=True, exist_ok=True)
+    RATE_LIMIT_STATE.write_text(
+        json.dumps(
+            {
+                "active": True,
+                "reason": "meta_application_request_limit",
+                "code": exc.code,
+                "subcode": exc.subcode,
+                "detected_at": now.isoformat(),
+                "blocked_until": blocked_until.isoformat(),
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    print(f"meta_rate_limit_until={blocked_until.isoformat()}", file=sys.stderr)
+
+
+def check_meta_cooldown() -> None:
+    if not RATE_LIMIT_STATE.exists():
+        return
+    try:
+        state = json.loads(RATE_LIMIT_STATE.read_text(encoding="utf-8"))
+        if not state.get("active"):
+            return
+        raw = str(state.get("blocked_until") or "").strip()
+        if not raw:
+            return
+        blocked_until = dt.datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        if blocked_until.tzinfo is None:
+            blocked_until = blocked_until.replace(tzinfo=dt.timezone.utc)
+        now = dt.datetime.now(dt.timezone.utc)
+        if now < blocked_until.astimezone(dt.timezone.utc):
+            remaining = blocked_until.astimezone(dt.timezone.utc) - now
+            raise InstagramError(f"Cooldown da Meta ativo; nenhuma chamada será feita por cerca de {remaining}.", code=4, subcode=2207051)
+    except (json.JSONDecodeError, ValueError):
+        print("meta_rate_limit_state_warning=invalid_state", file=sys.stderr)
+
+
+def clear_meta_cooldown() -> None:
+    if not RATE_LIMIT_STATE.exists():
+        return
+    try:
+        state = json.loads(RATE_LIMIT_STATE.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        state = {}
+    if not state.get("active"):
+        return
+    state["active"] = False
+    state["cleared_at"] = dt.datetime.now(dt.timezone.utc).isoformat()
+    RATE_LIMIT_STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def request_json(method: str, path: str, token: str, params: dict | None = None, graph_root: str = FACEBOOK_GRAPH_ROOT) -> dict:
@@ -45,7 +109,10 @@ def request_json(method: str, path: str, token: str, params: dict | None = None,
             message = detail.get("message", body)
             code = detail.get("code")
             subcode = detail.get("error_subcode")
-            raise InstagramError(f"Meta API: {message} (code={code}, subcode={subcode})", code=code, subcode=subcode) from None
+            error = InstagramError(f"Meta API: {message} (code={code}, subcode={subcode})", code=code, subcode=subcode)
+            if is_rate_limit_error(error):
+                mark_meta_rate_limit(error)
+            raise error from None
         except json.JSONDecodeError:
             raise InstagramError(f"Meta API HTTP {exc.code}: {body[:500]}", code=exc.code) from None
 
@@ -57,8 +124,9 @@ def discover_instagram_user(token: str) -> tuple[str, str, str]:
         instagram_id = profile.get("user_id") or profile.get("id")
         if instagram_id:
             return INSTAGRAM_GRAPH_ROOT, str(instagram_id), str(profile.get("username", ""))
-    except InstagramError:
-        pass
+    except InstagramError as exc:
+        if is_rate_limit_error(exc):
+            raise
     if configured:
         profile = request_json("GET", configured, token, {"fields": "id,username"}, graph_root=FACEBOOK_GRAPH_ROOT)
         return FACEBOOK_GRAPH_ROOT, configured, str(profile.get("username", ""))
@@ -154,17 +222,18 @@ def validate_post(post: dict, require_approval: bool) -> None:
 
 
 def wait_until_ready(container_id: str, token: str, graph_root: str) -> None:
-    for attempt in range(30):
+    delays = (4, 6, 8, 12, 16, 24, 36, 0)
+    for attempt, delay in enumerate(delays, start=1):
         status = request_json("GET", container_id, token, {"fields": "status_code,status"}, graph_root=graph_root)
         code = str(status.get("status_code") or "").upper()
         if code == "FINISHED":
-            if attempt:
-                time.sleep(5)
             return
         if code in {"ERROR", "EXPIRED"}:
             raise InstagramError(f"Container não publicável: {status}")
-        time.sleep(4)
-    raise InstagramError("Tempo esgotado aguardando o processamento da imagem.")
+        if delay:
+            print(f"container_wait_attempt={attempt};next_wait_seconds={delay}")
+            time.sleep(delay)
+    raise InstagramError("Tempo esgotado aguardando o processamento da imagem após 8 consultas.")
 
 
 def recent_remote_media(user_id: str, token: str, graph_root: str, strict: bool = False) -> list[dict]:
@@ -172,6 +241,8 @@ def recent_remote_media(user_id: str, token: str, graph_root: str, strict: bool 
         data = request_json("GET", f"{user_id}/media", token, {"fields": "id,caption,timestamp", "limit": "25"}, graph_root=graph_root)
         return [x for x in data.get("data", []) if isinstance(x, dict)]
     except InstagramError as exc:
+        if is_rate_limit_error(exc):
+            raise
         if strict:
             raise InstagramError(f"Reconciliação remota obrigatória falhou: {exc}", code=exc.code, subcode=exc.subcode) from exc
         print(f"remote_reconciliation_warning={exc}")
@@ -224,7 +295,7 @@ def append_ledger(args, published: list[dict], key: str, media_id: str, creation
 
 def publish_with_retry(user_id: str, creation_id: str, token: str, graph_root: str, post: dict) -> str:
     last_error = None
-    for attempt in range(1, 5):
+    for attempt in range(1, 4):
         try:
             response = request_json("POST", f"{user_id}/media_publish", token, {"creation_id": creation_id}, graph_root=graph_root)
             media_id = str(response.get("id") or "").strip()
@@ -233,13 +304,18 @@ def publish_with_retry(user_id: str, creation_id: str, token: str, graph_root: s
             return media_id
         except InstagramError as exc:
             last_error = exc
+            if is_rate_limit_error(exc):
+                raise
             if exc.code == 9007 or exc.subcode == 2207027:
                 print(f"media_publish_retry={attempt};reason=media_id_not_available")
+                if attempt >= 3:
+                    break
                 time.sleep(10 * attempt)
                 try:
                     wait_until_ready(creation_id, token, graph_root)
-                except InstagramError:
-                    pass
+                except InstagramError as wait_exc:
+                    if is_rate_limit_error(wait_exc):
+                        raise
                 existing = reconcile_existing(post, user_id, token, graph_root)
                 if existing:
                     return existing
@@ -287,6 +363,8 @@ def main() -> int:
         print(f"Validação local concluída; chave: {key}; nenhum secret foi carregado.")
         return 0
 
+    check_meta_cooldown()
+
     token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "").strip()
     if token.startswith("INSTAGRAM_ACCESS_TOKEN="):
         token = token.split("=", 1)[1].strip()
@@ -324,11 +402,15 @@ def main() -> int:
         print("Teste concluído sem criar publicação.")
         return 0
 
-    existing = reconcile_existing(post, user_id, token, graph_root, strict=strict_reconciliation)
-    if existing:
-        append_ledger(args, published, key, existing, reconciled=True)
-        print(f"Publicação já existia na Meta e foi reconciliada: media_id={existing}")
-        return 0
+    if strict_reconciliation:
+        existing = reconcile_existing(post, user_id, token, graph_root, strict=True)
+        if existing:
+            append_ledger(args, published, key, existing, reconciled=True)
+            clear_meta_cooldown()
+            print(f"Publicação já existia na Meta e foi reconciliada: media_id={existing}")
+            return 0
+    else:
+        print("remote_reconciliation_skipped=normal_publish")
 
     container = request_json("POST", f"{user_id}/media", token, {"image_url": post["image_url"], "caption": post["caption"]}, graph_root=graph_root)
     creation_id = str(container.get("id") or "").strip()
@@ -338,6 +420,7 @@ def main() -> int:
     wait_until_ready(creation_id, token, graph_root)
     media_id = publish_with_retry(user_id, creation_id, token, graph_root, post)
     append_ledger(args, published, key, media_id, creation_id=creation_id)
+    clear_meta_cooldown()
     print(f"Publicado com sucesso: media_id={media_id}")
     return 0
 
