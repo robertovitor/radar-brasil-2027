@@ -10,6 +10,11 @@
   const clearButton=document.getElementById('limpar');
   const actions=sidebar?.querySelector('.actions');
   const agendaTitle=document.getElementById('agendaTitulo');
+  const heroImage=document.querySelector('.hero-banner img');
+  if(heroImage){
+    heroImage.src='./radar_brasil_2027_texto_final_legivel.png';
+    heroImage.alt='Radar Brasil 2027 — Juntos por um legado maior';
+  }
   if(!layout||!content||!rail)return;
 
   const placeClearButton=(mobile)=>{
