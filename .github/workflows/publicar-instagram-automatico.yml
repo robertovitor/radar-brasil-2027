@@ -129,9 +129,16 @@ jobs:
           echo "$output"
           found="$(echo "$output" | sed -n 's/^found=//p' | tail -1)"
           batch="$(echo "$output" | sed -n 's/^batch_file=//p' | tail -1)"
+          reason="$(echo "$output" | sed -n 's/^reason=//p' | tail -1)"
           echo "found=${found:-false}" >> "$GITHUB_OUTPUT"
           echo "batch_file=$batch" >> "$GITHUB_OUTPUT"
+          echo "reason=${reason:-none}" >> "$GITHUB_OUTPUT"
           if [ "$status" -ne 0 ]; then
+            if [ "$reason" = "quality_gate_failed" ]; then
+              echo "quality_gate_blocked=true"
+              echo "O item foi reprovado pelos gates de qualidade; nenhum post foi enviado à Meta nesta tentativa."
+              exit 0
+            fi
             exit "$status"
           fi
       - name: Salvar imagem e fila aprovadas
