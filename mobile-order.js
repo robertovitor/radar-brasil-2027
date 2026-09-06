@@ -10,11 +10,6 @@
   const clearButton=document.getElementById('limpar');
   const actions=sidebar?.querySelector('.actions');
   const agendaTitle=document.getElementById('agendaTitulo');
-  const heroImage=document.querySelector('.hero-banner img');
-  if(heroImage){
-    heroImage.src='./radar_brasil_2027_texto_final_legivel.png';
-    heroImage.alt='Radar Brasil 2027 — Juntos por um legado maior';
-  }
   if(!layout||!content||!rail)return;
 
   const placeClearButton=(mobile)=>{
@@ -55,11 +50,9 @@
     rail.style.margin='0';
 
     if(newsMode){
-      // No mobile, Últimas notícias deve ser o primeiro bloco da área principal.
       if(rail.parentElement!==layout || layout.firstElementChild!==rail){
         layout.insertBefore(rail,layout.firstElementChild);
       }
-      // Garante que o painel de notícias venha logo depois e que elementos de eventos não fiquem na frente.
       if(newsPanel.parentElement!==layout){
         layout.insertBefore(newsPanel,content);
       }
@@ -69,7 +62,6 @@
       return;
     }
 
-    // Mobile Eventos: Próximos eventos primeiro, depois filtros, mapa, calendário e conteúdo.
     if(rail.parentElement!==layout || layout.firstElementChild!==rail){
       layout.insertBefore(rail,layout.firstElementChild);
     }
@@ -92,7 +84,6 @@
     }
   };
 
-  // Ao limpar os filtros, retorna a tela para o bloco de Filtros em desktop e mobile.
   if(clearButton&&clearButton.dataset.clearScroll!=='1'){
     clearButton.dataset.clearScroll='1';
     clearButton.addEventListener('click',()=>{
