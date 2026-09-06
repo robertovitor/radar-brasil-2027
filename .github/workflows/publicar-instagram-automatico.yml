@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: "15 * * * *"
     - cron: "27 * * * *"
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
   push:
     branches: [main]
     paths:
@@ -20,6 +23,7 @@ concurrency:
 
 jobs:
   verificar-intervalo:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     outputs:
       eligible: ${{ steps.intervalo.outputs.eligible }}
