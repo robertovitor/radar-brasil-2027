@@ -159,17 +159,76 @@ jobs:
           git pull --rebase origin main
           git push origin HEAD:main
       - name: Registrar publicação confirmada ou reconciliada
+        id: registrar_publicacao
         if: always() && steps.selecionar.outputs.found == 'true'
+        shell: bash
         run: |
-          if git diff --quiet -- instagram/publicados.json; then exit 0; fi
+          if git diff --quiet -- instagram/publicados.json; then
+            echo "ledger_changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
           git add instagram/publicados.json
           git commit -m "Registra publicação confirmada no Instagram"
           git pull --rebase origin main
           git push origin HEAD:main
-      - name: Limpar reserva somente após sucesso confirmado
-        if: always() && steps.selecionar.outputs.found == 'true' && steps.publicar.outcome == 'success'
+          echo "ledger_changed=true" >> "$GITHUB_OUTPUT"
+      - name: Determinar resultado efetivo da publicação
+        id: resultado_publicacao
+        if: always() && steps.selecionar.outputs.found == 'true'
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          batch_path = Path(r'''${{ steps.selecionar.outputs.batch_file }}''')
+          ledger_path = Path("instagram/publicados.json")
+          confirmed = False
+          reason = "not_confirmed"
+
+          try:
+              batch = json.loads(batch_path.read_text(encoding="utf-8")) if batch_path.exists() else {}
+              ledger = json.loads(ledger_path.read_text(encoding="utf-8")) if ledger_path.exists() else {}
+
+              candidates = batch if isinstance(batch, list) else batch.get("items") or batch.get("posts") or batch.get("queue") or [batch]
+              if not isinstance(candidates, list):
+                  candidates = [candidates]
+              published = ledger.get("published", []) if isinstance(ledger, dict) else []
+
+              def values(obj):
+                  if not isinstance(obj, dict):
+                      return set()
+                  keys = ("id", "post_id", "source_id", "queue_id", "slug", "title", "titulo", "url", "link", "batch_id")
+                  return {str(obj.get(k)).strip() for k in keys if obj.get(k) is not None and str(obj.get(k)).strip()}
+
+              candidate_values = set()
+              for item in candidates:
+                  candidate_values |= values(item)
+
+              for row in published if isinstance(published, list) else []:
+                  if candidate_values and (candidate_values & values(row)):
+                      confirmed = True
+                      reason = "ledger_match"
+                      break
+          except Exception as exc:
+              print(f"effective_result_warning={exc}")
+
+          publish_outcome = r'''${{ steps.publicar.outcome }}'''.strip().lower()
+          if publish_outcome == "success":
+              confirmed = True
+              reason = "meta_call_success"
+
+          print(f"publication_confirmed={str(confirmed).lower()}")
+          print(f"publication_result_reason={reason}")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"confirmed={str(confirmed).lower()}\n")
+              output.write(f"reason={reason}\n")
+          PY
+      - name: Limpar reserva após sucesso confirmado ou reconciliado
+        if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.confirmed == 'true'
         run: |
           git pull --rebase origin main
           python scripts/reservar_publicacao_instagram.py clear --batch "${{ steps.selecionar.outputs.batch_file }}"
@@ -183,8 +242,8 @@ jobs:
             git pull --rebase origin main
             git push origin HEAD:main
           fi
-      - name: Sinalizar falha sem liberar a trava idempotente
-        if: always() && steps.publicar.outcome == 'failure'
+      - name: Sinalizar somente falha real de publicação
+        if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.confirmed != 'true'
         run: |
-          echo "A publicação falhou; a reserva foi mantida para impedir duplicação até a próxima reconciliação."
+          echo "A publicação não foi confirmada nem reconciliada; a reserva foi mantida para impedir duplicação."
           exit 1
