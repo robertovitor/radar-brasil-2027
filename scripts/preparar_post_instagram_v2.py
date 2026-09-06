@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Camada v2: busca semântica contextual, priorizando imagem real antes do fallback textual."""
 from __future__ import annotations
-import hashlib, json, pathlib, re, urllib.parse
+import contextlib, hashlib, io, json, pathlib, re, urllib.parse
 from PIL import Image, ImageDraw
 import preparar_post_instagram_curado as base
 import preparar_post_instagram_sem_repetir_imagem as smart
@@ -198,8 +198,6 @@ def robust_commons_image(item, used):
             overlap = len(item_tokens & desc_tokens)
             female = smart.female_signal(descriptor)
             ok, reason = base.semantic_image_ok(item, page, meta, query)
-            # Para locais/estádios/órgãos/cidades, uma correspondência direta de
-            # entidade é suficiente; não exigimos presença de pessoas na foto.
             if not ok and institutional and overlap >= 1:
                 ok, reason = True, 'commons_place_or_institution_match'
             if not ok:
@@ -257,7 +255,65 @@ def normalize_image_gate(batch_path='instagram/fila/automatica/lote-atual.json')
             p.write_text(json.dumps(post, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     if changed: print('semantic_image_gate_corrected=true')
 
+def run_with_quality_retry(max_attempts=5):
+    """Se um item falhar apenas no gate de legibilidade, tenta o próximo elegível.
+
+    O bloqueio é temporário e existe somente durante esta execução. O arquivo
+    persistente de bloqueios é restaurado ao final, portanto nenhum conteúdo é
+    descartado permanentemente só porque uma composição específica não coube.
+    """
+    blocked_path = pathlib.Path('instagram/bloqueados-publicacao.json')
+    original_exists = blocked_path.exists()
+    original_text = blocked_path.read_text(encoding='utf-8') if original_exists else ''
+    temp_blocked = set()
+    try:
+        for attempt in range(1, max_attempts + 1):
+            buffer = io.StringIO()
+            with contextlib.redirect_stdout(buffer):
+                result = smart.main()
+            output = buffer.getvalue()
+            print(output, end='')
+            reason_matches = re.findall(r'^reason=(.+)$', output, flags=re.M)
+            reason = reason_matches[-1].strip() if reason_matches else ''
+            if result == 0 or reason != 'quality_gate_failed':
+                return result
+
+            selected = ''
+            for pattern in (
+                r'^real_photo_candidate_selected=(.+)$',
+                r'^fallback_visual_selected_after_exhausting_candidates=(.+)$',
+                r'^image_search_candidate=(.+)$',
+            ):
+                matches = re.findall(pattern, output, flags=re.M)
+                if matches:
+                    selected = matches[-1].strip()
+                    break
+            if not selected or selected in temp_blocked:
+                print('quality_retry_stopped=no_new_candidate_key')
+                return result
+
+            temp_blocked.add(selected)
+            try:
+                data = json.loads(original_text) if original_text.strip() else {'blocked_keys': []}
+                if not isinstance(data, dict): data = {'blocked_keys': []}
+            except Exception:
+                data = {'blocked_keys': []}
+            existing = [base.clean(x) for x in data.get('blocked_keys', []) if base.clean(x)]
+            data['blocked_keys'] = existing + [x for x in sorted(temp_blocked) if x not in existing]
+            blocked_path.parent.mkdir(parents=True, exist_ok=True)
+            blocked_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+            print(f'quality_retry_attempt={attempt + 1}')
+            print('quality_retry_skipped_key=' + selected)
+        print('found=false')
+        print('reason=quality_gate_exhausted_candidates')
+        return 0
+    finally:
+        if original_exists:
+            blocked_path.write_text(original_text, encoding='utf-8')
+        elif blocked_path.exists():
+            blocked_path.unlink()
+
 if __name__ == '__main__':
-    result = smart.main()
+    result = run_with_quality_retry()
     normalize_image_gate()
     raise SystemExit(result)
