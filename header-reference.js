@@ -59,7 +59,7 @@
   document.head.appendChild(style);
   const hero=document.querySelector('.hero-banner img');
   if(hero){
-    hero.src='./cabecalho.png?v=20260905e';
+    hero.src='./radarbrasilimagem.png?v=20260906a';
     hero.alt='Radar Brasil 2027 — Todo o futebol feminino, em todo o Brasil';
   }
 })();
