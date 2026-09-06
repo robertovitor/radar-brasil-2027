@@ -15,16 +15,22 @@
     status.value=allowed.includes(current)?current:'Planejado';
   };
 
-  const apply=()=>{
-    if(typeof window.render==='function')window.render();
+  const scrollToResults=()=>{
+    const agenda=document.getElementById('eventAgenda');
+    if(agenda)requestAnimationFrame(()=>agenda.scrollIntoView({behavior:'smooth',block:'start'}));
   };
 
-  // Todos os filtros de Eventos passam a atualizar imediatamente.
+  const apply=(scroll=false)=>{
+    if(typeof window.render==='function')window.render();
+    if(scroll)scrollToResults();
+  };
+
+  // Todos os filtros de Eventos passam a atualizar imediatamente e posicionar nos resultados.
   ['status','categoria','regiao','uf','ano','mes'].forEach(id=>{
     const el=document.getElementById(id);
     if(!el||el.dataset.liveFilterFix==='1')return;
     el.dataset.liveFilterFix='1';
-    el.addEventListener('change',()=>setTimeout(apply,0));
+    el.addEventListener('change',()=>setTimeout(()=>apply(true),0));
   });
 
   // Busca também atualiza sem depender de Enter/botão Aplicar.
@@ -34,9 +40,12 @@
     let timer;
     busca.addEventListener('input',()=>{
       clearTimeout(timer);
-      timer=setTimeout(apply,180);
+      timer=setTimeout(()=>apply(true),180);
     });
   }
+
+  // O botão Aplicar mantém o mesmo comportamento de posicionar nos resultados.
+  document.getElementById('aplicar')?.addEventListener('click',()=>setTimeout(scrollToResults,0));
 
   const wait=setInterval(()=>{
     try{
