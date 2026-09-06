@@ -87,6 +87,15 @@
     }
   };
 
+  // No mobile, ao limpar os filtros retorna a tela para o bloco de Filtros.
+  if(clearButton&&clearButton.dataset.mobileClearScroll!=='1'){
+    clearButton.dataset.mobileClearScroll='1';
+    clearButton.addEventListener('click',()=>{
+      if(!mq.matches)return;
+      setTimeout(()=>sidebar?.scrollIntoView({behavior:'smooth',block:'start'}),0);
+    });
+  }
+
   document.getElementById('tabEventos')?.addEventListener('click',()=>setTimeout(place,0));
   document.getElementById('tabNoticias')?.addEventListener('click',()=>setTimeout(place,0));
   mq.addEventListener?.('change',place);
