@@ -87,11 +87,10 @@
     }
   };
 
-  // No mobile, ao limpar os filtros retorna a tela para o bloco de Filtros.
-  if(clearButton&&clearButton.dataset.mobileClearScroll!=='1'){
-    clearButton.dataset.mobileClearScroll='1';
+  // Ao limpar os filtros, retorna a tela para o bloco de Filtros em desktop e mobile.
+  if(clearButton&&clearButton.dataset.clearScroll!=='1'){
+    clearButton.dataset.clearScroll='1';
     clearButton.addEventListener('click',()=>{
-      if(!mq.matches)return;
       setTimeout(()=>sidebar?.scrollIntoView({behavior:'smooth',block:'start'}),0);
     });
   }
