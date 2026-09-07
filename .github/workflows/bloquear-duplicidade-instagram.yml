@@ -1,0 +1,50 @@
+name: Bloquear duplicidade Instagram
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "10 * * * *"
+    - cron: "22 * * * *"
+    - cron: "34 * * * *"
+    - cron: "46 * * * *"
+    - cron: "58 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - noticias.json
+      - dados.json
+      - instagram/publicados.json
+      - instagram/dedup-guard-trigger.txt
+      - scripts/atualizar_bloqueios_duplicidade_instagram.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: instagram-dedup-guard
+  cancel-in-progress: false
+
+jobs:
+  bloquear-duplicatas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Atualizar repositório
+        run: git pull --rebase --autostash origin main
+      - name: Detectar pautas já publicadas
+        run: python scripts/atualizar_bloqueios_duplicidade_instagram.py
+      - name: Persistir bloqueios
+        run: |
+          if [ -z "$(git status --porcelain -- instagram/bloqueados-publicacao.json)" ]; then
+            echo "Nenhum novo bloqueio necessário."
+            exit 0
+          fi
+          git config user.name "radar-instagram-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add instagram/bloqueados-publicacao.json
+          git commit -m "Bloqueia pautas duplicadas antes do Instagram"
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
