@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Continua a rodada do Instagram após reconciliações até obter um post realmente novo.
 
-Este script só é chamado depois que o primeiro candidato da rodada foi reconciliado
-com um post já existente na Meta. Ele repete seleção -> persistência da arte ->
-reserva -> publicação -> ledger -> liberação da reserva dentro do MESMO job.
-Assim, uma reconciliação não consome a rodada nem depende de um novo workflow.
+A continuação acontece dentro do mesmo job. Se a Meta entrar em rate limit, a
+reserva da tentativa é liberada, o cooldown persistido é respeitado e a rodada
+termina em modo adiado, sem gerar falso erro.
 """
 
 from __future__ import annotations
 
+import datetime as dt
 import json
 import os
 import pathlib
@@ -54,6 +54,21 @@ def ledger_rows() -> list[dict]:
     return [r for r in rows if isinstance(r, dict)]
 
 
+def rate_limit_active() -> tuple[bool, str]:
+    try:
+        state = json.loads(RATE_STATE.read_text(encoding="utf-8"))
+        raw = str(state.get("blocked_until") or "").strip()
+        if not state.get("active") or not raw:
+            return False, ""
+        until = dt.datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        if until.tzinfo is None:
+            until = until.replace(tzinfo=dt.timezone.utc)
+        active = dt.datetime.now(dt.timezone.utc) < until.astimezone(dt.timezone.utc)
+        return active, until.astimezone(dt.timezone.utc).isoformat()
+    except Exception:
+        return False, ""
+
+
 def parse_selector(output: str) -> tuple[bool, str, str]:
     found = False
     batch = ""
@@ -72,10 +87,15 @@ def batch_key(batch_path: pathlib.Path) -> str:
     try:
         batch = json.loads(batch_path.read_text(encoding="utf-8"))
         posts = batch.get("posts", []) if isinstance(batch, dict) else []
-        post = json.loads((ROOT / posts[0]).read_text(encoding="utf-8")) if posts else {}
+        if not posts:
+            return ""
+        post_path = pathlib.Path(str(posts[0]))
+        if not post_path.is_absolute():
+            post_path = ROOT / post_path
+        post = json.loads(post_path.read_text(encoding="utf-8"))
+        return str(post.get("key") or post.get("idempotency_key") or "").strip()
     except Exception:
         return ""
-    return str(post.get("key") or "").strip()
 
 
 def row_for_key(key: str) -> dict | None:
@@ -83,6 +103,15 @@ def row_for_key(key: str) -> dict | None:
         if str(row.get("key") or "").strip() == key:
             return row
     return None
+
+
+def clear_reservation(batch: pathlib.Path, env: dict[str, str]) -> bool:
+    if not git_sync():
+        return False
+    clear = run([sys.executable, "scripts/reservar_publicacao_instagram.py", "clear", "--batch", str(batch.relative_to(ROOT))], env=env)
+    if clear.returncode != 0:
+        return False
+    return git_commit_push(["instagram/reservas-publicacao.json"], "Libera reserva após publicação confirmada ou adiada")
 
 
 def main() -> int:
@@ -150,17 +179,20 @@ def main() -> int:
         genuinely_new = bool(row and row.get("published_at") and not reconciled)
 
         if confirmed:
-            if not git_sync():
+            if not clear_reservation(batch, env):
                 return 1
-            clear = run([sys.executable, "scripts/reservar_publicacao_instagram.py", "clear", "--batch", str(batch.relative_to(ROOT))], env=env)
-            if clear.returncode != 0:
-                return 1
-            if not git_commit_push(["instagram/reservas-publicacao.json"], "Libera reserva após publicação confirmada"):
-                return 1
-
-        if publish.returncode != 0 and not confirmed:
+        elif publish.returncode != 0:
+            limited, blocked_until = rate_limit_active()
+            if limited:
+                if not clear_reservation(batch, env):
+                    return 1
+                print("continuation_deferred_rate_limit=true")
+                print(f"continuation_resume_after={blocked_until}")
+                print("continuation_action=wait_for_next_automatic_trigger_after_cooldown")
+                return 0
             print("continuation_error=meta_publish_unconfirmed", file=sys.stderr)
             return publish.returncode or 1
+
         if genuinely_new:
             print("continuation_new_post_published=true")
             print(f"continuation_new_post_key={key}")
