@@ -1,33 +1,21 @@
 #!/usr/bin/env python3
-"""Mescla inclusões editoriais, deduplica fatos/eventos e registra novidades para o Instagram."""
-import json, pathlib, re, unicodedata
+"""Restaura o acervo pré-auditoria, remove apenas duplicações confirmadas e mescla o inbox."""
+import json, pathlib, re, subprocess, unicodedata
 from datetime import datetime
 from difflib import SequenceMatcher
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 INBOX = ROOT / 'editorial' / 'inbox.json'
 IG_STATE = ROOT / 'instagram' / 'conteudo-conhecido.json'
+RESTORE_BASE = '32df5cdcbe435ef8c3be95a934be480042be3b42'
 
-# Duplicações já auditadas no acervo. Mantemos o registro canônico e removemos a cópia.
-DROP_EVENT_IDS = {
-    'evt-wifs-20260914',               # dup de EVT-0022
-    'evt-20260824-workshop-sede',      # dup de EVT-0023
-    'evt-7set2026-bsb',                # dup de EVT-20260907-DESFILE-COPA2027
-}
+DROP_EVENT_IDS = {'evt-wifs-20260914','evt-20260824-workshop-sede','evt-7set2026-bsb'}
 DROP_NEWS_LINK_PARTS = {
     'vod.fifa.com/es/news/copa-mundial-femenina-brasil-2027-apertura-plazo-presentacion-solicitudes-programa-voluntariado',
     'futebolbaiano.com.br/2026/09/r-400-milhoes-e-novos-voos-bahia-se-prepara-para-receber-turistas-na-copa.html',
     'gov.br/esporte/pt-br/noticias/sancionada-lei-que-cria-condicoes-para-realizacao-da-copa-do-mundo-feminina-de-2027',
 }
-
-STOP = {
-    'a','as','ao','aos','da','das','de','do','dos','e','em','na','nas','no','nos','o','os','para','por','com','um','uma',
-    'copa','mundo','mundial','feminina','feminino','fifa','brasil','2027','2026','rumo','sobre','durante','nova','novo'
-}
-
-
-def load(path, default):
-    return json.loads(path.read_text(encoding='utf-8')) if path.exists() else default
+STOP = {'a','as','ao','aos','da','das','de','do','dos','e','em','na','nas','no','nos','o','os','para','por','com','um','uma','copa','mundo','mundial','feminina','feminino','fifa','brasil','2027','2026','rumo','sobre','durante'}
 
 
 def norm(v):
@@ -37,178 +25,124 @@ def norm(v):
     return ' '.join(s.split())
 
 
-def tokens(v):
-    return {t for t in norm(v).split() if len(t) > 2 and t not in STOP}
+def url_norm(v):
+    s = str(v or '').strip().casefold().replace('https://','').replace('http://','')
+    if s.startswith('www.'): s = s[4:]
+    return s.rstrip('/')
 
 
-def jac(a, b):
-    a, b = tokens(a), tokens(b)
-    if not a or not b:
-        return 0.0
-    return len(a & b) / len(a | b)
+def tokens(v): return {t for t in norm(v).split() if len(t) > 2 and t not in STOP}
+def jac(a,b):
+    a,b=tokens(a),tokens(b)
+    return len(a&b)/len(a|b) if a and b else 0.0
 
-
-def seq(a, b):
-    return SequenceMatcher(None, norm(a), norm(b)).ratio()
-
-
+def seq(a,b): return SequenceMatcher(None,norm(a),norm(b)).ratio()
 def parse_date(v):
-    try:
-        return datetime.strptime(str(v or '')[:10], '%Y-%m-%d').date()
-    except Exception:
-        return None
+    try: return datetime.strptime(str(v or '')[:10],'%Y-%m-%d').date()
+    except Exception: return None
 
-
-def date_gap(a, b):
-    da, db = parse_date(a), parse_date(b)
+def date_gap(a,b):
+    da,db=parse_date(a),parse_date(b)
     return abs((da-db).days) if da and db else 9999
 
+def load(path, default): return json.loads(path.read_text(encoding='utf-8')) if path.exists() else default
 
-def same_place(a, b, kind):
-    if kind == 'eventos':
-        pa = norm(f"{a.get('Cidade','')} {a.get('UF','')}")
-        pb = norm(f"{b.get('Cidade','')} {b.get('UF','')}")
-    else:
-        pa = norm(a.get('CidadeUF'))
-        pb = norm(b.get('CidadeUF'))
-    return bool(pa and pb and pa == pb)
+def load_from_commit(path):
+    p = subprocess.run(['git','show',f'{RESTORE_BASE}:{path}'], cwd=ROOT, capture_output=True, text=True, check=True)
+    return json.loads(p.stdout)
 
 
-def legislative_progression(a, b):
-    texta = norm(f"{a.get('Titulo','')} {a.get('Resumo','')}")
-    textb = norm(f"{b.get('Titulo','')} {b.get('Resumo','')}")
-    # Câmara -> Senado, projeto -> sanção etc. são desdobramentos, não duplicação.
-    stages = ('camara','senado','sancao','sancionado','presidencia','promulgacao','homologacao')
-    sa = {x for x in stages if x in texta}
-    sb = {x for x in stages if x in textb}
-    return bool(sa and sb and sa != sb)
+def same_place(a,b,kind):
+    pa = norm(f"{a.get('Cidade','')} {a.get('UF','')}") if kind=='eventos' else norm(a.get('CidadeUF'))
+    pb = norm(f"{b.get('Cidade','')} {b.get('UF','')}") if kind=='eventos' else norm(b.get('CidadeUF'))
+    return bool(pa and pb and pa==pb)
 
 
-def is_duplicate(a, b, kind):
-    if kind == 'eventos':
-        if norm(a.get('ID')) and norm(a.get('ID')) == norm(b.get('ID')):
-            return True
-        if norm(a.get('Link')) and norm(a.get('Link')) == norm(b.get('Link')):
-            return True
-        if date_gap(a.get('Data'), b.get('Data')) == 0 and same_place(a, b, kind):
-            tj = jac(a.get('Titulo'), b.get('Titulo'))
-            ts = seq(a.get('Titulo'), b.get('Titulo'))
-            # Mesma data/cidade + títulos semanticamente próximos = mesmo acontecimento.
-            if tj >= 0.48 or ts >= 0.78:
-                return True
+def legislative_progression(a,b):
+    ta=norm(f"{a.get('Titulo','')} {a.get('Resumo','')}"); tb=norm(f"{b.get('Titulo','')} {b.get('Resumo','')}")
+    stages=('camara','senado','sancao','sancionado','presidencia','promulgacao','homologacao')
+    sa={x for x in stages if x in ta}; sb={x for x in stages if x in tb}
+    return bool(sa and sb and sa!=sb)
+
+
+def duplicate_incoming(a,b,kind):
+    # Regras conservadoras para NOVAS inclusões; não varrem retroativamente o acervo inteiro.
+    if kind=='eventos':
+        if norm(a.get('ID')) and norm(a.get('ID'))==norm(b.get('ID')): return True
+        if url_norm(a.get('Link')) and url_norm(a.get('Link'))==url_norm(b.get('Link')): return True
+        if date_gap(a.get('Data'),b.get('Data'))==0 and same_place(a,b,kind):
+            return jac(a.get('Titulo'),b.get('Titulo'))>=0.55 or seq(a.get('Titulo'),b.get('Titulo'))>=0.82
         return False
-
-    # notícias
-    la, lb = norm(a.get('Link')), norm(b.get('Link'))
-    if la and la == lb:
-        return True
-    if norm(a.get('Titulo')) == norm(b.get('Titulo')):
-        return True
-    if legislative_progression(a, b):
-        return False
-    if date_gap(a.get('Data'), b.get('Data')) <= 3 and same_place(a, b, kind):
-        tj = jac(a.get('Titulo'), b.get('Titulo'))
-        ts = seq(a.get('Titulo'), b.get('Titulo'))
-        sj = jac(a.get('Resumo'), b.get('Resumo'))
-        nums_a = set(re.findall(r'\b\d+[\d.,]*\b', norm(a.get('Resumo'))))
-        nums_b = set(re.findall(r'\b\d+[\d.,]*\b', norm(b.get('Resumo'))))
-        distinctive_number = bool(nums_a & nums_b)
-        if tj >= 0.62 or ts >= 0.82:
-            return True
-        if tj >= 0.28 and sj >= 0.36:
-            return True
-        if distinctive_number and tj >= 0.20 and sj >= 0.27:
-            return True
+    if url_norm(a.get('Link')) and url_norm(a.get('Link'))==url_norm(b.get('Link')): return True
+    if norm(a.get('Titulo'))==norm(b.get('Titulo')): return True
+    if legislative_progression(a,b): return False
+    if date_gap(a.get('Data'),b.get('Data'))<=2 and same_place(a,b,kind):
+        # Exige forte proximidade no título. Matérias do mesmo tema com desdobramento diferente permanecem.
+        return jac(a.get('Titulo'),b.get('Titulo'))>=0.70 or seq(a.get('Titulo'),b.get('Titulo'))>=0.86
     return False
 
 
-def cleanup_current(items, kind):
-    kept, removed = [], []
-    for item in items:
-        if kind == 'eventos' and norm(item.get('ID')) in DROP_EVENT_IDS:
-            removed.append(item); continue
-        if kind == 'noticias':
-            link = norm(item.get('Link')).replace(' ', '')
-            if any(norm(p).replace(' ', '') in link for p in DROP_NEWS_LINK_PARTS):
-                removed.append(item); continue
-        dup = next((x for x in kept if is_duplicate(item, x, kind)), None)
-        if dup:
-            removed.append(item)
-        else:
-            kept.append(item)
-    return kept, removed
+def explicit_cleanup(events, news):
+    ev_removed=[]; ev=[]
+    for x in events:
+        if norm(x.get('ID')) in DROP_EVENT_IDS: ev_removed.append(x)
+        else: ev.append(x)
+
+    nw_removed=[]; nw=[]; seen_urls=set()
+    for x in news:
+        u=url_norm(x.get('Link'))
+        if any(url_norm(p) in u for p in DROP_NEWS_LINK_PARTS):
+            nw_removed.append(x); continue
+        # Captura, por exemplo, prefeitura.poa.br e www.prefeitura.poa.br da mesma pauta.
+        if u and u in seen_urls:
+            nw_removed.append(x); continue
+        if u: seen_urls.add(u)
+        nw.append(x)
+    return ev,nw,ev_removed,nw_removed
 
 
-def instagram_key(kind, item):
-    if kind == 'eventos':
-        ident = norm(item.get('ID') or item.get('Titulo'))
-        return f'instagram:evento:{ident}' if ident else ''
-    ident = norm(item.get('Link') or item.get('Titulo'))
-    return f'instagram:noticia:{ident}' if ident else ''
-
-
-def clean_instagram_state(removed_events, removed_news):
-    state = load(IG_STATE, {'known': [], 'pending_new': []})
-    drop = {instagram_key('eventos', x) for x in removed_events} | {instagram_key('noticias', x) for x in removed_news}
-    drop.discard('')
-    known = [k for k in dict.fromkeys(state.get('known', [])) if k not in drop]
-    pending = [k for k in dict.fromkeys(state.get('pending_new', [])) if k not in drop]
-    changed = known != state.get('known', []) or pending != state.get('pending_new', [])
-    if changed:
-        IG_STATE.write_text(json.dumps({'known': known, 'pending_new': pending}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    return changed
-
-
-def merge(target_path, incoming, kind):
-    current = load(target_path, [])
-    current, removed = cleanup_current(current, kind)
-    fresh = []
-    for item in incoming:
-        if any(is_duplicate(item, x, kind) for x in current + fresh):
-            continue
-        fresh.append(item)
-    merged = (fresh + current) if kind == 'noticias' else (current + fresh)
-    original = load(target_path, [])
-    if merged != original:
-        target_path.write_text(json.dumps(merged, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    return fresh, removed
-
-
-def update_instagram_state(new_events, new_news):
-    state = load(IG_STATE, {'known': [], 'pending_new': []})
-    known = list(dict.fromkeys(state.get('known', [])))
-    pending = list(dict.fromkeys(state.get('pending_new', [])))
-    for kind, items in (('eventos', new_events), ('noticias', new_news)):
-        for item in items:
-            key = instagram_key(kind, item)
-            if key and key not in known: known.append(key)
-            if key and key not in pending: pending.append(key)
-    if new_events or new_news:
-        IG_STATE.parent.mkdir(parents=True, exist_ok=True)
-        IG_STATE.write_text(json.dumps({'known': known, 'pending_new': pending}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+def instagram_key(kind,item):
+    if kind=='eventos':
+        ident=norm(item.get('ID') or item.get('Titulo')); return f'instagram:evento:{ident}' if ident else ''
+    ident=norm(item.get('Link') or item.get('Titulo')); return f'instagram:noticia:{ident}' if ident else ''
 
 
 def main():
-    inbox = load(INBOX, {'eventos': [], 'noticias': []})
-    fresh_events, removed_events = merge(ROOT/'dados.json', inbox.get('eventos', []), 'eventos')
-    fresh_news, removed_news = merge(ROOT/'noticias.json', inbox.get('noticias', []), 'noticias')
-    clean_instagram_state(removed_events, removed_news)
-    update_instagram_state(fresh_events, fresh_news)
+    # Recupera exatamente o acervo existente antes da tentativa de limpeza abrangente.
+    events = load_from_commit('dados.json')
+    news = load_from_commit('noticias.json')
+    state = load_from_commit('instagram/conteudo-conhecido.json')
+    events,news,removed_events,removed_news = explicit_cleanup(events,news)
 
-    incoming_events = inbox.get('eventos', [])
-    incoming_news = inbox.get('noticias', [])
-    processed = len(incoming_events) + len(incoming_news)
-    if processed:
-        INBOX.write_text(json.dumps({'eventos': [], 'noticias': []}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    inbox=load(INBOX,{'eventos':[],'noticias':[]})
+    fresh_events=[]
+    for x in inbox.get('eventos',[]):
+        if not any(duplicate_incoming(x,y,'eventos') for y in events+fresh_events): fresh_events.append(x)
+    fresh_news=[]
+    for x in inbox.get('noticias',[]):
+        if not any(duplicate_incoming(x,y,'noticias') for y in news+fresh_news): fresh_news.append(x)
+    events.extend(fresh_events); news=fresh_news+news
 
-    discarded = processed - len(fresh_events) - len(fresh_news)
-    print(f'eventos_incluidos={len(fresh_events)}')
-    print(f'noticias_incluidas={len(fresh_news)}')
+    drop={instagram_key('eventos',x) for x in removed_events}|{instagram_key('noticias',x) for x in removed_news}
+    drop.discard('')
+    known=[k for k in dict.fromkeys(state.get('known',[])) if k not in drop]
+    pending=[k for k in dict.fromkeys(state.get('pending_new',[])) if k not in drop]
+    for kind,items in (('eventos',fresh_events),('noticias',fresh_news)):
+        for x in items:
+            k=instagram_key(kind,x)
+            if k and k not in known: known.append(k)
+            if k and k not in pending: pending.append(k)
+
+    (ROOT/'dados.json').write_text(json.dumps(events,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    (ROOT/'noticias.json').write_text(json.dumps(news,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    IG_STATE.write_text(json.dumps({'known':known,'pending_new':pending},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    if inbox.get('eventos') or inbox.get('noticias'):
+        INBOX.write_text(json.dumps({'eventos':[],'noticias':[]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+
     print(f'eventos_duplicados_removidos={len(removed_events)}')
     print(f'noticias_duplicadas_removidas={len(removed_news)}')
-    print(f'itens_descartados_como_duplicados={discarded}')
-    print(f'instagram_pendentes_adicionados={len(fresh_events)+len(fresh_news)}')
+    print(f'eventos_incluidos={len(fresh_events)}')
+    print(f'noticias_incluidas={len(fresh_news)}')
     return 0
 
-if __name__ == '__main__':
-    raise SystemExit(main())
+if __name__=='__main__': raise SystemExit(main())
