@@ -5,8 +5,13 @@ on:
   schedule:
     - cron: "15 * * * *"
     - cron: "27 * * * *"
+    - cron: "39 * * * *"
+    - cron: "51 * * * *"
   workflow_run:
-    workflows: ["pages build and deployment"]
+    workflows:
+      - "pages build and deployment"
+      - "Mesclar inbox editorial"
+      - "Atualizar site pela planilha do GitHub"
     types: [completed]
   push:
     branches: [main]
