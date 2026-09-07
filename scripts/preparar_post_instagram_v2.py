@@ -154,7 +154,6 @@ def semantic_entity_variants(item):
         add(' '.join(terms[:7]))
         add(' '.join(terms[:5]))
         add(' '.join(terms[:3]))
-    # Entidades e locais conhecidos costumam ter fotos abundantes no Commons.
     entity_patterns = (
         r'\bArena Castelão\b', r'\bCastelão\b', r'\bArena Fonte Nova\b', r'\bFonte Nova\b',
         r'\bMaracanã\b', r'\bMané Garrincha\b', r'\bMineirão\b', r'\bBeira-Rio\b', r'\bNeo Química Arena\b',
@@ -218,8 +217,6 @@ def relaxed_commons_image(item, used):
             overlap = len(item_tokens & image_tokens)
             female = smart.female_signal(descriptor)
             semantic_ok, semantic_reason = base.semantic_image_ok(item, page, meta, query)
-            # Regra relaxada: para local/estádio/instituição, 1 termo forte basta;
-            # para outros temas, aceitamos 2 termos ou sinal feminino + 1 termo.
             acceptable = semantic_ok or (institutional and overlap >= 1) or overlap >= 2 or (female and overlap >= 1)
             if not acceptable:
                 continue
@@ -252,7 +249,6 @@ def relaxed_commons_image(item, used):
             }
     return None
 
-# Substitui a busca Commons rígida da camada anterior por uma busca progressiva.
 smart.find_commons_image = relaxed_commons_image
 
 
@@ -285,8 +281,6 @@ def normalize_image_gate(batch_path='instagram/fila/automatica/lote-atual.json')
         has_external = bool(base.clean(post.get('image_source_url')) or base.clean(post.get('image_page_url')))
         fallback = base.clean(post.get('visual_mode')) == 'fallback_visual'
         if fallback or not has_external:
-            # Fallback textual continua permitido apenas como último recurso,
-            # mas não é mais rotulado como uma foto semântica encontrada.
             post.update({'SEMANTIC_IMAGE_SEARCH_DONE':True,'SEMANTIC_IMAGE_OK':False,'TEXT_FALLBACK':True})
             changed = True
         if changed:
@@ -295,10 +289,35 @@ def normalize_image_gate(batch_path='instagram/fila/automatica/lote-atual.json')
         print('semantic_image_gate_corrected=true')
 
 
-def run_with_quality_retry(max_attempts=5):
+def retry_candidate_key(output):
+    """Extrai o item que deve ser ignorado temporariamente na próxima tentativa."""
+    patterns = (
+        r'^real_photo_candidate_selected=(.+)$',
+        r'^fallback_visual_selected_after_exhausting_candidates=(.+)$',
+        r'^image_search_candidate=(.+)$',
+        r'^quality_gate_failed=(.+)$',
+        r'^real_photo_unavailable=(.+)$',
+    )
+    for pattern in patterns:
+        matches = re.findall(pattern, output, flags=re.M)
+        if matches:
+            return base.clean(matches[-1])
+    return ''
+
+
+def run_with_quality_retry(max_attempts=8):
+    """Continua para outro item quando a combinação atual falha em gates editoriais."""
     blocked_path = pathlib.Path('instagram/bloqueados.json')
     original = blocked_path.read_bytes() if blocked_path.exists() else None
+    recoverable_reasons = {
+        'quality_gate_failed',
+        'duplicate_image_blocked_after_render',
+        'real_photo_unavailable',
+        'image_unique_failed',
+        'title_readability_failed',
+    }
     try:
+        result = 1
         for attempt in range(1, max_attempts + 1):
             capture = io.StringIO()
             with contextlib.redirect_stdout(capture):
@@ -308,22 +327,31 @@ def run_with_quality_retry(max_attempts=5):
             normalize_image_gate()
             if result == 0:
                 return 0
-            if 'reason=quality_gate_failed' not in output:
+
+            reasons = re.findall(r'^reason=([^\n]+)$', output, flags=re.M)
+            reason = base.clean(reasons[-1]) if reasons else ''
+            if reason not in recoverable_reasons and 'reason=quality_gate_failed' not in output:
                 return result
-            m = re.search(r'(?:quality_gate_failed|real_photo_unavailable)=([^\n]+)', output)
-            key = base.clean(m.group(1)) if m else ''
+
+            key = retry_candidate_key(output)
             if not key:
+                print('quality_retry_aborted=no_candidate_key')
                 return result
+
             try:
                 blocked = json.loads(blocked_path.read_text(encoding='utf-8')) if blocked_path.exists() else {}
             except Exception:
                 blocked = {}
             if isinstance(blocked, list):
                 blocked = {str(x):True for x in blocked}
-            blocked[key] = {'reason':'temporary_quality_retry','attempt':attempt}
+            blocked[key] = {'reason':'temporary_quality_retry','attempt':attempt,'failure_reason':reason or 'quality_gate_failed'}
             blocked_path.write_text(json.dumps(blocked, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
             print(f'quality_retry_attempt={attempt}')
+            print('quality_retry_reason=' + (reason or 'quality_gate_failed'))
             print('quality_retry_skipped_key=' + key)
+
+        print('found=false')
+        print('reason=all_quality_candidates_exhausted')
         return result
     finally:
         if original is None:
