@@ -8,7 +8,6 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 INBOX = ROOT / 'editorial' / 'inbox.json'
 IG_STATE = ROOT / 'instagram' / 'conteudo-conhecido.json'
 
-# Duplicações confirmadas na auditoria. A cópia é removida caso reapareça.
 DROP_EVENT_IDS = {
     'evt-wifs-20260914',
     'evt-20260824-workshop-sede',
@@ -18,6 +17,16 @@ DROP_NEWS_LINK_PARTS = {
     'vod.fifa.com/es/news/copa-mundial-femenina-brasil-2027-apertura-plazo-presentacion-solicitudes-programa-voluntariado',
     'futebolbaiano.com.br/2026/09/r-400-milhoes-e-novos-voos-bahia-se-prepara-para-receber-turistas-na-copa.html',
     'gov.br/esporte/pt-br/noticias/sancionada-lei-que-cria-condicoes-para-realizacao-da-copa-do-mundo-feminina-de-2027',
+}
+# Chaves históricas que apontavam para cópias removidas. São retiradas de known/pending_new.
+DROP_IG_KEYS = {
+    'instagram:evento:evt-wifs-20260914',
+    'instagram:evento:evt-20260824-workshop-sede',
+    'instagram:evento:evt-7set2026-bsb',
+    'instagram:noticia:https://vod.fifa.com/es/news/copa-mundial-femenina-brasil-2027-apertura-plazo-presentacion-solicitudes-programa-voluntariado',
+    'instagram:noticia:https://futebolbaiano.com.br/2026/09/r-400-milhoes-e-novos-voos-bahia-se-prepara-para-receber-turistas-na-copa.html',
+    'instagram:noticia:https://www.gov.br/esporte/pt-br/noticias/sancionada-lei-que-cria-condicoes-para-realizacao-da-copa-do-mundo-feminina-de-2027',
+    'instagram:noticia:https://www.prefeitura.poa.br/secopa2027/noticias/pioneiras-da-dupla-gre-nal-se-reunem-com-secopa-para-alinhar-acoes-para-copa-do',
 }
 STOP = {
     'a','as','ao','aos','da','das','de','do','dos','e','em','na','nas','no','nos','o','os','para','por','com','um','uma',
@@ -34,6 +43,11 @@ def norm(v):
     s = ''.join(c for c in unicodedata.normalize('NFKD', s) if not unicodedata.combining(c))
     s = re.sub(r'[^a-z0-9]+', ' ', s)
     return ' '.join(s.split())
+
+
+def key_norm(v):
+    # Compatível com o formato histórico de instagram/conteudo-conhecido.json.
+    return ' '.join(str(v or '').strip().casefold().split())
 
 
 def raw_id(v):
@@ -92,7 +106,7 @@ def legislative_progression(a,b):
 
 
 def duplicate_incoming(a,b,kind):
-    """Deduplicação conservadora para novas inclusões; fonte diferente não cria fato novo."""
+    """Deduplicação conservadora: fonte/URL diferente, sozinha, não cria fato novo."""
     if kind == 'eventos':
         if norm(a.get('ID')) and norm(a.get('ID')) == norm(b.get('ID')):
             return True
@@ -127,7 +141,6 @@ def explicit_cleanup(events, news):
         if any(url_norm(p) in u for p in DROP_NEWS_LINK_PARTS):
             nw_removed.append(x)
             continue
-        # URLs iguais com ou sem www são a mesma matéria/fonte.
         if u and u in seen_urls:
             nw_removed.append(x)
             continue
@@ -139,9 +152,9 @@ def explicit_cleanup(events, news):
 
 def instagram_key(kind,item):
     if kind == 'eventos':
-        ident=norm(item.get('ID') or item.get('Titulo'))
+        ident=key_norm(item.get('ID') or item.get('Titulo'))
         return f'instagram:evento:{ident}' if ident else ''
-    ident=norm(item.get('Link') or item.get('Titulo'))
+    ident=key_norm(item.get('Link') or item.get('Titulo'))
     return f'instagram:noticia:{ident}' if ident else ''
 
 
@@ -169,15 +182,22 @@ def main():
     events.extend(fresh_events)
     news=fresh_news+news
 
-    drop={instagram_key('eventos',x) for x in removed_events}|{instagram_key('noticias',x) for x in removed_news}
+    drop=set(DROP_IG_KEYS)
+    drop |= {instagram_key('eventos',x) for x in removed_events}
+    drop |= {instagram_key('noticias',x) for x in removed_news}
     drop.discard('')
-    known=[k for k in dict.fromkeys(state.get('known',[])) if k not in drop]
-    pending=[k for k in dict.fromkeys(state.get('pending_new',[])) if k not in drop]
-    for kind,items in (('eventos',fresh_events),('noticias',fresh_news)):
+    known=[k for k in dict.fromkeys(state.get('known',[])) if key_norm(k) not in {key_norm(d) for d in drop}]
+    pending=[k for k in dict.fromkeys(state.get('pending_new',[])) if key_norm(k) not in {key_norm(d) for d in drop}]
+
+    # Garante que cada registro canônico existente tenha sua chave histórica correta.
+    for kind,items in (('eventos',events),('noticias',news)):
         for x in items:
             k=instagram_key(kind,x)
             if k and k not in known:
                 known.append(k)
+    for kind,items in (('eventos',fresh_events),('noticias',fresh_news)):
+        for x in items:
+            k=instagram_key(kind,x)
             if k and k not in pending:
                 pending.append(k)
     state={'known':known,'pending_new':pending}
@@ -197,6 +217,7 @@ def main():
     print(f'eventos_incluidos={len(fresh_events)}')
     print(f'noticias_incluidas={len(fresh_news)}')
     print(f'itens_descartados_como_duplicados={discarded}')
+    print(f'chaves_instagram_removidas={len(drop)}')
     return 0
 
 if __name__=='__main__':
