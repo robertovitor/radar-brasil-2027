@@ -23,14 +23,6 @@
       "last_attempt_at": "2026-09-06T20:35:35.356354+00:00",
       "attempts": 1,
       "requires_strict_reconciliation": false
-    },
-    {
-      "key": "instagram:noticia:https://www.sinj.df.gov.br/sinj/textoarquivodiario.aspx?id_file=afb86271-9977-31e0-ae59-86b99234ddbb",
-      "post_file": "instagram/fila/automatica/j-textoarquivodiario-aspx-id-file-afb86271-9977-31e0-ae59-86b99234ddbb-e64399a9ba.json",
-      "reserved_at": "2026-09-07T16:12:09.034750+00:00",
-      "last_attempt_at": "2026-09-07T16:12:09.034750+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
     }
   ]
 }
