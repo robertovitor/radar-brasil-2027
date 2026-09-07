@@ -25,20 +25,20 @@
       "requires_strict_reconciliation": false
     },
     {
-      "key": "instagram:evento:evt-enff-20260924",
-      "post_file": "instagram/fila/automatica/instagram-evento-evt-enff-20260924-07c7fe74ba.json",
-      "reserved_at": "2026-09-05T22:55:25.504181+00:00",
-      "last_attempt_at": "2026-09-05T22:55:25.504181+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false
-    },
-    {
       "key": "instagram:noticia:https://futebolbaiano.com.br/2026/09/r-400-milhoes-e-novos-voos-bahia-se-prepara-para-receber-turistas-na-copa.html",
       "post_file": "instagram/fila/automatica/lhoes-e-novos-voos-bahia-se-prepara-para-receber-turistas-na-copa-html-b7503c20a4.json",
       "reserved_at": "2026-09-06T20:35:35.356354+00:00",
       "last_attempt_at": "2026-09-06T20:35:35.356354+00:00",
       "attempts": 1,
       "requires_strict_reconciliation": false
+    },
+    {
+      "key": "instagram:evento:evt-enff-20260924",
+      "post_file": "instagram/fila/automatica/instagram-evento-evt-enff-20260924-07c7fe74ba.json",
+      "reserved_at": "2026-09-07T14:20:16.726444+00:00",
+      "last_attempt_at": "2026-09-07T14:20:16.726444+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
