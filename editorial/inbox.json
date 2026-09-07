@@ -1,4 +1,26 @@
 {
-  "eventos": [],
+  "eventos": [
+    {
+      "ID": "EVT-7SET2026-BSB",
+      "Titulo": "Desfile de 7 de Setembro destaca Copa Feminina 2027 em Brasília",
+      "Status": "Planejado",
+      "Data": "2026-09-07",
+      "DataBR": "07/09/2026",
+      "UF": "DF",
+      "Cidade": "Brasília",
+      "Categoria": "Evento público / ativação institucional",
+      "Organizador": "Governo Federal",
+      "Publico": 30000,
+      "Patrocinador": "",
+      "Local": "Esplanada dos Ministérios",
+      "Latitude": -15.7939,
+      "Longitude": -47.8828,
+      "Link": "https://www.poder360.com.br/poder-eleicoes-2026/7-de-setembro-tera-lula-na-esplanada-e-flavio-na-paulista/",
+      "Observacoes": "O desfile cívico-militar de 7 de Setembro de 2026, previsto para ocorrer das 9h às 11h na Esplanada dos Ministérios, terá a Copa do Mundo Feminina de 2027 entre seus três eixos temáticos, ao lado de soberania nacional e combate ao feminicídio. A programação prevê representação do tema do Mundial em uma celebração pública com expectativa de cerca de 30 mil pessoas. A Agência Brasil confirmou data, horário, local, público estimado e operação especial de transporte e segurança para o evento.",
+      "Mes": "Set",
+      "Ano": 2026,
+      "Regiao": "Centro-Oeste"
+    }
+  ],
   "noticias": []
 }
