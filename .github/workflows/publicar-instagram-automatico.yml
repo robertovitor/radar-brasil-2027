@@ -86,7 +86,7 @@ jobs:
       - name: Instalar processamento de imagens
         run: pip install pillow==11.3.0
       - name: Atualizar estado antes da seleção
-        run: git pull --rebase origin main
+        run: git pull --rebase --autostash origin main
       - name: Verificar cooldown da Meta
         id: meta_cooldown
         shell: bash
@@ -151,13 +151,13 @@ jobs:
             echo "prepare_commit_skipped=no_changes"
           else
             git commit -m "Prepara post com imagem única"
-            git pull --rebase origin main
+            git pull --rebase --autostash origin main
             git push origin HEAD:main
           fi
       - name: Reservar publicação antes de chamar a Meta
         if: steps.selecionar.outputs.found == 'true'
         run: |
-          git pull --rebase origin main
+          git pull --rebase --autostash origin main
           python scripts/reservar_publicacao_instagram.py reserve --batch "${{ steps.selecionar.outputs.batch_file }}"
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -166,7 +166,7 @@ jobs:
             echo "reservation_commit_skipped=no_changes"
           else
             git commit -m "Reserva post antes da publicação no Instagram"
-            git pull --rebase origin main
+            git pull --rebase --autostash origin main
             git push origin HEAD:main
           fi
       - name: Publicar somente o item selecionado
@@ -193,7 +193,7 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add instagram/publicados.json
           git commit -m "Registra publicação confirmada no Instagram"
-          git pull --rebase origin main
+          git pull --rebase --autostash origin main
           git push origin HEAD:main
           echo "ledger_changed=true" >> "$GITHUB_OUTPUT"
       - name: Persistir estado de rate limit da Meta
@@ -204,7 +204,7 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add instagram/meta-rate-limit.json
           git commit -m "Atualiza cooldown de rate limit da Meta"
-          git pull --rebase origin main
+          git pull --rebase --autostash origin main
           git push origin HEAD:main
       - name: Determinar resultado efetivo da publicação
         id: resultado_publicacao
@@ -262,7 +262,7 @@ jobs:
       - name: Limpar reserva após sucesso confirmado ou reconciliado
         if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.confirmed == 'true'
         run: |
-          git pull --rebase origin main
+          git pull --rebase --autostash origin main
           python scripts/reservar_publicacao_instagram.py clear --batch "${{ steps.selecionar.outputs.batch_file }}"
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -271,7 +271,7 @@ jobs:
             echo "reservation_clear_commit_skipped=no_changes"
           else
             git commit -m "Libera reserva após publicação confirmada"
-            git pull --rebase origin main
+            git pull --rebase --autostash origin main
             git push origin HEAD:main
           fi
       - name: Sinalizar somente falha real de publicação
