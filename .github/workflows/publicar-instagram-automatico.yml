@@ -128,7 +128,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          output="$(python scripts/preparar_post_instagram_v2.py 2>&1)"
+          output="$(PYTHONPATH=scripts python scripts/preparar_post_instagram_v2.py 2>&1)"
           status=$?
           set -e
           echo "$output"
@@ -139,9 +139,9 @@ jobs:
           echo "batch_file=$batch" >> "$GITHUB_OUTPUT"
           echo "reason=${reason:-none}" >> "$GITHUB_OUTPUT"
           if [ "$status" -ne 0 ]; then
-            if [ "$reason" = "quality_gate_failed" ]; then
+            if [ "$reason" = "quality_gate_failed" ] || [ "$reason" = "all_quality_candidates_exhausted" ]; then
               echo "quality_gate_blocked=true"
-              echo "O item foi reprovado pelos gates de qualidade; nenhum post foi enviado à Meta nesta tentativa."
+              echo "Os candidatos disponíveis foram reprovados pelos gates editoriais; nenhum post foi enviado à Meta nesta tentativa."
               exit 0
             fi
             exit "$status"
