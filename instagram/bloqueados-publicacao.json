@@ -1,6 +1,57 @@
 {
   "blocked_keys": [
-    "instagram:noticia:https://ge.globo.com/futebol/copa-do-mundo-feminina/noticia/2026/09/03/governo-e-consorcio-fla-flu-preparam-reforma-de-r-25-milhoes-em-tribuna-do-maracana-para-a-copa-de-2027.ghtml"
+    "instagram:evento:evt-0071",
+    "instagram:evento:evt-editorial-20260903-futebol-cidadania",
+    "instagram:noticia:https://ge.globo.com/futebol/copa-do-mundo-feminina/noticia/2026/08/14/copa-do-mundo-2027-calendario-sera-revelado-dia-20-de-agosto.ghtml",
+    "instagram:noticia:https://ge.globo.com/futebol/copa-do-mundo-feminina/noticia/2026/09/03/governo-e-consorcio-fla-flu-preparam-reforma-de-r-25-milhoes-em-tribuna-do-maracana-para-a-copa-de-2027.ghtml",
+    "instagram:noticia:https://prefeitura.poa.br/secopa2027/noticias/pioneiras-da-dupla-gre-nal-se-reunem-com-secopa-para-alinhar-acoes-para-copa-do",
+    "instagram:noticia:https://www.camara.leg.br/noticias/1301485-camara-aprova-autonomia-de-escolas-para-ajustar-calendario-na-copa-do-mundo-feminina",
+    "instagram:noticia:https://www.meioemensagem.com.br/midia/sportv-faz-evento-para-celebrar-protagonismo-feminino",
+    "instagram:noticia:https://www.oliberal.com/esportes/nao-da-para-falar-em-paixao-nacional-so-valorizando-o-masculino-diz-secretaria-da-copa-1.1153852"
   ],
-  "reason": "Pauta já publicada no Instagram; bloqueio preventivo após detecção de repetição em 2026-09-04."
+  "reason": "Pauta já publicada no Instagram; bloqueio preventivo após detecção de repetição em 2026-09-04.",
+  "duplicate_reasons": {
+    "instagram:noticia:https://prefeitura.poa.br/secopa2027/noticias/pioneiras-da-dupla-gre-nal-se-reunem-com-secopa-para-alinhar-acoes-para-copa-do": {
+      "reason": "duplicate_story_already_published",
+      "matches": "instagram:noticia:https://www.prefeitura.poa.br/secopa2027/noticias/pioneiras-da-dupla-gre-nal-se-reunem-com-secopa-para-alinhar-acoes-para-copa-do",
+      "candidate_title": "Porto Alegre articula participação de pioneiras do Gre-Nal na programação da Copa Feminina 2027",
+      "published_title": "Porto Alegre articula participação de pioneiras do Gre-Nal na programação da Copa 2027 A Secopa 2027 de Porto Alegre reuniu em 03/09/2026 cinco pioneiras do futebol feminino de Grêmio e Internacional para discutir formas de integrar a trajetória dessas atletas à programação local da Copa do Mundo Feminina 2027. A iniciativa conecta memória, legado e engajamento da cidade-sede, que receberá sete partidas do torneio. Fonte: Prefeitura de Porto Alegre #RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino Saiba mais pelo link da Bio"
+    },
+    "instagram:noticia:https://www.camara.leg.br/noticias/1301485-camara-aprova-autonomia-de-escolas-para-ajustar-calendario-na-copa-do-mundo-feminina": {
+      "reason": "duplicate_story_already_published",
+      "matches": "instagram:noticia:https://www12.senado.leg.br/noticias/senado-agora/2026/09/02/copa-feminina-de-futebol",
+      "candidate_title": "Câmara torna facultativo o ajuste das férias escolares durante a Copa Feminina 2027",
+      "published_title": "Congresso torna facultativo ajuste das férias escolares durante a Copa Feminina 2027 O Senado aprovou em 02/09/2026 o PL 3.481/2026, que torna facultativo o ajuste dos calendários escolares para coincidir com a Copa do Mundo Feminina de 2027. A Câmara havia aprovado o texto em 31/08/2026. A proposta altera a regra da Lei Geral da Copa que previa ajuste obrigatório e segue para sanção presidencial. A mudança afeta a organização social e educacional durante o torneio e pode influenciar a participação de famílias, estudantes e comunidades nas ações ligadas ao Mundial. Fonte: Agência Senado / Câmara dos Deputados #RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino Saiba mais pelo link da Bio"
+    },
+    "instagram:noticia:https://www.meioemensagem.com.br/midia/sportv-faz-evento-para-celebrar-protagonismo-feminino": {
+      "reason": "duplicate_story_already_published",
+      "matches": "instagram:evento:evt-0091",
+      "candidate_title": "Sportv lança campanha e debate cobertura da Copa 2027 no Festival Feitas de Esporte",
+      "published_title": "Festival Feitas de Esporte debate a cobertura da Copa Feminina 2027 Quando: 30/08/2026 Onde: Nossa Arena, São Paulo, SP Festival programado para 30/08/2026, das 9h às 13h, com atividades esportivas, debates, brunch e lançamento da campanha do Sportv sobre futebol feminino. A programação inclui bate-papo específico sobre a cobertura do canal para a Copa do Mundo Feminina 2027, com Alline Calandrini, Júlia Vergueiro e convidados, além da entrega de novos vestiários e apresentação de Alline como embaixadora do projeto. Fonte: Sportv / Nossa Arena #RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino Saiba mais pelo link da Bio"
+    },
+    "instagram:noticia:https://ge.globo.com/futebol/copa-do-mundo-feminina/noticia/2026/08/14/copa-do-mundo-2027-calendario-sera-revelado-dia-20-de-agosto.ghtml": {
+      "reason": "duplicate_story_already_published",
+      "matches": "instagram:evento:evt-0016",
+      "candidate_title": "FIFA confirma evento de 20/08 para revelar calendário e sorteio da repescagem",
+      "published_title": "Divulgação do calendário e das cidades dos jogos da Copa Quando: 20/08/2026 Onde: Sede da FIFA, Zurique / transmissão online, São Paulo, SP Evento em 20/08, às 9h de Brasília: divulgação do calendário e distribuição de jogos por sede, cidades dos jogos do Brasil e sorteio da fase preliminar da repescagem. Fonte: FIFA #RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino Saiba mais pelo link da Bio"
+    },
+    "instagram:noticia:https://www.oliberal.com/esportes/nao-da-para-falar-em-paixao-nacional-so-valorizando-o-masculino-diz-secretaria-da-copa-1.1153852": {
+      "reason": "duplicate_story_already_published",
+      "matches": "instagram:evento:evt-0013",
+      "candidate_title": "Painel debate legado da Copa 2027 no Summit Mulheres nas Profissões",
+      "published_title": "Painel sobre legado da Copa no Summit Mulheres nas Profissões Quando: 04/08/2026 Onde: Expo Center Norte, São Paulo, SP Summit Mulheres nas Profissões (4–5/08): painel sobre a Copa do Mundo Feminina FIFA 2027, legado e valorização do futebol feminino. Fonte: Grupo Mulheres do Brasil / parceiros #RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino Saiba mais pelo link da Bio"
+    },
+    "instagram:evento:evt-0071": {
+      "reason": "duplicate_story_already_published",
+      "matches": "instagram:evento:evt-0055",
+      "candidate_title": "Caravana do Futebol Feminino Petrobras em São Paulo",
+      "published_title": "Prêmio TV Brasil Petrobras Para Elas celebra o futebol feminino Quando: 15/11/2026 Onde: Local a definir, São Paulo, SP Primeira edição do Prêmio TV Brasil Petrobras Para Elas, marcada para 15/11/2026, em São Paulo, com transmissão ao vivo pela TV Brasil e YouTube. A premiação reconhece atletas, treinadoras, clubes, departamentos e iniciativas relevantes para o fortalecimento do futebol feminino brasileiro. A fonte oficial confirma cidade e data, mas não informa o local físico. Fonte: TV Brasil / EBC / Petrobras #RadarBrasil2027 #CopaFeminina2027 #FutebolFeminino Saiba mais pelo link da Bio"
+    },
+    "instagram:evento:evt-editorial-20260903-futebol-cidadania": {
+      "reason": "duplicate_story_already_published",
+      "matches": "instagram:noticia:https://jornalgrandebahia.com.br/2026/09/futebol-feminino-e-copa-do-mundo-2027-painel-em-salvador-debate-seguranca-e-abre-inscricoes-para-voluntarios/",
+      "candidate_title": "Painel Futebol & Cidadania debate segurança e legado da Copa Feminina 2027 em Salvador",
+      "published_title": "Painel em Salvador conecta proteção no esporte e legado da Copa Feminina 2027 Painel Futebol & Cidadania, realizado em 03/09/2026 no Colégio Estadual Professor Rômulo Almeida, em Salvador, reuniu Setre, IPIE, UFBA e comunidade escolar para discutir proteção e prevenção de abusos no esporte, formação profissional e legado ligado à Copa Feminina 2027. O encontro também anunciou mapeamento de projetos de futebol feminino em escolas de tempo integral e apresentou propostas de Centro de Referência do Futebol Feminino e plano estadual de formação para árbitras, treinadoras e gestoras. Fonte: Jornal Grande Bahia / GovBA #RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino Saiba mais pelo link da Bio"
+    }
+  }
 }
