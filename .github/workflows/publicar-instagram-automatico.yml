@@ -178,13 +178,22 @@ jobs:
         id: publicar
         if: steps.selecionar.outputs.found == 'true'
         continue-on-error: true
+        shell: bash
         env:
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_GRAPH_VERSION: v25.0
           META_RATE_LIMIT_STATE: instagram/meta-rate-limit.json
           META_RATE_LIMIT_COOLDOWN_MINUTES: "60"
-        run: python scripts/publicar_lote_instagram.py --batch "${{ steps.selecionar.outputs.batch_file }}" --ledger instagram/publicados.json
+        run: |
+          set +e
+          output="$(python scripts/publicar_lote_instagram.py --batch "${{ steps.selecionar.outputs.batch_file }}" --ledger instagram/publicados.json 2>&1)"
+          status=$?
+          set -e
+          echo "$output"
+          reconciled="$(echo "$output" | sed -n 's/^reconciled_existing_continue=//p' | tail -1)"
+          echo "reconciled_existing=${reconciled:-false}" >> "$GITHUB_OUTPUT"
+          exit "$status"
       - name: Registrar publicação confirmada ou reconciliada
         id: registrar_publicacao
         if: always() && steps.selecionar.outputs.found == 'true'
@@ -258,6 +267,9 @@ jobs:
               confirmed = True
               reason = "meta_call_success"
 
+          if r'''${{ steps.publicar.outputs.reconciled_existing }}'''.strip().lower() == "true":
+              reason = "meta_reconciled_existing"
+
           print(f"publication_confirmed={str(confirmed).lower()}")
           print(f"publication_result_reason={reason}")
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
@@ -279,6 +291,27 @@ jobs:
             git pull --rebase --autostash origin main
             git push origin HEAD:main
           fi
+      - name: Continuar imediatamente após reconciliar post existente
+        if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.confirmed == 'true' && steps.publicar.outputs.reconciled_existing == 'true'
+        shell: bash
+        run: |
+          git pull --rebase --autostash origin main
+          python - <<'PY'
+          import datetime as dt
+          from pathlib import Path
+          now = dt.datetime.now(dt.timezone(dt.timedelta(hours=-3)))
+          Path("instagram/executar-automatico.txt").write_text(
+              f"{now.isoformat(timespec='seconds')} continuar-apos-reconciliacao-{now.strftime('%Y%m%dT%H%M%S')}\n",
+              encoding="utf-8",
+          )
+          PY
+          git config user.name "radar-instagram-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add instagram/executar-automatico.txt
+          git commit -m "Continua busca após reconciliar post existente"
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
+          echo "continuation_triggered=true"
       - name: Sinalizar somente falha real de publicação
         if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.confirmed != 'true'
         run: |
