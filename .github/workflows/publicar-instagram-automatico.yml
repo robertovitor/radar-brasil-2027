@@ -46,19 +46,13 @@ jobs:
           import json
           import os
           from pathlib import Path
-
           ledger = Path("instagram/publicados.json")
           eligible = True
           elapsed = None
-
           if ledger.exists():
               try:
                   data = json.loads(ledger.read_text(encoding="utf-8"))
-                  stamps = [
-                      row.get("published_at")
-                      for row in data.get("published", [])
-                      if isinstance(row, dict) and row.get("published_at")
-                  ]
+                  stamps = [row.get("published_at") for row in data.get("published", []) if isinstance(row, dict) and row.get("published_at") and not row.get("reconciled_from_remote")]
                   if stamps:
                       last = max(dt.datetime.fromisoformat(str(stamp).replace("Z", "+00:00")) for stamp in stamps)
                       if last.tzinfo is None:
@@ -67,8 +61,6 @@ jobs:
                       eligible = elapsed >= 3600
               except Exception as exc:
                   print(f"interval_check_warning={exc}")
-                  eligible = True
-
           print(f"interval_elapsed_seconds={int(elapsed) if elapsed is not None else 'none'}")
           print(f"interval_eligible={str(eligible).lower()}")
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
@@ -92,6 +84,7 @@ jobs:
         run: pip install pillow==11.3.0
       - name: Atualizar estado antes da seleção
         run: git pull --rebase --autostash origin main
+
       - name: Verificar cooldown da Meta
         id: meta_cooldown
         shell: bash
@@ -121,7 +114,15 @@ jobs:
               print(f"meta_cooldown_until={blocked_until}")
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
               output.write(f"blocked={str(blocked).lower()}\n")
+              output.write(f"blocked_until={blocked_until}\n")
           PY
+      - name: Aguardar próximo gatilho quando cooldown estiver ativo
+        if: steps.meta_cooldown.outputs.blocked == 'true'
+        run: |
+          echo "meta_rate_limit_deferred=true"
+          echo "meta_rate_limit_resume_after=${{ steps.meta_cooldown.outputs.blocked_until }}"
+          echo "Nenhuma chamada à Meta será feita durante o cooldown. O próximo gatilho após o horário de liberação tentará novamente."
+
       - name: Selecionar conteúdo com busca semântica e título completo
         id: selecionar
         if: steps.meta_cooldown.outputs.blocked != 'true'
@@ -141,24 +142,23 @@ jobs:
           if [ "$status" -ne 0 ]; then
             if [ "$reason" = "quality_gate_failed" ] || [ "$reason" = "all_quality_candidates_exhausted" ]; then
               echo "quality_gate_blocked=true"
-              echo "Os candidatos disponíveis foram reprovados pelos gates editoriais; nenhum post foi enviado à Meta nesta tentativa."
               exit 0
             fi
             exit "$status"
           fi
+
       - name: Salvar imagem e fila aprovadas
         if: steps.selecionar.outputs.found == 'true'
         run: |
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
           git add instagram/artes instagram/fila/automatica
-          if git diff --cached --quiet; then
-            echo "prepare_commit_skipped=no_changes"
-          else
+          if ! git diff --cached --quiet; then
             git commit -m "Prepara post com imagem única"
             git pull --rebase --autostash origin main
             git push origin HEAD:main
           fi
+
       - name: Reservar publicação antes de chamar a Meta
         if: steps.selecionar.outputs.found == 'true'
         run: |
@@ -167,13 +167,12 @@ jobs:
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
           git add instagram/reservas-publicacao.json
-          if git diff --cached --quiet; then
-            echo "reservation_commit_skipped=no_changes"
-          else
+          if ! git diff --cached --quiet; then
             git commit -m "Reserva post antes da publicação no Instagram"
             git pull --rebase --autostash origin main
             git push origin HEAD:main
           fi
+
       - name: Publicar somente o item selecionado
         id: publicar
         if: steps.selecionar.outputs.found == 'true'
@@ -191,25 +190,20 @@ jobs:
           status=$?
           set -e
           echo "$output"
-          reconciled="$(echo "$output" | sed -n 's/^reconciled_existing_continue=//p' | tail -1)"
-          echo "reconciled_existing=${reconciled:-false}" >> "$GITHUB_OUTPUT"
+          echo "status=$status" >> "$GITHUB_OUTPUT"
           exit "$status"
+
       - name: Registrar publicação confirmada ou reconciliada
-        id: registrar_publicacao
         if: always() && steps.selecionar.outputs.found == 'true'
-        shell: bash
         run: |
-          if git diff --quiet -- instagram/publicados.json; then
-            echo "ledger_changed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
+          if git diff --quiet -- instagram/publicados.json; then exit 0; fi
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
           git add instagram/publicados.json
           git commit -m "Registra publicação confirmada no Instagram"
           git pull --rebase --autostash origin main
           git push origin HEAD:main
-          echo "ledger_changed=true" >> "$GITHUB_OUTPUT"
+
       - name: Persistir estado de rate limit da Meta
         if: always() && steps.selecionar.outputs.found == 'true'
         run: |
@@ -220,100 +214,111 @@ jobs:
           git commit -m "Atualiza cooldown de rate limit da Meta"
           git pull --rebase --autostash origin main
           git push origin HEAD:main
+
       - name: Determinar resultado efetivo da publicação
         id: resultado_publicacao
         if: always() && steps.selecionar.outputs.found == 'true'
         shell: bash
         run: |
+          git pull --rebase --autostash origin main
           python - <<'PY'
+          import datetime as dt
           import json
           import os
           from pathlib import Path
 
           batch_path = Path(r'''${{ steps.selecionar.outputs.batch_file }}''')
           ledger_path = Path("instagram/publicados.json")
-          confirmed = False
-          reason = "not_confirmed"
-
+          rate_path = Path("instagram/meta-rate-limit.json")
+          key = ""
           try:
-              batch = json.loads(batch_path.read_text(encoding="utf-8")) if batch_path.exists() else {}
-              ledger = json.loads(ledger_path.read_text(encoding="utf-8")) if ledger_path.exists() else {}
+              batch = json.loads(batch_path.read_text(encoding="utf-8"))
+              posts = batch.get("posts", []) if isinstance(batch, dict) else []
+              if posts:
+                  post = json.loads(Path(str(posts[0])).read_text(encoding="utf-8"))
+                  key = str(post.get("key") or post.get("idempotency_key") or "").strip()
+          except Exception as exc:
+              print(f"result_batch_warning={exc}")
 
-              candidates = batch if isinstance(batch, list) else batch.get("items") or batch.get("posts") or batch.get("queue") or [batch]
-              if not isinstance(candidates, list):
-                  candidates = [candidates]
-              published = ledger.get("published", []) if isinstance(ledger, dict) else []
-
-              def values(obj):
-                  if not isinstance(obj, dict):
-                      return set()
-                  keys = ("id", "post_id", "source_id", "queue_id", "slug", "title", "titulo", "url", "link", "batch_id")
-                  return {str(obj.get(k)).strip() for k in keys if obj.get(k) is not None and str(obj.get(k)).strip()}
-
-              candidate_values = set()
-              for item in candidates:
-                  candidate_values |= values(item)
-
-              for row in published if isinstance(published, list) else []:
-                  if candidate_values and (candidate_values & values(row)):
-                      confirmed = True
-                      reason = "ledger_match"
+          row = None
+          try:
+              ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+              for item in reversed(ledger.get("published", [])):
+                  if isinstance(item, dict) and key and str(item.get("key") or "").strip() == key:
+                      row = item
                       break
           except Exception as exc:
-              print(f"effective_result_warning={exc}")
+              print(f"result_ledger_warning={exc}")
 
-          publish_outcome = r'''${{ steps.publicar.outcome }}'''.strip().lower()
-          if publish_outcome == "success":
-              confirmed = True
-              reason = "meta_call_success"
+          confirmed = bool(row and row.get("instagram_media_id"))
+          reconciled = bool(row and row.get("reconciled_from_remote"))
+          genuinely_new = bool(row and row.get("published_at") and not reconciled)
+          deferred = False
+          blocked_until = ""
+          if not confirmed and rate_path.exists():
+              try:
+                  state = json.loads(rate_path.read_text(encoding="utf-8"))
+                  raw = str(state.get("blocked_until") or "").strip()
+                  if state.get("active") and raw:
+                      until = dt.datetime.fromisoformat(raw.replace("Z", "+00:00"))
+                      if until.tzinfo is None:
+                          until = until.replace(tzinfo=dt.timezone.utc)
+                      deferred = dt.datetime.now(dt.timezone.utc) < until.astimezone(dt.timezone.utc)
+                      blocked_until = until.astimezone(dt.timezone.utc).isoformat()
+              except Exception as exc:
+                  print(f"result_rate_limit_warning={exc}")
 
-          if r'''${{ steps.publicar.outputs.reconciled_existing }}'''.strip().lower() == "true":
-              reason = "meta_reconciled_existing"
-
+          reason = "published_new" if genuinely_new else "meta_reconciled_existing" if reconciled else "meta_rate_limit_deferred" if deferred else "not_confirmed"
           print(f"publication_confirmed={str(confirmed).lower()}")
+          print(f"publication_reconciled={str(reconciled).lower()}")
+          print(f"publication_genuinely_new={str(genuinely_new).lower()}")
+          print(f"publication_deferred={str(deferred).lower()}")
           print(f"publication_result_reason={reason}")
+          if blocked_until:
+              print(f"publication_resume_after={blocked_until}")
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
               output.write(f"confirmed={str(confirmed).lower()}\n")
+              output.write(f"reconciled={str(reconciled).lower()}\n")
+              output.write(f"genuinely_new={str(genuinely_new).lower()}\n")
+              output.write(f"deferred={str(deferred).lower()}\n")
+              output.write(f"blocked_until={blocked_until}\n")
               output.write(f"reason={reason}\n")
           PY
-      - name: Limpar reserva após sucesso confirmado ou reconciliado
-        if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.confirmed == 'true'
+
+      - name: Liberar reserva após confirmação ou rate limit
+        if: always() && steps.selecionar.outputs.found == 'true' && (steps.resultado_publicacao.outputs.confirmed == 'true' || steps.resultado_publicacao.outputs.deferred == 'true')
         run: |
           git pull --rebase --autostash origin main
           python scripts/reservar_publicacao_instagram.py clear --batch "${{ steps.selecionar.outputs.batch_file }}"
           git config user.name "radar-instagram-bot"
           git config user.email "actions@users.noreply.github.com"
           git add instagram/reservas-publicacao.json
-          if git diff --cached --quiet; then
-            echo "reservation_clear_commit_skipped=no_changes"
-          else
-            git commit -m "Libera reserva após publicação confirmada"
+          if ! git diff --cached --quiet; then
+            git commit -m "Libera reserva após publicação confirmada ou adiada"
             git pull --rebase --autostash origin main
             git push origin HEAD:main
           fi
-      - name: Continuar imediatamente após reconciliar post existente
-        if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.confirmed == 'true' && steps.publicar.outputs.reconciled_existing == 'true'
-        shell: bash
+
+      - name: Continuar na mesma rodada após reconciliar post existente
+        if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.reconciled == 'true'
+        env:
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_GRAPH_VERSION: v25.0
+          META_RATE_LIMIT_STATE: instagram/meta-rate-limit.json
+          META_RATE_LIMIT_COOLDOWN_MINUTES: "60"
+          INSTAGRAM_CONTINUATION_MAX_ATTEMPTS: "8"
+        run: python scripts/continuar_publicacao_instagram.py
+
+      - name: Registrar adiamento por rate limit sem falhar o workflow
+        if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.deferred == 'true'
         run: |
-          git pull --rebase --autostash origin main
-          python - <<'PY'
-          import datetime as dt
-          from pathlib import Path
-          now = dt.datetime.now(dt.timezone(dt.timedelta(hours=-3)))
-          Path("instagram/executar-automatico.txt").write_text(
-              f"{now.isoformat(timespec='seconds')} continuar-apos-reconciliacao-{now.strftime('%Y%m%dT%H%M%S')}\n",
-              encoding="utf-8",
-          )
-          PY
-          git config user.name "radar-instagram-bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add instagram/executar-automatico.txt
-          git commit -m "Continua busca após reconciliar post existente"
-          git pull --rebase --autostash origin main
-          git push origin HEAD:main
-          echo "continuation_triggered=true"
+          echo "meta_rate_limit_deferred=true"
+          echo "meta_rate_limit_resume_after=${{ steps.resultado_publicacao.outputs.blocked_until }}"
+          echo "A rodada foi adiada pela Meta; não é falha editorial nem erro do workflow."
+
       - name: Sinalizar somente falha real de publicação
-        if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.confirmed != 'true'
+        if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.confirmed != 'true' && steps.resultado_publicacao.outputs.deferred != 'true'
         run: |
-          echo "A publicação não foi confirmada nem reconciliada; a reserva foi mantida para impedir duplicação."
+          echo "A publicação não foi confirmada, reconciliada nem adiada por rate limit."
           exit 1
