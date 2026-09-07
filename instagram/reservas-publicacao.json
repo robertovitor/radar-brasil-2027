@@ -9,14 +9,6 @@
       "requires_strict_reconciliation": false
     },
     {
-      "key": "instagram:noticia:https://sampi.net.br/campinas/noticias/3002816/cidade/2026/09/piracicaba-busca-reconstruir-futebol-feminino-as-vesperas-da-copa",
-      "post_file": "instagram/fila/automatica/6-09-piracicaba-busca-reconstruir-futebol-feminino-as-vesperas-da-copa-99d652fe11.json",
-      "reserved_at": "2026-09-05T20:22:32.434068+00:00",
-      "last_attempt_at": "2026-09-05T20:22:32.434068+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false
-    },
-    {
       "key": "instagram:noticia:https://futebolbaiano.com.br/2026/09/r-400-milhoes-e-novos-voos-bahia-se-prepara-para-receber-turistas-na-copa.html",
       "post_file": "instagram/fila/automatica/lhoes-e-novos-voos-bahia-se-prepara-para-receber-turistas-na-copa-html-b7503c20a4.json",
       "reserved_at": "2026-09-06T20:35:35.356354+00:00",
@@ -31,6 +23,14 @@
       "last_attempt_at": "2026-09-07T16:20:10.710422+00:00",
       "attempts": 1,
       "requires_strict_reconciliation": false
+    },
+    {
+      "key": "instagram:noticia:https://sampi.net.br/campinas/noticias/3002816/cidade/2026/09/piracicaba-busca-reconstruir-futebol-feminino-as-vesperas-da-copa",
+      "post_file": "instagram/fila/automatica/6-09-piracicaba-busca-reconstruir-futebol-feminino-as-vesperas-da-copa-99d652fe11.json",
+      "reserved_at": "2026-09-07T18:18:09.520314+00:00",
+      "last_attempt_at": "2026-09-07T18:18:09.520314+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
