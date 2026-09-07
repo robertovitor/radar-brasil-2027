@@ -47,14 +47,6 @@
       "last_attempt_at": "2026-09-06T20:35:35.356354+00:00",
       "attempts": 1,
       "requires_strict_reconciliation": false
-    },
-    {
-      "key": "instagram:evento:evt-0105",
-      "post_file": "instagram/fila/automatica/instagram-evento-evt-0105-00e11959b2.json",
-      "reserved_at": "2026-09-07T01:08:00.050724+00:00",
-      "last_attempt_at": "2026-09-07T01:08:00.050724+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
     }
   ]
 }
