@@ -34,10 +34,42 @@ FEMALE_MARKERS=(
     'female football','female soccer','selecao feminina','seleção feminina','jogadora','jogadoras',
     'atleta feminina','atletas femininas','women national team',"women's national team"
 )
-INSTITUTIONAL_MARKERS=(
-    'ministerio','ministério','secom','senado','camara','câmara','governo','lei','projeto de lei',
-    'patrocinio','patrocínio','voluntariado','programa','bancada','transmissao','transmissão',
-    'midia','mídia','comunicacao','comunicação','politica publica','política pública'
+POLITICAL_IMAGE_BLOCKERS=(
+    'politico','político','politica partidaria','política partidária','partido politico','partido político',
+    'presidente da republica','presidente da república','vice-presidente','senador','senadora',
+    'deputado','deputada','ministro','ministra','governador','governadora','prefeito','prefeita',
+    'parlamentar','congresso nacional','senado federal','camara dos deputados','câmara dos deputados',
+    'assembleia legislativa','plenário','plenario','palacio do planalto','palácio do planalto',
+    'palacio','palácio','cerimonia de assinatura','cerimônia de assinatura','reuniao ministerial',
+    'reunião ministerial','sessao solene','sessão solene','comicio','comício','campanha eleitoral'
+)
+WOMEN_CUP_MARKERS=(
+    'copa do mundo feminina','mundial feminino','women world cup',"women's world cup",
+    'fifa women','fifa female','copa feminina','feminina 2027','women 2027'
+)
+STADIUM_MARKERS=(
+    'estadio','estádio','stadium','arena','maracana','maracanã','mineirao','mineirão',
+    'mane garrincha','mané garrincha','fonte nova','castelao','castelão','beira-rio'
+)
+FIFA_CBF_MARKERS=(
+    'fifa','confederacao brasileira de futebol','confederação brasileira de futebol',
+    'selecao brasileira feminina','seleção brasileira feminina','cbf'
+)
+BRAZIL_PLACE_MARKERS=(
+    'cidade','cityscape','skyline','ponto turistico','ponto turístico','tourist attraction',
+    'monumento','monument','praca','praça','square','praia','beach','parque','park',
+    'ponte','bridge','museu','museum','teatro','theatre','theater','centro cultural',
+    'avenida','avenue','orla','waterfront','centro historico','centro histórico','historic center'
+)
+BRAZIL_MARKERS=(
+    'brasil','brazil','brasilia','brasília','rio de janeiro','sao paulo','são paulo','salvador',
+    'fortaleza','recife','belo horizonte','porto alegre','curitiba','belem','belém','manaus',
+    'natal','goiania','goiânia','cuiaba','cuiabá'
+)
+VISUAL_QUERY_BLOCKERS=POLITICAL_IMAGE_BLOCKERS+(
+    'governo','ministerio','ministério','senado','camara','câmara','lei','legislacao','legislação',
+    'tributario','tributário','tributaria','tributária','imposto','decreto','bancada','prefeitura',
+    'secretaria','politica publica','política pública'
 )
 
 def load(p, default):
@@ -132,13 +164,13 @@ def candidates(events,news,published,pending,prior_titles=()):
             place=', '.join(filter(None,[clean(x.get('Local')),clean(x.get('Cidade')),clean(x.get('UF'))]))
             subtitle=(clean(x.get('DataBR')) or d.strftime('%d/%m/%Y'))+' • '+(place or 'Local a definir')
             search_context=' '.join(filter(None,[title,clean(x.get('Cidade')),clean(x.get('UF')),clean(x.get('Local')),clean(x.get('Organizador'))]))
-            out.append(dict(key=key,title=title,date=d,type='evento',subtitle=subtitle,search_context=search_context,caption=f"📅 {title}\n\nQuando: {clean(x.get('DataBR')) or d.strftime('%d/%m/%Y')}\nOnde: {place or 'Local a definir'}\n\n{clean(x.get('Observacoes'))}\n\nFonte: {clean(x.get('Organizador')) or 'Radar Brasil 2027'}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
+            out.append(dict(key=key,title=title,date=d,type='evento',subtitle=subtitle,search_context=search_context,visual_places=place,caption=f"📅 {title}\n\nQuando: {clean(x.get('DataBR')) or d.strftime('%d/%m/%Y')}\nOnde: {place or 'Local a definir'}\n\n{clean(x.get('Observacoes'))}\n\nFonte: {clean(x.get('Organizador')) or 'Radar Brasil 2027'}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     for x in news:
         title=clean(x.get('Titulo')); d=date(x.get('Data')); key='instagram:noticia:'+clean(x.get('Link') or title).casefold()
         if title and d and d<=dt.datetime.now(dt.timezone.utc).date() and key not in published and not base(x) and not any(duplicate_title(title,old) for old in prior_titles):
             subtitle=(clean(x.get('Veiculo')) or 'Radar Brasil 2027')+' • '+d.strftime('%d/%m/%Y')
             search_context=' '.join(filter(None,[title,clean(x.get('Tema')),clean(x.get('CidadeUF')),clean(x.get('Veiculo'))]))
-            out.append(dict(key=key,title=title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,caption=f"📰 {title}\n\n{clean(x.get('Resumo'))}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
+            out.append(dict(key=key,title=title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,visual_places=clean(x.get('CidadeUF')),caption=f"📰 {title}\n\n{clean(x.get('Resumo'))}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     pending_order={clean(key):idx for idx,key in enumerate(pending)}
     def rank(i):
         # A data editorial é a prioridade principal para eventos e notícias:
@@ -165,18 +197,24 @@ def distinct_terms(text):
             uniq.append(w); seen.add(n)
     return uniq
 
-def commons_queries(text):
-    """Busca somente por contexto específico; termos genéricos nunca bastam para aprovação."""
-    uniq=distinct_terms(text)
+def commons_queries(text,places=''):
+    """Consulta apenas domínios visuais permitidos, nunca política ou governo."""
+    blocked={norm(x) for x in VISUAL_QUERY_BLOCKERS}
+    uniq=[w for w in distinct_terms(text) if norm(w) not in blocked]
+    place=clean(places)
     queries=[]
     def add(q):
         q=clean(q)
         if q and norm(q) not in {norm(x) for x in queries}: queries.append(q)
     if uniq:
-        add(' '.join(uniq[:10]))
-        add(' '.join(uniq[:7]))
-        add(' '.join(uniq[:5]))
-        for term in uniq[:4]: add(term+' women football')
+        add(' '.join(uniq[:5])+' futebol feminino Brasil')
+        add(' '.join(uniq[:3])+' Copa do Mundo Feminina')
+    if place:
+        add(place+' estádio futebol feminino')
+        add(place+' cidade ponto turístico Brasil')
+    add('Copa do Mundo Feminina FIFA 2027 Brasil')
+    add('CBF futebol feminino Brasil')
+    add('Seleção Brasileira feminina futebol')
     return queries[:8]
 
 def license_allowed(meta):
@@ -198,32 +236,53 @@ def commons_license(meta):
     return short or usage or 'Licença livre verificada no Wikimedia Commons'
 
 def commons_descriptor(page,meta):
-    fields=[clean(page.get('title')),strip_html(meta.get('ObjectName',{}).get('value')),strip_html(meta.get('ImageDescription',{}).get('value')),strip_html(meta.get('Categories',{}).get('value')),strip_html(meta.get('Credit',{}).get('value'))]
+    # A consulta não entra no descritor: somente os metadados reais da imagem
+    # podem aprovar o gate semântico.
+    fields=[clean(page.get('title')),strip_html(meta.get('ObjectName',{}).get('value')),strip_html(meta.get('ImageDescription',{}).get('value')),strip_html(meta.get('Categories',{}).get('value'))]
     return ' '.join(x for x in fields if x)
 
-def semantic_image_ok(item,page,meta,query):
-    item_text=norm((item.get('search_context') or '')+' '+item.get('title',''))
-    desc=norm(commons_descriptor(page,meta)+' '+query)
-    if any(norm(x) in desc for x in MALE_BLOCKERS): return False,'male_or_mens_football_blocker'
+def restricted_visual_domain(text,item_text=''):
+    desc=norm(text); context=norm(item_text)
+    if any(norm(x) in desc for x in POLITICAL_IMAGE_BLOCKERS):
+        return False,'politics_or_government_visual_blocked'
+    if any(norm(x) in desc for x in MALE_BLOCKERS):
+        return False,'male_or_mens_football_blocker'
     female=any(norm(x) in desc for x in FEMALE_MARKERS)
-    item_terms={norm(x) for x in distinct_terms(item_text)}
+    women_cup=any(norm(x) in desc for x in WOMEN_CUP_MARKERS)
+    fifa_cbf=any(norm(x) in desc for x in FIFA_CBF_MARKERS)
+    stadium=any(norm(x) in desc for x in STADIUM_MARKERS)
+    brazil_place=any(norm(x) in desc for x in BRAZIL_PLACE_MARKERS)
+    brazil=any(norm(x) in desc for x in BRAZIL_MARKERS)
+    context_terms={norm(x) for x in distinct_terms(context)}
     desc_terms={norm(x) for x in distinct_terms(desc)}
-    overlap=item_terms & desc_terms
-    institutional=any(norm(x) in item_text for x in INSTITUTIONAL_MARKERS)
-    if institutional:
-        # Para pautas institucionais, uma foto real do local, estádio, órgão ou
-        # equipamento citado é válida mesmo sem pessoas. Bloqueadores de futebol
-        # masculino continuam sendo aplicados acima.
-        ok=len(overlap)>=2
-        return ok,('institutional_or_venue_direct_match' if ok else 'institutional_requires_text_art')
-    football_context=any(x in item_text for x in ('futebol','selecao','jogo','amistoso','torneio','copa','mundial'))
-    if football_context and not female: return False,'female_context_missing'
-    ok=len(overlap)>=2
-    return ok,('direct_semantic_match' if ok else 'weak_keyword_overlap')
+    related=bool(context_terms & desc_terms)
+    stadium_ok=stadium and (brazil or related)
+    place_ok=brazil_place and (brazil or related)
+    if female or women_cup:
+        return True,'women_football_or_womens_cup'
+    if fifa_cbf:
+        return True,'fifa_or_cbf'
+    if stadium_ok:
+        return True,'relevant_stadium'
+    if place_ok:
+        return True,'relevant_brazilian_city_or_landmark'
+    return False,'outside_restricted_visual_domain'
+
+def curated_image_policy_ok(item,image):
+    descriptor=' '.join(filter(None,[
+        clean(image.get('source_page_url')),clean(image.get('image_source_url')),
+        clean(image.get('justificativa')),clean(image.get('visual_description'))
+    ]))
+    return restricted_visual_domain(descriptor,(item.get('search_context') or '')+' '+item.get('visual_places',''))
+
+def semantic_image_ok(item,page,meta,query):
+    # query é mantida apenas para auditoria; não pode influenciar a aprovação.
+    descriptor=commons_descriptor(page,meta)
+    return restricted_visual_domain(descriptor,(item.get('search_context') or '')+' '+item.get('visual_places',''))
 
 def find_commons_image(item):
     search_context=item.get('search_context') or item['title']
-    for query in commons_queries(search_context):
+    for query in commons_queries(search_context,item.get('visual_places','')):
         params={'action':'query','generator':'search','gsrsearch':query+' filetype:bitmap','gsrnamespace':'6','gsrlimit':'20','prop':'imageinfo','iiprop':'url|mime|size|extmetadata','iiurlwidth':'1600','format':'json','formatversion':'2'}
         try: data=http_json(COMMONS_API+'?'+urllib.parse.urlencode(params))
         except Exception as exc:
@@ -306,8 +365,13 @@ def main():
     fallback_item=ranked[0]; item=None; c=None
     for candidate in ranked:
         candidate_image=curated.get(candidate['key'])
-        if candidate_image and candidate_image.get('semantic_image_ok') is not True:
-            print('curated_image_rejected=semantic_image_ok_missing_or_false:'+candidate['key']); candidate_image=None
+        if candidate_image:
+            policy_ok,policy_reason=curated_image_policy_ok(candidate,candidate_image)
+            if not policy_ok:
+                print('curated_image_rejected='+policy_reason+':'+candidate['key']); candidate_image=None
+            else:
+                candidate_image=dict(candidate_image)
+                candidate_image['semantic_reason']=policy_reason
         if not candidate_image:
             candidate_image=find_commons_image(candidate)
             if candidate_image: print('auto_image_found='+clean(candidate_image.get('query')))
