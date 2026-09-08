@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Python
         uses: actions/setup-python@v5
@@ -49,4 +51,5 @@ jobs:
           git config user.email 'actions@users.noreply.github.com'
           git add banco_imagens/catalogo.csv banco_imagens/catalogo.json
           git commit -m 'data: atualiza banco de 500 imagens abertas'
-          git push
+          git pull --rebase origin main
+          git push origin HEAD:main
