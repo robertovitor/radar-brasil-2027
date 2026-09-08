@@ -141,12 +141,14 @@ def candidates(events,news,published,pending,prior_titles=()):
             out.append(dict(key=key,title=title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,caption=f"📰 {title}\n\n{clean(x.get('Resumo'))}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     pending_order={clean(key):idx for idx,key in enumerate(pending)}
     def rank(i):
-        if i['key'] in pending_order:
-            # pending_new é autoritativa: a incorporação mais recente (última chave)
-            # precede qualquer backlog, independentemente da data editorial ou tipo.
-            return (1,-pending_order[i['key']],i['key'])
-        tier=2 if i['type']=='evento' else 3
-        return (tier,-i['date'].toordinal(),i['key'])
+        # A data editorial é a prioridade principal para eventos e notícias:
+        # do item mais novo para o mais antigo, em uma única fila.
+        # pending_new serve apenas como desempate entre itens da mesma data.
+        pending_idx=pending_order.get(i['key'])
+        pending_tie=0 if pending_idx is not None else 1
+        recent_pending=-(pending_idx if pending_idx is not None else -1)
+        type_tie=0 if i['type']=='evento' else 1
+        return (-i['date'].toordinal(),pending_tie,recent_pending,type_tie,i['key'])
     return sorted(out,key=rank)
 
 def http_json(url,timeout=20):
