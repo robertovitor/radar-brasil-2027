@@ -80,9 +80,11 @@
       "key": "instagram:noticia:https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027/articles/funcoes-voluntarios-copa-do-mundo-feminina-brasil-2027",
       "post_file": "instagram/fila/automatica/l-2027-articles-funcoes-voluntarios-copa-do-mundo-feminina-brasil-2027-eb53581712.json",
       "reserved_at": "2026-09-08T12:17:06.459668+00:00",
-      "last_attempt_at": "2026-09-08T12:17:06.459668+00:00",
+      "last_attempt_at": "2026-09-08T12:17:24.542520+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-08T13:17:22.445537+00:00"
     }
   ]
 }
