@@ -141,36 +141,11 @@ smart.base.make_original_art = make_clean_fallback
 _original_variants = smart.query_variants
 
 def semantic_entity_variants(item):
-    """Gera consultas mais curtas e variadas para aumentar chance de foto contextual."""
+    """Gera apenas consultas pertencentes ao domínio visual permitido."""
     title = base.clean(item.get('title'))
     context = base.clean(item.get('search_context'))
-    variants = []
-    def add(q):
-        q = base.clean(q)
-        if q and base.norm(q) not in {base.norm(x) for x in variants}:
-            variants.append(q)
-    terms = base.distinct_terms(title + ' ' + context)
-    if terms:
-        add(' '.join(terms[:7]))
-        add(' '.join(terms[:5]))
-        add(' '.join(terms[:3]))
-    entity_patterns = (
-        r'\bArena Castelão\b', r'\bCastelão\b', r'\bArena Fonte Nova\b', r'\bFonte Nova\b',
-        r'\bMaracanã\b', r'\bMané Garrincha\b', r'\bMineirão\b', r'\bBeira-Rio\b', r'\bNeo Química Arena\b',
-        r'\bFortaleza\b', r'\bSalvador\b', r'\bRecife\b', r'\bBrasília\b', r'\bRio de Janeiro\b',
-        r'\bSão Paulo\b', r'\bBelo Horizonte\b', r'\bPorto Alegre\b', r'\bBahia\b', r'\bCeará\b',
-        r'\bFIFA\b', r'\bCBF\b', r'\bSeleção Brasileira\b', r'\bfutebol feminino\b'
-    )
-    combined = title + ' ' + context
-    for pattern in entity_patterns:
-        m = re.search(pattern, combined, re.I)
-        if m:
-            add(m.group(0))
-            if 'futebol' not in base.norm(m.group(0)):
-                add(m.group(0) + ' football')
-    for q in _original_variants(item):
-        add(q)
-    return variants[:16]
+    places = base.clean(item.get('visual_places'))
+    return base.commons_queries(title + ' ' + context, places)[:16]
 
 smart.query_variants = semantic_entity_variants
 
@@ -217,8 +192,9 @@ def relaxed_commons_image(item, used):
             overlap = len(item_tokens & image_tokens)
             female = smart.female_signal(descriptor)
             semantic_ok, semantic_reason = base.semantic_image_ok(item, page, meta, query)
-            acceptable = semantic_ok or (institutional and overlap >= 1) or overlap >= 2 or (female and overlap >= 1)
-            if not acceptable:
+            if not semantic_ok:
+                # O gate restrito é definitivo; contexto textual não pode liberar
+                # imagens de política, governo ou de fora do universo permitido.
                 continue
             url = base.clean(info.get('url'))
             if not url:
@@ -229,7 +205,7 @@ def relaxed_commons_image(item, used):
             score = overlap * 10 + (8 if female else 0) + (6 if semantic_ok else 0) + (4 if institutional else 0)
             if width >= 1000 and height >= 650:
                 score += 3
-            reason = semantic_reason if semantic_ok else ('commons_relaxed_venue_match' if institutional else 'commons_relaxed_context_match')
+            reason = semantic_reason
             scored.append((score, url, source_page, meta, reason))
         if scored:
             scored.sort(key=lambda x: x[0], reverse=True)
