@@ -37,16 +37,6 @@
       "blocked_until": "2026-09-08T11:44:20.554175+00:00"
     },
     {
-      "key": "instagram:noticia:https://diariodonordeste.verdesmares.com.br/jogada/fortaleza-avanca-na-lei-da-copa-e-prepara-castelao-para-inspecao-da-fifa-a-300-dias-do-mundial-1.3787756",
-      "post_file": "instagram/fila/automatica/prepara-castelao-para-inspecao-da-fifa-a-300-dias-do-mundial-1-3787756-dab7c14da0.json",
-      "reserved_at": "2026-09-08T14:35:09.392918+00:00",
-      "last_attempt_at": "2026-09-08T14:35:26.096844+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": true,
-      "uncertain_after_meta": true,
-      "blocked_until": "2026-09-08T15:35:18.729704+00:00"
-    },
-    {
       "key": "instagram:noticia:https://www12.senado.leg.br/noticias/materias/2026/09/02/senado-aprova-prioridade-para-futebol-feminino-na-politica-de-esporte",
       "post_file": "instagram/fila/automatica/-senado-aprova-prioridade-para-futebol-feminino-na-politica-de-esporte-2c441df303.json",
       "reserved_at": "2026-09-08T17:05:03.730925+00:00",
@@ -55,6 +45,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-08T18:05:17.486661+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://diariodonordeste.verdesmares.com.br/jogada/fortaleza-avanca-na-lei-da-copa-e-prepara-castelao-para-inspecao-da-fifa-a-300-dias-do-mundial-1.3787756",
+      "post_file": "instagram/fila/automatica/prepara-castelao-para-inspecao-da-fifa-a-300-dias-do-mundial-1-3787756-dab7c14da0.json",
+      "reserved_at": "2026-09-08T23:15:08.466187+00:00",
+      "last_attempt_at": "2026-09-08T23:15:08.466187+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
