@@ -243,16 +243,19 @@ def commons_descriptor(page,meta):
 
 def restricted_visual_domain(text,item_text=''):
     desc=norm(text); context=norm(item_text)
-    if any(norm(x) in desc for x in POLITICAL_IMAGE_BLOCKERS):
+    def has_marker(markers):
+        # Limites de palavra evitam que "men football" bloqueie "women football".
+        return any(re.search(r'(?<![a-z0-9])'+re.escape(norm(x))+r'(?![a-z0-9])',desc) for x in markers)
+    if has_marker(POLITICAL_IMAGE_BLOCKERS):
         return False,'politics_or_government_visual_blocked'
-    if any(norm(x) in desc for x in MALE_BLOCKERS):
+    if has_marker(MALE_BLOCKERS):
         return False,'male_or_mens_football_blocker'
-    female=any(norm(x) in desc for x in FEMALE_MARKERS)
-    women_cup=any(norm(x) in desc for x in WOMEN_CUP_MARKERS)
-    fifa_cbf=any(norm(x) in desc for x in FIFA_CBF_MARKERS)
-    stadium=any(norm(x) in desc for x in STADIUM_MARKERS)
-    brazil_place=any(norm(x) in desc for x in BRAZIL_PLACE_MARKERS)
-    brazil=any(norm(x) in desc for x in BRAZIL_MARKERS)
+    female=has_marker(FEMALE_MARKERS)
+    women_cup=has_marker(WOMEN_CUP_MARKERS)
+    fifa_cbf=has_marker(FIFA_CBF_MARKERS)
+    stadium=has_marker(STADIUM_MARKERS)
+    brazil_place=has_marker(BRAZIL_PLACE_MARKERS)
+    brazil=has_marker(BRAZIL_MARKERS)
     context_terms={norm(x) for x in distinct_terms(context)}
     desc_terms={norm(x) for x in distinct_terms(desc)}
     related=bool(context_terms & desc_terms)
