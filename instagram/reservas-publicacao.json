@@ -17,38 +17,6 @@
       "requires_strict_reconciliation": false
     },
     {
-      "key": "instagram:noticia:https://prefeitura.poa.br/secopa2027/noticias/prefeitura-protocola-projeto-de-lei-com-regras-especiais-para-copa-feminina",
-      "post_file": "instagram/fila/automatica/itura-protocola-projeto-de-lei-com-regras-especiais-para-copa-feminina-e5a1d209e6.json",
-      "reserved_at": "2026-09-07T23:02:06.659372+00:00",
-      "last_attempt_at": "2026-09-07T23:02:06.659372+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
-    },
-    {
-      "key": "instagram:noticia:https://www.fortaleza.ce.gov.br/noticias/fortaleza-mobiliza-voluntarios-para-a-copa-do-mundo-feminina-da-fifa-brasil-2027-e-celebra-abertura-oficial-das-inscricoes",
-      "post_file": "instagram/fila/automatica/feminina-da-fifa-brasil-2027-e-celebra-abertura-oficial-das-inscricoes-42db5eef6a.json",
-      "reserved_at": "2026-09-08T04:17:11.654663+00:00",
-      "last_attempt_at": "2026-09-08T04:17:11.654663+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
-    },
-    {
-      "key": "instagram:evento:evt-0047",
-      "post_file": "instagram/fila/automatica/instagram-evento-evt-0047-5462e858f8.json",
-      "reserved_at": "2026-09-08T07:05:16.558363+00:00",
-      "last_attempt_at": "2026-09-08T07:05:16.558363+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
-    },
-    {
-      "key": "instagram:evento:evt-0027",
-      "post_file": "instagram/fila/automatica/instagram-evento-evt-0027-b12e8e305b.json",
-      "reserved_at": "2026-09-08T08:12:17.549694+00:00",
-      "last_attempt_at": "2026-09-08T08:12:17.549694+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
-    },
-    {
       "key": "instagram:evento:evt-0030",
       "post_file": "instagram/fila/automatica/instagram-evento-evt-0030-09eb8aefb9.json",
       "reserved_at": "2026-09-08T09:16:11.469004+00:00",
@@ -59,14 +27,6 @@
       "blocked_until": "2026-09-08T10:16:24.047116+00:00"
     },
     {
-      "key": "instagram:evento:evt-0056",
-      "post_file": "instagram/fila/automatica/instagram-evento-evt-0056-ff6b3940d2.json",
-      "reserved_at": "2026-09-08T10:41:08.258471+00:00",
-      "last_attempt_at": "2026-09-08T10:41:08.258471+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
-    },
-    {
       "key": "instagram:evento:evt-0073",
       "post_file": "instagram/fila/automatica/instagram-evento-evt-0073-3f06ba4c28.json",
       "reserved_at": "2026-09-08T10:44:07.287557+00:00",
@@ -75,14 +35,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-08T11:44:20.554175+00:00"
-    },
-    {
-      "key": "instagram:noticia:https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027/articles/funcoes-voluntarios-copa-do-mundo-feminina-brasil-2027",
-      "post_file": "instagram/fila/automatica/l-2027-articles-funcoes-voluntarios-copa-do-mundo-feminina-brasil-2027-eb53581712.json",
-      "reserved_at": "2026-09-08T14:34:07.802786+00:00",
-      "last_attempt_at": "2026-09-08T14:34:07.802786+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
     },
     {
       "key": "instagram:noticia:https://diariodonordeste.verdesmares.com.br/jogada/fortaleza-avanca-na-lei-da-copa-e-prepara-castelao-para-inspecao-da-fifa-a-300-dias-do-mundial-1.3787756",
@@ -103,14 +55,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-08T18:05:17.486661+00:00"
-    },
-    {
-      "key": "instagram:noticia:https://www.cnnbrasil.com.br/esportes/futebol/futebol-internacional/bola-de-ouro-lorena-e-indicada-a-melhor-goleira-do-futebol-feminino/",
-      "post_file": "instagram/fila/automatica/al-bola-de-ouro-lorena-e-indicada-a-melhor-goleira-do-futebol-feminino-89ebba5563.json",
-      "reserved_at": "2026-09-08T18:14:58.539594+00:00",
-      "last_attempt_at": "2026-09-08T18:14:58.539594+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
     },
     {
       "key": "instagram:noticia:https://atarde.com.br/bahia/copa-feminina-2027-tera-acaraje-dentro-da-arena-fonte-nova-1399762",
