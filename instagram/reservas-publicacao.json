@@ -88,9 +88,11 @@
       "key": "instagram:noticia:https://diariodonordeste.verdesmares.com.br/jogada/fortaleza-avanca-na-lei-da-copa-e-prepara-castelao-para-inspecao-da-fifa-a-300-dias-do-mundial-1.3787756",
       "post_file": "instagram/fila/automatica/prepara-castelao-para-inspecao-da-fifa-a-300-dias-do-mundial-1-3787756-dab7c14da0.json",
       "reserved_at": "2026-09-08T14:35:09.392918+00:00",
-      "last_attempt_at": "2026-09-08T14:35:09.392918+00:00",
+      "last_attempt_at": "2026-09-08T14:35:23.459788+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-08T15:35:18.729704+00:00"
     }
   ]
 }
