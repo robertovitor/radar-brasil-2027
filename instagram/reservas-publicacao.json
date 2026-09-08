@@ -67,6 +67,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-08T09:14:22.283461+00:00"
+    },
+    {
+      "key": "instagram:evento:evt-0030",
+      "post_file": "instagram/fila/automatica/instagram-evento-evt-0030-09eb8aefb9.json",
+      "reserved_at": "2026-09-08T09:16:11.469004+00:00",
+      "last_attempt_at": "2026-09-08T09:16:11.469004+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false
     }
   ]
 }
