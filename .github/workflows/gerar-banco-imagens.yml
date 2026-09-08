@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'scripts/gerar_banco_imagens_v2.py'
+      - 'scripts/gerar_banco_imagens_v3.py'
       - '.github/workflows/gerar-banco-imagens.yml'
 
 permissions:
@@ -24,21 +24,27 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Gerar catálogo de 500 imagens
-        run: python scripts/gerar_banco_imagens_v2.py
+      - name: Gerar catálogo editorial de 500 imagens
+        run: python scripts/gerar_banco_imagens_v3.py
 
-      - name: Validar quantidade e licenças
+      - name: Validar quantidade licenças e distribuição
         run: |
           python - <<'PY'
-          import csv
+          import csv, re
+          from collections import Counter
           from pathlib import Path
-          p = Path('banco_imagens/catalogo.csv')
-          rows = list(csv.DictReader(p.open(encoding='utf-8')))
-          assert len(rows) == 500, f'Esperadas 500 imagens; encontradas {len(rows)}'
-          assert all(r['instagram_ok'] == 'SIM' for r in rows), 'Há item não aprovado para Instagram'
-          assert len({r['pagina_origem'] for r in rows}) == 500, 'Há páginas duplicadas'
-          assert all(r['url_direta'] for r in rows[3:]), 'Há item automático sem URL direta'
-          print('Validação OK: 500 imagens únicas e aprovadas')
+          rows=list(csv.DictReader(Path('banco_imagens/catalogo.csv').open(encoding='utf-8')))
+          expected={'selecao_brasileira':100,'futebol_feminino_brasil':70,'copas_femininas':80,'futebol_feminino_internacional':40,'estadios_sedes_2027':100,'cidades_sedes_2027':80,'torcida_futebol_feminino':30}
+          counts=Counter(r['categoria'] for r in rows)
+          assert len(rows)==500, f'Esperadas 500; encontradas {len(rows)}'
+          assert dict(counts)==expected, f'Distribuicao incorreta: {dict(counts)}'
+          assert all(r['instagram_ok']=='SIM' for r in rows), 'Ha item nao aprovado para Instagram'
+          assert len({r['pagina_origem'] for r in rows})==500, 'Ha paginas duplicadas'
+          assert all(r['url_direta'] for r in rows if r['status_licenca']=='APROVADA_AUTO'), 'Item automatico sem URL direta'
+          bad=re.compile(r'NFL|NCAA|Badgers|Georgia Tech|Ole Miss|American football|gridiron|touchdown|quarterback|Super Bowl',re.I)
+          torcida=[r for r in rows if r['categoria']=='torcida_futebol_feminino']
+          assert not any(bad.search((r['titulo']+' '+r['pessoa_local'])) for r in torcida), 'Torcida de futebol americano detectada'
+          print('Validacao OK: 500 imagens, cotas corretas, unicas e com licenca aberta')
           PY
 
       - name: Commit do catálogo
@@ -50,6 +56,6 @@ jobs:
           git config user.name 'radar-brasil-2027-bot'
           git config user.email 'actions@users.noreply.github.com'
           git add banco_imagens/catalogo.csv banco_imagens/catalogo.json
-          git commit -m 'data: atualiza banco de 500 imagens abertas'
+          git commit -m 'data: refina banco editorial de 500 imagens abertas'
           git pull --rebase origin main
           git push origin HEAD:main
