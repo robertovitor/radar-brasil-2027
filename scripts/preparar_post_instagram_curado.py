@@ -74,6 +74,9 @@ VISUAL_QUERY_BLOCKERS=POLITICAL_IMAGE_BLOCKERS+(
     'tributario','tributário','tributaria','tributária','imposto','decreto','bancada','prefeitura',
     'secretaria','politica publica','política pública'
 )
+# Compatibilidade com as camadas antigas: somente domínios visuais permitidos.
+# Política e órgãos governamentais ficam explicitamente fora desta lista.
+INSTITUTIONAL_MARKERS=STADIUM_MARKERS+FIFA_CBF_MARKERS+BRAZIL_PLACE_MARKERS
 
 def load(p, default):
     p=pathlib.Path(p)
