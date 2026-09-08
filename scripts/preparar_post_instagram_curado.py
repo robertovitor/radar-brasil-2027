@@ -345,29 +345,56 @@ def make_original_art(out,title,kind,subtitle,key):
 def main():
     events=load('dados.json',[]); news=load('noticias.json',[]); ledger=load('instagram/publicados.json',{'published':[]}); state=load('instagram/conteudo-conhecido.json',{'pending_new':[]}); catalog=load('instagram/imagens-curadas.json',{'items':[]}); blocked=load('instagram/bloqueados-publicacao.json',{'blocked_keys':[]}); reservations=load('instagram/reservas-publicacao.json',{'reservations':[]})
     now=dt.datetime.now(dt.timezone.utc)
+    ledger_keys={clean(x.get('key')) for x in ledger.get('published',[]) if isinstance(x,dict)}
     active_reservations=set()
+    strict_pending=set()
     reservation_ttl=dt.timedelta(hours=2)
     for row in reservations.get('reservations',[]):
         if not isinstance(row,dict):
             continue
         key=clean(row.get('key'))
+        if not key or key in ledger_keys:
+            continue
+        strict=bool(row.get('requires_strict_reconciliation'))
+        uncertain=bool(row.get('uncertain_after_meta'))
+        if strict:
+            strict_pending.add(key)
+        reconciliation_ready=False
+        if strict and uncertain:
+            raw_until=clean(row.get('blocked_until'))
+            try:
+                until=dt.datetime.fromisoformat(raw_until.replace('Z','+00:00'))
+                if until.tzinfo is None: until=until.replace(tzinfo=dt.timezone.utc)
+                reconciliation_ready=now>=until.astimezone(dt.timezone.utc)
+            except (ValueError,TypeError):
+                reconciliation_ready=not raw_until
         raw=clean(row.get('last_attempt_at') or row.get('reserved_at'))
         try:
             stamp=dt.datetime.fromisoformat(raw.replace('Z','+00:00'))
             if stamp.tzinfo is None: stamp=stamp.replace(tzinfo=dt.timezone.utc)
-            if now-stamp.astimezone(dt.timezone.utc) < reservation_ttl:
+            if now-stamp.astimezone(dt.timezone.utc) < reservation_ttl and not reconciliation_ready:
                 active_reservations.add(key)
         except (ValueError,TypeError):
             # Reserva sem timestamp válido permanece bloqueada: falhar fechado evita duplicação.
-            if key: active_reservations.add(key)
-    published={clean(x.get('key')) for x in ledger.get('published',[])}|{clean(x) for x in blocked.get('blocked_keys',[])}|active_reservations
+            if not reconciliation_ready:
+                active_reservations.add(key)
+    published=ledger_keys|{clean(x) for x in blocked.get('blocked_keys',[])}|active_reservations
     pending=[clean(key) for key in state.get('pending_new',[])]; stamps=[]
     for x in ledger.get('published',[]):
-        try: stamps.append(dt.datetime.fromisoformat(clean(x.get('published_at')).replace('Z','+00:00')))
-        except: pass
+        if not isinstance(x,dict): continue
+        raw=clean(x.get('published_at') or x.get('reconciled_at'))
+        try:
+            stamp=dt.datetime.fromisoformat(raw.replace('Z','+00:00'))
+            if stamp.tzinfo is None: stamp=stamp.replace(tzinfo=dt.timezone.utc)
+            stamps.append(stamp.astimezone(dt.timezone.utc))
+        except (ValueError,TypeError): pass
     if stamps and (now-max(stamps)).total_seconds()<3600: print('found=false'); print('reason=minimum_interval'); return 0
     curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and all(clean(x.get(field)) for field in ('image_source_url','source_page_url','credito','licenca'))}
     ranked=candidates(events,news,published,pending,published_titles(ledger))
+    # Tentativas ambíguas liberadas pelo cooldown vêm sempre antes de pauta nova.
+    ranked.sort(key=lambda item: 0 if item['key'] in strict_pending else 1)
+    if ranked and ranked[0]['key'] in strict_pending:
+        print('priority_strict_reconciliation='+ranked[0]['key'])
     if not ranked: print('found=false'); print('reason=no_eligible_item'); return 0
     # Prioriza conteúdo que possua fotografia real válida. Só usa a arte textual
     # quando nenhum dos itens elegíveis tiver imagem segura e não repetida.
