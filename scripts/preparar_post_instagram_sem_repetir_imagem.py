@@ -129,33 +129,13 @@ def distinct_query_terms(text, limit):
 
 
 def query_variants(item):
-    """Busca progressiva: entidade/local primeiro; contexto feminino depois."""
+    """Busca somente futebol feminino, Copa Feminina, estádios, cidades, turismo, FIFA e CBF."""
     title = base.clean(item.get('title'))
     context = base.clean(item.get('search_context'))
+    places = base.clean(item.get('visual_places'))
+    # A página pode enriquecer entidades, mas termos políticos são removidos em commons_queries.
     page_hints = fetch_page_hints(item)
-    combined = base.clean(' '.join([title, context, page_hints]))
-    terms7 = distinct_query_terms(combined, 7)
-    terms5 = distinct_query_terms(combined, 5)
-    terms3 = distinct_query_terms(combined, 3)
-    variants = []
-
-    def add(q):
-        q = base.clean(q)
-        if q and base.norm(q) not in {base.norm(x) for x in variants}:
-            variants.append(q)
-
-    if terms7:
-        add(' '.join(terms7))
-    if terms5:
-        add(' '.join(terms5))
-    if terms3:
-        add(' '.join(terms3) + ' women football')
-    # Última expansão controlada para fotos temáticas, sem virar busca genérica demais.
-    if item.get('type') == 'evento' and terms3:
-        add(' '.join(terms3) + ' Brazil')
-    return variants[:4]
-
-
+    return base.commons_queries(base.clean(' '.join([title, context, page_hints])), places)[:8]
 def http_json(url, source):
     if SOURCE_BLOCKED.get(source) or REQUEST_BUDGET.get(source, 0) <= 0:
         return None
@@ -189,12 +169,12 @@ def female_signal(text):
 
 def male_blocked(text):
     n = base.norm(text)
-    return any(base.norm(marker) in n for marker in base.MALE_BLOCKERS)
+    return any(re.search(r'(?<![a-z0-9])'+re.escape(base.norm(marker))+r'(?![a-z0-9])', n) for marker in base.MALE_BLOCKERS)
 
 
 def institutional_or_venue_item(item):
-    n = base.norm((item.get('search_context') or '') + ' ' + item.get('title', ''))
-    markers = tuple(base.INSTITUTIONAL_MARKERS) + ('estadio', 'estádio', 'arena', 'museu', 'cidade', 'prefeitura', 'senado', 'camara', 'câmara')
+    n = base.norm((item.get('search_context') or '') + ' ' + item.get('title', '') + ' ' + item.get('visual_places', ''))
+    markers = tuple(base.STADIUM_MARKERS) + tuple(base.FIFA_CBF_MARKERS) + tuple(base.BRAZIL_PLACE_MARKERS)
     return any(base.norm(x) in n for x in markers)
 
 
@@ -203,10 +183,11 @@ def openverse_score(item, result, query):
     tags = ' '.join(base.clean(t.get('name')) for t in (result.get('tags') or []) if isinstance(t, dict))
     creator = base.clean(result.get('creator'))
     haystack = ' '.join([title, tags, creator])
-    if male_blocked(haystack):
+    item_text = (item.get('search_context') or '') + ' ' + item.get('title', '') + ' ' + item.get('visual_places', '')
+    allowed, _ = base.restricted_visual_domain(haystack, item_text)
+    if not allowed:
         return -100
 
-    item_text = (item.get('search_context') or '') + ' ' + item.get('title', '')
     item_tokens = text_tokens(item_text)
     image_tokens = text_tokens(haystack)
     query_tokens = text_tokens(query)
@@ -317,12 +298,8 @@ def find_commons_image(item, used):
             continue
         ok, reason = base.semantic_image_ok(item, page, meta, query)
         if not ok:
-            # Para local/instituição aceitamos sobreposição textual forte mesmo sem marcador feminino.
-            descriptor = base.commons_descriptor(page, meta)
-            overlap = len(text_tokens((item.get('search_context') or '') + ' ' + item.get('title', '')) & text_tokens(descriptor))
-            if not (institutional_or_venue_item(item) and overlap >= 2):
-                continue
-            reason = 'commons_venue_or_institution_match'
+            # Falha fechada: nenhuma sobreposição textual pode liberar política ou governo.
+            continue
         url = base.clean(info.get('url'))
         if not url:
             continue
