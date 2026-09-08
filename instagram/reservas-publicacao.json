@@ -121,6 +121,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-08T19:16:47.228368+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://atarde.com.br/bahia/copa-feminina-2027-tera-acaraje-dentro-da-arena-fonte-nova-1399762",
+      "post_file": "instagram/fila/automatica/hia-copa-feminina-2027-tera-acaraje-dentro-da-arena-fonte-nova-1399762-30808ba7ce.json",
+      "reserved_at": "2026-09-08T20:00:08.941390+00:00",
+      "last_attempt_at": "2026-09-08T20:00:08.941390+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false
     }
   ]
 }
