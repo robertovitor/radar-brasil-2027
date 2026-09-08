@@ -33,16 +33,6 @@
       "requires_strict_reconciliation": true
     },
     {
-      "key": "instagram:evento:evt-0047",
-      "post_file": "instagram/fila/automatica/instagram-evento-evt-0047-5462e858f8.json",
-      "reserved_at": "2026-09-08T04:19:19.146844+00:00",
-      "last_attempt_at": "2026-09-08T04:19:36.029802+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": true,
-      "uncertain_after_meta": true,
-      "blocked_until": "2026-09-08T05:19:29.338216+00:00"
-    },
-    {
       "key": "instagram:evento:evt-0027",
       "post_file": "instagram/fila/automatica/instagram-evento-evt-0027-b12e8e305b.json",
       "reserved_at": "2026-09-08T05:39:15.602946+00:00",
@@ -51,6 +41,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-08T06:39:30.224295+00:00"
+    },
+    {
+      "key": "instagram:evento:evt-0047",
+      "post_file": "instagram/fila/automatica/instagram-evento-evt-0047-5462e858f8.json",
+      "reserved_at": "2026-09-08T07:05:16.558363+00:00",
+      "last_attempt_at": "2026-09-08T07:05:16.558363+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
