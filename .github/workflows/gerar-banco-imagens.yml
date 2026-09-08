@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'scripts/gerar_banco_imagens.py'
+      - 'scripts/gerar_banco_imagens_v2.py'
       - '.github/workflows/gerar-banco-imagens.yml'
 
 permissions:
@@ -23,7 +23,7 @@ jobs:
           python-version: '3.12'
 
       - name: Gerar catálogo de 500 imagens
-        run: python scripts/gerar_banco_imagens.py
+        run: python scripts/gerar_banco_imagens_v2.py
 
       - name: Validar quantidade e licenças
         run: |
@@ -35,6 +35,7 @@ jobs:
           assert len(rows) == 500, f'Esperadas 500 imagens; encontradas {len(rows)}'
           assert all(r['instagram_ok'] == 'SIM' for r in rows), 'Há item não aprovado para Instagram'
           assert len({r['pagina_origem'] for r in rows}) == 500, 'Há páginas duplicadas'
+          assert all(r['url_direta'] for r in rows[3:]), 'Há item automático sem URL direta'
           print('Validação OK: 500 imagens únicas e aprovadas')
           PY
 
