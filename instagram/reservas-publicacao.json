@@ -54,9 +54,11 @@
       "key": "instagram:evento:evt-0056",
       "post_file": "instagram/fila/automatica/instagram-evento-evt-0056-ff6b3940d2.json",
       "reserved_at": "2026-09-08T07:07:09.609319+00:00",
-      "last_attempt_at": "2026-09-08T07:07:09.609319+00:00",
+      "last_attempt_at": "2026-09-08T07:07:27.554582+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-08T08:07:23.758053+00:00"
     }
   ]
 }
