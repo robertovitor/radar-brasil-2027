@@ -40,8 +40,11 @@ POLITICAL_IMAGE_BLOCKERS=(
     'deputado','deputada','ministro','ministra','governador','governadora','prefeito','prefeita',
     'parlamentar','congresso nacional','senado federal','camara dos deputados','câmara dos deputados',
     'assembleia legislativa','plenário','plenario','palacio do planalto','palácio do planalto',
-    'palacio','palácio','cerimonia de assinatura','cerimônia de assinatura','reuniao ministerial',
-    'reunião ministerial','sessao solene','sessão solene','comicio','comício','campanha eleitoral'
+    'palacio','palácio','prefeitura','city hall','governo federal','governo estadual','governo municipal',
+    'ministerio','ministério','secretaria de governo','centro administrativo municipal',
+    'paco municipal','paço municipal','inauguracao','inauguração','cerimonia de assinatura',
+    'cerimônia de assinatura','reuniao ministerial','reunião ministerial','sessao solene',
+    'sessão solene','comicio','comício','campanha eleitoral'
 )
 WOMEN_CUP_MARKERS=(
     'copa do mundo feminina','mundial feminino','women world cup',"women's world cup",
