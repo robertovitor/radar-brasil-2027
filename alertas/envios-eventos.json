@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "migration_mode": "conservative",
+  "cutover_utc": "2026-09-06T00:00:00Z",
+  "legacy_source": "airtable:Envios de Alertas",
+  "privacy": "no_email_addresses",
+  "entries": []
+}
