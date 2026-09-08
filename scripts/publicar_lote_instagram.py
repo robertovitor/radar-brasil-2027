@@ -24,7 +24,7 @@ def load_published(path: pathlib.Path) -> list[dict]:
 
 
 def normalize_new_reconciliations(path: pathlib.Path, previous_keys: set[str]) -> int:
-    """Reconciliação remota não conta como nova publicação para o intervalo de 1 hora."""
+    """Preserva o horário remoto e registra quando a reconciliação ocorreu."""
     if not path.exists():
         return 0
     try:
@@ -45,8 +45,9 @@ def normalize_new_reconciliations(path: pathlib.Path, previous_keys: set[str]) -
         published_at = str(row.get("published_at") or "").strip()
         if not published_at:
             continue
-        row["reconciled_at"] = published_at
-        row.pop("published_at", None)
+        # published_at representa o melhor horário conhecido do post remoto e
+        # deve continuar contando para a trava de 60 minutos.
+        row["reconciled_at"] = dt.datetime.now(dt.timezone.utc).isoformat()
         changed += 1
 
     if changed:
@@ -97,7 +98,7 @@ def main() -> int:
     if reconciled:
         print(f"reconciled_existing_count={reconciled}")
         print("reconciled_existing_continue=true")
-        print("A reconciliação foi registrada sem consumir o intervalo de 1 hora.")
+        print("A reconciliação foi registrada e passa a consumir o intervalo de 1 hora.")
 
         # Antes, a continuação dependia de um novo push/workflow. Commits feitos pelo
         # GITHUB_TOKEN não disparam outro workflow de push, então a rodada podia parar
