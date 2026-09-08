@@ -103,6 +103,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-08T16:56:20.876499+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://www12.senado.leg.br/noticias/materias/2026/09/02/senado-aprova-prioridade-para-futebol-feminino-na-politica-de-esporte",
+      "post_file": "instagram/fila/automatica/-senado-aprova-prioridade-para-futebol-feminino-na-politica-de-esporte-2c441df303.json",
+      "reserved_at": "2026-09-08T17:05:03.730925+00:00",
+      "last_attempt_at": "2026-09-08T17:05:03.730925+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false
     }
   ]
 }
