@@ -175,13 +175,24 @@ def main() -> int:
         last_attempt = parse_timestamp(existing.get("last_attempt_at") or existing.get("reserved_at"))
         age = now - last_attempt if last_attempt else dt.timedelta(0)
         ttl = dt.timedelta(hours=max(0.1, args.ttl_hours))
-        if age < ttl:
+        # Uma tentativa ambígua deve ser reconciliada assim que o cooldown
+        # terminar, sem esperar o TTL genérico de duas horas. Essa retomada
+        # continua idempotente porque o publicador consulta a Meta primeiro.
+        blocked_until = parse_timestamp(existing.get("blocked_until"))
+        reconciliation_ready = bool(
+            existing.get("requires_strict_reconciliation")
+            and existing.get("uncertain_after_meta")
+            and (blocked_until is None or now >= blocked_until)
+        )
+        if age < ttl and not reconciliation_ready:
             remaining = max(1, int((ttl - age).total_seconds()))
             print("reservation_changed=false")
             print(f"reservation_key={key}")
             print("reservation_conflict=true")
             print(f"reservation_retry_after_seconds={remaining}")
             return 3
+        if reconciliation_ready:
+            print("reservation_priority_reconciliation=true")
         rows = [x for x in rows if str(x.get("key") or "") != key]
 
     stamp = now.isoformat()
