@@ -1,18 +1,13 @@
-name: Atualizar site pela planilha do GitHub
+name: Importar planilha para JSON (manual)
 
 on:
-  push:
-    paths:
-      - "Radar_Brasil_2027.xlsx"
-      - "scripts/atualizar_dados.py"
-      - ".github/workflows/atualizar-dados.yml"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: atualizar-dados-json
+  group: importar-planilha-json
   cancel-in-progress: false
 
 jobs:
@@ -32,7 +27,7 @@ jobs:
       - name: Instalar dependências
         run: pip install openpyxl==3.1.5
 
-      - name: Atualizar dados.json
+      - name: Importar dados da planilha
         env:
           SOURCE_FILE: "Radar_Brasil_2027.xlsx"
         run: python scripts/atualizar_dados.py
@@ -46,5 +41,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- dados.json noticias.json
-          git commit -m "Atualiza dados e notícias pela planilha do GitHub"
+          git commit -m "Importa dados e notícias da planilha manualmente"
           git push
