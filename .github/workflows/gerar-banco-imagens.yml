@@ -1,0 +1,51 @@
+name: Gerar banco de imagens abertas
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/gerar_banco_imagens.py'
+      - '.github/workflows/gerar-banco-imagens.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  gerar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Gerar catálogo de 500 imagens
+        run: python scripts/gerar_banco_imagens.py
+
+      - name: Validar quantidade e licenças
+        run: |
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          p = Path('banco_imagens/catalogo.csv')
+          rows = list(csv.DictReader(p.open(encoding='utf-8')))
+          assert len(rows) == 500, f'Esperadas 500 imagens; encontradas {len(rows)}'
+          assert all(r['instagram_ok'] == 'SIM' for r in rows), 'Há item não aprovado para Instagram'
+          assert len({r['pagina_origem'] for r in rows}) == 500, 'Há páginas duplicadas'
+          print('Validação OK: 500 imagens únicas e aprovadas')
+          PY
+
+      - name: Commit do catálogo
+        run: |
+          if git diff --quiet -- banco_imagens/catalogo.csv banco_imagens/catalogo.json; then
+            echo 'Sem alterações no catálogo.'
+            exit 0
+          fi
+          git config user.name 'radar-brasil-2027-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add banco_imagens/catalogo.csv banco_imagens/catalogo.json
+          git commit -m 'data: atualiza banco de 500 imagens abertas'
+          git push
