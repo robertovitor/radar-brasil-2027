@@ -25,6 +25,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-08T18:05:17.486661+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://www.empetur.pe.gov.br/h-licitacoes/2556-empetur-aviso-de-abertura-processo-n-1687-2026-cel-iii-pe-0008-empetur",
+      "post_file": "instagram/fila/automatica/empetur-aviso-de-abertura-processo-n-1687-2026-cel-iii-pe-0008-empetur-682177ee69.json",
+      "reserved_at": "2026-09-09T10:57:04.990176+00:00",
+      "last_attempt_at": "2026-09-09T10:57:04.990176+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false
     }
   ]
 }
