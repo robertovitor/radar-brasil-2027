@@ -46,8 +46,6 @@ def normalize_new_reconciliations(path: pathlib.Path, previous_keys: set[str]) -
         published_at = str(row.get("published_at") or "").strip()
         if not published_at:
             continue
-        # published_at representa o melhor horário conhecido do post remoto e
-        # deve continuar contando para a trava de 60 minutos.
         row["reconciled_at"] = dt.datetime.now(dt.timezone.utc).isoformat()
         changed += 1
 
@@ -78,7 +76,7 @@ def main() -> int:
         result = subprocess.run(
             [
                 sys.executable,
-                "scripts/publicar_instagram.py",
+                "scripts/publicar_instagram_economico.py",
                 "--post",
                 str(post),
                 "--ledger",
