@@ -15,6 +15,7 @@ import publicar_instagram as base
 CACHE = pathlib.Path("instagram/meta-account-cache.json")
 STATE = base.RATE_LIMIT_STATE
 BLOCKED = pathlib.Path("instagram/bloqueados-publicacao.json")
+RESERVATIONS = pathlib.Path("instagram/reservas-publicacao.json")
 _original_discover = base.discover_instagram_user
 _original_request_json = base.request_json
 
@@ -77,6 +78,52 @@ def _git(*args: str) -> subprocess.CompletedProcess:
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
     )
+
+
+def _hydrate_legacy_uncertain_blocks() -> None:
+    """Bloqueia localmente reservas antigas que já chegaram à Meta.
+
+    Essas reservas foram criadas antes da trava permanente. Se estão marcadas
+    como uncertain_after_meta, não podem ser republicadas só porque o post
+    deixou de aparecer na conta (por exemplo, após exclusão manual).
+    """
+    reservations = _read_json(RESERVATIONS)
+    rows = reservations.get("reservations", [])
+    if not isinstance(rows, list):
+        return
+
+    legacy_keys = {
+        str(row.get("key") or "").strip()
+        for row in rows
+        if isinstance(row, dict)
+        and row.get("uncertain_after_meta") is True
+        and str(row.get("key") or "").strip()
+    }
+    if not legacy_keys:
+        return
+
+    data = _read_json(BLOCKED)
+    blocked_keys = data.get("blocked_keys", [])
+    if not isinstance(blocked_keys, list):
+        blocked_keys = []
+    current = {str(value).strip() for value in blocked_keys if str(value).strip()}
+    missing = sorted(legacy_keys - current)
+    if not missing:
+        return
+
+    data["blocked_keys"] = [*blocked_keys, *missing]
+    legacy = data.get("legacy_uncertain_meta", {})
+    if not isinstance(legacy, dict):
+        legacy = {}
+    now = dt.datetime.now(dt.timezone.utc).isoformat()
+    for key in missing:
+        legacy[key] = {
+            "blocked_at": now,
+            "reason": "legacy_uncertain_after_meta_never_republish",
+        }
+    data["legacy_uncertain_meta"] = legacy
+    BLOCKED.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"legacy_uncertain_meta_blocks_loaded={len(missing)}")
 
 
 def _persist_meta_attempt_block(key: str, creation_id: str) -> None:
@@ -186,6 +233,7 @@ base.request_json = request_json_idempotente
 
 if __name__ == "__main__":
     try:
+        _hydrate_legacy_uncertain_blocks()
         raise SystemExit(base.main())
     except (base.InstagramError, json.JSONDecodeError) as exc:
         print(f"ERRO: {exc}", file=sys.stderr)
