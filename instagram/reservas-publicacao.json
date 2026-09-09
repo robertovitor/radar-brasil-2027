@@ -17,16 +17,6 @@
       "requires_strict_reconciliation": false
     },
     {
-      "key": "instagram:evento:evt-0073",
-      "post_file": "instagram/fila/automatica/instagram-evento-evt-0073-3f06ba4c28.json",
-      "reserved_at": "2026-09-08T10:44:07.287557+00:00",
-      "last_attempt_at": "2026-09-08T10:44:24.446709+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": true,
-      "uncertain_after_meta": true,
-      "blocked_until": "2026-09-08T11:44:20.554175+00:00"
-    },
-    {
       "key": "instagram:noticia:https://www12.senado.leg.br/noticias/materias/2026/09/02/senado-aprova-prioridade-para-futebol-feminino-na-politica-de-esporte",
       "post_file": "instagram/fila/automatica/-senado-aprova-prioridade-para-futebol-feminino-na-politica-de-esporte-2c441df303.json",
       "reserved_at": "2026-09-08T17:05:03.730925+00:00",
@@ -35,6 +25,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-08T18:05:17.486661+00:00"
+    },
+    {
+      "key": "instagram:evento:evt-0073",
+      "post_file": "instagram/fila/automatica/instagram-evento-evt-0073-3f06ba4c28.json",
+      "reserved_at": "2026-09-09T02:16:36.285250+00:00",
+      "last_attempt_at": "2026-09-09T02:16:36.285250+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
