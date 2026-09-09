@@ -99,6 +99,33 @@ base.SEARCHES['copas_femininas'] = [
     "FIFA Women's World Cup opening ceremony",
 ]
 
+base.SEARCHES['torcida_futebol_feminino'] = [
+    "FIFA Women's World Cup fans football",
+    "FIFA Women's World Cup supporters stadium",
+    "FIFA Women's World Cup crowd football",
+    "2023 Women's World Cup fans Australia",
+    "2023 Women's World Cup fans New Zealand",
+    "2023 Women's World Cup fans England",
+    "2023 Women's World Cup fans Spain",
+    "2023 Women's World Cup fans Brazil",
+    "2023 Women's World Cup fans USA",
+    "2019 Women's World Cup fans France",
+    "2019 Women's World Cup fans USA",
+    "2019 Women's World Cup fans England",
+    "2019 Women's World Cup supporters Netherlands",
+    "2015 Women's World Cup fans Canada",
+    "women football supporters Brazil stadium",
+    "women football supporters England stadium",
+    "women football supporters Spain stadium",
+    "women football supporters Australia stadium",
+    "women soccer supporters national team",
+    "women association football fans stadium",
+    "female football supporters crowd stadium",
+    "women football crowd supporters",
+    "women soccer fans flags stadium",
+    "women football fans cheering stadium",
+]
+
 _original_candidates = base.candidates
 def candidates(query, pages=4):
     # Mantem a profundidade alta, mas as consultas ficaram mais especificas para
