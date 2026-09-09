@@ -74,16 +74,19 @@ def editorial_allowed(row):
     lic = str(row.get('licenca') or '').lower()
     if not any(x in lic for x in ('cc0','public domain','domínio público','dominio publico','cc by','cc-by','pdm')):
         return False
+    # Para o uso automático exigimos URL direta/thumbnail. A página do Commons
+    # sozinha não é uma imagem publicável pela API do Instagram.
+    if not (row.get('url_direta') or row.get('url_thumbnail')):
+        return False
     text = ' '.join(str(row.get(k) or '') for k in ('titulo','pessoa_local','atribuicao','observacoes'))
     if BLOCK.search(text) or AMERICAN.search(text) or MEN.search(text):
         return False
     cat = str(row.get('categoria') or '')
-    if cat in ('selecao_brasileira','futebol_feminino_brasil','copas_femininas','futebol_feminino_internacional','torcida_futebol_feminino'):
-        if not SOCCER.search(text):
-            return False
+    if cat in ('selecao_brasileira','futebol_feminino_brasil','copas_femininas','futebol_feminino_internacional','torcida_futebol_feminino') and not SOCCER.search(text):
+        return False
     if cat == 'torcida_futebol_feminino' and not WOMEN.search(text):
         return False
-    return bool(row.get('url_direta') or row.get('pagina_origem'))
+    return True
 
 def infer_categories(item_text):
     n = norm(item_text)
@@ -94,6 +97,12 @@ def infer_categories(item_text):
             scores.append((score, cat))
     scores.sort(reverse=True)
     return [cat for _,cat in scores] or ['selecao_brasileira','futebol_feminino_brasil','copas_femininas','estadios_sedes_2027','cidades_sedes_2027']
+
+def _usage(row):
+    try:
+        return int(row.get('qtd_utilizacoes') or 0)
+    except Exception:
+        return 0
 
 def select(item, used=None):
     if not CATALOG.exists():
@@ -110,7 +119,7 @@ def select(item, used=None):
     for row in rows:
         if not isinstance(row, dict) or not editorial_allowed(row):
             continue
-        src = str(row.get('url_direta') or '')
+        src = str(row.get('url_direta') or row.get('url_thumbnail') or '')
         page = str(row.get('pagina_origem') or '')
         ids = {identity(src), identity(page)} - {''}
         if ids & used:
@@ -122,11 +131,11 @@ def select(item, used=None):
         cat_bonus = max(0, 18 - preferred.index(cat)*4) if cat in preferred else 0
         female_bonus = 5 if WOMEN.search(row_text) else 0
         score = overlap * 7 + cat_bonus + female_bonus
-        ranked.append((score, overlap, row))
+        ranked.append((score, overlap, -_usage(row), row))
     if not ranked:
         return None
-    ranked.sort(key=lambda x: (x[0], x[1], str(x[2].get('qtd_utilizacoes') or '0')), reverse=True)
-    score, overlap, row = ranked[0]
+    ranked.sort(key=lambda x: (x[0], x[1], x[2]), reverse=True)
+    score, overlap, _, row = ranked[0]
     if score < 8:
         return None
     return {
