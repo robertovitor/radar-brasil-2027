@@ -337,16 +337,16 @@
     },
     {
       "idempotency_key": "instagram:noticia:https://oglobo.globo.com/play/noticia/2026/09/02/nota-10-a-estreia-do-aquecimento-delas-no-sportv.ghtml",
-      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Sele%C3%A7%C3%A3o_brasileira_de_futebol_feminino%2C_03072011%2C_DSC00861.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "source_page_url": "https://commons.wikimedia.org/wiki/File:Sele%C3%A7%C3%A3o_brasileira_de_futebol_feminino,_03072011,_DSC00861.jpg",
-      "credito": "Allan Patrick | Flickr: Seleção brasileira de futebol feminino, 03/07/2011, DSC00861 | CC BY-SA 2.0",
-      "licenca": "CC BY-SA 2.0",
+      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/2/25/Canad%C3%A1_vence_o_Brasil_no_futebol_feminino%2C_na_Rio_2016_%2828989123372%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "source_page_url": "https://commons.wikimedia.org/wiki/File:Canad%C3%A1_vence_o_Brasil_no_futebol_feminino,_na_Rio_2016_(28989123372).jpg",
+      "credito": "Agência Brasil Fotografias | Canadá vence o Brasil no futebol feminino, na Rio 2016 | CC BY 2.0",
+      "licenca": "CC BY 2.0",
       "reutilizacao_permitida": true,
       "justificativa": "Selecionada automaticamente do banco editorial aprovado por relevância temática e antirrepetição.",
       "origem": "banco_aprovado",
-      "bank_image_id": "IMG0049",
+      "bank_image_id": "IMG0090",
       "bank_category": "selecao_brasileira",
-      "semantic_reason": "bank:selecao_brasileira:IMG0049 score=51"
+      "semantic_reason": "bank:selecao_brasileira:IMG0090 score=51"
     },
     {
       "idempotency_key": "instagram:noticia:https://www12.senado.leg.br/noticias/materias/2026/09/02/senado-aprova-prioridade-para-futebol-feminino-na-politica-de-esporte",
@@ -454,6 +454,19 @@
     },
     {
       "idempotency_key": "instagram:noticia:https://ge.globo.com/futebol/futebol-internacional/noticia/2026/08/20/arthur-elias-diz-que-selecao-esta-70percent-fechada-para-a-copa-e-que-marta-tem-ano-desafiador.ghtml",
+      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/5/58/German_football_team_2016_Olympics_women.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "source_page_url": "https://commons.wikimedia.org/wiki/File:German_football_team_2016_Olympics_women.jpg",
+      "credito": "Rovena Rosa/Agência Brasil | Futebol feminino de Zimbábue e Alemanha se enfrentam em SP & http://agenciabrasil.ebc.com.br/rio-2016/foto/2016-08/futebol-feminino-de-zimbabue-e-alemanha-se-enfrentam-em-sp | CC BY 3.0 br",
+      "licenca": "CC BY 3.0 br",
+      "reutilizacao_permitida": true,
+      "justificativa": "Selecionada automaticamente do banco editorial aprovado por relevância temática e antirrepetição.",
+      "origem": "banco_aprovado",
+      "bank_image_id": "IMG0008",
+      "bank_category": "selecao_brasileira",
+      "semantic_reason": "bank:selecao_brasileira:IMG0008 score=44"
+    },
+    {
+      "idempotency_key": "instagram:noticia:https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/08/20/copa-2027-venda-de-ingressos-ainda-nao-comecou-como-registrar-interesse.ghtm",
       "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/1/11/BRASIL_CAMPEON_DE_LA_COPA_AMERICA_FEMENINA_DE_FUTBOL_ECUADOR_2014_%2815195795250%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
       "source_page_url": "https://commons.wikimedia.org/wiki/File:BRASIL_CAMPEON_DE_LA_COPA_AMERICA_FEMENINA_DE_FUTBOL_ECUADOR_2014_(15195795250).jpg",
       "credito": "Agencia de Noticias ANDES | BRASIL CAMPEON DE LA COPA AMERICA FEMENINA DE FUTBOL ECUADOR 2014 | CC BY-SA 2.0",
@@ -463,10 +476,10 @@
       "origem": "banco_aprovado",
       "bank_image_id": "IMG0053",
       "bank_category": "selecao_brasileira",
-      "semantic_reason": "bank:selecao_brasileira:IMG0053 score=44"
+      "semantic_reason": "bank:selecao_brasileira:IMG0053 score=37"
     },
     {
-      "idempotency_key": "instagram:noticia:https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/08/20/copa-2027-venda-de-ingressos-ainda-nao-comecou-como-registrar-interesse.ghtm",
+      "idempotency_key": "instagram:noticia:https://asserj.com.br/en/w/copa-do-mundo-feminina-entra-no-radar-dos-supermercados",
       "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/7/75/Jogadoras_da_Sele%C3%A7%C3%A3o_Brasileira_posam_para_foto_no_vesti%C3%A1rio%2C_Acervo_do_Museu_do_Futebol.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
       "source_page_url": "https://commons.wikimedia.org/wiki/File:Jogadoras_da_Sele%C3%A7%C3%A3o_Brasileira_posam_para_foto_no_vesti%C3%A1rio,_Acervo_do_Museu_do_Futebol.jpg",
       "credito": "Unknown photographer/Museu do Futebol | Museu do Futebol: 726663 | CC BY-SA 4.0",
@@ -479,7 +492,7 @@
       "semantic_reason": "bank:selecao_brasileira:IMG0055 score=37"
     },
     {
-      "idempotency_key": "instagram:noticia:https://asserj.com.br/en/w/copa-do-mundo-feminina-entra-no-radar-dos-supermercados",
+      "idempotency_key": "instagram:noticia:https://pt.linkedin.com/posts/fsports-ag_o-legado-come%c3%a7a-antes-do-primeiro-apito-activity-7495445214967484417-5m11",
       "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/3/34/BRASIL_CAMPEON_DE_LA_COPA_AMERICA_FEMENINA_DE_FUTBOL_ECUADOR_2014_%2815383867255%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
       "source_page_url": "https://commons.wikimedia.org/wiki/File:BRASIL_CAMPEON_DE_LA_COPA_AMERICA_FEMENINA_DE_FUTBOL_ECUADOR_2014_(15383867255).jpg",
       "credito": "Agencia de Noticias ANDES | BRASIL CAMPEON DE LA COPA AMERICA FEMENINA DE FUTBOL ECUADOR 2014 | CC BY-SA 2.0",
@@ -489,20 +502,7 @@
       "origem": "banco_aprovado",
       "bank_image_id": "IMG0083",
       "bank_category": "selecao_brasileira",
-      "semantic_reason": "bank:selecao_brasileira:IMG0083 score=37"
-    },
-    {
-      "idempotency_key": "instagram:noticia:https://pt.linkedin.com/posts/fsports-ag_o-legado-come%c3%a7a-antes-do-primeiro-apito-activity-7495445214967484417-5m11",
-      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/BRASIL_CAMPEON_DE_LA_COPA_AMERICA_FEMENINA_DE_FUTBOL_ECUADOR_2014_%2815383867055%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "source_page_url": "https://commons.wikimedia.org/wiki/File:BRASIL_CAMPEON_DE_LA_COPA_AMERICA_FEMENINA_DE_FUTBOL_ECUADOR_2014_(15383867055).jpg",
-      "credito": "Agencia de Noticias ANDES | BRASIL CAMPEON DE LA COPA AMERICA FEMENINA DE FUTBOL ECUADOR 2014 | CC BY-SA 2.0",
-      "licenca": "CC BY-SA 2.0",
-      "reutilizacao_permitida": true,
-      "justificativa": "Selecionada automaticamente do banco editorial aprovado por relevância temática e antirrepetição.",
-      "origem": "banco_aprovado",
-      "bank_image_id": "IMG0084",
-      "bank_category": "selecao_brasileira",
-      "semantic_reason": "bank:selecao_brasileira:IMG0084 score=26"
+      "semantic_reason": "bank:selecao_brasileira:IMG0083 score=26"
     },
     {
       "idempotency_key": "instagram:noticia:https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/08/17/copa-2027-tamires-pede-engajamento-das-cidades-sede-para-lotar-estadios.ghtm",
@@ -545,6 +545,19 @@
     },
     {
       "idempotency_key": "instagram:noticia:https://www1.folha.uol.com.br/colunas/painel/2026/08/associacao-de-tribunais-de-contas-se-opoe-a-ferias-escolares-obrigatorias-na-copa-do-mundo-feminina.shtml",
+      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/BRASIL_CAMPEON_DE_LA_COPA_AMERICA_FEMENINA_DE_FUTBOL_ECUADOR_2014_%2815383867055%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "source_page_url": "https://commons.wikimedia.org/wiki/File:BRASIL_CAMPEON_DE_LA_COPA_AMERICA_FEMENINA_DE_FUTBOL_ECUADOR_2014_(15383867055).jpg",
+      "credito": "Agencia de Noticias ANDES | BRASIL CAMPEON DE LA COPA AMERICA FEMENINA DE FUTBOL ECUADOR 2014 | CC BY-SA 2.0",
+      "licenca": "CC BY-SA 2.0",
+      "reutilizacao_permitida": true,
+      "justificativa": "Selecionada automaticamente do banco editorial aprovado por relevância temática e antirrepetição.",
+      "origem": "banco_aprovado",
+      "bank_image_id": "IMG0084",
+      "bank_category": "selecao_brasileira",
+      "semantic_reason": "bank:selecao_brasileira:IMG0084 score=37"
+    },
+    {
+      "idempotency_key": "instagram:noticia:https://ge.globo.com/futebol/futebol-internacional/noticia/2026/08/05/cbf-comunica-aos-clubes-parada-obrigatoria-durante-periodo-da-copa-do-mundo-feminina-de-2027.ghtml",
       "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/6/6e/BRASIL_CAMPEON_DE_LA_COPA_AMERICA_FEMENINA_DE_FUTBOL_ECUADOR_2014_%2815383867225%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
       "source_page_url": "https://commons.wikimedia.org/wiki/File:BRASIL_CAMPEON_DE_LA_COPA_AMERICA_FEMENINA_DE_FUTBOL_ECUADOR_2014_(15383867225).jpg",
       "credito": "Agencia de Noticias ANDES | BRASIL CAMPEON DE LA COPA AMERICA FEMENINA DE FUTBOL ECUADOR 2014 | CC BY-SA 2.0",
@@ -555,19 +568,6 @@
       "bank_image_id": "IMG0085",
       "bank_category": "selecao_brasileira",
       "semantic_reason": "bank:selecao_brasileira:IMG0085 score=37"
-    },
-    {
-      "idempotency_key": "instagram:noticia:https://ge.globo.com/futebol/futebol-internacional/noticia/2026/08/05/cbf-comunica-aos-clubes-parada-obrigatoria-durante-periodo-da-copa-do-mundo-feminina-de-2027.ghtml",
-      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/0/06/BRASIL_CAMPEON_DE_LA_COPA_AMERICA_FEMENINA_DE_FUTBOL_ECUADOR_2014_%2815197343167%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "source_page_url": "https://commons.wikimedia.org/wiki/File:BRASIL_CAMPEON_DE_LA_COPA_AMERICA_FEMENINA_DE_FUTBOL_ECUADOR_2014_(15197343167).jpg",
-      "credito": "Agencia de Noticias ANDES | BRASIL CAMPEON DE LA COPA AMERICA FEMENINA DE FUTBOL ECUADOR 2014 | CC BY-SA 2.0",
-      "licenca": "CC BY-SA 2.0",
-      "reutilizacao_permitida": true,
-      "justificativa": "Selecionada automaticamente do banco editorial aprovado por relevância temática e antirrepetição.",
-      "origem": "banco_aprovado",
-      "bank_image_id": "IMG0086",
-      "bank_category": "selecao_brasileira",
-      "semantic_reason": "bank:selecao_brasileira:IMG0086 score=37"
     },
     {
       "idempotency_key": "instagram:noticia:https://maquinadoesporte.com.br/copa-mundo-feminina-2027/desafio-para-copa-do-mundo-feminina-2027-e-descentralizar-legado-dizem-especialistas/",
@@ -607,6 +607,19 @@
       "bank_image_id": "IMG0197",
       "bank_category": "futebol_feminino",
       "semantic_reason": "bank:futebol_feminino:IMG0197 score=26"
+    },
+    {
+      "idempotency_key": "instagram:noticia:https://ge.globo.com/futebol/copa-do-mundo/noticia/2026/09/09/copa-feminina-governo-negocia-ingressos-populares-e-cre-em-torneio-blindado-da-crise-na-fifa.ghtml",
+      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Sele%C3%A7%C3%A3o_brasileira_de_futebol_feminino%2C_03072011%2C_DSC00861.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "source_page_url": "https://commons.wikimedia.org/wiki/File:Sele%C3%A7%C3%A3o_brasileira_de_futebol_feminino,_03072011,_DSC00861.jpg",
+      "credito": "Allan Patrick | Flickr: Seleção brasileira de futebol feminino, 03/07/2011, DSC00861 | CC BY-SA 2.0",
+      "licenca": "CC BY-SA 2.0",
+      "reutilizacao_permitida": true,
+      "justificativa": "Selecionada automaticamente do banco editorial aprovado por relevância temática e antirrepetição.",
+      "origem": "banco_aprovado",
+      "bank_image_id": "IMG0049",
+      "bank_category": "selecao_brasileira",
+      "semantic_reason": "bank:selecao_brasileira:IMG0049 score=51"
     }
   ]
 }
