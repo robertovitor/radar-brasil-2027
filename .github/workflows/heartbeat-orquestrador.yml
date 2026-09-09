@@ -2,9 +2,11 @@ name: Orquestrador principal do Radar
 
 on:
   schedule:
-    # O ciclo editorial do ChatGPT permanece às :45. O GitHub assume a
-    # materialização determinística da cadeia dois minutos depois.
+    # Janela principal após o ciclo editorial e uma recuperação na mesma hora.
+    # A segunda execução é idempotente e sai sem repetir a cadeia se a primeira
+    # já tiver concluído com sucesso.
     - cron: '47 * * * *'
+    - cron: '55 * * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -45,6 +47,26 @@ jobs:
               "$@" \
               "https://api.github.com/repos/${REPO}/${path}"
           }
+
+          # Para execuções agendadas, não repita uma cadeia que já tenha sido
+          # concluída com sucesso nos últimos 30 minutos. Isso torna a janela
+          # de recuperação das :55 segura contra duplicidade.
+          if [ "${GITHUB_EVENT_NAME}" = "schedule" ]; then
+            cutoff=$(( $(date -u +%s) - 1800 ))
+            previous_success=$(api GET "actions/workflows/heartbeat-orquestrador.yml/runs?branch=${BRANCH}&per_page=20" \
+              | jq -r --argjson current "${GITHUB_RUN_ID}" --argjson cutoff "$cutoff" '
+                  [.workflow_runs[]
+                   | select((.id != $current) and
+                            (.status == "completed") and
+                            (.conclusion == "success") and
+                            ((.created_at | fromdateiso8601) >= $cutoff))]
+                  | length')
+            if [ "$previous_success" -gt 0 ]; then
+              echo 'ORQUESTRADOR_NOOP=true'
+              echo 'Uma execução do orquestrador já concluiu com sucesso nos últimos 30 minutos; evitando duplicidade.'
+              exit 0
+            fi
+          fi
 
           dispatch() {
             local workflow="$1"
