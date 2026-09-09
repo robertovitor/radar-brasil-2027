@@ -58,6 +58,20 @@ jobs:
             (( created_epoch >= cutoff ))
           }
 
+          current_cycle_healthy() {
+            local workflow="$1"
+            local cycle_start
+            cycle_start=$(date -u +%Y-%m-%dT%H:00:00Z)
+
+            api GET "actions/workflows/${workflow}/runs?branch=${BRANCH}&per_page=20" \
+              | jq -e --arg cycle_start "$cycle_start" '
+                  any(.workflow_runs[];
+                    .created_at >= $cycle_start and
+                    (.status != "completed" or .conclusion == "success")
+                  )
+                ' >/dev/null
+          }
+
           wait_for_dispatch() {
             local workflow="$1"
             local started_at="$2"
@@ -91,17 +105,12 @@ jobs:
             return 1
           }
 
-          ensure_workflow() {
+          dispatch_and_wait() {
             local workflow="$1"
             local label="$2"
             local started_at
 
-            if recent_success "$workflow"; then
-              echo "OK: ${label} teve execução bem-sucedida nos últimos ${MAX_AGE_MINUTES} minutos."
-              return 0
-            fi
-
-            echo "RECUPERAÇÃO: ${label} não teve sucesso recente; disparando ${workflow}."
+            echo "RECUPERAÇÃO: ${label}; disparando ${workflow}."
             started_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)
             api POST "actions/workflows/${workflow}/dispatches" \
               -H 'Content-Type: application/json' \
@@ -109,9 +118,35 @@ jobs:
             wait_for_dispatch "$workflow" "$started_at"
           }
 
-          # Ordem deliberada: primeiro incorpora/publica dados no Radar,
-          # depois garante a planilha e, por último, tenta o Instagram.
-          ensure_workflow 'mesclar-inbox-editorial.yml' 'Mesclar inbox editorial'
+          ensure_current_cycle() {
+            local workflow="$1"
+            local label="$2"
+
+            if current_cycle_healthy "$workflow"; then
+              echo "OK: ${label} já executou ou está executando neste ciclo horário."
+              return 0
+            fi
+
+            dispatch_and_wait "$workflow" "${label} não executou neste ciclo horário"
+          }
+
+          ensure_workflow() {
+            local workflow="$1"
+            local label="$2"
+
+            if recent_success "$workflow"; then
+              echo "OK: ${label} teve execução bem-sucedida nos últimos ${MAX_AGE_MINUTES} minutos."
+              return 0
+            fi
+
+            dispatch_and_wait "$workflow" "${label} não teve sucesso recente"
+          }
+
+          # O editorial tem schedule próprio e deve rodar em cada ciclo.
+          # O heartbeat é apenas contingência caso a rodada horária não apareça.
+          ensure_current_cycle 'mesclar-inbox-editorial.yml' 'Mesclar inbox editorial'
+
+          # As demais rotinas mantêm a tolerância histórica de recuperação.
           ensure_workflow 'sincronizar-planilha.yml' 'Sincronizar planilha do Radar'
           ensure_workflow 'publicar-instagram-automatico.yml' 'Publicar automaticamente no Instagram'
 
