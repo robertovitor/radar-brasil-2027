@@ -32,6 +32,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Instalar processamento de imagens
+        run: pip install pillow==11.3.0
       - name: Atualizar estado
         run: git pull --rebase --autostash origin main
       - name: Selecionar imagens do banco para próximas pautas
