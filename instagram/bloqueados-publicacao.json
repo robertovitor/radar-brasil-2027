@@ -8,7 +8,10 @@
     "instagram:noticia:https://prefeitura.poa.br/secopa2027/noticias/pioneiras-da-dupla-gre-nal-se-reunem-com-secopa-para-alinhar-acoes-para-copa-do",
     "instagram:noticia:https://www.camara.leg.br/noticias/1301485-camara-aprova-autonomia-de-escolas-para-ajustar-calendario-na-copa-do-mundo-feminina",
     "instagram:noticia:https://www.meioemensagem.com.br/midia/sportv-faz-evento-para-celebrar-protagonismo-feminino",
-    "instagram:noticia:https://www.oliberal.com/esportes/nao-da-para-falar-em-paixao-nacional-so-valorizando-o-masculino-diz-secretaria-da-copa-1.1153852"
+    "instagram:noticia:https://www.oliberal.com/esportes/nao-da-para-falar-em-paixao-nacional-so-valorizando-o-masculino-diz-secretaria-da-copa-1.1153852",
+    "instagram:noticia:https://www.empetur.pe.gov.br/h-licitacoes/2556-empetur-aviso-de-abertura-processo-n-1687-2026-cel-iii-pe-0008-empetur",
+    "instagram:noticia:https://www12.senado.leg.br/noticias/materias/2026/09/02/senado-aprova-prioridade-para-futebol-feminino-na-politica-de-esporte",
+    "instagram:noticia:https://www.correio24horas.com.br/salvador/copa-salvador-interbairros-2026-tera-r-40-mil-para-campeoes-e-comeca-dia-30-veja-novidades-0826"
   ],
   "reason": "Pauta já publicada no Instagram; bloqueio preventivo após detecção de repetição em 2026-09-04.",
   "duplicate_reasons": {
@@ -59,6 +62,23 @@
       "matches": "instagram:noticia:https://www.fortaleza.ce.gov.br/noticias/fortaleza-mobiliza-voluntarios-para-a-copa-do-mundo-feminina-da-fifa-brasil-2027-e-celebra-abertura-oficial-das-inscricoes",
       "candidate_title": "FIFA abre inscrições oficiais para mais de 6 mil voluntários da Copa Feminina 2027",
       "published_title": "Fortaleza supera 7,3 mil interessados locais no voluntariado da Copa Feminina 2027 A Prefeitura de Fortaleza informou em 03/09/2026 que mais de 7,3 mil pessoas já haviam indicado a capital cearense como cidade-sede de preferência durante a fase de registro de interesse do Programa de Voluntários da Copa do Mundo Feminina 2027. O dado local, divulgado junto à abertura das inscrições oficiais, evidencia forte mobilização e engajamento da população da cidade-sede antes do torneio. Fonte: Prefeitura de Fortaleza #RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino Saiba mais pelo link da Bio"
+    }
+  },
+  "legacy_uncertain_meta": {
+    "instagram:noticia:https://www.empetur.pe.gov.br/h-licitacoes/2556-empetur-aviso-de-abertura-processo-n-1687-2026-cel-iii-pe-0008-empetur": {
+      "blocked_at": "2026-09-09T19:58:08.807463+00:00",
+      "reason": "legacy_uncertain_after_meta_never_republish"
+    },
+    "instagram:noticia:https://www12.senado.leg.br/noticias/materias/2026/09/02/senado-aprova-prioridade-para-futebol-feminino-na-politica-de-esporte": {
+      "blocked_at": "2026-09-09T19:58:08.807463+00:00",
+      "reason": "legacy_uncertain_after_meta_never_republish"
+    }
+  },
+  "meta_attempts": {
+    "instagram:noticia:https://www.correio24horas.com.br/salvador/copa-salvador-interbairros-2026-tera-r-40-mil-para-campeoes-e-comeca-dia-30-veja-novidades-0826": {
+      "creation_id": "18099916616098480",
+      "attempted_at": "2026-09-09T19:58:14.369964+00:00",
+      "reason": "meta_container_created_never_republish"
     }
   }
 }
