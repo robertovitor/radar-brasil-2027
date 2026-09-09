@@ -1,13 +1,10 @@
 name: Publicar automaticamente no Instagram
 
 on:
-  # A cadência principal continua vindo do heartbeat da automação às :12.
-  # O cron às :27 é uma contingência independente: se o heartbeat falhar,
-  # o próprio GitHub Actions tenta a rodada. O gate de 60 minutos e o
-  # concurrency abaixo impedem publicação duplicada ou chamadas paralelas.
+  # A cadência principal vem do ciclo único do Radar, que atualiza
+  # instagram/executar-automatico.txt somente após concluir o site/merge.
+  # workflow_dispatch fica disponível apenas para recuperação manual/contingência.
   workflow_dispatch:
-  schedule:
-    - cron: '27 * * * *'
   push:
     branches: [main]
     paths:
@@ -51,8 +48,6 @@ jobs:
                   for row in data.get("published", []):
                       if not isinstance(row, dict):
                           continue
-                      # A publicação remota também consome o intervalo. Para
-                      # ledgers antigos, reconciled_at é o melhor limite seguro.
                       raw = row.get("published_at") or row.get("reconciled_at")
                       if raw:
                           stamps.append(raw)
