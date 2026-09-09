@@ -1,0 +1,56 @@
+name: Preparar banco de imagens para Instagram
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '5 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - banco_imagens/catalogo.json
+      - dados.json
+      - noticias.json
+      - scripts/preparar_banco_curado_instagram.py
+      - scripts/selecionar_imagem_banco_instagram.py
+      - .github/workflows/preparar-banco-instagram.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: preparar-banco-instagram
+  cancel-in-progress: true
+
+jobs:
+  preparar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Atualizar estado
+        run: git pull --rebase --autostash origin main
+      - name: Selecionar imagens do banco para próximas pautas
+        env:
+          PYTHONPATH: scripts
+        run: python scripts/preparar_banco_curado_instagram.py
+      - name: Persistir curadoria automática do banco
+        run: |
+          git config user.name "radar-instagram-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add instagram/imagens-curadas.json
+          if git diff --cached --quiet; then
+            echo "bank_curated_no_changes=true"
+            exit 0
+          fi
+          git commit -m "Atualiza imagens do banco aprovadas para Instagram"
+          for attempt in 1 2 3; do
+            git pull --rebase --autostash origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1
