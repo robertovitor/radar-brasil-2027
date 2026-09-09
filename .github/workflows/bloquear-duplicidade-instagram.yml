@@ -2,12 +2,6 @@ name: Bloquear duplicidade Instagram
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "10 * * * *"
-    - cron: "22 * * * *"
-    - cron: "34 * * * *"
-    - cron: "46 * * * *"
-    - cron: "58 * * * *"
   push:
     branches: [main]
     paths:
@@ -19,7 +13,6 @@ on:
 
 permissions:
   contents: write
-  actions: write
 
 concurrency:
   group: instagram-dedup-guard
@@ -49,24 +42,3 @@ jobs:
           git commit -m "Bloqueia pautas duplicadas antes do Instagram"
           git pull --rebase --autostash origin main
           git push origin HEAD:main
-
-  heartbeat-redundante:
-    if: github.event_name == 'schedule' && github.event.schedule == '22 * * * *'
-    needs: bloquear-duplicatas
-    runs-on: ubuntu-latest
-    steps:
-      - name: Disparar heartbeat como segunda via
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPO: ${{ github.repository }}
-        run: |
-          set -euo pipefail
-          curl --fail-with-body --silent --show-error \
-            -X POST \
-            -H "Authorization: Bearer ${GH_TOKEN}" \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            -H "Content-Type: application/json" \
-            -d '{"ref":"main"}' \
-            "https://api.github.com/repos/${REPO}/actions/workflows/heartbeat-orquestrador.yml/dispatches"
-          echo "Heartbeat redundante disparado pelo guard de duplicidade."
