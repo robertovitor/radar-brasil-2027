@@ -1,69 +1,75 @@
 (()=>{
-  const style=document.createElement('style');
-  style.textContent=`
-    .hero-banner{
-      width:100%!important;
-      height:auto!important;
-      min-height:0!important;
-      padding:0!important;
-      margin:0!important;
-      overflow:hidden!important;
-      background:#fff!important;
-      display:block!important;
-    }
-    .hero-banner::before{display:none!important;content:none!important}
-    .hero-banner-inner{
-      width:100%!important;
-      height:auto!important;
-      max-height:none!important;
-      min-height:0!important;
-      max-width:none!important;
-      margin:0!important;
-      padding:0!important;
-      display:block!important;
-      overflow:visible!important;
-      background:#fff!important;
-    }
-    .hero-banner img{
-      display:block!important;
-      width:100%!important;
-      height:auto!important;
-      max-width:100%!important;
-      max-height:none!important;
-      margin:0!important;
-      padding:0!important;
-      object-fit:contain!important;
-      object-position:center top!important;
-    }
-    .hero-actions{display:none!important}
-    header{
-      margin:0!important;
-      top:auto!important;
-    }
-    .header-inner{
-      margin-top:0!important;
-      margin-bottom:0!important;
-    }
-    @media(max-width:820px){
-      .hero-banner-inner{
-        width:100%!important;
-        height:auto!important;
-        max-height:none!important;
-      }
-      .hero-banner img{
-        width:100%!important;
-        height:auto!important;
-        object-fit:contain!important;
-        object-position:center top!important;
-      }
-    }
-  `;
-  document.head.appendChild(style);
+  const section=document.querySelector('.hero-banner');
+  const inner=document.querySelector('.hero-banner-inner');
   const hero=document.querySelector('.hero-banner img');
+
+  const force=(el,props)=>{
+    if(!el)return;
+    Object.entries(props).forEach(([k,v])=>el.style.setProperty(k,v,'important'));
+  };
+
+  document.documentElement.style.setProperty('margin','0','important');
+  document.documentElement.style.setProperty('padding','0','important');
+  document.body.style.setProperty('margin','0','important');
+  document.body.style.setProperty('padding','0','important');
+
+  force(section,{
+    'width':'100%',
+    'height':'auto',
+    'min-height':'0',
+    'max-height':'none',
+    'margin':'0',
+    'padding':'0',
+    'display':'block',
+    'overflow':'hidden',
+    'line-height':'0',
+    'background':'transparent',
+    'position':'relative',
+    'top':'auto',
+    'bottom':'auto'
+  });
+
+  force(inner,{
+    'width':'100%',
+    'height':'auto',
+    'min-height':'0',
+    'max-height':'none',
+    'margin':'0',
+    'padding':'0',
+    'display':'block',
+    'overflow':'hidden',
+    'line-height':'0',
+    'background':'transparent',
+    'position':'relative',
+    'top':'auto',
+    'bottom':'auto'
+  });
+
+  force(hero,{
+    'display':'block',
+    'width':'100%',
+    'height':'auto',
+    'min-height':'0',
+    'max-height':'none',
+    'max-width':'100%',
+    'margin':'0',
+    'padding':'0',
+    'object-fit':'contain',
+    'object-position':'center top',
+    'vertical-align':'top'
+  });
+
   if(hero){
-    hero.src='./cabecalho.png?v=20260909b';
+    hero.src='./cabecalho.png?v=20260909e';
     hero.alt='Radar Brasil 2027 — Todo o futebol feminino, em todo o Brasil';
   }
-  const oldHeroActions=document.querySelector('.hero-actions');
-  if(oldHeroActions)oldHeroActions.remove();
+
+  document.querySelector('.hero-actions')?.remove();
+
+  if(section && document.body.firstElementChild!==section){
+    document.body.insertBefore(section,document.body.firstElementChild);
+  }
+
+  const header=document.querySelector('body > header');
+  force(header,{'margin':'0','top':'auto'});
 })();
