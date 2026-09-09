@@ -1,8 +1,10 @@
-name: Heartbeat de contingência do Radar
+name: Orquestrador principal do Radar
 
 on:
   schedule:
-    - cron: '22 * * * *'
+    # O ciclo editorial do ChatGPT permanece às :45. O GitHub assume a
+    # materialização determinística da cadeia dois minutos depois.
+    - cron: '47 * * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -14,20 +16,19 @@ permissions:
   contents: read
 
 concurrency:
-  group: heartbeat-contingencia-radar
+  group: orquestrador-principal-radar
   cancel-in-progress: false
 
 jobs:
-  recuperar-cadeia:
+  executar-cadeia:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 40
     env:
       GH_TOKEN: ${{ github.token }}
       REPO: ${{ github.repository }}
       BRANCH: main
-      MAX_AGE_MINUTES: '90'
     steps:
-      - name: Verificar somente etapas GitHub da cadeia
+      - name: Executar site e Instagram em ordem estrita
         shell: bash
         run: |
           set -euo pipefail
@@ -45,45 +46,81 @@ jobs:
               "https://api.github.com/repos/${REPO}/${path}"
           }
 
-          recent_healthy_run() {
+          dispatch() {
             local workflow="$1"
-            local now cutoff
-            now=$(date -u +%s)
-            cutoff=$((now - MAX_AGE_MINUTES * 60))
-            api GET "actions/workflows/${workflow}/runs?branch=${BRANCH}&per_page=20" \
-              | jq -e --argjson cutoff "$cutoff" '
-                  any(.workflow_runs[];
-                    ((.created_at | fromdateiso8601) >= $cutoff) and
-                    (.status != "completed" or .conclusion == "success")
-                  )
-                ' >/dev/null
-          }
-
-          dispatch_workflow() {
-            local workflow="$1"
-            local label="$2"
-            echo "CONTINGÊNCIA: ${label} sem execução saudável recente; disparando ${workflow}."
             api POST "actions/workflows/${workflow}/dispatches" \
               -H 'Content-Type: application/json' \
               -d "{\"ref\":\"${BRANCH}\"}" >/dev/null
           }
 
-          # O ciclo principal agora é a automação única do Radar. Este workflow não
-          # consulta Airtable, não faz pesquisa editorial e não envia e-mail.
-          # Ele apenas recupera os dois pontos GitHub que precisam materializar.
-          if recent_healthy_run 'mesclar-inbox-editorial.yml'; then
-            echo 'OK: merge editorial/site teve execução saudável recente.'
-          else
-            dispatch_workflow 'mesclar-inbox-editorial.yml' 'merge editorial/site'
-          fi
+          wait_new_run() {
+            local workflow="$1"
+            local started_epoch="$2"
+            local run_id=""
+            for attempt in $(seq 1 24); do
+              run_id=$(api GET "actions/workflows/${workflow}/runs?branch=${BRANCH}&event=workflow_dispatch&per_page=20" \
+                | jq -r --argjson started "$started_epoch" '
+                    [.workflow_runs[]
+                     | select((.created_at | fromdateiso8601) >= ($started - 5))]
+                    | sort_by(.created_at)
+                    | last
+                    | .id // empty')
+              if [ -n "$run_id" ]; then
+                echo "$run_id"
+                return 0
+              fi
+              sleep 5
+            done
+            return 1
+          }
 
-          # A planilha já é sincronizada dentro de mesclar-inbox-editorial.yml;
-          # portanto não há mais disparo separado de sincronizar-planilha.yml.
+          wait_success() {
+            local run_id="$1"
+            for attempt in $(seq 1 180); do
+              payload=$(api GET "actions/runs/${run_id}")
+              status=$(jq -r '.status' <<<"$payload")
+              conclusion=$(jq -r '.conclusion // empty' <<<"$payload")
+              echo "run=${run_id} status=${status} conclusion=${conclusion:-pending}" >&2
+              if [ "$status" = "completed" ]; then
+                [ "$conclusion" = "success" ]
+                return
+              fi
+              sleep 5
+            done
+            echo "Timeout aguardando run ${run_id}." >&2
+            return 1
+          }
 
-          if recent_healthy_run 'publicar-instagram-automatico.yml'; then
-            echo 'OK: Instagram teve execução saudável recente.'
-          else
-            dispatch_workflow 'publicar-instagram-automatico.yml' 'publicação Instagram'
-          fi
+          # 1) SITE/JSON/PLANILHA. Executa sempre; quando inbox está vazio,
+          # mesclar-inbox-editorial.py termina em no-op, sem publicar duplicatas.
+          site_started=$(date -u +%s)
+          echo "Disparando merge/site..."
+          dispatch 'mesclar-inbox-editorial.yml'
+          site_run=$(wait_new_run 'mesclar-inbox-editorial.yml' "$site_started") || {
+            echo 'FALHA OPERACIONAL: merge/site não materializou.'
+            exit 1
+          }
+          echo "site_run=${site_run}"
+          wait_success "$site_run" || {
+            echo "FALHA OPERACIONAL: merge/site run ${site_run} não concluiu com sucesso."
+            exit 1
+          }
 
-          echo 'Heartbeat de contingência concluído.'
+          # 2) INSTAGRAM. Só começa depois de site/planilha concluídos.
+          instagram_started=$(date -u +%s)
+          echo "Disparando Instagram após sucesso do site..."
+          dispatch 'publicar-instagram-automatico.yml'
+          instagram_run=$(wait_new_run 'publicar-instagram-automatico.yml' "$instagram_started") || {
+            echo 'FALHA OPERACIONAL: Instagram não materializou.'
+            exit 1
+          }
+          echo "instagram_run=${instagram_run}"
+          wait_success "$instagram_run" || {
+            echo "FALHA OPERACIONAL: workflow do Instagram não concluiu com sucesso."
+            exit 1
+          }
+
+          echo 'CADEIA_GITHUB_OK=true'
+          echo "site_run=${site_run}"
+          echo "instagram_run=${instagram_run}"
+          echo 'Orquestração GitHub concluída em ordem: site/planilha -> Instagram.'
