@@ -72,6 +72,23 @@ jobs:
                 ' >/dev/null
           }
 
+          instagram_expected_cycle_healthy() {
+            local workflow="$1"
+            local expected_start
+            # O heartbeat roda às :17 e o cron nativo do Instagram às :27.
+            # Portanto, às :17 validamos se houve uma rodada desde o :27 da hora anterior.
+            # Isso preserva o cron :27 como gatilho principal e só recupera uma rodada perdida.
+            expected_start=$(date -u -d '1 hour' +%Y-%m-%dT%H:27:00Z)
+
+            api GET "actions/workflows/${workflow}/runs?branch=${BRANCH}&per_page=20" \
+              | jq -e --arg expected_start "$expected_start" '
+                  any(.workflow_runs[];
+                    .created_at >= $expected_start and
+                    (.status != "completed" or .conclusion == "success")
+                  )
+                ' >/dev/null
+          }
+
           wait_for_dispatch() {
             local workflow="$1"
             local started_at="$2"
@@ -142,12 +159,27 @@ jobs:
             dispatch_and_wait "$workflow" "${label} não teve sucesso recente"
           }
 
+          ensure_instagram_expected_cycle() {
+            local workflow="$1"
+            local label="$2"
+
+            if instagram_expected_cycle_healthy "$workflow"; then
+              echo "OK: ${label} teve execução válida desde o :27 da hora anterior."
+              return 0
+            fi
+
+            dispatch_and_wait "$workflow" "${label} perdeu a rodada esperada do :27"
+          }
+
           # O editorial tem schedule próprio e deve rodar em cada ciclo.
           # O heartbeat é apenas contingência caso a rodada horária não apareça.
           ensure_current_cycle 'mesclar-inbox-editorial.yml' 'Mesclar inbox editorial'
 
-          # As demais rotinas mantêm a tolerância histórica de recuperação.
+          # A planilha mantém a tolerância histórica de recuperação.
           ensure_workflow 'sincronizar-planilha.yml' 'Sincronizar planilha do Radar'
-          ensure_workflow 'publicar-instagram-automatico.yml' 'Publicar automaticamente no Instagram'
+
+          # Instagram: mantém o cron nativo às :27 como principal. O heartbeat às :17
+          # só recupera se não houver uma rodada válida desde o :27 da hora anterior.
+          ensure_instagram_expected_cycle 'publicar-instagram-automatico.yml' 'Publicar automaticamente no Instagram'
 
           echo 'Heartbeat concluído: cadeia crítica verificada.'
