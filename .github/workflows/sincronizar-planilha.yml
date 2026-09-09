@@ -1,13 +1,6 @@
 name: Sincronizar planilha do Radar
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'dados.json'
-      - 'noticias.json'
-      - 'scripts/sincronizar_planilha.py'
-      - '.github/workflows/sincronizar-planilha.yml'
   workflow_dispatch:
 
 permissions:
