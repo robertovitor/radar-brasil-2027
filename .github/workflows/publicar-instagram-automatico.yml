@@ -1,10 +1,13 @@
 name: Publicar automaticamente no Instagram
 
 on:
-  # A cadência oficial vem do heartbeat da automação principal (:12) e,
-  # somente se ele falhar, da contingência do monitor. Não há cron nem
-  # workflow_run aqui para evitar chamadas paralelas à Meta.
+  # A cadência principal continua vindo do heartbeat da automação às :12.
+  # O cron às :27 é uma contingência independente: se o heartbeat falhar,
+  # o próprio GitHub Actions tenta a rodada. O gate de 60 minutos e o
+  # concurrency abaixo impedem publicação duplicada ou chamadas paralelas.
   workflow_dispatch:
+  schedule:
+    - cron: '27 * * * *'
   push:
     branches: [main]
     paths:
