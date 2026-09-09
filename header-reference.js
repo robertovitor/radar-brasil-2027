@@ -29,9 +29,12 @@
     'bottom':'auto'
   });
 
+  /* O PNG possui faixas brancas embutidas no próprio canvas.
+     Mantemos a imagem original e recortamos apenas essas áreas via CSS. */
   force(inner,{
     'width':'100%',
     'height':'auto',
+    'aspect-ratio':'2171 / 451',
     'min-height':'0',
     'max-height':'none',
     'margin':'0',
@@ -40,13 +43,14 @@
     'overflow':'hidden',
     'line-height':'0',
     'background':'transparent',
-    'position':'relative',
-    'top':'auto',
-    'bottom':'auto'
+    'position':'relative'
   });
 
   force(hero,{
     'display':'block',
+    'position':'absolute',
+    'left':'0',
+    'top':'-29.49%',
     'width':'100%',
     'height':'auto',
     'min-height':'0',
@@ -60,7 +64,7 @@
   });
 
   if(hero){
-    hero.src='./cabecalho.png?v=20260909e';
+    hero.src='./cabecalho.png?v=20260909f';
     hero.alt='Radar Brasil 2027 — Todo o futebol feminino, em todo o Brasil';
   }
 
