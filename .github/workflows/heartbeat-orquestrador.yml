@@ -1,0 +1,118 @@
+name: Heartbeat das rotinas do Radar
+
+on:
+  schedule:
+    # Minuto fora do topo da hora para reduzir risco de atraso do scheduler.
+    - cron: '17 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/heartbeat-orquestrador.yml'
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: heartbeat-rotinas-radar
+  cancel-in-progress: false
+
+jobs:
+  recuperar-rotinas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      BRANCH: main
+      MAX_AGE_MINUTES: '80'
+    steps:
+      - name: Verificar e recuperar etapas ausentes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          api() {
+            local method="$1"
+            local path="$2"
+            shift 2
+            curl --fail-with-body --silent --show-error \
+              -X "$method" \
+              -H "Authorization: Bearer ${GH_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "$@" \
+              "https://api.github.com/repos/${REPO}/${path}"
+          }
+
+          recent_success() {
+            local workflow="$1"
+            local cutoff now created created_epoch
+            now=$(date -u +%s)
+            cutoff=$(( now - MAX_AGE_MINUTES * 60 ))
+            created=$(api GET "actions/workflows/${workflow}/runs?branch=${BRANCH}&status=success&per_page=1" \
+              | jq -r '.workflow_runs[0].created_at // empty')
+            [[ -n "$created" ]] || return 1
+            created_epoch=$(date -u -d "$created" +%s)
+            (( created_epoch >= cutoff ))
+          }
+
+          wait_for_dispatch() {
+            local workflow="$1"
+            local started_at="$2"
+            local deadline run_id status conclusion
+            deadline=$(( $(date -u +%s) + 900 ))
+            run_id=""
+
+            while (( $(date -u +%s) < deadline )); do
+              run_id=$(api GET "actions/workflows/${workflow}/runs?branch=${BRANCH}&event=workflow_dispatch&per_page=10" \
+                | jq -r --arg started "$started_at" '[.workflow_runs[] | select(.created_at >= $started)] | sort_by(.created_at) | last | .id // empty')
+              [[ -n "$run_id" ]] && break
+              sleep 5
+            done
+
+            if [[ -z "$run_id" ]]; then
+              echo "::error::Não foi possível localizar a execução disparada de ${workflow}."
+              return 1
+            fi
+
+            while (( $(date -u +%s) < deadline )); do
+              read -r status conclusion < <(api GET "actions/runs/${run_id}" | jq -r '[.status, (.conclusion // "-")] | @tsv')
+              echo "${workflow}: run ${run_id} status=${status} conclusion=${conclusion}"
+              if [[ "$status" == "completed" ]]; then
+                [[ "$conclusion" == "success" ]]
+                return
+              fi
+              sleep 10
+            done
+
+            echo "::error::Timeout aguardando ${workflow} (run ${run_id})."
+            return 1
+          }
+
+          ensure_workflow() {
+            local workflow="$1"
+            local label="$2"
+            local started_at
+
+            if recent_success "$workflow"; then
+              echo "OK: ${label} teve execução bem-sucedida nos últimos ${MAX_AGE_MINUTES} minutos."
+              return 0
+            fi
+
+            echo "RECUPERAÇÃO: ${label} não teve sucesso recente; disparando ${workflow}."
+            started_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+            api POST "actions/workflows/${workflow}/dispatches" \
+              -H 'Content-Type: application/json' \
+              -d "{\"ref\":\"${BRANCH}\"}" >/dev/null
+            wait_for_dispatch "$workflow" "$started_at"
+          }
+
+          # Ordem deliberada: primeiro incorpora/publica dados no Radar,
+          # depois garante a planilha e, por último, tenta o Instagram.
+          ensure_workflow 'mesclar-inbox-editorial.yml' 'Mesclar inbox editorial'
+          ensure_workflow 'sincronizar-planilha.yml' 'Sincronizar planilha do Radar'
+          ensure_workflow 'publicar-instagram-automatico.yml' 'Publicar automaticamente no Instagram'
+
+          echo 'Heartbeat concluído: cadeia crítica verificada.'
