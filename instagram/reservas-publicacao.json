@@ -30,9 +30,11 @@
       "key": "instagram:noticia:https://legis.alepe.pe.gov.br/texto.aspx?id=89825&tipo=",
       "post_file": "instagram/fila/automatica/instagram-noticia-https-legis-alepe-pe-gov-br-texto-aspx-id-89825-tipo-0b5885d044.json",
       "reserved_at": "2026-09-09T08:45:11.013744+00:00",
-      "last_attempt_at": "2026-09-09T08:45:11.013744+00:00",
+      "last_attempt_at": "2026-09-09T08:45:27.720233+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-09T09:45:25.538218+00:00"
     }
   ]
 }
