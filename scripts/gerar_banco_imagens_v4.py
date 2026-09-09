@@ -14,7 +14,8 @@ BRAZIL_FEM=re.compile(
     r"(?:Brazil|Brasil|brasileir|Brasileir[aã]o Feminino|Campeonato Brasileiro.*Feminino|"
     r"Corinthians|Palmeiras|Ferrovi[aá]ria|Santos|S[aã]o Paulo|Flamengo|Fluminense|"
     r"Internacional|Gr[eê]mio|Cruzeiro|Atl[eé]tico Mineiro|Bahia|Fortaleza|Ava[ií]|Kindermann|"
-    r"Red Bull Bragantino|Botafogo|Vasco|Am[eé]rica Mineiro)", re.I)
+    r"Red Bull Bragantino|Botafogo|Vasco|Am[eé]rica Mineiro|Real Bras[ií]lia|Minas Bras[ií]lia|"
+    r"3B da Amaz[oô]nia|Mixto|Sport Recife|Vit[oó]ria|Juventude)", re.I)
 
 base.SEARCHES['selecao_brasileira'] = [
     'Brazil women national football team','Brazil women national football team 2024',
@@ -40,36 +41,52 @@ base.SEARCHES['selecao_brasileira'] = [
 base.SEARCHES['futebol_feminino_brasil'] = [
     'women association football Brazil','Brazil female footballer','Brazil women football players',
     'Campeonato Brasileiro de Futebol Feminino','Brasileirao Feminino football',
+    'Campeonato Brasileiro Feminino A1','Campeonato Brasileiro Feminino A2','Copa do Brasil futebol feminino',
     'Corinthians women football Brazil','Palmeiras women football Brazil','Ferroviaria women football Brazil',
     'Santos women football Brazil','Sao Paulo women football Brazil','Flamengo women football Brazil',
     'Fluminense women football Brazil','Internacional women football Brazil','Gremio women football Brazil',
     'Cruzeiro women football Brazil','Atletico Mineiro women football Brazil','Bahia women football Brazil',
-    'Red Bull Bragantino women football Brazil','Botafogo women football Brazil',
+    'Red Bull Bragantino women football Brazil','Botafogo women football Brazil','Vasco women football Brazil',
+    'Real Brasilia women football','Minas Brasilia women football','Kindermann women football Brazil',
+    '3B da Amazonia women football','Mixto women football Brazil','Sport Recife women football',
+    'Vitoria women football Brazil','Juventude women football Brazil',
     'Brazil women club football','Brazil women football league','Brazilian women football club',
+    'Libertadores Femenina Brazil club','Copa Libertadores Femenina Corinthians',
+    'Copa Libertadores Femenina Ferroviaria','Copa Libertadores Femenina Palmeiras',
 ]
 
 base.SEARCHES['copas_femininas'] = [
-    '2023 FIFA Women World Cup football','2023 FIFA Women World Cup players',
-    '2023 FIFA Women World Cup match','2023 FIFA Women World Cup teams',
-    '2023 FIFA Women World Cup Australia','2023 FIFA Women World Cup New Zealand',
-    '2023 FIFA Women World Cup England','2023 FIFA Women World Cup Spain',
-    '2023 FIFA Women World Cup Brazil','2023 FIFA Women World Cup USA',
-    '2019 FIFA Women World Cup football','2019 FIFA Women World Cup players',
-    '2019 FIFA Women World Cup match','2019 FIFA Women World Cup France',
-    '2019 FIFA Women World Cup USA','2019 FIFA Women World Cup England',
-    '2019 FIFA Women World Cup Netherlands','2019 FIFA Women World Cup Brazil',
-    '2015 FIFA Women World Cup football','2015 FIFA Women World Cup players',
-    '2015 FIFA Women World Cup match','2015 FIFA Women World Cup Canada',
-    '2011 FIFA Women World Cup football','2011 FIFA Women World Cup players',
-    '2011 FIFA Women World Cup Germany','2007 FIFA Women World Cup football',
-    '2007 FIFA Women World Cup China','2003 FIFA Women World Cup football',
-    '1999 FIFA Women World Cup football','1995 FIFA Women World Cup football',
-    '1991 FIFA Women World Cup football','FIFA Women World Cup final',
-    'FIFA Women World Cup semifinal','FIFA Women World Cup stadium women football',
+    "2023 FIFA Women's World Cup football","2023 FIFA Women's World Cup players",
+    "2023 FIFA Women's World Cup match","2023 FIFA Women's World Cup teams",
+    "2023 FIFA Women's World Cup final","2023 FIFA Women's World Cup semifinal",
+    "2023 FIFA Women's World Cup quarterfinal","2023 FIFA Women's World Cup opening",
+    "2023 FIFA Women's World Cup Australia","2023 FIFA Women's World Cup New Zealand",
+    "2023 FIFA Women's World Cup England","2023 FIFA Women's World Cup Spain",
+    "2023 FIFA Women's World Cup Brazil","2023 FIFA Women's World Cup USA",
+    "2019 FIFA Women's World Cup football","2019 FIFA Women's World Cup players",
+    "2019 FIFA Women's World Cup match","2019 FIFA Women's World Cup final",
+    "2019 FIFA Women's World Cup semifinal","2019 FIFA Women's World Cup quarterfinal",
+    "2019 FIFA Women's World Cup France","2019 FIFA Women's World Cup USA",
+    "2019 FIFA Women's World Cup England","2019 FIFA Women's World Cup Netherlands",
+    "2019 FIFA Women's World Cup Brazil","2015 FIFA Women's World Cup football",
+    "2015 FIFA Women's World Cup players","2015 FIFA Women's World Cup match",
+    "2015 FIFA Women's World Cup final","2015 FIFA Women's World Cup semifinal",
+    "2015 FIFA Women's World Cup Canada","2011 FIFA Women's World Cup football",
+    "2011 FIFA Women's World Cup players","2011 FIFA Women's World Cup final",
+    "2011 FIFA Women's World Cup Germany","2007 FIFA Women's World Cup football",
+    "2007 FIFA Women's World Cup final","2007 FIFA Women's World Cup China",
+    "2003 FIFA Women's World Cup football","2003 FIFA Women's World Cup final",
+    "1999 FIFA Women's World Cup football","1999 FIFA Women's World Cup final",
+    "1995 FIFA Women's World Cup football","1995 FIFA Women's World Cup final",
+    "1991 FIFA Women's World Cup football","1991 FIFA Women's World Cup final",
+    "FIFA Women's World Cup trophy football","FIFA Women's World Cup supporters football",
+    "FIFA Women's World Cup stadium football","FIFA Women's World Cup opening ceremony",
 ]
 
 _original_candidates = base.candidates
 def candidates(query, pages=4):
+    # Mantem a profundidade alta, mas as consultas ficaram mais especificas para
+    # gerar menos resultados irrelevantes por chamada.
     return _original_candidates(query, pages=7)
 base.candidates = candidates
 
@@ -85,7 +102,7 @@ def editorial_ok(cat,title,desc):
     if cat=='futebol_feminino_brasil':
         return bool(BRAZIL_FEM.search(text) and base.SOCCER.search(text) and not MEN.search(text) and not base.BLOCK_AMERICAN.search(text))
     if cat=='copas_femininas':
-        return bool(re.search(r'(?:world cup|copa do mundo)',text,re.I) and not MEN.search(text) and not base.BLOCK_AMERICAN.search(text))
+        return bool(re.search(r"(?:women['’]?s? world cup|world cup|copa do mundo)",text,re.I) and not MEN.search(text) and not base.BLOCK_AMERICAN.search(text))
     if cat=='futebol_feminino_internacional':
         return bool(base.SOCCER.search(text) and not base.BLOCK_AMERICAN.search(text) and not MEN.search(text))
     return True
