@@ -3,8 +3,8 @@
   "reason": "meta_application_request_limit",
   "code": 4,
   "subcode": 2207051,
-  "strike_count": 1,
-  "cooldown_minutes": 60,
-  "detected_at": "2026-09-09T10:57:19.545968+00:00",
-  "blocked_until": "2026-09-09T11:57:19.545968+00:00"
+  "strike_count": 2,
+  "cooldown_minutes": 120,
+  "detected_at": "2026-09-09T12:08:25.138516+00:00",
+  "blocked_until": "2026-09-09T14:08:25.138516+00:00"
 }
