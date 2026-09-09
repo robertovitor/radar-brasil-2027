@@ -1,9 +1,6 @@
 name: Mesclar inbox editorial
 
 on:
-  schedule:
-    # Evita o topo da hora, quando o scheduler do GitHub tende a concentrar carga.
-    - cron: '7 * * * *'
   push:
     branches: [main]
     paths:
