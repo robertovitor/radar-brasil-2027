@@ -98,24 +98,8 @@ def main() -> int:
     reconciled = normalize_new_reconciliations(args.ledger, previous_keys)
     if reconciled:
         print(f"reconciled_existing_count={reconciled}")
-        print("reconciled_existing_continue=true")
-        print("A reconciliação foi registrada e passa a consumir o intervalo de 1 hora.")
-
-        # Antes, a continuação dependia de um novo push/workflow. Commits feitos pelo
-        # GITHUB_TOKEN não disparam outro workflow de push, então a rodada podia parar
-        # aqui por horas. Agora continuamos dentro do mesmo job até achar um post novo.
-        if os.environ.get("INSTAGRAM_CONTINUATION_ACTIVE") != "1":
-            print("reconciled_existing_same_run_continuation=true", flush=True)
-            env = os.environ.copy()
-            env["INSTAGRAM_CONTINUATION_ACTIVE"] = "1"
-            continuation = subprocess.run(
-                [sys.executable, "scripts/continuar_publicacao_instagram.py"],
-                env=env,
-                check=False,
-            )
-            if continuation.returncode != 0:
-                print("same_run_continuation_failed=true", file=sys.stderr)
-                return continuation.returncode
+        print("reconciled_existing_continue=false")
+        print("A reconciliação foi registrada e encerra a rodada para não repetir chamadas à Meta.")
 
     print(f"Lote concluído: {successes} sucesso(s), {len(failures)} falha(s).")
     if failures:
