@@ -80,9 +80,11 @@
       "key": "instagram:noticia:https://pt.linkedin.com/posts/fsports-ag_o-legado-come%c3%a7a-antes-do-primeiro-apito-activity-7495445214967484417-5m11",
       "post_file": "instagram/fila/automatica/-come-c3-a7a-antes-do-primeiro-apito-activity-7495445214967484417-5m11-a8276918a9.json",
       "reserved_at": "2026-09-10T16:43:13.636185+00:00",
-      "last_attempt_at": "2026-09-10T16:43:13.636185+00:00",
+      "last_attempt_at": "2026-09-10T16:43:41.598120+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-10T20:43:38.666694+00:00"
     }
   ]
 }
