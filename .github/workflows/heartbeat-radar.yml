@@ -4,7 +4,9 @@ on:
   schedule:
     # Contingência do merge/site, após a rodada principal das :00.
     - cron: '20 * * * *'
-    # Contingência do Instagram, após a rodada principal das :12.
+    # Gatilho principal do Instagram.
+    - cron: '12 * * * *'
+    # Contingência do Instagram, caso a rodada principal atrase/falhe.
     - cron: '32 * * * *'
   workflow_dispatch:
 
@@ -42,21 +44,28 @@ jobs:
           git pull --rebase origin main
           git push origin HEAD:main
 
-  recuperar-instagram:
-    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '32 * * * *'
+  disparar-instagram:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '12 * * * *' || github.event.schedule == '32 * * * *'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
-      - name: Disparar contingência Instagram
+      - name: Disparar Instagram pelo heartbeat
         shell: bash
         run: |
           set -euo pipefail
           git pull --rebase origin main
           ts="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-          printf '%s heartbeat-instagram-%s\n' "$ts" "$(date -u +'%Y%m%dT%H%M%SZ')" > instagram/executar-automatico.txt
+          if [ "${{ github.event.schedule }}" = "32 * * * *" ]; then
+            kind="heartbeat-instagram-recovery"
+            msg="heartbeat: recupera ciclo Instagram"
+          else
+            kind="heartbeat-instagram"
+            msg="heartbeat: dispara ciclo Instagram"
+          fi
+          printf '%s %s-%s\n' "$ts" "$kind" "$(date -u +'%Y%m%dT%H%M%SZ')" > instagram/executar-automatico.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add instagram/executar-automatico.txt
@@ -64,6 +73,6 @@ jobs:
             echo 'Heartbeat Instagram sem alteração; nada a publicar.'
             exit 0
           fi
-          git commit -m 'heartbeat: recupera ciclo Instagram'
+          git commit -m "$msg"
           git pull --rebase origin main
           git push origin HEAD:main
