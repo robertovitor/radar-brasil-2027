@@ -1,4 +1,39 @@
 {
-  "eventos": [],
-  "noticias": []
+  "eventos": [
+    {
+      "ID": "EVT-CCXP-MARTA-20261206",
+      "Titulo": "Painel da cinebiografia de Marta na CCXP26",
+      "Status": "Planejado",
+      "Data": "2026-12-06",
+      "DataBR": "06/12/2026",
+      "UF": "SP",
+      "Cidade": "São Paulo",
+      "Categoria": "Ativação cultural / futebol feminino",
+      "Organizador": "CCXP / Conspiração",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "São Paulo Expo",
+      "Latitude": -23.6435,
+      "Longitude": -46.6295,
+      "Link": "https://oglobo.globo.com/cultura/noticia/2026/09/02/marta-e-alice-carvalho-sao-confirmadas-em-painel-da-ccxp.ghtml",
+      "Observacoes": "A CCXP26 confirmou para 06/12/2026 um painel sobre a cinebiografia de Marta, com presença da jogadora e da atriz Alice Carvalho. O longa tem estreia prevista para 08/04/2027, poucos meses antes da Copa do Mundo Feminina FIFA 2027 no Brasil, conectando cultura, visibilidade do futebol feminino e o aquecimento para o Mundial.",
+      "Mes": "Dez",
+      "Ano": 2026,
+      "Regiao": "Sudeste"
+    }
+  ],
+  "noticias": [
+    {
+      "Data": "2026-09-10",
+      "DataBR": "10/09/2026",
+      "Titulo": "Debate cobra legado duradouro da Copa Feminina 2027 para mulheres no esporte",
+      "Tema": "Legado social / futebol feminino / políticas públicas / Copa Feminina 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "UOL",
+      "Link": "https://noticias.uol.com.br/colunas/joildo-santos/2026/09/10/a-copa-das-mulheres-vai-deixar-um-legado-ou-apenas-uma-fotografia.ghtm",
+      "Sentimento": "Neutro",
+      "Impacto": "Médio",
+      "Resumo": "Artigo publicado em 10/09/2026 discute se a Copa do Mundo Feminina de 2027 deixará legado estrutural para mulheres no esporte, defendendo investimentos permanentes em infraestrutura, formação, acesso à modalidade e políticas de proteção e equidade, para que o impacto do torneio ultrapasse a realização dos jogos."
+    }
+  ]
 }
