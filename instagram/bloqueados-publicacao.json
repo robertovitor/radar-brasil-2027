@@ -11,7 +11,8 @@
     "instagram:noticia:https://www.oliberal.com/esportes/nao-da-para-falar-em-paixao-nacional-so-valorizando-o-masculino-diz-secretaria-da-copa-1.1153852",
     "instagram:noticia:https://www.empetur.pe.gov.br/h-licitacoes/2556-empetur-aviso-de-abertura-processo-n-1687-2026-cel-iii-pe-0008-empetur",
     "instagram:noticia:https://www12.senado.leg.br/noticias/materias/2026/09/02/senado-aprova-prioridade-para-futebol-feminino-na-politica-de-esporte",
-    "instagram:noticia:https://www.correio24horas.com.br/salvador/copa-salvador-interbairros-2026-tera-r-40-mil-para-campeoes-e-comeca-dia-30-veja-novidades-0826"
+    "instagram:noticia:https://www.correio24horas.com.br/salvador/copa-salvador-interbairros-2026-tera-r-40-mil-para-campeoes-e-comeca-dia-30-veja-novidades-0826",
+    "instagram:noticia:https://ge.globo.com/futebol/copa-do-mundo/noticia/2026/09/09/copa-feminina-governo-negocia-ingressos-populares-e-cre-em-torneio-blindado-da-crise-na-fifa.ghtml"
   ],
   "reason": "Pauta já publicada no Instagram; bloqueio preventivo após detecção de repetição em 2026-09-04.",
   "duplicate_reasons": {
@@ -78,6 +79,11 @@
     "instagram:noticia:https://www.correio24horas.com.br/salvador/copa-salvador-interbairros-2026-tera-r-40-mil-para-campeoes-e-comeca-dia-30-veja-novidades-0826": {
       "creation_id": "18099916616098480",
       "attempted_at": "2026-09-09T19:58:14.369964+00:00",
+      "reason": "meta_container_created_never_republish"
+    },
+    "instagram:noticia:https://ge.globo.com/futebol/copa-do-mundo/noticia/2026/09/09/copa-feminina-governo-negocia-ingressos-populares-e-cre-em-torneio-blindado-da-crise-na-fifa.ghtml": {
+      "creation_id": "18099972029098480",
+      "attempted_at": "2026-09-10T01:11:42.012207+00:00",
       "reason": "meta_container_created_never_republish"
     }
   }
