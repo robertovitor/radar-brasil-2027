@@ -13,7 +13,8 @@
     "instagram:noticia:https://www12.senado.leg.br/noticias/materias/2026/09/02/senado-aprova-prioridade-para-futebol-feminino-na-politica-de-esporte",
     "instagram:noticia:https://www.correio24horas.com.br/salvador/copa-salvador-interbairros-2026-tera-r-40-mil-para-campeoes-e-comeca-dia-30-veja-novidades-0826",
     "instagram:noticia:https://ge.globo.com/futebol/copa-do-mundo/noticia/2026/09/09/copa-feminina-governo-negocia-ingressos-populares-e-cre-em-torneio-blindado-da-crise-na-fifa.ghtml",
-    "instagram:noticia:https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/08/20/copa-2027-venda-de-ingressos-ainda-nao-comecou-como-registrar-interesse.ghtm"
+    "instagram:noticia:https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/08/20/copa-2027-venda-de-ingressos-ainda-nao-comecou-como-registrar-interesse.ghtm",
+    "instagram:noticia:https://asserj.com.br/en/w/copa-do-mundo-feminina-entra-no-radar-dos-supermercados"
   ],
   "reason": "Pauta já publicada no Instagram; bloqueio preventivo após detecção de repetição em 2026-09-04.",
   "duplicate_reasons": {
@@ -90,6 +91,11 @@
     "instagram:noticia:https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/08/20/copa-2027-venda-de-ingressos-ainda-nao-comecou-como-registrar-interesse.ghtm": {
       "creation_id": "18100031114098480",
       "attempted_at": "2026-09-10T06:41:16.088915+00:00",
+      "reason": "meta_container_created_never_republish"
+    },
+    "instagram:noticia:https://asserj.com.br/en/w/copa-do-mundo-feminina-entra-no-radar-dos-supermercados": {
+      "creation_id": "18100088606098480",
+      "attempted_at": "2026-09-10T11:52:19.769360+00:00",
       "reason": "meta_container_created_never_republish"
     }
   }
