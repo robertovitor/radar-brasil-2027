@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - 'editorial/inbox.json'
+      - 'editorial/backlog-sugestoes.json'
       - 'editorial/gatilhos/*.txt'
   workflow_dispatch:
 
@@ -33,6 +34,8 @@ jobs:
         run: pip install openpyxl==3.1.5
       - name: Mesclar itens aprovados e enfileirar novidades
         run: python scripts/mesclar_inbox_editorial.py
+      - name: Validar backlog de sugestões aprovadas
+        run: python scripts/validar_backlog_editorial.py
       - name: Sincronizar planilha com os dados atuais
         run: python scripts/sincronizar_planilha.py
       - name: Publicar alterações
