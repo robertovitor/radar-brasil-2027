@@ -70,9 +70,11 @@
       "key": "instagram:noticia:https://asserj.com.br/en/w/copa-do-mundo-feminina-entra-no-radar-dos-supermercados",
       "post_file": "instagram/fila/automatica/rj-com-br-en-w-copa-do-mundo-feminina-entra-no-radar-dos-supermercados-6d0173f9dd.json",
       "reserved_at": "2026-09-10T11:52:12.597630+00:00",
-      "last_attempt_at": "2026-09-10T11:52:12.597630+00:00",
+      "last_attempt_at": "2026-09-10T11:52:38.702780+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-10T15:52:36.088905+00:00"
     }
   ]
 }
