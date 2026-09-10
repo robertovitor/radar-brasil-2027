@@ -1,36 +1,33 @@
 name: Heartbeat Radar
 
 on:
-  schedule:
-    # Terceira camada: contingência do merge/site, após principal por push e heartbeat externo.
-    - cron: '20 * * * *'
-    # Terceira camada: contingência do Instagram, caso o gatilho externo das :12 não materialize.
-    - cron: '32 * * * *'
+  # Contingência manual apenas. A recuperação horária principal é feita pela
+  # automação externa Monitorar rotina Radar (:22), que verifica antes de agir.
+  # Manter cron aqui causaria gatilhos cegos e execuções redundantes.
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: heartbeat-radar-${{ github.event.schedule || 'manual' }}
+  group: heartbeat-radar-manual
   cancel-in-progress: false
 
 jobs:
   recuperar-editorial:
-    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '20 * * * *'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
-      - name: Disparar contingência editorial
+      - name: Disparar contingência editorial manual
         shell: bash
         run: |
           set -euo pipefail
           git pull --rebase origin main
           ts="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-          printf 'timestamp=%s\nid=heartbeat-editorial-%s\n' "$ts" "$(date -u +'%Y%m%dT%H%M%SZ')" > editorial/executar-automatico.txt
+          printf 'timestamp=%s\nid=heartbeat-editorial-manual-%s\n' "$ts" "$(date -u +'%Y%m%dT%H%M%SZ')" > editorial/executar-automatico.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add editorial/executar-automatico.txt
@@ -38,25 +35,25 @@ jobs:
             echo 'Heartbeat editorial sem alteração; nada a publicar.'
             exit 0
           fi
-          git commit -m 'heartbeat: recupera ciclo editorial'
+          git commit -m 'heartbeat: recuperação editorial manual'
           git pull --rebase origin main
           git push origin HEAD:main
 
   recuperar-instagram:
-    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '32 * * * *'
+    needs: recuperar-editorial
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
-      - name: Disparar contingência do Instagram
+      - name: Disparar contingência do Instagram manual
         shell: bash
         run: |
           set -euo pipefail
           git pull --rebase origin main
           ts="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-          printf '%s heartbeat-instagram-recovery-%s\n' "$ts" "$(date -u +'%Y%m%dT%H%M%SZ')" > instagram/executar-automatico.txt
+          printf '%s heartbeat-instagram-manual-%s\n' "$ts" "$(date -u +'%Y%m%dT%H%M%SZ')" > instagram/executar-automatico.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add instagram/executar-automatico.txt
@@ -64,6 +61,6 @@ jobs:
             echo 'Heartbeat Instagram sem alteração; nada a publicar.'
             exit 0
           fi
-          git commit -m 'heartbeat: recupera ciclo Instagram'
+          git commit -m 'heartbeat: recuperação Instagram manual'
           git pull --rebase origin main
           git push origin HEAD:main
