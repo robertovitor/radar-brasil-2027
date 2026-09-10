@@ -1,0 +1,69 @@
+name: Heartbeat Radar
+
+on:
+  schedule:
+    # Contingência do merge/site, após a rodada principal das :00.
+    - cron: '20 * * * *'
+    # Contingência do Instagram, após a rodada principal das :12.
+    - cron: '32 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: heartbeat-radar-${{ github.event.schedule || 'manual' }}
+  cancel-in-progress: false
+
+jobs:
+  recuperar-editorial:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '20 * * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Disparar contingência editorial
+        shell: bash
+        run: |
+          set -euo pipefail
+          git pull --rebase origin main
+          ts="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          printf 'timestamp=%s\nid=heartbeat-editorial-%s\n' "$ts" "$(date -u +'%Y%m%dT%H%M%SZ')" > editorial/executar-automatico.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add editorial/executar-automatico.txt
+          if git diff --cached --quiet; then
+            echo 'Heartbeat editorial sem alteração; nada a publicar.'
+            exit 0
+          fi
+          git commit -m 'heartbeat: recupera ciclo editorial'
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+  recuperar-instagram:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '32 * * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Disparar contingência Instagram
+        shell: bash
+        run: |
+          set -euo pipefail
+          git pull --rebase origin main
+          ts="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          printf '%s heartbeat-instagram-%s\n' "$ts" "$(date -u +'%Y%m%dT%H%M%SZ')" > instagram/executar-automatico.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add instagram/executar-automatico.txt
+          if git diff --cached --quiet; then
+            echo 'Heartbeat Instagram sem alteração; nada a publicar.'
+            exit 0
+          fi
+          git commit -m 'heartbeat: recupera ciclo Instagram'
+          git pull --rebase origin main
+          git push origin HEAD:main
