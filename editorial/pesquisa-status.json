@@ -1,17 +1,6 @@
 {
-  "cycle_id": "20260910-14",
-  "stage": "completed",
-  "started_at": "2026-09-10T15:36:40-03:00",
-  "completed_at": "2026-09-10T15:43:00-03:00",
-  "recovery": true,
-  "summary": {
-    "candidatos_publicos_analisados": 4,
-    "sugestoes_eventos_analisadas": 4,
-    "sugestoes_noticias_analisadas": 3,
-    "aprovados": 6,
-    "recusados": 0,
-    "pendentes": 1,
-    "itens_novos_inbox": 4,
-    "observacao": "Duplicatas de mesma URL foram consolidadas editorialmente; 3 registros Sesc representam 1 evento e 2 registros Lance representam 1 notícia."
-  }
+  "cycle_id": "20260910-15",
+  "stage": "started",
+  "started_at": "2026-09-10T15:52:25-03:00",
+  "recovery": true
 }
