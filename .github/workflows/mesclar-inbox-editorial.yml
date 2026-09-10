@@ -2,14 +2,12 @@ name: Mesclar inbox editorial
 
 on:
   schedule:
-    # Roda a cada hora logo após o ciclo editorial das :45.
-    - cron: '47 * * * *'
+    - cron: '0 * * * *'
   push:
     branches: [main]
     paths:
       - 'editorial/inbox.json'
-      - 'editorial/backlog-sugestoes.json'
-      - 'editorial/gatilhos/*.txt'
+      - 'editorial/executar-automatico.txt'
   workflow_dispatch:
 
 permissions:
@@ -34,8 +32,6 @@ jobs:
         run: pip install openpyxl==3.1.5
       - name: Mesclar itens aprovados e enfileirar novidades
         run: python scripts/mesclar_inbox_editorial.py
-      - name: Validar backlog de sugestões aprovadas
-        run: python scripts/validar_backlog_editorial.py
       - name: Sincronizar planilha com os dados atuais
         run: python scripts/sincronizar_planilha.py
       - name: Publicar alterações

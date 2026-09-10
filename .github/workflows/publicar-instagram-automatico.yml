@@ -1,9 +1,9 @@
 name: Publicar automaticamente no Instagram
 
 on:
-  # A cadência principal vem do ciclo único do Radar, que atualiza
-  # instagram/executar-automatico.txt somente após concluir o site/merge.
-  # workflow_dispatch fica disponível apenas para recuperação manual/contingência.
+  # A cadência oficial vem do heartbeat da automação principal (:12) e,
+  # somente se ele falhar, da contingência do monitor. Não há cron nem
+  # workflow_run aqui para evitar chamadas paralelas à Meta.
   workflow_dispatch:
   push:
     branches: [main]
@@ -48,6 +48,8 @@ jobs:
                   for row in data.get("published", []):
                       if not isinstance(row, dict):
                           continue
+                      # A publicação remota também consome o intervalo. Para
+                      # ledgers antigos, reconciled_at é o melhor limite seguro.
                       raw = row.get("published_at") or row.get("reconciled_at")
                       if raw:
                           stamps.append(raw)
@@ -304,6 +306,17 @@ jobs:
             echo "Falha persistente ao gravar a limpeza da reserva após 3 tentativas."
             exit 1
           fi
+
+      - name: Continuar na mesma rodada após reconciliar post existente
+        if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.reconciled == 'true'
+        env:
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_GRAPH_VERSION: v25.0
+          META_RATE_LIMIT_STATE: instagram/meta-rate-limit.json
+          META_RATE_LIMIT_COOLDOWN_MINUTES: "60"
+          INSTAGRAM_CONTINUATION_MAX_ATTEMPTS: "8"
+        run: python scripts/continuar_publicacao_instagram.py
 
       - name: Registrar adiamento por rate limit sem falhar o workflow
         if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.deferred == 'true'

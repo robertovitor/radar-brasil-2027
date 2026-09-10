@@ -22,7 +22,6 @@ FACEBOOK_GRAPH_ROOT = f"https://graph.facebook.com/{GRAPH_VERSION}"
 INSTAGRAM_GRAPH_ROOT = f"https://graph.instagram.com/{GRAPH_VERSION}"
 RATE_LIMIT_STATE = pathlib.Path(os.getenv("META_RATE_LIMIT_STATE", "instagram/meta-rate-limit.json"))
 RATE_LIMIT_COOLDOWN_MINUTES = max(15, int(os.getenv("META_RATE_LIMIT_COOLDOWN_MINUTES", "60")))
-RATE_LIMIT_MAX_MULTIPLIER = max(1, int(os.getenv("META_RATE_LIMIT_MAX_MULTIPLIER", "4")))
 
 
 class InstagramError(RuntimeError):
@@ -38,16 +37,7 @@ def is_rate_limit_error(exc: InstagramError) -> bool:
 
 def mark_meta_rate_limit(exc: InstagramError) -> None:
     now = dt.datetime.now(dt.timezone.utc)
-    previous = {}
-    try:
-        if RATE_LIMIT_STATE.exists():
-            previous = json.loads(RATE_LIMIT_STATE.read_text(encoding="utf-8"))
-    except (json.JSONDecodeError, OSError):
-        previous = {}
-    strikes = int(previous.get("strike_count") or 0) + 1
-    multiplier = min(2 ** max(0, strikes - 1), RATE_LIMIT_MAX_MULTIPLIER)
-    cooldown_minutes = RATE_LIMIT_COOLDOWN_MINUTES * multiplier
-    blocked_until = now + dt.timedelta(minutes=cooldown_minutes)
+    blocked_until = now + dt.timedelta(minutes=RATE_LIMIT_COOLDOWN_MINUTES)
     RATE_LIMIT_STATE.parent.mkdir(parents=True, exist_ok=True)
     RATE_LIMIT_STATE.write_text(
         json.dumps(
@@ -56,8 +46,6 @@ def mark_meta_rate_limit(exc: InstagramError) -> None:
                 "reason": "meta_application_request_limit",
                 "code": exc.code,
                 "subcode": exc.subcode,
-                "strike_count": strikes,
-                "cooldown_minutes": cooldown_minutes,
                 "detected_at": now.isoformat(),
                 "blocked_until": blocked_until.isoformat(),
             },
@@ -67,7 +55,6 @@ def mark_meta_rate_limit(exc: InstagramError) -> None:
         + "\n",
         encoding="utf-8",
     )
-    print(f"meta_rate_limit_strikes={strikes}", file=sys.stderr)
     print(f"meta_rate_limit_until={blocked_until.isoformat()}", file=sys.stderr)
 
 
@@ -102,7 +89,6 @@ def clear_meta_cooldown() -> None:
     if not state.get("active"):
         return
     state["active"] = False
-    state["strike_count"] = 0
     state["cleared_at"] = dt.datetime.now(dt.timezone.utc).isoformat()
     RATE_LIMIT_STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
@@ -133,11 +119,6 @@ def request_json(method: str, path: str, token: str, params: dict | None = None,
 
 def discover_instagram_user(token: str) -> tuple[str, str, str]:
     configured = os.getenv("INSTAGRAM_USER_ID", "").strip()
-    if configured:
-        # O ID já é validado pelo secret e esta integração usa Instagram Login.
-        # Evita uma consulta de perfil em toda tentativa de publicação.
-        print("instagram_profile_lookup_skipped=configured_user_id")
-        return INSTAGRAM_GRAPH_ROOT, configured, ""
     try:
         profile = request_json("GET", configured or "me", token, {"fields": "id,user_id,username,account_type"}, graph_root=INSTAGRAM_GRAPH_ROOT)
         instagram_id = profile.get("user_id") or profile.get("id")
@@ -241,9 +222,7 @@ def validate_post(post: dict, require_approval: bool) -> None:
 
 
 def wait_until_ready(container_id: str, token: str, graph_root: str) -> None:
-    # Quatro consultas são suficientes para imagens estáticas; tentativas extras
-    # ampliavam o consumo da cota da aplicação sem melhorar a taxa de sucesso.
-    delays = (5, 10, 20, 0)
+    delays = (4, 6, 8, 12, 16, 24, 36, 0)
     for attempt, delay in enumerate(delays, start=1):
         status = request_json("GET", container_id, token, {"fields": "status_code,status"}, graph_root=graph_root)
         code = str(status.get("status_code") or "").upper()
@@ -254,7 +233,7 @@ def wait_until_ready(container_id: str, token: str, graph_root: str) -> None:
         if delay:
             print(f"container_wait_attempt={attempt};next_wait_seconds={delay}")
             time.sleep(delay)
-    raise InstagramError("Tempo esgotado aguardando o processamento da imagem após 4 consultas.")
+    raise InstagramError("Tempo esgotado aguardando o processamento da imagem após 8 consultas.")
 
 
 def recent_remote_media(user_id: str, token: str, graph_root: str, strict: bool = False) -> list[dict]:
@@ -316,7 +295,7 @@ def append_ledger(args, published: list[dict], key: str, media_id: str, creation
 
 def publish_with_retry(user_id: str, creation_id: str, token: str, graph_root: str, post: dict) -> str:
     last_error = None
-    for attempt in range(1, 3):
+    for attempt in range(1, 4):
         try:
             response = request_json("POST", f"{user_id}/media_publish", token, {"creation_id": creation_id}, graph_root=graph_root)
             media_id = str(response.get("id") or "").strip()
@@ -329,7 +308,7 @@ def publish_with_retry(user_id: str, creation_id: str, token: str, graph_root: s
                 raise
             if exc.code == 9007 or exc.subcode == 2207027:
                 print(f"media_publish_retry={attempt};reason=media_id_not_available")
-                if attempt >= 2:
+                if attempt >= 3:
                     break
                 time.sleep(10 * attempt)
                 try:
@@ -337,6 +316,9 @@ def publish_with_retry(user_id: str, creation_id: str, token: str, graph_root: s
                 except InstagramError as wait_exc:
                     if is_rate_limit_error(wait_exc):
                         raise
+                existing = reconcile_existing(post, user_id, token, graph_root)
+                if existing:
+                    return existing
                 continue
             existing = reconcile_existing(post, user_id, token, graph_root)
             if existing:
