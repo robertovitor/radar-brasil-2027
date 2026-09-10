@@ -1,6 +1,17 @@
 {
   "cycle_id": "20260910-16",
-  "stage": "started",
+  "stage": "completed",
   "started_at": "2026-09-10T17:00:21-03:00",
-  "recovery": true
+  "completed_at": "2026-09-10T17:02:00-03:00",
+  "recovery": true,
+  "summary": {
+    "candidatos_publicos_analisados": 6,
+    "sugestoes_eventos_analisadas": 1,
+    "sugestoes_noticias_analisadas": 0,
+    "aprovados": 0,
+    "recusados": 0,
+    "pendentes": 1,
+    "itens_novos_inbox": 0,
+    "observacao": "Contingência assumiu o ciclo 16 porque a principal não materializou o heartbeat. As duas leituras obrigatórias do Airtable foram feitas uma única vez. Não houve item novo a enfileirar; o post DdEcCfSRfy3 permaneceu em verificação após nova busca pública sem confirmação independente."
+  }
 }
