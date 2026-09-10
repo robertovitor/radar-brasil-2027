@@ -1,6 +1,17 @@
 {
   "cycle_id": "20260910-15",
-  "stage": "started",
+  "stage": "completed",
   "started_at": "2026-09-10T15:52:25-03:00",
-  "recovery": true
+  "completed_at": "2026-09-10T15:56:10-03:00",
+  "recovery": true,
+  "summary": {
+    "candidatos_publicos_analisados": 4,
+    "sugestoes_eventos_analisadas": 2,
+    "sugestoes_noticias_analisadas": 0,
+    "aprovados": 1,
+    "recusados": 0,
+    "pendentes": 1,
+    "itens_novos_inbox": 2,
+    "observacao": "Contingência assumiu o ciclo. Enfileirados o painel da cinebiografia de Marta na CCXP26 e uma pauta pública nova sobre legado da Copa Feminina 2027. O post DdEcCfSRfy3 permaneceu em verificação."
+  }
 }
