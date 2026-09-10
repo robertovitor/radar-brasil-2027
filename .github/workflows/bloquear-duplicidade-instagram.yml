@@ -2,6 +2,12 @@ name: Bloquear duplicidade Instagram
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "10 * * * *"
+    - cron: "22 * * * *"
+    - cron: "34 * * * *"
+    - cron: "46 * * * *"
+    - cron: "58 * * * *"
   push:
     branches: [main]
     paths:
