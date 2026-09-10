@@ -1,6 +1,9 @@
 name: Mesclar inbox editorial
 
 on:
+  schedule:
+    # Roda a cada hora logo após o ciclo editorial das :45.
+    - cron: '47 * * * *'
   push:
     branches: [main]
     paths:
