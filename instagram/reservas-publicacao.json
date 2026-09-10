@@ -50,9 +50,11 @@
       "key": "instagram:noticia:https://ge.globo.com/futebol/copa-do-mundo/noticia/2026/09/09/copa-feminina-governo-negocia-ingressos-populares-e-cre-em-torneio-blindado-da-crise-na-fifa.ghtml",
       "post_file": "instagram/fila/automatica/a-ingressos-populares-e-cre-em-torneio-blindado-da-crise-na-fifa-ghtml-19f646fb0f.json",
       "reserved_at": "2026-09-10T01:11:36.933666+00:00",
-      "last_attempt_at": "2026-09-10T01:11:36.933666+00:00",
+      "last_attempt_at": "2026-09-10T01:11:59.204652+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-10T05:11:57.151176+00:00"
     }
   ]
 }
