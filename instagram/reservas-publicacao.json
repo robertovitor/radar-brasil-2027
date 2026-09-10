@@ -60,9 +60,11 @@
       "key": "instagram:noticia:https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/08/20/copa-2027-venda-de-ingressos-ainda-nao-comecou-como-registrar-interesse.ghtm",
       "post_file": "instagram/fila/automatica/027-venda-de-ingressos-ainda-nao-comecou-como-registrar-interesse-ghtm-931ac3bc84.json",
       "reserved_at": "2026-09-10T06:41:10.598234+00:00",
-      "last_attempt_at": "2026-09-10T06:41:10.598234+00:00",
+      "last_attempt_at": "2026-09-10T06:41:34.094314+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-10T10:41:31.944030+00:00"
     }
   ]
 }
