@@ -1,4 +1,63 @@
 {
-  "eventos": [],
-  "noticias": []
+  "eventos": [
+    {
+      "ID": "evt-sesc-futebol-mulheres-20260915",
+      "Titulo": "Futebol para mulheres: Entre a prática e a Copa — Módulo 2",
+      "Status": "Planejado",
+      "Data": "2026-09-15",
+      "DataBR": "15/09/2026",
+      "UF": "SP",
+      "Cidade": "São Paulo",
+      "Categoria": "Curso / formação",
+      "Organizador": "Sesc São Paulo — Centro de Pesquisa e Formação",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "Centro de Pesquisa e Formação do Sesc São Paulo",
+      "Latitude": -23.5505,
+      "Longitude": -46.6333,
+      "Link": "https://www.sescsp.org.br/programacao/futebol-para-mulheres-entre-a-pratica-e-a-copa-modulo-2/",
+      "Observacoes": "Módulo 2 do ciclo do Sesc sobre presença e protagonismo das mulheres no futebol brasileiro, com encontros em 15 e 17/09/2026, das 14h às 16h. A programação aborda gestão do futebol para mulheres e aspectos técnicos e fisiológicos, explicitamente no contexto que antecede e acompanha a Copa no Brasil.",
+      "Mes": "Set",
+      "Ano": 2026,
+      "Regiao": "Sudeste"
+    }
+  ],
+  "noticias": [
+    {
+      "Data": "2026-09-10",
+      "DataBR": "10/09/2026",
+      "Titulo": "CBF vê Copa Feminina 2027 como teste para Mundial de Clubes de 2029 no Brasil",
+      "Tema": "CBF / estratégia internacional / Copa Feminina 2027 / Mundial de Clubes 2029",
+      "CidadeUF": "Brasil",
+      "Veiculo": "Lance!",
+      "Link": "https://www.lance.com.br/futebol-feminino/cbf-ve-copa-do-mundo-feminina-como-teste-para-mundial-de-clubes-de-2029-no-brasil.html",
+      "Sentimento": "Positivo",
+      "Impacto": "Médio",
+      "Resumo": "A CBF trata a organização da Copa do Mundo Feminina de 2027 no Brasil como referência e teste para projetos internacionais futuros, incluindo a possibilidade de receber um Mundial de Clubes em 2029. A pauta destaca iniciativas em discussão e a construção de uma estratégia de longo prazo ligada à realização do torneio feminino no país."
+    },
+    {
+      "Data": "2026-09-09",
+      "DataBR": "09/09/2026",
+      "Titulo": "FIFA faz visita técnica ao Estádio Presidente Vargas nos preparativos para a Copa Feminina 2027",
+      "Tema": "Fortaleza / centro de treinamento / infraestrutura / preparação da Copa 2027",
+      "CidadeUF": "Fortaleza/CE",
+      "Veiculo": "Prefeitura de Fortaleza",
+      "Link": "https://fortaleza.ce.gov.br/noticias/nos-preparativos-para-a-copa-do-mundo-feminina-da-fifa-brasil-2027-estadio-presidente-vargas-recebe-visita-tecnica-da-entidade",
+      "Sentimento": "Positivo",
+      "Impacto": "Médio",
+      "Resumo": "O Estádio Presidente Vargas, em Fortaleza, recebeu em 04/09/2026 uma visita técnica da FIFA. A equipe avaliou instalações e a organização de espaços que poderão atender delegações e imprensa durante a Copa do Mundo Feminina FIFA 2027, reforçando a preparação da cidade-sede."
+    },
+    {
+      "Data": "2026-09-10",
+      "DataBR": "10/09/2026",
+      "Titulo": "CBF prepara calendário de 2027 com pausa e adaptação de estádios para a Copa Feminina",
+      "Tema": "Calendário CBF / clubes / estádios / operação da Copa 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "UOL",
+      "Link": "https://www.uol.com.br/esporte/futebol/colunas/rodrigo-mattos/2026/09/10/o-que-se-sabe-sobre-o-calendario-do-futebol-para-2027.htm",
+      "Sentimento": "Neutro",
+      "Impacto": "Alto",
+      "Resumo": "A CBF prepara o calendário do futebol brasileiro de 2027 considerando a paralisação do futebol masculino durante a Copa do Mundo Feminina e ajustes cerca de 15 dias antes do torneio para evitar jogos nos estádios cedidos à FIFA. A medida afeta arenas como Maracanã, Neo Química Arena, Beira-Rio e Mineirão."
+    }
+  ]
 }
