@@ -1,6 +1,17 @@
 {
   "cycle_id": "20260910-17",
-  "stage": "started",
+  "stage": "failed",
   "started_at": "2026-09-10T17:51:29-03:00",
-  "recovery": true
+  "failed_at": "2026-09-10T17:53:00-03:00",
+  "recovery": true,
+  "error": "Falha operacional na leitura obrigatória da tabela Sugestões (tblf6qaCTZmKo48m2): campos solicitados não existem com esses nomes. A tabela Sugestões de Notícias foi lida uma única vez; nenhuma nova leitura Airtable foi feita, nenhum item foi enfileirado e nenhum status de sugestão foi alterado nesta rodada.",
+  "summary": {
+    "candidatos_publicos_analisados": 4,
+    "sugestoes_eventos_analisadas": 0,
+    "sugestoes_noticias_analisadas": 0,
+    "aprovados": 0,
+    "recusados": 0,
+    "pendentes": 0,
+    "itens_novos_inbox": 0
+  }
 }
