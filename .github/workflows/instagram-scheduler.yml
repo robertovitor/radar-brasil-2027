@@ -1,8 +1,8 @@
-name: Agendar Instagram nativamente
+name: Agendar Instagram via dispatch
 
 on:
-  # Mantido apenas como contingência manual. A agenda oficial agora está
-  # diretamente em publicar-instagram-automatico.yml às :12.
+  schedule:
+    - cron: "12 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -18,9 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Registrar gatilho manual de contingência
+      - name: Registrar gatilho do scheduler
         run: |
-          echo "instagram_intermediate_scheduler_active=false"
+          echo "instagram_intermediate_scheduler_active=true"
           echo "trigger_event=${{ github.event_name }}"
           echo "triggered_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
@@ -31,7 +31,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          echo "Disparando publicar-instagram-automatico.yml manualmente como contingência."
+          echo "Disparando publicar-instagram-automatico.yml via workflow_dispatch."
           gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
