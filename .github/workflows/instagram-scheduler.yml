@@ -2,7 +2,7 @@ name: Agendar Instagram nativamente
 
 on:
   schedule:
-    - cron: '12 * * * *'
+    - cron: "12 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -16,11 +16,25 @@ concurrency:
 jobs:
   disparar:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
+      - name: Registrar gatilho nativo
+        run: |
+          echo "instagram_native_scheduler=true"
+          echo "scheduled_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
       - name: Disparar workflow oficial do Instagram
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+        shell: bash
         run: |
+          set -euo pipefail
           echo "Disparando publicar-instagram-automatico.yml pela agenda nativa do GitHub."
-          gh workflow run publicar-instagram-automatico.yml --repo "$GH_REPO" --ref main
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "/repos/${GH_REPO}/actions/workflows/publicar-instagram-automatico.yml/dispatches" \
+            -f ref=main
+          echo "instagram_dispatch_requested=true"
