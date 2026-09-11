@@ -1,4 +1,29 @@
 {
   "eventos": [],
-  "noticias": []
+  "noticias": [
+    {
+      "Data": "2026-08-18",
+      "DataBR": "18/08/2026",
+      "Titulo": "CNE orienta ajustes no calendário escolar durante a Copa Feminina 2027",
+      "Tema": "Educação / calendário escolar / cidades-sede / operação da Copa 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "MEC / CNE",
+      "Link": "https://www.gov.br/mec/pt-br/assuntos/noticias/2026/agosto/cne-orienta-redes-de-ensino-sobre-organizacao-do-calendario-escolar-durante-a-copa-do-mundo-feminina-de-2027",
+      "Sentimento": "Neutro",
+      "Impacto": "Alto",
+      "Resumo": "O Conselho Nacional de Educação aprovou o Parecer CNE/CEB nº 7/2026 orientando os sistemas de ensino sobre a organização dos calendários escolares de 2027 em razão da Copa do Mundo Feminina. Cidades-sede, regiões metropolitanas e áreas diretamente impactadas deverão promover os ajustes necessários conforme a realidade local e o calendário oficial da competição."
+    },
+    {
+      "Data": "2026-09-11",
+      "DataBR": "11/09/2026",
+      "Titulo": "Maracanã trocará gramado em 2027 antes da Copa do Mundo Feminina",
+      "Tema": "Rio de Janeiro / Maracanã / gramado / infraestrutura / Copa Feminina 2027",
+      "CidadeUF": "Rio de Janeiro/RJ",
+      "Veiculo": "UOL",
+      "Link": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/09/11/maracana-aponta-fatores-para-campo-ruim-e-informa-que-trocara-tipo-de-grama.ghtm",
+      "Sentimento": "Neutro",
+      "Impacto": "Alto",
+      "Resumo": "A administração do Maracanã informou que substituirá o gramado atual por Celebration Hybrid em 2027. A mudança ocorre em um ano de calendário intenso no estádio, que receberá partidas da Copa do Mundo Feminina, incluindo a abertura e a final do torneio, e busca melhorar a qualidade do campo após críticas recorrentes."
+    }
+  ]
 }
