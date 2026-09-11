@@ -1,0 +1,25 @@
+name: Rotina editorial :45
+
+on:
+  schedule:
+    - cron: "45 * * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  disparar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Disparar fluxo editorial principal
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          gh workflow run mesclar-inbox-editorial.yml --repo "$GH_REPO" --ref main
+          echo "rotina_45_dispatched=true"
+          echo "scheduled_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
