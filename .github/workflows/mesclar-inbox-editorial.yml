@@ -1,12 +1,15 @@
 name: Mesclar inbox editorial
 
 on:
+  # Um único executor: schedule e manual entram neste mesmo workflow.
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
       - 'editorial/inbox.json'
       - 'editorial/executar-automatico.txt'
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -28,7 +31,7 @@ jobs:
           python-version: '3.12'
       - name: Registrar origem do gatilho
         run: |
-          echo "merge_direct_schedule=false"
+          echo "merge_direct_schedule=${{ github.event_name == 'schedule' }}"
           echo "trigger_event=${{ github.event_name }}"
           echo "triggered_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
       - name: Instalar dependências da planilha
