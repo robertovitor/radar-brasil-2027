@@ -1,9 +1,10 @@
 name: Publicar automaticamente no Instagram
 
 on:
-  # A cadência oficial vem do heartbeat da automação principal (:12) e,
-  # somente se ele falhar, da contingência do monitor. Não há cron nem
-  # workflow_run aqui para evitar chamadas paralelas à Meta.
+  # Agenda nativa direta: este próprio workflow é disparado pelo GitHub às :12.
+  # workflow_dispatch permanece disponível apenas para testes/recuperação manual.
+  schedule:
+    - cron: "12 * * * *"
   workflow_dispatch:
   push:
     branches: [main]
@@ -29,6 +30,11 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+      - name: Registrar gatilho direto do Instagram
+        run: |
+          echo "instagram_direct_schedule=${{ github.event_name == 'schedule' }}"
+          echo "trigger_event=${{ github.event_name }}"
+          echo "triggered_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
       - name: Verificar intervalo mínimo entre publicações
         id: intervalo
         shell: bash
@@ -48,8 +54,6 @@ jobs:
                   for row in data.get("published", []):
                       if not isinstance(row, dict):
                           continue
-                      # A publicação remota também consome o intervalo. Para
-                      # ledgers antigos, reconciled_at é o melhor limite seguro.
                       raw = row.get("published_at") or row.get("reconciled_at")
                       if raw:
                           stamps.append(raw)
