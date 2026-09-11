@@ -19,37 +19,41 @@ jobs:
           ref: main
           fetch-depth: 1
 
-      - name: Verificar frescor da pesquisa editorial pelo GitHub Actions
+      - name: Registrar limite de observabilidade da pesquisa editorial externa
+        run: |
+          echo 'pesquisa_editorial_source=chatgpt_automation'
+          echo 'pesquisa_editorial_github_observable=false'
+          echo 'pesquisa_editorial_note=nao_e_falha_ausencia_de_run_no_github'
+
+      - name: Verificar frescor do merge editorial
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         shell: bash
         run: |
           set -euo pipefail
-          runs="$(gh run list --repo "$GH_REPO" --limit 100 --json name,workflowName,createdAt,status,conclusion,event --jq '[.[] | select((.name // .workflowName // "") | test("pesquisa.*editorial|editorial.*pesquisa"; "i"))][0]')"
-          if [ -z "$runs" ] || [ "$runs" = "null" ]; then
-            echo 'pesquisa_run_missing=true'
+          latest="$(gh run list --repo "$GH_REPO" --workflow mesclar-inbox-editorial.yml --limit 1 --json createdAt,status,conclusion,event --jq '.[0]')"
+          if [ -z "$latest" ] || [ "$latest" = "null" ]; then
+            echo 'merge_run_missing=true'
             exit 1
           fi
-          echo "pesquisa_latest=$runs"
-          created="$(echo "$runs" | jq -r '.createdAt')"
-          status="$(echo "$runs" | jq -r '.status')"
-          conclusion="$(echo "$runs" | jq -r '.conclusion // ""')"
-          event="$(echo "$runs" | jq -r '.event')"
-          python - "$created" "$status" "$conclusion" "$event" <<'PY'
+          echo "merge_latest=$latest"
+          created="$(echo "$latest" | jq -r '.createdAt')"
+          status="$(echo "$latest" | jq -r '.status')"
+          conclusion="$(echo "$latest" | jq -r '.conclusion // ""')"
+          python - "$created" "$status" "$conclusion" <<'PY'
           import datetime as dt
           import sys
-          created, status, conclusion, event = sys.argv[1:]
-          stamp = dt.datetime.fromisoformat(created.replace('Z', '+00:00'))
+          raw, status, conclusion = sys.argv[1:]
+          stamp = dt.datetime.fromisoformat(raw.replace('Z', '+00:00'))
           age = (dt.datetime.now(dt.timezone.utc) - stamp.astimezone(dt.timezone.utc)).total_seconds()
-          print(f'pesquisa_run_age_seconds={int(age)}')
-          print(f'pesquisa_run_status={status}')
-          print(f'pesquisa_run_conclusion={conclusion}')
-          print(f'pesquisa_run_event={event}')
+          print(f'merge_run_age_seconds={int(age)}')
+          print(f'merge_run_status={status}')
+          print(f'merge_run_conclusion={conclusion}')
           if age > 7200:
-              raise SystemExit('pesquisa_run_stale_over_2h=true')
+              raise SystemExit('merge_run_stale_over_2h=true')
           if status == 'completed' and conclusion not in ('success', 'neutral', 'skipped'):
-              raise SystemExit('pesquisa_run_failed=true')
+              raise SystemExit('merge_run_failed=true')
           PY
 
       - name: Verificar frescor do workflow do Instagram
@@ -58,6 +62,7 @@ jobs:
           GH_REPO: ${{ github.repository }}
         shell: bash
         run: |
+          set -euo pipefail
           latest="$(gh run list --repo "$GH_REPO" --workflow publicar-instagram-automatico.yml --limit 1 --json createdAt,status,conclusion,event --jq '.[0]')"
           if [ -z "$latest" ] || [ "$latest" = "null" ]; then
             echo 'instagram_run_missing=true'
