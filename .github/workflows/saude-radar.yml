@@ -2,7 +2,7 @@ name: Saúde operacional do Radar
 
 on:
   schedule:
-    - cron: '30 * * * *'
+    - cron: "30 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -12,40 +12,44 @@ permissions:
 jobs:
   auditar:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 1
 
-      - name: Verificar frescor da pesquisa editorial
+      - name: Verificar frescor da pesquisa editorial pelo GitHub Actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         shell: bash
         run: |
-          python - <<'PY'
+          set -euo pipefail
+          runs="$(gh run list --repo "$GH_REPO" --limit 100 --json name,workflowName,createdAt,status,conclusion,event --jq '[.[] | select((.name // .workflowName // "") | test("pesquisa.*editorial|editorial.*pesquisa"; "i"))][0]')"
+          if [ -z "$runs" ] || [ "$runs" = "null" ]; then
+            echo 'pesquisa_run_missing=true'
+            exit 1
+          fi
+          echo "pesquisa_latest=$runs"
+          created="$(echo "$runs" | jq -r '.createdAt')"
+          status="$(echo "$runs" | jq -r '.status')"
+          conclusion="$(echo "$runs" | jq -r '.conclusion // ""')"
+          event="$(echo "$runs" | jq -r '.event')"
+          python - "$created" "$status" "$conclusion" "$event" <<'PY'
           import datetime as dt
-          import json
-          from pathlib import Path
-
-          path = Path('editorial/pesquisa-status.json')
-          if not path.exists():
-              raise SystemExit('pesquisa_status_missing=true')
-
-          data = json.loads(path.read_text(encoding='utf-8'))
-          raw = data.get('completed_at') or data.get('failed_at') or data.get('started_at')
-          if not raw:
-              raise SystemExit('pesquisa_status_timestamp_missing=true')
-
-          stamp = dt.datetime.fromisoformat(str(raw).replace('Z', '+00:00'))
-          if stamp.tzinfo is None:
-              stamp = stamp.replace(tzinfo=dt.timezone.utc)
+          import sys
+          created, status, conclusion, event = sys.argv[1:]
+          stamp = dt.datetime.fromisoformat(created.replace('Z', '+00:00'))
           age = (dt.datetime.now(dt.timezone.utc) - stamp.astimezone(dt.timezone.utc)).total_seconds()
-          stage = str(data.get('stage') or '').strip().lower()
-          print(f'pesquisa_stage={stage}')
-          print(f'pesquisa_age_seconds={int(age)}')
+          print(f'pesquisa_run_age_seconds={int(age)}')
+          print(f'pesquisa_run_status={status}')
+          print(f'pesquisa_run_conclusion={conclusion}')
+          print(f'pesquisa_run_event={event}')
           if age > 7200:
-              raise SystemExit('pesquisa_stale_over_2h=true')
-          if stage == 'failed':
-              raise SystemExit('pesquisa_last_stage_failed=true')
+              raise SystemExit('pesquisa_run_stale_over_2h=true')
+          if status == 'completed' and conclusion not in ('success', 'neutral', 'skipped'):
+              raise SystemExit('pesquisa_run_failed=true')
           PY
 
       - name: Verificar frescor do workflow do Instagram
@@ -61,13 +65,19 @@ jobs:
           fi
           echo "instagram_latest=$latest"
           created="$(echo "$latest" | jq -r '.createdAt')"
-          python - "$created" <<'PY'
+          status="$(echo "$latest" | jq -r '.status')"
+          conclusion="$(echo "$latest" | jq -r '.conclusion // ""')"
+          python - "$created" "$status" "$conclusion" <<'PY'
           import datetime as dt
           import sys
-          raw = sys.argv[1]
+          raw, status, conclusion = sys.argv[1:]
           stamp = dt.datetime.fromisoformat(raw.replace('Z', '+00:00'))
           age = (dt.datetime.now(dt.timezone.utc) - stamp.astimezone(dt.timezone.utc)).total_seconds()
           print(f'instagram_run_age_seconds={int(age)}')
+          print(f'instagram_run_status={status}')
+          print(f'instagram_run_conclusion={conclusion}')
           if age > 5400:
               raise SystemExit('instagram_run_stale_over_90m=true')
+          if status == 'completed' and conclusion not in ('success', 'neutral', 'skipped'):
+              raise SystemExit('instagram_run_failed=true')
           PY
