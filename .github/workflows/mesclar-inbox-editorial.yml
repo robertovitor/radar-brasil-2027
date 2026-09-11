@@ -2,7 +2,7 @@ name: Mesclar inbox editorial
 
 on:
   schedule:
-    - cron: '45 * * * *'
+    - cron: '0 * * * *'
   push:
     branches: [main]
     paths:
