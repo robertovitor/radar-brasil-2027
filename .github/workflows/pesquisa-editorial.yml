@@ -1,0 +1,81 @@
+name: Pesquisa editorial Radar
+
+on:
+  schedule:
+    - cron: "45 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pesquisa-editorial-radar
+  cancel-in-progress: false
+
+jobs:
+  pesquisar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Registrar origem do gatilho
+        run: |
+          echo "pesquisa_direct_schedule=${{ github.event_name == 'schedule' }}"
+          echo "trigger_event=${{ github.event_name }}"
+          echo "triggered_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+      - name: Executar pesquisa editorial nativa
+        id: pesquisa
+        env:
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+        shell: bash
+        run: |
+          set +e
+          python scripts/pesquisa_editorial.py
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Commitar inbox quando houver novidade
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --quiet -- editorial/inbox.json; then
+            git add editorial/inbox.json
+            git commit -m 'Enfileira novidades da pesquisa editorial nativa'
+            git pull --rebase origin main
+            git push origin main
+          else
+            echo 'Nenhuma novidade para o inbox.'
+          fi
+
+      - name: Commitar telemetria obrigatória
+        shell: bash
+        run: |
+          git pull --rebase origin main
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --quiet -- editorial/pesquisa-status.json; then
+            git add editorial/pesquisa-status.json
+            git commit -m 'Registra status da pesquisa editorial nativa'
+            git pull --rebase origin main
+            git push origin main
+          else
+            echo 'ERRO: pesquisa-status.json não foi alterado.'
+            exit 2
+          fi
+
+      - name: Falhar workflow se a pesquisa falhou
+        if: steps.pesquisa.outputs.exit_code != '0'
+        run: |
+          echo "Pesquisa editorial falhou com código ${{ steps.pesquisa.outputs.exit_code }}. O status já foi persistido."
+          exit 1
