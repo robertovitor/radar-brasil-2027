@@ -21,6 +21,7 @@ jobs:
       - name: Registrar gatilho nativo
         run: |
           echo "instagram_native_scheduler=true"
+          echo "scheduler_registration=v2"
           echo "scheduled_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
       - name: Disparar workflow oficial do Instagram
