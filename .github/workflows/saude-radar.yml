@@ -1,0 +1,73 @@
+name: Saúde operacional do Radar
+
+on:
+  schedule:
+    - cron: '30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  auditar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Verificar frescor da pesquisa editorial
+        shell: bash
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import json
+          from pathlib import Path
+
+          path = Path('editorial/pesquisa-status.json')
+          if not path.exists():
+              raise SystemExit('pesquisa_status_missing=true')
+
+          data = json.loads(path.read_text(encoding='utf-8'))
+          raw = data.get('completed_at') or data.get('failed_at') or data.get('started_at')
+          if not raw:
+              raise SystemExit('pesquisa_status_timestamp_missing=true')
+
+          stamp = dt.datetime.fromisoformat(str(raw).replace('Z', '+00:00'))
+          if stamp.tzinfo is None:
+              stamp = stamp.replace(tzinfo=dt.timezone.utc)
+          age = (dt.datetime.now(dt.timezone.utc) - stamp.astimezone(dt.timezone.utc)).total_seconds()
+          stage = str(data.get('stage') or '').strip().lower()
+          print(f'pesquisa_stage={stage}')
+          print(f'pesquisa_age_seconds={int(age)}')
+          if age > 7200:
+              raise SystemExit('pesquisa_stale_over_2h=true')
+          if stage == 'failed':
+              raise SystemExit('pesquisa_last_stage_failed=true')
+          PY
+
+      - name: Verificar frescor do workflow do Instagram
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          latest="$(gh run list --repo "$GH_REPO" --workflow publicar-instagram-automatico.yml --limit 1 --json createdAt,status,conclusion,event --jq '.[0]')"
+          if [ -z "$latest" ] || [ "$latest" = "null" ]; then
+            echo 'instagram_run_missing=true'
+            exit 1
+          fi
+          echo "instagram_latest=$latest"
+          created="$(echo "$latest" | jq -r '.createdAt')"
+          python - "$created" <<'PY'
+          import datetime as dt
+          import sys
+          raw = sys.argv[1]
+          stamp = dt.datetime.fromisoformat(raw.replace('Z', '+00:00'))
+          age = (dt.datetime.now(dt.timezone.utc) - stamp.astimezone(dt.timezone.utc)).total_seconds()
+          print(f'instagram_run_age_seconds={int(age)}')
+          if age > 5400:
+              raise SystemExit('instagram_run_stale_over_90m=true')
+          PY
