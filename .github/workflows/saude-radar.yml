@@ -19,6 +19,11 @@ jobs:
           ref: main
           fetch-depth: 1
 
+      - name: Registrar agenda nativa da saúde
+        run: |
+          echo "health_native_scheduler=true"
+          echo "scheduled_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
       - name: Registrar limite de observabilidade da pesquisa editorial externa
         run: |
           echo 'pesquisa_editorial_source=chatgpt_automation'
