@@ -1,21 +1,18 @@
 {
-  "cycle_id": "20260911-14-manual",
-  "started_at": "2026-09-11T14:05:00-03:00",
-  "completed_at": "2026-09-11T14:13:00-03:00",
-  "stage": "completed",
-  "manual_run": true,
-  "airtable_reads_total": 2,
-  "airtable_reads": [
-    {"table": "Sugestões", "reads": 1},
-    {"table": "Sugestões de Notícias", "reads": 1}
-  ],
-  "sugestoes_lidas": 19,
-  "sugestoes_noticias_lidas": 17,
-  "candidatos_publicos": 4,
-  "aprovados_novos": 2,
+  "cycle_id": "20260911-20",
+  "started_at": "2026-09-11T20:01:49-03:00",
+  "completed_at": "2026-09-11T20:01:49-03:00",
+  "stage": "failed",
+  "executor": "github-actions-native",
+  "airtable_reads_total": 0,
+  "airtable_reads": [],
+  "sugestoes_lidas": 0,
+  "sugestoes_noticias_lidas": 0,
+  "candidatos_publicos": 0,
+  "aprovados_novos": 0,
   "rejeitados": 0,
-  "duplicados": 2,
-  "inbox_itens_adicionados": 2,
-  "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução manual solicitada pelo usuário, sem alteração da schedule. Duas leituras Airtable exatas, sem fieldIds e sem schema. Sugestão do MEC aprovada e enfileirada; nova pauta do Maracanã também enfileirada."
+  "duplicados": 0,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
+  "observacoes_operacionais": "RuntimeError: AIRTABLE_TOKEN ausente nos GitHub Actions Secrets"
 }
