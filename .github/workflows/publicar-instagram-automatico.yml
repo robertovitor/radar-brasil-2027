@@ -307,16 +307,11 @@ jobs:
             exit 1
           fi
 
-      - name: Continuar na mesma rodada após reconciliar post existente
+      - name: Encerrar rodada após reconciliar post existente
         if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.reconciled == 'true'
-        env:
-          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
-          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
-          INSTAGRAM_GRAPH_VERSION: v25.0
-          META_RATE_LIMIT_STATE: instagram/meta-rate-limit.json
-          META_RATE_LIMIT_COOLDOWN_MINUTES: "60"
-          INSTAGRAM_CONTINUATION_MAX_ATTEMPTS: "8"
-        run: python scripts/continuar_publicacao_instagram.py
+        run: |
+          echo "reconciled_existing_same_run_continuation=false"
+          echo "A reconciliação consome o intervalo de 1 hora; a próxima tentativa fica para o próximo gatilho elegível."
 
       - name: Registrar adiamento por rate limit sem falhar o workflow
         if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.deferred == 'true'
