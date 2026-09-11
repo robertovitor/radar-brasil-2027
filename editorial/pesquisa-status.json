@@ -1,17 +1,21 @@
 {
-  "cycle_id": "20260910-17",
-  "stage": "failed",
-  "started_at": "2026-09-10T17:51:29-03:00",
-  "failed_at": "2026-09-10T17:53:00-03:00",
-  "recovery": true,
-  "error": "Falha operacional na leitura obrigatória da tabela Sugestões (tblf6qaCTZmKo48m2): campos solicitados não existem com esses nomes. A tabela Sugestões de Notícias foi lida uma única vez; nenhuma nova leitura Airtable foi feita, nenhum item foi enfileirado e nenhum status de sugestão foi alterado nesta rodada.",
-  "summary": {
-    "candidatos_publicos_analisados": 4,
-    "sugestoes_eventos_analisadas": 0,
-    "sugestoes_noticias_analisadas": 0,
-    "aprovados": 0,
-    "recusados": 0,
-    "pendentes": 0,
-    "itens_novos_inbox": 0
-  }
+  "cycle_id": "20260911-14-manual",
+  "started_at": "2026-09-11T14:05:00-03:00",
+  "completed_at": "2026-09-11T14:13:00-03:00",
+  "stage": "completed",
+  "manual_run": true,
+  "airtable_reads_total": 2,
+  "airtable_reads": [
+    {"table": "Sugestões", "reads": 1},
+    {"table": "Sugestões de Notícias", "reads": 1}
+  ],
+  "sugestoes_lidas": 19,
+  "sugestoes_noticias_lidas": 17,
+  "candidatos_publicos": 4,
+  "aprovados_novos": 2,
+  "rejeitados": 0,
+  "duplicados": 2,
+  "inbox_itens_adicionados": 2,
+  "inbox_commit_needed": true,
+  "observacoes_operacionais": "Execução manual solicitada pelo usuário, sem alteração da schedule. Duas leituras Airtable exatas, sem fieldIds e sem schema. Sugestão do MEC aprovada e enfileirada; nova pauta do Maracanã também enfileirada."
 }
