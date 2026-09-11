@@ -31,6 +31,7 @@ jobs:
       - name: Registrar agenda nativa
         run: |
           echo "merge_native_scheduler=true"
+          echo "merge_scheduler_registration=v3"
           echo "scheduled_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
       - name: Instalar dependências da planilha
         run: pip install openpyxl==3.1.5
