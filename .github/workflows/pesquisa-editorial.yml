@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "45 * * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/pesquisa_editorial.py'
+      - '.github/workflows/pesquisa-editorial.yml'
 
 permissions:
   contents: write
