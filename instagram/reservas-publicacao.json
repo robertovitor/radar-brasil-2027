@@ -85,14 +85,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-10T20:43:38.666694+00:00"
-    },
-    {
-      "key": "instagram:evento:evt-sesc-futebol-mulheres-20260915",
-      "post_file": "instagram/fila/automatica/instagram-evento-evt-sesc-futebol-mulheres-20260915-280f83a145.json",
-      "reserved_at": "2026-09-12T22:16:19.424008+00:00",
-      "last_attempt_at": "2026-09-12T22:16:19.424008+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
     }
   ]
 }
