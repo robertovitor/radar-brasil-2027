@@ -3,7 +3,7 @@
 
 - Mantém o núcleo original e as EXATAS duas leituras Airtable do script-base.
 - Reaproveita os registros já lidos para reconhecer nomes de campos equivalentes.
-- Tenta resolver URLs intermediárias do Google News antes da validação editorial.
+- Resolve URLs intermediárias do Google News antes da validação editorial.
 - Bloqueia pautas já existentes/publicadas, inclusive por similaridade conservadora.
 - Não altera schedule, concorrência, merge, alertas, Instagram ou saúde.
 """
@@ -52,32 +52,22 @@ def value_by_alias(fields, aliases):
 
 def find_title(fields, kind):
     aliases = (
-        ('Título', 'Titulo', 'Título da sugestão', 'Titulo da sugestao', 'Assunto',
-         'Título da notícia', 'Titulo da noticia', 'Título da notícia sugerida',
-         'Título do evento', 'Titulo do evento', 'Nome do evento', 'Nome', 'Evento')
+        ('Título', 'Titulo', 'Título da sugestão', 'Titulo da sugestao', 'Assunto', 'Título da notícia', 'Titulo da noticia', 'Título da notícia sugerida', 'Título do evento', 'Titulo do evento', 'Nome do evento', 'Nome', 'Evento')
         if kind == 'eventos' else
-        ('Título', 'Titulo', 'Título da sugestão', 'Titulo da sugestao', 'Assunto',
-         'Título da notícia', 'Titulo da noticia', 'Título da notícia sugerida',
-         'Titulo da noticia sugerida', 'Notícia', 'Noticia', 'Nome')
+        ('Título', 'Titulo', 'Título da sugestão', 'Titulo da sugestao', 'Assunto', 'Título da notícia', 'Titulo da noticia', 'Título da notícia sugerida', 'Titulo da noticia sugerida', 'Notícia', 'Noticia', 'Nome')
     )
     value = value_by_alias(fields, aliases)
     if value not in (None, ''):
         return str(value).strip()
     for k, v in fields.items():
         nk = keynorm(k)
-        if isinstance(v, str) and v.strip() and (
-            'titulo' in nk or 'assunto' in nk or
-            (kind == 'eventos' and ('nome evento' in nk or nk == 'evento'))
-        ):
+        if isinstance(v, str) and v.strip() and ('titulo' in nk or 'assunto' in nk or (kind == 'eventos' and ('nome evento' in nk or nk == 'evento'))):
             return v.strip()
     return ''
 
 
 def find_url(fields):
-    aliases = ('Link', 'URL', 'Site', 'Fonte/Link', 'Fonte Link',
-               'Link da sugestão', 'URL da sugestão', 'Link da notícia', 'Link da noticia',
-               'URL da notícia', 'URL da noticia', 'Link do evento', 'URL do evento',
-               'Link da fonte', 'URL da fonte')
+    aliases = ('Link', 'URL', 'Site', 'Fonte/Link', 'Fonte Link', 'Link da sugestão', 'URL da sugestão', 'Link da notícia', 'Link da noticia', 'URL da notícia', 'URL da noticia', 'Link do evento', 'URL do evento', 'Link da fonte', 'URL da fonte')
     candidates = []
     direct = value_by_alias(fields, aliases)
     if direct not in (None, ''):
@@ -117,36 +107,12 @@ def candidate_from_record_compat(record, kind):
         return None
     if kind == 'noticias':
         date = parse_date(value_by_alias(f, ('Data', 'Data da notícia', 'Data da noticia', 'Data de publicação', 'Data de publicacao')), default_today=True)
-        return {
-            'Data': date,
-            'DataBR': pe.datetime.strptime(date, '%Y-%m-%d').strftime('%d/%m/%Y'),
-            'Titulo': title,
-            'Tema': str(pe.first(f, 'Tema', 'Categoria')).strip() or 'Copa Feminina 2027',
-            'CidadeUF': str(pe.first(f, 'Cidade/UF', 'CidadeUF', 'Cidade', 'Local')).strip() or 'Brasil',
-            'Veiculo': str(pe.first(f, 'Veículo', 'Veiculo', 'Fonte')).strip() or urllib.parse.urlparse(link).netloc,
-            'Link': link,
-            'Sentimento': 'Neutro',
-            'Impacto': str(pe.first(f, 'Impacto')).strip() or 'Médio',
-            'Resumo': str(pe.first(f, 'Resumo', 'Descrição', 'Descricao', 'Observações', 'Observacoes')).strip()[:1200],
-        }
+        return {'Data': date, 'DataBR': pe.datetime.strptime(date, '%Y-%m-%d').strftime('%d/%m/%Y'), 'Titulo': title, 'Tema': str(pe.first(f, 'Tema', 'Categoria')).strip() or 'Copa Feminina 2027', 'CidadeUF': str(pe.first(f, 'Cidade/UF', 'CidadeUF', 'Cidade', 'Local')).strip() or 'Brasil', 'Veiculo': str(pe.first(f, 'Veículo', 'Veiculo', 'Fonte')).strip() or urllib.parse.urlparse(link).netloc, 'Link': link, 'Sentimento': 'Neutro', 'Impacto': str(pe.first(f, 'Impacto')).strip() or 'Médio', 'Resumo': str(pe.first(f, 'Resumo', 'Descrição', 'Descricao', 'Observações', 'Observacoes')).strip()[:1200]}
     date = parse_date(value_by_alias(f, ('Data', 'Data do evento', 'Data do Evento')))
     if not date:
         return None
-    city = str(pe.first(f, 'Cidade')).strip()
-    uf = str(pe.first(f, 'UF', 'Estado')).strip()
-    return {
-        'ID': str(pe.first(f, 'ID')).strip() or f"SUG-{record.get('id', '')}",
-        'Titulo': title, 'Status': 'Planejado', 'Data': date,
-        'DataBR': pe.datetime.strptime(date, '%Y-%m-%d').strftime('%d/%m/%Y'),
-        'UF': uf, 'Cidade': city,
-        'Categoria': str(pe.first(f, 'Categoria')).strip() or 'Evento',
-        'Organizador': str(pe.first(f, 'Organizador')).strip(), 'Publico': 0,
-        'Patrocinador': str(pe.first(f, 'Patrocinador')).strip(),
-        'Local': str(pe.first(f, 'Local')).strip(), 'Latitude': None, 'Longitude': None,
-        'Link': link,
-        'Observacoes': str(pe.first(f, 'Observações', 'Observacoes', 'Resumo', 'Descrição', 'Descricao')).strip()[:1200],
-        'Mes': '', 'Ano': int(date[:4]), 'Regiao': ''
-    }
+    city = str(pe.first(f, 'Cidade')).strip(); uf = str(pe.first(f, 'UF', 'Estado')).strip()
+    return {'ID': str(pe.first(f, 'ID')).strip() or f"SUG-{record.get('id', '')}", 'Titulo': title, 'Status': 'Planejado', 'Data': date, 'DataBR': pe.datetime.strptime(date, '%Y-%m-%d').strftime('%d/%m/%Y'), 'UF': uf, 'Cidade': city, 'Categoria': str(pe.first(f, 'Categoria')).strip() or 'Evento', 'Organizador': str(pe.first(f, 'Organizador')).strip(), 'Publico': 0, 'Patrocinador': str(pe.first(f, 'Patrocinador')).strip(), 'Local': str(pe.first(f, 'Local')).strip(), 'Latitude': None, 'Longitude': None, 'Link': link, 'Observacoes': str(pe.first(f, 'Observações', 'Observacoes', 'Resumo', 'Descrição', 'Descricao')).strip()[:1200], 'Mes': '', 'Ano': int(date[:4]), 'Regiao': ''}
 
 
 pe.candidate_from_record = candidate_from_record_compat
@@ -155,26 +121,55 @@ _original_gdelt_candidates = pe.gdelt_candidates
 _original_existing_keys = pe.existing_keys
 
 
+def _external_http_url(candidate):
+    candidate = html.unescape(str(candidate or '')).replace('\\u0026', '&').replace('\\/', '/').strip()
+    if candidate.startswith('//'):
+        candidate = 'https:' + candidate
+    if not candidate.startswith(('http://', 'https://')):
+        return ''
+    parsed = urllib.parse.urlparse(candidate)
+    host = parsed.netloc.casefold().removeprefix('www.')
+    if host in ('news.google.com', 'google.com') or host.endswith('.google.com'):
+        # Alguns links do Google carregam a URL editorial em um parâmetro.
+        qs = urllib.parse.parse_qs(parsed.query)
+        for key in ('url', 'q', 'u'):
+            for value in qs.get(key, []):
+                decoded = urllib.parse.unquote(value)
+                direct = _external_http_url(decoded)
+                if direct:
+                    return direct
+        return ''
+    return candidate
+
+
 def resolve_google_news(url):
+    """Resolve o agregador sem aceitar o próprio Google como fonte editorial.
+
+    Estratégia em camadas: redirect HTTP, canonical/og:url e links externos
+    presentes no HTML. Não faz nenhuma leitura Airtable adicional.
+    """
     try:
-        data, final_url, _ = pe.request_bytes(url, timeout=12)
-        final_host = urllib.parse.urlparse(final_url).netloc.casefold().removeprefix('www.')
-        if final_url.startswith(('http://', 'https://')) and final_host not in ('news.google.com', 'google.com'):
-            return final_url
-        raw = data[:400000].decode('utf-8', 'ignore')
+        data, final_url, _ = pe.request_bytes(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.3)'}, timeout=15)
+        direct = _external_http_url(final_url)
+        if direct:
+            return direct
+        raw = data[:700000].decode('utf-8', 'ignore')
+        raw_unescaped = html.unescape(raw).replace('\\u0026', '&').replace('\\/', '/')
         patterns = (
             r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',
+            r'<link[^>]+href=["\']([^"\']+)["\'][^>]+rel=["\']canonical["\']',
             r'<meta[^>]+property=["\']og:url["\'][^>]+content=["\']([^"\']+)',
             r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:url["\']',
+            r'href=["\'](https?://[^"\']+)',
+            r'"(https?://[^"<> ]+)"',
         )
-        for pattern in patterns:
-            m = re.search(pattern, raw, flags=re.I)
-            if not m:
-                continue
-            candidate = html.unescape(m.group(1)).strip()
-            host = urllib.parse.urlparse(candidate).netloc.casefold().removeprefix('www.')
-            if candidate.startswith(('http://', 'https://')) and host not in ('news.google.com', 'google.com'):
-                return candidate
+        for text in (raw, raw_unescaped):
+            for pattern in patterns:
+                for match in re.finditer(pattern, text, flags=re.I):
+                    direct = _external_http_url(match.group(1))
+                    if direct and pe.trusted_url(direct):
+                        return direct
+        print('google_news_resolve_unresolved=1')
     except Exception as exc:
         print(f'google_news_resolve_warning={type(exc).__name__}:{exc}')
     return ''
@@ -221,16 +216,12 @@ def same_story(title, prior):
     a, b = title_tokens(title), title_tokens(prior)
     if not a or not b:
         return False
-    overlap = len(a & b)
-    containment = overlap / min(len(a), len(b))
-    union = overlap / len(a | b)
-    # Conservador: exige pelo menos 3 termos informativos em comum e forte sobreposição.
+    overlap = len(a & b); containment = overlap / min(len(a), len(b)); union = overlap / len(a | b)
     return overlap >= 3 and (containment >= 0.72 or union >= 0.60)
 
 
 def filter_known_stories(candidates):
-    priors = known_titles()
-    out = []
+    priors = known_titles(); out = []
     for c in candidates:
         title = str(c.get('title') or '')
         matched = next((p for p in priors if same_story(title, p)), None)
@@ -251,6 +242,7 @@ def rss_candidates_compat():
                 c['google_news_url'] = c.get('url', '')
                 c['url'] = direct
                 c['origin'] = 'google-news-resolved'
+                print(f"google_news_resolved={c.get('source','')}|{direct}")
         out.append(c)
     return filter_known_stories(out)
 
