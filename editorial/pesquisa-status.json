@@ -1,7 +1,7 @@
 {
   "cycle_id": "20260912-07",
-  "started_at": "2026-09-12T07:17:24-03:00",
-  "completed_at": "2026-09-12T07:17:26-03:00",
+  "started_at": "2026-09-12T07:56:05-03:00",
+  "completed_at": "2026-09-12T07:56:43-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -16,12 +16,12 @@
     }
   ],
   "sugestoes_lidas": 19,
-  "sugestoes_noticias_lidas": 17,
-  "candidatos_publicos": 35,
+  "sugestoes_noticias_lidas": 18,
+  "candidatos_publicos": 142,
   "aprovados_novos": 0,
-  "rejeitados": 11,
+  "rejeitados": 154,
   "duplicados": 0,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
-  "observacoes_operacionais": "Execução nativa GitHub. Exatamente duas leituras Airtable; pesquisa pública RSS executada de forma conservadora."
+  "observacoes_operacionais": "Execução nativa GitHub. Exatamente duas leituras Airtable; pesquisa pública ampliada em múltiplos eixos via Google News RSS + GDELT, com deduplicação, filtro anti-base, confiança de domínio e validação de conteúdo antes de inclusão automática."
 }
