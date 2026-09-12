@@ -4,7 +4,7 @@
 Esta camada NÃO altera schedule, concorrência, Airtable, merge, Instagram ou alertas.
 Ela reaproveita pesquisa_editorial_compat.py e acrescenta apenas:
 - uma busca editorial limitada quando o resolvedor nativo do Google News não encontra a URL direta;
-- extração conservadora do título quando uma sugestão de notícia já lida do Airtable tem URL válida, mas título vazio.
+- extração conservadora do título quando uma sugestão de notícia ou evento já lida do Airtable tem URL válida, mas título vazio.
 """
 import html
 import importlib.util
@@ -88,10 +88,12 @@ def _title_from_url(url):
 
 
 def candidate_from_record_v2(record, kind):
-    """Preserva o parser atual e só trata notícia com link válido + título vazio."""
+    """Preserva o parser atual e só trata sugestão com link válido + título vazio."""
     candidate = _original_candidate_from_record(record, kind)
-    if candidate is not None or kind != 'noticias':
+    if candidate is not None:
         return candidate
+    if kind not in ('noticias', 'eventos'):
+        return None
 
     fields = record.get('fields', {})
     link = compat.find_url(fields)
@@ -108,6 +110,8 @@ def candidate_from_record_v2(record, kind):
     enriched_fields = dict(fields)
     enriched_fields['Título'] = resolved_title
     enriched_record['fields'] = enriched_fields
+    # Todas as demais regras permanecem no parser original; para eventos, por exemplo,
+    # a data continua obrigatória e precisa ser válida.
     return _original_candidate_from_record(enriched_record, kind)
 
 
