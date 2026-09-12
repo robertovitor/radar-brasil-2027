@@ -22,14 +22,43 @@ jobs:
       - name: Registrar agenda nativa da saúde
         run: |
           echo "health_native_scheduler=true"
-          echo "health_scheduler_registration=v3"
+          echo "health_scheduler_registration=v4"
           echo "scheduled_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
-      - name: Registrar limite de observabilidade da pesquisa editorial externa
+      - name: Verificar frescor da pesquisa editorial nativa
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
         run: |
-          echo 'pesquisa_editorial_source=chatgpt_automation'
-          echo 'pesquisa_editorial_github_observable=false'
-          echo 'pesquisa_editorial_note=nao_e_falha_ausencia_de_run_no_github'
+          set -euo pipefail
+          latest="$(gh run list --repo "$GH_REPO" --workflow pesquisa-editorial.yml --event schedule --limit 1 --json createdAt,status,conclusion,event --jq '.[0]')"
+          if [ -z "$latest" ] || [ "$latest" = "null" ]; then
+            echo 'pesquisa_run_missing=true'
+            exit 1
+          fi
+          echo "pesquisa_latest=$latest"
+          created="$(echo "$latest" | jq -r '.createdAt')"
+          status="$(echo "$latest" | jq -r '.status')"
+          conclusion="$(echo "$latest" | jq -r '.conclusion // ""')"
+          event="$(echo "$latest" | jq -r '.event')"
+          python - "$created" "$status" "$conclusion" "$event" <<'PY'
+          import datetime as dt
+          import sys
+          raw, status, conclusion, event = sys.argv[1:]
+          stamp = dt.datetime.fromisoformat(raw.replace('Z', '+00:00'))
+          age = (dt.datetime.now(dt.timezone.utc) - stamp.astimezone(dt.timezone.utc)).total_seconds()
+          print(f'pesquisa_run_age_seconds={int(age)}')
+          print(f'pesquisa_run_status={status}')
+          print(f'pesquisa_run_conclusion={conclusion}')
+          print(f'pesquisa_run_event={event}')
+          if event != 'schedule':
+              raise SystemExit('pesquisa_run_not_direct_schedule=true')
+          if age > 5400:
+              raise SystemExit('pesquisa_run_stale_over_90m=true')
+          if status == 'completed' and conclusion not in ('success', 'neutral', 'skipped'):
+              raise SystemExit('pesquisa_run_failed=true')
+          PY
 
       - name: Verificar frescor do merge editorial
         env:
