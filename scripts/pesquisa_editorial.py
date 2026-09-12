@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, os, pathlib, re, sys, urllib.parse, urllib.request, xml.etree.ElementTree as ET
+import html, json, os, pathlib, re, sys, urllib.parse, urllib.request, xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -10,7 +10,39 @@ TABLE_EVENTS = 'tblf6qaCTZmKo48m2'
 TABLE_NEWS = 'tbl0iuH4F5Hog8gDD'
 BRT = timezone(timedelta(hours=-3))
 TOKEN = os.environ.get('AIRTABLE_TOKEN','').strip()
-UA = 'RadarBrasil2027/1.0 (+https://www.radarcopafeminina2027.com.br/)'
+UA = 'RadarBrasil2027/1.1 (+https://www.radarcopafeminina2027.com.br/)'
+
+TRUSTED_DOMAINS = (
+    'fifa.com','inside.fifa.com','cbf.com.br','gov.br','planalto.gov.br','camara.leg.br','senado.leg.br',
+    'agenciabrasil.ebc.com.br','ge.globo.com','globoesporte.globo.com','espn.com.br','cnnbrasil.com.br','uol.com.br',
+    'folha.uol.com.br','estadao.com.br','oglobo.globo.com','valor.globo.com','exame.com','lance.com.br','terra.com.br',
+    'prefeitura.poa.br','saopaulo.sp.gov.br','prefeitura.sp.gov.br','rio.rj.gov.br','salvador.ba.gov.br','fortaleza.ce.gov.br',
+    'recife.pe.gov.br','belohorizonte.mg.gov.br','brasilia.df.gov.br','goias.gov.br','bahia.ba.gov.br','ceara.gov.br',
+    'pernambuco.gov.br','mg.gov.br','rs.gov.br','rj.gov.br','es.gov.br','sc.gov.br','pr.gov.br','sp.gov.br'
+)
+
+PUBLIC_QUERIES = [
+  '"Copa do Mundo Feminina 2027" Brasil',
+  '"Copa Feminina 2027" Brasil',
+  '"Mundial Feminino 2027" Brasil',
+  '"Seleção Brasileira feminina" convocação OR lesão OR transferência OR prêmio OR entrevista',
+  '"Seleção Brasileira feminina" Mundial 2027',
+  '"Copa Feminina 2027" estádio OR arena OR infraestrutura',
+  '"Copa Feminina 2027" mobilidade OR transporte OR aeroporto',
+  '"Copa Feminina 2027" turismo OR hotelaria OR hospitalidade',
+  '"Copa Feminina 2027" voluntariado OR voluntários',
+  '"Copa Feminina 2027" ingressos OR bilhetes',
+  '"Copa Feminina 2027" patrocinador OR marca OR ativação',
+  '"Copa Feminina 2027" fan zone OR fan festival OR torcida',
+  '"Copa Feminina 2027" cidade-sede OR cidades-sede',
+  '"futebol feminino" 2027 Brasil FIFA'
+]
+
+EXCLUDE_BASE = ('sub-15','sub 15','sub-17','sub 17','sub-20','sub 20','sub-23','sub 23','seleção de base','selecao de base','categoria de base')
+RELEVANT_TERMS = (
+    'copa feminina','copa do mundo feminina','mundial feminino','futebol feminino','selecao brasileira feminina',
+    'seleção brasileira feminina','fifa 2027','2027'
+)
 
 
 def now(): return datetime.now(BRT)
@@ -24,11 +56,18 @@ def dump(path, obj):
     path.write_text(json.dumps(obj, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
 
 def norm(v):
-    return re.sub(r'\s+',' ', re.sub(r'[^a-z0-9]+',' ', str(v or '').casefold())).strip()
+    return re.sub(r'\s+',' ', re.sub(r'[^a-z0-9à-ÿ]+',' ', str(v or '').casefold())).strip()
 
 def urlnorm(v):
     s=str(v or '').strip().casefold().replace('https://','').replace('http://','')
     return s.removeprefix('www.').rstrip('/')
+
+def request_bytes(url, headers=None, timeout=25):
+    h={'User-Agent':UA}
+    if headers: h.update(headers)
+    req=urllib.request.Request(url,headers=h)
+    with urllib.request.urlopen(req,timeout=timeout) as r:
+        return r.read(), r.geturl(), dict(r.headers)
 
 def request_json(url, method='GET', payload=None):
     headers={'User-Agent':UA}
@@ -42,7 +81,7 @@ def request_json(url, method='GET', payload=None):
         return json.loads(r.read().decode('utf-8'))
 
 def airtable_read(table_id):
-    # Uma única leitura por tabela. pageSize máximo da API REST é 100.
+    # Exatamente uma leitura por tabela; a REST API aceita pageSize máximo de 100.
     url=f'https://api.airtable.com/v0/{BASE}/{table_id}?pageSize=100'
     obj=request_json(url)
     if obj.get('offset'):
@@ -97,27 +136,117 @@ def candidate_from_record(record, kind):
             'Latitude':None,'Longitude':None,'Link':link,'Observacoes':str(first(f,'Observações','Observacoes','Resumo','Descrição','Descricao')).strip()[:1200],
             'Mes':'','Ano':int(date[:4]),'Regiao':''}
 
+def parse_pubdate(raw):
+    try:
+        from email.utils import parsedate_to_datetime
+        dt=parsedate_to_datetime(raw)
+        return dt.astimezone(BRT).date().isoformat()
+    except Exception:
+        return now().date().isoformat()
+
+def trusted_url(url):
+    host=urllib.parse.urlparse(url).netloc.casefold().removeprefix('www.')
+    return any(host==d or host.endswith('.'+d) for d in TRUSTED_DOMAINS)
+
+def article_is_relevant(title, text=''):
+    blob=norm(f'{title} {text}')
+    if any(norm(x) in blob for x in EXCLUDE_BASE): return False
+    return any(norm(x) in blob for x in RELEVANT_TERMS)
+
+def clean_html_text(raw):
+    raw=re.sub(r'<script\b[^>]*>.*?</script>',' ',raw,flags=re.I|re.S)
+    raw=re.sub(r'<style\b[^>]*>.*?</style>',' ',raw,flags=re.I|re.S)
+    raw=re.sub(r'<[^>]+>',' ',raw)
+    return re.sub(r'\s+',' ',html.unescape(raw)).strip()
+
+def fetch_article_excerpt(url):
+    try:
+        data,final_url,headers=request_bytes(url,timeout=20)
+        ctype=str(headers.get('Content-Type','')).casefold()
+        if 'text/html' not in ctype and 'application/xhtml' not in ctype: return '',final_url
+        raw=data[:700000].decode('utf-8','ignore')
+        return clean_html_text(raw)[:7000], final_url
+    except Exception:
+        return '',url
+
 def rss_candidates():
-    queries=[
-      '"Copa do Mundo Feminina 2027" Brasil',
-      '"Copa Feminina 2027" estádio OR mobilidade OR turismo OR voluntariado OR ingressos',
-      '"Seleção Brasileira feminina" 2027 FIFA'
-    ]
-    out=[]
-    for q in queries:
+    out=[]; seen=set()
+    for q in PUBLIC_QUERIES:
         url='https://news.google.com/rss/search?'+urllib.parse.urlencode({'q':q,'hl':'pt-BR','gl':'BR','ceid':'BR:pt-419'})
         try:
-            req=urllib.request.Request(url,headers={'User-Agent':UA})
-            with urllib.request.urlopen(req,timeout=25) as r: root=ET.fromstring(r.read())
-            for item in root.findall('.//item')[:12]:
+            data,_,_=request_bytes(url,timeout=20)
+            root=ET.fromstring(data)
+            for item in root.findall('.//item')[:15]:
                 title=(item.findtext('title') or '').strip(); link=(item.findtext('link') or '').strip(); pub=(item.findtext('pubDate') or '').strip()
+                source_el=item.find('source'); source=(source_el.text or '').strip() if source_el is not None else ''
                 if not title or not link: continue
-                txt=norm(title)
-                if not any(k in txt for k in ('femin','2027','selecao brasileira')): continue
-                out.append((title,link,pub))
+                if not article_is_relevant(title): continue
+                k=norm(title)
+                if k in seen: continue
+                seen.add(k); out.append({'title':title,'url':link,'pub':pub,'source':source,'origin':'google-news'})
         except Exception as e:
             print(f'rss_warning={type(e).__name__}:{e}')
     return out
+
+def gdelt_candidates():
+    out=[]; seen=set()
+    # Consulta ampla adicional com URLs diretas; reduz dependência do RSS do Google News.
+    queries=[
+      '"Copa Feminina 2027" OR "Copa do Mundo Feminina 2027"',
+      '"Seleção Brasileira feminina"',
+      '"futebol feminino" Brasil 2027'
+    ]
+    for q in queries:
+        params={'query':q,'mode':'ArtList','maxrecords':'50','format':'json','sort':'HybridRel'}
+        url='https://api.gdeltproject.org/api/v2/doc/doc?'+urllib.parse.urlencode(params)
+        try:
+            data,_,_=request_bytes(url,timeout=25)
+            obj=json.loads(data.decode('utf-8','ignore'))
+            for a in obj.get('articles',[])[:50]:
+                title=str(a.get('title') or '').strip(); link=str(a.get('url') or '').strip()
+                if not title or not link or not article_is_relevant(title): continue
+                k=urlnorm(link) or norm(title)
+                if k in seen: continue
+                seen.add(k); out.append({'title':title,'url':link,'pub':str(a.get('seendate') or ''),'source':str(a.get('domain') or ''),'origin':'gdelt'})
+        except Exception as e:
+            print(f'gdelt_warning={type(e).__name__}:{e}')
+    return out
+
+def public_research(keys):
+    raw=rss_candidates()+gdelt_candidates()
+    dedup=[]; seen_titles=set(); seen_urls=set()
+    for c in raw:
+        tk=norm(c['title']); uk=urlnorm(c['url'])
+        if tk in seen_titles or uk in seen_urls: continue
+        seen_titles.add(tk); seen_urls.add(uk); dedup.append(c)
+
+    approved=[]; rejected=0; duplicates=0
+    # Validação efetiva de candidatos com URL direta/confiável. RSS agregador continua útil para descoberta/contagem,
+    # mas não é auto-incluído sem uma URL editorial verificável.
+    for c in dedup:
+        title=c['title']; link=c['url']
+        if ('u:'+urlnorm(link)) in keys or ('t:'+norm(title)) in keys:
+            duplicates+=1; continue
+        if c['origin']=='google-news':
+            rejected+=1; continue
+        if not trusted_url(link):
+            rejected+=1; continue
+        excerpt,final_url=fetch_article_excerpt(link)
+        if final_url and final_url!=link and trusted_url(final_url): link=final_url
+        if not excerpt or not article_is_relevant(title,excerpt):
+            rejected+=1; continue
+        date=now().date().isoformat()
+        m=re.search(r'(20\d{2})(\d{2})(\d{2})', c.get('pub',''))
+        if m:
+            try: date=f'{m.group(1)}-{m.group(2)}-{m.group(3)}'
+            except Exception: pass
+        item={'Data':date,'DataBR':datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),
+              'Titulo':title,'Tema':'Copa Feminina 2027','CidadeUF':'Brasil',
+              'Veiculo':urllib.parse.urlparse(link).netloc.removeprefix('www.'),'Link':link,
+              'Sentimento':'Neutro','Impacto':'Médio','Resumo':excerpt[:900]}
+        approved.append(item)
+        keys.add('u:'+urlnorm(link)); keys.add('t:'+norm(title))
+    return len(dedup), approved, rejected, duplicates
 
 def main():
     started=now(); cycle=started.strftime('%Y%m%d-%H')
@@ -145,19 +274,25 @@ def main():
                     continue
                 inbox.setdefault(kind,[]).append(cand); keys.add('u:'+urlnorm(cand.get('Link'))); keys.add('t:'+norm(cand.get('Titulo')))
                 status['aprovados_novos']+=1
-                # Só escreve campos que já existem na tabela, evitando criação acidental de schema.
                 upd={}
                 if 'Status' in f: upd['Status']='Aprovado'
                 if 'Resultado da verificação' in f: upd['Resultado da verificação']='Aprovado pela pesquisa editorial nativa; enfileirado para o Radar.'
                 if 'Última verificação' in f: upd['Última verificação']=iso()
                 if upd: airtable_patch(table,rec['id'],upd)
 
-        public=rss_candidates(); status['candidatos_publicos']=len(public)
-        # Pesquisa pública fica conservadora: apenas contabiliza candidatos. Inclusão automática exige sugestão estruturada/Airtable.
+        public_count, public_approved, public_rejected, public_dup = public_research(keys)
+        status['candidatos_publicos']=public_count
+        status['rejeitados']+=public_rejected
+        status['duplicados']+=public_dup
+        for cand in public_approved:
+            inbox.setdefault('noticias',[]).append(cand)
+        status['aprovados_novos']+=len(public_approved)
+
         status['inbox_itens_adicionados']=sum(len(inbox.get(k,[]))-len(before.get(k,[])) for k in ('eventos','noticias'))
         status['inbox_commit_needed']=inbox!=before
         if inbox!=before: dump(INBOX,inbox)
-        status['stage']='completed'; status['observacoes_operacionais']='Execução nativa GitHub. Exatamente duas leituras Airtable; pesquisa pública RSS executada de forma conservadora.'
+        status['stage']='completed'
+        status['observacoes_operacionais']='Execução nativa GitHub. Exatamente duas leituras Airtable; pesquisa pública ampliada em múltiplos eixos via Google News RSS + GDELT, com deduplicação, filtro anti-base, confiança de domínio e validação de conteúdo antes de inclusão automática.'
         code=0
     except Exception as e:
         status['stage']='failed'; status['observacoes_operacionais']=f'{type(e).__name__}: {e}'
