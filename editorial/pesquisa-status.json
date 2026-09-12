@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260912-14",
-  "started_at": "2026-09-12T14:26:51-03:00",
-  "completed_at": "2026-09-12T14:27:49-03:00",
+  "cycle_id": "20260912-16",
+  "started_at": "2026-09-12T16:38:51-03:00",
+  "completed_at": "2026-09-12T16:40:49-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -16,10 +16,10 @@
     }
   ],
   "sugestoes_lidas": 19,
-  "sugestoes_noticias_lidas": 18,
-  "candidatos_publicos": 126,
+  "sugestoes_noticias_lidas": 19,
+  "candidatos_publicos": 127,
   "aprovados_novos": 0,
-  "rejeitados": 138,
+  "rejeitados": 140,
   "duplicados": 0,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
@@ -117,6 +117,15 @@
     {
       "origem": "airtable",
       "tabela": "Sugestões de Notícias",
+      "record_id": "rec0PJ1Mp1RHozDCr",
+      "titulo": "",
+      "url": "",
+      "decisao": "rejeitado",
+      "motivo": "Registro processável sem título/link válidos ou, para evento, sem data ISO válida."
+    },
+    {
+      "origem": "airtable",
+      "tabela": "Sugestões de Notícias",
       "record_id": "rec4CG16k4KjjYPtZ",
       "titulo": "",
       "url": "",
@@ -134,17 +143,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027 abre inscrições para voluntários que atuarão no Recife - Brasil de Fato",
-      "fonte": "Brasil de Fato",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQTVZySGFpcHN5NkxwR1ZKanlFQXYwZklWVVZzTEpHWVUwOEE5ZGw1WkU5dGxQSHJ0NEJsbjVRQmVXaXhvbmwzV1JTVERZV2NWdjVuSE5xOHo5QkF0T01HVnFTbFVxWUlQRWk3dHZrcWVUelM0b01TUHBaQUhQbFVhSnZHUjhYYWlIVDVacDdGSEc2ZElYNHhhYVg4MXNrM2Z4SjdGZHlBMGJWRV9pTVV3cFhSOUNMQWNxVmFWZjlJSGZDSmFj?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+      "titulo": "Estudo encomendado pela Embratur aponta: Copa do Mundo Feminina no Brasil movimentará quase R$9 bilhões na economia - embratur.com.br",
+      "fonte": "embratur.com.br",
+      "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQbFdwempBVHI3VURJeVVzSHZhYVNiSHQzX3VCV0hudVJHUVpNWExsalVLOEVrN1lHaXVZenZQSTVIWFBoODdEOGJJUmVpZGhsY1ZNbjJMYU8wRHZXVENKUjVBQVZNcG1sQ2ZYR2tfa1pUS0ZZbWc4RmpESEUwUFFwWVJQcU1TcVJrM2VoLXdnNWhkNzNHdEdPRExKZ0dmMFlnby1rVC01bkI4RGRoYTNKN1Y3VTRWUzRiamVBamFlei0xSmNEWEZ3S2RkVWpQNHNYM2JRYVNjSE1md09QUlFFNGVEdw?oc=5",
+      "decisao": "duplicado",
+      "motivo": "Duplicado dentro da própria coleta pública."
     },
     {
       "origem": "google-news",
-      "titulo": "Inscrições abertas para voluntários na Copa do Mundo Feminina 2027 - diariodigital.com.br",
-      "fonte": "diariodigital.com.br",
-      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOZXBlS2RwNWNKQWgyTXRkbzNtTDN0RGsxblVRNG83c0VZZUNIbTltQ1VDXzZyUV9XeGZ2NHhVYWZSRTUzTjk3aE5FM01ITlVBWGI1a0JlTndaTzhJUDRfUnkyYmlMa0xkaXE3Tjh3cjNHS3hkSnFZOXlmcmtsQ292R2FxWkVtdU8xUkdrdGtaUG5IdS12bGlaX1VkT2NTZWJiMjV2MHFMYXjSAagBQVVfeXFMTVB4STdrMVd1eFBSbE9QajBvV2tfbU1IcmRlX3g3WDB1d2FXeGNUWjhQQXVpUGhzSlZyQ1VyTldNcjZ5eVFKeDJQQUxvbEtKWUNGV091RU9zWDFZN1VHLVllQk9TNUdiQWtoc19sbjlrWkMyN1IwdHhHMTc2SllON1gyT3luOGNoT05fdmVoV1FuNzhiSWwtazFkSVJTS2JuYm5LTnc0eDB0?oc=5",
+      "titulo": "Copa do Mundo Feminina 2027 abre inscrições para voluntários que atuarão no Recife - Brasil de Fato",
+      "fonte": "Brasil de Fato",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQTVZySGFpcHN5NkxwR1ZKanlFQXYwZklWVVZzTEpHWVUwOEE5ZGw1WkU5dGxQSHJ0NEJsbjVRQmVXaXhvbmwzV1JTVERZV2NWdjVuSE5xOHo5QkF0T01HVnFTbFVxWUlQRWk3dHZrcWVUelM0b01TUHBaQUhQbFVhSnZHUjhYYWlIVDVacDdGSEc2ZElYNHhhYVg4MXNrM2Z4SjdGZHlBMGJWRV9pTVV3cFhSOUNMQWNxVmFWZjlJSGZDSmFj?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -158,6 +167,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Inscrições abertas para voluntários na Copa do Mundo Feminina 2027 - diariodigital.com.br",
+      "fonte": "diariodigital.com.br",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOZXBlS2RwNWNKQWgyTXRkbzNtTDN0RGsxblVRNG83c0VZZUNIbTltQ1VDXzZyUV9XeGZ2NHhVYWZSRTUzTjk3aE5FM01ITlVBWGI1a0JlTndaTzhJUDRfUnkyYmlMa0xkaXE3Tjh3cjNHS3hkSnFZOXlmcmtsQ292R2FxWkVtdU8xUkdrdGtaUG5IdS12bGlaX1VkT2NTZWJiMjV2MHFMYXjSAagBQVVfeXFMTVB4STdrMVd1eFBSbE9QajBvV2tfbU1IcmRlX3g3WDB1d2FXeGNUWjhQQXVpUGhzSlZyQ1VyTldNcjZ5eVFKeDJQQUxvbEtKWUNGV091RU9zWDFZN1VHLVllQk9TNUdiQWtoc19sbjlrWkMyN1IwdHhHMTc2SllON1gyT3luOGNoT05fdmVoV1FuNzhiSWwtazFkSVJTS2JuYm5LTnc0eDB0?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Copa do Mundo Feminina 2027 no Brasil: veja quando começa e onde serão os jogos - sctododia",
       "fonte": "sctododia",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxON1A1VjlHSzk2Nlc2eUxuRllPMjdGSjFvcUxlTW5rY0tIdkY3djdGb1g5aW5PME5iSjVyNXo5TlI4SXdNZXMySlVuQmJTRGlVLVd0eFpLS2NKOC1JU1Q4MW5RVDFaT0ZkLUlXc3BncGI0cks3c2dnMGx3a3RQZzQyZ0JHVkVsY1NGeUVqejVkWVVXTjBRa3pVZUowQWp0Z1N2b2hxRUFJcHc?oc=5",
@@ -166,25 +183,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "MEC define regras para férias escolares durante Copa do Mundo Feminina 2027 - acritica.net",
-      "fonte": "acritica.net",
+      "titulo": "MEC define regras para férias escolares durante Copa do Mundo Feminina 2027 - A Crítica de Campo Grande",
+      "fonte": "A Crítica de Campo Grande",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPaUs3cmNCaTF4bGlycWcteUVJNUNrTG1WSV9SU2VtWlg4eDlVU2lkdC1mYTVMUGQ5a2dwOU5mU0ZaOE1xUWFTVDd4ZXQ2RktINDQyOHFFVEpIT2Q2TVhISm5iVVF6QktoaVlkZlU0MlRFNlVKd0RqNi1yLV9QSm5tUXFDNjFxWkUxQkFQa0NaekJveVBvLVE5RDlFVWVZRlVJUmdRY0xiMzd3UVh1YmZObk0xd0Q?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Desfile na Esplanada celebra Copa do Mundo Feminina de 2027 no Brasil - Correio Braziliense",
-      "fonte": "Correio Braziliense",
+      "titulo": "Desfile na Esplanada celebra Copa do Mundo Feminina de 2027 no Brasil - correiobraziliense.com.br",
+      "fonte": "correiobraziliense.com.br",
       "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQZlEzREFRZFU1bFdYeDFMLXJPVHo3UXJYRlNOQzdKQmJiUzVDV2tGSmthSUtUNDNWUHYzVFVhbGxaMENVRG9yWG1yUlR5WDNfLXo2ZVI5TkRQdHY4VE05dU1HbUVqYkE1ZnRWdFdLdURpaDdCajhJTS1jdDBYVXV4ZU9zY3lvVkdHdFZjYnVQVHFfdDBTUHMtY19kTmtiRVVfZXRwYnAyY1IxRlhSRHZ2WEszaEpuSzlNcm9UMHhQYVZaUzFyTTlkd05fMHdpaW9vSU1OaXhB0gHbAUFVX3lxTE04aVI2eklPcHhhY201TkVXTHctbmV1VUx4SGxvLTJEUTVvOVNyMDVEbm13Z3BKc3ZWay0yT2xNYk4wRllsVG5HN3NHamtfWjRHd1pZcy1DYnFDQkpCT3JRMHdNZTNqa1pGM1k4VkwyVk1ac3ZXZjgxNVdoS1o2ZXlKVFVpTXJjekJuZXlHVlp2R2ltYVRMQTZ1eFg5R2VmTTM3aWk2RV91NE1HamZmWW1oU2tjUGpPQ3ZSTWJQSjBZVjJwOGZLY21DSUh6MFFzRzBadGhxLVczWThXMA?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina muda férias escolares em 2027; veja regras - A TARDE",
-      "fonte": "A TARDE",
-      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPZjg1ZlpnYVA3QzNUSjFneVBrTXNTeGlNQ2JGV1NSMFdEVUtvQUJidlZxa0pjYzN1Mi1HRGV4clpqVDJlUkNZXzFUZEdPN29Qb0E5VGM3aE5QZnNFdnAxLXU0dExldlY4UGZ4NDF3RGQyV2hfbW51azJvYWJ0dENjSmUtUHp5eDdobnJROUhCSzdEZkduNWlSMkk2LV9kMnV0M2R0cVR30gGuAUFVX3lxTE9DWWdxMFh4ZmwwMV9tSkNSamstWmZCa3JRamRYNW9pdHpzOHFVTGtkZTFzajRQamVoREFRYkttTGhVSTRaNEdIWXMtZUVWUG45Q2Y3NURRVEZ2bGtsVElMZ2UtckN5WHRNaXdyb2NVSldDY0RiQV9rQWNsVzAtNGxSWXlOM0d0dzZ4RTlLNnZLMDdnRC04SHJZdWFZY2NjSzM0MUgyX0RnVWFCd05MUQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -222,16 +231,24 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa Feminina FIFA 2027 abre inscrições para voluntários em Porto Alegre - Prefeitura de Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
+      "titulo": "Fifa faz estudo para definir preços dos ingressos da Copa do Mundo Feminina no Brasil - ge",
+      "fonte": "ge",
+      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxNcEl4WTNSVDJCYVJvMnlQUWE3Ym5ua0diblBBY2ZETVZ5STZNX09IYVpaQmhhLTFRakFpUWl5Nnp5aEVPNWw0TUlGU19hdm90UUxIczhsNkktN0MxanRLZ1lzM1lmRXlGY1lvOC1pMW9rX3djM2FJTi1zM1ByampTS0kwU2s5MGc2cEhhZEhDbWQxUlNiajdrcTR0YjBxMmdJX2FWaTBfTlRFSGl3RlBFbU9EN29tWVhIcUhsNF80a1djY0JaY0JxbmZzZmZxNjZwRzJ6UTBxRERfbzJwV0hpZFpIa3QxN0pBQ1VoS0o0UUVZU0nSAYICQVVfeXFMT2tmQ2x6SjhlNFowcUQ0bXVOYUpMek5yemhVWnVvNTdZVVNWX1RzNkg4WEF6WS1yRko3dm90Umw2OWdnMTNRZTl5NUs4cG1FenplMFNiTFN1cDRsT1VzTkFibVNWNUkzMGduRXpZcGdOZ29SWXhnWWxFVnBmUEcyZWlqd3Q4MjFPRVBBQUJyQWRnLVQwNTh1d2toRzktMU4zb1REbXMwSl9yNTVNd2luUEdfdm52bkp3b0ZVMkJvLVBNYnpmOUp2bVYtT1ViY01pZnpKOWREelY1aTVJUDlneDB6QXlNY0d3UlJrVGctblA1QVpzbjZtNHd5Q2VOV2lsZlh3?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa Feminina FIFA 2027 abre inscrições para voluntários em Porto Alegre - prefeitura.poa.br",
+      "fonte": "prefeitura.poa.br",
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOLURVb2pMcm9rOUJUeGh3dWRNZERwTUl5NEZ5cWVPS3FhcGlwSmJQLUI2MGdZc0VJQUNIbXJucWVuemdaLTdHZXVtV0ZkN0pMU21xYkhWQTktOVR0QzRxRkljY1JFS0h3UUUyTVgyTmZ6dVFkbGpnRkFEVm44YjBoTUNUQm9hM1JRR2x2NGVZSnFGQWxST2p4OWM0dl9ENFVUa1M5VmNxNTBJNmVWb05fYTVySGFwRmJuOEE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa estuda preços dos ingressos para a Copa Feminina de 2027 - Poder360",
-      "fonte": "Poder360",
+      "titulo": "Fifa estuda preços dos ingressos para a Copa Feminina de 2027 - poder360.com.br",
+      "fonte": "poder360.com.br",
       "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNU2N3c1lTUlJkaUFQM2hyZlpuM2cwLXp2UXV2OVNqcXQxUVQzd1ZmRDQ5WVloX2JybHRObkpmVE1CNjhkZjNUc3dDVXJfdzRrYlFTX0s5Q2dNVkJXVHV5M09FS2VpWmh4aVhuVEZ0RkRubnBuYzJsYXA3NnJ5MU5USjhVTmNoUEpFQk9GU1daVVVFRXlVUzNmOW9Yc05NS1JueXM5YkVVQ294UQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -246,16 +263,16 @@
     },
     {
       "origem": "google-news",
-      "titulo": "MS tem autonomia sobre férias na Copa Feminina 2027 - Campo Grande News",
-      "fonte": "Campo Grande News",
+      "titulo": "MS tem autonomia sobre férias na Copa Feminina 2027 - campograndenews.com.br",
+      "fonte": "campograndenews.com.br",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOV1hVLXBob1F0TXk2cEZ1WFB5ZWh4cm5jZ2s2M3ZycHlZTm8wRHl5VkhNcDRVZnJUdlZZRWo4MzhYenZSMnp1R2VrNTdZekRvRW1ERkE5NnlVVERXWkZGQTlNS1FIa0FzVWVrWjNMWDRkZ2ZYYW5CM2hMemxPcFJhTUc1aEVBWGNBajVhUTlIdGlEYWxobHhBSVpqY3B3NUdQZGNCenN5cmc5X2Q0RnZrX1NB0gGyAUFVX3lxTE4yUHdzakZ1eXdIUmVRYkxvQTg2TXUtVFNNNDI5RzFjMmxCdWVaNGwzZERtVFFIZmpOUzUwWk9VMW1aaEhLODZLb0RuUVl3OGxkdlBmdi1aaDMxYm56aVJXRUdBYWZJcFFUUVVNTExQcGt3UEhjd1k0Q0pWTS1TczVySXNsb3ozNG5MSXo0cTRqZE1wLU1TeTdoeXVKaVVsdUhjQlFnczVDU2Y5UTdaT3RSWHc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Copa Feminina Muda Férias Escolares De 2027 - abcagora.com.br",
-      "fonte": "abcagora.com.br",
+      "titulo": "Copa Feminina Muda Férias Escolares De 2027 - ABC Agora",
+      "fonte": "ABC Agora",
       "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBBY0xuQmtUR0xwTGpZbFRrNlVabHpVbThnN3B2M1haRDUzQW1YMzIzLVpkMW0xc3M5d3RTY2pxdW5TZEFZMGlPaFhydnplWnJWWDFwM0JVektxQVNuMDhNRXdiWk5JYWlVcHpoemZhZEFNWm5jYVY0ZFdPYw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -270,8 +287,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "MEC regulamenta férias escolares na Copa Feminina 2027 no Brasil - Guarulhos Online",
-      "fonte": "Guarulhos Online",
+      "titulo": "MEC regulamenta férias escolares na Copa Feminina 2027 no Brasil - guarulhosonline.com.br",
+      "fonte": "guarulhosonline.com.br",
       "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPTlZiQThwNHpwcGMxc1Zka3lqa2VBcUluWTJHTEZiRHRrWWhnZU5fOFVmbHJpLXNUczh3bzBfZnhyZGhGcVd1dWZNWWMtZnFlak1IeHNwVVF1cjZycXQ5RlRzNnhFMTVYWnNFYUtSdVBHVi1uaHZRTkJfN19CWkd3OdIBhgFBVV95cUxNQk55S1JwVGZfMHpkWVdXOEpNQ1hWRUI1ZDdnS09KZUhVY3lQSEUyWHY0SmoxVmJ1cWMtM2MtdHZaRVdYbEtmY0huOTNxVnZQdTAtN2hqYUgwSHBjbVJ2c2U0ZUpfQ0VtZjEweXM2SjVaZ1NOWGFudWpMV01jOEVja3FjRHI2UQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -294,16 +311,16 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Porto Alegre terá sete jogos da Copa do Mundo Feminina de 2027 - Prefeitura de Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
+      "titulo": "Porto Alegre terá sete jogos da Copa do Mundo Feminina de 2027 - prefeitura.poa.br",
+      "fonte": "prefeitura.poa.br",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPcDRzQmZadDhCUXB1NEU4XzRvWE9BMlFoWUEwWmtMT0RrRXhYdVhGXzVWajkzdzhCcUZGWENKS3lST0J6aFhTdGVoUkVLVW0zYUhYdmFDVm9IVFFCclhNSTlVZmlvUEZ3QVlaZ0EwWkw0dDIwdld6R1dDSjVybHh0OWFnQjJWSTFNR2VNNVBnbFQ2a2x2NGZma0x0cnNtUTFQYWxkb0Q3VUktT0ta?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Câmara aprova fim de férias obrigatórias na Copa Feminina de 2027 - Poder360",
-      "fonte": "Poder360",
+      "titulo": "Câmara aprova fim de férias obrigatórias na Copa Feminina de 2027 - poder360.com.br",
+      "fonte": "poder360.com.br",
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxONnl1el9XajQ4eUxuYlFta0lrb1RHYmFoekhhcXVuc3JlazdNeS0wbFBUNVBtWC0xUG5ZLTNQYTY4UlBLdElhOWQ5OElDYWpaZEdFNHF0UXN3UHZsSVU1U2hVQUxxc05DQS1XMmc5cjktVThTSmFTNmExQXRfMVV6VjJiR3B4aXlJdmxENzNPQ1FSajQzbmZfSnJOaHJPNWFZREVsRFdsOEJjYk00ZTFv?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -326,8 +343,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Brasil recebe Mundial Feminino 2027 e define regras para trabalho de imigrantes - www.gov.br",
-      "fonte": "www.gov.br",
+      "titulo": "Brasil recebe Mundial Feminino 2027 e define regras para trabalho de imigrantes - GOV.BR",
+      "fonte": "GOV.BR",
       "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNNTdKa3V4QkhiZWN2OThrYXlMTHM1OEluOFNMR0VhTWx3RlJsdDVUSjdfb3VjNDhiOERiREZjd01adWpjOTA0MHhiNW5abW5yYklFRjhzX0N6N3JRSGdfNVZBVXhhYl9GNk9wQjRkYXpkb2N3Zkt6enZ1WFVZazgyMGJpdXFzdF96X2xlZ2dpNXFuY0duMHdIVjB4MGx1S2VBUnlSRTJzNWpIQm5TcFJrdThaQU4zMG5MMm5GN1Q3UFdLT0toUmNzbA?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -374,8 +391,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Portugal continua invencível na qualificação para o Mundial feminino 2027 - Comité Olímpico de Portugal",
-      "fonte": "Comité Olímpico de Portugal",
+      "titulo": "Portugal continua invencível na qualificação para o Mundial feminino 2027 - comiteolimpicoportugal.pt",
+      "fonte": "comiteolimpicoportugal.pt",
       "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPNllwcXJ1Z3lEWkdzOW01V2ZDWUFOaENwQ1laNXVCUXN4dG1vc2NCUXVjWUYtbGpXQjd0azdULUhHVXFBX3pUTU5IeVJhc2N5OVFrNEVaM0wyZ2pQUTJKa1dDZ0ZkLUlYTzZyWEdFMGtjWklNbFdkMjRXdEI2S09wLVhVSjl1cHFheU9XVXRSelVLcGI0ekFGU3ZicHJwQ3pCRHpYRUZqS1lha0tQNzhPTVd2Q2JPNG8zVHhKWVVyaXRUTEF4S19KTGxCYmhzMmVjXzd0QkNIaw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -398,8 +415,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Debate aponta necessidade de investir no futebol feminino para Copa de 2027 - senado.leg.br",
-      "fonte": "senado.leg.br",
+      "titulo": "Debate aponta necessidade de investir no futebol feminino para Copa de 2027 - Senado",
+      "fonte": "Senado",
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQWTltNXB3VkV5VkhmZ255d19hQ0tFUGZHUmxMNjZCdnJvb1Q4eVd6bkRQZVRJMGhqNlNoY1VLYlM1bkxZZHhoQXN0cUw0NE01SGJUZ1plMk10a2g1anY1UU1PRFJleTZDTEtTUGVQLV81TWt1NzhBSzdKQ1pzYjFabGR5NzdaY2lYNlB1M1NvZDdkTDdhclROZHNoaGVtY3ZPSDJ1akdtSkphS0xPWFNKYWdyS3phTXVnVW5CLTA0UExTVmxjVVE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -422,9 +439,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Arthur Elias convoca seleção brasileira feminina para o Fifa Series; veja lista - ge",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQRUtLWDNuS0Z6bkRhc20tM1dmZS1YMUo5anV0SFNXeUNkUVI2T0ZtbWhBMXJXZHN6aVd3X3B3bXlUaDJUR1V1a3FGWW1LeWpwNFZGOHFLRWprN2Z0WUZqSTN5eUFYcXRTeHFxRDNFNkFlckl2dm1UcWtWZ2NweE4xbFpVcW8zSkcyaG41LWZ3VnBXNmtqZ1R6SllXODQ3LUIwTzEzVlhTWUowNUdlYVpRcUF2M1NPRjZjXzd0NE1QVjdTMTVlRU14NkJ3Y1JOdUZtOFpuc3F5ZmlwYS1EaElCOWxOaktzUdIB9AFBVV95cUxNUGU4Qkl1X2VGQjVVbnh5T2lmNkpsclBneTlUM1BhODlydmlyX2NvR2ItSV9uN2R2WHd0c1NJTDNDNzc5QU85eHRyRjB2NjVnZ1JueXhlczFqaEFMN0NMSHpDekdTQVpNVEpJWkVFQ1VzTTByLWN4SjUwRTVYeHdZUVh3azdMbjd0T3ltTFp6aERqMmxhZWZ3YjdnOGI2RDZTLWh6M2dXSDczU2d1VDZDdWVKendZQ3pEcmotSjU1ZmtTdTBadG1yY1lwMlF2amtwTjdSWWZTZmF4d05WVnBaQV9pQjAzbGRYWURQZ2dnQTBKUnN4?oc=5",
+      "titulo": "Titular da Seleção Brasileira Feminina disputará categoria importante da Bola de Ouro; saiba mais - Terra",
+      "fonte": "Terra",
+      "url": "https://news.google.com/rss/articles/CBMiqAJBVV95cUxNbG5FUk41ak5jUEJDVzZsSHlaMUxGLWhCUnBGWVRpd3phTjZMTVV2N0tSYlBnMGdIb0xlelktZ0JTOU96d016NzcwWThTREtLX0EyNjZrUFNPSUZkd2JzN3NNVldpQjZTakRVUG56TzNudEJuaXFHek92Y0FJRnNFU3RMd2tiYllGNFVobjNkMVY0bW9zWmQ3YnE0VE9iaG9LLVhJY0xMQ21mSGxOd2hxam9OaVkxV21ldkZPWHNqVmlVRWtQa3Q4NDRvcFppU0FJbEI5a1hIZWZmS0hBUE02aXQ2RE43TVJNUUZfbldTR2RTRlpKTjhrV2Z0QkhuWDJvTFhGVG8yX25yTEJqTmJTejhZVE9zaWpoUDJ5SlQxWUdiRUFYd3pnNw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -438,24 +455,16 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Titular da Seleção Brasileira Feminina disputará categoria importante da Bola de Ouro; saiba mais - Terra",
-      "fonte": "Terra",
-      "url": "https://news.google.com/rss/articles/CBMiqAJBVV95cUxNbG5FUk41ak5jUEJDVzZsSHlaMUxGLWhCUnBGWVRpd3phTjZMTVV2N0tSYlBnMGdIb0xlelktZ0JTOU96d016NzcwWThTREtLX0EyNjZrUFNPSUZkd2JzN3NNVldpQjZTakRVUG56TzNudEJuaXFHek92Y0FJRnNFU3RMd2tiYllGNFVobjNkMVY0bW9zWmQ3YnE0VE9iaG9LLVhJY0xMQ21mSGxOd2hxam9OaVkxV21ldkZPWHNqVmlVRWtQa3Q4NDRvcFppU0FJbEI5a1hIZWZmS0hBUE02aXQ2RE43TVJNUUZfbldTR2RTRlpKTjhrV2Z0QkhuWDJvTFhGVG8yX25yTEJqTmJTejhZVE9zaWpoUDJ5SlQxWUdiRUFYd3pnNw?oc=5",
+      "titulo": "Arthur Elias não garante Marta na Copa de 2027 - CNN Brasil",
+      "fonte": "CNN Brasil",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQeHc1dDlBWHZkbUhPeDB6SFZmUmpVMFZhR2ZvaUtVRWpKeXR1bUtLV3loZElFc2J2Wm9Qc09EdURGRm82RGsxTnMwSm5ScXpWenlQcUxfajRYZktLY3BESlo3SF9iSWx2dENiSHhzcWE0Ynoya2wzaTlFVldoOTVWdS1CTlp2TlpDczRPSWRiMUluNTVQVldDeEsyNHRFeUhxYUpMS1hhdkhQODVIRTl6aEJR?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Seleção Brasileira feminina de vôlei treina no Maracanãzinho - LANCE!",
-      "fonte": "LANCE!",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPUWNrdmwtQkQxRkt2ZG9JaU1wekFNY2huM19kZnp0c3E2RFU3bEw0aEFDdWlFNTZWTGNqc2h0TmltQk9NalQ5N1JxbUtRTXhUYUdOOGhoa0pscmZQVVNLV2ZYWi1fLVNFOS1lTjd0Z2NNeTFmY1Z2X19HWTJxNnhpa0t3TUdWTUlZNFQzQXhtY2dBTDRQdFRMOGxhQmU?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027: veja as seleções já classificadas - LANCE!",
-      "fonte": "LANCE!",
+      "titulo": "Copa do Mundo Feminina 2027: veja as seleções já classificadas - lance.com.br",
+      "fonte": "lance.com.br",
       "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNS1pFck5Wb0dmMDV5aWxWWFp6MU1sUWMyRGZwQWtiUlE5dmdHNlZyaGNRUXg5ZFpmTkc0ZlJxNjBQejJreFYtTm55Sy1Zbm01NkhsWlcwU1BNU3dNT2NPU1NTYURWSlJHc29DSWlPQTNmYUFEXzcwY2dzQTU4YXQ2b1dpR1hndEptUmY4cE02RUpCbVFBSk1FaFRlcFp2eldZQkF4N3FB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -478,8 +487,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Brasil: Maracanã recebe abertura e final do Mundial feminino de 2027 - agenciaincomparaveis.com",
-      "fonte": "agenciaincomparaveis.com",
+      "titulo": "Brasil: Maracanã recebe abertura e final do Mundial feminino de 2027 - Agência Incomparáveis",
+      "fonte": "Agência Incomparáveis",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQTEJYNDMydnNGYW95aFMwWEt4UC16UHdmR1NVZ2x6LXFjeFdKUm1HaTNCcW55NUczWjJsYUxfTWZQSEJMbWtGUW1HUkhpTm5yY2ZPT0lGMjdnZGdfaHloa1VTdTBGUzFoS2k2bEhMT1JYYWhHZkt4V1VFRzAwLWc0LTZ4MkktaGhTZ1lBdmlxbmZfSTloLTZwQ3pxbEdqZkE3Rk96bjFmb2U?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -542,8 +551,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Seleção projeta jogo no Maracanã antes da Copa do Mundo Feminina - LANCE!",
-      "fonte": "LANCE!",
+      "titulo": "Seleção projeta jogo no Maracanã antes da Copa do Mundo Feminina - lance.com.br",
+      "fonte": "lance.com.br",
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQWjdYT0hMNEk1WThDLUFKbjhFc29HaV9VVktNbWtkWTRCcDFTQ1hpV3lhS1A2RnR4eGRtcGZ6bHlBUmxDZXVTbVNtVGczRjF4eEQtU1d1SW1nQkE0RWtPUXJ1YTZ6MDlBY0dfUTYydDZWNkpVanRFZ25Da0phWmRId0NHZ2c1WXRzTXNuaHZsT2VoOGtmWUN2cXZXbEIwWGdjUTBRaVZlV3RRb2tLYTNWQw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -606,9 +615,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Abertura no Maracanã: Fifa revela sedes e tabela da Copa Feminina 2027 - Revista PLACAR",
-      "fonte": "Revista PLACAR",
-      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNeVF4WWo1eUpFM3AwdjNYTFI4bTd2QjlIRmZCSktCQWxUOEt3ejJ2eXhheldBZXlQSnYydDhNYmt5aUduYjEwQTRGdndiUEFqOFhOUGlCWGdiVlY3amNZR3JWZkoza1lQLUdUdFhCY0NOWlljWXFzZzQ0X3BkRFFDdXlEV0F3cks3SFc0QlRfTHdyYTd4cWUyVHhiYUNvZXFpU3c?oc=5",
+      "titulo": "Copa Feminina 2027 terá férias escolares alinhadas aos jogos - diariodigital.com.br",
+      "fonte": "diariodigital.com.br",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPUjVGdXEyb3gzRFM1ck5zSEd5cmpaYUJIenVlNGhMNF9GcFBrYnl5YU1wSlRnNHlNR3hVQnN5aHNON0lRUU5BTEtnX1lscWt3YmZKRWNuRm9GVGdsX1ZQcVJMTXljdkpjRXhZeUlGZEhnb09mbEhQYVNyRzBZZkUtbU5BVDYxbGc0YnZNNks3T1BJd0Z0aEkwcnMzXzg3RXh40gGgAUFVX3lxTE5LbmhlcU1vdm9yQ1R5QUp3cFRJNWRudXJ5OUF6cUx2aWZNYkVuQWxwMlJianhGa3hqY1pISkxqNmZaSHhvWl9sTEdmaC1BcEFEXzM5eXo3Ql94ckxORjRTd29ZeFlUMTUyWGFJdURvOGpzOU53T1FDXzd4QW5YbEFiVGtEelE1THBtWXRfNHF4b3BITm5HLVVDRjV1MjFkMmY?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -630,8 +639,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Porto Alegre apresenta preparação para a Copa Feminina 2027 em workshop da FIFA - Prefeitura de Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
+      "titulo": "Porto Alegre apresenta preparação para a Copa Feminina 2027 em workshop da FIFA - prefeitura.poa.br",
+      "fonte": "prefeitura.poa.br",
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPc09xbUVOZkNHRE9uSmxEREJJSDVpTHRkcHJnblZCS3V2eE15eGRiU0tJRmpfT29uVUx1Y0RRdXhVOXNJUWlWb01DSjR0aHlfbEtJdjFCcmZpVXR5MFZfeUhKcmk3UElqcUlFaVhZNHpBSDh2MmxFNFUxNVhlejduTmUwZzd2MWwwMmxHUWtCNHFENkFnUWZfVVhhR0tkamVFa3lnS2VBMldnbDc2Q2xkV3VRMC1TQ082R0psSF95djQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -662,6 +671,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Prefeitura protocola Projeto de Lei com regras especiais para a Copa Feminina 2027 - prefeitura.poa.br",
+      "fonte": "prefeitura.poa.br",
+      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQTllZbXZxM3lXcXhZZXI1UExrbDIwamJ2QnlZeWdxMm54am51SVVEWng4b3dYbTVSZXlSSDl4ZnVkQVRDTDR1ZWo2ckJya2xsM05RT3pVdWVCM0ZNOFhoOUF5bmtjRGhlQzJQSk1xVUFKV2tGNEthdHh1eHdxOVFVNmxIUllwTTh4Mjc5NHZjVHViZ3hoX2pfdGFQbVZiUWczRHMwNDRyR3NsWV9vcVZvN2k5QjViY0JmN05rZUdn?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Fifa abre inscrições para voluntários; Copa Feminina 2027 no Brasil - Portal Você Online",
       "fonte": "Portal Você Online",
       "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQbkY1U0dYOFAwWjU2UVhRb0tCckl2V2k5Umg5cWg2VUMtS0pjQlZPbTM4ckctYkRiajBRQVdTbGVTTDh4WUNSczY3bVdKc19NZlpfWmVhNnR4bGY4TkNpdm1pMEVjODM1Z3hETjRhNW9DdVB1S09HOFIyS1BxNG0xbzdfcEZRTHJ4T1pTemlXNkdLTm1h?oc=5",
@@ -670,8 +687,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Comitê da Copa Feminina faz vistoria no Mané Garrincha nesta 4ª - Poder360",
-      "fonte": "Poder360",
+      "titulo": "Comitê da Copa Feminina faz vistoria no Mané Garrincha nesta 4ª - poder360.com.br",
+      "fonte": "poder360.com.br",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOanhyTURjc0J0LTl4cUhOT2dwODVIcHdIOGxLcUN6VzlDeTQwd3V3NTUtSno0cFB5QUh0N2tPYklDWFpKSEJ0Qk81OVZFbE1EamRQZ1VMd29yV01ON3JacW5CUnJTUXFoZ0ZaS0N3QlpILUlfUmJsUl9oSC14ZFNtMGpsSUFPNVg0T2h3aFFmRzluVVBXYzY2U3Y5b0VGWnZQQnVUU1AxS1ljSlpB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -686,8 +703,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina pode levar Nordeste a novo patamar no turismo internacional - Portal NE9",
-      "fonte": "Portal NE9",
+      "titulo": "Copa do Mundo Feminina pode levar Nordeste a novo patamar no turismo internacional - ne9.com.br",
+      "fonte": "ne9.com.br",
       "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1JcUk4VDFaYVFlcUV0cGNUOHFSM3pDb0pjeTl6U1hocS1nWXE3cV96U0ZFRnpyeVNaQ0ZFcWhrMWFJcGZ3Z0IzNEdXRnlnaEY1bG1zelhYUzk5eFd0RHMtS1EyM2lJRmZZampaSWtR?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -702,6 +719,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Como ser voluntário na Copa do Mundo Feminina 2027 - Remessa Online",
+      "fonte": "Remessa Online",
+      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQSDBsOU81QU9ZZTNsc1dGWTNLY3pYVFM1WTBHZEh0c25kXy1kZGh4Sk9hQUhiZWdudXBabGFfU1h2SXJoS2VNcmxVaFdmX21QR21XUGhiTVdDQTRXSDdkNThLUld4SUhJbVZCd3hjQ3JsWGlSbEhkX2pOT0pEWWJiTHRMa1M0alNCQmJXb3Rnem9fZ9IBkgFBVV95cUxQSDBsOU81QU9ZZTNsc1dGWTNLY3pYVFM1WTBHZEh0c25kXy1kZGh4Sk9hQUhiZWdudXBabGFfU1h2SXJoS2VNcmxVaFdmX21QR21XUGhiTVdDQTRXSDdkNThLUld4SUhJbVZCd3hjQ3JsWGlSbEhkX2pOT0pEWWJiTHRMa1M0alNCQmJXb3Rnem9fZw?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "FIFA abre cadastro para interessados em trabalhar como voluntários na Copa Feminina de 2027 - DPF » De torcedor para torcedor",
       "fonte": "DPF » De torcedor para torcedor",
       "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxObW1lclRyRWloN21YUmY0c2tPS1FXMy1vc3RBRkVwRWpzdmtBTlpwSXRiQmtLSWVHTkRpV0oxSDlSTTlOZzNhMzZPX3RQeU1wVnlzc3FkUkhTRFEzd1lYek1HZENibGplenEtRGk3YlRQMWRjQXdZWWZGY3VNbXlMT3FySl_SAYQBQVVfeXFMTm1tZXJUckVpaDdtWFJmNHNrT0tRVzMtb3N0QUZFcEVqc3ZrQU5acEl0YkJrS0llR05EaVdKMUg5Uk05TmczYTM2T190UHlNcFZ5c3NxZFJIU0RRM3dZWHpNR2RDYmxqZXpxLURpN2JUUDFkY0F3WVlmRmN1TW15TE9xckpf?oc=5",
@@ -710,8 +735,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Porto Alegre apresenta preparação para a Copa do Mundo Feminina FIFA 2027 em workshop internacional - Prefeitura de Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
+      "titulo": "Porto Alegre apresenta preparação para a Copa do Mundo Feminina FIFA 2027 em workshop internacional - prefeitura.poa.br",
+      "fonte": "prefeitura.poa.br",
       "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNbnFTWXZmSnBwTTZOREozMnJ6OUpDbXFubDdFb0dNZW5qTElfZDZsN2hLdVJOa0p2d3RPRWZUTDJHMksxcmZtZVNMX1JxcVBoQmJ5Qnp4b2o5ZkdGcE5nVUVBanhyZEw0ZmhROWxERGVzdUxXSV9UZ3pwczdpempNbXFCN3pYbnMyTUJhY3ptUzZEaFdNVUFDZGprOXRnNEFDUGFaanc5OHZEaTl6WUI2WldkTjZBMnJtM3J5Wg?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -726,8 +751,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Cidades-sede da Copa do Mundo Feminina 2027 oferecem roteiros turísticos - Correio Braziliense",
-      "fonte": "Correio Braziliense",
+      "titulo": "Cidades-sede da Copa do Mundo Feminina 2027 oferecem roteiros turísticos - correiobraziliense.com.br",
+      "fonte": "correiobraziliense.com.br",
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOejIxX2pnMWkwRk9kWUFCYURFcEVaNVVOVGZxWTlTai1pTi0tNXdUb3QwYUNyNHo2c3Q0RkV0bFp1MEV1UW9BY01FM0ZzaWxqcU40VEhadFZldXlWeVlCVy0tUkphODF2S1VIemd3RldEQWc1RV9yYmFsRXdYbnpFNUh6ZmlmVVVBQV9lTHYtRndRTHNGZklEclJQTDRRemxuVXRTUHFvSGM2WXVBemtvaDdaeUNoTXZweUxSMENWYzBXMnVUU0E?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -766,8 +791,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027 no Brasil: veja os preços estimados dos ingressos - BPMoney",
-      "fonte": "BPMoney",
+      "titulo": "Copa do Mundo Feminina 2027 no Brasil: veja os preços estimados dos ingressos - bpmoney.com.br",
+      "fonte": "bpmoney.com.br",
       "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPV0ZmWWgwMlo3aHVJMUFQYnpLQjFYZUJWVnpsUzdCSjhoODdJNm03S0FlWUd2SklVMWF2bGlaaF9uRHJPM0I1WnllOVBERHRWaU1MdE0yNGNrMHNSYm5WZFdTN3JmRTE2dWVGYkl5WGtXb1lHa1A1Q0I3R1lrZFdpc045Qk1SNmU2SVpxV1dYakxHcW8?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -822,8 +847,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Voluntariado na Copa Feminina 2027: como se inscrever - Campo Grande News",
-      "fonte": "Campo Grande News",
+      "titulo": "Voluntariado na Copa Feminina 2027: como se inscrever - campograndenews.com.br",
+      "fonte": "campograndenews.com.br",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQT1Yzc3F5VXd5VE90aEVObXBfYjNWSngyUnlpQlQ2Vzh4M0NhV0djZ0NmcmFjenRYY1o5Mll5N1hQendiU3J1TWNNQlFtNFdyVVN5ZlNvRmZid0lqdG5Lck4wYVoxbkVsUmdJQTRZRXhMSDZBLVFrMUE3Q2dkYklNTnZJSXRxbnR1QVF1ZjlGWXl6emtlZkhyX3hRYk82ajlWNkRUN0k2YTN4cy1xa2dFZDRNMNIBswFBVV95cUxNX3E0Tk5GZ1hjX2ZIbDFOdE93bVZNSTdRVUd4d1NlWEtmWkZxeGVPXy1YRkFmSUpGV1dYZ2pnejlmVlBYQi1zTEIwak00V0U3MEgwRE05V1JwcWFfR0ZGLTVxRXJhN2FBX1dVZVk0eUtwbWtJSHF4dVFoTGowcTFvWHNyLVRqNENMR1A0NFJGU2hYMDVCdkJYeXJfdTRGRFVqOXVYWFRzV2hIT0tJRVlpOW9uNA?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -838,16 +863,16 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa acelera campanha de voluntários para Copa do Mundo Feminina de 2027 - maquinadoesporte.com.br",
-      "fonte": "maquinadoesporte.com.br",
+      "titulo": "Fifa acelera campanha de voluntários para Copa do Mundo Feminina de 2027 - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOY2hZVU1aV29lcjBKbGNsYjdxQkRBLVdGRzNJNGRFZ2NxeXNYNVhMVUdPamVoTXBsOW0ycURKQlp3Y1NuUmRibkREM0pMeXNMcEVPVEFqM0ZqX2dlbnduUnZkb3o5ZUYzVEhQZHhKeXVWMDY1Tjl6X3Q5Z3ZvT0dkWFppc05wbUx3N3lQSFhVanR2b21nb0RBekZqTFpDRkE3ZDJadFd5Nmo5NmhaQUZzVVNqbDU2UDJPRHloUkNrTVlSTzk2RHc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina abre inscrições para voluntários em Porto Alegre - Prefeitura de Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
+      "titulo": "Copa do Mundo Feminina abre inscrições para voluntários em Porto Alegre - prefeitura.poa.br",
+      "fonte": "prefeitura.poa.br",
       "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOZkZNMmtRSHlqbkcyYkoxN2p3ZDd0b00yTjBha1BORTVIeExfbUQzVldadGloU2VqekE1ZG1ZcGs4NlpzOEYwSk94aVVBbGtzQ2RXWHoxV2gwYlZZajhPNWdSUVZPbThlRmV2LXUya0RkX3pMYnk5SDVqd0tkenc0X0VEN19zaEZ1eWVOUmZKdmFYcWo2bF9mbU5zWEFNbGNsTmhwc2E0VWtfeVBBNjhMNlB3SkhuVHRp?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -870,16 +895,16 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Porto Alegre entra na contagem regressiva de um ano para a Copa do Mundo Feminina da FIFA 2027 - Prefeitura de Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
+      "titulo": "Porto Alegre entra na contagem regressiva de um ano para a Copa do Mundo Feminina da FIFA 2027 - prefeitura.poa.br",
+      "fonte": "prefeitura.poa.br",
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOai02VDh0bVdOUGNkRHhFSUdJcEpjZ0J2WkVzTmxBYkNwMTZPcG4wWk1pN2tiNV9JZjdRZFo3QlZuQTZIYW91S2djWnR1TkNfa2dLeTlJY1gzLWY4WTJNNWxkU3FLMEdlUk85QlZKV2wzNWk0ZFlUN1Y5cko3MFV6a2NTYW9TSXNacllvUG9tOXhBUVpRd3doZTh6ZTFJMU93c0pNRWduZUN1OGhZaEIyNm51NFZKNnVFY1Q2bHZEOHdmMVE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Mais de 730 mil pessoas já manifestaram interesse na compra de ingressos para a Copa Feminina de 2027 - www.gov.br",
-      "fonte": "www.gov.br",
+      "titulo": "Mais de 730 mil pessoas já manifestaram interesse na compra de ingressos para a Copa Feminina de 2027 - GOV.BR",
+      "fonte": "GOV.BR",
       "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNSXBHZE9wUXpBX0tKX2RPcEhITC1NTmZqeTM5bFJYY29qM2lVal9nWGxqU3VXc2lzM0JDbm55QWlYbjRVVjVJSElPMHRWS2tnX0cwMDNxdnRiSHE4T05WZlhVbHRsclNBaGZ5X1hkeUV5ekQydU1JeW9rZlRkMzJzR2sxZUN4RTg2UndCWTVWMkdhcDhLYzlJVHp5LXl1cEFRUVBHQmhZSWRYTkUwTEhvYUkwaFMyaFdrR1ZjUHdLTlpEdWZMY1BGT0txVUpTTkRCY2c?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -910,17 +935,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Lei Geral da Copa do Mundo Feminina de 2027: Equalizando o papel do Brasil e da Fifa para a competição - maquinadoesporte.com.br",
-      "fonte": "maquinadoesporte.com.br",
+      "titulo": "Lei Geral da Copa do Mundo Feminina de 2027: Equalizando o papel do Brasil e da Fifa para a competição - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxPTU56aDlzQUZEWEljWTZtRmEzak9tNk42QUw5ZzllSUMxVVdsektweGc0bWhheTBPTFNnVG80LTFMRU5yTWpBdUFkeHRkRHpNRDdRV0RkNV9KbUdPNE5famNQRm5leDFHc3VySm5HcklGUGhFc0dUal9zTWVKTzhQb2dCaC1iY192bTV2S1F5ZjVPNVBJZ3ZMUjJVd3NUT2ZxVzVEQnJMallKckpMRUNpaHBSUjZmSnNvQ3FTcFFhbF9wN0RPS1N4eUxjU2FHcUEzc1BxSFN0MHdKUQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Copa Feminina: Porto Alegre participa do lançamento da marca oficial do evento - Prefeitura de Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
-      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOcjR3Q2VBN09lUlVvem5LUEpYaUhXXzVEbnpmbWVEWE8yVzF1TU9IRHBJYWxPWFoyUExMYWltWlYxYnNheGNMTEhIVGdkdG9Td0g4TXJRYWx3eXNSWkZ1MzRKd3J0cGUwaHhlQU5QeC1lQUhkaGlKNmV4eURHbjRtWWgxWlpRNEdhd1JXZ1FuLTBLNlJZMTI4Z29IcTU1VFZ1RkU5cnIzeFV4cm4wWlc3WEh4WC1hMHJscHEyUnljb1c?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -929,6 +946,14 @@
       "titulo": "Fifa lança marca da Copa Feminina 2027 em evento no Rio de Janeiro - Agência Brasil",
       "fonte": "Agência Brasil",
       "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxONzAwVVNpbmRtcUpUREtvUWVrUnlUc1NZT3BnbHRyaHQwNEx4U2dzVFhmNFdjSW0tOWJwRGRCM2ZJSXRJNWNETEczTmFqb3RvU2RNc181Ti1xb2Vjd1B0WmQ5S1Q2NldTY0FPMUJmVmhxWnFfRnNlMDhZRjlLYjJxdVdyNjJEV1RjNGN5d0s2azc2eU51dHBIQjVwQlZYTFVuMDMxVTNsb2NORHp3Q0taeFBsNkR0ZVc3c1RFRXdneXNaQQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa Feminina: Porto Alegre participa do lançamento da marca oficial do evento - prefeitura.poa.br",
+      "fonte": "prefeitura.poa.br",
+      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOcjR3Q2VBN09lUlVvem5LUEpYaUhXXzVEbnpmbWVEWE8yVzF1TU9IRHBJYWxPWFoyUExMYWltWlYxYnNheGNMTEhIVGdkdG9Td0g4TXJRYWx3eXNSWkZ1MzRKd3J0cGUwaHhlQU5QeC1lQUhkaGlKNmV4eURHbjRtWWgxWlpRNEdhd1JXZ1FuLTBLNlJZMTI4Z29IcTU1VFZ1RkU5cnIzeFV4cm4wWlc3WEh4WC1hMHJscHEyUnljb1c?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -950,17 +975,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Abertura, final e jogos no Mineirão: Fifa marca data para revelar calendário da Copa Feminina 2027 - O TEMPO",
-      "fonte": "O TEMPO",
-      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxOa2ZsWU9RVmNOcnp0TENFdjNmMTFtZzl6eDdKaThEaHJkZDdfWTJ1Y05WMzl0M0QtdjdHU3VQTkNsV05PS3B1T0JJMVhzcGpRN0ZZSFVZaU9uLWE2SjM0dXZsUDMyYW1kSnNwMzRxdFMxcjk2LTV6bHNsQURoenQyTjlNeU5BQWdWSnZMcEtqZnhobkgxQWZvMFZ5Q0lGVnlnZTVsMGdoZ0tzM2RZT0FKMFRDNHNhLWRpWWhIRGpTX2FvOElNX3h2by1YdTNvX1laZVMwWmpnT3NhN2RJUHFCSm1lZ2JoV09XbXNRZHJ4c05OazTSAfgBQVVfeXFMUDN6Rlh0ZHdUeWk5cVFWY1dFUThMNUczTmVXY0FIWWhQaFhySXQ5U2s5MTh5TEYyYjdURXV4UXh2dTR2Q0dQak9xTUd2UWJiWlZud1MzbkZDNjR5b19LVXpIVmN2b1hLekFRVnNLZk93SDFBTFB3UDVlanM2YVFsdDVBd0FrRjgyZEFVclE1cnlzWHN1c2ZWMlJKLUpfaU5oMkZLa0E0elBlbGFHQlc4bF94dlROTnZqMWw0UlpUT0NzQVdGM1dPUTFSRkdVeWVfeTZNbTNJM25oazI2bFBCM1ZXbFEtTi1WckxfN3MyR29UQXhiMGR6ZGo?oc=5",
+      "titulo": "Fifa lança identidade visual da Copa do Mundo Feminina de 2027 - poder360.com.br",
+      "fonte": "poder360.com.br",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQRmp0MFpTLXJ3eHRscnAycm9KTDdxdmpoOEtaMWdkU0llR2RRRlk3UmFuMk1HNHJoR0lLZExERHBQWHJDRUxfUVhIVTlvQk9MYUl2MDJwb2VOY05QMDVjWU9zeGRxcWZvT04xeDR2NzNjRDFUdENtT1doaTdkcXhtSG42Vmtkekl1RXhXbWNOYnkzbFNmSXdNMmZRTzFFSWxBa3JSeGdRazkyZEU?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa lança identidade visual da Copa do Mundo Feminina de 2027 - Poder360",
-      "fonte": "Poder360",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQRmp0MFpTLXJ3eHRscnAycm9KTDdxdmpoOEtaMWdkU0llR2RRRlk3UmFuMk1HNHJoR0lLZExERHBQWHJDRUxfUVhIVTlvQk9MYUl2MDJwb2VOY05QMDVjWU9zeGRxcWZvT04xeDR2NzNjRDFUdENtT1doaTdkcXhtSG42Vmtkekl1RXhXbWNOYnkzbFNmSXdNMmZRTzFFSWxBa3JSeGdRazkyZEU?oc=5",
+      "titulo": "Abertura, final e jogos no Mineirão: Fifa marca data para revelar calendário da Copa Feminina 2027 - O TEMPO",
+      "fonte": "O TEMPO",
+      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxOa2ZsWU9RVmNOcnp0TENFdjNmMTFtZzl6eDdKaThEaHJkZDdfWTJ1Y05WMzl0M0QtdjdHU3VQTkNsV05PS3B1T0JJMVhzcGpRN0ZZSFVZaU9uLWE2SjM0dXZsUDMyYW1kSnNwMzRxdFMxcjk2LTV6bHNsQURoenQyTjlNeU5BQWdWSnZMcEtqZnhobkgxQWZvMFZ5Q0lGVnlnZTVsMGdoZ0tzM2RZT0FKMFRDNHNhLWRpWWhIRGpTX2FvOElNX3h2by1YdTNvX1laZVMwWmpnT3NhN2RJUHFCSm1lZ2JoV09XbXNRZHJ4c05OazTSAfgBQVVfeXFMUDN6Rlh0ZHdUeWk5cVFWY1dFUThMNUczTmVXY0FIWWhQaFhySXQ5U2s5MTh5TEYyYjdURXV4UXh2dTR2Q0dQak9xTUd2UWJiWlZud1MzbkZDNjR5b19LVXpIVmN2b1hLekFRVnNLZk93SDFBTFB3UDVlanM2YVFsdDVBd0FrRjgyZEFVclE1cnlzWHN1c2ZWMlJKLUpfaU5oMkZLa0E0elBlbGFHQlc4bF94dlROTnZqMWw0UlpUT0NzQVdGM1dPUTFSRkdVeWVfeTZNbTNJM25oazI2bFBCM1ZXbFEtTi1WckxfN3MyR29UQXhiMGR6ZGo?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -990,48 +1015,48 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa Feminina: prefeitura trabalha nos preparativos a 500 dias do evento - Prefeitura de Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
+      "titulo": "Copa Feminina: prefeitura trabalha nos preparativos a 500 dias do evento - prefeitura.poa.br",
+      "fonte": "prefeitura.poa.br",
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOVzFMbW9Hd1VnSUpubThoUlhjdDVXOG5wakRrTjJ4VkhYMzRtcVJGTG9SXzhqU19UYnFuWG9PdjZGMEFrWE03UGZTUk1LTWQ3VVZsQ1lKMV9VSWdraTZ3R2kxOUtEM1NNRTlYNTFPWmJFanBjSUJIQkpsUVgwWnJ1LVpjamxXd25iVUFzSTVtdjF0ekNjY1RiTE9QM0NMT1FpaTJVbTJZSFMzRmNmSVktdjAyQVNrUQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "De olho na Copa do Mundo Feminina de 2027, Centauro fecha com Bia Zaneratto e Tainá Maranhão como embaixadoras - maquinadoesporte.com.br",
-      "fonte": "maquinadoesporte.com.br",
+      "titulo": "De olho na Copa do Mundo Feminina de 2027, Centauro fecha com Bia Zaneratto e Tainá Maranhão como embaixadoras - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxOWWtkMWhQMDJnLWVFbGFqeDFQMlE0bWdKbG5fWlNQOGx0cDZpa2xJdUIzNzBrM1gtVVowV2RqRXRhUnIyeGk3NVpwdlRCOWNJTkFFb09lVVJSZUpFSWVac2pXd3U3WFlTdGV6d3hpckhEU2wzbGJ5eXlsc29iSXRVNHRiZFlCc29WUHRkeDFodHpCREdFSDhJZWZtaHZJN0plNm5ralVyZzNUSDA1bFVKS2FLVzN2U3FyVGlVOW4tSlgtOEdFNWxlRGk2RlBRLUpFWTY4MHE0Mi1iSmNkdzE3cklHWUx1N2JVUUkzdWctME9odGNDU09EZHc3cw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "A um ano da Copa do Mundo Feminina, Brasil tem desafio de expandir potencial bilionário da modalidade - maquinadoesporte.com.br",
-      "fonte": "maquinadoesporte.com.br",
+      "titulo": "A um ano da Copa do Mundo Feminina, Brasil tem desafio de expandir potencial bilionário da modalidade - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxQZ01mdlNieFBncmp4bGw2c1FhX2stZ1BaYnNjcl9jZWgwS3lDTElEYW1FUk9rR01qZjNESXJXY3dneUZ0X2s2YktNX0pxRmZ3WEhrRjY3UUVLVXpvWU1naHA1cEJCNjdFYWt1VGkyMjlWUllpMkowY1d4OFN5Rm5qUTR3WWIxQzc5VWxLaWRocFBoVzg0dW9Yb0Vnb0ZPb25CZFc3VHR0NG9kX0x2TlpVc0tYSEl3QmtocUxlVXBpMkJEY1NLaWJxZ1RvRmJRb1BnM3RNR1loRzlfQkVWZmViYW9Qbk41Sm5iYVhudTRJYw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa apresenta marca oficial da Copa do Mundo Feminina de 2027 com evento em Copacabana - maquinadoesporte.com.br",
-      "fonte": "maquinadoesporte.com.br",
+      "titulo": "Fifa apresenta marca oficial da Copa do Mundo Feminina de 2027 com evento em Copacabana - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQLWJMa2RPZ1ZzVUJiVGZSdjZIbHp5SThlRm45MjRCcmZtemRWSkFiOFM1aENTNW85MnRsM3pKVHE5NjVJNm5mX2VmSUh4b0YybFhiR3pxRl9YdFNzcHFadFh1dFBabm11Rk9BNjBxbVhzRzJxRXdCZVBkdnNPMXJ3MEw0cW9fMVl3MnhCSHhzaklmQ3pYSnctbFkwdkVGbHlvMkhjalhWbS1pemxQbGdkNllVNWRpaE8xbThLemVSNEtndENiY0VrcnhYaHpyeFpmM3Q3SlQ2ajc1UQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Fórmula 1 repetirá evento de abertura com festival de três dias em Milão para 2027 - maquinadoesporte.com.br",
-      "fonte": "maquinadoesporte.com.br",
+      "titulo": "Fórmula 1 repetirá evento de abertura com festival de três dias em Milão para 2027 - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxONm9nNGNKbldNRVFSTWV0V3RZYzVUbHoxcExOSnNuSVpkVXRwc3k3YWJYUDBNeThuV2Y2VlJjVjFYS2M0S1ZqRWhJR0dKNkU0NHFqTlp3dmNVbkt2SUJiTzBIS1FTNk9Xc1hKbTJmSEdyUDU2c2RVRXFBNlRiYWRpeXBJeXJtcTF2LVY3Vll1V0hmSm5oQ2kwOVJoMzlBeW9CN1RvYjFvNzFLSHQzMXFDYXJjT1N6Y3NFWUE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Capital busca experiências de grandes eventos para qualificar organização da Copa Feminina 2027 - Prefeitura de Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
+      "titulo": "Capital busca experiências de grandes eventos para qualificar organização da Copa Feminina 2027 - prefeitura.poa.br",
+      "fonte": "prefeitura.poa.br",
       "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPSHpRY3FvWThuTy12VDBqTy02dEZCWEI4Q0x2c3NfQU90d3NnMTRvSVpITnJFYmxaTDNOZU9tVWtqQXlwTnVJaE1WejViZXl1R0laMGdNTlBQNHVuRHhuRGhhRWlqcHQyV2w4Rl9uUnp3QldLMlQ0dlVGOE1ZRlE5SVE1MjdKS1NWbzNBMzlZMmtyd2pxeEZZVm9fdDVLRlB4TjlvVFVVYkd1Y3pDRVFqckZrZEV0ZnhSQ3NPbk55SQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -1046,8 +1071,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa Feminina 2027 recruta 6 mil voluntários no Brasil - spacemoney.com.br",
-      "fonte": "spacemoney.com.br",
+      "titulo": "Copa Feminina 2027 recruta 6 mil voluntários no Brasil - SpaceMoney",
+      "fonte": "SpaceMoney",
       "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBRRkdUdWU0QjdVYlRmR0FnWVZIa0wzazIycExDQzlGaUd6X2I4b3Fxb2x0Rk1pVTlNZU9obTVud0kydEN4UVUyakNsR3lWeEJOZk5JZTAycnZtSEV6Tk5SZEhvOHdwNVpEWXFMOVRfTllwSXRDSlNDREVB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -1062,40 +1087,40 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Calendário da Copa Feminina 2027: Beira-Rio terá sete jogos - spacemoney.com.br",
-      "fonte": "spacemoney.com.br",
+      "titulo": "Calendário da Copa Feminina 2027: Beira-Rio terá sete jogos - SpaceMoney",
+      "fonte": "SpaceMoney",
       "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPdVZHV3dPNDdaU3lSQmY3X2lMRHRxbmgyWVJfMnhXNTBhcnNKVFprRy11RERkVU5MXy10YUJTcGpsTG5wT0pDYjhqbEVWNHBrWEFVM01sWGJUQXhsLW5aVllLOThYWEVaNHQ5ZEt3ZnhXUURWUEFycFpzVXM3YkF1OXVzU1R3UQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Com métricas bilionárias, digital reforça sucesso da Copa do Mundo Feminina - maquinadoesporte.com.br",
-      "fonte": "maquinadoesporte.com.br",
+      "titulo": "Com métricas bilionárias, digital reforça sucesso da Copa do Mundo Feminina - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOeGVnX1VQYnVzWGFyREl3S1ItSWRPQlltdWlNbkhnWDN0OWxhWkI4Z0VYZGlDRkFESzVjTUU3VEM5WW5OSXpoZ2JLZzE4MmJDZklsVzdzc05Lb3FlWWNYQm9ncWQ2ZUROVGlJNW5VRTc1dEEtaGV6YzQ2ZDYteXdGRDljdl9YMmg5a3hPTVV5ZjhLa2NmMVBrcDE2MW1UZUFJOVFaN001Si1xU0Jjd1dwQTJoV2dSZw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Copa Feminina 2027: Tudo o que você precisa saber para ser voluntário - Correio Braziliense",
-      "fonte": "Correio Braziliense",
+      "titulo": "Copa Feminina 2027: Tudo o que você precisa saber para ser voluntário - correiobraziliense.com.br",
+      "fonte": "correiobraziliense.com.br",
       "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQN3RSOThSelNjRmN5OFVNV05rbkZxa1hfeG9XNGtmUzNRTnhpRGZ0SC1KNnp3dzRXWDJSRUNqZEFacTlIa1YteGFMZmNoYUhfbnJJUnlVWVVLdTNqMUdGT2ZTbDRvdGRXOHAyOWZaMElOZjcyOFFBa29FY0tPM1J0N1RVRHpHVFdXSDljV1Z1ZGlIb0w4aGVxWGxNcFJCdm9NUEtycmgzWTZwZGZVR0VlZ1ZyWndvS1Y0SFRPdUJGWTd6OVFjUFBZM2h1bEgwQkRIOFHSAdcBQVVfeXFMT1RoVENVTWtMVDRDU0lqZWpNSW94RGVoTGVQclNZRUU0OHhGQmhRazBZMXY0SEw4aEQtLUFFN0NUallBSGZ6b0FLV2tSQmVMNDBoUWtnb01PYW5Zc1lHRTV5OWFYUlZWU2RTQ0s4WnNSZmZqT0xIdDlpbVp6dWFjX2FmRlNsWjk1SDRCZnM5cXY5NGhyV0tIWnN0TlhmRXNldERSU3Mtblg0OWFpR0RSMlh6YUxSeENLMUZHaEY5N1Q3Nnp0aXFOSlVjUkJJaEVrNjlPeDZGVlU?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina de 2027 terá 32 seleções e oito cidades-sede no Brasil - acritica.net",
-      "fonte": "acritica.net",
+      "titulo": "Copa do Mundo Feminina de 2027 terá 32 seleções e oito cidades-sede no Brasil - A Crítica de Campo Grande",
+      "fonte": "A Crítica de Campo Grande",
       "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMm5aTjFneUQxVG42MUxxUGJ1TjFmbWFDSVg1ZTlRWU5hLXZDYkpacXBNRU9nc1Rsb1IzaTRDLUZlS1V3QkhNV2J0ZU5rbzY0dVlKQk5KT29KdXpEWkNod1FGRGVkR0ZDeVhPYmFhWTFpOHpsQ1BuVlhBaExXZHY4dVRB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Boicote da Uefa e prêmios em dinheiro podem marcar sorteio da Copa do Mundo Feminina de 2027 no RJ - maquinadoesporte.com.br",
-      "fonte": "maquinadoesporte.com.br",
+      "titulo": "Boicote da Uefa e prêmios em dinheiro podem marcar sorteio da Copa do Mundo Feminina de 2027 no RJ - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxQRkp2ZmlLUTl3SGdRbnpUUDVHVjN5bnNwbzBjNGN6OGJGNGJCTzJnTFc5c1FVQThPOFNGN25ZRTRQa09mN2tub3ljaWhkNU0xX2xMTjRLOGJ2eTIwanFfbTVGYm01VVR4T2RXczVObXUyQmN4QnozRGlMaUt0NEU0LVFneUNCbnY2bmszY3duaFdNNFhKSHFOa3hBTVA3VHE2NE9pWWFrOTVsbWE1TTFEdDRLcW5Sdzd6eDJHOVJrNjZ6M0xtOVVQVXhZWFJobm5XR0o3dlR3Y0pqWTY3anhIMUdn?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -1118,8 +1143,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Calendário de jogos da Copa do Mundo Feminina da FIFA 2027™ é divulgado e Beira-Rio sediará sete jogos - Sport Club Internacional",
-      "fonte": "Sport Club Internacional",
+      "titulo": "Calendário de jogos da Copa do Mundo Feminina da FIFA 2027™ é divulgado e Beira-Rio sediará sete jogos - internacional.com.br",
+      "fonte": "internacional.com.br",
       "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxPMU9GOFFPQXpCMTZlZHdDWUdoYXgwMGtZWnhLSDlPUHMwdnBvbFVMOXZ5aVNka3Z2NDRmNmZkX1ZCOUFtSGE5ckcwaFlWZndhNTJITGxGWnlEeV9FSmhKVHpvMU1OQ0hKcVd4UjFnV2t2TUdCTDd3VGdhUlZ3MElVNC1DUWhzaXlMcFpXaWFnVlV2a1BmRzYzZVZsYVpRNzhiQ1h1b09TX0lVdlNiZll6VFlDeVJWMFQ4VUZEb2M3UVMzcDNUTWdkMlRkRDBDR2VtLWc4alpuazBSRHRCVGFubk9YbU9VZVRpb1E?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -1134,8 +1159,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa confirma caminho do Brasil na Copa do Mundo Feminina; veja roteiro - LANCE!",
-      "fonte": "LANCE!",
+      "titulo": "Fifa confirma caminho do Brasil na Copa do Mundo Feminina; veja roteiro - lance.com.br",
+      "fonte": "lance.com.br",
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOVkNLemFqMWZGWTE2akJOcjJPX2kzMUxSM2tjallyOHpZQ0xRZ1p6U0pGdHdSNTBNTllBSElnWlp4aXRmT2hIeTBRZkkxeUlfQ3NhWGZwYUlHZ0gtQlhnLXZ4cFBSVDFoUWN1YUxIVUZDWWlsRzE3ckF0TDhpbzZTUnFGMDJFVnV0UHJuTHZpenRKcWhwaUIzbEs1cUNhLUc5c3pOc2RLOHhueWpYcnhxRkZxcXRILXlwbGVnOXFGTTRVYzg?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
