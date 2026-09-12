@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import html, json, os, pathlib, re, sys, urllib.parse, urllib.request, xml.etree.ElementTree as ET
+import html, json, os, pathlib, re, urllib.parse, urllib.request, xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -10,7 +10,7 @@ TABLE_EVENTS = 'tblf6qaCTZmKo48m2'
 TABLE_NEWS = 'tbl0iuH4F5Hog8gDD'
 BRT = timezone(timedelta(hours=-3))
 TOKEN = os.environ.get('AIRTABLE_TOKEN','').strip()
-UA = 'RadarBrasil2027/1.1 (+https://www.radarcopafeminina2027.com.br/)'
+UA = 'RadarBrasil2027/1.2 (+https://www.radarcopafeminina2027.com.br/)'
 
 TRUSTED_DOMAINS = (
     'fifa.com','inside.fifa.com','cbf.com.br','gov.br','planalto.gov.br','camara.leg.br','senado.leg.br',
@@ -81,7 +81,7 @@ def request_json(url, method='GET', payload=None):
         return json.loads(r.read().decode('utf-8'))
 
 def airtable_read(table_id):
-    # Exatamente uma leitura por tabela; a REST API aceita pageSize máximo de 100.
+    # Exatamente uma leitura por tabela. Nenhuma auditoria faz leitura adicional.
     url=f'https://api.airtable.com/v0/{BASE}/{table_id}?pageSize=100'
     obj=request_json(url)
     if obj.get('offset'):
@@ -136,14 +136,6 @@ def candidate_from_record(record, kind):
             'Latitude':None,'Longitude':None,'Link':link,'Observacoes':str(first(f,'Observações','Observacoes','Resumo','Descrição','Descricao')).strip()[:1200],
             'Mes':'','Ano':int(date[:4]),'Regiao':''}
 
-def parse_pubdate(raw):
-    try:
-        from email.utils import parsedate_to_datetime
-        dt=parsedate_to_datetime(raw)
-        return dt.astimezone(BRT).date().isoformat()
-    except Exception:
-        return now().date().isoformat()
-
 def trusted_url(url):
     host=urllib.parse.urlparse(url).netloc.casefold().removeprefix('www.')
     return any(host==d or host.endswith('.'+d) for d in TRUSTED_DOMAINS)
@@ -179,8 +171,7 @@ def rss_candidates():
             for item in root.findall('.//item')[:15]:
                 title=(item.findtext('title') or '').strip(); link=(item.findtext('link') or '').strip(); pub=(item.findtext('pubDate') or '').strip()
                 source_el=item.find('source'); source=(source_el.text or '').strip() if source_el is not None else ''
-                if not title or not link: continue
-                if not article_is_relevant(title): continue
+                if not title or not link or not article_is_relevant(title): continue
                 k=norm(title)
                 if k in seen: continue
                 seen.add(k); out.append({'title':title,'url':link,'pub':pub,'source':source,'origin':'google-news'})
@@ -190,12 +181,7 @@ def rss_candidates():
 
 def gdelt_candidates():
     out=[]; seen=set()
-    # Consulta ampla adicional com URLs diretas; reduz dependência do RSS do Google News.
-    queries=[
-      '"Copa Feminina 2027" OR "Copa do Mundo Feminina 2027"',
-      '"Seleção Brasileira feminina"',
-      '"futebol feminino" Brasil 2027'
-    ]
+    queries=['"Copa Feminina 2027" OR "Copa do Mundo Feminina 2027"','"Seleção Brasileira feminina"','"futebol feminino" Brasil 2027']
     for q in queries:
         params={'query':q,'mode':'ArtList','maxrecords':'50','format':'json','sort':'HybridRel'}
         url='https://api.gdeltproject.org/api/v2/doc/doc?'+urllib.parse.urlencode(params)
@@ -214,46 +200,52 @@ def gdelt_candidates():
 
 def public_research(keys):
     raw=rss_candidates()+gdelt_candidates()
-    dedup=[]; seen_titles=set(); seen_urls=set()
+    dedup=[]; seen_titles=set(); seen_urls=set(); audit=[]
     for c in raw:
         tk=norm(c['title']); uk=urlnorm(c['url'])
-        if tk in seen_titles or uk in seen_urls: continue
+        if tk in seen_titles or uk in seen_urls:
+            audit.append({'origem':c.get('origin','pesquisa-publica'),'titulo':c.get('title',''),'fonte':c.get('source',''),'url':c.get('url',''),'decisao':'duplicado','motivo':'Duplicado dentro da própria coleta pública.'})
+            continue
         seen_titles.add(tk); seen_urls.add(uk); dedup.append(c)
 
     approved=[]; rejected=0; duplicates=0
-    # Validação efetiva de candidatos com URL direta/confiável. RSS agregador continua útil para descoberta/contagem,
-    # mas não é auto-incluído sem uma URL editorial verificável.
     for c in dedup:
         title=c['title']; link=c['url']
+        base={'origem':c.get('origin','pesquisa-publica'),'titulo':title,'fonte':c.get('source',''),'url':link}
         if ('u:'+urlnorm(link)) in keys or ('t:'+norm(title)) in keys:
-            duplicates+=1; continue
+            duplicates+=1
+            audit.append({**base,'decisao':'duplicado','motivo':'Já existe em dados.json, noticias.json ou editorial/inbox.json.'})
+            continue
         if c['origin']=='google-news':
-            rejected+=1; continue
+            rejected+=1
+            audit.append({**base,'decisao':'rejeitado','motivo':'Resultado do Google News sem URL editorial direta validável nesta etapa.'})
+            continue
         if not trusted_url(link):
-            rejected+=1; continue
+            rejected+=1
+            audit.append({**base,'decisao':'rejeitado','motivo':'Domínio fora da lista de fontes confiáveis para inclusão automática.'})
+            continue
         excerpt,final_url=fetch_article_excerpt(link)
         if final_url and final_url!=link and trusted_url(final_url): link=final_url
-        if not excerpt or not article_is_relevant(title,excerpt):
-            rejected+=1; continue
+        if not excerpt:
+            rejected+=1
+            audit.append({**base,'url_final':link,'decisao':'rejeitado','motivo':'Não foi possível obter conteúdo textual suficiente da fonte.'})
+            continue
+        if not article_is_relevant(title,excerpt):
+            rejected+=1
+            audit.append({**base,'url_final':link,'decisao':'rejeitado','motivo':'Conteúdo sem relevância editorial suficiente ou relacionado a seleção de base.'})
+            continue
         date=now().date().isoformat()
         m=re.search(r'(20\d{2})(\d{2})(\d{2})', c.get('pub',''))
-        if m:
-            try: date=f'{m.group(1)}-{m.group(2)}-{m.group(3)}'
-            except Exception: pass
-        item={'Data':date,'DataBR':datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),
-              'Titulo':title,'Tema':'Copa Feminina 2027','CidadeUF':'Brasil',
-              'Veiculo':urllib.parse.urlparse(link).netloc.removeprefix('www.'),'Link':link,
-              'Sentimento':'Neutro','Impacto':'Médio','Resumo':excerpt[:900]}
+        if m: date=f'{m.group(1)}-{m.group(2)}-{m.group(3)}'
+        item={'Data':date,'DataBR':datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'Titulo':title,'Tema':'Copa Feminina 2027','CidadeUF':'Brasil','Veiculo':urllib.parse.urlparse(link).netloc.removeprefix('www.'),'Link':link,'Sentimento':'Neutro','Impacto':'Médio','Resumo':excerpt[:900]}
         approved.append(item)
+        audit.append({**base,'url_final':link,'decisao':'aprovado','motivo':'Fonte confiável, conteúdo acessível, relevante e não duplicado.'})
         keys.add('u:'+urlnorm(link)); keys.add('t:'+norm(title))
-    return len(dedup), approved, rejected, duplicates
+    return len(dedup), approved, rejected, duplicates, audit
 
 def main():
     started=now(); cycle=started.strftime('%Y%m%d-%H')
-    status={'cycle_id':cycle,'started_at':iso(started),'completed_at':None,'stage':'started','executor':'github-actions-native',
-            'airtable_reads_total':0,'airtable_reads':[],'sugestoes_lidas':0,'sugestoes_noticias_lidas':0,
-            'candidatos_publicos':0,'aprovados_novos':0,'rejeitados':0,'duplicados':0,'inbox_itens_adicionados':0,
-            'inbox_commit_needed':False,'observacoes_operacionais':''}
+    status={'cycle_id':cycle,'started_at':iso(started),'completed_at':None,'stage':'started','executor':'github-actions-native','airtable_reads_total':0,'airtable_reads':[],'sugestoes_lidas':0,'sugestoes_noticias_lidas':0,'candidatos_publicos':0,'aprovados_novos':0,'rejeitados':0,'duplicados':0,'inbox_itens_adicionados':0,'inbox_commit_needed':False,'auditoria':[],'observacoes_operacionais':''}
     inbox=load(INBOX,{'eventos':[],'noticias':[]}); before=json.loads(json.dumps(inbox)); keys=existing_keys()
     try:
         if not TOKEN: raise RuntimeError('AIRTABLE_TOKEN ausente nos GitHub Actions Secrets')
@@ -261,38 +253,45 @@ def main():
         nw=airtable_read(TABLE_NEWS); status['airtable_reads_total']+=1; status['airtable_reads'].append({'table':'Sugestões de Notícias','reads':1})
         status['sugestoes_lidas']=len(ev); status['sugestoes_noticias_lidas']=len(nw)
 
-        for table,records,kind in ((TABLE_EVENTS,ev,'eventos'),(TABLE_NEWS,nw,'noticias')):
+        for table,records,kind,table_name in ((TABLE_EVENTS,ev,'eventos','Sugestões'),(TABLE_NEWS,nw,'noticias','Sugestões de Notícias')):
             for rec in records:
                 f=rec.get('fields',{})
                 if not processable(f): continue
+                raw_title=str(first(f,'Título','Titulo','Título da notícia','Titulo da noticia','Nome','Evento')).strip()
+                raw_link=str(first(f,'Link','URL','Fonte','Link da notícia','Link da noticia')).strip()
+                audit_base={'origem':'airtable','tabela':table_name,'record_id':rec.get('id',''),'titulo':raw_title,'url':raw_link}
                 cand=candidate_from_record(rec,kind)
                 if not cand:
-                    status['rejeitados']+=1; continue
+                    status['rejeitados']+=1
+                    status['auditoria'].append({**audit_base,'decisao':'rejeitado','motivo':'Registro processável sem título/link válidos ou, para evento, sem data ISO válida.'})
+                    continue
                 dup=('u:'+urlnorm(cand.get('Link'))) in keys or ('t:'+norm(cand.get('Titulo'))) in keys
                 if dup:
                     status['duplicados']+=1
+                    status['auditoria'].append({**audit_base,'decisao':'duplicado','motivo':'Já existe em dados.json, noticias.json ou editorial/inbox.json.'})
                     continue
                 inbox.setdefault(kind,[]).append(cand); keys.add('u:'+urlnorm(cand.get('Link'))); keys.add('t:'+norm(cand.get('Titulo')))
                 status['aprovados_novos']+=1
+                status['auditoria'].append({**audit_base,'decisao':'aprovado','motivo':'Sugestão estruturada, válida e não duplicada; enfileirada para o Radar.'})
                 upd={}
                 if 'Status' in f: upd['Status']='Aprovado'
                 if 'Resultado da verificação' in f: upd['Resultado da verificação']='Aprovado pela pesquisa editorial nativa; enfileirado para o Radar.'
                 if 'Última verificação' in f: upd['Última verificação']=iso()
                 if upd: airtable_patch(table,rec['id'],upd)
 
-        public_count, public_approved, public_rejected, public_dup = public_research(keys)
+        public_count, public_approved, public_rejected, public_dup, public_audit = public_research(keys)
         status['candidatos_publicos']=public_count
         status['rejeitados']+=public_rejected
         status['duplicados']+=public_dup
-        for cand in public_approved:
-            inbox.setdefault('noticias',[]).append(cand)
+        status['auditoria'].extend(public_audit)
+        for cand in public_approved: inbox.setdefault('noticias',[]).append(cand)
         status['aprovados_novos']+=len(public_approved)
 
         status['inbox_itens_adicionados']=sum(len(inbox.get(k,[]))-len(before.get(k,[])) for k in ('eventos','noticias'))
         status['inbox_commit_needed']=inbox!=before
         if inbox!=before: dump(INBOX,inbox)
         status['stage']='completed'
-        status['observacoes_operacionais']='Execução nativa GitHub. Exatamente duas leituras Airtable; pesquisa pública ampliada em múltiplos eixos via Google News RSS + GDELT, com deduplicação, filtro anti-base, confiança de domínio e validação de conteúdo antes de inclusão automática.'
+        status['observacoes_operacionais']='Execução nativa GitHub. Exatamente duas leituras Airtable; pesquisa pública ampliada em múltiplos eixos via Google News RSS + GDELT, com deduplicação, filtro anti-base, confiança de domínio, validação de conteúdo e trilha de auditoria gravada no pesquisa-status.json. A auditoria reutiliza os dados já lidos e não faz chamadas adicionais ao Airtable.'
         code=0
     except Exception as e:
         status['stage']='failed'; status['observacoes_operacionais']=f'{type(e).__name__}: {e}'
