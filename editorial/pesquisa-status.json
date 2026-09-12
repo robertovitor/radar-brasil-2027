@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260912-05",
-  "started_at": "2026-09-12T05:42:43-03:00",
-  "completed_at": "2026-09-12T05:46:38-03:00",
+  "cycle_id": "20260912-06",
+  "started_at": "2026-09-12T06:46:23-03:00",
+  "completed_at": "2026-09-12T06:52:05-03:00",
   "stage": "completed",
   "executor": "scheduled-automation-operational",
   "airtable_reads_total": 2,
@@ -21,11 +21,11 @@
   ],
   "sugestoes_lidas": 19,
   "sugestoes_noticias_lidas": 17,
-  "candidatos_publicos": 5,
+  "candidatos_publicos": 6,
   "aprovados_novos": 0,
-  "rejeitados": 1,
-  "duplicados": 4,
+  "rejeitados": 0,
+  "duplicados": 6,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
-  "observacoes_operacionais": "Executadas exatamente duas leituras completas no Airtable, sem filtros, ordenação, schema ou paginação. Backlog reutilizado: sugestão Instagram DdEcCfSRfy3 permaneceu Em verificação após nova busca pública sem confirmação; notícia do CNE já presente em noticias.json teve o indicador de publicação reconciliado no Airtable. Pesquisa pública recente encontrou apenas pautas já incorporadas/duplicadas, conteúdo de categoria de base excluído e uma página comercial sem data editorial verificável. editorial/inbox.json preservado sem alteração; nenhum merge, e-mail ou Instagram foi disparado."
+  "observacoes_operacionais": "Executadas exatamente duas leituras completas no Airtable, sem filtros, ordenação, schema ou paginação. O único item de backlog foi identificado pela busca pública: o post DdEcCfSRfy3 divulga “Futebol para mulheres: Entre a prática e a Copa — Módulo 2”, já presente em dados.json pela fonte oficial do Sesc; o registro foi atualizado no Airtable para Recusado por duplicidade. Os demais candidatos recentes triados — WIFS, troca do gramado do Maracanã, voluntariado, interesse em ingressos e calendário/caminho do Brasil — já constavam nos arquivos finais. editorial/inbox.json foi preservado sem alteração; nenhum merge, e-mail ou Instagram foi disparado."
 }
