@@ -2,8 +2,8 @@
 """Camada conservadora de compatibilidade da pesquisa editorial.
 
 - Mantém o núcleo original e as EXATAS duas leituras Airtable do script-base.
-- Reaproveita os registros já lidos para reconhecer nomes de campos equivalentes.
-- Resolve URLs intermediárias do Google News antes da validação editorial.
+- Reaproveita os registros já lidos para reconhecer nomes/formatos de campos equivalentes.
+- Resolve URLs intermediárias do Google News apenas quando chegam a fonte editorial confiável.
 - Bloqueia pautas já existentes/publicadas, inclusive por similaridade conservadora.
 - Não altera schedule, concorrência, merge, alertas, Instagram ou saúde.
 """
@@ -25,6 +25,34 @@ def keynorm(value):
     text = unicodedata.normalize('NFKD', str(value or ''))
     text = ''.join(ch for ch in text if not unicodedata.combining(ch)).casefold()
     return re.sub(r'[^a-z0-9]+', ' ', text).strip()
+
+
+def scalar_text(value):
+    """Extrai texto sem fazer nenhuma consulta externa.
+
+    Airtable pode entregar valores como string, lista ou objeto (ex.: campos derivados,
+    lookup e rich values). Mantemos a extração conservadora e determinística.
+    """
+    if value in (None, ''):
+        return ''
+    if isinstance(value, str):
+        return value.strip()
+    if isinstance(value, (int, float)):
+        return str(value)
+    if isinstance(value, (list, tuple)):
+        for item in value:
+            text = scalar_text(item)
+            if text:
+                return text
+        return ''
+    if isinstance(value, dict):
+        for key in ('url', 'href', 'title', 'titulo', 'name', 'nome', 'text', 'label', 'value'):
+            if key in value:
+                text = scalar_text(value.get(key))
+                if text:
+                    return text
+        return ''
+    return str(value).strip()
 
 
 def compatible_first(fields, *names):
@@ -52,41 +80,79 @@ def value_by_alias(fields, aliases):
 
 def find_title(fields, kind):
     aliases = (
-        ('Título', 'Titulo', 'Título da sugestão', 'Titulo da sugestao', 'Assunto', 'Título da notícia', 'Titulo da noticia', 'Título da notícia sugerida', 'Título do evento', 'Titulo do evento', 'Nome do evento', 'Nome', 'Evento')
+        ('Título', 'Titulo', 'Título da sugestão', 'Titulo da sugestao', 'Assunto',
+         'Título da notícia', 'Titulo da noticia', 'Título da notícia sugerida',
+         'Notícia sugerida', 'Noticia sugerida', 'Título do evento', 'Titulo do evento',
+         'Evento sugerido', 'Nome do evento', 'Nome', 'Evento')
         if kind == 'eventos' else
-        ('Título', 'Titulo', 'Título da sugestão', 'Titulo da sugestao', 'Assunto', 'Título da notícia', 'Titulo da noticia', 'Título da notícia sugerida', 'Titulo da noticia sugerida', 'Notícia', 'Noticia', 'Nome')
+        ('Título', 'Titulo', 'Título da sugestão', 'Titulo da sugestao', 'Assunto',
+         'Título da notícia', 'Titulo da noticia', 'Título da notícia sugerida',
+         'Titulo da noticia sugerida', 'Notícia sugerida', 'Noticia sugerida',
+         'Notícia', 'Noticia', 'Nome')
     )
-    value = value_by_alias(fields, aliases)
-    if value not in (None, ''):
-        return str(value).strip()
+    value = scalar_text(value_by_alias(fields, aliases))
+    if value:
+        return value
+
+    # Fallback somente em campos cujo NOME indica claramente conteúdo/título.
+    markers = ('titulo', 'assunto', 'manchete', 'headline')
+    if kind == 'eventos':
+        markers += ('nome evento', 'evento sugerido')
+    else:
+        markers += ('noticia sugerida',)
     for k, v in fields.items():
         nk = keynorm(k)
-        if isinstance(v, str) and v.strip() and ('titulo' in nk or 'assunto' in nk or (kind == 'eventos' and ('nome evento' in nk or nk == 'evento'))):
-            return v.strip()
+        if any(marker in nk for marker in markers):
+            text = scalar_text(v)
+            if text and not re.match(r'^https?://', text, flags=re.I):
+                return text
     return ''
 
 
+def _urls_from_value(value):
+    urls = []
+    if value in (None, ''):
+        return urls
+    if isinstance(value, dict):
+        for key in ('url', 'href', 'link', 'value'):
+            if key in value:
+                urls.extend(_urls_from_value(value.get(key)))
+        return urls
+    if isinstance(value, (list, tuple)):
+        for item in value:
+            urls.extend(_urls_from_value(item))
+        return urls
+    text = scalar_text(value)
+    if not text:
+        return urls
+    if re.match(r'^https?://', text, flags=re.I):
+        urls.append(text)
+    else:
+        urls.extend(re.findall(r'https?://[^\s<>"\']+', text, flags=re.I))
+    return urls
+
+
 def find_url(fields):
-    aliases = ('Link', 'URL', 'Site', 'Fonte/Link', 'Fonte Link', 'Link da sugestão', 'URL da sugestão', 'Link da notícia', 'Link da noticia', 'URL da notícia', 'URL da noticia', 'Link do evento', 'URL do evento', 'Link da fonte', 'URL da fonte')
+    aliases = ('Link', 'URL', 'Site', 'Fonte/Link', 'Fonte Link', 'Link da sugestão',
+               'URL da sugestão', 'Link da notícia', 'Link da noticia', 'URL da notícia',
+               'URL da noticia', 'Link do evento', 'URL do evento', 'Link da fonte',
+               'URL da fonte', 'Endereço', 'Endereco')
     candidates = []
     direct = value_by_alias(fields, aliases)
-    if direct not in (None, ''):
-        candidates.append(direct)
+    candidates.extend(_urls_from_value(direct))
     for k, v in fields.items():
         nk = keynorm(k)
-        if ('link' in nk or 'site' in nk or re.search(r'(^| )url( |$)', nk)) and v not in (None, ''):
-            candidates.append(v)
+        if ('link' in nk or 'site' in nk or 'endereco' in nk or re.search(r'(^| )url( |$)', nk)):
+            candidates.extend(_urls_from_value(v))
     for value in candidates:
-        if isinstance(value, dict):
-            value = value.get('url') or value.get('href') or ''
-        s = str(value).strip()
+        s = html.unescape(str(value).strip()).rstrip('.,);]')
         if re.match(r'^https?://', s, flags=re.I):
             return s
     return ''
 
 
 def parse_date(value, default_today=False):
-    s = str(value or '').strip()
+    s = scalar_text(value)
     if not s:
         return pe.now().date().isoformat() if default_today else ''
     s10 = s[:10]
@@ -104,15 +170,43 @@ def candidate_from_record_compat(record, kind):
     title = find_title(f, kind)
     link = find_url(f)
     if not title or not link:
+        # Diagnóstico sem conteúdo/PII e sem nova leitura: registra somente nomes de campos.
+        safe_keys = ','.join(sorted(keynorm(k) for k in f.keys()))
+        print(f"airtable_unmapped_record={record.get('id','')}|kind={kind}|title={bool(title)}|url={bool(link)}|field_keys={safe_keys}")
         return None
     if kind == 'noticias':
         date = parse_date(value_by_alias(f, ('Data', 'Data da notícia', 'Data da noticia', 'Data de publicação', 'Data de publicacao')), default_today=True)
-        return {'Data': date, 'DataBR': pe.datetime.strptime(date, '%Y-%m-%d').strftime('%d/%m/%Y'), 'Titulo': title, 'Tema': str(pe.first(f, 'Tema', 'Categoria')).strip() or 'Copa Feminina 2027', 'CidadeUF': str(pe.first(f, 'Cidade/UF', 'CidadeUF', 'Cidade', 'Local')).strip() or 'Brasil', 'Veiculo': str(pe.first(f, 'Veículo', 'Veiculo', 'Fonte')).strip() or urllib.parse.urlparse(link).netloc, 'Link': link, 'Sentimento': 'Neutro', 'Impacto': str(pe.first(f, 'Impacto')).strip() or 'Médio', 'Resumo': str(pe.first(f, 'Resumo', 'Descrição', 'Descricao', 'Observações', 'Observacoes')).strip()[:1200]}
+        return {
+            'Data': date,
+            'DataBR': pe.datetime.strptime(date, '%Y-%m-%d').strftime('%d/%m/%Y'),
+            'Titulo': title,
+            'Tema': scalar_text(pe.first(f, 'Tema', 'Categoria')) or 'Copa Feminina 2027',
+            'CidadeUF': scalar_text(pe.first(f, 'Cidade/UF', 'CidadeUF', 'Cidade', 'Local')) or 'Brasil',
+            'Veiculo': scalar_text(pe.first(f, 'Veículo', 'Veiculo', 'Fonte')) or urllib.parse.urlparse(link).netloc,
+            'Link': link,
+            'Sentimento': 'Neutro',
+            'Impacto': scalar_text(pe.first(f, 'Impacto')) or 'Médio',
+            'Resumo': scalar_text(pe.first(f, 'Resumo', 'Descrição', 'Descricao', 'Observações', 'Observacoes'))[:1200],
+        }
     date = parse_date(value_by_alias(f, ('Data', 'Data do evento', 'Data do Evento')))
     if not date:
+        print(f"airtable_event_without_valid_date={record.get('id','')}")
         return None
-    city = str(pe.first(f, 'Cidade')).strip(); uf = str(pe.first(f, 'UF', 'Estado')).strip()
-    return {'ID': str(pe.first(f, 'ID')).strip() or f"SUG-{record.get('id', '')}", 'Titulo': title, 'Status': 'Planejado', 'Data': date, 'DataBR': pe.datetime.strptime(date, '%Y-%m-%d').strftime('%d/%m/%Y'), 'UF': uf, 'Cidade': city, 'Categoria': str(pe.first(f, 'Categoria')).strip() or 'Evento', 'Organizador': str(pe.first(f, 'Organizador')).strip(), 'Publico': 0, 'Patrocinador': str(pe.first(f, 'Patrocinador')).strip(), 'Local': str(pe.first(f, 'Local')).strip(), 'Latitude': None, 'Longitude': None, 'Link': link, 'Observacoes': str(pe.first(f, 'Observações', 'Observacoes', 'Resumo', 'Descrição', 'Descricao')).strip()[:1200], 'Mes': '', 'Ano': int(date[:4]), 'Regiao': ''}
+    city = scalar_text(pe.first(f, 'Cidade'))
+    uf = scalar_text(pe.first(f, 'UF', 'Estado'))
+    return {
+        'ID': scalar_text(pe.first(f, 'ID')) or f"SUG-{record.get('id', '')}",
+        'Titulo': title, 'Status': 'Planejado', 'Data': date,
+        'DataBR': pe.datetime.strptime(date, '%Y-%m-%d').strftime('%d/%m/%Y'),
+        'UF': uf, 'Cidade': city,
+        'Categoria': scalar_text(pe.first(f, 'Categoria')) or 'Evento',
+        'Organizador': scalar_text(pe.first(f, 'Organizador')), 'Publico': 0,
+        'Patrocinador': scalar_text(pe.first(f, 'Patrocinador')),
+        'Local': scalar_text(pe.first(f, 'Local')), 'Latitude': None, 'Longitude': None,
+        'Link': link,
+        'Observacoes': scalar_text(pe.first(f, 'Observações', 'Observacoes', 'Resumo', 'Descrição', 'Descricao'))[:1200],
+        'Mes': '', 'Ano': int(date[:4]), 'Regiao': ''
+    }
 
 
 pe.candidate_from_record = candidate_from_record_compat
@@ -121,8 +215,19 @@ _original_gdelt_candidates = pe.gdelt_candidates
 _original_existing_keys = pe.existing_keys
 
 
+def _decode_embedded_url(value):
+    value = html.unescape(str(value or '')).replace('\\u0026', '&').replace('\\u003d', '=').replace('\\/', '/').strip()
+    # Duas passagens cobrem percent-encoding simples e duplo sem transformar dados arbitrários.
+    for _ in range(2):
+        decoded = urllib.parse.unquote(value)
+        if decoded == value:
+            break
+        value = decoded
+    return value
+
+
 def _external_http_url(candidate):
-    candidate = html.unescape(str(candidate or '')).replace('\\u0026', '&').replace('\\/', '/').strip()
+    candidate = _decode_embedded_url(candidate)
     if candidate.startswith('//'):
         candidate = 'https:' + candidate
     if not candidate.startswith(('http://', 'https://')):
@@ -130,12 +235,11 @@ def _external_http_url(candidate):
     parsed = urllib.parse.urlparse(candidate)
     host = parsed.netloc.casefold().removeprefix('www.')
     if host in ('news.google.com', 'google.com') or host.endswith('.google.com'):
-        # Alguns links do Google carregam a URL editorial em um parâmetro.
+        # Links Google podem carregar a URL editorial em parâmetros conhecidos.
         qs = urllib.parse.parse_qs(parsed.query)
-        for key in ('url', 'q', 'u'):
+        for key in ('url', 'q', 'u', 'target', 'dest', 'destination'):
             for value in qs.get(key, []):
-                decoded = urllib.parse.unquote(value)
-                direct = _external_http_url(decoded)
+                direct = _external_http_url(value)
                 if direct:
                     return direct
         return ''
@@ -143,27 +247,33 @@ def _external_http_url(candidate):
 
 
 def resolve_google_news(url):
-    """Resolve o agregador sem aceitar o próprio Google como fonte editorial.
+    """Resolve agregador sem aceitar o Google como fonte editorial.
 
-    Estratégia em camadas: redirect HTTP, canonical/og:url e links externos
-    presentes no HTML. Não faz nenhuma leitura Airtable adicional.
+    Só devolve URL final quando ela pertence à lista já existente de fontes confiáveis.
+    Falha fechada: se não resolver, o item segue para rejeição normal do script-base.
     """
     try:
-        data, final_url, _ = pe.request_bytes(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.3)'}, timeout=15)
+        data, final_url, _ = pe.request_bytes(
+            url,
+            headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.4)'},
+            timeout=15,
+        )
         direct = _external_http_url(final_url)
-        if direct:
+        if direct and pe.trusted_url(direct):
             return direct
-        raw = data[:700000].decode('utf-8', 'ignore')
-        raw_unescaped = html.unescape(raw).replace('\\u0026', '&').replace('\\/', '/')
+
+        raw = data[:900000].decode('utf-8', 'ignore')
+        variants = [raw, html.unescape(raw), _decode_embedded_url(raw)]
         patterns = (
             r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',
             r'<link[^>]+href=["\']([^"\']+)["\'][^>]+rel=["\']canonical["\']',
             r'<meta[^>]+property=["\']og:url["\'][^>]+content=["\']([^"\']+)',
             r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:url["\']',
+            r'[?&](?:url|q|u|target|dest|destination)=([^&"\'<> ]+)',
             r'href=["\'](https?://[^"\']+)',
             r'"(https?://[^"<> ]+)"',
         )
-        for text in (raw, raw_unescaped):
+        for text in variants:
             for pattern in patterns:
                 for match in re.finditer(pattern, text, flags=re.I):
                     direct = _external_http_url(match.group(1))
@@ -216,12 +326,15 @@ def same_story(title, prior):
     a, b = title_tokens(title), title_tokens(prior)
     if not a or not b:
         return False
-    overlap = len(a & b); containment = overlap / min(len(a), len(b)); union = overlap / len(a | b)
+    overlap = len(a & b)
+    containment = overlap / min(len(a), len(b))
+    union = overlap / len(a | b)
     return overlap >= 3 and (containment >= 0.72 or union >= 0.60)
 
 
 def filter_known_stories(candidates):
-    priors = known_titles(); out = []
+    priors = known_titles()
+    out = []
     for c in candidates:
         title = str(c.get('title') or '')
         matched = next((p for p in priors if same_story(title, p)), None)
