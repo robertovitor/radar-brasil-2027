@@ -49,34 +49,25 @@ jobs:
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
 
-      - name: Commitar inbox quando houver novidade
+      - name: Publicar inbox e telemetria da mesma execução
         shell: bash
         run: |
+          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          if ! git diff --quiet -- editorial/inbox.json; then
-            git add editorial/inbox.json
-            git commit -m 'Enfileira novidades da pesquisa editorial nativa'
-            git pull --rebase origin main
-            git push origin main
-          else
-            echo 'Nenhuma novidade para o inbox.'
-          fi
 
-      - name: Commitar telemetria obrigatória
-        shell: bash
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          if ! git diff --quiet -- editorial/pesquisa-status.json; then
-            git add editorial/pesquisa-status.json
-            git commit -m 'Registra status da pesquisa editorial nativa'
-            git pull --rebase origin main
-            git push origin main
-          else
-            echo 'ERRO: pesquisa-status.json não foi alterado.'
+          # Ambos os arquivos são gerados pela mesma pesquisa. Versioná-los juntos evita
+          # deixar pesquisa-status.json sem stage antes do pull --rebase do inbox.
+          git add editorial/inbox.json editorial/pesquisa-status.json
+
+          if git diff --cached --quiet; then
+            echo 'ERRO: pesquisa não alterou inbox nem pesquisa-status.json.'
             exit 2
           fi
+
+          git commit -m 'Atualiza resultado da pesquisa editorial nativa'
+          git pull --rebase origin main
+          git push origin main
 
       - name: Falhar workflow se a pesquisa falhou
         if: steps.pesquisa.outputs.exit_code != '0'
