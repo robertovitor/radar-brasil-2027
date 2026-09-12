@@ -44,7 +44,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          python scripts/pesquisa_editorial.py
+          python scripts/pesquisa_editorial_compat.py
           code=$?
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
