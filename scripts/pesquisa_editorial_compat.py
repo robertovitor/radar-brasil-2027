@@ -4,10 +4,12 @@
 - Mantém o núcleo original e as EXATAS duas leituras Airtable do script-base.
 - Reaproveita os registros já lidos para reconhecer nomes de campos equivalentes.
 - Tenta resolver URLs intermediárias do Google News antes da validação editorial.
+- Bloqueia pautas já existentes/publicadas, inclusive por similaridade conservadora.
 - Não altera schedule, concorrência, merge, alertas, Instagram ou saúde.
 """
 import html
 import importlib.util
+import json
 import re
 import unicodedata
 import urllib.parse
@@ -25,7 +27,6 @@ def keynorm(value):
     return re.sub(r'[^a-z0-9]+', ' ', text).strip()
 
 
-# first() continua sem qualquer chamada externa: trabalha apenas no dict de fields já obtido.
 def compatible_first(fields, *names):
     for name in names:
         if fields.get(name) not in (None, ''):
@@ -51,10 +52,12 @@ def value_by_alias(fields, aliases):
 
 def find_title(fields, kind):
     aliases = (
-        ('Título', 'Titulo', 'Título da notícia', 'Titulo da noticia', 'Título da notícia sugerida',
+        ('Título', 'Titulo', 'Título da sugestão', 'Titulo da sugestao', 'Assunto',
+         'Título da notícia', 'Titulo da noticia', 'Título da notícia sugerida',
          'Título do evento', 'Titulo do evento', 'Nome do evento', 'Nome', 'Evento')
         if kind == 'eventos' else
-        ('Título', 'Titulo', 'Título da notícia', 'Titulo da noticia', 'Título da notícia sugerida',
+        ('Título', 'Titulo', 'Título da sugestão', 'Titulo da sugestao', 'Assunto',
+         'Título da notícia', 'Titulo da noticia', 'Título da notícia sugerida',
          'Titulo da noticia sugerida', 'Notícia', 'Noticia', 'Nome')
     )
     value = value_by_alias(fields, aliases)
@@ -62,23 +65,30 @@ def find_title(fields, kind):
         return str(value).strip()
     for k, v in fields.items():
         nk = keynorm(k)
-        if isinstance(v, str) and v.strip() and ('titulo' in nk or (kind == 'eventos' and 'nome' in nk and 'evento' in nk)):
+        if isinstance(v, str) and v.strip() and (
+            'titulo' in nk or 'assunto' in nk or
+            (kind == 'eventos' and ('nome evento' in nk or nk == 'evento'))
+        ):
             return v.strip()
     return ''
 
 
 def find_url(fields):
-    aliases = ('Link', 'URL', 'Link da notícia', 'Link da noticia', 'URL da notícia', 'URL da noticia',
-               'Link do evento', 'URL do evento', 'Link da fonte', 'URL da fonte')
+    aliases = ('Link', 'URL', 'Site', 'Fonte/Link', 'Fonte Link',
+               'Link da sugestão', 'URL da sugestão', 'Link da notícia', 'Link da noticia',
+               'URL da notícia', 'URL da noticia', 'Link do evento', 'URL do evento',
+               'Link da fonte', 'URL da fonte')
     candidates = []
     direct = value_by_alias(fields, aliases)
     if direct not in (None, ''):
         candidates.append(direct)
     for k, v in fields.items():
         nk = keynorm(k)
-        if ('link' in nk or re.search(r'(^| )url( |$)', nk)) and v not in (None, ''):
+        if ('link' in nk or 'site' in nk or re.search(r'(^| )url( |$)', nk)) and v not in (None, ''):
             candidates.append(v)
     for value in candidates:
+        if isinstance(value, dict):
+            value = value.get('url') or value.get('href') or ''
         s = str(value).strip()
         if re.match(r'^https?://', s, flags=re.I):
             return s
@@ -141,6 +151,8 @@ def candidate_from_record_compat(record, kind):
 
 pe.candidate_from_record = candidate_from_record_compat
 _original_rss_candidates = pe.rss_candidates
+_original_gdelt_candidates = pe.gdelt_candidates
+_original_existing_keys = pe.existing_keys
 
 
 def resolve_google_news(url):
@@ -168,6 +180,67 @@ def resolve_google_news(url):
     return ''
 
 
+def load_json(path, default):
+    try:
+        return json.loads(path.read_text(encoding='utf-8'))
+    except Exception:
+        return default
+
+
+def existing_keys_compat():
+    keys = _original_existing_keys()
+    ledger = load_json(pe.ROOT / 'instagram' / 'publicados.json', {})
+    for row in ledger.get('published', []):
+        key = str(row.get('key') or '')
+        if key.startswith('instagram:noticia:http'):
+            keys.add('u:' + pe.urlnorm(key[len('instagram:noticia:'):]))
+    return keys
+
+
+pe.existing_keys = existing_keys_compat
+
+STOPWORDS = {'a','o','as','os','de','da','do','das','dos','e','em','no','na','nos','nas','para','por','com','um','uma','que','ao','à','brasil','2027','copa','mundo','feminina','feminino','fifa'}
+
+
+def title_tokens(title):
+    return {x for x in keynorm(title).split() if len(x) >= 4 and x not in STOPWORDS}
+
+
+def known_titles():
+    titles = []
+    for path in (pe.ROOT / 'noticias.json', pe.INBOX):
+        obj = load_json(path, [] if path.name != 'inbox.json' else {'noticias': []})
+        rows = obj if isinstance(obj, list) else obj.get('noticias', [])
+        for row in rows:
+            if isinstance(row, dict) and row.get('Titulo'):
+                titles.append(str(row['Titulo']))
+    return titles
+
+
+def same_story(title, prior):
+    a, b = title_tokens(title), title_tokens(prior)
+    if not a or not b:
+        return False
+    overlap = len(a & b)
+    containment = overlap / min(len(a), len(b))
+    union = overlap / len(a | b)
+    # Conservador: exige pelo menos 3 termos informativos em comum e forte sobreposição.
+    return overlap >= 3 and (containment >= 0.72 or union >= 0.60)
+
+
+def filter_known_stories(candidates):
+    priors = known_titles()
+    out = []
+    for c in candidates:
+        title = str(c.get('title') or '')
+        matched = next((p for p in priors if same_story(title, p)), None)
+        if matched:
+            print(f"semantic_duplicate_skipped={title} | existing={matched}")
+            continue
+        out.append(c)
+    return out
+
+
 def rss_candidates_compat():
     out = []
     for candidate in _original_rss_candidates():
@@ -179,10 +252,15 @@ def rss_candidates_compat():
                 c['url'] = direct
                 c['origin'] = 'google-news-resolved'
         out.append(c)
-    return out
+    return filter_known_stories(out)
+
+
+def gdelt_candidates_compat():
+    return filter_known_stories(_original_gdelt_candidates())
 
 
 pe.rss_candidates = rss_candidates_compat
+pe.gdelt_candidates = gdelt_candidates_compat
 
 if __name__ == '__main__':
     raise SystemExit(pe.main())
