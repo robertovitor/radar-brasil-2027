@@ -2,8 +2,9 @@
 """Fallback conservador para resolver URLs do Google News.
 
 Esta camada NÃO altera schedule, concorrência, Airtable, merge, Instagram ou alertas.
-Ela reaproveita pesquisa_editorial_compat.py e apenas acrescenta uma busca editorial
-limitada quando o resolvedor nativo do Google News não encontra a URL direta.
+Ela reaproveita pesquisa_editorial_compat.py e acrescenta apenas:
+- uma busca editorial limitada quando o resolvedor nativo do Google News não encontra a URL direta;
+- extração conservadora do título quando uma sugestão de notícia já lida do Airtable tem URL válida, mas título vazio.
 """
 import html
 import importlib.util
@@ -18,10 +19,13 @@ spec.loader.exec_module(compat)
 pe = compat.pe
 
 _original_resolve_google_news = compat.resolve_google_news
+_original_candidate_from_record = compat.candidate_from_record_compat
 
-# Limite rígido: evita explosão de chamadas e qualquer efeito cascata.
+# Limites rígidos: evitam explosão de chamadas e qualquer efeito cascata.
 MAX_FALLBACK_SEARCHES = 8
+MAX_MISSING_TITLE_FETCHES = 6
 _fallback_searches = 0
+_missing_title_fetches = 0
 
 SOURCE_DOMAIN_HINTS = {
     'gov br': 'gov.br',
@@ -37,6 +41,78 @@ SOURCE_DOMAIN_HINTS = {
     'prefeitura de fortaleza': 'fortaleza.ce.gov.br',
     'prefeitura poa br': 'prefeitura.poa.br',
 }
+
+
+def _clean_page_title(value):
+    value = re.sub(r'<[^>]+>', ' ', html.unescape(str(value or '')))
+    value = re.sub(r'\s+', ' ', value).strip()
+    return value[:300]
+
+
+def _title_from_url(url):
+    """Extrai somente o título editorial da própria URL sugerida.
+
+    Não consulta Airtable, não altera o registro e não aprova a pauta; apenas permite
+    que a validação editorial existente prossiga quando o formulário recebeu só o link.
+    """
+    global _missing_title_fetches
+    if _missing_title_fetches >= MAX_MISSING_TITLE_FETCHES:
+        return ''
+    if not re.match(r'^https?://', str(url or ''), flags=re.I):
+        return ''
+    _missing_title_fetches += 1
+    try:
+        data, _, _ = pe.request_bytes(
+            url,
+            headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.5)'},
+            timeout=12,
+        )
+        raw = data[:500000].decode('utf-8', 'ignore')
+        patterns = (
+            r'<meta[^>]+property=["\']og:title["\'][^>]+content=["\']([^"\']+)',
+            r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:title["\']',
+            r'<meta[^>]+name=["\']twitter:title["\'][^>]+content=["\']([^"\']+)',
+            r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']twitter:title["\']',
+            r'<title[^>]*>(.*?)</title>',
+        )
+        for pattern in patterns:
+            match = re.search(pattern, raw, flags=re.I | re.S)
+            if match:
+                title = _clean_page_title(match.group(1))
+                if len(title) >= 8:
+                    print(f'suggestion_title_resolved={urllib.parse.urlparse(url).netloc}|{title}')
+                    return title
+    except Exception as exc:
+        print(f'suggestion_title_warning={type(exc).__name__}:{exc}')
+    return ''
+
+
+def candidate_from_record_v2(record, kind):
+    """Preserva o parser atual e só trata notícia com link válido + título vazio."""
+    candidate = _original_candidate_from_record(record, kind)
+    if candidate is not None or kind != 'noticias':
+        return candidate
+
+    fields = record.get('fields', {})
+    link = compat.find_url(fields)
+    title = compat.find_title(fields, kind)
+    if not link or title:
+        return None
+
+    resolved_title = _title_from_url(link)
+    if not resolved_title:
+        return None
+
+    # Não modifica o registro original vindo do Airtable.
+    enriched_record = dict(record)
+    enriched_fields = dict(fields)
+    enriched_fields['Título'] = resolved_title
+    enriched_record['fields'] = enriched_fields
+    return _original_candidate_from_record(enriched_record, kind)
+
+
+# O núcleo passa a usar o fallback apenas no registro já lido; nenhuma leitura Airtable extra.
+pe.candidate_from_record = candidate_from_record_v2
 
 
 def _source_domain(source):
