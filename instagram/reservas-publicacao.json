@@ -90,9 +90,11 @@
       "key": "instagram:noticia:https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/08/17/copa-2027-tamires-pede-engajamento-das-cidades-sede-para-lotar-estadios.ghtm",
       "post_file": "instagram/fila/automatica/027-tamires-pede-engajamento-das-cidades-sede-para-lotar-estadios-ghtm-98211ebaaa.json",
       "reserved_at": "2026-09-12T05:46:39.222402+00:00",
-      "last_attempt_at": "2026-09-12T05:46:39.222402+00:00",
+      "last_attempt_at": "2026-09-12T05:47:01.188730+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-12T06:46:58.818922+00:00"
     }
   ]
 }
