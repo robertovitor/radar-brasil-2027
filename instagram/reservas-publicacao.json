@@ -85,6 +85,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-10T20:43:38.666694+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://www.sescrio.org.br/noticias/esporte/em-clima-de-copa-2027-sesc-rj-amplia-turmas-gratuitas-de-futebol-feminino/",
+      "post_file": "instagram/fila/automatica/clima-de-copa-2027-sesc-rj-amplia-turmas-gratuitas-de-futebol-feminino-c0e4ac122d.json",
+      "reserved_at": "2026-09-12T14:07:20.406724+00:00",
+      "last_attempt_at": "2026-09-12T14:07:20.406724+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false
     }
   ]
 }
