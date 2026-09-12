@@ -24,8 +24,10 @@ _original_candidate_from_record = compat.candidate_from_record_compat
 # Limites rígidos: evitam explosão de chamadas e qualquer efeito cascata.
 MAX_FALLBACK_SEARCHES = 8
 MAX_MISSING_TITLE_FETCHES = 6
+MAX_FALLBACK_VALIDATIONS = 6
 _fallback_searches = 0
 _missing_title_fetches = 0
+_fallback_validations = 0
 
 SOURCE_DOMAIN_HINTS = {
     'gov br': 'gov.br',
@@ -38,7 +40,14 @@ SOURCE_DOMAIN_HINTS = {
     'cnn brasil': 'cnnbrasil.com.br',
     'espn brasil': 'espn.com.br',
     'uol': 'uol.com.br',
+    'o globo': 'oglobo.globo.com',
+    'estadao': 'estadao.com.br',
+    'estadão': 'estadao.com.br',
+    'folha de s paulo': 'folha.uol.com.br',
+    'folha': 'folha.uol.com.br',
+    'lance': 'lance.com.br',
     'prefeitura de fortaleza': 'fortaleza.ce.gov.br',
+    'prefeitura de porto alegre': 'prefeitura.poa.br',
     'prefeitura poa br': 'prefeitura.poa.br',
 }
 
@@ -161,6 +170,77 @@ def _candidate_from_duck_href(href):
     return href
 
 
+def _same_domain(url, domain):
+    host = urllib.parse.urlparse(str(url or '')).netloc.casefold().removeprefix('www.')
+    return bool(host and domain and (host == domain or host.endswith('.' + domain) or domain.endswith('.' + host)))
+
+
+def _search_terms(title):
+    words = [w for w in re.findall(r'[\wÀ-ÿ-]+', _strip_source_suffix(title)) if len(w) >= 4]
+    stop = {'copa','mundo','feminina','feminino','2027','brasil','fifa','para','com','uma','das','dos','de','do','da','em','no','na'}
+    useful = [w for w in words if compat.keynorm(w) not in stop]
+    return ' '.join(useful[:8]) or _strip_source_suffix(title)
+
+
+def _result_candidates(raw, domain):
+    """Extrai candidatos sem confiar no layout exato do buscador."""
+    seen = set()
+    patterns = (
+        r'<a[^>]+href=["\']([^"\']+)["\'][^>]*>(.*?)</a>',
+        r'(https?://[^\s"\'<>]+)',
+    )
+    for pattern in patterns:
+        for m in re.finditer(pattern, raw, flags=re.I | re.S):
+            href = _candidate_from_duck_href(m.group(1))
+            if not _same_domain(href, domain) or not pe.trusted_url(href):
+                continue
+            key = compat.pe.urlnorm(href)
+            if not key or key in seen:
+                continue
+            seen.add(key)
+            label = ''
+            if m.lastindex and m.lastindex >= 2:
+                label = _clean_page_title(m.group(2))
+            yield href, label
+
+
+def _validate_editorial_candidate(url, expected_title, domain):
+    """Valida domínio + título da própria página antes de aceitar a URL."""
+    global _fallback_validations
+    if _fallback_validations >= MAX_FALLBACK_VALIDATIONS:
+        return False
+    if not _same_domain(url, domain) or not pe.trusted_url(url):
+        return False
+    _fallback_validations += 1
+    try:
+        data, final_url, headers = pe.request_bytes(
+            url,
+            headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.6)'},
+            timeout=12,
+        )
+        if not _same_domain(final_url, domain) or not pe.trusted_url(final_url):
+            return False
+        ctype = str(headers.get('Content-Type', '')).casefold()
+        if 'html' not in ctype:
+            return False
+        raw = data[:500000].decode('utf-8', 'ignore')
+        page_title = ''
+        for pattern in (
+            r'<meta[^>]+property=["\']og:title["\'][^>]+content=["\']([^"\']+)',
+            r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:title["\']',
+            r'<title[^>]*>(.*?)</title>',
+        ):
+            m = re.search(pattern, raw, flags=re.I | re.S)
+            if m:
+                page_title = _clean_page_title(m.group(1))
+                if page_title:
+                    break
+        return bool(page_title and _similar_title(expected_title, page_title))
+    except Exception as exc:
+        print(f'google_news_validation_warning={type(exc).__name__}:{exc}')
+        return False
+
+
 def _search_editorial_url(title, source):
     global _fallback_searches
     if _fallback_searches >= MAX_FALLBACK_SEARCHES:
@@ -175,23 +255,21 @@ def _search_editorial_url(title, source):
 
     _fallback_searches += 1
     editorial_title = _strip_source_suffix(title)
-    query = f'site:{domain} "{editorial_title}"'
+    # Evita a consulta excessivamente rígida com o título inteiro entre aspas.
+    query = f'site:{domain} {_search_terms(editorial_title)}'
     url = 'https://html.duckduckgo.com/html/?' + urllib.parse.urlencode({'q': query})
     try:
         data, _, _ = pe.request_bytes(
             url,
-            headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.4)'},
+            headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.6)'},
             timeout=12,
         )
         raw = data[:500000].decode('utf-8', 'ignore')
-        # Resultado padrão do HTML do DuckDuckGo.
-        for m in re.finditer(r'<a[^>]+class=["\'][^"\']*result__a[^"\']*["\'][^>]+href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', raw, flags=re.I|re.S):
-            href = _candidate_from_duck_href(m.group(1))
-            label = re.sub(r'<[^>]+>', ' ', html.unescape(m.group(2)))
-            parsed = urllib.parse.urlparse(href)
-            host = parsed.netloc.casefold().removeprefix('www.')
-            same_domain = host == domain or host.endswith('.' + domain) or domain.endswith('.' + host)
-            if same_domain and _similar_title(editorial_title, label) and pe.trusted_url(href):
+        for href, label in _result_candidates(raw, domain):
+            # O label do buscador é apenas um filtro rápido; a confirmação final vem da própria página.
+            if label and not _similar_title(editorial_title, label):
+                continue
+            if _validate_editorial_candidate(href, editorial_title, domain):
                 print(f'google_news_search_resolved={domain}|{href}')
                 return href
     except Exception as exc:
