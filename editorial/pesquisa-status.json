@@ -1,18 +1,27 @@
 {
   "cycle_id": "20260912-07",
-  "started_at": "2026-09-12T07:08:10-03:00",
-  "completed_at": "2026-09-12T07:08:10-03:00",
-  "stage": "failed",
+  "started_at": "2026-09-12T07:17:24-03:00",
+  "completed_at": "2026-09-12T07:17:26-03:00",
+  "stage": "completed",
   "executor": "github-actions-native",
-  "airtable_reads_total": 0,
-  "airtable_reads": [],
-  "sugestoes_lidas": 0,
-  "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 0,
+  "airtable_reads_total": 2,
+  "airtable_reads": [
+    {
+      "table": "Sugestões",
+      "reads": 1
+    },
+    {
+      "table": "Sugestões de Notícias",
+      "reads": 1
+    }
+  ],
+  "sugestoes_lidas": 19,
+  "sugestoes_noticias_lidas": 17,
+  "candidatos_publicos": 35,
   "aprovados_novos": 0,
-  "rejeitados": 0,
+  "rejeitados": 11,
   "duplicados": 0,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
-  "observacoes_operacionais": "HTTPError: HTTP Error 401: Unauthorized"
+  "observacoes_operacionais": "Execução nativa GitHub. Exatamente duas leituras Airtable; pesquisa pública RSS executada de forma conservadora."
 }
