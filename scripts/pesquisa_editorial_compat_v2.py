@@ -4,7 +4,8 @@
 Esta camada NÃO altera schedule, concorrência, Airtable, merge, Instagram ou alertas.
 Ela reaproveita pesquisa_editorial_compat.py e acrescenta apenas:
 - uma busca editorial limitada quando o resolvedor nativo do Google News não encontra a URL direta;
-- extração conservadora do título quando uma sugestão de notícia ou evento já lida do Airtable tem URL válida, mas título vazio.
+- extração conservadora do título quando uma sugestão de notícia ou evento já lida do Airtable tem URL válida, mas título vazio;
+- proteção contra falso negativo de relevância quando uma página editorial sobre a Copa 2027 contém chamadas laterais de seleções de base.
 
 Regra do Google News: o agregador é somente mecanismo de descoberta. Quando a URL
 editorial direta não puder ser resolvida, a matéria é procurada de forma limitada no
@@ -25,13 +26,15 @@ pe = compat.pe
 
 _original_resolve_google_news = compat.resolve_google_news
 _original_candidate_from_record = compat.candidate_from_record_compat
+_original_article_is_relevant = pe.article_is_relevant
 
-# Limites rígidos: evitam explosão de chamadas e qualquer efeito cascata.
-MAX_FALLBACK_SEARCHES = 8
+# Limites rígidos: continuam impedindo explosão de chamadas. A ampliação abaixo afeta
+# somente busca pública; não cria nenhuma leitura adicional do Airtable.
+MAX_FALLBACK_SEARCHES = 16
 MAX_MISSING_TITLE_FETCHES = 6
 # Distribui as validações entre resultados do Google News: antes, o primeiro
 # resultado podia consumir sozinho todo o orçamento global e bloquear os demais.
-MAX_FALLBACK_VALIDATIONS = 12
+MAX_FALLBACK_VALIDATIONS = 24
 MAX_VALIDATIONS_PER_SEARCH = 2
 _fallback_searches = 0
 _missing_title_fetches = 0
@@ -135,6 +138,32 @@ def candidate_from_record_v2(record, kind):
 
 # O núcleo passa a usar o fallback apenas no registro já lido; nenhuma leitura Airtable extra.
 pe.candidate_from_record = candidate_from_record_v2
+
+
+def article_is_relevant_v2(title, text=''):
+    """Evita falso negativo causado por menu/rodapé contendo categorias de base.
+
+    Se o próprio título traz sinal inequívoco da Copa Feminina/Mundial Feminino, a
+    exclusão por categoria de base só vale quando o TERMO DE BASE também está no título.
+    Para títulos menos explícitos, mantém exatamente a regra anterior, inclusive a
+    inspeção do texto da página.
+    """
+    title_norm = pe.norm(title)
+    strong_competition_signal = (
+        'copa feminina' in title_norm
+        or 'copa do mundo feminina' in title_norm
+        or 'mundial feminino' in title_norm
+        or 'fifa 2027' in title_norm
+        or ('2027' in title_norm and 'feminin' in title_norm)
+    )
+    if strong_competition_signal:
+        if any(pe.norm(term) in title_norm for term in pe.EXCLUDE_BASE):
+            return False
+        return True
+    return _original_article_is_relevant(title, text)
+
+
+pe.article_is_relevant = article_is_relevant_v2
 
 
 def _source_domain(source):
