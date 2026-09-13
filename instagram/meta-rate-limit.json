@@ -1,9 +1,8 @@
 {
-  "active": false,
+  "active": true,
   "reason": "meta_application_request_limit",
   "code": 4,
   "subcode": 2207051,
-  "detected_at": "2026-09-12T19:19:53.355359+00:00",
-  "blocked_until": "2026-09-12T20:19:53.355359+00:00",
-  "cleared_at": "2026-09-12T22:16:22.226453+00:00"
+  "detected_at": "2026-09-13T00:58:22.174696+00:00",
+  "blocked_until": "2026-09-13T01:58:22.174696+00:00"
 }
