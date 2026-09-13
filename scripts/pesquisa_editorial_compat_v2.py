@@ -5,6 +5,11 @@ Esta camada NÃO altera schedule, concorrência, Airtable, merge, Instagram ou a
 Ela reaproveita pesquisa_editorial_compat.py e acrescenta apenas:
 - uma busca editorial limitada quando o resolvedor nativo do Google News não encontra a URL direta;
 - extração conservadora do título quando uma sugestão de notícia ou evento já lida do Airtable tem URL válida, mas título vazio.
+
+Regra do Google News: o agregador é somente mecanismo de descoberta. Quando a URL
+editorial direta não puder ser resolvida, a matéria é procurada de forma limitada no
+domínio da fonte e só é aceita após validação independente do domínio e do título da
+própria página editorial. Se essa validação falhar, o comportamento continua fail-closed.
 """
 import html
 import importlib.util
@@ -160,17 +165,25 @@ def _similar_title(a, b):
     return overlap >= 3 and overlap / min(len(ta), len(tb)) >= 0.60
 
 
-def _candidate_from_duck_href(href):
+def _candidate_from_search_href(href):
+    """Desembrulha apenas URLs explícitas de buscadores conhecidos."""
     href = html.unescape(str(href or '')).strip()
     if href.startswith('//'):
         href = 'https:' + href
     parsed = urllib.parse.urlparse(href)
     host = parsed.netloc.casefold().removeprefix('www.')
+    qs = urllib.parse.parse_qs(parsed.query)
     if host.endswith('duckduckgo.com'):
-        qs = urllib.parse.parse_qs(parsed.query)
         vals = qs.get('uddg', [])
         if vals:
             return urllib.parse.unquote(vals[0])
+    if host.endswith('bing.com'):
+        for key in ('url', 'u', 'target'):
+            vals = qs.get(key, [])
+            if vals:
+                candidate = urllib.parse.unquote(vals[0])
+                if candidate.startswith(('http://', 'https://')):
+                    return candidate
     return href
 
 
@@ -195,7 +208,7 @@ def _result_candidates(raw, domain):
     )
     for pattern in patterns:
         for m in re.finditer(pattern, raw, flags=re.I | re.S):
-            href = _candidate_from_duck_href(m.group(1))
+            href = _candidate_from_search_href(m.group(1))
             if not _same_domain(href, domain) or not pe.trusted_url(href):
                 continue
             key = compat.pe.urlnorm(href)
@@ -206,6 +219,24 @@ def _result_candidates(raw, domain):
             if m.lastindex and m.lastindex >= 2:
                 label = _clean_page_title(m.group(2))
             yield href, label
+
+
+def _rss_result_candidates(raw, domain):
+    """Extrai URLs de itens RSS sem confiar no título fornecido pelo agregador."""
+    seen = set()
+    for item in re.findall(r'<item\b[^>]*>(.*?)</item>', raw, flags=re.I | re.S):
+        m = re.search(r'<link\b[^>]*>(.*?)</link>', item, flags=re.I | re.S)
+        if not m:
+            continue
+        href = _candidate_from_search_href(re.sub(r'<!\[CDATA\[(.*?)\]\]>', r'\1', m.group(1), flags=re.S).strip())
+        href = html.unescape(href)
+        if not _same_domain(href, domain) or not pe.trusted_url(href):
+            continue
+        key = compat.pe.urlnorm(href)
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        yield href
 
 
 def _validate_editorial_candidate(url, expected_title, domain):
@@ -219,7 +250,7 @@ def _validate_editorial_candidate(url, expected_title, domain):
     try:
         data, final_url, headers = pe.request_bytes(
             url,
-            headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.6)'},
+            headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.7)'},
             timeout=12,
         )
         if not _same_domain(final_url, domain) or not pe.trusted_url(final_url):
@@ -259,29 +290,55 @@ def _search_editorial_url(title, source):
 
     _fallback_searches += 1
     editorial_title = _strip_source_suffix(title)
-    # Evita a consulta excessivamente rígida com o título inteiro entre aspas.
     query = f'site:{domain} {_search_terms(editorial_title)}'
-    url = 'https://html.duckduckgo.com/html/?' + urllib.parse.urlencode({'q': query})
+    validations_this_search = 0
+
+    # Caminho 1: busca HTML. O rótulo do resultado NÃO decide mais a aprovação;
+    # somente a página editorial real pode validar a notícia.
+    duck_url = 'https://html.duckduckgo.com/html/?' + urllib.parse.urlencode({'q': query})
     try:
         data, _, _ = pe.request_bytes(
-            url,
-            headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.6)'},
+            duck_url,
+            headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.7)'},
             timeout=12,
         )
         raw = data[:500000].decode('utf-8', 'ignore')
-        validations_this_search = 0
-        for href, label in _result_candidates(raw, domain):
-            # O label do buscador é apenas um filtro rápido; a confirmação final vem da própria página.
-            if label and not _similar_title(editorial_title, label):
-                continue
-            if validations_this_search >= MAX_VALIDATIONS_PER_SEARCH:
+        for href, _label in _result_candidates(raw, domain):
+            if validations_this_search >= 1:
                 break
             validations_this_search += 1
             if _validate_editorial_candidate(href, editorial_title, domain):
-                print(f'google_news_search_resolved={domain}|{href}')
+                print(f'google_news_search_resolved=duckduckgo|{domain}|{href}')
                 return href
     except Exception as exc:
-        print(f'google_news_search_warning={type(exc).__name__}:{exc}')
+        print(f'google_news_search_warning=duckduckgo|{type(exc).__name__}:{exc}')
+
+    # Caminho 2: RSS público de busca. Só é tentado após o primeiro caminho falhar.
+    # Continua submetido ao MESMO limite total de duas validações por pauta.
+    if validations_this_search < MAX_VALIDATIONS_PER_SEARCH:
+        rss_url = 'https://www.bing.com/news/search?' + urllib.parse.urlencode({
+            'q': query,
+            'format': 'rss',
+            'setlang': 'pt-BR',
+        })
+        try:
+            data, _, _ = pe.request_bytes(
+                rss_url,
+                headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.7)'},
+                timeout=12,
+            )
+            raw = data[:500000].decode('utf-8', 'ignore')
+            for href in _rss_result_candidates(raw, domain):
+                if validations_this_search >= MAX_VALIDATIONS_PER_SEARCH:
+                    break
+                validations_this_search += 1
+                if _validate_editorial_candidate(href, editorial_title, domain):
+                    print(f'google_news_search_resolved=bing-rss|{domain}|{href}')
+                    return href
+        except Exception as exc:
+            print(f'google_news_search_warning=bing-rss|{type(exc).__name__}:{exc}')
+
+    print(f'google_news_search_unresolved={domain}|validations={validations_this_search}')
     return ''
 
 
