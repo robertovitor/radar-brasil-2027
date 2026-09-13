@@ -105,6 +105,24 @@ def legislative_progression(a,b):
     return bool(sa and sb and sa != sb)
 
 
+def semantic_fact_signature(item):
+    """Assinaturas apenas para fatos inequívocos; evita colapsar matérias só relacionadas."""
+    text=norm(f"{item.get('Titulo','')} {str(item.get('Resumo',''))[:900]}")
+
+    # Mesmo fato operacional, ainda que outra fonte use título/URL diferentes:
+    # abertura das inscrições/candidaturas do programa de voluntariado da Copa 2027.
+    volunteer=('voluntar' in text)
+    applications=('inscric' in text or 'candidat' in text)
+    opening=any(term in text for term in (
+        'abre inscric', 'abriu inscric', 'abertura das inscric', 'abertura oficial das inscric',
+        'inscricoes abertas', 'candidaturas abertas', 'abre candidaturas', 'abriu candidaturas'
+    ))
+    if volunteer and applications and opening:
+        return 'voluntariado:inscricoes-abertas:2027'
+
+    return ''
+
+
 def duplicate_incoming(a,b,kind):
     """Deduplicação conservadora: fonte/URL diferente, sozinha, não cria fato novo."""
     if kind == 'eventos':
@@ -122,6 +140,10 @@ def duplicate_incoming(a,b,kind):
         return True
     if legislative_progression(a,b):
         return False
+    sig_a=semantic_fact_signature(a)
+    sig_b=semantic_fact_signature(b)
+    if sig_a and sig_a == sig_b:
+        return True
     if date_gap(a.get('Data'),b.get('Data')) <= 2 and same_place(a,b,kind):
         return jac(a.get('Titulo'),b.get('Titulo')) >= 0.70 or seq(a.get('Titulo'),b.get('Titulo')) >= 0.86
     return False
