@@ -1,5 +1,6 @@
 name: Pesquisa editorial Radar
 
+# Manutenção 2026-09-13: regravação sem mudança funcional para reindexar o schedule no GitHub Actions.
 on:
   schedule:
     - cron: "45 * * * *"
