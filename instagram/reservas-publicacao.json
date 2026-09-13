@@ -90,9 +90,11 @@
       "key": "instagram:noticia:https://noticiasdatv.uol.com.br/noticia/televisao/a-9-meses-da-copa-do-mundo-tvs-ja-apostam-em-programas-de-futebol-feminino-156477",
       "post_file": "instagram/fila/automatica/a-copa-do-mundo-tvs-ja-apostam-em-programas-de-futebol-feminino-156477-27a0312971.json",
       "reserved_at": "2026-09-13T00:58:04.233378+00:00",
-      "last_attempt_at": "2026-09-13T00:58:04.233378+00:00",
+      "last_attempt_at": "2026-09-13T00:58:24.059524+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-13T01:58:22.174696+00:00"
     }
   ]
 }
