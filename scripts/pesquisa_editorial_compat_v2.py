@@ -24,7 +24,10 @@ _original_candidate_from_record = compat.candidate_from_record_compat
 # Limites rígidos: evitam explosão de chamadas e qualquer efeito cascata.
 MAX_FALLBACK_SEARCHES = 8
 MAX_MISSING_TITLE_FETCHES = 6
-MAX_FALLBACK_VALIDATIONS = 6
+# Distribui as validações entre resultados do Google News: antes, o primeiro
+# resultado podia consumir sozinho todo o orçamento global e bloquear os demais.
+MAX_FALLBACK_VALIDATIONS = 12
+MAX_VALIDATIONS_PER_SEARCH = 2
 _fallback_searches = 0
 _missing_title_fetches = 0
 _fallback_validations = 0
@@ -46,6 +49,7 @@ SOURCE_DOMAIN_HINTS = {
     'folha de s paulo': 'folha.uol.com.br',
     'folha': 'folha.uol.com.br',
     'lance': 'lance.com.br',
+    'a tarde': 'atarde.com.br',
     'prefeitura de fortaleza': 'fortaleza.ce.gov.br',
     'prefeitura de porto alegre': 'prefeitura.poa.br',
     'prefeitura poa br': 'prefeitura.poa.br',
@@ -265,10 +269,14 @@ def _search_editorial_url(title, source):
             timeout=12,
         )
         raw = data[:500000].decode('utf-8', 'ignore')
+        validations_this_search = 0
         for href, label in _result_candidates(raw, domain):
             # O label do buscador é apenas um filtro rápido; a confirmação final vem da própria página.
             if label and not _similar_title(editorial_title, label):
                 continue
+            if validations_this_search >= MAX_VALIDATIONS_PER_SEARCH:
+                break
+            validations_this_search += 1
             if _validate_editorial_candidate(href, editorial_title, domain):
                 print(f'google_news_search_resolved={domain}|{href}')
                 return href
