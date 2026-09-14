@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/pesquisa_editorial.py'
+      - 'scripts/pesquisa_editorial_compat_v3.py'
       - '.github/workflows/pesquisa-editorial.yml'
 
 permissions:
@@ -45,7 +46,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          python scripts/pesquisa_editorial_compat_v2.py
+          python scripts/pesquisa_editorial_compat_v3.py
           code=$?
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
