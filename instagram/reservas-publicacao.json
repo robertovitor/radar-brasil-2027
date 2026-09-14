@@ -99,12 +99,10 @@
     {
       "key": "instagram:evento:sug-recrhcuk8brbxsjxg",
       "post_file": "instagram/fila/automatica/instagram-evento-sug-recrhcuk8brbxsjxg-792a3acb65.json",
-      "reserved_at": "2026-09-14T19:20:16.150306+00:00",
-      "last_attempt_at": "2026-09-14T19:20:30.320987+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": true,
-      "uncertain_after_meta": true,
-      "blocked_until": "2026-09-14T20:20:27.686871+00:00"
+      "reserved_at": "2026-09-14T23:06:51.019733+00:00",
+      "last_attempt_at": "2026-09-14T23:06:51.019733+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
