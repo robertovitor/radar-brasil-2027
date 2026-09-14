@@ -44,27 +44,59 @@ jobs:
           import json
           import os
           from pathlib import Path
+
           ledger = Path("instagram/publicados.json")
+          now = dt.datetime.now(dt.timezone.utc)
           eligible = True
           elapsed = None
+          chosen = None
+          valid = []
+
+          def parse_stamp(raw):
+              value = dt.datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+              if value.tzinfo is None:
+                  value = value.replace(tzinfo=dt.timezone.utc)
+              return value.astimezone(dt.timezone.utc)
+
           if ledger.exists():
               try:
                   data = json.loads(ledger.read_text(encoding="utf-8"))
-                  stamps = []
                   for row in data.get("published", []):
                       if not isinstance(row, dict):
                           continue
-                      raw = row.get("published_at") or row.get("reconciled_at")
-                      if raw:
-                          stamps.append(raw)
-                  if stamps:
-                      last = max(dt.datetime.fromisoformat(str(stamp).replace("Z", "+00:00")) for stamp in stamps)
-                      if last.tzinfo is None:
-                          last = last.replace(tzinfo=dt.timezone.utc)
-                      elapsed = (dt.datetime.now(dt.timezone.utc) - last.astimezone(dt.timezone.utc)).total_seconds()
+                      key = str(row.get("key") or "").strip() or "unknown"
+                      for field in ("published_at", "reconciled_at"):
+                          raw = row.get(field)
+                          if not raw:
+                              continue
+                          try:
+                              stamp = parse_stamp(raw)
+                          except Exception as exc:
+                              print(f"interval_stamp_invalid key={key} field={field} value={raw} error={exc}")
+                              continue
+
+                          future_seconds = (stamp - now).total_seconds()
+                          if future_seconds > 300:
+                              print(f"interval_stamp_ignored_future key={key} field={field} value={raw} future_seconds={int(future_seconds)}")
+                              continue
+                          if future_seconds > 0:
+                              stamp = now
+                              print(f"interval_stamp_clock_skew_capped key={key} field={field} value={raw}")
+
+                          valid.append((stamp, key, field, str(raw)))
+
+                  if valid:
+                      chosen = max(valid, key=lambda item: item[0])
+                      last, key, field, raw = chosen
+                      elapsed = max(0.0, (now - last).total_seconds())
                       eligible = elapsed >= 3600
+                      print(f"interval_reference_key={key}")
+                      print(f"interval_reference_field={field}")
+                      print(f"interval_reference_timestamp={raw}")
+                      print(f"interval_reference_utc={last.isoformat()}")
               except Exception as exc:
                   print(f"interval_check_warning={exc}")
+
           print(f"interval_elapsed_seconds={int(elapsed) if elapsed is not None else 'none'}")
           print(f"interval_eligible={str(eligible).lower()}")
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
