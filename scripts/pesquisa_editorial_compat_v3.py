@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Camada conservadora v3 da pesquisa editorial.
 
-Fecha uma única brecha: sugestões já lidas do Airtable também passam pela mesma
-comparação semântica conservadora usada na pesquisa pública antes de poderem entrar
-em editorial/inbox.json.
+Fecha duas brechas sem aumentar leituras do Airtable:
+- sugestões de notícias já lidas passam pela mesma comparação semântica conservadora
+  usada na pesquisa pública antes de poderem entrar em editorial/inbox.json;
+- sugestões de eventos vindas do formulário podem usar os campos ``Data informada`` e
+  ``Cidade informada`` como aliases dos campos já esperados pelo parser legado.
 
-Não faz leituras adicionais do Airtable, não altera schedules e não muda merge,
-alertas, Instagram ou saúde operacional.
+Não altera schedules e não muda merge, alertas, Instagram ou saúde operacional.
 """
 import importlib.util
 from pathlib import Path
@@ -30,7 +31,49 @@ def _semantic_prior_title(title):
     return ''
 
 
+def _event_record_with_form_aliases(record):
+    """Mapeia somente aliases já presentes no registro lido do Airtable.
+
+    Não consulta Airtable, não altera o registro remoto e não inventa data/local.
+    Só copia para os nomes já reconhecidos pelo parser quando o campo canônico está
+    ausente. A validação de formato da data continua sendo feita pelo parser existente.
+    """
+    fields = dict(record.get('fields', {}) or {})
+    normalized = {v2.compat.keynorm(k): k for k in fields}
+
+    canonical_date_keys = {
+        v2.compat.keynorm('Data'),
+        v2.compat.keynorm('Data do evento'),
+        v2.compat.keynorm('Data do Evento'),
+    }
+    has_canonical_date = any(k in normalized for k in canonical_date_keys)
+    if not has_canonical_date:
+        for alias in ('Data informada', 'Data do evento informada', 'Data sugerida'):
+            source_key = normalized.get(v2.compat.keynorm(alias))
+            if source_key and fields.get(source_key) not in (None, ''):
+                fields['Data'] = fields[source_key]
+                print(f"airtable_event_date_alias_used={record.get('id','')}|field={v2.compat.keynorm(alias)}")
+                break
+
+    # Mesmo princípio para cidade: aproveita somente o valor já enviado pelo formulário.
+    if not fields.get('Cidade'):
+        for alias in ('Cidade informada', 'Cidade do evento'):
+            source_key = normalized.get(v2.compat.keynorm(alias))
+            if source_key and fields.get(source_key) not in (None, ''):
+                fields['Cidade'] = fields[source_key]
+                break
+
+    if fields == record.get('fields', {}):
+        return record
+    enriched = dict(record)
+    enriched['fields'] = fields
+    return enriched
+
+
 def candidate_from_record_v3(record, kind):
+    if kind == 'eventos':
+        record = _event_record_with_form_aliases(record)
+
     candidate = _original_candidate_from_record(record, kind)
     if candidate is None or kind != 'noticias':
         return candidate
