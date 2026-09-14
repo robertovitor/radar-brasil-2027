@@ -1,39 +1,4 @@
 {
-  "eventos": [
-    {
-      "ID": "SUG-recRhcUk8BrBXSJxG",
-      "Titulo": "COB EXPO 26",
-      "Status": "Planejado",
-      "Data": "2026-10-03",
-      "DataBR": "03/10/2026",
-      "UF": "",
-      "Cidade": "São Paulo/SP",
-      "Categoria": "Evento",
-      "Organizador": "",
-      "Publico": 0,
-      "Patrocinador": "",
-      "Local": "",
-      "Latitude": null,
-      "Longitude": null,
-      "Link": "https://cobexpo.com.br/",
-      "Observacoes": "",
-      "Mes": "",
-      "Ano": 2026,
-      "Regiao": ""
-    }
-  ],
-  "noticias": [
-    {
-      "Data": "2026-09-14",
-      "DataBR": "14/09/2026",
-      "Titulo": "Fifa faz estudo para definir preços dos ingressos da Copa do Mundo Feminina no Brasil - ge",
-      "Tema": "Copa Feminina 2027",
-      "CidadeUF": "Brasil",
-      "Veiculo": "ge.globo.com",
-      "Link": "https://ge.globo.com/futebol/selecao-brasileira/noticia/2026/09/08/fifa-inicia-estudo-para-definir-precos-dos-ingressos-da-copa-do-mundo-feminina-no-brasil.ghtml",
-      "Sentimento": "Neutro",
-      "Impacto": "Médio",
-      "Resumo": "Fifa faz estudo para definir preços dos ingressos da Copa do Mundo | Ge Pular para o conteúdo seleção brasileira TIMES Série A Série B Europa Fifa faz estudo para definir preços dos ingressos da Copa do Mundo Feminina no Brasil Entidade orienta que torcedores se inscrevam na lista de espera pelos ingressos Por Danny Paiva — Belo Horizonte 08/09/2026 12h52 Atualizado 08/09/2026 Fifa abre inscrições para voluntariado na Copa do Mundo Feminina A Fifa iniciou estudos de mercado para definir os preços dos ingressos da Copa do Mundo Feminina no Brasil. A entidade vai analisar diferentes fatores que vão determinar os valores e também a forma de comercialização das entradas. Ainda não há uma estimativa de preços, e os custos podem variar de acordo com cada cidade-sede. A Fifa informou que os estudos levam em consideração experiências de eventos anteriores realizados no Brasil, como a Copa do Mun"
-    }
-  ]
+  "eventos": [],
+  "noticias": []
 }
