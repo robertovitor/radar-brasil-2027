@@ -6,7 +6,8 @@ Fecha brechas sem aumentar leituras do Airtable:
 - sugestões de eventos podem usar Data informada/Cidade informada como aliases;
 - datas brasileiras textuais/ranges simples são normalizadas antes do parser legado;
 - títulos genéricos de páginas de proteção não viram eventos;
-- candidatos públicos resolvidos também passam por deduplicação semântica final.
+- candidatos públicos resolvidos também passam por deduplicação semântica final;
+- resumos públicos priorizam conteúdo editorial e descartam menus/scripts/publicidade.
 
 Não altera schedules e não muda merge, alertas, Instagram ou saúde operacional.
 """
@@ -42,6 +43,14 @@ MONTHS_PT = {
     'setembro': 9, 'outubro': 10, 'novembro': 11, 'dezembro': 12,
 }
 
+BOILERPLATE_MARKERS = (
+    'ir para o conteúdo', 'ir para a página inicial', 'menu de navegação',
+    'abrir menu principal', 'assine', 'publicidade', 'newsletter',
+    'acesse sua conta', 'cadastre-se grátis', 'termos mais buscados',
+    'seu navegador não pode executar javascript', 'script =',
+    'googlesyndication', 'doubleclick', 'carregando...', 'página principal',
+)
+
 
 def _is_generic_protection_title(title):
     norm = v2.compat.keynorm(title)
@@ -67,13 +76,11 @@ def _same_story_v3(title, prior):
     a = v2.compat.keynorm(title)
     b = v2.compat.keynorm(prior)
 
-    # Voluntariado: diferentes veículos variam muito o título, mas a pauta é a mesma.
     volunteer_a = ('voluntar' in a and ('copa' in a or 'mundial' in a) and '2027' in a)
     volunteer_b = ('voluntar' in b and ('copa' in b or 'mundial' in b) and '2027' in b)
     if volunteer_a and volunteer_b:
         return True
 
-    # Preço/estudo de ingressos para a Copa Feminina 2027.
     ticket_a = ('ingresso' in a and ('preco' in a or 'valor' in a or 'estudo' in a) and '2027' in a)
     ticket_b = ('ingresso' in b and ('preco' in b or 'valor' in b or 'estudo' in b) and '2027' in b)
     if ticket_a and ticket_b:
@@ -82,8 +89,6 @@ def _same_story_v3(title, prior):
     return False
 
 
-# Guarda a função original uma única vez e substitui no módulo compat; assim tanto a
-# deduplicação pública quanto a do Airtable usam a mesma regra, sem novas leituras.
 if not hasattr(v2.compat, 'same_story_v2_original'):
     v2.compat.same_story_v2_original = v2.compat.same_story
 v2.compat.same_story = _same_story_v3
@@ -99,35 +104,25 @@ def _semantic_prior_title(title):
 
 
 def _normalize_event_date(value):
-    """Normaliza formatos comuns do formulário sem inventar data.
-
-    Para intervalos, usa apenas a primeira data explicitamente informada, que é a
-    convenção já usada pelo Radar para o campo Data principal.
-    """
+    """Normaliza formatos comuns do formulário sem inventar data."""
     text = v2.compat.scalar_text(value).strip()
     if not text:
         return value
-
-    # Já aceitos pelo parser legado.
     if re.match(r'^\d{4}-\d{2}-\d{2}', text):
         return text[:10]
     m = re.search(r'\b(\d{1,2})[/-](\d{1,2})[/-](20\d{2})\b', text)
     if m:
         return f"{int(m.group(1)):02d}/{int(m.group(2)):02d}/{m.group(3)}"
-
-    # Exemplos: 2 de outubro de 2026 / 2 a 4 de outubro de 2026.
     norm = v2.compat.keynorm(text)
     m = re.search(r'\b(\d{1,2})(?:\s+a\s+\d{1,2})?\s+de\s+([a-z]+)\s+de\s+(20\d{2})\b', norm)
     if m and m.group(2) in MONTHS_PT:
         return f"{int(m.group(1)):02d}/{MONTHS_PT[m.group(2)]:02d}/{m.group(3)}"
-
     return value
 
 
 def _event_record_with_form_aliases(record):
     fields = dict(record.get('fields', {}) or {})
     normalized = {v2.compat.keynorm(k): k for k in fields}
-
     canonical_date_keys = {
         v2.compat.keynorm('Data'),
         v2.compat.keynorm('Data do evento'),
@@ -142,7 +137,6 @@ def _event_record_with_form_aliases(record):
                 print(f"airtable_event_date_alias_used={record.get('id','')}|field={v2.compat.keynorm(alias)}")
                 break
     else:
-        # Também normaliza o campo canônico se vier em formato textual brasileiro.
         for key in ('Data', 'Data do evento', 'Data do Evento'):
             source_key = normalized.get(v2.compat.keynorm(key))
             if source_key and fields.get(source_key) not in (None, ''):
@@ -166,22 +160,17 @@ def _event_record_with_form_aliases(record):
 def candidate_from_record_v3(record, kind):
     if kind == 'eventos':
         record = _event_record_with_form_aliases(record)
-
     candidate = _original_candidate_from_record(record, kind)
     if candidate is None:
         return None
-
     if _is_generic_protection_title(candidate.get('Titulo', '')):
         print(f"airtable_candidate_blocked_protection={record.get('id','')}")
         return None
-
     if kind != 'noticias':
         return candidate
-
     prior = _semantic_prior_title(candidate.get('Titulo'))
     if not prior:
         return candidate
-
     blocked = dict(candidate)
     blocked['Titulo'] = prior
     print(f"airtable_semantic_duplicate_skipped={candidate.get('Titulo','')} | existing={prior}")
@@ -189,6 +178,95 @@ def candidate_from_record_v3(record, kind):
 
 
 pe.candidate_from_record = candidate_from_record_v3
+
+
+def _strip_non_editorial_blocks(raw):
+    cleaned = raw
+    for tag in ('script', 'style', 'noscript', 'svg', 'nav', 'header', 'footer', 'aside', 'form'):
+        cleaned = re.sub(fr'<{tag}\b[^>]*>.*?</{tag}>', ' ', cleaned, flags=re.I | re.S)
+    return cleaned
+
+
+def _meta_description(raw):
+    for tag in re.findall(r'<meta\b[^>]*>', raw, flags=re.I | re.S):
+        attrs = dict((k.casefold(), pe.html.unescape(v)) for k, _, v in re.findall(
+            r'([:\w-]+)\s*=\s*(["\'])(.*?)\2', tag, flags=re.I | re.S
+        ))
+        key = (attrs.get('property') or attrs.get('name') or '').casefold()
+        if key in ('og:description', 'twitter:description', 'description'):
+            text = pe.clean_html_text(attrs.get('content', ''))
+            if len(text) >= 70:
+                return text
+    return ''
+
+
+def _is_editorial_text(text):
+    compact = re.sub(r'\s+', ' ', str(text or '')).strip()
+    low = compact.casefold()
+    if len(compact) < 45:
+        return False
+    if 'http://' in low or 'https://' in low or 'javascript' in low:
+        return False
+    if any(marker in low for marker in BOILERPLATE_MARKERS):
+        return False
+    letters = sum(ch.isalpha() for ch in compact)
+    return letters >= max(25, int(len(compact) * 0.45))
+
+
+def _paragraphs_from_html(fragment):
+    out = []
+    seen = set()
+    for part in re.findall(r'<p\b[^>]*>(.*?)</p>', fragment, flags=re.I | re.S):
+        text = pe.clean_html_text(_strip_non_editorial_blocks(part))
+        text = re.sub(r'\s+', ' ', text).strip()
+        key = v2.compat.keynorm(text)
+        if _is_editorial_text(text) and key not in seen:
+            seen.add(key)
+            out.append(text)
+    return out
+
+
+def fetch_article_excerpt_clean(url):
+    """Extrai texto editorial sem mudar número de leituras do Airtable.
+
+    Prioridade: parágrafos dentro de article/main, depois meta description,
+    depois parágrafos do documento. Nunca usa o texto bruto inteiro da página.
+    """
+    try:
+        data, final_url, headers = pe.request_bytes(url, timeout=20)
+        ctype = str(headers.get('Content-Type', '')).casefold()
+        if 'text/html' not in ctype and 'application/xhtml' not in ctype:
+            return '', final_url
+        raw = data[:900000].decode('utf-8', 'ignore')
+        stripped = _strip_non_editorial_blocks(raw)
+
+        paragraphs = []
+        for tag in ('article', 'main'):
+            for block in re.findall(fr'<{tag}\b[^>]*>(.*?)</{tag}>', stripped, flags=re.I | re.S):
+                paragraphs.extend(_paragraphs_from_html(block))
+        if not paragraphs:
+            desc = _meta_description(raw)
+            if desc:
+                paragraphs.append(desc)
+            paragraphs.extend(_paragraphs_from_html(stripped))
+
+        unique = []
+        seen = set()
+        for p in paragraphs:
+            k = v2.compat.keynorm(p)
+            if k and k not in seen:
+                seen.add(k)
+                unique.append(p)
+        excerpt = ' '.join(unique)
+        return excerpt[:7000], final_url
+    except Exception as exc:
+        print(f"clean_excerpt_warning={type(exc).__name__}:{exc}")
+        return '', url
+
+
+# Substitui somente a extração de texto da pesquisa pública. Não toca em schedules,
+# Airtable, merge, alertas ou Instagram.
+pe.fetch_article_excerpt = fetch_article_excerpt_clean
 
 
 def rss_candidates_v3():
