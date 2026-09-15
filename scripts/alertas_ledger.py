@@ -7,6 +7,12 @@ Uso:
 
 O recipient_ref é derivado do record ID do Airtable via SHA-256. O e-mail nunca é
 persistido no repositório público.
+
+Trava conservadora para notícias:
+- `check --kind noticia` só libera o envio se `content-key` já estiver presente em
+  `noticias.json`, que é a base pública do Radar após o Merge.
+- A validação é totalmente local e não adiciona leituras ao Airtable.
+- Eventos mantêm o comportamento anterior para não alterar um fluxo já estável.
 """
 from __future__ import annotations
 
@@ -15,12 +21,14 @@ import datetime as dt
 import hashlib
 import json
 from pathlib import Path
+from urllib.parse import urlsplit, urlunsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
     "evento": ROOT / "alertas" / "envios-eventos.json",
     "noticia": ROOT / "alertas" / "envios-noticias.json",
 }
+PUBLIC_NEWS_FILE = ROOT / "noticias.json"
 
 
 def recipient_ref(record_id: str) -> str:
@@ -41,6 +49,43 @@ def load(kind: str) -> dict:
 def save(kind: str, data: dict) -> None:
     path = FILES[kind]
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def normalize_url(value: str) -> str:
+    value = (value or "").strip()
+    if not value:
+        return ""
+    try:
+        parts = urlsplit(value)
+        if not parts.scheme or not parts.netloc:
+            return value.rstrip("/")
+        # Query/fragmentos não definem a identidade editorial para esta trava.
+        return urlunsplit((parts.scheme.lower(), parts.netloc.lower(), parts.path.rstrip("/"), "", ""))
+    except Exception:
+        return value.rstrip("/")
+
+
+def news_is_published(content_key: str) -> bool:
+    """Confirma localmente que a notícia já passou pelo Merge e está no Radar."""
+    if not PUBLIC_NEWS_FILE.exists():
+        return False
+    try:
+        rows = json.loads(PUBLIC_NEWS_FILE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    if not isinstance(rows, list):
+        return False
+
+    wanted = normalize_url(content_key)
+    if not wanted:
+        return False
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        link = normalize_url(str(row.get("Link") or row.get("link") or row.get("URL") or row.get("url") or ""))
+        if link and link == wanted:
+            return True
+    return False
 
 
 def key(kind: str, recipient_record_id: str, content_key: str, alert_type: str = "novo") -> str:
@@ -76,6 +121,18 @@ def main() -> int:
     existing = find_entry(data, delivery_key)
 
     if args.command == "check":
+        # Fail closed apenas para notícias: o alerta só pode sair depois que o
+        # conteúdo estiver em noticias.json. Não consulta Airtable nem muda o
+        # comportamento de eventos.
+        if args.kind == "noticia" and not news_is_published(args.content_key):
+            print("published_in_radar=false")
+            print("send_allowed=false")
+            print("reason=noticia_ainda_nao_publicada_no_radar")
+            print("delivery_key=" + delivery_key)
+            return 2
+        if args.kind == "noticia":
+            print("published_in_radar=true")
+            print("send_allowed=true")
         print("already_sent=" + ("true" if existing else "false"))
         print("delivery_key=" + delivery_key)
         return 0 if existing else 1
