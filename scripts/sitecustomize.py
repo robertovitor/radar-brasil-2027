@@ -1,15 +1,18 @@
 """Ajustes de runtime para o pipeline do Instagram.
 
 Este módulo é carregado automaticamente pelo Python quando scripts/ está no
-sys.path. Ele faz duas coisas:
+sys.path. Ele faz três coisas:
 1) impede que candidatos reprovados pelos gates voltem no retry da mesma rodada;
-2) torna a consulta ao Wikimedia Commons mais estável, com cache, espaçamento
+2) bloqueia notícias com mais de 30 dias antes da seleção para o Instagram;
+3) torna a consulta ao Wikimedia Commons mais estável, com cache, espaçamento
    entre chamadas e retry curto em HTTP 429 para preservar a busca de fotos.
 """
 from __future__ import annotations
 
+import datetime as dt
 import json
 import pathlib
+import re
 import time
 import urllib.error
 import urllib.request
@@ -45,11 +48,68 @@ def _temporary_rejected_keys():
     return set()
 
 
+def _news_date_from_url(url):
+    """Usa a data editorial explícita no URL quando ela existir."""
+    match = re.search(
+        r"/(20\d{2})[/-](0[1-9]|1[0-2])[/-]([0-2]\d|3[01])(?:/|\b)",
+        str(url or "").strip(),
+    )
+    if not match:
+        return None
+    try:
+        return dt.date(int(match.group(1)), int(match.group(2)), int(match.group(3)))
+    except ValueError:
+        return None
+
+
+def _news_date(item):
+    # Evita que a data de descoberta sobrescreva uma data original explícita no URL.
+    from_url = _news_date_from_url(item.get("Link"))
+    if from_url is not None:
+        return from_url
+    try:
+        return dt.date.fromisoformat(str(item.get("Data") or "").strip()[:10])
+    except (TypeError, ValueError):
+        return None
+
+
 if _base is not None and not getattr(_base, "_quality_retry_filter_installed", False):
     _original_candidates = _base.candidates
 
     def _candidates_without_rejected(*args, **kwargs):
         ranked = _original_candidates(*args, **kwargs)
+
+        # Trava de frescor somente para notícias. Eventos mantêm a lógica existente.
+        # Não há novas leituras externas: a validação usa apenas os dados já carregados.
+        today = dt.datetime.now(dt.timezone.utc).date()
+        cutoff = today - dt.timedelta(days=30)
+        fresh_ranked = []
+        stale_removed = 0
+        for item in ranked:
+            if str(item.get("type") or "").strip().casefold() != "noticia":
+                fresh_ranked.append(item)
+                continue
+            # O candidato já normalizado não carrega o Link original; recuperamos a
+            # URL do próprio idempotency key, que é instagram:noticia:<URL>.
+            key = str(item.get("key") or "").strip()
+            url = key[len("instagram:noticia:"):] if key.startswith("instagram:noticia:") else ""
+            effective = _news_date_from_url(url) or item.get("date")
+            if isinstance(effective, dt.datetime):
+                effective = effective.date()
+            if isinstance(effective, dt.date) and effective < cutoff:
+                stale_removed += 1
+                print(
+                    "stale_news_blocked="
+                    + str(item.get("title") or "").strip()
+                    + f" | effective_date={effective.isoformat()} | cutoff={cutoff.isoformat()}"
+                )
+                continue
+            fresh_ranked.append(item)
+        ranked = fresh_ranked
+        if stale_removed:
+            print(f"instagram_stale_news_filtered={stale_removed}")
+            print("instagram_freshness_guard=max_30_days")
+
         rejected = _temporary_rejected_keys()
         if not rejected:
             return ranked
