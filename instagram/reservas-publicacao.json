@@ -100,9 +100,11 @@
       "key": "instagram:noticia:https://www.terra.com.br/esportes/futebol/copa-feminina/copa-do-mundo-feminina-2027-saiba-as-datas-e-locais-dos-jogos-da-selecao-brasileira,ebc8ed8cc608d85c97b8cce34f91611b3t35hsvt.html",
       "post_file": "instagram/fila/automatica/os-da-selecao-brasileira-ebc8ed8cc608d85c97b8cce34f91611b3t35hsvt-html-69a47a4207.json",
       "reserved_at": "2026-09-15T01:25:31.908790+00:00",
-      "last_attempt_at": "2026-09-15T01:25:31.908790+00:00",
+      "last_attempt_at": "2026-09-15T01:25:49.538670+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-15T02:25:47.461054+00:00"
     }
   ]
 }
