@@ -1,7 +1,7 @@
 {
   "cycle_id": "20260915-08",
-  "started_at": "2026-09-15T08:50:32-03:00",
-  "completed_at": "2026-09-15T08:52:35-03:00",
+  "started_at": "2026-09-15T08:52:48-03:00",
+  "completed_at": "2026-09-15T08:54:52-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -17,12 +17,12 @@
   ],
   "sugestoes_lidas": 20,
   "sugestoes_noticias_lidas": 23,
-  "candidatos_publicos": 105,
-  "aprovados_novos": 1,
+  "candidatos_publicos": 104,
+  "aprovados_novos": 0,
   "rejeitados": 118,
   "duplicados": 4,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "auditoria": [
     {
       "origem": "airtable",
@@ -417,15 +417,6 @@
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQeU41LWhCcFRsRDdOUlBpMVIwQ29rTHJkSmZ2aEYxVkVBcWZsb1g3ZVlzZk1LVlQ5X2o3Z0l1M012NzNlcHhnb2NaUGVuSURpYmtteHZ1WTBpRVdRUlRvd2lBcThEUk5LR2EyWEdOWXk2aUJXVk9kWnhQU01YQnUzWHRkRUZaU2VxWm1tQ0lKUGJDRmxyMFZKOVRNY3hDSjNQekJZcFRxTkZxREFxMmRz?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news-resolved",
-      "titulo": "Arthur Elias convoca seleção brasileira feminina para o Fifa Series; veja lista - ge.globo.com",
-      "fonte": "ge.globo.com",
-      "url": "https://ge.globo.com/futebol/selecao-brasileira/noticia/2026/05/20/arthur-elias-convoca-selecao-feminina-para-amistosos-contra-os-estados-unidos-veja-lista.ghtml",
-      "url_final": "https://ge.globo.com/futebol/selecao-brasileira/noticia/2026/05/20/arthur-elias-convoca-selecao-feminina-para-amistosos-contra-os-estados-unidos-veja-lista.ghtml",
-      "decisao": "aprovado",
-      "motivo": "Fonte confiável, conteúdo acessível, relevante e não duplicado."
     },
     {
       "origem": "google-news",
