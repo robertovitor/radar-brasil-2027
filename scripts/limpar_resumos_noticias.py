@@ -4,6 +4,7 @@
 Conservador:
 - não consulta Airtable;
 - não altera título, data, link, tema, impacto ou sentimento;
+- remove somente URLs explicitamente bloqueadas abaixo;
 - resumos longos são encerrados em frase completa;
 - só acessa a URL quando o resumo está contaminado por boilerplate.
 """
@@ -14,6 +15,9 @@ import pesquisa_editorial_compat_v3 as compat
 ROOT=Path(__file__).resolve().parents[1]
 NEWS=ROOT/'noticias.json'
 MARKERS=('script =','googlesyndication','doubleclick','ir para o conteúdo','ir para a página inicial','menu de navegação','abrir menu principal','seu navegador não pode executar javascript','termos mais buscados','acesse sua conta ou cadastre-se','carregando...','página principal\\">','publicidade')
+BLOCKED_URLS={
+    'https://ge.globo.com/futebol/selecao-brasileira/noticia/2026/05/20/arthur-elias-convoca-selecao-feminina-para-amistosos-contra-os-estados-unidos-veja-lista.ghtml',
+}
 
 def suspicious(text):
     value=str(text or '').strip().casefold()
@@ -23,7 +27,11 @@ def main():
     try:items=json.loads(NEWS.read_text(encoding='utf-8'))
     except Exception as exc:print(f'news_cleanup_read_error={type(exc).__name__}:{exc}'); return 1
     if not isinstance(items,list):print('news_cleanup_skipped=not_a_list'); return 0
-    changed=0
+    before=len(items)
+    items=[item for item in items if not (isinstance(item,dict) and str(item.get('Link') or '').strip() in BLOCKED_URLS)]
+    removed=before-len(items)
+    changed=removed
+    if removed:print(f'news_blocked_removed={removed}')
     for item in items:
         if not isinstance(item,dict):continue
         original=' '.join(str(item.get('Resumo') or '').split()).strip()
