@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260914-20",
-  "started_at": "2026-09-14T20:43:42-03:00",
-  "completed_at": "2026-09-14T20:46:08-03:00",
+  "cycle_id": "20260914-21",
+  "started_at": "2026-09-14T21:00:20-03:00",
+  "completed_at": "2026-09-14T21:02:22-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -17,12 +17,12 @@
   ],
   "sugestoes_lidas": 20,
   "sugestoes_noticias_lidas": 22,
-  "candidatos_publicos": 99,
-  "aprovados_novos": 0,
+  "candidatos_publicos": 100,
+  "aprovados_novos": 1,
   "rejeitados": 112,
   "duplicados": 4,
-  "inbox_itens_adicionados": 0,
-  "inbox_commit_needed": false,
+  "inbox_itens_adicionados": 1,
+  "inbox_commit_needed": true,
   "auditoria": [
     {
       "origem": "airtable",
@@ -338,6 +338,15 @@
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
+      "origem": "google-news-resolved",
+      "titulo": "Quais serão as cidades-sedes e os estádios do Brasil na Copa do Mundo Feminina de 2027? - LANCE!",
+      "fonte": "LANCE!",
+      "url": "https://www.lance.com.br/futebol-nacional/quais-serao-as-cidades-sedes-e-os-estadios-do-brasil-na-copa-do-mundo-feminina-de-2027.html",
+      "url_final": "https://www.lance.com.br/futebol-nacional/quais-serao-as-cidades-sedes-e-os-estadios-do-brasil-na-copa-do-mundo-feminina-de-2027.html",
+      "decisao": "aprovado",
+      "motivo": "Fonte confiável, conteúdo acessível, relevante e não duplicado."
+    },
+    {
       "origem": "google-news",
       "titulo": "Portugal continua invencível na qualificação para o Mundial feminino 2027 - Comité Olímpico de Portugal",
       "fonte": "Comité Olímpico de Portugal",
@@ -347,8 +356,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Seleção feminina de futebol inicia qualificação para o Mundial-2027 com receção à Finlândia em Vizela - Diário de Notícias",
-      "fonte": "Diário de Notícias",
+      "titulo": "Seleção feminina de futebol inicia qualificação para o Mundial-2027 com receção à Finlândia em Vizela - dn.pt",
+      "fonte": "dn.pt",
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPaDFWREt3WnZuU0xSVGpIX2t0TXpwOUJJNVpDMHIxMW50MEtkX1JMVTFzaW5zT3p1a0xzTXVlcVpPQWl4WTNudG16SVRVWUNyd0FpdHpnSXFrR1JXd1diaEdQNDJrTDRyOExSQ1FxNEdZak9QcjVnV1JJQWhhLTdqeHVIOUlfY21wVFdHc05CZUZoWVRyX3NvQ2d5UkZzb3pKbjJIWi0xRk5WcXduV2EwOEFmY2NpYmx5cEk0?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -406,14 +415,6 @@
       "titulo": "Marta volta à Seleção Brasileira feminina para amistosos contra Estados Unidos em junho; veja convocação - ESPN Brasil",
       "fonte": "ESPN Brasil",
       "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxQQWJ5a2twNDJZc1BPMXR2UDdWMkppZExmRTZaZjZRd1l5clBaYUNzMEViNi14UTU2U2hJTXotdXlEUURRZFZxcFVBYkNxYW5OSDY2OW8zQm9LeTVQLWt0Q0w3N1ZwMFhTUWliODB6bk4wQXh6dkdBVGlyaHNRcVBLaGo0Yk5oemRWRElfaUcxVUU1eFY2NzA0VDRVWVpWVWMxWjdoMUo0M3lHNE41a2R0aVJzc2dOdVRESkdWdXIybzNvVnpSVWJySllUM0Z3eUwtT1JKNWVNWG8xbzdhMHZobjk1TXh5OHlsb011UXl3MU1KNjJ1VmVRRQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Formiga vê Copa no Brasil como impulso para futebol feminino: ‘O momento chegou’ - Estadão",
-      "fonte": "Estadão",
-      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPUVhocGFTWktFWjJrcEVtSl9lMTQtdDlEV1FCUmk1WThoVFluU2Q1b3J2ZkpzU2w5OFAwZDcyVWVwQko2RHgyQTl4X0Z2TTZqSU8zYTZUZDZKb2N6TEdHelB4OFNGWEU0cTd6Wmt3WUZwS2ZoVktvZzM0bEljM1NOeEcwS2ZwNnNJeWl6V3RkREZMczlSRkFvYmEweU80NF8ybUNYWGg2dDg5d2VBUkRnRzd4V1ZHMEQzbHR2cHczakRfaVFYNWZF0gHMAUFVX3lxTE83NXRLR3VPQ1VkZ2dGUkhVSi1LLVc4eDg4UjFRa01VbjFoRzFMTGk5WXJzdW5Qb2xtRzBuWloyQnhkdWJhYUZfeUNOLUpaam5QUmpJMk9zVUMyWHUxR2k3Y1FwVU40bzB2SEJlR3V0cmY5TVRsX3oyb1Z1a2J4cFRIcGVoUHJ4bWlhZHliMzIxdmlVZ3hqUU12eG13N3N4d2hSX0JNcUFuMEMzV3NhMmlRX3RiOEdjcHFvMW1qSEQ3bzNNVEdUM2hqV29XUg?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -486,6 +487,14 @@
       "titulo": "Brasil estreia no Maracanã na Copa do Mundo Feminina de 2027 - Agora RN",
       "fonte": "Agora RN",
       "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOTmxMU2ZMcEhSQ1R0NlNoS3pGUE9nWXNrYjRneURwYW5ITkJtbnM4ZXAzcnNRbVBNdFhkOGxpNnpzR1lzdmE3a1RqR1hsNi1CZ3JXVk9kRDNRbzVieWI3QUNXdDVUQS1BQlZlMUk4SDlzSUN5X0YxMzdMSUFNT2JOeA?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa do Mundo Feminina: saiba tudo sobre o campeonato de 2027 no Brasil - viva.com.br",
+      "fonte": "viva.com.br",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNdm41OF9OelZFZXlET3lNOFRtWjUyRkI3cDhXclNqbVhkdHVWS0IyakVsMzlyRTF5UDJSSV93RDdXV000UG0yb2V4WVNuSjFiR0psZHE1Qmd6cjFWYzc1NjNBU2YzVVJiN2Jic3lmM3VOaGpMSE5YRkRyT2xxaWdsNDE1bnNWdFFMNXFYQVBJUEdFQjhHY3lUbDBGRGgybGdqcjFEV3hORQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
