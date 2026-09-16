@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 """v5.5 — fonte primária estrutural + extração segura de eventos da Seleção Feminina.
 
-Mantém o núcleo v5.4 e corrige somente a descoberta oficial:
-- consulta diretamente páginas/listagem oficiais da Seleção Feminina na CBF antes dos agregadores;
-- valida candidatos oficiais no próprio domínio CBF;
-- candidatos oficiais alimentam o extrator independentemente do Google News;
+Correção cirúrgica:
+- mantém todo o núcleo v5.4 e as 2 leituras Airtable;
+- consulta/valida a fonte oficial CBF antes dos agregadores;
+- corrige somente a URL oficial determinística dos amistosos, acompanhando a rota real da CBF;
 - Google News permanece fallback;
-- zero novas leituras Airtable (permanecem exatamente as 2 do núcleo);
-- deduplica contra dados.json e editorial/inbox.json;
 - não altera Merge, Alertas, Instagram, Saúde, schedules ou limites de frescor.
 """
 import importlib.util
@@ -28,6 +26,13 @@ _original_dump = pe.dump
 CBF_LISTINGS = (
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina',
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal',
+)
+
+# URL oficial atualmente publicada pela CBF. Continua fail-closed: a página precisa
+# responder no domínio CBF e o conteúdo precisa confirmar Seleção Feminina + Argentina
+# + contexto de amistoso antes de qualquer evento ser criado.
+CBF_OFFICIAL_EVENT_PAGES = (
+    'https://www.cbf.com.br/selecao-brasileira/noticias/noticias/selecao-feminina-principal/selecao-feminina-enfrenta-a-argentina-dias-10-e-13-de-outubro-em-porto-alegre-e-recife',
 )
 
 EVENT_RULES = (
@@ -71,14 +76,11 @@ def _extract_links(raw, base_url):
         href=html.unescape(href).strip()
         if href.startswith('/'):
             href=urllib.parse.urljoin(base_url, href)
-        if 'cbf.com.br' not in urllib.parse.urlparse(href).netloc.casefold():
-            continue
-        if '/noticias/' not in href:
-            continue
+        if 'cbf.com.br' not in urllib.parse.urlparse(href).netloc.casefold(): continue
+        if '/noticias/' not in href: continue
         clean=v54.v2._clean_page_title(label)
         key=pe.urlnorm(href)
-        if not key or key in seen or not _official_link_matches(clean, href):
-            continue
+        if not key or key in seen or not _official_link_matches(clean, href): continue
         seen.add(key); out.append((href,clean))
     return out
 
@@ -86,41 +88,28 @@ def _extract_links(raw, base_url):
 def _validate_official_page(href, hint=''):
     try:
         data, final_url, headers=pe.request_bytes(
-            href,
-            headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/2.4)'},
-            timeout=15,
-        )
-        if 'cbf.com.br' not in urllib.parse.urlparse(final_url).netloc.casefold():
-            return None
+            href, headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/2.5)'}, timeout=15)
+        if 'cbf.com.br' not in urllib.parse.urlparse(final_url).netloc.casefold(): return None
         raw=data[:900000].decode('utf-8','ignore')
         title=v54.v2._clean_page_title(raw) or hint
-        # _clean_page_title espera HTML e recupera title/h1 quando possível; se não,
-        # usa o rótulo/slug já obtido da listagem.
-        if not title or '<' in title:
-            title=hint
+        if not title or '<' in title: title=hint
         combined=pe.norm(f'{title} {raw[:250000]}')
         if any(x in combined for x in ('sub 17','sub17','sub 20','sub20')) and 'selecao feminina principal' not in combined:
             return None
         for rule in EVENT_RULES:
-            if all(pe.norm(x) in combined for x in rule['title_needles']):
-                if any(x in combined for x in ('amistoso','amistosos','enfrenta','contra')):
-                    return {'origin':'cbf-primary-v5.5','title':title or hint,'source':'cbf.com.br','trusted_source_domain':'cbf.com.br','url':final_url,'pub':''}
+            if all(pe.norm(x) in combined for x in rule['title_needles']) and any(x in combined for x in ('amistoso','amistosos','enfrenta','contra')):
+                return {'origin':'cbf-primary-v5.5','title':title or hint,'source':'cbf.com.br','trusted_source_domain':'cbf.com.br','url':final_url,'pub':''}
     except Exception as exc:
         print(f'primary_cbf_page_warning={type(exc).__name__}:{exc}')
     return None
 
 
 def _primary_cbf_candidates():
-    """Descoberta oficial independente do Google News e do resolvedor de agregador."""
     out=[]; seen=set()
-    # 1) listagens oficiais; não depende de título do Google News.
     for listing_url in CBF_LISTINGS:
         try:
             data, final_url, headers=pe.request_bytes(
-                listing_url,
-                headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/2.4)'},
-                timeout=15,
-            )
+                listing_url, headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/2.5)'}, timeout=15)
             raw=data[:900000].decode('utf-8','ignore')
             links=_extract_links(raw, final_url)
             print(f'primary_cbf_listing={listing_url}|matches={len(links)}')
@@ -134,12 +123,10 @@ def _primary_cbf_candidates():
         except Exception as exc:
             print(f'primary_cbf_listing_warning={type(exc).__name__}:{exc}')
 
-    # 2) fallback oficial determinístico para a pauta conhecida: continua sendo URL CBF,
-    # validada em tempo de execução. Não cria evento se a página oficial não confirmar.
-    known_official=(
-        'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/selecao-feminina-enfrenta-a-argentina-dias-10-e-13-de-outubro-em-porto-alegre-e-recife',
-    )
-    for href in known_official:
+    # Fallback oficial determinístico. Não depende do HTML da listagem, que pode mudar.
+    # A URL foi corrigida para a rota efetivamente publicada pela CBF e continua sendo
+    # validada pelo conteúdo antes de alimentar o extrator.
+    for href in CBF_OFFICIAL_EVENT_PAGES:
         key=pe.urlnorm(href)
         if key in seen: continue
         candidate=_validate_official_page(href,'Seleção Feminina enfrenta a Argentina dias 10 e 13 de outubro em Porto Alegre e Recife')
@@ -153,13 +140,10 @@ def _primary_cbf_candidates():
 def _events_from_candidates(candidates):
     known=_known_event_keys(); out=[]
     for c in candidates:
-        if str(c.get('trusted_source_domain') or '').casefold()!='cbf.com.br':
-            continue
+        if str(c.get('trusted_source_domain') or '').casefold()!='cbf.com.br': continue
         title=str(c.get('title') or '').strip(); nt=pe.norm(title)
         for rule in EVENT_RULES:
             if not all(pe.norm(x) in nt for x in rule['title_needles']):
-                # página oficial validada pode ter título recuperado de forma imperfeita;
-                # a validação anterior já confirmou o conteúdo. Aceita origem oficial.
                 if c.get('origin')!='cbf-primary-v5.5': continue
             for date,city,uf,venue in rule['events']:
                 event_title=f"Brasil x {rule['opponent']} — amistoso da Seleção Feminina"
@@ -169,8 +153,7 @@ def _events_from_candidates(candidates):
                     continue
                 known.add(key)
                 out.append({
-                    'ID':f'CBF-{date}-{rule["opponent"].upper()}',
-                    'Titulo':event_title,
+                    'ID':f'CBF-{date}-{rule["opponent"].upper()}', 'Titulo':event_title,
                     'Status':'Planejado','Data':date,
                     'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),
                     'UF':uf,'Cidade':city,'Categoria':'Amistoso da Seleção Feminina',
@@ -185,7 +168,6 @@ def _events_from_candidates(candidates):
 
 def rss_candidates_v55():
     primary=_primary_cbf_candidates()
-    # Extrai do oficial ANTES de executar agregadores.
     pe._v55_official_events=_events_from_candidates(primary)
     rss=_original_rss_candidates()
     return primary+rss
