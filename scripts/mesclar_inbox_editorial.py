@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
-"""Mescla inclusões editoriais, bloqueia duplicações do mesmo fato e enfileira novidades."""
+"""Mescla inclusões editoriais, bloqueia duplicações do mesmo fato e enfileira novidades.
+
+Barreira de segurança: notícias que chegam ao inbox também passam por frescor no Merge.
+Isso impede que conteúdo antigo represado atravesse a etapa mesmo se tiver sido gerado
+antes das proteções atuais da Pesquisa Editorial.
+"""
 import json, pathlib, re, unicodedata
-from datetime import datetime
+from datetime import datetime, date
 from difflib import SequenceMatcher
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 INBOX = ROOT / 'editorial' / 'inbox.json'
 IG_STATE = ROOT / 'instagram' / 'conteudo-conhecido.json'
+NEWS_MAX_AGE_DAYS = 30
 
 DROP_EVENT_IDS = {
     'evt-wifs-20260914',
@@ -18,7 +24,6 @@ DROP_NEWS_LINK_PARTS = {
     'futebolbaiano.com.br/2026/09/r-400-milhoes-e-novos-voos-bahia-se-prepara-para-receber-turistas-na-copa.html',
     'gov.br/esporte/pt-br/noticias/sancionada-lei-que-cria-condicoes-para-realizacao-da-copa-do-mundo-feminina-de-2027',
 }
-# Chaves históricas que apontavam para cópias removidas. São retiradas de known/pending_new.
 DROP_IG_KEYS = {
     'instagram:evento:evt-wifs-20260914',
     'instagram:evento:evt-20260824-workshop-sede',
@@ -46,7 +51,6 @@ def norm(v):
 
 
 def key_norm(v):
-    # Compatível com o formato histórico de instagram/conteudo-conhecido.json.
     return ' '.join(str(v or '').strip().casefold().split())
 
 
@@ -81,6 +85,20 @@ def parse_date(v):
         return None
 
 
+def news_is_fresh(item, today=None):
+    """Fail-closed no Merge: data ausente/inválida, futura ou >30 dias não entra."""
+    published = parse_date(item.get('Data'))
+    if published is None:
+        return False, 'data_ausente_ou_invalida'
+    today = today or date.today()
+    age = (today - published).days
+    if age < -1:
+        return False, f'data_futura:{published.isoformat()}'
+    if age > NEWS_MAX_AGE_DAYS:
+        return False, f'noticia_antiga:{age}d'
+    return True, f'fresca:{age}d'
+
+
 def date_gap(a,b):
     da,db=parse_date(a),parse_date(b)
     return abs((da-db).days) if da and db else 9999
@@ -106,11 +124,7 @@ def legislative_progression(a,b):
 
 
 def semantic_fact_signature(item):
-    """Assinaturas apenas para fatos inequívocos; evita colapsar matérias só relacionadas."""
     text=norm(f"{item.get('Titulo','')} {str(item.get('Resumo',''))[:900]}")
-
-    # Mesmo fato operacional, ainda que outra fonte use título/URL diferentes:
-    # abertura das inscrições/candidaturas do programa de voluntariado da Copa 2027.
     volunteer=('voluntar' in text)
     applications=('inscric' in text or 'candidat' in text)
     opening=any(term in text for term in (
@@ -119,12 +133,10 @@ def semantic_fact_signature(item):
     ))
     if volunteer and applications and opening:
         return 'voluntariado:inscricoes-abertas:2027'
-
     return ''
 
 
 def duplicate_incoming(a,b,kind):
-    """Deduplicação conservadora: fonte/URL diferente, sozinha, não cria fato novo."""
     if kind == 'eventos':
         if norm(a.get('ID')) and norm(a.get('ID')) == norm(b.get('ID')):
             return True
@@ -133,15 +145,13 @@ def duplicate_incoming(a,b,kind):
         if date_gap(a.get('Data'),b.get('Data')) == 0 and same_place(a,b,kind):
             return jac(a.get('Titulo'),b.get('Titulo')) >= 0.55 or seq(a.get('Titulo'),b.get('Titulo')) >= 0.82
         return False
-
     if url_norm(a.get('Link')) and url_norm(a.get('Link')) == url_norm(b.get('Link')):
         return True
     if norm(a.get('Titulo')) == norm(b.get('Titulo')):
         return True
     if legislative_progression(a,b):
         return False
-    sig_a=semantic_fact_signature(a)
-    sig_b=semantic_fact_signature(b)
+    sig_a=semantic_fact_signature(a); sig_b=semantic_fact_signature(b)
     if sig_a and sig_a == sig_b:
         return True
     if date_gap(a.get('Data'),b.get('Data')) <= 2 and same_place(a,b,kind):
@@ -152,22 +162,16 @@ def duplicate_incoming(a,b,kind):
 def explicit_cleanup(events, news):
     ev_removed=[]; ev=[]
     for x in events:
-        if raw_id(x.get('ID')) in DROP_EVENT_IDS:
-            ev_removed.append(x)
-        else:
-            ev.append(x)
-
+        if raw_id(x.get('ID')) in DROP_EVENT_IDS: ev_removed.append(x)
+        else: ev.append(x)
     nw_removed=[]; nw=[]; seen_urls=set()
     for x in news:
         u=url_norm(x.get('Link'))
         if any(url_norm(p) in u for p in DROP_NEWS_LINK_PARTS):
-            nw_removed.append(x)
-            continue
+            nw_removed.append(x); continue
         if u and u in seen_urls:
-            nw_removed.append(x)
-            continue
-        if u:
-            seen_urls.add(u)
+            nw_removed.append(x); continue
+        if u: seen_urls.add(u)
         nw.append(x)
     return ev,nw,ev_removed,nw_removed
 
@@ -184,10 +188,7 @@ def main():
     events=load(ROOT/'dados.json',[])
     news=load(ROOT/'noticias.json',[])
     state=load(IG_STATE,{'known':[],'pending_new':[]})
-    original_events=list(events)
-    original_news=list(news)
-    original_state=json.loads(json.dumps(state))
-
+    original_events=list(events); original_news=list(news); original_state=json.loads(json.dumps(state))
     events,news,removed_events,removed_news=explicit_cleanup(events,news)
     inbox=load(INBOX,{'eventos':[],'noticias':[]})
 
@@ -196,8 +197,13 @@ def main():
         if not any(duplicate_incoming(x,y,'eventos') for y in events+fresh_events):
             fresh_events.append(x)
 
-    fresh_news=[]
+    fresh_news=[]; stale_news=[]
     for x in inbox.get('noticias',[]):
+        fresh, reason = news_is_fresh(x)
+        if not fresh:
+            stale_news.append((x, reason))
+            print(f"noticia_descartada_frescor={reason}|{x.get('Data','')}|{x.get('Titulo','')}")
+            continue
         if not any(duplicate_incoming(x,y,'noticias') for y in news+fresh_news):
             fresh_news.append(x)
 
@@ -208,20 +214,18 @@ def main():
     drop |= {instagram_key('eventos',x) for x in removed_events}
     drop |= {instagram_key('noticias',x) for x in removed_news}
     drop.discard('')
-    known=[k for k in dict.fromkeys(state.get('known',[])) if key_norm(k) not in {key_norm(d) for d in drop}]
-    pending=[k for k in dict.fromkeys(state.get('pending_new',[])) if key_norm(k) not in {key_norm(d) for d in drop}]
+    drop_norm={key_norm(d) for d in drop}
+    known=[k for k in dict.fromkeys(state.get('known',[])) if key_norm(k) not in drop_norm]
+    pending=[k for k in dict.fromkeys(state.get('pending_new',[])) if key_norm(k) not in drop_norm]
 
-    # Garante que cada registro canônico existente tenha sua chave histórica correta.
     for kind,items in (('eventos',events),('noticias',news)):
         for x in items:
             k=instagram_key(kind,x)
-            if k and k not in known:
-                known.append(k)
+            if k and k not in known: known.append(k)
     for kind,items in (('eventos',fresh_events),('noticias',fresh_news)):
         for x in items:
             k=instagram_key(kind,x)
-            if k and k not in pending:
-                pending.append(k)
+            if k and k not in pending: pending.append(k)
     state={'known':known,'pending_new':pending}
 
     if events != original_events:
@@ -233,12 +237,13 @@ def main():
     if inbox.get('eventos') or inbox.get('noticias'):
         INBOX.write_text(json.dumps({'eventos':[],'noticias':[]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
-    discarded=len(inbox.get('eventos',[]))+len(inbox.get('noticias',[]))-len(fresh_events)-len(fresh_news)
+    duplicate_discarded=(len(inbox.get('eventos',[]))-len(fresh_events)) + (len(inbox.get('noticias',[]))-len(fresh_news)-len(stale_news))
     print(f'eventos_duplicados_removidos={len(removed_events)}')
     print(f'noticias_duplicadas_removidas={len(removed_news)}')
     print(f'eventos_incluidos={len(fresh_events)}')
     print(f'noticias_incluidas={len(fresh_news)}')
-    print(f'itens_descartados_como_duplicados={discarded}')
+    print(f'noticias_descartadas_por_frescor={len(stale_news)}')
+    print(f'itens_descartados_como_duplicados={max(0,duplicate_discarded)}')
     print(f'chaves_instagram_removidas={len(drop)}')
     return 0
 
