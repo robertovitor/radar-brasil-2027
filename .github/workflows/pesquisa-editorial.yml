@@ -1,6 +1,6 @@
 name: Pesquisa editorial Radar
 
-# Manutenção 2026-09-16: ativa camada v5.4 sem alterar schedule nem arquitetura.
+# Manutenção 2026-09-16: ativa camada v5.5 cirúrgica sem alterar schedule nem arquitetura.
 on:
   schedule:
     - cron: "45 * * * *"
@@ -16,6 +16,7 @@ on:
       - 'scripts/pesquisa_editorial_compat_v5_2.py'
       - 'scripts/pesquisa_editorial_compat_v5_3.py'
       - 'scripts/pesquisa_editorial_compat_v5_4.py'
+      - 'scripts/pesquisa_editorial_compat_v5_5.py'
       - 'scripts/limpar_resumos_noticias.py'
       - '.github/workflows/pesquisa-editorial.yml'
 
@@ -53,7 +54,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          python scripts/pesquisa_editorial_compat_v5_4.py
+          python scripts/pesquisa_editorial_compat_v5_5.py
           code=$?
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
