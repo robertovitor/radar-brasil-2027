@@ -32,7 +32,7 @@ CBF_LISTINGS = (
 # responder no domínio CBF e o conteúdo precisa confirmar Seleção Feminina + Argentina
 # + contexto de amistoso antes de qualquer evento ser criado.
 CBF_OFFICIAL_EVENT_PAGES = (
-    'https://www.cbf.com.br/selecao-brasileira/noticias/noticias/selecao-feminina-principal/selecao-feminina-enfrenta-a-argentina-dias-10-e-13-de-outubro-em-porto-alegre-e-recife',
+    'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/selecao-feminina-enfrenta-a-argentina-dias-10-e-13-de-outubro-em-porto-alegre-e-recife',
 )
 
 EVENT_RULES = (
