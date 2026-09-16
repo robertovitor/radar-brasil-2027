@@ -2,6 +2,7 @@
 """Camada v5.1: correções cirúrgicas sem alterar arquitetura ou leituras Airtable.
 
 - normaliza sugestões já lidas ANTES do parser/validador v5;
+- reconhece URLs aninhadas em valores Airtable sem nova leitura;
 - só recupera título a partir de URL em domínio confiável;
 - mantém a porta editorial v5 (fonte, título, relevância, frescor e dedupe);
 - melhora o fallback Google News usando o orçamento de validação já existente;
@@ -27,21 +28,51 @@ pe = v5.pe
 compat = v2.compat
 _v5_candidate_from_record = v5.candidate_from_record_v5
 
-# Alias sozinho não bastava: o fallback v2 também exige pe.trusted_url(probe).
-# A inclusão continua fail-closed: URL, domínio final e título da página ainda são validados.
 if 'otempo.com.br' not in pe.TRUSTED_DOMAINS:
     pe.TRUSTED_DOMAINS = tuple(pe.TRUSTED_DOMAINS) + ('otempo.com.br',)
 
 
+def _urls_nested(value, depth=0):
+    """Extrai URLs de strings/listas/objetos Airtable já carregados, sem I/O externo."""
+    if depth > 4 or value in (None, ''):
+        return []
+    if isinstance(value, dict):
+        out = []
+        # Primeiro chaves semanticamente fortes; depois demais valores para anexos/lookups.
+        ordered = []
+        for key in ('url', 'href', 'link', 'value'):
+            if key in value:
+                ordered.append(value.get(key))
+        ordered.extend(v for k, v in value.items() if k not in ('url', 'href', 'link', 'value'))
+        for item in ordered:
+            out.extend(_urls_nested(item, depth + 1))
+        return out
+    if isinstance(value, (list, tuple)):
+        out = []
+        for item in value:
+            out.extend(_urls_nested(item, depth + 1))
+        return out
+    text = html.unescape(str(value).strip())
+    if not text:
+        return []
+    return [u.rstrip('.,);]') for u in re.findall(r'https?://[^\s<>"\']+', text, flags=re.I)]
+
+
 def _first_embedded_url(fields):
-    """Fallback conservador para formulários: extrai uma URL explícita dos valores já lidos."""
+    """Fallback conservador: aceita somente URL HTTP(S) explícita nos valores já lidos."""
     for value in (fields or {}).values():
-        text = compat.scalar_text(value)
-        if not text:
-            continue
-        m = re.search(r'https?://[^\s<>"\']+', text, flags=re.I)
-        if m:
-            return m.group(0).rstrip('.,);]')
+        for url in _urls_nested(value):
+            if re.match(r'^https?://', url, flags=re.I):
+                return url
+    return ''
+
+
+def _named_value(fields, markers):
+    """Localiza valor apenas quando o NOME do campo contém marcador conhecido."""
+    for key, value in (fields or {}).items():
+        nk = compat.keynorm(key)
+        if any(marker in nk for marker in markers) and value not in (None, ''):
+            return value
     return ''
 
 
@@ -50,7 +81,7 @@ def _pre_normalize_record(record, kind):
     title = compat.find_title(fields, kind)
     link = compat.find_url(fields) or _first_embedded_url(fields)
 
-    # Não buscamos título em URL arbitrária enviada por formulário.
+    # Fail-closed: título automático somente se a própria URL já for de fonte confiável.
     if link and not title and pe.trusted_url(link):
         title = v2._title_from_url(link)
 
@@ -63,7 +94,7 @@ def _pre_normalize_record(record, kind):
         raw_date = compat.value_by_alias(fields, (
             'Data', 'Data do evento', 'Data do Evento', 'Data informada',
             'Data do evento informada', 'Data sugerida'
-        ))
+        )) or _named_value(fields, ('data evento', 'data informada', 'data sugerida'))
         normalized = v3._normalize_event_date(raw_date)
         parsed = compat.parse_date(normalized)
         if parsed:
@@ -72,7 +103,7 @@ def _pre_normalize_record(record, kind):
         raw_date = compat.value_by_alias(fields, (
             'Data', 'Data da notícia', 'Data da noticia',
             'Data de publicação', 'Data de publicacao'
-        ))
+        )) or _named_value(fields, ('data noticia', 'data publicacao'))
         parsed = compat.parse_date(raw_date)
         if parsed:
             fields['Data'] = parsed
@@ -92,13 +123,7 @@ pe.candidate_from_record = candidate_from_record_v5_1
 
 
 def _search_editorial_url_v5_1(title, source):
-    """Usa melhor as duas validações por pauta sem aumentar buscas externas.
-
-    v2 validava no máximo 1 resultado do DuckDuckGo e reservava a segunda validação
-    ao Bing RSS; quando o RSS não devolvia URL editorial, o orçamento ficava ocioso.
-    Aqui validamos até 2 candidatos reais do primeiro resultado já baixado. Bing só é
-    consultado se ainda houver orçamento. Os limites globais do v2 permanecem intactos.
-    """
+    """Usa melhor as duas validações por pauta sem aumentar buscas externas."""
     if v2._fallback_searches >= v2.MAX_FALLBACK_SEARCHES:
         return ''
     domain = v2._source_domain(source)
@@ -128,8 +153,6 @@ def _search_editorial_url_v5_1(title, source):
     except Exception as exc:
         print(f'google_news_search_warning=duckduckgo-v5.1|{type(exc).__name__}:{exc}')
 
-    # Só faz a requisição de fallback se o primeiro caminho não consumiu as 2
-    # validações permitidas para esta pauta.
     if validations < v2.MAX_VALIDATIONS_PER_SEARCH:
         rss_url = 'https://www.bing.com/news/search?' + urllib.parse.urlencode({
             'q': query, 'format': 'rss', 'setlang': 'pt-BR'
@@ -155,8 +178,6 @@ def _search_editorial_url_v5_1(title, source):
     return ''
 
 
-# O resolvedor v2 consulta esta função em tempo de execução; trocar somente este ponto
-# preserva RSS, GDELT, dedupe e todos os demais limites já existentes.
 v2._search_editorial_url = _search_editorial_url_v5_1
 
 if __name__ == '__main__':
