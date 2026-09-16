@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""v5.5 — extração segura de eventos da Seleção Feminina descobertos na pesquisa.
+"""v5.5 — fonte primária efetiva + extração segura de eventos da Seleção Feminina.
 
-Mantém a v5.4 e acrescenta somente uma ponte notícia -> evento:
-- usa os candidatos RSS/Google News JÁ coletados pela v5.4 (zero novas leituras Airtable);
-- aceita evento quando título + fonte confiável deixam confronto/data/local inequívocos;
-- não exige que a notícia tenha sido aprovada como notícia antes;
-- não transforma notícias genéricas em eventos;
+Mantém a v5.4 e corrige a precedência da pesquisa:
+- consulta a listagem oficial da Seleção Feminina na CBF ANTES dos agregadores;
+- reaproveita o cache/listagem pública já implementado na v5.3 (zero novas leituras Airtable);
+- candidatos oficiais relevantes alimentam o extrator mesmo que Google News falhe;
+- Google News continua fallback, não fonte primária;
 - deduplica contra dados.json e editorial/inbox.json;
 - não altera Merge, Alertas, Instagram, Saúde, schedules ou limites de frescor.
 """
@@ -21,14 +21,11 @@ pe = v54.pe
 _original_rss_candidates = pe.rss_candidates
 _original_dump = pe.dump
 
-# Casos estruturados devem ser raros e comprováveis. O gatilho não depende mais de a
-# notícia virar notícia aprovada; basta a pauta já descoberta pela pesquisa, fonte
-# confiável/reconhecida e título inequívoco.
 EVENT_RULES = (
     {
         'opponent': 'Argentina',
         'title_needles': ('selecao', 'feminina', 'argentina'),
-        'source_allow': ('cbf.com.br', 'ge.globo.com', 'agorars.com.br'),
+        'source_allow': ('cbf.com.br', 'ge.globo.com', 'agorars.com.br', 'cbnrecife.com'),
         'events': (
             ('2026-10-10', 'Porto Alegre', 'RS', 'Beira-Rio'),
             ('2026-10-13', 'São Lourenço da Mata', 'PE', 'Arena Pernambuco'),
@@ -52,16 +49,49 @@ def _known_event_keys():
 
 
 def _source_domain(candidate):
-    # v5.4 já marca trusted_source_domain quando reconhece a fonte do Google News.
     domain=str(candidate.get('trusted_source_domain') or '').casefold().strip()
     if domain: return domain
     source=str(candidate.get('source') or '').casefold()
-    # reaproveita o resolvedor existente; não faz request adicional.
     try:
         domain=v54.v2._source_domain(source) or ''
     except Exception:
         domain=''
     return domain.casefold()
+
+
+def _primary_cbf_candidates():
+    """Transforma links da listagem oficial CBF em candidatos antes do RSS.
+
+    A leitura HTTP é a mesma listagem pública/cacheada da v5.3; não toca Airtable.
+    Só expõe pautas inequivocamente ligadas à Seleção Feminina e às regras de evento.
+    """
+    out=[]; seen=set()
+    try:
+        listing=v54.v53._load_cbf_listing()
+    except Exception as exc:
+        print(f'primary_cbf_v55_warning={type(exc).__name__}:{exc}')
+        return out
+    for href,label in listing:
+        title=str(label or '').strip()
+        nt=pe.norm(title)
+        if not title or not href: continue
+        if 'feminina' not in nt: continue
+        if not any(all(pe.norm(x) in nt for x in rule['title_needles']) for rule in EVENT_RULES):
+            continue
+        key=pe.urlnorm(href)
+        if not key or key in seen: continue
+        seen.add(key)
+        out.append({
+            'origin':'cbf-primary-v5.5',
+            'title':title,
+            'source':'cbf.com.br',
+            'trusted_source_domain':'cbf.com.br',
+            'url':href,
+            'pub':'',
+        })
+        print(f'primary_cbf_event_candidate={title[:160]}|{href}')
+    print(f'primary_cbf_event_candidates={len(out)}')
+    return out
 
 
 def _events_from_candidates(candidates):
@@ -73,7 +103,6 @@ def _events_from_candidates(candidates):
         for rule in EVENT_RULES:
             if not all(pe.norm(x) in nt for x in rule['title_needles']): continue
             if not any(allowed in domain for allowed in rule['source_allow']): continue
-            # Proteção adicional: a pauta precisa falar explicitamente em amistoso/jogo.
             if not any(x in nt for x in ('amistoso','jogo','enfrenta','contra')): continue
             for date,city,uf,venue in rule['events']:
                 event_title=f"Brasil x {rule['opponent']} — amistoso da Seleção Feminina"
@@ -98,7 +127,7 @@ def _events_from_candidates(candidates):
                     'Latitude':None,
                     'Longitude':None,
                     'Link':str(c.get('url') or ''),
-                    'Observacoes':f"Amistoso Brasil x {rule['opponent']} identificado em pauta recente de fonte confiável; data e local estruturados pela regra editorial do Radar.",
+                    'Observacoes':f"Amistoso Brasil x {rule['opponent']} identificado a partir de fonte oficial/prioritária ou fonte confiável da pesquisa; data e local estruturados pela regra editorial do Radar.",
                     'Mes':'',
                     'Ano':int(date[:4]),
                     'Regiao':'',
@@ -108,7 +137,10 @@ def _events_from_candidates(candidates):
 
 
 def rss_candidates_v55():
-    candidates=_original_rss_candidates()
+    # PRECEDÊNCIA REAL: CBF primeiro. Só depois executa RSS/Google News da v5.4.
+    primary=_primary_cbf_candidates()
+    rss=_original_rss_candidates()
+    candidates=primary+rss
     pe._v55_official_events=_events_from_candidates(candidates)
     return candidates
 
@@ -120,7 +152,6 @@ def dump_v55(path,obj):
         extra=getattr(pe,'_v55_official_events',[])
         if extra:
             existing=list(obj.get('eventos',[]))
-            # Segunda barreira de dedupe, inclusive se o núcleo adicionou o mesmo evento.
             keys={(str(x.get('Data') or ''),pe.norm(x.get('Titulo')),pe.norm(x.get('Cidade'))) for x in existing if isinstance(x,dict)}
             added=0
             for event in extra:
