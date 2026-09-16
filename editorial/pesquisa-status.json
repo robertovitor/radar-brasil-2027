@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260916-15",
-  "started_at": "2026-09-16T15:58:51-03:00",
-  "completed_at": "2026-09-16T16:00:56-03:00",
+  "cycle_id": "20260916-16",
+  "started_at": "2026-09-16T16:05:39-03:00",
+  "completed_at": "2026-09-16T16:07:31-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -17,9 +17,9 @@
   ],
   "sugestoes_lidas": 23,
   "sugestoes_noticias_lidas": 23,
-  "candidatos_publicos": 90,
+  "candidatos_publicos": 91,
   "aprovados_novos": 0,
-  "rejeitados": 111,
+  "rejeitados": 112,
   "duplicados": 0,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
@@ -231,6 +231,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Beira-Rio é o primeiro estádio a receber vistoria técnica para a Copa do Mundo Feminina - GZH",
+      "fonte": "GZH",
+      "url": "https://news.google.com/rss/articles/CBMinAJBVV95cUxNRFp3cmNSY3p5X3FjY2hJZVpyVVE5Sk15bzVMUGVGbDBRaEpCZExqaUhMZFp6eV96dDdtemYtRHYxd25TVkNWRWFXNk1WYkl5Rmxnc3F4MUI5b3A1WTVxUE1uSjFnc0NsWlF1VDhpZkJ5Y1NSdjFma2pDbnlodkhKRW5FMkxYSnBFbE9WVjZQWXNFVWhadkxkbXgxMjd0Zkc1dkthZ1F6TVFlSTdIVV92ME80YXBLbGt2UFVmY0wwZ1NaZTAzam02anJXOExOSHRhMHpNWUlLVmhqRjNBQ3hydGZQRE13VGhyOTl2dEZTVVVjalJxZVNRZk02aTFCazBTYVlGRHRudFpLYkRKbW5iLXZIY2dMYlJwR1J1TQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Seleção Brasileira Feminina enfrenta a Argentina em amistoso na Arena de Pernambuco - CBN Recife",
       "fonte": "CBN Recife",
       "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQQmZkMmNkZW9VWDItRDBwUmhBVnlMZEJSSndZbGpLOWdUSlVsOEg5RkdjY2RjZUQ4cUhkYTNCZ2N5QkVROENfVWwyR0gyZ3g3a0JGdlNwWEc3bXJTMFZHNFNDRktRbDRnTHFlelBlUF9mcUFnNURadllORkQ1TVlzSi1IbWpJSFhqeUV5eUh0blJHU2hYa1RWTjd0SlB3YmstX1lZMVcwdmhHZzdVaHQ2SmV5alpRRjl2MFBYMTdR?oc=5",
@@ -359,9 +367,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027: saiba quais estádios vão sediar o torneio no Brasil - ND Mais",
-      "fonte": "ND Mais",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQeU41LWhCcFRsRDdOUlBpMVIwQ29rTHJkSmZ2aEYxVkVBcWZsb1g3ZVlzZk1LVlQ5X2o3Z0l1M012NzNlcHhnb2NaUGVuSURpYmtteHZ1WTBpRVdRUlRvd2lBcThEUk5LR2EyWEdOWXk2aUJXVk9kWnhQU01YQnUzWHRkRUZaU2VxWm1tQ0lKUGJDRmxyMFZKOVRNY3hDSjNQekJZcFRxTkZxREFxMmRz?oc=5",
+      "titulo": "Beira-Rio, em Porto Alegre, receberá sete jogos da Copa do Mundo Feminina; confira as datas - abcmais.com",
+      "fonte": "abcmais.com",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPUTlxcFdMYkdhZDg0YnlSSjR6Q203djY4TW5hTHBhQzRsMTJGSGswSnlfRW5KRldqQ3pqemZjQUVHVFF5YUZUczZlS0ROZFZvbWQ1WTQwV01BdVloaW1Ld0k4WDBoMks3VlNnOVBXQTEtZHA3R0dGTTltWGxUcmVSam1Lcy1wTFQ4ZnhHSGVpN25xMEVvOWVER0Y1YzFhSzZtbW41QUdlTjBBcndoWWtiSkMzWTVjMW1mdXJlVmYwMA?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -407,8 +415,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027: Fifa define onde seleção brasileira jogará na fase de grupos - VEJA",
-      "fonte": "VEJA",
+      "titulo": "Copa do Mundo Feminina 2027: Fifa define onde seleção brasileira jogará na fase de grupos - veja.abril.com.br",
+      "fonte": "veja.abril.com.br",
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNdmNjYXNycGhVdzBCSG9CMmN4aXBWTHhkYTdncU1QOVJrcFN5eEJ5VnhmcUZpSmU5bGNDbmxLcDhTWWpUZk9WbVBrZk1DRy1scGxSeGRaM25WSnBaNzdmTjY4bnRGSThYQThSOEg2b283WU82LXBlR0p3M3U4ZVdIMHd5MXBZQ01fbjVpUW5YbXZBdDlVNlJhd0VCcmh3V1NjWm9nRkIxRDBpSlR4d2NDdHZyUVQ3RjFaNjdDMktZLTc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -583,8 +591,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027 no Brasil: veja os preços estimados dos ingressos - bpmoney.com.br",
-      "fonte": "bpmoney.com.br",
+      "titulo": "Copa do Mundo Feminina 2027 no Brasil: veja os preços estimados dos ingressos - BPMoney",
+      "fonte": "BPMoney",
       "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPV0ZmWWgwMlo3aHVJMUFQYnpLQjFYZUJWVnpsUzdCSjhoODdJNm03S0FlWUd2SklVMWF2bGlaaF9uRHJPM0I1WnllOVBERHRWaU1MdE0yNGNrMHNSYm5WZFdTN3JmRTE2dWVGYkl5WGtXb1lHa1A1Q0I3R1lrZFdpc045Qk1SNmU2SVpxV1dYakxHcW8?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -791,8 +799,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina de 2027 terá 32 seleções e oito cidades-sede no Brasil - A Crítica de Campo Grande",
-      "fonte": "A Crítica de Campo Grande",
+      "titulo": "Copa do Mundo Feminina de 2027 terá 32 seleções e oito cidades-sede no Brasil - acritica.net",
+      "fonte": "acritica.net",
       "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMm5aTjFneUQxVG42MUxxUGJ1TjFmbWFDSVg1ZTlRWU5hLXZDYkpacXBNRU9nc1Rsb1IzaTRDLUZlS1V3QkhNV2J0ZU5rbzY0dVlKQk5KT29KdXpEWkNod1FGRGVkR0ZDeVhPYmFhWTFpOHpsQ1BuVlhBaExXZHY4dVRB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
