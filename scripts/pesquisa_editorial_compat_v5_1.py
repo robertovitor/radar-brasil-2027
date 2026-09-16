@@ -5,7 +5,7 @@
 - reconhece URLs aninhadas em valores Airtable sem nova leitura;
 - só recupera título a partir de URL em domínio confiável;
 - mantém a porta editorial v5 (fonte, título, relevância, frescor e dedupe);
-- melhora o fallback Google News usando o orçamento de validação já existente;
+- melhora o fallback Google News dentro do mesmo orçamento de busca/validação;
 - inclui O TEMPO na lista explícita de fontes editoriais confiáveis.
 
 Não altera schedules, Airtable, merge, alertas, Instagram ou saúde.
@@ -38,7 +38,6 @@ def _urls_nested(value, depth=0):
         return []
     if isinstance(value, dict):
         out = []
-        # Primeiro chaves semanticamente fortes; depois demais valores para anexos/lookups.
         ordered = []
         for key in ('url', 'href', 'link', 'value'):
             if key in value:
@@ -81,7 +80,6 @@ def _pre_normalize_record(record, kind):
     title = compat.find_title(fields, kind)
     link = compat.find_url(fields) or _first_embedded_url(fields)
 
-    # Fail-closed: título automático somente se a própria URL já for de fonte confiável.
     if link and not title and pe.trusted_url(link):
         title = v2._title_from_url(link)
 
@@ -123,7 +121,14 @@ pe.candidate_from_record = candidate_from_record_v5_1
 
 
 def _search_editorial_url_v5_1(title, source):
-    """Usa melhor as duas validações por pauta sem aumentar buscas externas."""
+    """Resolve Google News sem confiar no agregador e sem ampliar os limites globais.
+
+    Mantém no máximo duas validações editoriais por pauta e duas consultas públicas:
+    DuckDuckGo HTML e, somente se necessário, Bing HTML. O segundo caminho substitui
+    o antigo Bing RSS, que frequentemente devolvia outro link de agregador em vez da
+    URL do veículo. A aprovação continua dependendo da página real: domínio confiável,
+    domínio final igual ao veículo e título semanticamente compatível.
+    """
     if v2._fallback_searches >= v2.MAX_FALLBACK_SEARCHES:
         return ''
     domain = v2._source_domain(source)
@@ -132,47 +137,58 @@ def _search_editorial_url_v5_1(title, source):
 
     v2._fallback_searches += 1
     editorial_title = v2._strip_source_suffix(title)
-    query = f'site:{domain} {v2._search_terms(editorial_title)}'
+    terms = v2._search_terms(editorial_title)
+    query = f'site:{domain} {terms}'
     validations = 0
+    seen = set()
+
+    def validate_results(raw, engine):
+        nonlocal validations
+        for href, _label in v2._result_candidates(raw, domain):
+            if validations >= v2.MAX_VALIDATIONS_PER_SEARCH:
+                break
+            key = compat.pe.urlnorm(href)
+            if not key or key in seen:
+                continue
+            seen.add(key)
+            validations += 1
+            if v2._validate_editorial_candidate(href, editorial_title, domain):
+                print(f'google_news_search_resolved={engine}-v5.1|{domain}|{href}')
+                return href
+        return ''
 
     duck_url = 'https://html.duckduckgo.com/html/?' + urllib.parse.urlencode({'q': query})
     try:
         data, _, _ = pe.request_bytes(
             duck_url,
-            headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.8)'},
+            headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.9)'},
             timeout=12,
         )
-        raw = data[:500000].decode('utf-8', 'ignore')
-        for href, _label in v2._result_candidates(raw, domain):
-            if validations >= v2.MAX_VALIDATIONS_PER_SEARCH:
-                break
-            validations += 1
-            if v2._validate_editorial_candidate(href, editorial_title, domain):
-                print(f'google_news_search_resolved=duckduckgo-v5.1|{domain}|{href}')
-                return href
+        resolved = validate_results(data[:500000].decode('utf-8', 'ignore'), 'duckduckgo')
+        if resolved:
+            return resolved
     except Exception as exc:
         print(f'google_news_search_warning=duckduckgo-v5.1|{type(exc).__name__}:{exc}')
 
+    # Substitui Bing RSS por HTML: mesma quantidade máxima de consultas externas,
+    # mas com maior chance de expor a URL editorial direta do veículo.
     if validations < v2.MAX_VALIDATIONS_PER_SEARCH:
-        rss_url = 'https://www.bing.com/news/search?' + urllib.parse.urlencode({
-            'q': query, 'format': 'rss', 'setlang': 'pt-BR'
+        bing_url = 'https://www.bing.com/search?' + urllib.parse.urlencode({
+            'q': query,
+            'setlang': 'pt-BR',
+            'cc': 'br',
         })
         try:
             data, _, _ = pe.request_bytes(
-                rss_url,
-                headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.8)'},
+                bing_url,
+                headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/1.9)'},
                 timeout=12,
             )
-            raw = data[:500000].decode('utf-8', 'ignore')
-            for href in v2._rss_result_candidates(raw, domain):
-                if validations >= v2.MAX_VALIDATIONS_PER_SEARCH:
-                    break
-                validations += 1
-                if v2._validate_editorial_candidate(href, editorial_title, domain):
-                    print(f'google_news_search_resolved=bing-rss-v5.1|{domain}|{href}')
-                    return href
+            resolved = validate_results(data[:600000].decode('utf-8', 'ignore'), 'bing-html')
+            if resolved:
+                return resolved
         except Exception as exc:
-            print(f'google_news_search_warning=bing-rss-v5.1|{type(exc).__name__}:{exc}')
+            print(f'google_news_search_warning=bing-html-v5.1|{type(exc).__name__}:{exc}')
 
     print(f'google_news_search_unresolved_v5.1={domain}|validations={validations}')
     return ''
