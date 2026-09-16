@@ -1,6 +1,6 @@
 name: Pesquisa editorial Radar
 
-# Manutenção 2026-09-16: ativa camada v5.3 sem alterar schedule nem arquitetura.
+# Manutenção 2026-09-16: ativa camada v5.4 sem alterar schedule nem arquitetura.
 on:
   schedule:
     - cron: "45 * * * *"
@@ -15,6 +15,7 @@ on:
       - 'scripts/pesquisa_editorial_compat_v5_1.py'
       - 'scripts/pesquisa_editorial_compat_v5_2.py'
       - 'scripts/pesquisa_editorial_compat_v5_3.py'
+      - 'scripts/pesquisa_editorial_compat_v5_4.py'
       - 'scripts/limpar_resumos_noticias.py'
       - '.github/workflows/pesquisa-editorial.yml'
 
@@ -52,7 +53,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          python scripts/pesquisa_editorial_compat_v5_3.py
+          python scripts/pesquisa_editorial_compat_v5_4.py
           code=$?
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
@@ -70,8 +71,6 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-          # Inbox/status continuam versionados juntos. noticias.json só entra se o
-          # saneamento conservador realmente encontrou um resumo contaminado.
           git add editorial/inbox.json editorial/pesquisa-status.json noticias.json
 
           if git diff --cached --quiet; then
