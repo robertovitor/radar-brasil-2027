@@ -85,6 +85,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-10T20:43:38.666694+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://www.estadao.com.br/esportes/futebol/formiga-ve-copa-no-brasil-como-impulso-para-futebol-feminino-o-momento-chegou-npres/",
+      "post_file": "instagram/fila/automatica/pa-no-brasil-como-impulso-para-futebol-feminino-o-momento-chegou-npres-11d78bc51f.json",
+      "reserved_at": "2026-09-16T20:05:46.559117+00:00",
+      "last_attempt_at": "2026-09-16T20:05:46.559117+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false
     }
   ]
 }
