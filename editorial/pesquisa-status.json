@@ -1,7 +1,7 @@
 {
   "cycle_id": "20260916-18",
-  "started_at": "2026-09-16T18:44:31-03:00",
-  "completed_at": "2026-09-16T18:46:22-03:00",
+  "started_at": "2026-09-16T18:48:52-03:00",
+  "completed_at": "2026-09-16T18:50:30-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -17,12 +17,12 @@
   ],
   "sugestoes_lidas": 23,
   "sugestoes_noticias_lidas": 23,
-  "candidatos_publicos": 90,
-  "aprovados_novos": 0,
-  "rejeitados": 111,
+  "candidatos_publicos": 92,
+  "aprovados_novos": 3,
+  "rejeitados": 110,
   "duplicados": 0,
-  "inbox_itens_adicionados": 0,
-  "inbox_commit_needed": false,
+  "inbox_itens_adicionados": 3,
+  "inbox_commit_needed": true,
   "auditoria": [
     {
       "origem": "airtable",
@@ -271,8 +271,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "MS tem autonomia sobre férias na Copa Feminina 2027 - Campo Grande News",
-      "fonte": "Campo Grande News",
+      "titulo": "MS tem autonomia sobre férias na Copa Feminina 2027 - campograndenews.com.br",
+      "fonte": "campograndenews.com.br",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOV1hVLXBob1F0TXk2cEZ1WFB5ZWh4cm5jZ2s2M3ZycHlZTm8wRHl5VkhNcDRVZnJUdlZZRWo4MzhYenZSMnp1R2VrNTdZekRvRW1ERkE5NnlVVERXWkZGQTlNS1FIa0FzVWVrWjNMWDRkZ2ZYYW5CM2hMemxPcFJhTUc1aEVBWGNBajVhUTlIdGlEYWxobHhBSVpqY3B3NUdQZGNCenN5cmc5X2Q0RnZrX1NB0gGyAUFVX3lxTE4yUHdzakZ1eXdIUmVRYkxvQTg2TXUtVFNNNDI5RzFjMmxCdWVaNGwzZERtVFFIZmpOUzUwWk9VMW1aaEhLODZLb0RuUVl3OGxkdlBmdi1aaDMxYm56aVJXRUdBYWZJcFFUUVVNTExQcGt3UEhjd1k0Q0pWTS1TczVySXNsb3ozNG5MSXo0cTRqZE1wLU1TeTdoeXVKaVVsdUhjQlFnczVDU2Y5UTdaT3RSWHc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -287,16 +287,16 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027 terá oito sedes no Brasil - ES Brasil",
-      "fonte": "ES Brasil",
+      "titulo": "Copa do Mundo Feminina 2027 terá oito sedes no Brasil - esbrasil.com.br",
+      "fonte": "esbrasil.com.br",
       "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1UUjNtemFPUExxeG95eGpyUUxjeGhiTXJ3OEJnRTc5WjhjOW00WFZHMXlRUU9JcGM5bXd3bk5CdXZidFFFbDU0a1d0RFF3VTlISFBWNmxCLVBPZUhKTDU5NzNYajlDRTgzX2tYWWFYNXEtUQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Brasil vira a chave para sediar o Mundial Feminino de 2027 - diariodocentrodomundo.com.br",
-      "fonte": "diariodocentrodomundo.com.br",
+      "titulo": "Brasil vira a chave para sediar o Mundial Feminino de 2027 - Diário do Centro do Mundo",
+      "fonte": "Diário do Centro do Mundo",
       "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPQkRlUEZ3UUNuRXVZeF8zS0RWcjZOM0dSWFBXMEhCWVFxemZEUkZlNTRvYlNEbE04bTlqRExCcERtN20tZjZRbVQwQU1kVGU0RUVKQnFvUHFyUWlpUDg2elgweWxUdWZJUmtFWUdMaHZLaHNqeDRSeUREeUdxaW0xTTlIWEZtNlBsblpZLTd3?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -375,17 +375,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Seleção Feminina terá amistosos contra Argentina e Japão antes da Copa de 2027 - itatiaia.com.br",
-      "fonte": "itatiaia.com.br",
+      "titulo": "Seleção Feminina terá amistosos contra Argentina e Japão antes da Copa de 2027 - Rádio Itatiaia",
+      "fonte": "Rádio Itatiaia",
       "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOMlV4Ni13cm5lTkRxSXpiUS1IM1ZERGFjcGhRMW1ncXo3NGdrWW83VjdfMFBHM1hWSVBQMXNSLU5NUFh4OHNKOXk4bm4za1E5MnBLSUk2TnJxOXZnQ2lTZ1VpQkp5NVRqRWVPZlhabVlWaFBHaWlLLWJrVzBYSFlrY2ZwVnhrblFZXzhTekdqNXFFLXdVMlN2S0lIVE5IQVRObDRrODduR0xvazRWeEYxbXJBZGwzcXhyQnRyX0Y5VTBBZEJTUFJQMmFOMVFMYzFQWFdraVJkZkw?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Seleção Brasileira Feminina confirma dois novos amistosos antes da Copa do Mundo, com jogo na Arena Pernambuco - JC",
-      "fonte": "JC",
-      "url": "https://news.google.com/rss/articles/CBMimwJBVV95cUxPc21ucGp2Nl81Q29pZzF4TGpETlN1SUVIbTJrcFhvSEdPek5LQW9BUUxKc0pQQWFfcTJIOWRPYUxBZDB3Y2R1XzF4TjRRclNOeUJqWXhyUTA5SEtuM1NXaG1iWk1QdFNuWFRBcG1lN3F6enY2NjYyb0IxemhPM2IwVEk2UWwtR01SckhtZGdCSmtxWVU3QURFNnNuV2tCTjVqOTNyOGtjQjVDcTFOcnNfMkR6b3lHd1NVQ2tyWEp5X1l3OTZuMVhTcWJORXZjUDdrUXl1OTZUR2VWNW9DcE8xc0tTWEJKZGZtOHktbVZpQmR5Tm9UbWU4MG1ZbGRSZVczQ2JHc3k1aTNkVmE2NEtDa05XRjVVWWQwM3Zn?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -479,8 +471,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa divulga calendário da Copa Feminina 2027 - correiodopovo.com.br",
-      "fonte": "correiodopovo.com.br",
+      "titulo": "Fifa divulga calendário da Copa Feminina 2027 - Correio do Povo",
+      "fonte": "Correio do Povo",
       "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQNmxPZFMwMThNMEZ5M0ZaQVVwdHE5Tk4zb21EQkI1dTA4ZFltTGpfSF9kcHpfYlNBNUFNbnZvOGlsM3lQWU9fc1c1WEtvRUZWUG1UMUItV2N5QmZCZXlHN1o3MmZhVXJGT1pVaUxEc09MRzZKUjdwVzRfdk4tM2o5SVg4M2x6TmphLVpwTWtzYzRJdndoWXVMMDhBWWw0UQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -551,8 +543,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina pode levar Nordeste a novo patamar no turismo internacional - ne9.com.br",
-      "fonte": "ne9.com.br",
+      "titulo": "Copa do Mundo Feminina pode levar Nordeste a novo patamar no turismo internacional - Portal NE9",
+      "fonte": "Portal NE9",
       "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1JcUk4VDFaYVFlcUV0cGNUOHFSM3pDb0pjeTl6U1hocS1nWXE3cV96U0ZFRnpyeVNaQ0ZFcWhrMWFJcGZ3Z0IzNEdXRnlnaEY1bG1zelhYUzk5eFd0RHMtS1EyM2lJRmZZampaSWtR?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -719,6 +711,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "FIFA lança marca da Copa Feminina 2027 no Rio - Portuguese Cri",
+      "fonte": "Portuguese Cri",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFB6ejEzekx1SmJHOEk3cms0TG54bURwdlZBMUJ1YnlqbHRFM05UYVNBWi1GOGcwa1lzWWQ5SHVETlVfOGFEX3VEMnZCX20wdHhvX05fck5YelR4bTlFRTFSd1BmVlFvbXlR?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Brasil começa a estruturar operação nacional para a Copa Feminina de 2027 - Portal IN - Pompeu Vasconcelos - Balada IN",
       "fonte": "Balada IN",
       "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOZEppNEdqTVcwM2s5ODA1b0kxRmpqczAzNy1JMWdWeHhzLVBmSlJTX3FSRmU5UHgxdkxxeGZ4dEY4VDREWTFWMU9OaERIbEtkYXpvNGJWc18yRmQ0RTY4VkJXTjNYcE95aHVyQkpHYnJHSThJYVg0TjdFcmdiaWhUS1cyU3pQMmR3TGdCcFpjSnBBcFNDWWtTZDF5UTF1N0xzdUwzUXVBYkd6dThqcjVJeEtNNHd4elk?oc=5",
@@ -743,8 +743,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Cristiane destaca legado para nova geração e reforça apoio da torcida rumo à Copa de 2027 - R7 Esportes",
-      "fonte": "R7 Esportes",
+      "titulo": "Cristiane destaca legado para nova geração e reforça apoio da torcida rumo à Copa de 2027 - esportes.r7.com",
+      "fonte": "esportes.r7.com",
       "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxOLWdGOXpNbzYtZWN2b29ZR04xcHBTX21hZkRMYjRxckgyY1lFa3RCdUUxNWc1WElFdkpuY01qeGJCbVE0bF9uVVI0aXd5VERPbFVJX2c3ZkVwTGhVQmUzQ1dGVGI1MmVYeUlmQVNtbV9CMTFZQm0yUFJ6dnFLa2hWaVIyNzdrLUVtODhHb0lNRHV0ZUs5elJ5ZGVVSlBJWGpoNFpTTXFvejRYa0dRUnc1bHRsX1RsV0Q3WXc4RjlpYXNqQ0xMUHp2Wm1RTmp0aWlLRWtKVFJFWQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -783,8 +783,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina de 2027 terá 32 seleções e oito cidades-sede no Brasil - acritica.net",
-      "fonte": "acritica.net",
+      "titulo": "Copa do Mundo Feminina de 2027 terá 32 seleções e oito cidades-sede no Brasil - A Crítica de Campo Grande",
+      "fonte": "A Crítica de Campo Grande",
       "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMm5aTjFneUQxVG42MUxxUGJ1TjFmbWFDSVg1ZTlRWU5hLXZDYkpacXBNRU9nc1Rsb1IzaTRDLUZlS1V3QkhNV2J0ZU5rbzY0dVlKQk5KT29KdXpEWkNod1FGRGVkR0ZDeVhPYmFhWTFpOHpsQ1BuVlhBaExXZHY4dVRB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -820,6 +820,14 @@
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNc0FUVzVraHphQ0FSRkROWkNvbU96SVVndkJHTW80eDhJQ1lJdlRWYWZTbTlHd2p0QjVGaHhUd0xIUFFRY3Z4U2h5M0FQZnl6M2hDUHlsUDRZVkdaaENneEhDUnZ1a1pOYjFSZXZTdUVYVzlpbXEtRU9mTXF3LXJSRFFmS0NRVTJYSmllVG5ud0VKMDNUS1JBa3Zra0VLY3dWYWYwaXVJN1JJbHdIQ3gwVWVxVG0zT2dVZDVPZHpocWZqc3ZVWVHSAdQBQVVfeXFMUGEzcjF2UWlvUG1mQnNFTElsak5XeFpFTXNtMkhkdEdRTVh2TGZlYlQyZFVTTWlEVG1NQm9JajRoUVJWR25mVUNQSW1Iem1fbEYyY2F3SW9rRlpIcU1Wc3lXRDc5LWdmYWdzV2lhZFpySFUzZWo4SUVzYXIxeXZNOUhkZlJwRFRWdTMxVlZiZXl3YVZPSzJ0dGhkaG9yN1lRbE5FV3NEWUlCampmZTJVY3dKS21FVUt3ajdWTHFuNkFXVnJVdWVCYUhBQzlMUzd3Y2FNdXA?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (852d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Seleção Brasileira Feminina confirma dois novos amistosos antes da Copa do Mundo, com jogo na Arena Pernambuco - jc.uol.com.br",
+      "fonte": "jc.uol.com.br",
+      "url": "https://news.google.com/rss/articles/CBMimwJBVV95cUxPc21ucGp2Nl81Q29pZzF4TGpETlN1SUVIbTJrcFhvSEdPek5LQW9BUUxKc0pQQWFfcTJIOWRPYUxBZDB3Y2R1XzF4TjRRclNOeUJqWXhyUTA5SEtuM1NXaG1iWk1QdFNuWFRBcG1lN3F6enY2NjYyb0IxemhPM2IwVEk2UWwtR01SckhtZGdCSmtxWVU3QURFNnNuV2tCTjVqOTNyOGtjQjVDcTFOcnNfMkR6b3lHd1NVQ2tyWEp5X1l3OTZuMVhTcWJORXZjUDdrUXl1OTZUR2VWNW9DcE8xc0tTWEJKZGZtOHktbVZpQmR5Tm9UbWU4MG1ZbGRSZVczQ2JHc3k1aTNkVmE2NEtDa05XRjVVWWQwM3Zn?oc=5",
+      "decisao": "aprovado",
+      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
     {
       "origem": "google-news-trusted-source",
@@ -919,11 +927,11 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Inter busca inspiração nos EUA para preparar Beira-Rio para a Copa do Mundo Feminina de 2027 - ge",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMi_gFBVV95cUxQR2Z1XzNibzJfOHNkWHBkWFpNMFlIbFVpSjM5VEdVTUxtTWVQNzlFMDZGb0FuUUVKM3RLbndjOFZRTWRheU9FUGtib24zNzZSbmZyZEE3c3lOaTk3Z004cjdQWXd2MFZUSW0tVzRTalkzMzNXZUtSODVoTW1ZZDVoblZibFJxREdPM3BXRFduUHhxY2ppWjhqakFVMFNDdVJWR0p5bDN4eVk3bnBvSm5JUDl4ejhPel9pYlkwUnhOdk4xaTdIR2tnMTNaUVkyMmZUTkdBZDdGV2VaYWV2Z2ZXanQyTFZ0b29XY1g5dXI0V3RmY3pKVVh6bE9ZTlFDd9IBjAJBVV95cUxQU3VyNVo1ZjhhdlZWM2M0bENEQTI2dHphckNTT2tpZk1VYzJOcGpHREZuOVNFZUV1Ri1ZMVhaYXZWRmUyY0RCdkZlVzN3MGRZZVVweElabnU1M0c5TW1EQkgtTGZFNFFHeUk0SGRhVS1wMXJpeDdtazRuXzhqZDJjNGdYLXY5MlZOSWRmRHhCY0tUTXlKSlVGOXgxbF94Vkszd0VTQ05yNGkyM19vUjdsM21jTWZ1X1FMbnJsYlhpOENxZEhWZ3h5ejZMYVk2QmM4b25lWTBWNHR4NkZQazF3dzhNSmVCWjJGcTlMczN5RXlJeklaYk9TTXdheFd6ZmdNajR1UDZxeFhxLWxV?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (78d)."
+      "titulo": "Copa do Mundo feminina 2027 terá abertura e final no Maracanã; São Paulo receberá 10 jogos - Estadão",
+      "fonte": "Estadão",
+      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOdUtZWXJJenVRUG1fZzhRS1NmMHo3UnR0ZHRtWTB0VXNWRmtzbXVhdktIb3Ric0p2ZGRVTzQ5WUs0Q3R5eHBDMHI0TWxDN0VvVTFwY3JlM2lYQTVKb1FBdUQ4am1ZTFNaaFVmdkFnd191UDkydWZYS0U1QlVuSTRlVDFERjJxRVBYN3ZHdjhEVDY0NWlGVGVpWV96Sm5Gd05YS1hZZkFqekxobXctWEdlUzJqbmREcjRqUVNnYlVseVBMOTBlLURDYjZXVnpKY2_SAdQBQVVfeXFMTmpXSmtQbGxnbmd0bTFsNTFuZmhfVmFSdjd3TWxzS2pJNE5zSXlGaFNpaEpKLURVNjNCeVpJdVV5TlhpcDNHVEE1dHU4RC0xZ2NXbV8ycGNVQVVLSjd4WktJbDJqd29JNWpBSy1aUndxSzRTMFVCNHg1bk1ONEFscEs0cHRIRk10bi0ybkJOMURJNWg2cTZMM2xVV2dhTXQ4OG5EVmM4TndzR2oySms1VzJsY3RKQm9EMHBOaGQtd1FWamZ1V2tsR2Y1R1NOSXU2dXZaZTA?oc=5",
+      "decisao": "aprovado",
+      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
     {
       "origem": "google-news-trusted-source",
@@ -932,6 +940,14 @@
       "url": "https://news.google.com/rss/articles/CBMikgJBVV95cUxPck5nWlFOOG1rRHJ6LXpIcEhreEJuZVlmc1hrNXdWS0NmN1RRc293TkhLTWJ3VkViRmNmRlNGV0xRTlcxTTNyeGpMX3lSSXp2cU9mY1B5Z1BMM0ZmM0QtaEFTY3RtNUJ0elItdGhDYV9iYzVFbTA0OUc5NEhLYk5mYnk1NlRKRFJHMHBFN2p2Q3BOckIyV0p3MkJnN2ZIaTlHOER4cTh1ODR3Yk1nY21pWEdwY19CaEFoQVF2OUdEdVFUYkJoNW9Wa3FIVVlLanRYYkt2S012S0k0TzJwUVR1bk9nT0ZNMlhDdlNZcWJWMHVEOG94MGo1Q3hid05TZlV0eDc3cXFKTFZyUUktdTh6ME5R?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (59d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Copa do Mundo Feminina 2027: veja os estádios onde a Seleção vai jogar - ge",
+      "fonte": "ge",
+      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQdk9DeGgtWS13a2xzZWdyMGE4cWRqN1Z5eWJ5ajBoZXNBemFrZTVBS01TRVFuRXpBSVhtbTZiVHFsMTh3V0d1QU51Y0tsVjZ6YThyeHdxNExDd0pMTWcyYk1NN0luRnNPVGNUM2c1WTRFMkhVTzg4b01CdE5QRWJhNFo4bXFDR0hDVWRBdTROakwyaXd0NzlMRTY1eDZpa0xOMjFUUzhFWlgzSWU0VThWSktOQ0dhYUhmRlgwU1cyVkhKZXlKYTJ6Q2xHclRHUlJrMlBnNUZZMzZpbldRT3fSAewBQVVfeXFMTTBCMXBPaWM2Zkl2dEltNnFLeFZxNG9ZNWp5LWVMbTZleExOZUJ1dDJEUXZ3ZUxsYkRDbDZfZWdBUWVWUEM3YXZ1UmRfTXJYNXdjdDZDZGVKaEFuM1pfUXdfRXd2SXlQekFoSkFFNmQzbVlWMU1USWIyNXJCUXI3VDR0bWEydjkzMjh5WVJPZzdKdGhkcUFzUWdvM2JlaDN6RkNiLXd2Q29ud0NZWUprQ21aV3NBWWJWd0hIMmtxMjJyNUJaSWV5RWZ6d3p6cWRIMlE3WTJkRHQyYlZtZ2xZNlNMNE1waTlMSFdqZUk?oc=5",
+      "decisao": "aprovado",
+      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     }
   ],
   "observacoes_operacionais": "Execução nativa GitHub. Exatamente duas leituras Airtable; pesquisa pública ampliada em múltiplos eixos via Google News RSS + GDELT, com deduplicação, filtro anti-base, confiança de domínio, validação de conteúdo e trilha de auditoria gravada no pesquisa-status.json. A auditoria reutiliza os dados já lidos e não faz chamadas adicionais ao Airtable."
