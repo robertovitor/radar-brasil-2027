@@ -1,11 +1,12 @@
 """Ajustes de runtime para o pipeline do Instagram.
 
 Este módulo é carregado automaticamente pelo Python quando scripts/ está no
-sys.path. Ele faz três coisas:
+sys.path. Ele faz quatro coisas:
 1) impede que candidatos reprovados pelos gates voltem no retry da mesma rodada;
 2) bloqueia notícias com mais de 30 dias antes da seleção para o Instagram;
 3) torna a consulta ao Wikimedia Commons mais estável, com cache, espaçamento
-   entre chamadas e retry curto em HTTP 429 para preservar a busca de fotos.
+   entre chamadas e retry curto em HTTP 429 para preservar a busca de fotos;
+4) exige confirmação da entidade quando a pauta é sobre a Seleção Brasileira feminina.
 """
 from __future__ import annotations
 
@@ -63,7 +64,6 @@ def _news_date_from_url(url):
 
 
 def _news_date(item):
-    # Evita que a data de descoberta sobrescreva uma data original explícita no URL.
     from_url = _news_date_from_url(item.get("Link"))
     if from_url is not None:
         return from_url
@@ -78,9 +78,6 @@ if _base is not None and not getattr(_base, "_quality_retry_filter_installed", F
 
     def _candidates_without_rejected(*args, **kwargs):
         ranked = _original_candidates(*args, **kwargs)
-
-        # Trava de frescor somente para notícias. Eventos mantêm a lógica existente.
-        # Não há novas leituras externas: a validação usa apenas os dados já carregados.
         today = dt.datetime.now(dt.timezone.utc).date()
         cutoff = today - dt.timedelta(days=30)
         fresh_ranked = []
@@ -89,8 +86,6 @@ if _base is not None and not getattr(_base, "_quality_retry_filter_installed", F
             if str(item.get("type") or "").strip().casefold() != "noticia":
                 fresh_ranked.append(item)
                 continue
-            # O candidato já normalizado não carrega o Link original; recuperamos a
-            # URL do próprio idempotency key, que é instagram:noticia:<URL>.
             key = str(item.get("key") or "").strip()
             url = key[len("instagram:noticia:"):] if key.startswith("instagram:noticia:") else ""
             effective = _news_date_from_url(url) or item.get("date")
@@ -124,19 +119,81 @@ if _base is not None and not getattr(_base, "_quality_retry_filter_installed", F
     _base._quality_retry_filter_installed = True
 
 
-# O Commons começou a responder 429 quando retries sucessivos faziam consultas
-# em rajada. Mantemos um cache por URL e espaçamos apenas chamadas de rede reais.
-# Em 429 fazemos até duas novas tentativas com backoff; 429 não bloqueia o provider
-# inteiro imediatamente, porque isso empurrava toda a rodada para arte textual.
+# Gate de entidade: uma foto genericamente ligada a futebol feminino não pode
+# ilustrar uma pauta explicitamente sobre a Seleção Brasileira feminina.
+def _brazil_wnt_item(item):
+    if _base is None:
+        return False
+    text = _base.norm(" ".join([
+        _base.clean(item.get("title")),
+        _base.clean(item.get("search_context")),
+    ]))
+    brazil = bool(re.search(r"\b(brasil|brasileir[ao])\b", text))
+    selection = bool(re.search(r"\b(selecao|national team)\b", text))
+    female = bool(re.search(r"\b(feminin[ao]|women|womens|woman|female)\b", text))
+    return brazil and selection and female
+
+
+def _brazil_wnt_confirmed(descriptor):
+    if _base is None:
+        return False
+    d = _base.norm(descriptor)
+    explicit = (
+        r"\bselecao brasileira feminina\b",
+        r"\bselecao feminina brasileira\b",
+        r"\bbrazil women(?:s)? national (?:football|soccer) team\b",
+        r"\bbrazilian women(?:s)? national (?:football|soccer) team\b",
+        r"\bbrazil women(?:s)? (?:football|soccer) team\b",
+    )
+    if any(re.search(pattern, d) for pattern in explicit):
+        return True
+    brazil = bool(re.search(r"\b(brasil|brazil|brasileir[ao]|brazilian)\b", d))
+    selection = bool(re.search(r"\b(selecao|national team)\b", d))
+    female = bool(re.search(r"\b(feminin[ao]|women|womens|woman|female)\b", d))
+    return brazil and selection and female
+
+
+if _base is not None and not getattr(_base, "_brazil_wnt_entity_gate_installed", False):
+    _original_semantic_image_ok = _base.semantic_image_ok
+    _original_curated_image_policy_ok = _base.curated_image_policy_ok
+
+    def _strict_semantic_image_ok(item, page, meta, query):
+        ok, reason = _original_semantic_image_ok(item, page, meta, query)
+        if not ok or not _brazil_wnt_item(item):
+            return ok, reason
+        descriptor = _base.commons_descriptor(page, meta)
+        if not _brazil_wnt_confirmed(descriptor):
+            return False, "brazil_wnt_entity_not_confirmed"
+        return True, "brazil_wnt_entity_confirmed"
+
+    def _strict_curated_image_policy_ok(item, image):
+        ok, reason = _original_curated_image_policy_ok(item, image)
+        if not ok or not _brazil_wnt_item(item):
+            return ok, reason
+        descriptor = " ".join(filter(None, [
+            _base.clean(image.get("source_page_url")),
+            _base.clean(image.get("image_source_url")),
+            _base.clean(image.get("justificativa")),
+            _base.clean(image.get("visual_description")),
+            _base.clean(image.get("tags")),
+        ]))
+        if not _brazil_wnt_confirmed(descriptor):
+            return False, "brazil_wnt_entity_not_confirmed"
+        return True, "brazil_wnt_entity_confirmed"
+
+    _base.semantic_image_ok = _strict_semantic_image_ok
+    _base.curated_image_policy_ok = _strict_curated_image_policy_ok
+    _base._brazil_wnt_entity_gate_installed = True
+    print("instagram_entity_image_gate=brazil_wnt_strict")
+
+
 if _smart is not None and not getattr(_smart, "_commons_resilience_installed", False):
     _http_cache = {}
     _last_commons_call = 0.0
     _original_http_json = _smart.http_json
 
     def _resilient_http_json(url, source):
-        nonlocal_holder = None  # mantém a função simples para Python 3.12
         global _last_commons_call
-
         cache_key = f"{source}:{url}"
         if cache_key in _http_cache:
             print(f"{source}_search_cache_hit=true")
@@ -150,9 +207,6 @@ if _smart is not None and not getattr(_smart, "_commons_resilience_installed", F
 
         if _smart.REQUEST_BUDGET.get(source, 0) <= 0:
             return None
-
-        # Mesmo que uma chamada anterior tenha marcado Commons como bloqueado por
-        # um 429 transitório, esta camada assume o controle do backoff.
         _smart.SOURCE_BLOCKED[source] = False
 
         waits = (0.0, 3.0, 6.0)
@@ -185,7 +239,6 @@ if _smart is not None and not getattr(_smart, "_commons_resilience_installed", F
                 _last_commons_call = time.monotonic()
                 print(f"commons_search_failed=HTTPError:{exc.code}")
                 if exc.code == 429:
-                    # Tenta novamente após backoff; não mata o provider inteiro.
                     continue
                 if exc.code == 403:
                     _smart.SOURCE_BLOCKED[source] = True
