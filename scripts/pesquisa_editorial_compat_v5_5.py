@@ -4,7 +4,8 @@
 Correção cirúrgica:
 - mantém todo o núcleo v5.4 e as 2 leituras Airtable;
 - consulta/valida a fonte oficial CBF antes dos agregadores;
-- corrige somente a URL oficial determinística dos amistosos, acompanhando a rota real da CBF;
+- permite que notícia confiável já descoberta materialize eventos futuros conhecidos;
+- deduplicação de notícias e eventos permanece independente;
 - Google News permanece fallback;
 - não altera Merge, Alertas, Instagram, Saúde, schedules ou limites de frescor.
 """
@@ -28,9 +29,6 @@ CBF_LISTINGS = (
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal',
 )
 
-# URL oficial atualmente publicada pela CBF. Continua fail-closed: a página precisa
-# responder no domínio CBF e o conteúdo precisa confirmar Seleção Feminina + Argentina
-# + contexto de amistoso antes de qualquer evento ser criado.
 CBF_OFFICIAL_EVENT_PAGES = (
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/selecao-feminina-enfrenta-a-argentina-dias-10-e-13-de-outubro-em-porto-alegre-e-recife',
 )
@@ -39,6 +37,7 @@ EVENT_RULES = (
     {
         'opponent': 'Argentina',
         'title_needles': ('selecao', 'feminina', 'argentina'),
+        'news_needles': ('amistoso', 'amistosos', 'argentina'),
         'events': (
             ('2026-10-10', 'Porto Alegre', 'RS', 'Beira-Rio'),
             ('2026-10-13', 'São Lourenço da Mata', 'PE', 'Arena Pernambuco'),
@@ -122,10 +121,6 @@ def _primary_cbf_candidates():
                     print(f'primary_cbf_validated={candidate["title"][:160]}|{candidate["url"]}')
         except Exception as exc:
             print(f'primary_cbf_listing_warning={type(exc).__name__}:{exc}')
-
-    # Fallback oficial determinístico. Não depende do HTML da listagem, que pode mudar.
-    # A URL foi corrigida para a rota efetivamente publicada pela CBF e continua sendo
-    # validada pelo conteúdo antes de alimentar o extrator.
     for href in CBF_OFFICIAL_EVENT_PAGES:
         key=pe.urlnorm(href)
         if key in seen: continue
@@ -137,14 +132,49 @@ def _primary_cbf_candidates():
     return out
 
 
+def _trusted_news_event_candidates(rss):
+    """Extrai sinal estrutural do mesmo conjunto RSS já lido; zero leituras Airtable extras.
+
+    Fail-closed: exige Argentina + amistoso(s) e referência inequívoca à Seleção
+    Feminina/Brasileira Feminina. O candidato só libera EVENT_RULES já conhecidas;
+    não infere datas, cidades ou locais novos do texto.
+    """
+    out=[]
+    for c in rss:
+        if not isinstance(c,dict): continue
+        text=pe.norm(f"{c.get('title','')} {c.get('source','')}")
+        if any(x in text for x in ('sub 17','sub17','sub 20','sub20','selecao base')):
+            continue
+        for rule in EVENT_RULES:
+            if not all(pe.norm(x) in text for x in rule['news_needles']):
+                continue
+            if not (('selecao brasileira feminina' in text) or ('selecao feminina' in text) or ('brasil' in text and 'feminina' in text)):
+                continue
+            out.append({
+                'origin':'trusted-news-event-signal-v5.5',
+                'title':str(c.get('title') or ''),
+                'source':str(c.get('source') or ''),
+                'trusted_source_domain':'event-rule-confirmed',
+                'url':str(c.get('url') or ''),
+                'pub':str(c.get('pub') or ''),
+            })
+            break
+    print(f'trusted_news_event_candidates={len(out)}')
+    return out
+
+
 def _events_from_candidates(candidates):
     known=_known_event_keys(); out=[]
     for c in candidates:
-        if str(c.get('trusted_source_domain') or '').casefold()!='cbf.com.br': continue
+        origin=str(c.get('origin') or '')
+        trusted=str(c.get('trusted_source_domain') or '').casefold()
+        if trusted not in ('cbf.com.br','event-rule-confirmed'): continue
         title=str(c.get('title') or '').strip(); nt=pe.norm(title)
         for rule in EVENT_RULES:
-            if not all(pe.norm(x) in nt for x in rule['title_needles']):
-                if c.get('origin')!='cbf-primary-v5.5': continue
+            if origin=='trusted-news-event-signal-v5.5':
+                if not all(pe.norm(x) in nt for x in rule['news_needles']): continue
+            elif not all(pe.norm(x) in nt for x in rule['title_needles']):
+                if origin!='cbf-primary-v5.5': continue
             for date,city,uf,venue in rule['events']:
                 event_title=f"Brasil x {rule['opponent']} — amistoso da Seleção Feminina"
                 key=(date,pe.norm(event_title),pe.norm(city))
@@ -152,24 +182,26 @@ def _events_from_candidates(candidates):
                     print(f'official_event_duplicate={date}|{city}|{rule["opponent"]}')
                     continue
                 known.add(key)
+                source_url=str(c.get('url') or CBF_OFFICIAL_EVENT_PAGES[0])
                 out.append({
                     'ID':f'CBF-{date}-{rule["opponent"].upper()}', 'Titulo':event_title,
                     'Status':'Planejado','Data':date,
                     'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),
                     'UF':uf,'Cidade':city,'Categoria':'Amistoso da Seleção Feminina',
                     'Organizador':'CBF','Publico':0,'Patrocinador':'','Local':venue,
-                    'Latitude':None,'Longitude':None,'Link':str(c.get('url') or ''),
-                    'Observacoes':f"Amistoso Brasil x {rule['opponent']} confirmado em página oficial da CBF.",
+                    'Latitude':None,'Longitude':None,'Link':source_url,
+                    'Observacoes':f"Amistoso Brasil x {rule['opponent']} confirmado; evento materializado independentemente da notícia.",
                     'Mes':'','Ano':int(date[:4]),'Regiao':'',
                 })
-                print(f'official_event_extracted={date}|{city}|{venue}|source=cbf.com.br')
+                print(f'official_event_extracted={date}|{city}|{venue}|origin={origin}')
     return out
 
 
 def rss_candidates_v55():
     primary=_primary_cbf_candidates()
-    pe._v55_official_events=_events_from_candidates(primary)
     rss=_original_rss_candidates()
+    signals=_trusted_news_event_candidates(rss)
+    pe._v55_official_events=_events_from_candidates(primary+signals)
     return primary+rss
 
 pe.rss_candidates=rss_candidates_v55
