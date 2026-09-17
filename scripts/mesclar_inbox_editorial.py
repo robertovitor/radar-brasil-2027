@@ -138,13 +138,13 @@ def semantic_fact_signature(item):
 
 def duplicate_incoming(a,b,kind):
     if kind == 'eventos':
-        if norm(a.get('ID')) and norm(a.get('ID')) == norm(b.get('ID')):
-            return True
-        if url_norm(a.get('Link')) and url_norm(a.get('Link')) == url_norm(b.get('Link')):
-            return True
-        if date_gap(a.get('Data'),b.get('Data')) == 0 and same_place(a,b,kind):
-            return jac(a.get('Titulo'),b.get('Titulo')) >= 0.55 or seq(a.get('Titulo'),b.get('Titulo')) >= 0.82
-        return False
+        # Eventos distintos nunca são colapsados só por ID/link/título.
+        # Duplicidade exige simultaneamente a mesma data, o mesmo título
+        # normalizado e a mesma cidade/UF. Assim, séries com o mesmo título
+        # em datas ou cidades diferentes permanecem como eventos separados.
+        same_date = date_gap(a.get('Data'),b.get('Data')) == 0
+        same_title = bool(norm(a.get('Titulo')) and norm(a.get('Titulo')) == norm(b.get('Titulo')))
+        return same_date and same_title and same_place(a,b,kind)
     if url_norm(a.get('Link')) and url_norm(a.get('Link')) == url_norm(b.get('Link')):
         return True
     if norm(a.get('Titulo')) == norm(b.get('Titulo')):
