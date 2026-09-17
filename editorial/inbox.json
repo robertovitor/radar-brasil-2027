@@ -1,4 +1,60 @@
 {
-  "eventos": [],
-  "noticias": []
+  "eventos": [
+    {
+      "ID": "CBF-2026-10-10-ARGENTINA",
+      "Titulo": "Brasil x Argentina — amistoso da Seleção Feminina",
+      "Status": "Planejado",
+      "Data": "2026-10-10",
+      "DataBR": "10/10/2026",
+      "UF": "RS",
+      "Cidade": "Porto Alegre",
+      "Categoria": "Amistoso da Seleção Feminina",
+      "Organizador": "CBF",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "Beira-Rio",
+      "Latitude": null,
+      "Longitude": null,
+      "Link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxOVGlGSW9BX09yWEhwMFFxVkROUUg4ZURKSWVITWhXOGt4Y2ppbGR3QThhTTVtX1lQZWxxTG8zcnJhZGRTd3JabHIwRlliTWZuRldoVEZIT0FuaUFnamhwLWdNN19GenBOYVVhNmtLWThabGpyem1vT0VjN3FOYnRXTjlLRGd4SXJGTkJCZ1Z3eHYzUElzRmRpVG9OaC1JVXZtVkw0bzh0bUFBQldsSTM5VklkMnktZ1lEU2dROVd3Q1VPeFY0NTJEQy00a3dPQ2xWcWY2cTAwMHMtQTQ3M2VSedIB4AFBVV95cUxOVGlGSW9BX09yWEhwMFFxVkROUUg4ZURKSWVITWhXOGt4Y2ppbGR3QThhTTVtX1lQZWxxTG8zcnJhZGRTd3JabHIwRlliTWZuRldoVEZIT0FuaUFnamhwLWdNN19GenBOYVVhNmtLWThabGpyem1vT0VjN3FOYnRXTjlLRGd4SXJGTkJCZ1Z3eHYzUElzRmRpVG9OaC1JVXZtVkw0bzh0bUFBQldsSTM5VklkMnktZ1lEU2dROVd3Q1VPeFY0NTJEQy00a3dPQ2xWcWY2cTAwMHMtQTQ3M2VSeQ?oc=5",
+      "Observacoes": "Amistoso Brasil x Argentina confirmado; evento materializado independentemente da notícia.",
+      "Mes": "",
+      "Ano": 2026,
+      "Regiao": ""
+    },
+    {
+      "ID": "CBF-2026-10-13-ARGENTINA",
+      "Titulo": "Brasil x Argentina — amistoso da Seleção Feminina",
+      "Status": "Planejado",
+      "Data": "2026-10-13",
+      "DataBR": "13/10/2026",
+      "UF": "PE",
+      "Cidade": "São Lourenço da Mata",
+      "Categoria": "Amistoso da Seleção Feminina",
+      "Organizador": "CBF",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "Arena Pernambuco",
+      "Latitude": null,
+      "Longitude": null,
+      "Link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxOVGlGSW9BX09yWEhwMFFxVkROUUg4ZURKSWVITWhXOGt4Y2ppbGR3QThhTTVtX1lQZWxxTG8zcnJhZGRTd3JabHIwRlliTWZuRldoVEZIT0FuaUFnamhwLWdNN19GenBOYVVhNmtLWThabGpyem1vT0VjN3FOYnRXTjlLRGd4SXJGTkJCZ1Z3eHYzUElzRmRpVG9OaC1JVXZtVkw0bzh0bUFBQldsSTM5VklkMnktZ1lEU2dROVd3Q1VPeFY0NTJEQy00a3dPQ2xWcWY2cTAwMHMtQTQ3M2VSedIB4AFBVV95cUxOVGlGSW9BX09yWEhwMFFxVkROUUg4ZURKSWVITWhXOGt4Y2ppbGR3QThhTTVtX1lQZWxxTG8zcnJhZGRTd3JabHIwRlliTWZuRldoVEZIT0FuaUFnamhwLWdNN19GenBOYVVhNmtLWThabGpyem1vT0VjN3FOYnRXTjlLRGd4SXJGTkJCZ1Z3eHYzUElzRmRpVG9OaC1JVXZtVkw0bzh0bUFBQldsSTM5VklkMnktZ1lEU2dROVd3Q1VPeFY0NTJEQy00a3dPQ2xWcWY2cTAwMHMtQTQ3M2VSeQ?oc=5",
+      "Observacoes": "Amistoso Brasil x Argentina confirmado; evento materializado independentemente da notícia.",
+      "Mes": "",
+      "Ano": 2026,
+      "Regiao": ""
+    }
+  ],
+  "noticias": [
+    {
+      "Data": "2026-08-20",
+      "DataBR": "20/08/2026",
+      "Titulo": "Veja detalhes do calendário da Copa do Mundo Feminina de 2027 - CNN Brasil",
+      "Tema": "Copa Feminina 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "cnnbrasil.com.br",
+      "Link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOdG85bEpJYl8tbnl6ZW1xM1U1UjNSaVplM2wwNmE1SnoybXZxUVNYUkxIa1loYmdkaFVMRXBJd2gyUTJvVDBOWllDbXJoZ2Y4M1FHTFQtazFaZU9KTXpJUGhSRFNvdndyOUhmUEwwN2lvbzJPM3liR1gtaHBXc2d1RDhERnh3WVZBcmtMYUxBNkw2ejMwUngxd2l6QmQ2YVlTRUpuRzU4UjA3Q2RUeVV2ZVNMUVQ3ZFJzNS0tM1k3WQ?oc=5",
+      "Sentimento": "Neutro",
+      "Impacto": "Médio",
+      "Resumo": "Fonte: cnnbrasil.com.br. Descoberta via Google News; URL editorial direta não resolvida automaticamente."
+    }
+  ]
 }
