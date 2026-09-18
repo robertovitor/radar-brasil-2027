@@ -1,5 +1,6 @@
 {
   "blocked_keys": [
+    "instagram:evento:cbf-2026-10-10-argentina",
     "instagram:evento:evt-0071",
     "instagram:evento:evt-editorial-20260903-futebol-cidadania",
     "instagram:noticia:https://asserj.com.br/en/w/copa-do-mundo-feminina-entra-no-radar-dos-supermercados",
@@ -94,6 +95,12 @@
       "matches": "instagram:noticia:https://diariodonordeste.verdesmares.com.br/jogada/fortaleza-avanca-na-lei-da-copa-e-prepara-castelao-para-inspecao-da-fifa-a-300-dias-do-mundial-1.3787756",
       "candidate_title": "Arena Castelão receberá nove jogos da Copa do Mundo Feminina da FIFA Brasil 2027™ - Prefeitura de Fortaleza",
       "published_title": "Fortaleza avança na Lei da Copa e prepara inspeção da FIFA no Castelão A 300 dias da Copa do Mundo Feminina 2027, Fortaleza informou que prepara a promulgação da Lei Estadual da Copa, conclui o plano de mobilidade e discute gratuidade no transporte público em dias de jogos. A Arena Castelão, que receberá nove partidas, terá nova inspeção técnica da FIFA em setembro, enquanto Estado, município e federação avançam em infraestrutura, responsabilidade social e legado. Fonte: Diário do Nordeste #RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino Saiba mais pelo link da Bio"
+    },
+    "instagram:evento:cbf-2026-10-10-argentina": {
+      "reason": "duplicate_story_already_published",
+      "matches": "instagram:evento:cbf-2026-10-13-argentina",
+      "candidate_title": "Brasil x Argentina — amistoso da Seleção Feminina",
+      "published_title": "Brasil x Argentina — amistoso da Seleção Feminina Quando: 13/10/2026 Onde: Arena Pernambuco, São Lourenço da Mata, PE Amistoso Brasil x Argentina confirmado; evento materializado independentemente da notícia. Fonte: CBF #RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino Saiba mais pelo link da Bio"
     }
   },
   "legacy_uncertain_meta": {
