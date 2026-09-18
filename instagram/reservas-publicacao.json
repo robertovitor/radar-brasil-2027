@@ -87,16 +87,6 @@
       "blocked_until": "2026-09-10T20:43:38.666694+00:00"
     },
     {
-      "key": "instagram:evento:cbf-2026-10-13-argentina",
-      "post_file": "instagram/fila/automatica/instagram-evento-cbf-2026-10-13-argentina-010f015e28.json",
-      "reserved_at": "2026-09-18T05:54:17.830028+00:00",
-      "last_attempt_at": "2026-09-18T05:54:32.801599+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": true,
-      "uncertain_after_meta": true,
-      "blocked_until": "2026-09-18T06:54:30.639202+00:00"
-    },
-    {
       "key": "instagram:noticia:https://www.gov.br/mj/pt-br/assuntos/noticias-1/brasil-recebe-mundial-feminino-2027-e-define-regras-para-trabalho-de-estrangeiros",
       "post_file": "instagram/fila/automatica/be-mundial-feminino-2027-e-define-regras-para-trabalho-de-estrangeiros-e625cca860.json",
       "reserved_at": "2026-09-18T11:10:19.809340+00:00",
@@ -105,6 +95,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-18T12:10:35.820937+00:00"
+    },
+    {
+      "key": "instagram:evento:cbf-2026-10-13-argentina",
+      "post_file": "instagram/fila/automatica/instagram-evento-cbf-2026-10-13-argentina-010f015e28.json",
+      "reserved_at": "2026-09-18T14:59:51.009802+00:00",
+      "last_attempt_at": "2026-09-18T14:59:51.009802+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
