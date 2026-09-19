@@ -41,6 +41,10 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Instalar CA bundle para fonte oficial
+        run: |
+          python -m pip install --disable-pip-version-check --no-input certifi
+
       - name: Registrar origem do gatilho
         run: |
           echo "pesquisa_direct_schedule=${{ github.event_name == 'schedule' }}"
