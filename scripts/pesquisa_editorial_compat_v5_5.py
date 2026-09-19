@@ -22,6 +22,28 @@ v54 = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(v54)
 pe = v54.pe
 
+# Fontes editoriais adicionais observadas na auditoria. Escopo propositalmente
+# estreito: não cria novas leituras Airtable nem amplia a confiança para domínios
+# desconhecidos. As pautas continuam sujeitas a relevância, frescor e deduplicação.
+_ADDITIONAL_TRUSTED_DOMAINS = (
+    'fpf-pe.com.br',
+    'itatiaia.com.br',
+    'gzh.com.br',
+    'correiodopovo.com.br',
+    'machinadoesporte.com.br',
+)
+pe.TRUSTED_DOMAINS = tuple(dict.fromkeys(tuple(pe.TRUSTED_DOMAINS) + _ADDITIONAL_TRUSTED_DOMAINS))
+v54.v2.SOURCE_DOMAIN_HINTS.update({
+    'federacao pernambucana de futebol': 'fpf-pe.com.br',
+    'federação pernambucana de futebol': 'fpf-pe.com.br',
+    'radio itatiaia': 'itatiaia.com.br',
+    'rádio itatiaia': 'itatiaia.com.br',
+    'gzh': 'gzh.com.br',
+    'correio do povo': 'correiodopovo.com.br',
+    'maquina do esporte': 'machinadoesporte.com.br',
+    'máquina do esporte': 'machinadoesporte.com.br',
+})
+
 _original_rss_candidates = pe.rss_candidates
 _original_dump = pe.dump
 
