@@ -39,6 +39,18 @@ def normalized(value: object) -> str:
     return "".join(char for char in text if not unicodedata.combining(char))
 
 
+def clean_public_summary(value: object) -> str:
+    """Remove observações técnicas internas antes de montar a legenda pública."""
+    text = clean(value)
+    technical_patterns = (
+        r"(?i)(?:[.;]\s*)?Descoberta via Google News\s*;?\s*URL editorial direta não resolvida automaticamente\.?",
+        r"(?i)(?:[.;]\s*)?URL editorial direta não resolvida automaticamente\.?",
+    )
+    for pattern in technical_patterns:
+        text = re.sub(pattern, "", text).strip()
+    return re.sub(r"\s+([.,;:])", r"\1", text).strip(" ;.")
+
+
 def is_base_selection(item: dict) -> bool:
     """Exclui seleções de base sem bloquear conteúdo adulto que cite 'seleção'."""
     text = normalized(" ".join(clean(value) for value in item.values()))
@@ -139,7 +151,7 @@ def create_art(path: pathlib.Path, item: dict) -> None:
 def news_candidates(items: list[dict], today: dt.date, published: set[str]):
     for item in items:
         title = clean(item.get("Titulo"))
-        summary = clean(item.get("Resumo"))
+        summary = clean_public_summary(item.get("Resumo"))
         key = "instagram:noticia:" + clean(item.get("Link") or title).casefold()
         date = parse_date(item.get("Data"))
         if not title or key in published or not date or date > today or is_base_selection(item):
