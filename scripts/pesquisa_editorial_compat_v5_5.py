@@ -53,6 +53,7 @@ CBF_LISTINGS = (
 )
 CBF_OFFICIAL_EVENT_PAGES = (
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/selecao-feminina-enfrenta-a-argentina-dias-10-e-13-de-outubro-em-porto-alegre-e-recife',
+    'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/selecao-feminina-enfrenta-japao-em-dois-amistosos-em-novembro-e-dezembro',
 )
 EVENT_RULES = ({
     'opponent':'Argentina',
@@ -61,6 +62,14 @@ EVENT_RULES = ({
     'events':(
         ('2026-10-10','Porto Alegre','RS','Beira-Rio'),
         ('2026-10-13','Recife','PE','Arena Pernambuco'),
+    ),
+},{
+    'opponent':'Japão',
+    'title_needles':('selecao','feminina','japao'),
+    'news_needles':('amistoso','amistosos','japao'),
+    'events':(
+        ('2026-11-29','Hiroshima','JP','Edion Peace Wing Hiroshima'),
+        ('2026-12-05','Okayama','JP','JFE Harenokuni Stadium'),
     ),
 },)
 
