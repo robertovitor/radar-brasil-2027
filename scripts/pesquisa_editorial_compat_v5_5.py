@@ -14,6 +14,7 @@ import importlib.util
 import html
 import re
 import urllib.parse
+import ssl
 from pathlib import Path
 
 V54_SCRIPT = Path(__file__).with_name('pesquisa_editorial_compat_v5_4.py')
@@ -46,6 +47,35 @@ v54.v2.SOURCE_DOMAIN_HINTS.update({
 
 _original_rss_candidates = pe.rss_candidates
 _original_dump = pe.dump
+
+def _official_request_bytes(url, *, timeout=15):
+    """HTTPS oficial com verificação TLS obrigatória e fallback de CA bundle.
+
+    Nunca usa contexto SSL não verificado. Primeiro preserva o cliente existente;
+    somente para erro de cadeia de certificado tenta o bundle Mozilla/certifi,
+    quando disponível no runner.
+    """
+    headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/2.5)'}
+    try:
+        return pe.request_bytes(url,headers=headers,timeout=timeout)
+    except Exception as first:
+        if 'CERTIFICATE_VERIFY_FAILED' not in str(first):
+            raise
+        try:
+            import certifi
+            ctx=ssl.create_default_context(cafile=certifi.where())
+            req=urllib.request.Request(url,headers=headers)
+            with urllib.request.urlopen(req,timeout=timeout,context=ctx) as resp:
+                data=resp.read()
+                final_url=resp.geturl()
+                hdrs=dict(resp.headers.items())
+            if urllib.parse.urlparse(final_url).scheme != 'https':
+                raise RuntimeError('official_https_downgrade_blocked')
+            print('primary_cbf_tls_fallback=certifi_verified')
+            return data,final_url,hdrs
+        except Exception as second:
+            print(f'primary_cbf_tls_fallback_failed={type(second).__name__}:{second}')
+            raise first
 
 CBF_LISTINGS = (
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina',
@@ -108,7 +138,7 @@ def _validate_official_page(href,hint=''):
     ainda precisa passar pelas regras estruturadas e pela deduplicação.
     """
     try:
-        data,final_url,headers=pe.request_bytes(href,headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/2.5)'},timeout=15)
+        data,final_url,headers=_official_request_bytes(href,timeout=15)
         if 'cbf.com.br' not in urllib.parse.urlparse(final_url).netloc.casefold(): return None
         raw=data[:900000].decode('utf-8','ignore'); title=v54.v2._clean_page_title(raw) or hint
         if not title or '<' in title: title=hint
@@ -125,7 +155,7 @@ def _primary_cbf_candidates():
     out=[]; seen=set()
     for listing_url in CBF_LISTINGS:
         try:
-            data,final_url,headers=pe.request_bytes(listing_url,headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/2.5)'},timeout=15)
+            data,final_url,headers=_official_request_bytes(listing_url,timeout=15)
             links=_extract_links(data[:900000].decode('utf-8','ignore'),final_url); print(f'primary_cbf_listing={listing_url}|matches={len(links)}')
             for href,label in links[:8]:
                 key=pe.urlnorm(href)
