@@ -38,7 +38,7 @@ EVENT_RULES = ({
     'news_needles':('amistoso','amistosos','argentina'),
     'events':(
         ('2026-10-10','Porto Alegre','RS','Beira-Rio'),
-        ('2026-10-13','São Lourenço da Mata','PE','Arena Pernambuco'),
+        ('2026-10-13','Recife','PE','Arena Pernambuco'),
     ),
 },)
 
