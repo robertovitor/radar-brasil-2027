@@ -101,6 +101,12 @@ def _extract_links(raw, base_url):
     return out
 
 def _validate_official_page(href,hint=''):
+    """Valida página oficial e conserva o texto para extrair TODOS os eventos nela contidos.
+
+    Fail-closed: a página só vira candidata quando ao menos uma regra de evento é
+    comprovada no próprio conteúdo. O texto não cria evento sozinho; cada evento
+    ainda precisa passar pelas regras estruturadas e pela deduplicação.
+    """
     try:
         data,final_url,headers=pe.request_bytes(href,headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/2.5)'},timeout=15)
         if 'cbf.com.br' not in urllib.parse.urlparse(final_url).netloc.casefold(): return None
@@ -110,7 +116,8 @@ def _validate_official_page(href,hint=''):
         if any(x in combined for x in ('sub 17','sub17','sub 20','sub20')) and 'selecao feminina principal' not in combined: return None
         for rule in EVENT_RULES:
             if all(pe.norm(x) in combined for x in rule['title_needles']) and any(x in combined for x in ('amistoso','amistosos','enfrenta','contra')):
-                return {'origin':'cbf-primary-v5.5','title':title or hint,'source':'cbf.com.br','trusted_source_domain':'cbf.com.br','url':final_url,'pub':''}
+                matched=[r['opponent'] for r in EVENT_RULES if all(pe.norm(x) in combined for x in r['title_needles']) and any(x in combined for x in ('amistoso','amistosos','enfrenta','contra'))]
+                return {'origin':'cbf-primary-v5.5','title':title or hint,'source':'cbf.com.br','trusted_source_domain':'cbf.com.br','url':final_url,'pub':'','event_text':combined,'matched_event_rules':matched}
     except Exception as exc: print(f'primary_cbf_page_warning={type(exc).__name__}:{exc}')
     return None
 
@@ -129,7 +136,9 @@ def _primary_cbf_candidates():
     for href in CBF_OFFICIAL_EVENT_PAGES:
         key=pe.urlnorm(href)
         if key in seen: continue
-        candidate=_validate_official_page(href,'Seleção Feminina enfrenta a Argentina dias 10 e 13 de outubro em Porto Alegre e Recife')
+        slug=pe.norm(urllib.parse.urlparse(href).path.replace('-', ' '))
+        hint=('Seleção Feminina enfrenta Japão em dois amistosos em novembro e dezembro' if 'japao' in slug else 'Seleção Feminina enfrenta a Argentina dias 10 e 13 de outubro em Porto Alegre e Recife')
+        candidate=_validate_official_page(href,hint)
         if candidate: seen.add(key); out.append(candidate); print(f'primary_cbf_direct_validated={candidate["url"]}')
     print(f'primary_cbf_event_candidates={len(out)}'); return out
 
@@ -150,11 +159,16 @@ def _events_from_candidates(candidates):
     for c in candidates:
         origin=str(c.get('origin') or ''); trusted=str(c.get('trusted_source_domain') or '').casefold()
         if trusted not in ('cbf.com.br','event-rule-confirmed'): continue
-        title=str(c.get('title') or '').strip(); nt=pe.norm(title)
+        title=str(c.get('title') or '').strip(); nt=pe.norm(title); event_text=str(c.get('event_text') or nt)
         for rule in EVENT_RULES:
             if origin=='trusted-news-event-signal-v5.5':
                 if not all(pe.norm(x) in nt for x in rule['news_needles']): continue
-            elif not all(pe.norm(x) in nt for x in rule['title_needles']) and origin!='cbf-primary-v5.5': continue
+            elif origin=='cbf-primary-v5.5':
+                # Uma matéria pode conter N eventos. Cada regra precisa aparecer no
+                # conteúdo da própria página; não basta a página ter validado outra regra.
+                if not all(pe.norm(x) in event_text for x in rule['title_needles']): continue
+                if not any(x in event_text for x in ('amistoso','amistosos','enfrenta','contra')): continue
+            elif not all(pe.norm(x) in nt for x in rule['title_needles']): continue
             for date,city,uf,venue in rule['events']:
                 event_title=f"Brasil x {rule['opponent']} — amistoso da Seleção Feminina"; key=(date,pe.norm(event_title),pe.norm(city))
                 if key in known: print(f'official_event_duplicate={date}|{city}|{rule["opponent"]}'); continue
@@ -165,6 +179,8 @@ def _events_from_candidates(candidates):
 
 def rss_candidates_v55():
     primary=_primary_cbf_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss)
+    # A extração é 1 fonte -> 0..N eventos. Notícia e eventos continuam com
+    # deduplicação independente; reconhecer uma notícia nunca consome os eventos.
     pe._v55_official_events=_events_from_candidates(primary+signals)
     return primary+rss
 pe.rss_candidates=rss_candidates_v55
