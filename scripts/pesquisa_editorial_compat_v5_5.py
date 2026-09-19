@@ -128,7 +128,7 @@ def _events_from_candidates(candidates):
                 event_title=f"Brasil x {rule['opponent']} — amistoso da Seleção Feminina"; key=(date,pe.norm(event_title),pe.norm(city))
                 if key in known: print(f'official_event_duplicate={date}|{city}|{rule["opponent"]}'); continue
                 known.add(key); source_url=str(c.get('url') or CBF_OFFICIAL_EVENT_PAGES[0])
-                out.append({'ID':f'CBF-{date}-{rule["opponent"].upper()}','Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,'Categoria':'Amistoso da Seleção Feminina','Organizador':'CBF','Publico':0,'Patrocinador':'','Local':venue,'Latitude':None,'Longitude':None,'Link':source_url,'Observacoes':f"Amistoso Brasil x {rule['opponent']} confirmado; evento materializado independentemente da notícia.",'Mes':'','Ano':int(date[:4]),'Regiao':''})
+                out.append({'ID':f'CBF-{date}-{rule["opponent"].upper()}','Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,'Categoria':'Amistoso da Seleção Feminina','Organizador':'CBF','Publico':0,'Patrocinador':'','Local':venue,'Latitude':None,'Longitude':None,'Link':source_url,'Observacoes':f"Amistoso Brasil x {rule['opponent']} confirmado; evento materializado independentemente da notícia.",'Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':{'RS':'Sul','PE':'Nordeste'}.get(uf,'')})
                 print(f'official_event_extracted={date}|{city}|{venue}|origin={origin}')
     return out
 
