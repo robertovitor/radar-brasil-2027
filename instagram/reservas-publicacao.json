@@ -100,9 +100,11 @@
       "key": "instagram:noticia:https://news.google.com/rss/articles/cbmiqwjbvv95cuxpsu5ln3jbenrkalqzwwkwuglqdlfkd2jdqnhbewljdkxhtmppndf1rhrnvtu1owruywhyadlcd29zlug2efvvy1hscw42n2hxy1rhtmhnewjruezdry1uvutfmja2nephouf0aetlsehydnnjn3j1rvpvnmdwdjleoetnbljyx05smjjcdwtnr3foude3ntfgu2jialzjnmpjykcxz3pxvjgtbgxuu3ixakzjb1drag1nt1uzeunovw45og1ga0fcegcxvtren1nhevlfelvut0pgqnznbvg5rwjpulnrn2pcqjdveufoqnvpztjjeffkzhj6tnzcz2zms3qtt2s1vwityk81tllwwuwztxlrc2pmd3y2vhlmcxjoew5fn1hdv3kxoa?oc=5",
       "post_file": "instagram/fila/automatica/nzcz2zms3qtt2s1vwityk81tllwwuwztxlrc2pmd3y2vhlmcxjoew5fn1hdv3kxoa-oc-5-5aa4699ed3.json",
       "reserved_at": "2026-09-19T20:37:21.412230+00:00",
-      "last_attempt_at": "2026-09-19T20:37:21.412230+00:00",
+      "last_attempt_at": "2026-09-19T20:37:37.229506+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-19T21:37:34.944441+00:00"
     }
   ]
 }
