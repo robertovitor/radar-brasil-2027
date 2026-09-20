@@ -14,6 +14,7 @@ import importlib.util
 import html
 import re
 import urllib.parse
+import urllib.request
 import ssl
 from pathlib import Path
 
@@ -83,6 +84,7 @@ CBF_LISTINGS = (
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal',
 )
 WIFS_EVENT_PAGE = 'https://womanifs.com/'
+WIFS_MONTHS = {6:('jun','junho'),7:('jul','julho')}
 WIFS_EVENTS = (
     ('2027-06-23','Rio de Janeiro','RJ'),
     ('2027-06-27','Porto Alegre','RS'),
@@ -202,14 +204,45 @@ def _wifs_event_candidates():
             d=pe.datetime.strptime(date,'%Y-%m-%d')
             date_tokens=(d.strftime('%d/%m/%Y'),d.strftime('%d/%m'),f'{d.day:02d}/{d.month:02d}',f'{d.day}/{d.month}')
             cityn=pe.norm(city)
-            # O HTML pode separar dia/mês/ano em tags; por isso também aceitamos
-            # a presença conjunta do dia, mês, ano e cidade no texto normalizado.
-            date_ok=any(tok in raw for tok in date_tokens) or (str(d.day) in text and str(d.month) in text and '2027' in text)
-            if date_ok and cityn in text: confirmed.append((date,city,uf))
+            # Validação local por proximidade: evita o falso positivo de procurar
+            # dia/mês em qualquer ponto da página e tolera datas quebradas por tags.
+            positions=[m.start() for m in re.finditer(re.escape(cityn),text)]
+            date_ok=False
+            for pos in positions:
+                window=text[max(0,pos-180):pos+180]
+                numeric=any(pe.norm(tok) in window for tok in date_tokens)
+                month_words=WIFS_MONTHS.get(d.month,())
+                textual=bool(re.search(rf'(?<!\\d)0?{d.day}(?!\\d)',window)) and any(m in window for m in month_words)
+                if numeric or textual:
+                    date_ok=True; break
+            if date_ok: confirmed.append((date,city,uf))
+            else: print(f'wifs_event_not_confirmed={date}|{city}')
         print(f'wifs_events_validated={len(confirmed)}')
         return [{'origin':'wifs-primary-v5.6','title':'Jornada Mulheres que Mudam o Jogo – 2027 Women’s World Cup','source':'womanifs.com','trusted_source_domain':'womanifs.com','url':final_url,'pub':'','confirmed_events':confirmed}]
     except Exception as exc:
         print(f'wifs_warning={type(exc).__name__}:{exc}'); return []
+
+def _cbf_known_event_fallback_candidates(rss):
+    """Fallback sem nova chamada externa: reutiliza os candidatos RSS já baixados.
+
+    Só ativa uma regra quando o próprio título/fonte já observado nesta execução
+    contém Brasil/Seleção Feminina + adversário + contexto de amistoso. Não
+    desabilita TLS e não faz leitura adicional de Airtable.
+    """
+    out=[]; seen=set()
+    for c in rss:
+        if not isinstance(c,dict): continue
+        nt=pe.norm(f"{c.get('title','')} {c.get('source','')}")
+        if any(x in nt for x in ('sub 17','sub17','sub 20','sub20','selecao base')): continue
+        if not (('selecao feminina' in nt) or ('selecao brasileira feminina' in nt) or ('brasil' in nt and 'feminina' in nt)): continue
+        for rule in EVENT_RULES:
+            opp=pe.norm(rule['opponent'])
+            if opp not in nt or not any(x in nt for x in ('amistoso','amistosos','enfrenta','contra')): continue
+            key=(opp,pe.urlnorm(str(c.get('url') or '')))
+            if key in seen: continue
+            seen.add(key); out.append({'origin':'cbf-rss-evidence-v5.6','title':str(c.get('title') or ''),'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(c.get('url') or ''),'pub':str(c.get('pub') or ''),'matched_opponent':rule['opponent']})
+            print(f'cbf_rss_event_evidence={rule["opponent"]}|{c.get("title","")[:140]}')
+    print(f'cbf_rss_event_fallback_candidates={len(out)}'); return out
 
 def _trusted_news_event_candidates(rss):
     out=[]
@@ -238,7 +271,9 @@ def _events_from_candidates(candidates):
             continue
         title=str(c.get('title') or '').strip(); nt=pe.norm(title); event_text=str(c.get('event_text') or nt)
         for rule in EVENT_RULES:
-            if origin=='trusted-news-event-signal-v5.5':
+            if origin=='cbf-rss-evidence-v5.6':
+                if pe.norm(rule['opponent']) != pe.norm(c.get('matched_opponent')): continue
+            elif origin=='trusted-news-event-signal-v5.5':
                 if not all(pe.norm(x) in nt for x in rule['news_needles']): continue
             elif origin=='cbf-primary-v5.5':
                 # Uma matéria pode conter N eventos. Cada regra precisa aparecer no
@@ -255,10 +290,10 @@ def _events_from_candidates(candidates):
     return out
 
 def rss_candidates_v55():
-    primary=_primary_cbf_candidates(); wifs=_wifs_event_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss)
+    primary=_primary_cbf_candidates(); wifs=_wifs_event_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss); cbf_fallback=_cbf_known_event_fallback_candidates(rss)
     # A extração é 1 fonte -> 0..N eventos. Notícia e eventos continuam com
     # deduplicação independente; reconhecer uma notícia nunca consome os eventos.
-    pe._v55_official_events=_events_from_candidates(primary+wifs+signals)
+    pe._v55_official_events=_events_from_candidates(primary+wifs+signals+cbf_fallback)
     return primary+rss
 pe.rss_candidates=rss_candidates_v55
 
