@@ -32,6 +32,7 @@ _ADDITIONAL_TRUSTED_DOMAINS = (
     'gzh.com.br',
     'correiodopovo.com.br',
     'machinadoesporte.com.br',
+    'womanifs.com',
 )
 pe.TRUSTED_DOMAINS = tuple(dict.fromkeys(tuple(pe.TRUSTED_DOMAINS) + _ADDITIONAL_TRUSTED_DOMAINS))
 v54.v2.SOURCE_DOMAIN_HINTS.update({
@@ -81,6 +82,18 @@ CBF_LISTINGS = (
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina',
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal',
 )
+WIFS_EVENT_PAGE = 'https://womanifs.com/'
+WIFS_EVENTS = (
+    ('2027-06-23','Rio de Janeiro','RJ'),
+    ('2027-06-27','Porto Alegre','RS'),
+    ('2027-07-03','Brasília','DF'),
+    ('2027-07-06','Recife','PE'),
+    ('2027-07-09','Fortaleza','CE'),
+    ('2027-07-11','Salvador','BA'),
+    ('2027-07-15','Belo Horizonte','MG'),
+    ('2027-07-23','São Paulo','SP'),
+)
+
 CBF_OFFICIAL_EVENT_PAGES = (
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/selecao-feminina-enfrenta-a-argentina-dias-10-e-13-de-outubro-em-porto-alegre-e-recife',
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/selecao-feminina-enfrenta-japao-em-dois-amistosos-em-novembro-e-dezembro',
@@ -172,6 +185,32 @@ def _primary_cbf_candidates():
         if candidate: seen.add(key); out.append(candidate); print(f'primary_cbf_direct_validated={candidate["url"]}')
     print(f'primary_cbf_event_candidates={len(out)}'); return out
 
+def _wifs_event_candidates():
+    """Fonte temática: uma página pode materializar N eventos futuros.
+
+    A validação exige, no próprio HTML, o nome da jornada, referência à Copa 2027
+    e cada par data+cidade antes de criar qualquer candidato. Falha fechada.
+    """
+    try:
+        data,final_url,headers=pe.request_bytes(WIFS_EVENT_PAGE,headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/2.6)'},timeout=15)
+        if 'womanifs.com' not in urllib.parse.urlparse(final_url).netloc.casefold(): return []
+        raw=data[:1200000].decode('utf-8','ignore'); text=pe.norm(raw)
+        if not ('mulheres que mudam o jogo' in text and ('2027' in text) and ('world cup' in text or 'copa do mundo' in text)):
+            print('wifs_validation=failed_context'); return []
+        confirmed=[]
+        for date,city,uf in WIFS_EVENTS:
+            d=pe.datetime.strptime(date,'%Y-%m-%d')
+            date_tokens=(d.strftime('%d/%m/%Y'),d.strftime('%d/%m'),f'{d.day:02d}/{d.month:02d}',f'{d.day}/{d.month}')
+            cityn=pe.norm(city)
+            # O HTML pode separar dia/mês/ano em tags; por isso também aceitamos
+            # a presença conjunta do dia, mês, ano e cidade no texto normalizado.
+            date_ok=any(tok in raw for tok in date_tokens) or (str(d.day) in text and str(d.month) in text and '2027' in text)
+            if date_ok and cityn in text: confirmed.append((date,city,uf))
+        print(f'wifs_events_validated={len(confirmed)}')
+        return [{'origin':'wifs-primary-v5.6','title':'Jornada Mulheres que Mudam o Jogo – 2027 Women’s World Cup','source':'womanifs.com','trusted_source_domain':'womanifs.com','url':final_url,'pub':'','confirmed_events':confirmed}]
+    except Exception as exc:
+        print(f'wifs_warning={type(exc).__name__}:{exc}'); return []
+
 def _trusted_news_event_candidates(rss):
     out=[]
     for c in rss:
@@ -188,7 +227,15 @@ def _events_from_candidates(candidates):
     known=_known_event_keys(); out=[]
     for c in candidates:
         origin=str(c.get('origin') or ''); trusted=str(c.get('trusted_source_domain') or '').casefold()
-        if trusted not in ('cbf.com.br','event-rule-confirmed'): continue
+        if trusted not in ('cbf.com.br','event-rule-confirmed','womanifs.com'): continue
+        if origin=='wifs-primary-v5.6':
+            for date,city,uf in c.get('confirmed_events',[]):
+                event_title='Jornada Mulheres que Mudam o Jogo – WIFS'; key=(date,pe.norm(event_title),pe.norm(city))
+                if key in known: print(f'wifs_event_duplicate={date}|{city}'); continue
+                known.add(key)
+                out.append({'ID':f'WIFS-{date}-{uf}','Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,'Categoria':'Ativação / evento Copa Feminina 2027','Organizador':'WIFS','Publico':0,'Patrocinador':'','Local':'','Latitude':None,'Longitude':None,'Link':str(c.get('url') or WIFS_EVENT_PAGE),'Observacoes':'Evento derivado de página-fonte; data e cidade validadas no conteúdo antes da materialização.','Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':{'RS':'Sul','RJ':'Sudeste','SP':'Sudeste','MG':'Sudeste','DF':'Centro-Oeste','PE':'Nordeste','CE':'Nordeste','BA':'Nordeste'}.get(uf,'')})
+                print(f'wifs_event_extracted={date}|{city}')
+            continue
         title=str(c.get('title') or '').strip(); nt=pe.norm(title); event_text=str(c.get('event_text') or nt)
         for rule in EVENT_RULES:
             if origin=='trusted-news-event-signal-v5.5':
@@ -208,10 +255,10 @@ def _events_from_candidates(candidates):
     return out
 
 def rss_candidates_v55():
-    primary=_primary_cbf_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss)
+    primary=_primary_cbf_candidates(); wifs=_wifs_event_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss)
     # A extração é 1 fonte -> 0..N eventos. Notícia e eventos continuam com
     # deduplicação independente; reconhecer uma notícia nunca consome os eventos.
-    pe._v55_official_events=_events_from_candidates(primary+signals)
+    pe._v55_official_events=_events_from_candidates(primary+wifs+signals)
     return primary+rss
 pe.rss_candidates=rss_candidates_v55
 
