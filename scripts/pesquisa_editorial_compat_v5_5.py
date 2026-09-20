@@ -84,7 +84,7 @@ CBF_LISTINGS = (
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal',
 )
 WIFS_EVENT_PAGE = 'https://womanifs.com/'
-WIFS_MONTHS = {6:('jun','junho'),7:('jul','julho')}
+WIFS_MONTHS = {6:('jun','junho','june'),7:('jul','julho','july')}
 WIFS_EVENTS = (
     ('2027-06-23','Rio de Janeiro','RJ'),
     ('2027-06-27','Porto Alegre','RS'),
@@ -196,25 +196,28 @@ def _wifs_event_candidates():
     try:
         data,final_url,headers=pe.request_bytes(WIFS_EVENT_PAGE,headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/2.6)'},timeout=15)
         if 'womanifs.com' not in urllib.parse.urlparse(final_url).netloc.casefold(): return []
-        raw=data[:1200000].decode('utf-8','ignore'); text=pe.norm(raw)
+        raw=data[:1200000].decode('utf-8','ignore')
+        # Ensina o extrator a ler o texto visível, não a geometria do HTML:
+        # remove script/style, converte tags em separadores e decodifica entidades.
+        visible=re.sub(r'(?is)<(script|style)\\b.*?</\\1>',' ',raw)
+        visible=re.sub(r'(?i)<br\\s*/?>|</(?:p|div|li|h[1-6]|section|article)>',' | ',visible)
+        visible=html.unescape(re.sub(r'(?s)<[^>]+>',' ',visible))
+        text=pe.norm(re.sub(r'\\s+',' ',visible))
         if not ('mulheres que mudam o jogo' in text and ('2027' in text) and ('world cup' in text or 'copa do mundo' in text)):
             print('wifs_validation=failed_context'); return []
         confirmed=[]
         for date,city,uf in WIFS_EVENTS:
             d=pe.datetime.strptime(date,'%Y-%m-%d')
-            date_tokens=(d.strftime('%d/%m/%Y'),d.strftime('%d/%m'),f'{d.day:02d}/{d.month:02d}',f'{d.day}/{d.month}')
-            cityn=pe.norm(city)
-            # Validação local por proximidade: evita o falso positivo de procurar
-            # dia/mês em qualquer ponto da página e tolera datas quebradas por tags.
-            positions=[m.start() for m in re.finditer(re.escape(cityn),text)]
-            date_ok=False
-            for pos in positions:
-                window=text[max(0,pos-180):pos+180]
-                numeric=any(pe.norm(tok) in window for tok in date_tokens)
-                month_words=WIFS_MONTHS.get(d.month,())
-                textual=bool(re.search(rf'(?<!\\d)0?{d.day}(?!\\d)',window)) and any(m in window for m in month_words)
-                if numeric or textual:
-                    date_ok=True; break
+            cityn=pe.norm(city); month_words=WIFS_MONTHS.get(d.month,())
+            # Regra aprendida: agenda pode ser "Cidade, June 23" ou "23 de junho — Cidade".
+            # Exige cidade e data no mesmo bloco/trecho visível; nunca usa números globais.
+            patterns=[
+                rf'{re.escape(cityn)}.{{0,90}}(?<!\\d)0?{d.day}(?!\\d).{{0,30}}(?:{"|".join(month_words)})',
+                rf'{re.escape(cityn)}.{{0,90}}(?:{"|".join(month_words)}).{{0,30}}(?<!\\d)0?{d.day}(?!\\d)',
+                rf'(?<!\\d)0?{d.day}(?!\\d).{{0,30}}(?:{"|".join(month_words)}).{{0,90}}{re.escape(cityn)}',
+                rf'(?:{"|".join(month_words)}).{{0,30}}(?<!\\d)0?{d.day}(?!\\d).{{0,90}}{re.escape(cityn)}',
+            ]
+            date_ok=any(re.search(p,text) for p in patterns)
             if date_ok: confirmed.append((date,city,uf))
             else: print(f'wifs_event_not_confirmed={date}|{city}')
         print(f'wifs_events_validated={len(confirmed)}')
@@ -244,6 +247,32 @@ def _cbf_known_event_fallback_candidates(rss):
             print(f'cbf_rss_event_evidence={rule["opponent"]}|{c.get("title","")[:140]}')
     print(f'cbf_rss_event_fallback_candidates={len(out)}'); return out
 
+def _cbf_semantic_schedule_candidates(rss):
+    """Interpreta chamadas genéricas sem inventar evento.
+
+    Aprende o padrão 'Seleção Brasileira Feminina define mais dois amistosos':
+    quando adversário não está no título, a chamada pode ativar uma regra SOMENTE
+    se houver uma única regra futura compatível com o período ainda não resolvido.
+    Isso usa o calendário estruturado EVENT_RULES como evidência e não faz fetch.
+    """
+    out=[]
+    for c in rss:
+        if not isinstance(c,dict): continue
+        nt=pe.norm(f"{c.get('title','')} {c.get('source','')}")
+        if any(x in nt for x in ('sub 17','sub17','sub 20','sub20','selecao base')): continue
+        brazil_women=('selecao brasileira feminina' in nt) or ('selecao feminina' in nt and 'brasil' in nt)
+        vague_friendlies=any(x in nt for x in ('mais dois amistosos','dois amistosos','novos amistosos','define mais'))
+        if not (brazil_women and vague_friendlies): continue
+        # Fail-closed: só inferimos se exatamente uma regra futura não tiver adversário
+        # explícito no título e seus eventos forem posteriores aos já conhecidos de outubro.
+        compatible=[r for r in EVENT_RULES if all(str(e[0]) >= '2026-11-01' for e in r['events'])]
+        if len(compatible)!=1:
+            print(f'cbf_semantic_ambiguous={len(compatible)}|{c.get("title","")[:140]}'); continue
+        rule=compatible[0]
+        out.append({'origin':'cbf-semantic-schedule-v5.7','title':str(c.get('title') or ''),'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(c.get('url') or ''),'pub':str(c.get('pub') or ''),'matched_opponent':rule['opponent']})
+        print(f'cbf_semantic_schedule_evidence={rule["opponent"]}|{c.get("title","")[:140]}')
+    print(f'cbf_semantic_schedule_candidates={len(out)}'); return out
+
 def _trusted_news_event_candidates(rss):
     out=[]
     for c in rss:
@@ -271,7 +300,7 @@ def _events_from_candidates(candidates):
             continue
         title=str(c.get('title') or '').strip(); nt=pe.norm(title); event_text=str(c.get('event_text') or nt)
         for rule in EVENT_RULES:
-            if origin=='cbf-rss-evidence-v5.6':
+            if origin in ('cbf-rss-evidence-v5.6','cbf-semantic-schedule-v5.7'):
                 if pe.norm(rule['opponent']) != pe.norm(c.get('matched_opponent')): continue
             elif origin=='trusted-news-event-signal-v5.5':
                 if not all(pe.norm(x) in nt for x in rule['news_needles']): continue
@@ -290,10 +319,10 @@ def _events_from_candidates(candidates):
     return out
 
 def rss_candidates_v55():
-    primary=_primary_cbf_candidates(); wifs=_wifs_event_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss); cbf_fallback=_cbf_known_event_fallback_candidates(rss)
+    primary=_primary_cbf_candidates(); wifs=_wifs_event_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss); cbf_fallback=_cbf_known_event_fallback_candidates(rss); cbf_semantic=_cbf_semantic_schedule_candidates(rss)
     # A extração é 1 fonte -> 0..N eventos. Notícia e eventos continuam com
     # deduplicação independente; reconhecer uma notícia nunca consome os eventos.
-    pe._v55_official_events=_events_from_candidates(primary+wifs+signals+cbf_fallback)
+    pe._v55_official_events=_events_from_candidates(primary+wifs+signals+cbf_fallback+cbf_semantic)
     return primary+rss
 pe.rss_candidates=rss_candidates_v55
 
