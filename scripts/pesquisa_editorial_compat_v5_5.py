@@ -12,6 +12,7 @@ Correção cirúrgica:
 """
 import importlib.util
 import html
+import json
 import re
 import urllib.parse
 import urllib.request
@@ -188,40 +189,59 @@ def _primary_cbf_candidates():
     print(f'primary_cbf_event_candidates={len(out)}'); return out
 
 def _wifs_event_candidates():
-    """Fonte temática: uma página pode materializar N eventos futuros.
+    """Extrai agenda de uma página-fonte por camadas, sem depender do layout.
 
-    A validação exige, no próprio HTML, o nome da jornada, referência à Copa 2027
-    e cada par data+cidade antes de criar qualquer candidato. Falha fechada.
+    Ordem: dados estruturados/embutidos -> texto visível. Cada evento só é
+    materializado quando data e cidade aparecem na mesma unidade de conteúdo.
+    Nenhuma leitura Airtable adicional é feita.
     """
     try:
-        data,final_url,headers=pe.request_bytes(WIFS_EVENT_PAGE,headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/2.6)'},timeout=15)
+        data,final_url,headers=pe.request_bytes(WIFS_EVENT_PAGE,headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/2.7)'},timeout=15)
         if 'womanifs.com' not in urllib.parse.urlparse(final_url).netloc.casefold(): return []
-        raw=data[:1200000].decode('utf-8','ignore')
-        # Ensina o extrator a ler o texto visível, não a geometria do HTML:
-        # remove script/style, converte tags em separadores e decodifica entidades.
-        visible=re.sub(r'(?is)<(script|style)\\b.*?</\\1>',' ',raw)
-        visible=re.sub(r'(?i)<br\\s*/?>|</(?:p|div|li|h[1-6]|section|article)>',' | ',visible)
-        visible=html.unescape(re.sub(r'(?s)<[^>]+>',' ',visible))
-        text=pe.norm(re.sub(r'\\s+',' ',visible))
-        if not ('mulheres que mudam o jogo' in text and ('2027' in text) and ('world cup' in text or 'copa do mundo' in text)):
+        raw=data[:1600000].decode('utf-8','ignore')
+        raw_norm=pe.norm(html.unescape(raw))
+        if not ('mulheres que mudam o jogo' in raw_norm and '2027' in raw_norm and ('world cup' in raw_norm or 'copa do mundo' in raw_norm)):
             print('wifs_validation=failed_context'); return []
+
+        # Unidades independentes de evidência. Preservamos scripts JSON/configuração
+        # porque agendas modernas frequentemente são hidratadas no cliente.
+        units=[]
+        for m in re.finditer(r'(?is)<script\\b[^>]*>(.*?)</script>',raw):
+            body=html.unescape(m.group(1))
+            if len(body)<=500000: units.append(pe.norm(body))
+        for m in re.finditer(r'(?is)<(?:article|section|li|div)\\b[^>]*>(.*?)</(?:article|section|li|div)>',raw):
+            body=html.unescape(re.sub(r'(?s)<[^>]+>',' ',m.group(1)))
+            if body.strip(): units.append(pe.norm(re.sub(r'\\s+',' ',body)))
+        visible=re.sub(r'(?is)<(script|style)\\b.*?</\\1>',' ',raw)
+        visible=html.unescape(re.sub(r'(?s)<[^>]+>',' ',visible))
+        units.append(pe.norm(re.sub(r'\\s+',' ',visible)))
+        # O HTML bruto normalizado é fallback final para atributos/data-* e blobs
+        # de configuração. Não é suficiente sozinho: ainda exigimos data+cidade.
+        units.append(raw_norm)
+
         confirmed=[]
         for date,city,uf in WIFS_EVENTS:
-            d=pe.datetime.strptime(date,'%Y-%m-%d')
-            cityn=pe.norm(city); month_words=WIFS_MONTHS.get(d.month,())
-            # Regra aprendida: agenda pode ser "Cidade, June 23" ou "23 de junho — Cidade".
-            # Exige cidade e data no mesmo bloco/trecho visível; nunca usa números globais.
-            patterns=[
-                rf'{re.escape(cityn)}.{{0,90}}(?<!\\d)0?{d.day}(?!\\d).{{0,30}}(?:{"|".join(month_words)})',
-                rf'{re.escape(cityn)}.{{0,90}}(?:{"|".join(month_words)}).{{0,30}}(?<!\\d)0?{d.day}(?!\\d)',
-                rf'(?<!\\d)0?{d.day}(?!\\d).{{0,30}}(?:{"|".join(month_words)}).{{0,90}}{re.escape(cityn)}',
-                rf'(?:{"|".join(month_words)}).{{0,30}}(?<!\\d)0?{d.day}(?!\\d).{{0,90}}{re.escape(cityn)}',
-            ]
-            date_ok=any(re.search(p,text) for p in patterns)
-            if date_ok: confirmed.append((date,city,uf))
+            d=pe.datetime.strptime(date,'%Y-%m-%d'); cityn=pe.norm(city)
+            months=WIFS_MONTHS.get(d.month,())
+            numeric=(d.strftime('%Y-%m-%d'),d.strftime('%d/%m/%Y'),d.strftime('%d/%m'),f'{d.day}/{d.month}')
+            def has_date(u):
+                if any(pe.norm(x) in u for x in numeric): return True
+                return bool(re.search(rf'(?<!\\d)0?{d.day}(?!\\d)',u)) and any(m in u for m in months) and ('2027' in u or len(u)<800)
+            evidence=False
+            for u in units:
+                if cityn not in u: continue
+                # Em unidades grandes, exige proximidade; em blocos pequenos, coocorrência.
+                if len(u)<1200:
+                    if has_date(u): evidence=True; break
+                else:
+                    for pos in [m.start() for m in re.finditer(re.escape(cityn),u)]:
+                        window=u[max(0,pos-500):pos+500]
+                        if has_date(window): evidence=True; break
+                    if evidence: break
+            if evidence: confirmed.append((date,city,uf)); print(f'wifs_structured_event_confirmed={date}|{city}')
             else: print(f'wifs_event_not_confirmed={date}|{city}')
         print(f'wifs_events_validated={len(confirmed)}')
-        return [{'origin':'wifs-primary-v5.6','title':'Jornada Mulheres que Mudam o Jogo – 2027 Women’s World Cup','source':'womanifs.com','trusted_source_domain':'womanifs.com','url':final_url,'pub':'','confirmed_events':confirmed}]
+        return [{'origin':'wifs-primary-v5.7','title':'Jornada Mulheres que Mudam o Jogo – 2027 Women’s World Cup','source':'womanifs.com','trusted_source_domain':'womanifs.com','url':final_url,'pub':'','confirmed_events':confirmed}]
     except Exception as exc:
         print(f'wifs_warning={type(exc).__name__}:{exc}'); return []
 
@@ -260,7 +280,9 @@ def _cbf_semantic_schedule_candidates(rss):
         if not isinstance(c,dict): continue
         nt=pe.norm(f"{c.get('title','')} {c.get('source','')}")
         if any(x in nt for x in ('sub 17','sub17','sub 20','sub20','selecao base')): continue
-        brazil_women=('selecao brasileira feminina' in nt) or ('selecao feminina' in nt and 'brasil' in nt)
+        # "Seleção Brasileira Feminina" já identifica Brasil; não exige a
+        # palavra Brasil separadamente. Mantém exclusão de base logo acima.
+        brazil_women=('selecao brasileira feminina' in nt) or (('selecao feminina' in nt) and ('brasil' in nt or 'brasileira' in nt))
         vague_friendlies=any(x in nt for x in ('mais dois amistosos','dois amistosos','novos amistosos','define mais'))
         if not (brazil_women and vague_friendlies): continue
         # Fail-closed: só inferimos se exatamente uma regra futura não tiver adversário
@@ -290,7 +312,7 @@ def _events_from_candidates(candidates):
     for c in candidates:
         origin=str(c.get('origin') or ''); trusted=str(c.get('trusted_source_domain') or '').casefold()
         if trusted not in ('cbf.com.br','event-rule-confirmed','womanifs.com'): continue
-        if origin=='wifs-primary-v5.6':
+        if origin in ('wifs-primary-v5.6','wifs-primary-v5.7'):
             for date,city,uf in c.get('confirmed_events',[]):
                 event_title='Jornada Mulheres que Mudam o Jogo – WIFS'; key=(date,pe.norm(event_title),pe.norm(city))
                 if key in known: print(f'wifs_event_duplicate={date}|{city}'); continue
