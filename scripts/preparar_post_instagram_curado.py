@@ -162,6 +162,14 @@ def fit_title(draw,title,width,start_size=86,min_size=MIN_TITLE_FONT,max_lines=M
         words=words[:-1]
     return f,['Radar Brasil 2027'],False
 
+OTHER_SPORT_CONTENT_BLOCKERS=('volei','volley','liga das nacoes de volei','basquete','basketball','automobilismo','formula 1','formula1','futsal','handebol','handball')
+RADAR_FOOTBALL_CONTENT_MARKERS=('futebol feminino','selecao feminina','selecao brasileira feminina','copa do mundo feminina','copa feminina','mundial feminino','fifa women','women world cup','women s world cup')
+def radar_content_ok(item):
+    text=norm(' '.join(clean(v) for v in item.values()))
+    if any(norm(x) in text for x in OTHER_SPORT_CONTENT_BLOCKERS):
+        return any(norm(x) in text for x in RADAR_FOOTBALL_CONTENT_MARKERS)
+    return True
+
 def candidates(events,news,published,pending,prior_titles=()):
     out=[]
     for x in events:
@@ -173,7 +181,7 @@ def candidates(events,news,published,pending,prior_titles=()):
             out.append(dict(key=key,title=title,date=d,type='evento',subtitle=subtitle,search_context=search_context,visual_places=place,caption=f"📅 {title}\n\nQuando: {clean(x.get('DataBR')) or d.strftime('%d/%m/%Y')}\nOnde: {place or 'Local a definir'}\n\n{clean(x.get('Observacoes'))}\n\nFonte: {clean(x.get('Organizador')) or 'Radar Brasil 2027'}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     for x in news:
         title=clean(x.get('Titulo')); d=date(x.get('Data')); key='instagram:noticia:'+clean(x.get('Link') or title).casefold()
-        if title and d and d<=dt.datetime.now(dt.timezone.utc).date() and key not in published and not base(x) and not any(duplicate_title(title,old) for old in prior_titles):
+        if title and d and d<=dt.datetime.now(dt.timezone.utc).date() and key not in published and not base(x) and radar_content_ok(x) and not any(duplicate_title(title,old) for old in prior_titles):
             subtitle=(clean(x.get('Veiculo')) or 'Radar Brasil 2027')+' • '+d.strftime('%d/%m/%Y')
             search_context=' '.join(filter(None,[title,clean(x.get('Tema')),clean(x.get('CidadeUF')),clean(x.get('Veiculo'))]))
             out.append(dict(key=key,title=title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,visual_places=clean(x.get('CidadeUF')),caption=f"📰 {title}\n\n{clean(x.get('Resumo'))}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
