@@ -105,6 +105,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-20T02:06:31.614215+00:00"
+    },
+    {
+      "key": "instagram:evento:wifs-2027-07-23-sp",
+      "post_file": "instagram/fila/automatica/instagram-evento-wifs-2027-07-23-sp-975d1efa8d.json",
+      "reserved_at": "2026-09-20T16:01:28.209451+00:00",
+      "last_attempt_at": "2026-09-20T16:01:28.209451+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false
     }
   ]
 }
