@@ -185,5 +185,38 @@ def public_research_v54(keys):
 
 pe.public_research=public_research_v54
 
+# ---------- Gate temático: impede modalidades alheias ao Radar ----------
+_OTHER_SPORT_BLOCKERS = (
+    'volei','volley','liga das nacoes de volei','basquete','basketball',
+    'automobilismo','formula 1','formula1','futsal','handebol','handball',
+)
+_RADAR_FOOTBALL_MARKERS = (
+    'futebol feminino','selecao feminina','selecao brasileira feminina',
+    'copa do mundo feminina','copa feminina','mundial feminino',
+    'fifa women','women world cup','women s world cup',
+)
+
+def _radar_topic_ok(title):
+    text=pe.norm(title)
+    if any(pe.norm(x) in text for x in _OTHER_SPORT_BLOCKERS):
+        return any(pe.norm(x) in text for x in _RADAR_FOOTBALL_MARKERS)
+    return True
+
+_public_research_v54_ungated=public_research_v54
+
+def public_research_v54_topic_gate(keys):
+    count,approved,rejected,duplicates,audit=_public_research_v54_ungated(keys)
+    kept=[]
+    for item in approved:
+        title=str(item.get('Titulo') or '')
+        if _radar_topic_ok(title):
+            kept.append(item); continue
+        rejected+=1
+        audit.append({'origem':'topic-gate-v5.4','titulo':title,'fonte':item.get('Veiculo',''),'url':item.get('Link',''),'decisao':'rejeitado','motivo':'Modalidade fora do escopo do Radar Brasil 2027.'})
+        print(f'editorial_topic_blocked={title[:180]}')
+    return count,kept,rejected,duplicates,audit
+
+pe.public_research=public_research_v54_topic_gate
+
 if __name__=='__main__':
     raise SystemExit(pe.main())
