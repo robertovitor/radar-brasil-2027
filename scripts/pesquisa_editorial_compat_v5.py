@@ -86,12 +86,18 @@ def _explicit_record_date(record, kind):
         return None
 
 
-def _known_duplicate(candidate):
+def _known_duplicate(candidate, kind=None):
     link = str(candidate.get('Link') or '')
     title = str(candidate.get('Titulo') or '')
     keys = pe.existing_keys()
     if ('u:' + pe.urlnorm(link)) in keys or ('t:' + pe.norm(title)) in keys:
         return True
+    # Eventos estruturados têm identidade própria (data/local) e não devem ser
+    # descartados apenas porque existe uma notícia semanticamente semelhante.
+    # Mantém deduplicação exata por URL/título acima e preserva a deduplicação
+    # semântica original para notícias.
+    if kind == 'eventos':
+        return False
     return bool(v3._semantic_prior_title(title))
 
 
@@ -106,7 +112,7 @@ def _validate_suggestion(record, kind, candidate):
     if not pe.trusted_url(link):
         print(f'suggestion_v5_rejected={rid}|kind={kind}|reason=untrusted_domain')
         return None
-    if _known_duplicate(candidate):
+    if _known_duplicate(candidate, kind):
         print(f'suggestion_v5_duplicate={rid}|kind={kind}')
         return None
 
@@ -169,7 +175,7 @@ def _validate_suggestion(record, kind, candidate):
         candidate['Link'] = final_url
 
     # Dedup novamente com os valores canônicos obtidos da própria fonte.
-    if _known_duplicate(candidate):
+    if _known_duplicate(candidate, kind):
         print(f'suggestion_v5_duplicate={rid}|kind={kind}|phase=canonical')
         return None
 
