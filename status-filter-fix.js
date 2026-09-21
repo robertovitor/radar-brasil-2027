@@ -33,18 +33,18 @@
     el.addEventListener('change',()=>setTimeout(()=>apply(true),0));
   });
 
-  // Busca também atualiza sem depender de Enter/botão Aplicar.
+  // Busca atualiza os resultados durante a digitação, sem deslocar a página.
   const busca=document.getElementById('busca');
   if(busca&&busca.dataset.liveFilterFix!=='1'){
     busca.dataset.liveFilterFix='1';
     let timer;
     busca.addEventListener('input',()=>{
       clearTimeout(timer);
-      timer=setTimeout(()=>apply(true),180);
+      timer=setTimeout(()=>apply(false),180);
     });
   }
 
-  // O botão Aplicar mantém o mesmo comportamento de posicionar nos resultados.
+  // Enter na Busca posiciona nos resultados somente após o usuário concluir a digitação.\n  if(busca&&busca.dataset.searchEnterScroll!=='1'){\n    busca.dataset.searchEnterScroll='1';\n    busca.addEventListener('keydown',e=>{\n      if(e.key==='Enter'){\n        clearTimeout(timer);\n        apply(false);\n        scrollToResults();\n      }\n    });\n  }\n\n  // O botão Aplicar mantém o mesmo comportamento de posicionar nos resultados.
   document.getElementById('aplicar')?.addEventListener('click',()=>setTimeout(scrollToResults,0));
 
   const wait=setInterval(()=>{
