@@ -126,10 +126,15 @@ def candidate_from_record(record, kind):
                 'Veiculo':str(first(f,'Veículo','Veiculo','Fonte')).strip() or urllib.parse.urlparse(link).netloc,
                 'Link':link,'Sentimento':'Neutro','Impacto':str(first(f,'Impacto')).strip() or 'Médio',
                 'Resumo':str(first(f,'Resumo','Descrição','Descricao','Observações','Observacoes')).strip()[:1200]}
-    date=str(first(f,'Data','Data do evento','Data informada')).strip()[:10]
-    if re.fullmatch(r'\d{2}/\d{2}/\d{4}',date):
-        date=datetime.strptime(date,'%d/%m/%Y').strftime('%Y-%m-%d')
-    if not re.fullmatch(r'\d{4}-\d{2}-\d{2}',date): return None
+    raw_date=str(first(f,'Data informada','Data','Data do evento')).strip()
+    date=''
+    for fmt in ('%d/%m/%Y','%Y-%m-%d'):
+        try:
+            date=datetime.strptime(raw_date[:10],fmt).strftime('%Y-%m-%d')
+            break
+        except ValueError:
+            pass
+    if not date: return None
     city=str(first(f,'Cidade','Cidade informada')).strip(); uf=str(first(f,'UF')).strip()
     return {'ID':str(first(f,'ID')).strip() or f"SUG-{record.get('id','')}", 'Titulo':title,'Status':'Planejado','Data':date,
             'DataBR':datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,
