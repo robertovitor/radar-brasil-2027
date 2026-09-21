@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260921-18",
-  "started_at": "2026-09-21T18:55:43-03:00",
-  "completed_at": "2026-09-21T18:57:33-03:00",
+  "cycle_id": "20260921-19",
+  "started_at": "2026-09-21T19:11:05-03:00",
+  "completed_at": "2026-09-21T19:12:46-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -18,11 +18,11 @@
   "sugestoes_lidas": 29,
   "sugestoes_noticias_lidas": 24,
   "candidatos_publicos": 92,
-  "aprovados_novos": 1,
-  "rejeitados": 119,
+  "aprovados_novos": 0,
+  "rejeitados": 120,
   "duplicados": 0,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "auditoria": [
     {
       "origem": "airtable",
@@ -294,17 +294,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Esportivo recebe vistoria para Copa do Mundo Feminina 2027 em Bento Gonçalves - Jornal SERRANOSSA",
-      "fonte": "Jornal SERRANOSSA",
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE01dExpc053Z3E0dVdlVVZUSGFNVGpUTmJRRHkwRUdZQVktUThtNm11V25pRW1HNGRLTDdwVjdiRVBTSV9kZ3hJWU56ZGswXzhXRkd6VXE1anRsVS1uWTJ4cUpxclNabFBiLUV4UXk5Vkg5Zw?oc=5",
+      "titulo": "Copa do Mundo Feminina 2027 - Federação Paulista de Futebol",
+      "fonte": "Federação Paulista de Futebol",
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9iamltQ1p2YnFfRVBLRlkxeHBnWm9XanZVVVhHWGxoZjBQVkdYRmRfblNzQk5NLWE0dUZNaHpWTTJveXpacUxpd01EbUdXaWRibnRwTTVwdXhRTE5sbTZOTzl6aVR1eWtlcXpOT1hjSXBhUlpB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027 - Federação Paulista de Futebol",
-      "fonte": "Federação Paulista de Futebol",
-      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9iamltQ1p2YnFfRVBLRlkxeHBnWm9XanZVVVhHWGxoZjBQVkdYRmRfblNzQk5NLWE0dUZNaHpWTTJveXpacUxpd01EbUdXaWRibnRwTTVwdXhRTE5sbTZOTzl6aVR1eWtlcXpOT1hjSXBhUlpB?oc=5",
+      "titulo": "Esportivo recebe vistoria para Copa do Mundo Feminina 2027 em Bento Gonçalves - Jornal SERRANOSSA",
+      "fonte": "Jornal SERRANOSSA",
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE01dExpc053Z3E0dVdlVVZUSGFNVGpUTmJRRHkwRUdZQVktUThtNm11V25pRW1HNGRLTDdwVjdiRVBTSV9kZ3hJWU56ZGswXzhXRkd6VXE1anRsVS1uWTJ4cUpxclNabFBiLUV4UXk5Vkg5Zw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -614,8 +614,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina no Brasil movimentará quase R$ 9 bilhões na economia - Panrotas",
-      "fonte": "Panrotas",
+      "titulo": "Copa do Mundo Feminina no Brasil movimentará quase R$ 9 bilhões na economia - panrotas.com.br",
+      "fonte": "panrotas.com.br",
       "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQUUhkdzVrd2FidnR4LVZwQVRIRXNmbG9EcGc5U3FGTWdiaS1MdmdnZFYwMjFDTS03ejhJM3FwaG1TQnVCRDY2X3B5T3dXcnp4VDVEdGtOaEhielFGdGZCcV9OVkltYnhMY2hjRTNRYmlCam9XZjhyVnpuOWZOMGpIbkpjNy1WcFZoLVNTTG44LXoxbWhKanFoRGxhSFZ5RUdVeUVfUXpoSHlmbUJ5ZHBJbER1V184Y0RmNnZTM2x2elNmdXpQbDBNbUdNQWFmOHh5YU5Md1hB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -854,6 +854,14 @@
     },
     {
       "origem": "google-news-trusted-source",
+      "titulo": "Copa Feminina: Brasil estreia no Maracanã e passará por SP e DF na 1ª fase - UOL",
+      "fonte": "UOL",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNamd5OEgxbGhINGlWazA2Y1MyTzFLVl92OFhfdlkxdDdWZlEyS0YtSW5yUEUyZi1KdS1HT3d3eVpFS0ZFNk9GTVRYUV94Y052Mms4TUpGQlZkOWRCR1dyVUh2Rk9JS3NUQ1FDVTVkYnlTMDdkb2tOM25DbmdMem4tZGRzTzZQSmt1UWhvVmN6QmtNRWZ0ZmQ3VFM4b01zck9OeHlNRUMyUnQyZGw1QXc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (32d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
       "titulo": "Copa do Mundo 2027: calendário será revelado dia 20 de agosto - ge",
       "fonte": "ge",
       "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOZzNaekNLeDNDOHBpT0dSMzZWejJRM3dtX3JsbHczUzFwODQ5S0hJaTZ1WjdIRmI3NEJuQjFYUU4zdjl4M19xLVhRdTcyMU5kUkNXUXZmaHF5bVdXSEpJVzhJRTBGb1dmTVF3WmRjRmdiNjZ3QjFMZENjUUdSb1ZoLVNDRkwtcGZiSkg4NEUwamZuSHViUGl2XzN2M1B4OWNpT3dQUFhjN2k1dGdGTzUwcWJyYldVemdETE4yWUF5UFh3S2Vral9kVzVFQVJnWGRXVVV30gHiAUFVX3lxTFB6dGlzRmNaQ1dIN1ZGT3VVQTd5elJFbGszUkVhNjRONnBDcDdtR3RfNFZoMFhEVFZXNDNFNWZYNzRLTjdhRlF3TUhZZjdLcERNZ2g5T1V0d1RPRm12V29zV0JqZXlhY1ZNYVgtWHh0bktLZEVpUFNmRG5la0poM2JPZGYxZ3ktQXhkQVZtWTJLOXpNTFU4OURiNnFzUW8wYU5SeW9HWlBBUDBLRTZJdmV6amJ0WFdtT04yNjNvekhNQzdGQlRYWU8zV0RXcnBKX21mZS14U0d1VFpkZkxUbm10Qmc?oc=5",
@@ -883,14 +891,6 @@
       "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxNQjRiQ0F5TV82U3R2VXl1VkxMd0RjWVI1SnpNSHdXLS1KWEdUa09rNzBEcHYtMW5zTkUzSzVZQXV2aXJOc0JxbS11eEJSNkZmcDBtSWZETmRfWnJYV2VSU3RmUVVsdE9FZGJoUlVZQmxWQ29vaFVrN0p1M3c1ZGJkc0FJV1Y0aWJXMG1xSmo1dU9BT2hwd3dhbzBNUmxaRmtGOXVOdmF3bEZmdjl5TU5Nd05FTjE4UjE2YWZTVThucjkwcVhwZEplaVJzYXljcm9Nd2lzZkdrd1Vsa2dC?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (192d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Fifa abre inscrições para programa de voluntários da Copa Feminina - correiodopovo.com.br",
-      "fonte": "correiodopovo.com.br",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOWW5xYWhHX1JVOThoSjg1ZUdwYjd6aFE1MFZPQm9sTFB2NU5RempxZnBBeWpwengyUHd5ZnREZVBVVkNVTGpwM0xKMVV1UlUxQTRlZEI1T0pOSXdVeEV4YmlpQUQ0Ni1IcGlmaFhTUVZUN1Z4MTBncVpBQnVkc2xrZHNJY3pxZGwzSTF1WEdQQ0haOWZScGFNeTZFWE1GVE9wcFhvSW1CLTVVVUVNUnNYbkktTXFnSWVXb0E?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
     {
       "origem": "google-news-trusted-source",
@@ -1006,8 +1006,8 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Falta 1 ano: Brasil se prepara para receber a Copa do Mundo Feminina da FIFA em 2027 - cbf.com.br",
-      "fonte": "cbf.com.br",
+      "titulo": "Falta 1 ano: Brasil se prepara para receber a Copa do Mundo Feminina da FIFA em 2027 - CBF",
+      "fonte": "CBF",
       "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNcXZRdmVHbEdGZ2l5bW9oVjE5eW13b09KSHdBMHVFdW9qU0ZINFR5ZUhwTHF0VmdxS3FscXdvWEU1UktOUVduQ0NaMUFDbnAwaE5kNXFsWkJfUjZTWXFPX244QXNURllvMjZRVW1WVGQ4M25KSkt1cmM4cUEydERUek0wTVljMC1xbTBmMjk4Z1pkUm94U3ZIQUw3V1pGWlN2YlpVRUlYbXcyWUtZNXVzbmQyUEZMUHd2dS1xVGVPMzV6X0tOZEVOTkRsU2syclhLQ3JkQmhuSkZEd2VsQm44S3BUODFhQ2pqZlVXNDdJZTVWM3B5Tmc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (89d)."
