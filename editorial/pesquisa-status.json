@@ -1,7 +1,7 @@
 {
   "cycle_id": "20260921-14",
-  "started_at": "2026-09-21T14:44:49-03:00",
-  "completed_at": "2026-09-21T14:46:38-03:00",
+  "started_at": "2026-09-21T14:46:52-03:00",
+  "completed_at": "2026-09-21T14:48:17-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -17,12 +17,12 @@
   ],
   "sugestoes_lidas": 29,
   "sugestoes_noticias_lidas": 24,
-  "candidatos_publicos": 93,
-  "aprovados_novos": 1,
+  "candidatos_publicos": 92,
+  "aprovados_novos": 0,
   "rejeitados": 120,
   "duplicados": 0,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "auditoria": [
     {
       "origem": "airtable",
@@ -446,6 +446,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Debate aponta necessidade de investir no futebol feminino para Copa de 2027 - Senado",
+      "fonte": "Senado",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQWTltNXB3VkV5VkhmZ255d19hQ0tFUGZHUmxMNjZCdnJvb1Q4eVd6bkRQZVRJMGhqNlNoY1VLYlM1bkxZZHhoQXN0cUw0NE01SGJUZ1plMk10a2g1anY1UU1PRFJleTZDTEtTUGVQLV81TWt1NzhBSzdKQ1pzYjFabGR5NzdaY2lYNlB1M1NvZDdkTDdhclROZHNoaGVtY3ZPSDJ1akdtSkphS0xPWFNKYWdyS3phTXVnVW5CLTA0UExTVmxjVVE?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Espírito Santo vai receber seleções na Copa Feminina de Futebol em 2027 - Blog do Elimar Cortes",
       "fonte": "Blog do Elimar Cortes",
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQNE1ycGt0d1Z4cGxibTRIdEgzSzFIVW5EdDJYeHFQZkRKRjR6WjRiVXNFQ19uQVdfTEphRjNPMnl2a0lQVmplSXI1emxnVDdhUmN4OXItM2d4YjdUV3VpNXZ0LXAtenhYQ2xhRGFGVXY5aDMyenBYR0dyaUVlSzhILXZCTG12eU1XSVJNamJEekFhbTFSZTJaa0p4bzJZamdRUjBNeGc2SWNGQU1iTjBNQw?oc=5",
@@ -838,14 +846,6 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Debate aponta necessidade de investir no futebol feminino para Copa de 2027 - senado.leg.br",
-      "fonte": "senado.leg.br",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQWTltNXB3VkV5VkhmZ255d19hQ0tFUGZHUmxMNjZCdnJvb1Q4eVd6bkRQZVRJMGhqNlNoY1VLYlM1bkxZZHhoQXN0cUw0NE01SGJUZ1plMk10a2g1anY1UU1PRFJleTZDTEtTUGVQLV81TWt1NzhBSzdKQ1pzYjFabGR5NzdaY2lYNlB1M1NvZDdkTDdhclROZHNoaGVtY3ZPSDJ1akdtSkphS0xPWFNKYWdyS3phTXVnVW5CLTA0UExTVmxjVVE?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (1034d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "Arthur Elias convoca seleção brasileira feminina para o Fifa Series; veja lista - ge",
       "fonte": "ge",
       "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQRUtLWDNuS0Z6bkRhc20tM1dmZS1YMUo5anV0SFNXeUNkUVI2T0ZtbWhBMXJXZHN6aVd3X3B3bXlUaDJUR1V1a3FGWW1LeWpwNFZGOHFLRWprN2Z0WUZqSTN5eUFYcXRTeHFxRDNFNkFlckl2dm1UcWtWZ2NweE4xbFpVcW8zSkcyaG41LWZ3VnBXNmtqZ1R6SllXODQ3LUIwTzEzVlhTWUowNUdlYVpRcUF2M1NPRjZjXzd0NE1QVjdTMTVlRU14NkJ3Y1JOdUZtOFpuc3F5ZmlwYS1EaElCOWxOaktzUdIB9AFBVV95cUxNUGU4Qkl1X2VGQjVVbnh5T2lmNkpsclBneTlUM1BhODlydmlyX2NvR2ItSV9uN2R2WHd0c1NJTDNDNzc5QU85eHRyRjB2NjVnZ1JueXhlczFqaEFMN0NMSHpDekdTQVpNVEpJWkVFQ1VzTTByLWN4SjUwRTVYeHdZUVh3azdMbjd0T3ltTFp6aERqMmxhZWZ3YjdnOGI2RDZTLWh6M2dXSDczU2d1VDZDdWVKendZQ3pEcmotSjU1ZmtTdTBadG1yY1lwMlF2amtwTjdSWWZTZmF4d05WVnBaQV9pQjAzbGRYWURQZ2dnQTBKUnN4?oc=5",
@@ -891,14 +891,6 @@
       "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxNQjRiQ0F5TV82U3R2VXl1VkxMd0RjWVI1SnpNSHdXLS1KWEdUa09rNzBEcHYtMW5zTkUzSzVZQXV2aXJOc0JxbS11eEJSNkZmcDBtSWZETmRfWnJYV2VSU3RmUVVsdE9FZGJoUlVZQmxWQ29vaFVrN0p1M3c1ZGJkc0FJV1Y0aWJXMG1xSmo1dU9BT2hwd3dhbzBNUmxaRmtGOXVOdmF3bEZmdjl5TU5Nd05FTjE4UjE2YWZTVThucjkwcVhwZEplaVJzYXljcm9Nd2lzZkdrd1Vsa2dC?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (192d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Fifa abre inscrições para programa de voluntários da Copa Feminina - Correio do Povo",
-      "fonte": "Correio do Povo",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOWW5xYWhHX1JVOThoSjg1ZUdwYjd6aFE1MFZPQm9sTFB2NU5RempxZnBBeWpwengyUHd5ZnREZVBVVkNVTGpwM0xKMVV1UlUxQTRlZEI1T0pOSXdVeEV4YmlpQUQ0Ni1IcGlmaFhTUVZUN1Z4MTBncVpBQnVkc2xrZHNJY3pxZGwzSTF1WEdQQ0haOWZScGFNeTZFWE1GVE9wcFhvSW1CLTVVVUVNUnNYbkktTXFnSWVXb0E?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
     {
       "origem": "google-news-trusted-source",
