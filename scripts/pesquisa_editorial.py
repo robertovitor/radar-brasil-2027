@@ -115,8 +115,8 @@ def existing_keys():
 
 def candidate_from_record(record, kind):
     f=record.get('fields',{})
-    title=str(first(f,'Título','Titulo','Título da notícia','Titulo da noticia','Nome','Evento')).strip()
-    link=str(first(f,'Link','URL','Fonte','Link da notícia','Link da noticia')).strip()
+    title=str(first(f,'Título','Titulo','Título da notícia','Titulo da noticia','Nome','Evento','Evento sugerido')).strip()
+    link=str(first(f,'Link','URL','Fonte','Link da notícia','Link da noticia','Fonte ou link')).strip()
     if not title or not link: return None
     if kind=='noticias':
         date=str(first(f,'Data','Data da notícia','Data da noticia')).strip()[:10] or now().date().isoformat()
@@ -257,8 +257,8 @@ def main():
             for rec in records:
                 f=rec.get('fields',{})
                 if not processable(f): continue
-                raw_title=str(first(f,'Título','Titulo','Título da notícia','Titulo da noticia','Nome','Evento')).strip()
-                raw_link=str(first(f,'Link','URL','Fonte','Link da notícia','Link da noticia')).strip()
+                raw_title=str(first(f,'Título','Titulo','Título da notícia','Titulo da noticia','Nome','Evento','Evento sugerido')).strip()
+                raw_link=str(first(f,'Link','URL','Fonte','Link da notícia','Link da noticia','Fonte ou link')).strip()
                 audit_base={'origem':'airtable','tabela':table_name,'record_id':rec.get('id',''),'titulo':raw_title,'url':raw_link}
                 cand=candidate_from_record(rec,kind)
                 if not cand:
