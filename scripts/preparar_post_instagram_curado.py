@@ -407,7 +407,15 @@ def main():
     # Prioriza conteúdo que possua fotografia real válida. Só usa a arte textual
     # quando nenhum dos itens elegíveis tiver imagem segura e não repetida.
     fallback_item=ranked[0]; item=None; c=None
-    for candidate in ranked:
+    # Evento que acontece hoje tem prioridade editorial absoluta. A disponibilidade
+    # de foto pode definir a forma do post, nunca fazer uma pauta menos urgente furar
+    # a fila. Mantém intactas deduplicação, reserva, cooldown e reconciliação Meta.
+    today=dt.datetime.now(dt.timezone.utc).date()
+    today_event=(fallback_item.get('type')=='evento' and fallback_item.get('date')==today)
+    image_candidates=[fallback_item] if today_event else ranked
+    if today_event:
+        print('priority_event_today='+fallback_item['key'])
+    for candidate in image_candidates:
         candidate_image=curated.get(candidate['key'])
         if candidate_image:
             policy_ok,policy_reason=curated_image_policy_ok(candidate,candidate_image)
