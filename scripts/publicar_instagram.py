@@ -249,7 +249,7 @@ def recent_remote_media(user_id: str, token: str, graph_root: str, strict: bool 
         return []
 
 
-def reconcile_existing(post: dict, user_id: str, token: str, graph_root: str, strict: bool = False) -> str | None:
+def reconcile_existing(post: dict, user_id: str, token: str, graph_root: str, strict: bool = False) -> dict | None:
     caption = str(post.get("caption") or "").strip()
     title = post_title(post)
     now = dt.datetime.now(dt.timezone.utc)
@@ -270,19 +270,31 @@ def reconcile_existing(post: dict, user_id: str, token: str, graph_root: str, st
         if exact or topic_match:
             media_id = str(item.get("id") or "").strip()
             if media_id:
+                remote_published_at = ""
+                if raw_ts:
+                    try:
+                        parsed = dt.datetime.fromisoformat(raw_ts.replace("Z", "+00:00"))
+                        if parsed.tzinfo is None:
+                            parsed = parsed.replace(tzinfo=dt.timezone.utc)
+                        remote_published_at = parsed.astimezone(dt.timezone.utc).isoformat()
+                    except ValueError:
+                        pass
                 print(f"remote_existing_media_found={media_id}")
-                return media_id
+                if remote_published_at:
+                    print(f"remote_existing_published_at={remote_published_at}")
+                return {"id": media_id, "published_at": remote_published_at}
     return None
 
 
-def append_ledger(args, published: list[dict], key: str, media_id: str, creation_id: str | None = None, reconciled: bool = False) -> None:
+def append_ledger(args, published: list[dict], key: str, media_id: str, creation_id: str | None = None, reconciled: bool = False, published_at: str | None = None) -> None:
     if any(str(item.get("key") or "") == key for item in published):
         return
+    effective_published_at = str(published_at or "").strip() or dt.datetime.now(dt.timezone.utc).isoformat()
     row = {
         "key": key,
         "post_file": str(args.post),
         "instagram_media_id": str(media_id),
-        "published_at": dt.datetime.now(dt.timezone.utc).isoformat(),
+        "published_at": effective_published_at,
     }
     if creation_id:
         row["creation_id"] = str(creation_id)
@@ -318,15 +330,15 @@ def publish_with_retry(user_id: str, creation_id: str, token: str, graph_root: s
                         raise
                 existing = reconcile_existing(post, user_id, token, graph_root)
                 if existing:
-                    return existing
+                    return str(existing.get("id") or "")
                 continue
             existing = reconcile_existing(post, user_id, token, graph_root)
             if existing:
-                return existing
+                return str(existing.get("id") or "")
             raise
     existing = reconcile_existing(post, user_id, token, graph_root)
     if existing:
-        return existing
+        return str(existing.get("id") or "")
     raise last_error or InstagramError("Falha desconhecida em media_publish.")
 
 
@@ -405,9 +417,18 @@ def main() -> int:
     if strict_reconciliation:
         existing = reconcile_existing(post, user_id, token, graph_root, strict=True)
         if existing:
-            append_ledger(args, published, key, existing, reconciled=True)
+            media_id = str(existing.get("id") or "").strip()
+            remote_published_at = str(existing.get("published_at") or "").strip()
+            append_ledger(
+                args,
+                published,
+                key,
+                media_id,
+                reconciled=True,
+                published_at=remote_published_at or None,
+            )
             clear_meta_cooldown()
-            print(f"Publicação já existia na Meta e foi reconciliada: media_id={existing}")
+            print(f"Publicação já existia na Meta e foi reconciliada: media_id={media_id}")
             return 0
     else:
         print("remote_reconciliation_skipped=normal_publish")
