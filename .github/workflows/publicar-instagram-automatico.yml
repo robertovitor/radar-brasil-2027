@@ -228,7 +228,9 @@ jobs:
           status=$?
           set -e
           echo "$output"
+          semantic_skip="$(echo "$output" | sed -n 's/^semantic_duplicate_skipped=true.*$/true/p' | tail -1)"
           echo "status=$status" >> "$GITHUB_OUTPUT"
+          echo "semantic_duplicate_skipped=${semantic_skip:-false}" >> "$GITHUB_OUTPUT"
           exit "$status"
 
       - name: Registrar publicação confirmada ou reconciliada
@@ -323,8 +325,8 @@ jobs:
               output.write(f"reason={reason}\n")
           PY
 
-      - name: Liberar reserva após confirmação ou rate limit
-        if: always() && steps.selecionar.outputs.found == 'true' && (steps.resultado_publicacao.outputs.confirmed == 'true' || steps.resultado_publicacao.outputs.deferred == 'true')
+      - name: Liberar reserva após confirmação, rate limit ou descarte semântico
+        if: always() && steps.selecionar.outputs.found == 'true' && (steps.resultado_publicacao.outputs.confirmed == 'true' || steps.resultado_publicacao.outputs.deferred == 'true' || steps.publicar.outputs.semantic_duplicate_skipped == 'true')
         run: |
           git pull --rebase --autostash origin main
           python scripts/reservar_publicacao_instagram.py clear --batch "${{ steps.selecionar.outputs.batch_file }}"
@@ -359,7 +361,7 @@ jobs:
           echo "A rodada foi adiada pela Meta; não é falha editorial nem erro do workflow."
 
       - name: Sinalizar somente falha real de publicação
-        if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.confirmed != 'true' && steps.resultado_publicacao.outputs.deferred != 'true'
+        if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.confirmed != 'true' && steps.resultado_publicacao.outputs.deferred != 'true' && steps.publicar.outputs.semantic_duplicate_skipped != 'true'
         run: |
-          echo "A publicação não foi confirmada, reconciliada nem adiada por rate limit."
+          echo "A publicação não foi confirmada, reconciliada, adiada por rate limit nem descartada por duplicidade semântica."
           exit 1
