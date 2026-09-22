@@ -389,15 +389,26 @@ def _future_events_from_news(rss):
         title=str(c.get('title') or '').strip(); nt=pe.norm(f"{title} {c.get('source','')}")
         if any(x in nt for x in ('sub 17','sub17','sub 20','sub20','sub 23','sub23','selecao base','categoria de base')): continue
         relevant=('selecao brasileira feminina' in nt) or ('futebol feminino' in nt) or any(x in nt for x in ('lorena','marta','bola de ouro'))
-        if not relevant or not any(pe.norm(x) in nt for x in event_words) or not any(pe.norm(x) in nt for x in future_words): continue
-        # Só datas completas escritas no próprio título. Nada de inferir a partir da publicação.
-        m=re.search(r'(?<!\\d)([0-3]?\\d)[/.-]([01]?\\d)[/.-](20\\d{2})(?!\\d)',title)
+        # Pré-filtro barato: só abre a matéria quando o título sinaliza premiação/evento
+        # potencialmente estruturável. Reutiliza fetch HTTP; não toca no Airtable.
+        signal=('bola de ouro' in nt) or any(pe.norm(x) in nt for x in event_words)
+        if not relevant or not signal: continue
+        body=''; final_url=str(c.get('url') or '')
+        try:
+            body,final_url=pe.fetch_article_excerpt(final_url)
+        except Exception as e:
+            print(f'future_event_fetch_failed={type(e).__name__}|{title[:120]}')
+        nb=pe.norm(f"{title} {body}")
+        if not body or not any(pe.norm(x) in nb for x in future_words): continue
+        # A data precisa estar explicitamente no título OU corpo da fonte; pubDate nunca vira data do evento.
+        evidence=f"{title} {body}"
+        m=re.search(r'(?<!\\d)([0-3]?\\d)[/.-]([01]?\\d)[/.-](20\\d{2})(?!\\d)',evidence)
         date=''
         if m:
             try: date=pe.datetime(int(m.group(3)),int(m.group(2)),int(m.group(1))).date().isoformat()
             except ValueError: continue
         if not date:
-            tn=pe.norm(title)
+            tn=pe.norm(evidence)
             for mon,num in months.items():
                 mm=re.search(rf'(?<!\\d)([0-3]?\\d) de {pe.norm(mon)}(?: de)? (20\\d{{2}})',tn)
                 if mm:
@@ -405,14 +416,14 @@ def _future_events_from_news(rss):
                     except ValueError: date=''
                     break
         if not date or date < pe.now().date().isoformat(): continue
-        if 'bola de ouro' in nt:
+        if 'bola de ouro' in nb:
             event_title='Cerimônia da Bola de Ouro 2026'; category='Premiação / Futebol Feminino'; city='Londres'; uf=''; organizer='France Football'; local=''; semantic='bola-de-ouro-2026'
         else:
             # Outros tipos ficam apenas sinalizados até termos extração segura de nome/local.
             print(f'future_event_ambiguous_type={date}|{title[:140]}'); continue
         key=(date,semantic,pe.norm(city))
         if key in seen: continue
-        seen.add(key); out.append({'origin':'future-news-event-v5.9','title':title,'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(c.get('url') or ''),'event_date':date,'event_title':event_title,'category':category,'city':city,'uf':uf,'organizer':organizer,'local':local,'semantic_key':semantic})
+        seen.add(key); out.append({'origin':'future-news-event-v5.9','title':title,'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(final_url or c.get('url') or ''),'event_date':date,'event_title':event_title,'category':category,'city':city,'uf':uf,'organizer':organizer,'local':local,'semantic_key':semantic})
         print(f'future_event_evidence={date}|{semantic}|{title[:140]}')
     print(f'future_news_event_candidates={len(out)}'); return out
 
