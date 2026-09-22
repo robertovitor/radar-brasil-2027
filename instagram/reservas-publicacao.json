@@ -105,14 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-20T02:06:31.614215+00:00"
-    },
-    {
-      "key": "instagram:evento:cbf-2026-12-05-japão",
-      "post_file": "instagram/fila/automatica/instagram-evento-cbf-2026-12-05-japao-627b66b2cf.json",
-      "reserved_at": "2026-09-22T14:39:10.127542+00:00",
-      "last_attempt_at": "2026-09-22T14:39:10.127542+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
     }
   ]
 }
