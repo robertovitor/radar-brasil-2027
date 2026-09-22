@@ -2,6 +2,7 @@
 """Prepara um post do Radar Brasil 2027 com gates obrigatórios de semântica visual e legibilidade."""
 from __future__ import annotations
 import datetime as dt, difflib, hashlib, html, io, json, pathlib, re, urllib.parse, urllib.request, unicodedata
+from zoneinfo import ZoneInfo
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT='https://raw.githubusercontent.com/robertovitor/radar-brasil-2027/main/'
@@ -186,15 +187,18 @@ def candidates(events,news,published,pending,prior_titles=()):
             search_context=' '.join(filter(None,[title,clean(x.get('Tema')),clean(x.get('CidadeUF')),clean(x.get('Veiculo'))]))
             out.append(dict(key=key,title=title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,visual_places=clean(x.get('CidadeUF')),caption=f"📰 {title}\n\n{clean(x.get('Resumo'))}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     pending_order={clean(key):idx for idx,key in enumerate(pending)}
+    today_brt=dt.datetime.now(ZoneInfo('America/Sao_Paulo')).date()
     def rank(i):
-        # A data editorial é a prioridade principal para eventos e notícias:
-        # do item mais novo para o mais antigo, em uma única fila.
-        # pending_new serve apenas como desempate entre itens da mesma data.
+        # Evento que acontece hoje tem prioridade editorial sobre a fila normal.
+        # Depois dele, preserva exatamente a ordenação histórica da fila.
+        # A reconciliação estrita de tentativa incerta na Meta continua sendo
+        # aplicada depois e permanece acima de pauta nova por segurança.
+        today_event_tie=0 if i['type']=='evento' and i['date']==today_brt else 1
         pending_idx=pending_order.get(i['key'])
         pending_tie=0 if pending_idx is not None else 1
         recent_pending=-(pending_idx if pending_idx is not None else -1)
         type_tie=0 if i['type']=='evento' else 1
-        return (-i['date'].toordinal(),pending_tie,recent_pending,type_tie,i['key'])
+        return (today_event_tie,-i['date'].toordinal(),pending_tie,recent_pending,type_tie,i['key'])
     return sorted(out,key=rank)
 
 def http_json(url,timeout=20):
@@ -410,8 +414,8 @@ def main():
     # Evento que acontece hoje tem prioridade editorial absoluta. A disponibilidade
     # de foto pode definir a forma do post, nunca fazer uma pauta menos urgente furar
     # a fila. Mantém intactas deduplicação, reserva, cooldown e reconciliação Meta.
-    today=dt.datetime.now(dt.timezone.utc).date()
-    today_event=(fallback_item.get('type')=='evento' and fallback_item.get('date')==today)
+    today_brt=dt.datetime.now(ZoneInfo('America/Sao_Paulo')).date()
+    today_event=(fallback_item.get('type')=='evento' and fallback_item.get('date')==today_brt)
     image_candidates=[fallback_item] if today_event else ranked
     if today_event:
         print('priority_event_today='+fallback_item['key'])
