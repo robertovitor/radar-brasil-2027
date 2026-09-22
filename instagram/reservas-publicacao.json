@@ -109,12 +109,10 @@
     {
       "key": "instagram:evento:cbf-2026-12-05-japão",
       "post_file": "instagram/fila/automatica/instagram-evento-cbf-2026-12-05-japao-627b66b2cf.json",
-      "reserved_at": "2026-09-21T19:25:44.605924+00:00",
-      "last_attempt_at": "2026-09-21T19:25:55.711889+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": true,
-      "uncertain_after_meta": true,
-      "blocked_until": "2026-09-21T20:25:53.283221+00:00"
+      "reserved_at": "2026-09-22T14:39:10.127542+00:00",
+      "last_attempt_at": "2026-09-22T14:39:10.127542+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
