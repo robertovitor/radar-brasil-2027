@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260922-12",
-  "started_at": "2026-09-22T12:11:21-03:00",
-  "completed_at": "2026-09-22T12:13:28-03:00",
+  "cycle_id": "20260922-13",
+  "started_at": "2026-09-22T13:46:41-03:00",
+  "completed_at": "2026-09-22T13:48:43-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -17,12 +17,12 @@
   ],
   "sugestoes_lidas": 29,
   "sugestoes_noticias_lidas": 24,
-  "candidatos_publicos": 90,
-  "aprovados_novos": 2,
-  "rejeitados": 115,
-  "duplicados": 1,
-  "inbox_itens_adicionados": 2,
-  "inbox_commit_needed": true,
+  "candidatos_publicos": 88,
+  "aprovados_novos": 0,
+  "rejeitados": 116,
+  "duplicados": 0,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "auditoria": [
     {
       "origem": "airtable",
@@ -278,8 +278,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "MP do Ceará participa de visita técnica da FIFA à Arena Castelão para preparação da Copa do Mundo Feminina 2027 - mpce.mp.br",
-      "fonte": "mpce.mp.br",
+      "titulo": "MP do Ceará participa de visita técnica da FIFA à Arena Castelão para preparação da Copa do Mundo Feminina 2027 - MPCE",
+      "fonte": "MPCE",
       "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNaWNjak9MN3VZZnF1Z1VoTG5IemNxdGVRNXZ1cG5od1M3UXR4Uk9PUjZ6NjVHRzFFaF9MZmVReS1PUlcxX1FlZGp5NFhlZXF5a3Jfc2ZyeHVjdFp3WUtIRE5mTmxyRk5KQTVNYTJWNG9GbnBNcXdIbWJnT3dVLWVqQ3k2SXh5ZjNqZVlSa29VLUJhM1FLdlp0Z1QwdjJZcTJEZzVaTmE5RmxjMG9hOWFTbDJxLV9sdUpNMzFONHJRcDdjQVdFV3NYcDlOZw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -326,8 +326,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa faz visita técnica à Arena Castelão em preparação para a Copa do Mundo Feminina de 2027 - URB News",
-      "fonte": "URB News",
+      "titulo": "Fifa faz visita técnica à Arena Castelão em preparação para a Copa do Mundo Feminina de 2027 - urbnews.com.br",
+      "fonte": "urbnews.com.br",
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQSlBSN0I1Q1pWODhBUmg1R1ZNd195SFVnRE1mNi0wd0JQQldDQVF6TzI3bXFOMUx1ZUd3bDlIbTQ4aWgxTC1VX2xfbndLeGgtYmFEd2FrZ19VQ0UtZWQyWTV0cFBSamdNV3VXS1VITE1JUzZJZEJrb18tNk1HaU9RTWE5NzhwZE53VmppYlFyWUliakYyQjVFZWZVaUpydllYYVFRWjAxRjdveUQ0dm1yNTVFbWhLTFdQVURwZTk1VjNWRmRuNHc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -390,8 +390,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Seleção feminina de futebol inicia qualificação para o Mundial-2027 com receção à Finlândia em Vizela - dn.pt",
-      "fonte": "dn.pt",
+      "titulo": "Seleção feminina de futebol inicia qualificação para o Mundial-2027 com receção à Finlândia em Vizela - Diário de Notícias",
+      "fonte": "Diário de Notícias",
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPaDFWREt3WnZuU0xSVGpIX2t0TXpwOUJJNVpDMHIxMW50MEtkX1JMVTFzaW5zT3p1a0xzTXVlcVpPQWl4WTNudG16SVRVWUNyd0FpdHpnSXFrR1JXd1diaEdQNDJrTDRyOExSQ1FxNEdZak9QcjVnV1JJQWhhLTdqeHVIOUlfY21wVFdHc05CZUZoWVRyX3NvQ2d5UkZzb3pKbjJIWi0xRk5WcXduV2EwOEFmY2NpYmx5cEk0?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -427,14 +427,6 @@
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQWTltNXB3VkV5VkhmZ255d19hQ0tFUGZHUmxMNjZCdnJvb1Q4eVd6bkRQZVRJMGhqNlNoY1VLYlM1bkxZZHhoQXN0cUw0NE01SGJUZ1plMk10a2g1anY1UU1PRFJleTZDTEtTUGVQLV81TWt1NzhBSzdKQ1pzYjFabGR5NzdaY2lYNlB1M1NvZDdkTDdhclROZHNoaGVtY3ZPSDJ1akdtSkphS0xPWFNKYWdyS3phTXVnVW5CLTA0UExTVmxjVVE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Arthur Elias convoca seleção brasileira feminina para amistosos contra a Argentina - R7 Esportes",
-      "fonte": "R7 Esportes",
-      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQNUlNNkxSc1N6TjZpQnNsaExUM1k2S0I4amZ2YkpCdFRQY3Ftb0dVNVVMX2VFOEpoSGVCSnprT1FpMVZYVmVGeVFla0x4TnNrLWtyZFVIODVqNzNmd0Z1Q0txQjJyYzVRQTF6cExHSG5CVEJxUE93eU40TkI3Z1YyYXJkYksyYmhLeDhKQ0hRc1BzZU1VUnJESTdtY3ZyVEthYndGY29HZzBXeExBa3haOWZYYXl6alBwUWEzSEgzNjJ4ejRVRU1kWnFMV2tndw?oc=5",
-      "decisao": "duplicado",
-      "motivo": "Já existe em dados.json, noticias.json ou editorial/inbox.json."
     },
     {
       "origem": "google-news",
@@ -582,8 +574,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina no Brasil movimentará quase R$ 9 bilhões na economia - panrotas.com.br",
-      "fonte": "panrotas.com.br",
+      "titulo": "Copa do Mundo Feminina no Brasil movimentará quase R$ 9 bilhões na economia - Panrotas",
+      "fonte": "Panrotas",
       "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQUUhkdzVrd2FidnR4LVZwQVRIRXNmbG9EcGc5U3FGTWdiaS1MdmdnZFYwMjFDTS03ejhJM3FwaG1TQnVCRDY2X3B5T3dXcnp4VDVEdGtOaEhielFGdGZCcV9OVkltYnhMY2hjRTNRYmlCam9XZjhyVnpuOWZOMGpIbkpjNy1WcFZoLVNTTG44LXoxbWhKanFoRGxhSFZ5RUdVeUVfUXpoSHlmbUJ5ZHBJbER1V184Y0RmNnZTM2x2elNmdXpQbDBNbUdNQWFmOHh5YU5Md1hB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -630,17 +622,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Caxias do Sul é incluída em catálogo da Fifa para receber seleções na Copa do Mundo Feminina de 2027 - Leouve",
-      "fonte": "Leouve",
-      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPYlppMmZMcHczVE9tWkxLVWdqWXdac1o4VUhsclR5c3pFTHQwX3V2VFlXNDczM3NFbmVoY1JCaGFneGtuTV9nckc5QkdGbmw1WThia2M3NmtrRW9Gd3RGdE5CUWhPczVYSjFrbHVJdHpSa1dWUVlyTFVXdzJNQ0VXYg?oc=5",
+      "titulo": "Em contagem regressiva para a Copa do Mundo Feminina de 2027, o Governo da Bahia vai inaugurar uma placa comemorativa de 365 dias, no Dique do Tororó. O marco será instalado nesta quarta-feira (24), a partir das 9h, ao lado do monumento em form - instagram.com",
+      "fonte": "instagram.com",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1sXy1PMEtRNmlLZ3A5MUt0dlVsbUpRX05rQXpUYlF0LXFqSVQ0b1pyVzN4dnFRbXphc0lPY3BSLXVhZFBubi1oWWhic0NQUVJfbHc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Copa feminina 2027 soma 750 mil cadastrados por ingressos - SpaceMoney",
-      "fonte": "SpaceMoney",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1PZmExZE9Ta0gwbkM4b1R2RmZMdFBWY2RId1FrMmd4LXpRVGpGNmtIUXZtUG5uak1BOUY0aW5DaGRhcDJMOWwwMWVPUEw2amhDNFVubV85QjFYUFNPbDBhZlBzcW5mbzdZcmxXN1MzcGh3bzFGVDRHLTRZMHZRUzg?oc=5",
+      "titulo": "Caxias do Sul é incluída em catálogo da Fifa para receber seleções na Copa do Mundo Feminina de 2027 - Leouve",
+      "fonte": "Leouve",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPYlppMmZMcHczVE9tWkxLVWdqWXdac1o4VUhsclR5c3pFTHQwX3V2VFlXNDczM3NFbmVoY1JCaGFneGtuTV9nckc5QkdGbmw1WThia2M3NmtrRW9Gd3RGdE5CUWhPczVYSjFrbHVJdHpSa1dWUVlyTFVXdzJNQ0VXYg?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -654,8 +646,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa confirma sorteio e começa a definir palcos da Copa do Mundo Feminina de 2027 - R7 Esportes",
-      "fonte": "R7 Esportes",
+      "titulo": "Fifa confirma sorteio e começa a definir palcos da Copa do Mundo Feminina de 2027 - esportes.r7.com",
+      "fonte": "esportes.r7.com",
       "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQdDdoUXpiZW5NUnBHT0Fsdkl0MXFuNHVSa3BQNXk0cFAwWmFNTkRTQzVXRlU1dXpMSk41RDJ4eldGYUx3UVB1Q0t6a2toYjBuZHhHMERLUzk0STNmRWZWOUxydUl6QmxDOE9nZHhxSTVWdVBWV2xvcGwzZk9tOHBTWGdzZVE4SXVxS1FHUk1GaEtVNG50cW5PQzJxczVwN3Jza1NQdWVab3dTbUtuMG1kMTk1UVJCZmRoVEc3M1duZU9IQ2FyN0tNSUxRRE0?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -718,8 +710,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Cristiane destaca legado para nova geração e reforça apoio da torcida rumo à Copa de 2027 - R7 Esportes",
-      "fonte": "R7 Esportes",
+      "titulo": "Cristiane destaca legado para nova geração e reforça apoio da torcida rumo à Copa de 2027 - esportes.r7.com",
+      "fonte": "esportes.r7.com",
       "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxOLWdGOXpNbzYtZWN2b29ZR04xcHBTX21hZkRMYjRxckgyY1lFa3RCdUUxNWc1WElFdkpuY01qeGJCbVE0bF9uVVI0aXd5VERPbFVJX2c3ZkVwTGhVQmUzQ1dGVGI1MmVYeUlmQVNtbV9CMTFZQm0yUFJ6dnFLa2hWaVIyNzdrLUVtODhHb0lNRHV0ZUs5elJ5ZGVVSlBJWGpoNFpTTXFvejRYa0dRUnc1bHRsX1RsV0Q3WXc4RjlpYXNqQ0xMUHp2Wm1RTmp0aWlLRWtKVFJFWQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -742,8 +734,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina de 2027 terá 32 seleções e oito cidades-sede no Brasil - acritica.net",
-      "fonte": "acritica.net",
+      "titulo": "Copa do Mundo Feminina de 2027 terá 32 seleções e oito cidades-sede no Brasil - A Crítica de Campo Grande",
+      "fonte": "A Crítica de Campo Grande",
       "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMm5aTjFneUQxVG42MUxxUGJ1TjFmbWFDSVg1ZTlRWU5hLXZDYkpacXBNRU9nc1Rsb1IzaTRDLUZlS1V3QkhNV2J0ZU5rbzY0dVlKQk5KT29KdXpEWkNod1FGRGVkR0ZDeVhPYmFhWTFpOHpsQ1BuVlhBaExXZHY4dVRB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -753,6 +745,14 @@
       "titulo": "Copa Feminina Muda Férias Escolares De 2027 - ABC Agora",
       "fonte": "ABC Agora",
       "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBBY0xuQmtUR0xwTGpZbFRrNlVabHpVbThnN3B2M1haRDUzQW1YMzIzLVpkMW0xc3M5d3RTY2pxdW5TZEFZMGlPaFhydnplWnJWWDFwM0JVektxQVNuMDhNRXdiWk5JYWlVcHpoemZhZEFNWm5jYVY0ZFdPYw?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "FIFA e FBF discutem legado da Copa do Mundo de 2027 para o futebol feminino da Bahia - FBF",
+      "fonte": "FBF",
+      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1PODRMS01pZGpxTkRoZUFGcTFCYzVVRkdlcEl3YzhnZXFFM1pROTJVc2duUGx5ektwM3g2cTI4UHpFSDV1S2VSZDZEcVVyMGNMclhFb2xaU3c?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -771,14 +771,6 @@
       "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxPMU9GOFFPQXpCMTZlZHdDWUdoYXgwMGtZWnhLSDlPUHMwdnBvbFVMOXZ5aVNka3Z2NDRmNmZkX1ZCOUFtSGE5ckcwaFlWZndhNTJITGxGWnlEeV9FSmhKVHpvMU1OQ0hKcVd4UjFnV2t2TUdCTDd3VGdhUlZ3MElVNC1DUWhzaXlMcFpXaWFnVlV2a1BmRzYzZVZsYVpRNzhiQ1h1b09TX0lVdlNiZll6VFlDeVJWMFQ4VUZEb2M3UVMzcDNUTWdkMlRkRDBDR2VtLWc4alpuazBSRHRCVGFubk9YbU9VZVRpb1E?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Veja horário e onde assistir à convocação da Seleção Brasileira Feminina - CNN Brasil",
-      "fonte": "CNN Brasil",
-      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOcU5EbzZsaVJjekg4ZXJvckp0QkFuQjlYd1VfT2ozQnFiTFFmdVZ2NUx5U0NUWDE2VjNUbnljalE2NTRtZUNNX3REYnlTZ3luUldHRmEwWUN5Q09zTWYzSWNCTnlYUkJ6a3hmODI4LUJ1aXZESEdUTmtWSGgxMjYzTURSMGNDMThFMDBtbjVoMGNvYlZjMnB6SmlNeHcybTBpd2FiQmVxMkg5MzRtMG1mbTF6c3dVUGw3UFBHdE0ycXVDdk5mdl9YYUdTdzBFaHk3YllMeks3UlM?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
     {
       "origem": "google-news-trusted-source",
@@ -814,14 +806,6 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Convocação seleção brasileira feminina amistosos argentina - UOL",
-      "fonte": "UOL",
-      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1zQVdjUGFxcWkzdU9qdkxpN1hHY2FLZ0d3OGFZM0xqQkR1aHhPR1RTaERUYldsaC1QdzZ5SnFMbHZURFdMaVlVODRleVZMd1RYYXFDUGVIYVRoNWhXRnhaSWhBb1ZYZ0U?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "Arthur Elias convoca seleção brasileira feminina para o Fifa Series; veja lista - ge",
       "fonte": "ge",
       "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQRUtLWDNuS0Z6bkRhc20tM1dmZS1YMUo5anV0SFNXeUNkUVI2T0ZtbWhBMXJXZHN6aVd3X3B3bXlUaDJUR1V1a3FGWW1LeWpwNFZGOHFLRWprN2Z0WUZqSTN5eUFYcXRTeHFxRDNFNkFlckl2dm1UcWtWZ2NweE4xbFpVcW8zSkcyaG41LWZ3VnBXNmtqZ1R6SllXODQ3LUIwTzEzVlhTWUowNUdlYVpRcUF2M1NPRjZjXzd0NE1QVjdTMTVlRU14NkJ3Y1JOdUZtOFpuc3F5ZmlwYS1EaElCOWxOaktzUdIB9AFBVV95cUxNUGU4Qkl1X2VGQjVVbnh5T2lmNkpsclBneTlUM1BhODlydmlyX2NvR2ItSV9uN2R2WHd0c1NJTDNDNzc5QU85eHRyRjB2NjVnZ1JueXhlczFqaEFMN0NMSHpDekdTQVpNVEpJWkVFQ1VzTTByLWN4SjUwRTVYeHdZUVh3azdMbjd0T3ltTFp6aERqMmxhZWZ3YjdnOGI2RDZTLWh6M2dXSDczU2d1VDZDdWVKendZQ3pEcmotSjU1ZmtTdTBadG1yY1lwMlF2amtwTjdSWWZTZmF4d05WVnBaQV9pQjAzbGRYWURQZ2dnQTBKUnN4?oc=5",
@@ -830,11 +814,19 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Seleção Brasileira Feminina é convocada para amistosos; veja lista - LANCE!",
-      "fonte": "LANCE!",
+      "titulo": "Seleção Brasileira Feminina é convocada para amistosos; veja lista - lance.com.br",
+      "fonte": "lance.com.br",
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQM0hTSFRVdmpoQTBqZldtR3BYcG03ZGM5X2luQnQyWXVIU2ZTM1kwalFGNHAzYUh2ZGxQdVdCZ201bUxXSHpzNXo1TWhIekFzZGpscnZFS3VwWVc4TWxHVXR3TUgycndwY2xDMUFVWVI5TEtUUzdFZHltaV9qVE1UN0l2Nnk2VlByMml2TnQ2NlZZRmV1RHM2YVdRWVZELUpQS1Iw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (222d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Seleção brasileira feminina treinará em Itu em junho; veja lista de convocadas - ge",
+      "fonte": "ge",
+      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxQY21faDZhVnJTdGNKUlNWemo0dkJwRmtUUjZvT29Vc0lGMTloRTFJWUMzYnB3aUNFVDVidUlvQVNySHBCREhHYlJUWHhGZm13QmYyZnpOZ3EweTcwYi1scFNLd1hueFRHVm9XVkZlbTA5MHBxU0doZjVKRFJKOEdGV2ZqeUhSNnpBSGNFZEZUbW5Va2UwNzR1T185bHVBc0JMZTJrTGZOeXlhSlNhZFlhODlpWml3aFhXalZiai1uRzE1ZnlSYllxZmhmc2o5cUJMaERra0M2OEhFN0JnZlBOazc3aDBaZm5PUmROTEFKOEVlTFRBSHfSAYQCQVVfeXFMTjZNN2QtSTh4MU5VaG5UdW5GaktkamFEVlc4NGxUbXIzcFBwV09EWEphMU9OelZST2dGNlZwZzFmVUFpbnRvU3UtOERmVzBrYWdLanNTaVZNeFpNcWxPUWhjZG9aRkl2TjZQVUtGVlhVdjVUeGtjdHZZYUpMWGF1b2paNFVja296d25ZWTZTREVYVm94bnlwZUlVemNVaks5QTBJMkRsNTI4NEdBZTZSMHk3VWp4ZTJtMFJia1dKZFdjb2h4WEMwX29hVFlSUmxMV3QxeUtTU0ZsVnhLM3Y0TG5CNUpDMGtQNGhFcEpvQUV2NmlvOFJWanVvNmNYWUE4OEtyd1I?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (124d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -843,14 +835,6 @@
       "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxPTmtONS1ZRjBLY3poYURuelZJNTRWUndqRHgwZ3lGc3BnUVF2bVRhaEY1WVV5ekZVZm5uRWE5MnZTektjRHZFTmJMYUVJU1d3bVhoYXhNemhFZWVoV2lJUWxFWDk3TE5Da19ObHlJb3lFdXFDYzVkVEQ4dFpuQUJoYnZhSFR4NTVtdVFrYXBoUFNoUW8yT2hiaFJqY25MWkNoMGJ0RTZRY3NYVzRGVnZGQWxOX1hRX2xEeHh0NDJzVkw0aE8zbkVsUlMtYVUxVUpBc05URlpQSnp0MzdHWmk1RVUzdG1oSVgyRmxmLUhvM09rc0JxYXZoLVNB0gGIAkFVX3lxTE11ZGtTSUJxTnpTSkxFbnNoaXdHajMwaHhRY1hDam5ydGZ1M2ZNTzZuYjZrT3p3RnN3Ny1jUlZrU2VzcXRfMkVFbG16VnJJaHdEanBrMmF3a0cxUGlOYUhpSldtYi14YzdLSVdlZGI5d3V5ZmFUdnNWaFNGVk1QNUlqZVYzYnIzRW5KbEdtUnpFX2tLc2hJTHYyeVJGY1FUb3NWN1NNTGdTZWpmVk1kdmV2RVEzLWw2NWVyeTU2MHBDYXNwYzJzcG5oZzlRcFl3UllweUlrZlhWTGFUazl0ODl4eXhNckJFS0k5TVE5cGpiZGNzZjAweTVadlBlekRlaUwxR2Zfelloeg?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (210d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Marta volta à Seleção Brasileira feminina para amistosos contra Estados Unidos em junho; veja convocação - ESPN Brasil",
-      "fonte": "ESPN Brasil",
-      "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxQQWJ5a2twNDJZc1BPMXR2UDdWMkppZExmRTZaZjZRd1l5clBaYUNzMEViNi14UTU2U2hJTXotdXlEUURRZFZxcFVBYkNxYW5OSDY2OW8zQm9LeTVQLWt0Q0w3N1ZwMFhTUWliODB6bk4wQXh6dkdBVGlyaHNRcVBLaGo0Yk5oemRWRElfaUcxVUU1eFY2NzA0VDRVWVpWVWMxWjdoMUo0M3lHNE41a2R0aVJzc2dOdVRESkdWdXIybzNvVnpSVWJySllUM0Z3eUwtT1JKNWVNWG8xbzdhMHZobjk1TXh5OHlsb011UXl3MU1KNjJ1VmVRRQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (125d)."
     },
     {
       "origem": "google-news-trusted-source",
