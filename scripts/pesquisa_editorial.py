@@ -26,6 +26,10 @@ PUBLIC_QUERIES = [
   '"Copa Feminina 2027" Brasil',
   '"Mundial Feminino 2027" Brasil',
   '"Seleção Brasileira feminina" convocação OR lesão OR transferência OR prêmio OR entrevista',
+  '"convocação" "Seleção Brasileira Feminina"',
+  '"Arthur Elias" convocação "Seleção Feminina"',
+  '"lista de convocadas" "Seleção Feminina"',
+  '"convocadas" "amistosos" "Seleção Brasileira feminina"',
   '"Seleção Brasileira feminina" Mundial 2027',
   '"Copa Feminina 2027" estádio OR arena OR infraestrutura',
   '"Copa Feminina 2027" mobilidade OR transporte OR aeroporto',
@@ -188,7 +192,7 @@ def rss_candidates():
 
 def gdelt_candidates():
     out=[]; seen=set()
-    queries=['"Copa Feminina 2027" OR "Copa do Mundo Feminina 2027"','"Seleção Brasileira feminina"','"futebol feminino" Brasil 2027']
+    queries=['"Copa Feminina 2027" OR "Copa do Mundo Feminina 2027"','"Seleção Brasileira feminina"','"futebol feminino" Brasil 2027','"convocação" "Seleção Brasileira Feminina"','"Arthur Elias" convocação "Seleção Feminina"']
     for q in queries:
         params={'query':q,'mode':'ArtList','maxrecords':'50','format':'json','sort':'HybridRel'}
         url='https://api.gdeltproject.org/api/v2/doc/doc?'+urllib.parse.urlencode(params)
