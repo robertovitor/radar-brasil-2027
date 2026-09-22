@@ -31,6 +31,10 @@ class InstagramError(RuntimeError):
         self.subcode = subcode
 
 
+class SemanticDuplicateError(InstagramError):
+    """Bloqueio editorial saudável: a pauta já foi publicada."""
+
+
 def is_rate_limit_error(exc: InstagramError) -> bool:
     return exc.code == 4 or exc.subcode == 2207051
 
@@ -206,7 +210,7 @@ def guard_semantic_duplicate(post: dict, published: list[dict]) -> None:
             continue
         old_title = post_title(previous)
         if old_title and same_topic(current, old_title):
-            raise InstagramError(f"Duplicidade semântica bloqueada: '{current}' repete a pauta '{old_title}'.")
+            raise SemanticDuplicateError(f"Duplicidade semântica bloqueada: '{current}' repete a pauta '{old_title}'.")
 
 
 def validate_post(post: dict, require_approval: bool) -> None:
@@ -449,6 +453,10 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
+    except SemanticDuplicateError as exc:
+        print(f"DESCARTADO: {exc}", file=sys.stderr)
+        print("semantic_duplicate_skipped=true")
+        raise SystemExit(20)
     except (InstagramError, json.JSONDecodeError) as exc:
         print(f"ERRO: {exc}", file=sys.stderr)
         raise SystemExit(1)
