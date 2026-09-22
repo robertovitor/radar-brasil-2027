@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
-import os
 import pathlib
 import subprocess
 import sys
@@ -66,6 +65,7 @@ def main() -> int:
     batch = json.loads(args.batch.read_text(encoding="utf-8"))
     posts = [pathlib.Path(value) for value in batch.get("posts", [])]
     failures: list[str] = []
+    semantic_skips: list[str] = []
     successes = 0
     previous_keys = {
         str(row.get("key") or "").strip()
@@ -90,6 +90,9 @@ def main() -> int:
         )
         if result.returncode == 0:
             successes += 1
+        elif result.returncode == 20:
+            semantic_skips.append(str(post))
+            print(f"semantic_duplicate_skipped=true;post={post}")
         else:
             failures.append(str(post))
         if index < len(posts) and args.delay_seconds > 0:
@@ -98,26 +101,10 @@ def main() -> int:
     reconciled = normalize_new_reconciliations(args.ledger, previous_keys)
     if reconciled:
         print(f"reconciled_existing_count={reconciled}")
-        print("reconciled_existing_continue=true")
-        print("A reconciliação foi registrada; o intervalo usa o horário real do post remoto, não a hora da reconciliação.")
+        print("reconciled_existing_continue=false")
+        print("A reconciliação encerra esta rodada; o intervalo usa o horário real do post remoto.")
 
-        # Antes, a continuação dependia de um novo push/workflow. Commits feitos pelo
-        # GITHUB_TOKEN não disparam outro workflow de push, então a rodada podia parar
-        # aqui por horas. Agora continuamos dentro do mesmo job até achar um post novo.
-        if os.environ.get("INSTAGRAM_CONTINUATION_ACTIVE") != "1":
-            print("reconciled_existing_same_run_continuation=true", flush=True)
-            env = os.environ.copy()
-            env["INSTAGRAM_CONTINUATION_ACTIVE"] = "1"
-            continuation = subprocess.run(
-                [sys.executable, "scripts/continuar_publicacao_instagram.py"],
-                env=env,
-                check=False,
-            )
-            if continuation.returncode != 0:
-                print("same_run_continuation_failed=true", file=sys.stderr)
-                return continuation.returncode
-
-    print(f"Lote concluído: {successes} sucesso(s), {len(failures)} falha(s).")
+    print(f"Lote concluído: {successes} sucesso(s), {len(semantic_skips)} descarte(s) semântico(s), {len(failures)} falha(s).")
     if failures:
         print("Falharam: " + ", ".join(failures), file=sys.stderr)
         return 1
