@@ -99,7 +99,7 @@ def main() -> int:
     if reconciled:
         print(f"reconciled_existing_count={reconciled}")
         print("reconciled_existing_continue=true")
-        print("A reconciliação foi registrada e passa a consumir o intervalo de 1 hora.")
+        print("A reconciliação foi registrada; o intervalo usa o horário real do post remoto, não a hora da reconciliação.")
 
         # Antes, a continuação dependia de um novo push/workflow. Commits feitos pelo
         # GITHUB_TOKEN não disparam outro workflow de push, então a rodada podia parar
