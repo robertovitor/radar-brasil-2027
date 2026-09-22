@@ -105,22 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-20T02:06:31.614215+00:00"
-    },
-    {
-      "key": "instagram:evento:cbf-convocacao-2026-09-22",
-      "post_file": "instagram/fila/automatica/instagram-evento-cbf-convocacao-2026-09-22-2232e99c0e.json",
-      "reserved_at": "2026-09-22T18:51:37.486909+00:00",
-      "last_attempt_at": "2026-09-22T18:51:37.486909+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
-    },
-    {
-      "key": "instagram:noticia:https://news.google.com/rss/articles/cbmi2afbvv95cuxocu5ebzzsavjjekg4zxjvckp0qkfuqjlyd1vft2ozqnfitffmdvz2nux5u0nuwde2vjnubnljale2ntrtzunnx3reynltz3luuldhrmewwun5q09ztwyzswnctnlyukj6a3hmodi4luj1axzesedutmtwsggxmjyztursmgndmthfmdbtbjvomgnvylzjmnb6smlnehcybtbpd2fiqmvxmkg5mzrtmg1mbtf6c3dvugw3ufbhde0ycxvddk5mdl9yyudtdzbfahk3yllmeks3ulm?oc=5",
-      "post_file": "instagram/fila/automatica/g5mzrtmg1mbtf6c3dvugw3ufbhde0ycxvddk5mdl9yyudtdzbfahk3yllmeks3ulm-oc-5-0018399eff.json",
-      "reserved_at": "2026-09-22T18:53:13.862772+00:00",
-      "last_attempt_at": "2026-09-22T18:53:13.862772+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false
     }
   ]
 }
