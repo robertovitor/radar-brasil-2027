@@ -340,6 +340,50 @@ def _trusted_news_event_candidates(rss):
             out.append({'origin':'trusted-news-event-signal-v5.5','title':str(c.get('title') or ''),'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(c.get('url') or ''),'pub':str(c.get('pub') or '')}); break
     print(f'trusted_news_event_candidates={len(out)}'); return out
 
+def _extract_explicit_event_time(text, keywords=()):
+    """Extrai horário apenas quando há marcador temporal explícito perto do evento."""
+    raw=html.unescape(str(text or '')).casefold()
+    if not raw:
+        return ''
+    pattern=re.compile(r'\b(?:às|as|a partir das|com início às|com inicio as|início às|inicio as|começa às|comeca as|será às|sera as|marcada para às|marcada para as)\s*([01]?\d|2[0-3])(?:\s*(?::|h)\s*([0-5]\d))?\s*(?:h|horas?)?\b',re.I)
+    wanted=[pe.norm(x) for x in keywords if pe.norm(x)]
+    for m in pattern.finditer(raw):
+        window=raw[max(0,m.start()-220):min(len(raw),m.end()+220)]
+        nw=pe.norm(window)
+        if wanted and not any(x in nw for x in wanted):
+            continue
+        before=pe.norm(raw[max(0,m.start()-70):m.start()])
+        if any(x in before for x in ('publicado','publicada','atualizado','atualizada')):
+            continue
+        hour=int(m.group(1)); minute=int(m.group(2) or 0)
+        return f'{hour:02d}:{minute:02d}'
+    return ''
+
+def _known_event_time_keys():
+    keys=set()
+    for path in (pe.ROOT/'dados.json', pe.INBOX):
+        obj=pe.load(path, [] if path.name!='inbox.json' else {'eventos':[],'noticias':[]})
+        items=obj if isinstance(obj,list) else obj.get('eventos',[])
+        for item in items:
+            if not isinstance(item,dict):
+                continue
+            date=str(item.get('Data') or '').strip(); title=pe.norm(item.get('Titulo')); city=pe.norm(item.get('Cidade'))
+            hora=str(item.get('Hora') or '').strip()
+            if date and title and re.fullmatch(r'(?:[01]\d|2[0-3]):[0-5]\d',hora):
+                keys.add((date,title,city))
+    return keys
+
+def _apply_time_fields(event,candidate,default_timezone='America/Sao_Paulo'):
+    hora=str(candidate.get('event_time') or '').strip()
+    hora_fim=str(candidate.get('event_end_time') or '').strip()
+    if not re.fullmatch(r'(?:[01]\d|2[0-3]):[0-5]\d',hora):
+        return event
+    event=dict(event); event['Hora']=hora
+    if re.fullmatch(r'(?:[01]\d|2[0-3]):[0-5]\d',hora_fim):
+        event['HoraFim']=hora_fim
+    event['FusoHorario']=str(candidate.get('event_timezone') or '').strip() or default_timezone
+    return event
+
 def _convocation_events_from_rss(rss):
     """Reconhece convocação da Seleção Feminina principal como evento datado.
 
@@ -369,7 +413,18 @@ def _convocation_events_from_rss(rss):
         date=d.isoformat(); key=(date,'convocacao-selecao-feminina')
         if key in seen: continue
         seen.add(key)
-        out.append({'origin':'convocation-rss-v5.8','title':title,'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(c.get('url') or ''),'pub':str(c.get('pub') or ''),'event_date':date})
+        source_url=str(c.get('url') or ''); body=''; final_url=source_url
+        try:
+            body,final_url=pe.fetch_article_excerpt(source_url)
+        except Exception:
+            body=''
+        event_time=_extract_explicit_event_time(f"{title} {body}",('convocacao','convocação','convoca'))
+        candidate={'origin':'convocation-rss-v5.8','title':title,'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(final_url or source_url),'pub':str(c.get('pub') or ''),'event_date':date}
+        if event_time:
+            candidate['event_time']=event_time
+            candidate['event_timezone']='America/Sao_Paulo'
+            print(f'convocation_event_time={date}|{event_time}')
+        out.append(candidate)
         print(f'convocation_event_evidence={date}|{title[:140]}')
     print(f'convocation_event_candidates={len(out)}'); return out
 
@@ -450,37 +505,62 @@ def _future_events_from_news(rss):
         if not date or date < pe.now().date().isoformat(): continue
         if 'bola de ouro' in nb:
             event_title='Cerimônia da Bola de Ouro 2026'; category='Premiação / Futebol Feminino'; city='Londres'; uf=''; organizer='France Football'; local=''; semantic='bola-de-ouro-2026'
+            event_time=_extract_explicit_event_time(evidence,('bola de ouro','cerimonia','cerimônia','premiacao','premiação'))
+            event_timezone='Europe/London'
         else:
             # Outros tipos ficam apenas sinalizados até termos extração segura de nome/local.
             print(f'future_event_ambiguous_type={date}|{title[:140]}'); continue
         key=(date,semantic,pe.norm(city))
         if key in seen: continue
-        seen.add(key); out.append({'origin':'future-news-event-v5.9','title':title,'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(final_url or c.get('url') or ''),'event_date':date,'event_title':event_title,'category':category,'city':city,'uf':uf,'organizer':organizer,'local':local,'semantic_key':semantic})
+        seen.add(key); candidate={'origin':'future-news-event-v5.9','title':title,'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(final_url or c.get('url') or ''),'event_date':date,'event_title':event_title,'category':category,'city':city,'uf':uf,'organizer':organizer,'local':local,'semantic_key':semantic}
+        if event_time:
+            candidate['event_time']=event_time; candidate['event_timezone']=event_timezone
+            print(f'future_event_time={date}|{semantic}|{event_time}|{event_timezone}')
+        out.append(candidate)
         print(f'future_event_evidence={date}|{semantic}|{title[:140]}')
     print(f'future_news_event_candidates={len(out)}'); return out
 
 def _events_from_candidates(candidates):
-    known=_known_event_keys(); out=[]
+    known=_known_event_keys(); known_time=_known_event_time_keys(); out=[]
     for c in candidates:
         origin=str(c.get('origin') or ''); trusted=str(c.get('trusted_source_domain') or '').casefold()
         if trusted not in ('cbf.com.br','event-rule-confirmed','womanifs.com'): continue
         if origin=='future-news-event-v5.9':
             date=str(c.get('event_date') or ''); event_title=str(c.get('event_title') or '').strip(); city=str(c.get('city') or '').strip(); key=(date,pe.norm(event_title),pe.norm(city))
-            if not date or not event_title or key in known:
-                if key in known: print(f'future_event_duplicate={date}|{event_title}|{city}')
+            if not date or not event_title:
                 continue
-            known.add(key); uf=str(c.get('uf') or '')
-            out.append({'ID':f"NEWS-EVENT-{date}-{str(c.get('semantic_key') or 'event').upper()}",'Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,'Categoria':str(c.get('category') or 'Evento'),'Organizador':str(c.get('organizer') or ''),'Publico':0,'Patrocinador':'','Local':str(c.get('local') or ''),'Latitude':None,'Longitude':None,'Link':str(c.get('url') or ''),'Observacoes':f"Evento futuro extraído de notícia relevante: {str(c.get('title') or '')[:500]}",'Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':''})
+            has_new_time=bool(str(c.get('event_time') or '').strip()) and key not in known_time
+            if key in known and not has_new_time:
+                print(f'future_event_duplicate={date}|{event_title}|{city}')
+                continue
+            if key not in known:
+                known.add(key)
+            elif has_new_time:
+                print(f'future_event_time_enrichment={date}|{event_title}|{city}|{c.get("event_time")}')
+            uf=str(c.get('uf') or '')
+            event={'ID':f"NEWS-EVENT-{date}-{str(c.get('semantic_key') or 'event').upper()}",'Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,'Categoria':str(c.get('category') or 'Evento'),'Organizador':str(c.get('organizer') or ''),'Publico':0,'Patrocinador':'','Local':str(c.get('local') or ''),'Latitude':None,'Longitude':None,'Link':str(c.get('url') or ''),'Observacoes':f"Evento futuro extraído de notícia relevante: {str(c.get('title') or '')[:500]}",'Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':''}
+            event=_apply_time_fields(event,c,'America/Sao_Paulo')
+            if event.get('Hora'): known_time.add(key)
+            out.append(event)
             print(f'future_event_extracted={date}|{event_title}|{city}')
             continue
         if origin=='convocation-rss-v5.8':
             date=str(c.get('event_date') or '')
             event_title='Convocação da Seleção Brasileira Feminina'; key=(date,pe.norm(event_title),pe.norm('Rio de Janeiro'))
-            if not date or key in known:
-                if key in known: print(f'convocation_event_duplicate={date}')
+            if not date:
                 continue
-            known.add(key)
-            out.append({'ID':f'CBF-CONVOCACAO-{date}','Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':'RJ','Cidade':'Rio de Janeiro','Categoria':'Convocação da Seleção Feminina','Organizador':'CBF','Publico':0,'Patrocinador':'','Local':'','Latitude':None,'Longitude':None,'Link':str(c.get('url') or ''),'Observacoes':'Convocação da Seleção Brasileira Feminina identificada em cobertura pública do próprio dia; seleções de base são excluídas.','Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':'Sudeste'})
+            has_new_time=bool(str(c.get('event_time') or '').strip()) and key not in known_time
+            if key in known and not has_new_time:
+                print(f'convocation_event_duplicate={date}')
+                continue
+            if key not in known:
+                known.add(key)
+            elif has_new_time:
+                print(f'convocation_event_time_enrichment={date}|{c.get("event_time")}')
+            event={'ID':f'CBF-CONVOCACAO-{date}','Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':'RJ','Cidade':'Rio de Janeiro','Categoria':'Convocação da Seleção Feminina','Organizador':'CBF','Publico':0,'Patrocinador':'','Local':'','Latitude':None,'Longitude':None,'Link':str(c.get('url') or ''),'Observacoes':'Convocação da Seleção Brasileira Feminina identificada em cobertura pública do próprio dia; seleções de base são excluídas.','Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':'Sudeste'}
+            event=_apply_time_fields(event,c,'America/Sao_Paulo')
+            if event.get('Hora'): known_time.add(key)
+            out.append(event)
             print(f'convocation_event_extracted={date}|Rio de Janeiro')
             continue
         if origin in ('wifs-primary-v5.6','wifs-primary-v5.7'):
