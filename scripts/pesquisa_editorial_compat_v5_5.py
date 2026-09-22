@@ -340,11 +340,54 @@ def _trusted_news_event_candidates(rss):
             out.append({'origin':'trusted-news-event-signal-v5.5','title':str(c.get('title') or ''),'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(c.get('url') or ''),'pub':str(c.get('pub') or '')}); break
     print(f'trusted_news_event_candidates={len(out)}'); return out
 
+def _convocation_events_from_rss(rss):
+    """Reconhece convocação da Seleção Feminina principal como evento datado.
+
+    Usa somente candidatos públicos já coletados na execução; não lê Airtable nem
+    faz nova requisição. Exige convocação + Seleção Feminina/Brasileira, exclui base
+    e só materializa quando a data vem do próprio pubDate RSS. Para pauta publicada
+    no mesmo dia, a data do evento é esse dia; textos futuros continuam fail-closed
+    até haver data explícita estruturável.
+    """
+    out=[]; seen=set()
+    from email.utils import parsedate_to_datetime
+    for c in rss:
+        if not isinstance(c,dict): continue
+        title=str(c.get('title') or '').strip(); nt=pe.norm(f"{title} {c.get('source','')}")
+        if 'convoc' not in nt: continue
+        if any(x in nt for x in ('sub 17','sub17','sub 20','sub20','selecao base','categoria de base')): continue
+        women=('selecao brasileira feminina' in nt) or ('selecao feminina' in nt) or (('brasil' in nt or 'brasileira' in nt) and 'feminina' in nt)
+        if not women: continue
+        try:
+            dt=parsedate_to_datetime(str(c.get('pub') or ''))
+            if dt.tzinfo is None: dt=dt.replace(tzinfo=pe.BRT)
+            d=dt.astimezone(pe.BRT).date()
+        except Exception: continue
+        # Só transforma automaticamente notícia do próprio dia em evento. Isso evita
+        # inferir que uma matéria antiga/futura seja a data da convocação.
+        if d != pe.now().date(): continue
+        date=d.isoformat(); key=(date,'convocacao-selecao-feminina')
+        if key in seen: continue
+        seen.add(key)
+        out.append({'origin':'convocation-rss-v5.8','title':title,'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(c.get('url') or ''),'pub':str(c.get('pub') or ''),'event_date':date})
+        print(f'convocation_event_evidence={date}|{title[:140]}')
+    print(f'convocation_event_candidates={len(out)}'); return out
+
 def _events_from_candidates(candidates):
     known=_known_event_keys(); out=[]
     for c in candidates:
         origin=str(c.get('origin') or ''); trusted=str(c.get('trusted_source_domain') or '').casefold()
         if trusted not in ('cbf.com.br','event-rule-confirmed','womanifs.com'): continue
+        if origin=='convocation-rss-v5.8':
+            date=str(c.get('event_date') or '')
+            event_title='Convocação da Seleção Brasileira Feminina'; key=(date,pe.norm(event_title),pe.norm('Rio de Janeiro'))
+            if not date or key in known:
+                if key in known: print(f'convocation_event_duplicate={date}')
+                continue
+            known.add(key)
+            out.append({'ID':f'CBF-CONVOCACAO-{date}','Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':'RJ','Cidade':'Rio de Janeiro','Categoria':'Convocação da Seleção Feminina','Organizador':'CBF','Publico':0,'Patrocinador':'','Local':'','Latitude':None,'Longitude':None,'Link':str(c.get('url') or ''),'Observacoes':'Convocação da Seleção Brasileira Feminina identificada em cobertura pública do próprio dia; seleções de base são excluídas.','Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':'Sudeste'})
+            print(f'convocation_event_extracted={date}|Rio de Janeiro')
+            continue
         if origin in ('wifs-primary-v5.6','wifs-primary-v5.7'):
             for date,city,uf in c.get('confirmed_events',[]):
                 event_title='Jornada Mulheres que Mudam o Jogo – WIFS'; key=(date,pe.norm(event_title),pe.norm(city))
@@ -374,10 +417,10 @@ def _events_from_candidates(candidates):
     return out
 
 def rss_candidates_v55():
-    primary=_primary_cbf_candidates(); wifs=_wifs_event_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss); cbf_fallback=_cbf_known_event_fallback_candidates(rss); cbf_semantic=_cbf_semantic_schedule_candidates(rss)
+    primary=_primary_cbf_candidates(); wifs=_wifs_event_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss); cbf_fallback=_cbf_known_event_fallback_candidates(rss); cbf_semantic=_cbf_semantic_schedule_candidates(rss); convocations=_convocation_events_from_rss(rss)
     # A extração é 1 fonte -> 0..N eventos. Notícia e eventos continuam com
     # deduplicação independente; reconhecer uma notícia nunca consome os eventos.
-    pe._v55_official_events=_events_from_candidates(primary+wifs+signals+cbf_fallback+cbf_semantic)
+    pe._v55_official_events=_events_from_candidates(primary+wifs+signals+cbf_fallback+cbf_semantic+convocations)
     return primary+rss
 pe.rss_candidates=rss_candidates_v55
 
