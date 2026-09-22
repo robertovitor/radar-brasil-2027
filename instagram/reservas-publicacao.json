@@ -110,9 +110,11 @@
       "key": "instagram:evento:cbf-convocacao-2026-09-22",
       "post_file": "instagram/fila/automatica/instagram-evento-cbf-convocacao-2026-09-22-2232e99c0e.json",
       "reserved_at": "2026-09-22T16:29:20.179971+00:00",
-      "last_attempt_at": "2026-09-22T16:29:20.179971+00:00",
+      "last_attempt_at": "2026-09-22T16:29:32.909413+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-22T17:29:30.513173+00:00"
     }
   ]
 }
