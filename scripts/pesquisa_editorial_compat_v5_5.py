@@ -373,11 +373,63 @@ def _convocation_events_from_rss(rss):
         print(f'convocation_event_evidence={date}|{title[:140]}')
     print(f'convocation_event_candidates={len(out)}'); return out
 
+def _future_events_from_news(rss):
+    """Extrai eventos futuros explícitos de notícias já coletadas, sem novo fetch.
+
+    Regra deliberadamente conservadora: exige (1) assunto ligado à Seleção Brasileira
+    Feminina/futebol feminino, (2) linguagem inequívoca de evento futuro, (3) data
+    completa explícita no título disponível ao coletor e (4) tipo de evento conhecido.
+    Não usa pubDate como data do evento e exclui categorias de base.
+    """
+    out=[]; seen=set(); months={'janeiro':1,'fevereiro':2,'marco':3,'março':3,'abril':4,'maio':5,'junho':6,'julho':7,'agosto':8,'setembro':9,'outubro':10,'novembro':11,'dezembro':12}
+    event_words=('cerimonia','cerimônia','premiacao','premiação','sorteio','congresso','seminario','seminário','forum','fórum','workshop','lancamento','lançamento','evento')
+    future_words=('sera','será','acontece','acontecera','acontecerá','marcado','marcada','realizado','realizada','conhecido','conhecida','entregue','premiacao','premiação','cerimonia','cerimônia')
+    for c in rss:
+        if not isinstance(c,dict): continue
+        title=str(c.get('title') or '').strip(); nt=pe.norm(f"{title} {c.get('source','')}")
+        if any(x in nt for x in ('sub 17','sub17','sub 20','sub20','sub 23','sub23','selecao base','categoria de base')): continue
+        relevant=('selecao brasileira feminina' in nt) or ('futebol feminino' in nt) or any(x in nt for x in ('lorena','marta','bola de ouro'))
+        if not relevant or not any(pe.norm(x) in nt for x in event_words) or not any(pe.norm(x) in nt for x in future_words): continue
+        # Só datas completas escritas no próprio título. Nada de inferir a partir da publicação.
+        m=re.search(r'(?<!\\d)([0-3]?\\d)[/.-]([01]?\\d)[/.-](20\\d{2})(?!\\d)',title)
+        date=''
+        if m:
+            try: date=pe.datetime(int(m.group(3)),int(m.group(2)),int(m.group(1))).date().isoformat()
+            except ValueError: continue
+        if not date:
+            tn=pe.norm(title)
+            for mon,num in months.items():
+                mm=re.search(rf'(?<!\\d)([0-3]?\\d) de {pe.norm(mon)}(?: de)? (20\\d{{2}})',tn)
+                if mm:
+                    try: date=pe.datetime(int(mm.group(2)),num,int(mm.group(1))).date().isoformat()
+                    except ValueError: date=''
+                    break
+        if not date or date < pe.now().date().isoformat(): continue
+        if 'bola de ouro' in nt:
+            event_title='Cerimônia da Bola de Ouro 2026'; category='Premiação / Futebol Feminino'; city='Londres'; uf=''; organizer='France Football'; local=''; semantic='bola-de-ouro-2026'
+        else:
+            # Outros tipos ficam apenas sinalizados até termos extração segura de nome/local.
+            print(f'future_event_ambiguous_type={date}|{title[:140]}'); continue
+        key=(date,semantic,pe.norm(city))
+        if key in seen: continue
+        seen.add(key); out.append({'origin':'future-news-event-v5.9','title':title,'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(c.get('url') or ''),'event_date':date,'event_title':event_title,'category':category,'city':city,'uf':uf,'organizer':organizer,'local':local,'semantic_key':semantic})
+        print(f'future_event_evidence={date}|{semantic}|{title[:140]}')
+    print(f'future_news_event_candidates={len(out)}'); return out
+
 def _events_from_candidates(candidates):
     known=_known_event_keys(); out=[]
     for c in candidates:
         origin=str(c.get('origin') or ''); trusted=str(c.get('trusted_source_domain') or '').casefold()
         if trusted not in ('cbf.com.br','event-rule-confirmed','womanifs.com'): continue
+        if origin=='future-news-event-v5.9':
+            date=str(c.get('event_date') or ''); event_title=str(c.get('event_title') or '').strip(); city=str(c.get('city') or '').strip(); key=(date,pe.norm(event_title),pe.norm(city))
+            if not date or not event_title or key in known:
+                if key in known: print(f'future_event_duplicate={date}|{event_title}|{city}')
+                continue
+            known.add(key); uf=str(c.get('uf') or '')
+            out.append({'ID':f"NEWS-EVENT-{date}-{str(c.get('semantic_key') or 'event').upper()}",'Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,'Categoria':str(c.get('category') or 'Evento'),'Organizador':str(c.get('organizer') or ''),'Publico':0,'Patrocinador':'','Local':str(c.get('local') or ''),'Latitude':None,'Longitude':None,'Link':str(c.get('url') or ''),'Observacoes':f"Evento futuro extraído de notícia relevante: {str(c.get('title') or '')[:500]}",'Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':''})
+            print(f'future_event_extracted={date}|{event_title}|{city}')
+            continue
         if origin=='convocation-rss-v5.8':
             date=str(c.get('event_date') or '')
             event_title='Convocação da Seleção Brasileira Feminina'; key=(date,pe.norm(event_title),pe.norm('Rio de Janeiro'))
@@ -417,10 +469,10 @@ def _events_from_candidates(candidates):
     return out
 
 def rss_candidates_v55():
-    primary=_primary_cbf_candidates(); wifs=_wifs_event_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss); cbf_fallback=_cbf_known_event_fallback_candidates(rss); cbf_semantic=_cbf_semantic_schedule_candidates(rss); convocations=_convocation_events_from_rss(rss)
+    primary=_primary_cbf_candidates(); wifs=_wifs_event_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss); cbf_fallback=_cbf_known_event_fallback_candidates(rss); cbf_semantic=_cbf_semantic_schedule_candidates(rss); convocations=_convocation_events_from_rss(rss); future_events=_future_events_from_news(rss)
     # A extração é 1 fonte -> 0..N eventos. Notícia e eventos continuam com
     # deduplicação independente; reconhecer uma notícia nunca consome os eventos.
-    pe._v55_official_events=_events_from_candidates(primary+wifs+signals+cbf_fallback+cbf_semantic+convocations)
+    pe._v55_official_events=_events_from_candidates(primary+wifs+signals+cbf_fallback+cbf_semantic+convocations+future_events)
     return primary+rss
 pe.rss_candidates=rss_candidates_v55
 
