@@ -117,6 +117,16 @@ def existing_keys():
                 if x.get('Titulo'): keys.add('t:'+norm(x.get('Titulo')))
     return keys
 
+def normalize_event_time(value):
+    raw=str(value or '').strip().casefold()
+    if not raw:
+        return ''
+    m=re.fullmatch(r'([01]?\d|2[0-3])(?:\s*[:h]\s*([0-5]\d))?\s*(?:h|horas?)?', raw)
+    if not m:
+        return ''
+    hour=int(m.group(1)); minute=int(m.group(2) or 0)
+    return f'{hour:02d}:{minute:02d}'
+
 def candidate_from_record(record, kind):
     f=record.get('fields',{})
     title=str(first(f,'Título','Titulo','Título da notícia','Titulo da noticia','Nome','Evento','Evento sugerido')).strip()
@@ -140,12 +150,20 @@ def candidate_from_record(record, kind):
             pass
     if not date: return None
     city=str(first(f,'Cidade','Cidade informada')).strip(); uf=str(first(f,'UF')).strip()
-    return {'ID':str(first(f,'ID')).strip() or f"SUG-{record.get('id','')}", 'Titulo':title,'Status':'Planejado','Data':date,
-            'DataBR':datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,
-            'Categoria':str(first(f,'Categoria')).strip() or 'Evento','Organizador':str(first(f,'Organizador')).strip(),
-            'Publico':0,'Patrocinador':str(first(f,'Patrocinador')).strip(),'Local':str(first(f,'Local')).strip(),
-            'Latitude':None,'Longitude':None,'Link':link,'Observacoes':str(first(f,'Observações','Observacoes','Resumo','Descrição','Descricao')).strip()[:1200],
-            'Mes':'','Ano':int(date[:4]),'Regiao':''}
+    item={'ID':str(first(f,'ID')).strip() or f"SUG-{record.get('id','')}", 'Titulo':title,'Status':'Planejado','Data':date,
+          'DataBR':datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,
+          'Categoria':str(first(f,'Categoria')).strip() or 'Evento','Organizador':str(first(f,'Organizador')).strip(),
+          'Publico':0,'Patrocinador':str(first(f,'Patrocinador')).strip(),'Local':str(first(f,'Local')).strip(),
+          'Latitude':None,'Longitude':None,'Link':link,'Observacoes':str(first(f,'Observações','Observacoes','Resumo','Descrição','Descricao')).strip()[:1200],
+          'Mes':'','Ano':int(date[:4]),'Regiao':''}
+    hora=normalize_event_time(first(f,'Hora','Horário','Horario','Hora do evento'))
+    hora_fim=normalize_event_time(first(f,'Hora fim','HoraFim','Horário final','Horario final'))
+    if hora:
+        item['Hora']=hora
+        if hora_fim:
+            item['HoraFim']=hora_fim
+        item['FusoHorario']=str(first(f,'Fuso horário','FusoHorario','Timezone')).strip() or 'America/Sao_Paulo'
+    return item
 
 def trusted_url(url):
     host=urllib.parse.urlparse(url).netloc.casefold().removeprefix('www.')
