@@ -1,6 +1,7 @@
 {
   "blocked_keys": [
     "instagram:evento:cbf-2026-10-10-argentina",
+    "instagram:evento:cbf-2026-11-29-japão",
     "instagram:evento:evt-0071",
     "instagram:evento:evt-editorial-20260903-futebol-cidadania",
     "instagram:evento:wifs-2027-06-23-rj",
@@ -157,6 +158,12 @@
       "matches": "instagram:evento:wifs-2027-07-23-sp",
       "candidate_title": "Jornada Mulheres que Mudam o Jogo – WIFS",
       "published_title": "Jornada Mulheres que Mudam o Jogo – WIFS Quando: 23/07/2027 Onde: São Paulo, SP Evento derivado de página-fonte; data e cidade validadas no conteúdo antes da materialização. Fonte: WIFS #RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino Saiba mais pelo link da Bio"
+    },
+    "instagram:evento:cbf-2026-11-29-japão": {
+      "reason": "duplicate_story_already_published",
+      "matches": "instagram:evento:cbf-2026-12-05-japão",
+      "candidate_title": "Brasil x Japão — amistoso da Seleção Feminina",
+      "published_title": "Brasil x Japão — amistoso da Seleção Feminina Quando: 05/12/2026 Onde: JFE Harenokuni Stadium, Okayama, JP Amistoso Brasil x Japão confirmado; evento materializado independentemente da notícia. Fonte: CBF #RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino Saiba mais pelo link da Bio"
     }
   },
   "legacy_uncertain_meta": {
