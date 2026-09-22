@@ -65,7 +65,9 @@ jobs:
                       if not isinstance(row, dict):
                           continue
                       key = str(row.get("key") or "").strip() or "unknown"
-                      for field in ("published_at", "reconciled_at"):
+                      # O intervalo segue o horário real de publicação. A hora em que
+                      # um post antigo foi reconciliado não abre uma nova janela de 60 min.
+                      for field in ("published_at",):
                           raw = row.get(field)
                           if not raw:
                               continue
