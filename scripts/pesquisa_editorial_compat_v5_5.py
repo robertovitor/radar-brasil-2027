@@ -373,6 +373,37 @@ def _convocation_events_from_rss(rss):
         print(f'convocation_event_evidence={date}|{title[:140]}')
     print(f'convocation_event_candidates={len(out)}'); return out
 
+def _recent_known_news_event_candidates(max_age_days=30, limit=12):
+    """Retrovarredura local e limitada para notícias anteriores ao aprendizado.
+
+    Não consulta Airtable nem faz HTTP aqui. Lê apenas noticias.json, restringe a
+    notícias recentes com sinal forte de evento/premiação e limita o lote. O fetch
+    da fonte continua centralizado em _future_events_from_news, com as mesmas
+    proteções de data explícita, relevância e deduplicação de eventos.
+    """
+    items=pe.load(pe.ROOT/'noticias.json',[])
+    if not isinstance(items,list): return []
+    cutoff=pe.now().date()-pe.timedelta(days=max_age_days)
+    out=[]; seen=set()
+    signal_words=('bola de ouro','indicada','indicado','indicacao','nomeada','nomeado','finalista','concorre','premio','premiacao','premiação','cerimonia','cerimônia','sorteio','congresso','seminario','seminário','forum','fórum','workshop','lancamento','lançamento')
+    for item in reversed(items):
+        if not isinstance(item,dict): continue
+        title=str(item.get('Titulo') or '').strip(); link=str(item.get('Link') or '').strip()
+        if not title or not link: continue
+        nt=pe.norm(title)
+        if not any(pe.norm(x) in nt for x in signal_words): continue
+        raw_date=str(item.get('Data') or '')[:10]
+        try: d=pe.datetime.strptime(raw_date,'%Y-%m-%d').date()
+        except Exception: continue
+        if d < cutoff: continue
+        key=pe.urlnorm(link) or nt
+        if key in seen: continue
+        seen.add(key)
+        out.append({'origin':'known-news-backfill-v5.10','title':title,'source':str(item.get('Veiculo') or ''),'url':link,'pub':'','known_news_date':raw_date})
+        if len(out)>=limit: break
+    print(f'known_news_backfill_candidates={len(out)}|max_age_days={max_age_days}|limit={limit}')
+    return out
+
 def _future_events_from_news(rss):
     """Extrai eventos futuros explícitos de notícias já coletadas, sem novo fetch.
 
@@ -481,7 +512,7 @@ def _events_from_candidates(candidates):
     return out
 
 def rss_candidates_v55():
-    primary=_primary_cbf_candidates(); wifs=_wifs_event_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss); cbf_fallback=_cbf_known_event_fallback_candidates(rss); cbf_semantic=_cbf_semantic_schedule_candidates(rss); convocations=_convocation_events_from_rss(rss); future_events=_future_events_from_news(rss)
+    primary=_primary_cbf_candidates(); wifs=_wifs_event_candidates(); rss=_original_rss_candidates(); signals=_trusted_news_event_candidates(rss); cbf_fallback=_cbf_known_event_fallback_candidates(rss); cbf_semantic=_cbf_semantic_schedule_candidates(rss); convocations=_convocation_events_from_rss(rss); known_news=_recent_known_news_event_candidates(); future_events=_future_events_from_news(rss+known_news)
     # A extração é 1 fonte -> 0..N eventos. Notícia e eventos continuam com
     # deduplicação independente; reconhecer uma notícia nunca consome os eventos.
     pe._v55_official_events=_events_from_candidates(primary+wifs+signals+cbf_fallback+cbf_semantic+convocations+future_events)
