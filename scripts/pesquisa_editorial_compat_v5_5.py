@@ -80,6 +80,39 @@ def _official_request_bytes(url, *, timeout=15):
             print(f'primary_cbf_tls_fallback_failed={type(second).__name__}:{second}')
             raise first
 
+# A validação editorial v5 usa pe.request_bytes diretamente. Em alguns runners,
+# a cadeia TLS da CBF falha no cliente padrão embora a página oficial esteja válida.
+# Aplica fallback SOMENTE para HTTPS da CBF, sempre com verificação certifi; não
+# altera outras fontes, não desativa TLS e não cria qualquer leitura Airtable.
+_base_request_bytes = pe.request_bytes
+
+def _request_bytes_cbf_verified(url, headers=None, timeout=25):
+    try:
+        return _base_request_bytes(url, headers=headers, timeout=timeout)
+    except Exception as first:
+        parsed=urllib.parse.urlparse(str(url or ''))
+        host=parsed.netloc.casefold().removeprefix('www.')
+        if parsed.scheme != 'https' or not (host == 'cbf.com.br' or host.endswith('.cbf.com.br')):
+            raise
+        try:
+            import certifi
+            ctx=ssl.create_default_context(cafile=certifi.where())
+            h={'User-Agent':getattr(pe,'UA','RadarBrasil2027/2.8')}
+            if headers: h.update(headers)
+            req=urllib.request.Request(url,headers=h)
+            with urllib.request.urlopen(req,timeout=timeout,context=ctx) as resp:
+                data=resp.read(); final_url=resp.geturl(); hdrs=dict(resp.headers.items())
+            final=urllib.parse.urlparse(final_url)
+            final_host=final.netloc.casefold().removeprefix('www.')
+            if final.scheme != 'https' or not (final_host == 'cbf.com.br' or final_host.endswith('.cbf.com.br')):
+                raise RuntimeError('cbf_verified_redirect_blocked')
+            print('suggestion_cbf_tls_fallback=certifi_verified')
+            return data,final_url,hdrs
+        except Exception:
+            raise first
+
+pe.request_bytes=_request_bytes_cbf_verified
+
 CBF_LISTINGS = (
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina',
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal',
