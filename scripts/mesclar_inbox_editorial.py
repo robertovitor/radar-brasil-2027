@@ -192,9 +192,38 @@ def main():
     events,news,removed_events,removed_news=explicit_cleanup(events,news)
     inbox=load(INBOX,{'eventos':[],'noticias':[]})
 
-    fresh_events=[]
+    fresh_events=[]; enriched_events=0
     for x in inbox.get('eventos',[]):
-        if not any(duplicate_incoming(x,y,'eventos') for y in events+fresh_events):
+        merged=False
+        for idx,y in enumerate(events):
+            if not duplicate_incoming(x,y,'eventos'):
+                continue
+            updates={}
+            for field in ('Hora','HoraFim','FusoHorario'):
+                value=str(x.get(field) or '').strip()
+                if value and not str(y.get(field) or '').strip():
+                    updates[field]=value
+            if updates:
+                events[idx]={**y,**updates}
+                enriched_events+=1
+                print(f"evento_enriquecido_horario={events[idx].get('ID','')}|{updates.get('Hora','')}|{updates.get('FusoHorario','')}")
+            merged=True
+            break
+        if merged:
+            continue
+        for idx,y in enumerate(fresh_events):
+            if not duplicate_incoming(x,y,'eventos'):
+                continue
+            updates={}
+            for field in ('Hora','HoraFim','FusoHorario'):
+                value=str(x.get(field) or '').strip()
+                if value and not str(y.get(field) or '').strip():
+                    updates[field]=value
+            if updates:
+                fresh_events[idx]={**y,**updates}
+            merged=True
+            break
+        if not merged:
             fresh_events.append(x)
 
     fresh_news=[]; stale_news=[]
@@ -241,6 +270,7 @@ def main():
     print(f'eventos_duplicados_removidos={len(removed_events)}')
     print(f'noticias_duplicadas_removidas={len(removed_news)}')
     print(f'eventos_incluidos={len(fresh_events)}')
+    print(f'eventos_enriquecidos_com_horario={enriched_events}')
     print(f'noticias_incluidas={len(fresh_news)}')
     print(f'noticias_descartadas_por_frescor={len(stale_news)}')
     print(f'itens_descartados_como_duplicados={max(0,duplicate_discarded)}')
