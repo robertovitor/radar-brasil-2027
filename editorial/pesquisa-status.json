@@ -1,7 +1,7 @@
 {
   "cycle_id": "20260922-13",
-  "started_at": "2026-09-22T13:46:41-03:00",
-  "completed_at": "2026-09-22T13:48:43-03:00",
+  "started_at": "2026-09-22T13:49:01-03:00",
+  "completed_at": "2026-09-22T13:51:14-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -17,9 +17,9 @@
   ],
   "sugestoes_lidas": 29,
   "sugestoes_noticias_lidas": 24,
-  "candidatos_publicos": 88,
+  "candidatos_publicos": 89,
   "aprovados_novos": 0,
-  "rejeitados": 116,
+  "rejeitados": 117,
   "duplicados": 0,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
@@ -326,8 +326,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa faz visita técnica à Arena Castelão em preparação para a Copa do Mundo Feminina de 2027 - urbnews.com.br",
-      "fonte": "urbnews.com.br",
+      "titulo": "Fifa faz visita técnica à Arena Castelão em preparação para a Copa do Mundo Feminina de 2027 - URB News",
+      "fonte": "URB News",
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQSlBSN0I1Q1pWODhBUmg1R1ZNd195SFVnRE1mNi0wd0JQQldDQVF6TzI3bXFOMUx1ZUd3bDlIbTQ4aWgxTC1VX2xfbndLeGgtYmFEd2FrZ19VQ0UtZWQyWTV0cFBSamdNV3VXS1VITE1JUzZJZEJrb18tNk1HaU9RTWE5NzhwZE53VmppYlFyWUliakYyQjVFZWZVaUpydllYYVFRWjAxRjdveUQ0dm1yNTVFbWhLTFdQVURwZTk1VjNWRmRuNHc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -390,8 +390,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Seleção feminina de futebol inicia qualificação para o Mundial-2027 com receção à Finlândia em Vizela - Diário de Notícias",
-      "fonte": "Diário de Notícias",
+      "titulo": "Seleção feminina de futebol inicia qualificação para o Mundial-2027 com receção à Finlândia em Vizela - dn.pt",
+      "fonte": "dn.pt",
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPaDFWREt3WnZuU0xSVGpIX2t0TXpwOUJJNVpDMHIxMW50MEtkX1JMVTFzaW5zT3p1a0xzTXVlcVpPQWl4WTNudG16SVRVWUNyd0FpdHpnSXFrR1JXd1diaEdQNDJrTDRyOExSQ1FxNEdZak9QcjVnV1JJQWhhLTdqeHVIOUlfY21wVFdHc05CZUZoWVRyX3NvQ2d5UkZzb3pKbjJIWi0xRk5WcXduV2EwOEFmY2NpYmx5cEk0?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -622,9 +622,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Em contagem regressiva para a Copa do Mundo Feminina de 2027, o Governo da Bahia vai inaugurar uma placa comemorativa de 365 dias, no Dique do Tororó. O marco será instalado nesta quarta-feira (24), a partir das 9h, ao lado do monumento em form - instagram.com",
-      "fonte": "instagram.com",
-      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1sXy1PMEtRNmlLZ3A5MUt0dlVsbUpRX05rQXpUYlF0LXFqSVQ0b1pyVzN4dnFRbXphc0lPY3BSLXVhZFBubi1oWWhic0NQUVJfbHc?oc=5",
+      "titulo": "Falta um ano: Salvador entra na contagem regressiva para a Copa Feminina 2027 - MundoBA",
+      "fonte": "MundoBA",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQSk1UV1JNY0ZCZjZoZVVLWmEzZUpDejNyMk9vUFVXV3BvenJfODZUajZnVW9seDF6cEFPdEZDQk5HR0dsTzNLZHVpSm1DU3pEaFRUeEJHVy1MZUdIMHM5aXJ6SG1fUk5Zel9Cbm9tOTUzMEk0YWFUU2VUcWpueElDR29TT09uLWYxdnhWVkplV0R0QU55eVpqYmlLOGVNVG9vcncya2JwM211cW13?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -646,8 +646,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa confirma sorteio e começa a definir palcos da Copa do Mundo Feminina de 2027 - esportes.r7.com",
-      "fonte": "esportes.r7.com",
+      "titulo": "Fifa confirma sorteio e começa a definir palcos da Copa do Mundo Feminina de 2027 - R7 Esportes",
+      "fonte": "R7 Esportes",
       "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQdDdoUXpiZW5NUnBHT0Fsdkl0MXFuNHVSa3BQNXk0cFAwWmFNTkRTQzVXRlU1dXpMSk41RDJ4eldGYUx3UVB1Q0t6a2toYjBuZHhHMERLUzk0STNmRWZWOUxydUl6QmxDOE9nZHhxSTVWdVBWV2xvcGwzZk9tOHBTWGdzZVE4SXVxS1FHUk1GaEtVNG50cW5PQzJxczVwN3Jza1NQdWVab3dTbUtuMG1kMTk1UVJCZmRoVEc3M1duZU9IQ2FyN0tNSUxRRE0?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -710,8 +710,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Cristiane destaca legado para nova geração e reforça apoio da torcida rumo à Copa de 2027 - esportes.r7.com",
-      "fonte": "esportes.r7.com",
+      "titulo": "Cristiane destaca legado para nova geração e reforça apoio da torcida rumo à Copa de 2027 - R7 Esportes",
+      "fonte": "R7 Esportes",
       "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxOLWdGOXpNbzYtZWN2b29ZR04xcHBTX21hZkRMYjRxckgyY1lFa3RCdUUxNWc1WElFdkpuY01qeGJCbVE0bF9uVVI0aXd5VERPbFVJX2c3ZkVwTGhVQmUzQ1dGVGI1MmVYeUlmQVNtbV9CMTFZQm0yUFJ6dnFLa2hWaVIyNzdrLUVtODhHb0lNRHV0ZUs5elJ5ZGVVSlBJWGpoNFpTTXFvejRYa0dRUnc1bHRsX1RsV0Q3WXc4RjlpYXNqQ0xMUHp2Wm1RTmp0aWlLRWtKVFJFWQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -750,8 +750,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "FIFA e FBF discutem legado da Copa do Mundo de 2027 para o futebol feminino da Bahia - FBF",
-      "fonte": "FBF",
+      "titulo": "FIFA e FBF discutem legado da Copa do Mundo de 2027 para o futebol feminino da Bahia - fbf.org.br",
+      "fonte": "fbf.org.br",
       "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1PODRMS01pZGpxTkRoZUFGcTFCYzVVRkdlcEl3YzhnZXFFM1pROTJVc2duUGx5ektwM3g2cTI4UHpFSDV1S2VSZDZEcVVyMGNMclhFb2xaU3c?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -782,8 +782,8 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Dia Nacional do Futebol destaca avanços do futebol feminino no Brasil rumo à Copa do Mundo de 2027 - www.gov.br",
-      "fonte": "www.gov.br",
+      "titulo": "Dia Nacional do Futebol destaca avanços do futebol feminino no Brasil rumo à Copa do Mundo de 2027 - GOV.BR",
+      "fonte": "GOV.BR",
       "url": "https://news.google.com/rss/articles/CBMikgJBVV95cUxPck5nWlFOOG1rRHJ6LXpIcEhreEJuZVlmc1hrNXdWS0NmN1RRc293TkhLTWJ3VkViRmNmRlNGV0xRTlcxTTNyeGpMX3lSSXp2cU9mY1B5Z1BMM0ZmM0QtaEFTY3RtNUJ0elItdGhDYV9iYzVFbTA0OUc5NEhLYk5mYnk1NlRKRFJHMHBFN2p2Q3BOckIyV0p3MkJnN2ZIaTlHOER4cTh1ODR3Yk1nY21pWEdwY19CaEFoQVF2OUdEdVFUYkJoNW9Wa3FIVVlLanRYYkt2S012S0k0TzJwUVR1bk9nT0ZNMlhDdlNZcWJWMHVEOG94MGo1Q3hid05TZlV0eDc3cXFKTFZyUUktdTh6ME5R?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (65d)."
@@ -814,8 +814,8 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Seleção Brasileira Feminina é convocada para amistosos; veja lista - lance.com.br",
-      "fonte": "lance.com.br",
+      "titulo": "Seleção Brasileira Feminina é convocada para amistosos; veja lista - LANCE!",
+      "fonte": "LANCE!",
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQM0hTSFRVdmpoQTBqZldtR3BYcG03ZGM5X2luQnQyWXVIU2ZTM1kwalFGNHAzYUh2ZGxQdVdCZ201bUxXSHpzNXo1TWhIekFzZGpscnZFS3VwWVc4TWxHVXR3TUgycndwY2xDMUFVWVI5TEtUUzdFZHltaV9qVE1UN0l2Nnk2VlByMml2TnQ2NlZZRmV1RHM2YVdRWVZELUpQS1Iw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (222d)."
@@ -862,6 +862,14 @@
     },
     {
       "origem": "google-news-trusted-source",
+      "titulo": "Fifa divulga calendário da Copa Feminina 2027 - correiodopovo.com.br",
+      "fonte": "correiodopovo.com.br",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQNmxPZFMwMThNMEZ5M0ZaQVVwdHE5Tk4zb21EQkI1dTA4ZFltTGpfSF9kcHpfYlNBNUFNbnZvOGlsM3lQWU9fc1c1WEtvRUZWUG1UMUItV2N5QmZCZXlHN1o3MmZhVXJGT1pVaUxEc09MRzZKUjdwVzRfdk4tM2o5SVg4M2x6TmphLVpwTWtzYzRJdndoWXVMMDhBWWw0UQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (33d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
       "titulo": "Estádio de Brasília oferece só 25 camarotes à Fifa e corre risco de ser excluído da Copa feminina - ge",
       "fonte": "ge",
       "url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxOMGZLcExDNVdHSW1ld2hMRTNkZjl4OWhja050eVQ2RDhDd0stdWtQc3BaN193YXBEbUV1OGtjRXZTdDBoNmd2bUZyZEZ3MlpzQ050R3NhNkhINlFwUG9jcmM0OWhwRXV2TWhqN0pjTGVqeHA2TnhyZmx5cngtdjlJZy1zdVY0TDh4dlJXM0JRckg3eGJvdWNVcFI0bjQ2eWZxMmxNY1FKVVNDanE1Q0dCRVFRQlJleHl2bXQ2N1JlclZzWHhFWWkwcmZkQ1Mta2Vra01idkY0RHJLTnlLc2VZQWhPaUN0djZkZ3RzRXFodHk0d9IBgAJBVV95cUxNSkdwbFlBYk50U0hiajAxQ0dOZk1Sc3BUbnpTa1ZLREZ6M0NiTmExMjBfckl2LVRBNmU3VklOMXY2ZS1FVWQwQnh2Y3IzUUt0X05ZNmpmV3lZOXN5cms1VUlqVWsydWpQaVhoVHJzV1RrQWo2RE51LVIyTjMxckpBNHhqRkZSbFF2VDZ6ak9USkNMYlVZOW96c25UbU1wdHp3bEotS0VfUXFyMlpIQ1lQOWpDUUxSMDg2TGxRa3dWWjZlRDNjZUhsWVZMQTdMMmhRMHljTWhCSk5iQkU2NTFNajR5TnN5andONGFtaGVxVmpSaDYzdkpmUXo2WFhLelR4?oc=5",
@@ -878,8 +886,8 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Mais de 730 mil pessoas já manifestaram interesse na compra de ingressos para a Copa Feminina de 2027 - www.gov.br",
-      "fonte": "www.gov.br",
+      "titulo": "Mais de 730 mil pessoas já manifestaram interesse na compra de ingressos para a Copa Feminina de 2027 - GOV.BR",
+      "fonte": "GOV.BR",
       "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNSXBHZE9wUXpBX0tKX2RPcEhITC1NTmZqeTM5bFJYY29qM2lVal9nWGxqU3VXc2lzM0JDbm55QWlYbjRVVjVJSElPMHRWS2tnX0cwMDNxdnRiSHE4T05WZlhVbHRsclNBaGZ5X1hkeUV5ekQydU1JeW9rZlRkMzJzR2sxZUN4RTg2UndCWTVWMkdhcDhLYzlJVHp5LXl1cEFRUVBHQmhZSWRYTkUwTEhvYUkwaFMyaFdrR1ZjUHdLTlpEdWZMY1BGT0txVUpTTkRCY2c?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (48d)."
@@ -974,8 +982,8 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Falta 1 ano: Brasil se prepara para receber a Copa do Mundo Feminina da FIFA em 2027 - CBF",
-      "fonte": "CBF",
+      "titulo": "Falta 1 ano: Brasil se prepara para receber a Copa do Mundo Feminina da FIFA em 2027 - cbf.com.br",
+      "fonte": "cbf.com.br",
       "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNcXZRdmVHbEdGZ2l5bW9oVjE5eW13b09KSHdBMHVFdW9qU0ZINFR5ZUhwTHF0VmdxS3FscXdvWEU1UktOUVduQ0NaMUFDbnAwaE5kNXFsWkJfUjZTWXFPX244QXNURllvMjZRVW1WVGQ4M25KSkt1cmM4cUEydERUek0wTVljMC1xbTBmMjk4Z1pkUm94U3ZIQUw3V1pGWlN2YlpVRUlYbXcyWUtZNXVzbmQyUEZMUHd2dS1xVGVPMzV6X0tOZEVOTkRsU2syclhLQ3JkQmhuSkZEd2VsQm44S3BUODFhQ2pqZlVXNDdJZTVWM3B5Tmc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (90d)."
