@@ -391,7 +391,8 @@ def _future_events_from_news(rss):
         relevant=('selecao brasileira feminina' in nt) or ('futebol feminino' in nt) or any(x in nt for x in ('lorena','marta','bola de ouro'))
         # Pré-filtro barato: só abre a matéria quando o título sinaliza premiação/evento
         # potencialmente estruturável. Reutiliza fetch HTTP; não toca no Airtable.
-        award_signal=any(x in nt for x in ('indicada','indicado','indicacao','nomeada','nomeado','finalista','concorre','premio','premiação','premiacao'))\n        signal=('bola de ouro' in nt) or award_signal or any(pe.norm(x) in nt for x in event_words)
+        award_signal=any(x in nt for x in ('indicada','indicado','indicacao','nomeada','nomeado','finalista','concorre','premio','premiação','premiacao'))
+        signal=('bola de ouro' in nt) or award_signal or any(pe.norm(x) in nt for x in event_words)
         if not relevant or not signal: continue
         body=''; final_url=str(c.get('url') or '')
         try:
