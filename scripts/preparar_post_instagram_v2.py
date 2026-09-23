@@ -106,6 +106,28 @@ def fit_title_complete(draw, title, width, start_size=88, min_size=58, max_lines
             print('title_shortened_automatically=true')
             print('art_title=' + candidate)
             return f, lines, True
+    # Último fallback: preserva a legenda completa, mas reduz somente a
+    # headline da arte por palavras até caber no gate existente. Isso evita
+    # que títulos longos bloqueiem toda a rodada sem reduzir a fonte mínima.
+    words = original.split()
+    for size in range(68, min_size - 1, -2):
+        f = base.font(size, True)
+        for keep in range(len(words) - 1, 3, -1):
+            candidate = base.clean(' '.join(words[:keep]).rstrip(' ,;:-') + '…')
+            lines = base.wrap(draw, candidate, f, width)
+            if len(lines) <= max_lines:
+                TITLE_RENDER_META[original] = {
+                    'original_title': original,
+                    'art_title': candidate,
+                    'title_shortened': True,
+                }
+                print('title_shortened_automatically=true')
+                print('title_fit_fallback=word_trim')
+                print('art_title=' + candidate)
+                return f, lines, True
+
+    # Caso extremo (por exemplo, palavra isolada excepcionalmente longa):
+    # mantém o comportamento fail-closed do gate em vez de aprovar arte ilegível.
     f = base.font(min_size, True)
     lines = base.wrap(draw, original, f, width)
     TITLE_RENDER_META[original] = {'original_title': original, 'art_title': original, 'title_shortened': False}
