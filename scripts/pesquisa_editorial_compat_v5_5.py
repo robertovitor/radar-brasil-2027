@@ -128,7 +128,7 @@ pe.request_bytes=_request_bytes_cbf_verified
 # Nenhuma leitura adicional do Airtable é feita.
 _original_candidate_from_record_v55 = pe.candidate_from_record
 _event_date_rescues = 0
-MAX_EVENT_DATE_RESCUES = 4
+MAX_EVENT_DATE_RESCUES = 2
 _EVENT_RESCUE_STOP = {
     'evento','eventos','cidade','cidades','brasil','copa','2027','para','com',
     'uma','das','dos','de','do','da','em','no','na','ao','aos'
@@ -159,28 +159,60 @@ def _event_rescue_tokens(title):
     return [x for x in pe.norm(title).split() if len(x)>=4 and x not in _EVENT_RESCUE_STOP]
 
 def _trusted_search_results(query):
+    out=[]; seen=set()
+
+    def add(href):
+        href=str(href or '').strip()
+        if not href or not pe.trusted_url(href):
+            return False
+        key=pe.urlnorm(href)
+        if not key or key in seen:
+            return False
+        seen.add(key); out.append(href)
+        return True
+
+    # Caminho 1: busca HTML genérica.
     url='https://html.duckduckgo.com/html/?'+urllib.parse.urlencode({'q':query})
     try:
         data,_,_=pe.request_bytes(
             url,
-            headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/3.0)'},
-            timeout=12,
+            headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/3.1)'},
+            timeout=10,
         )
+        raw=data[:650000].decode('utf-8','ignore')
+        for m in re.finditer(r'<a\\b[^>]*href=["\\']([^"\\']+)["\\'][^>]*>',raw,flags=re.I|re.S):
+            href=v54.v2._candidate_from_search_href(html.unescape(m.group(1)))
+            add(href)
+            if len(out)>=4:
+                break
     except Exception as exc:
-        print(f'event_date_rescue_search_warning={type(exc).__name__}:{exc}')
-        return []
-    raw=data[:650000].decode('utf-8','ignore')
-    out=[]; seen=set()
-    for m in re.finditer(r'<a\b[^>]*href=["\']([^"\']+)["\'][^>]*>',raw,flags=re.I|re.S):
-        href=v54.v2._candidate_from_search_href(html.unescape(m.group(1)))
-        if not href or not pe.trusted_url(href):
-            continue
-        key=pe.urlnorm(href)
-        if not key or key in seen:
-            continue
-        seen.add(key); out.append(href)
-        if len(out)>=6:
-            break
+        print(f'event_date_rescue_search_warning=duckduckgo|{type(exc).__name__}:{exc}')
+
+    # Caminho 2: Google News RSS somente como descoberta. O agregador nunca
+    # é aceito como fonte final; a URL precisa resolver para domínio confiável.
+    rss_url='https://news.google.com/rss/search?'+urllib.parse.urlencode({
+        'q':query,'hl':'pt-BR','gl':'BR','ceid':'BR:pt-419'
+    })
+    try:
+        data,_,_=pe.request_bytes(rss_url,timeout=10)
+        root=pe.ET.fromstring(data)
+        for item in root.findall('.//item')[:10]:
+            title=(item.findtext('title') or '').strip()
+            link=(item.findtext('link') or '').strip()
+            source_el=item.find('source')
+            source=(source_el.text or '').strip() if source_el is not None else ''
+            domain=v54.v2._source_domain(source)
+            if not title or not link or not domain or not pe.trusted_url('https://'+domain+'/'):
+                continue
+            direct=v54.compat.resolve_google_news(link)
+            if direct and add(direct):
+                print(f'event_date_rescue_google_resolved={domain}|{direct}')
+            if len(out)>=6:
+                break
+    except Exception as exc:
+        print(f'event_date_rescue_search_warning=google-news|{type(exc).__name__}:{exc}')
+
+    print(f'event_date_rescue_sources={len(out)}')
     return out
 
 def _date_from_event_text(text, published=None):
