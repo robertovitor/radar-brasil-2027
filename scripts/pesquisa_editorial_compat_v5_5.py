@@ -121,6 +121,189 @@ def _request_bytes_cbf_verified(url, headers=None, timeout=25):
 
 pe.request_bytes=_request_bytes_cbf_verified
 
+# Resgate conservador de sugestões de EVENTO sem data.
+# O link original (inclusive rede social) serve apenas como pista de descoberta.
+# Para materializar o evento, exigimos uma fonte editorial já confiável no Radar,
+# correspondência semântica com o título sugerido e data explícita no conteúdo.
+# Nenhuma leitura adicional do Airtable é feita.
+_original_candidate_from_record_v55 = pe.candidate_from_record
+_event_date_rescues = 0
+MAX_EVENT_DATE_RESCUES = 4
+_EVENT_RESCUE_STOP = {
+    'evento','eventos','cidade','cidades','brasil','copa','2027','para','com',
+    'uma','das','dos','de','do','da','em','no','na','ao','aos'
+}
+_EVENT_MONTHS = {
+    'janeiro':1,'fevereiro':2,'marco':3,'março':3,'abril':4,'maio':5,'junho':6,
+    'julho':7,'agosto':8,'setembro':9,'outubro':10,'novembro':11,'dezembro':12,
+}
+_HOST_CITIES = {
+    'porto alegre':('Porto Alegre','RS'),'recife':('Recife','PE'),
+    'fortaleza':('Fortaleza','CE'),'salvador':('Salvador','BA'),
+    'belo horizonte':('Belo Horizonte','MG'),'sao paulo':('São Paulo','SP'),
+    'são paulo':('São Paulo','SP'),'rio de janeiro':('Rio de Janeiro','RJ'),
+    'brasilia':('Brasília','DF'),'brasília':('Brasília','DF'),
+}
+
+def _recent_record_for_rescue(record, max_age_days=7):
+    raw=str(record.get('createdTime') or '').strip()
+    if not raw:
+        return False
+    try:
+        dt=pe.datetime.fromisoformat(raw.replace('Z','+00:00'))
+        return (pe.now().date()-dt.astimezone(pe.BRT).date()).days <= max_age_days
+    except Exception:
+        return False
+
+def _event_rescue_tokens(title):
+    return [x for x in pe.norm(title).split() if len(x)>=4 and x not in _EVENT_RESCUE_STOP]
+
+def _trusted_search_results(query):
+    url='https://html.duckduckgo.com/html/?'+urllib.parse.urlencode({'q':query})
+    try:
+        data,_,_=pe.request_bytes(
+            url,
+            headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/3.0)'},
+            timeout=12,
+        )
+    except Exception as exc:
+        print(f'event_date_rescue_search_warning={type(exc).__name__}:{exc}')
+        return []
+    raw=data[:650000].decode('utf-8','ignore')
+    out=[]; seen=set()
+    for m in re.finditer(r'<a\b[^>]*href=["\']([^"\']+)["\'][^>]*>',raw,flags=re.I|re.S):
+        href=v54.v2._candidate_from_search_href(html.unescape(m.group(1)))
+        if not href or not pe.trusted_url(href):
+            continue
+        key=pe.urlnorm(href)
+        if not key or key in seen:
+            continue
+        seen.add(key); out.append(href)
+        if len(out)>=6:
+            break
+    return out
+
+def _date_from_event_text(text, published=None):
+    raw=html.unescape(str(text or '')).casefold()
+    # Prioriza intervalos ("24 e 25 de setembro"), evitando confundir com data de publicação.
+    range_re=re.compile(r'(?<!\d)(\d{1,2})\s*(?:e|a|–|-)\s*(\d{1,2})\s+de\s+([a-zç]+)(?:\s+de\s+(20\d{2}))?',re.I)
+    single_re=re.compile(r'(?<!\d)(\d{1,2})\s+de\s+([a-zç]+)(?:\s+de\s+(20\d{2}))?',re.I)
+    event_words=('evento','encontro','acontece','acontecerá','acontecera','será realizado','sera realizado','realizado','realizada','dias','programação','programacao')
+    def build(day,month_name,year,ctx):
+        month=_EVENT_MONTHS.get(pe.norm(month_name))
+        if not month:
+            return None
+        if year:
+            y=int(year)
+        elif published is not None:
+            y=published.year
+        else:
+            return None
+        try:
+            d=pe.datetime(y,month,int(day)).date()
+        except ValueError:
+            return None
+        if published is not None and not year and d < published-pe.timedelta(days=2):
+            try:
+                d=pe.datetime(y+1,month,int(day)).date()
+            except ValueError:
+                return None
+        if d < pe.now().date()-pe.timedelta(days=1) or d > pe.datetime(2028,12,31).date():
+            return None
+        return d
+    for m in range_re.finditer(raw):
+        ctx=raw[max(0,m.start()-180):min(len(raw),m.end()+180)]
+        if not any(w in ctx for w in event_words):
+            continue
+        d=build(m.group(1),m.group(3),m.group(4),ctx)
+        if d:
+            return d
+    for m in single_re.finditer(raw):
+        ctx=raw[max(0,m.start()-180):min(len(raw),m.end()+180)]
+        if any(w in ctx for w in ('publicado','publicada','atualizado','atualizada')):
+            continue
+        if not any(w in ctx for w in event_words):
+            continue
+        d=build(m.group(1),m.group(2),m.group(3),ctx)
+        if d:
+            return d
+    return None
+
+def _recover_missing_event_date(record):
+    global _event_date_rescues
+    if _event_date_rescues >= MAX_EVENT_DATE_RESCUES or not _recent_record_for_rescue(record):
+        return None
+    fields=dict(record.get('fields',{}) or {})
+    title=str(v54.compat.find_title(fields,'eventos') or v54._infer_title(fields,'')).strip()
+    link=str(v54.compat.find_url(fields) or v54._infer_url(fields)).strip()
+    if not title or not link:
+        return None
+    # Não tenta corrigir registros que já possuem data parseável.
+    if v54.compat.parse_date(v54.compat.value_by_alias(fields,('Data','Data do evento','Data do Evento','Data informada'))):
+        return None
+    tokens=_event_rescue_tokens(title)
+    if len(tokens)<2:
+        print(f'event_date_rescue_skipped={record.get("id","")}|reason=title_too_generic')
+        return None
+
+    _event_date_rescues += 1
+    query=f'{title} futebol feminino evento 2026 "Copa 2027"'
+    for href in _trusted_search_results(query):
+        try:
+            data,final_url,headers=pe.request_bytes(
+                href,
+                headers={'User-Agent':'Mozilla/5.0 (compatible; RadarBrasil2027/3.0)'},
+                timeout=12,
+            )
+            if not pe.trusted_url(final_url):
+                continue
+            ctype=str(headers.get('Content-Type','')).casefold()
+            if 'html' not in ctype:
+                continue
+            raw=data[:900000].decode('utf-8','ignore')
+            page_title=v54.v5._page_title(raw)
+            visible=pe.clean_html_text(v54.v3._strip_non_editorial_blocks(raw))[:12000]
+            blob=pe.norm(f'{page_title} {visible}')
+            if not all(t in blob for t in tokens):
+                continue
+            if not pe.article_is_relevant(page_title or title,visible):
+                continue
+            if not any(x in blob for x in ('evento','encontro','seminario','seminário','workshop','congresso','forum','fórum','painel')):
+                continue
+            published=v54.v5._page_date(raw)
+            event_date=_date_from_event_text(visible,published)
+            if event_date is None:
+                continue
+
+            enriched=dict(record); ef=dict(fields)
+            ef['Data']=event_date.isoformat()
+            ef['Título']=page_title or title
+            ef['Link']=final_url
+            if not str(v54.compat.value_by_alias(ef,('Cidade','Cidade informada')) or '').strip():
+                for needle,(city,uf) in _HOST_CITIES.items():
+                    if needle in blob:
+                        ef['Cidade informada']=city
+                        ef['UF']=uf
+                        break
+            enriched['fields']=ef
+            print(f'event_date_rescue_found={record.get("id","")}|date={event_date.isoformat()}|source={final_url}')
+            return enriched
+        except Exception as exc:
+            print(f'event_date_rescue_candidate_warning={type(exc).__name__}:{exc}')
+    print(f'event_date_rescue_unresolved={record.get("id","")}|title={title[:120]}')
+    return None
+
+def candidate_from_record_v59(record,kind):
+    candidate=_original_candidate_from_record_v55(record,kind)
+    if candidate is not None or kind!='eventos':
+        return candidate
+    enriched=_recover_missing_event_date(record)
+    if enriched is None:
+        return None
+    return _original_candidate_from_record_v55(enriched,kind)
+
+pe.candidate_from_record=candidate_from_record_v59
+
 # Ampliação temática mínima: segue a mesma pesquisa pública e os mesmos gates,
 # apenas cobre atualizações de ingressos da Seleção Feminina que podem não citar
 # "Copa 2027" no título. Não altera Airtable nem aprova nada por si só.
