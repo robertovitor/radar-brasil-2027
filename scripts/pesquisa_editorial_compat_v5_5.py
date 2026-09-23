@@ -180,7 +180,7 @@ def _trusted_search_results(query):
             timeout=10,
         )
         raw=data[:650000].decode('utf-8','ignore')
-        for m in re.finditer(r'<a\\b[^>]*href=["\\']([^"\\']+)["\\'][^>]*>',raw,flags=re.I|re.S):
+        for m in re.finditer(r"<a\\b[^>]*href=[\\\"']([^\\\"']+)[\\\"'][^>]*>",raw,flags=re.I|re.S):
             href=v54.v2._candidate_from_search_href(html.unescape(m.group(1)))
             add(href)
             if len(out)>=4:
