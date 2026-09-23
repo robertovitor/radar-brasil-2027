@@ -35,6 +35,9 @@ _ADDITIONAL_TRUSTED_DOMAINS = (
     'correiodopovo.com.br',
     'machinadoesporte.com.br',
     'womanifs.com',
+    'diariodonordeste.verdesmares.com.br',
+    'jc.ne10.uol.com.br',
+    'mktesportivo.com',
 )
 pe.TRUSTED_DOMAINS = tuple(dict.fromkeys(tuple(pe.TRUSTED_DOMAINS) + _ADDITIONAL_TRUSTED_DOMAINS))
 v54.v2.SOURCE_DOMAIN_HINTS.update({
@@ -46,6 +49,11 @@ v54.v2.SOURCE_DOMAIN_HINTS.update({
     'correio do povo': 'correiodopovo.com.br',
     'maquina do esporte': 'machinadoesporte.com.br',
     'máquina do esporte': 'machinadoesporte.com.br',
+    'diario do nordeste': 'diariodonordeste.verdesmares.com.br',
+    'diário do nordeste': 'diariodonordeste.verdesmares.com.br',
+    'jc': 'jc.ne10.uol.com.br',
+    'jornal do commercio': 'jc.ne10.uol.com.br',
+    'mkt esportivo': 'mktesportivo.com',
 })
 
 _original_rss_candidates = pe.rss_candidates
@@ -112,6 +120,14 @@ def _request_bytes_cbf_verified(url, headers=None, timeout=25):
             raise first
 
 pe.request_bytes=_request_bytes_cbf_verified
+
+# Ampliação temática mínima: segue a mesma pesquisa pública e os mesmos gates,
+# apenas cobre atualizações de ingressos da Seleção Feminina que podem não citar
+# "Copa 2027" no título. Não altera Airtable nem aprova nada por si só.
+_extra_public_queries = (
+    '"Seleção Brasileira feminina" ingressos OR bilhetes OR "venda de ingressos"',
+)
+pe.PUBLIC_QUERIES = list(dict.fromkeys(list(pe.PUBLIC_QUERIES) + list(_extra_public_queries)))
 
 CBF_LISTINGS = (
     'https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina',
@@ -598,6 +614,68 @@ def rss_candidates_v55():
     pe._v55_official_events=_events_from_candidates(primary+wifs+signals+cbf_fallback+cbf_semantic+convocations+future_events)
     return primary+rss
 pe.rss_candidates=rss_candidates_v55
+
+# Resolver conservador adicional: quando Google News e GDELT trazem o MESMO
+# título e a mesma fonte confiável, prefere a URL editorial direta do GDELT.
+# Não amplia o universo editorial: exige título equivalente, domínio conhecido,
+# mesma origem editorial e todos os gates existentes continuam sendo aplicados.
+_v55_public_research = pe.public_research
+_v55_gdelt_candidates = pe.gdelt_candidates
+
+def _direct_title_key(value):
+    return pe.norm(v54.v2._strip_source_suffix(str(value or '')))
+
+def _same_publisher(url, domain):
+    if not url or not domain:
+        return False
+    try:
+        return v54.v2._same_domain(str(url), str(domain)) and pe.trusted_url(str(url))
+    except Exception:
+        return False
+
+def public_research_v56(keys):
+    rss = pe.rss_candidates()
+    gdelt = _v55_gdelt_candidates()
+
+    direct_by_title = {}
+    for g in gdelt:
+        if not isinstance(g,dict):
+            continue
+        link = str(g.get('url') or '').strip()
+        title_key = _direct_title_key(g.get('title'))
+        if not title_key or not pe.trusted_url(link):
+            continue
+        direct_by_title.setdefault(title_key, g)
+
+    prepared = []
+    upgraded = 0
+    for c0 in rss:
+        c = dict(c0)
+        if c.get('origin') in ('google-news','google-news-trusted-source'):
+            title_key = _direct_title_key(c.get('title'))
+            source_domain = str(c.get('trusted_source_domain') or v54.v2._source_domain(c.get('source','')) or '').strip()
+            g = direct_by_title.get(title_key)
+            if g and _same_publisher(g.get('url'), source_domain):
+                c['google_news_url'] = c.get('url','')
+                c['url'] = str(g.get('url') or '')
+                c['origin'] = 'google-news-gdelt-resolved-v5.6'
+                c['trusted_source_domain'] = source_domain
+                upgraded += 1
+                print(f"google_news_gdelt_resolved=v5.6|{source_domain}|{c['url']}")
+        prepared.append(c)
+
+    saved_rss, saved_gdelt = pe.rss_candidates, pe.gdelt_candidates
+    try:
+        pe.rss_candidates = lambda: prepared
+        pe.gdelt_candidates = lambda: gdelt
+        result = _v55_public_research(keys)
+    finally:
+        pe.rss_candidates, pe.gdelt_candidates = saved_rss, saved_gdelt
+
+    print(f'google_news_gdelt_resolved_count={upgraded}')
+    return result
+
+pe.public_research = public_research_v56
 
 # Mantido por compatibilidade; a persistência final abaixo não depende deste hook.
 def dump_v55(path,obj):
