@@ -136,6 +136,31 @@ def semantic_fact_signature(item):
     return ''
 
 
+def semantic_news_event(item):
+    """Assinatura conservadora do acontecimento jornalistico, nao da manchete."""
+    text=norm(f"{item.get('Titulo','')} {str(item.get('Resumo',''))[:900]}")
+    # Convocacao da Selecao principal: ao vivo/onde assistir/lista/ausencias de uma
+    # mesma convocacao sao o mesmo fato. A data ancora evita colapsar convocacoes
+    # de janelas diferentes.
+    senior=('selecao brasileira' in text and 'feminin' in text)
+    callup=any(x in text for x in ('convocacao','convoca','convocad'))
+    if senior and callup:
+        d=parse_date(item.get('Data'))
+        if d:
+            return f"selecao-feminina:convocacao:{d.isoformat()}"
+    return ''
+
+
+def materially_distinct_news(a,b):
+    """Excecoes que representam evolucao real do fato e devem sobreviver."""
+    ta=norm(f"{a.get('Titulo','')} {a.get('Resumo','')}")
+    tb=norm(f"{b.get('Titulo','')} {b.get('Resumo','')}")
+    # Corte/substituicao posterior e lesao sao novos fatos, mesmo ligados a convocacao.
+    evolution=('cortad','corte','substitu','desconvoc','lesao','lesion')
+    ea={x for x in evolution if x in ta}; eb={x for x in evolution if x in tb}
+    return bool(ea != eb and (ea or eb))
+
+
 def duplicate_incoming(a,b,kind):
     if kind == 'eventos':
         # Eventos distintos nunca são colapsados só por ID/link/título.
@@ -153,6 +178,9 @@ def duplicate_incoming(a,b,kind):
         return False
     sig_a=semantic_fact_signature(a); sig_b=semantic_fact_signature(b)
     if sig_a and sig_a == sig_b:
+        return True
+    news_a=semantic_news_event(a); news_b=semantic_news_event(b)
+    if news_a and news_a == news_b and not materially_distinct_news(a,b):
         return True
     if date_gap(a.get('Data'),b.get('Data')) <= 2 and same_place(a,b,kind):
         return jac(a.get('Titulo'),b.get('Titulo')) >= 0.70 or seq(a.get('Titulo'),b.get('Titulo')) >= 0.86
