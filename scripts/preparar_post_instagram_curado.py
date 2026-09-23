@@ -4,6 +4,7 @@ from __future__ import annotations
 import datetime as dt, difflib, hashlib, html, io, json, pathlib, re, urllib.parse, urllib.request, unicodedata
 from zoneinfo import ZoneInfo
 from PIL import Image, ImageDraw, ImageFont
+from publicar_instagram import same_topic as publisher_same_topic
 
 ROOT='https://raw.githubusercontent.com/robertovitor/radar-brasil-2027/main/'
 COMMONS_API='https://commons.wikimedia.org/w/api.php'
@@ -122,14 +123,11 @@ def dedup_tokens(value):
     return set(tokens)
 
 def duplicate_title(a,b):
-    na=norm(a); nb=norm(b)
-    if not na or not nb: return False
-    if na==nb: return True
-    ta=dedup_tokens(a); tb=dedup_tokens(b)
-    if len(ta)<3 or len(tb)<3: return False
-    shared=len(ta&tb); coverage=shared/min(len(ta),len(tb)); union=shared/len(ta|tb)
-    sequence=difflib.SequenceMatcher(None,' '.join(sorted(ta)),' '.join(sorted(tb))).ratio()
-    return (shared>=3 and coverage>=0.80) or (shared>=4 and (coverage>=0.62 or union>=0.50 or sequence>=0.72))
+    # Usa exatamente a mesma regra da trava final de publicação.
+    # Assim, uma pauta que seria recusada por duplicidade semântica na etapa
+    # de publicar já é retirada do ranking, e a mesma rodada segue para o
+    # próximo candidato sem criar bloqueio permanente.
+    return publisher_same_topic(a,b)
 
 def published_titles(ledger):
     titles=[]
