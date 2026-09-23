@@ -87,16 +87,6 @@
       "blocked_until": "2026-09-10T20:43:38.666694+00:00"
     },
     {
-      "key": "instagram:noticia:https://www.gov.br/mj/pt-br/assuntos/noticias-1/brasil-recebe-mundial-feminino-2027-e-define-regras-para-trabalho-de-estrangeiros",
-      "post_file": "instagram/fila/automatica/be-mundial-feminino-2027-e-define-regras-para-trabalho-de-estrangeiros-e625cca860.json",
-      "reserved_at": "2026-09-18T11:10:19.809340+00:00",
-      "last_attempt_at": "2026-09-18T11:10:38.135337+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": true,
-      "uncertain_after_meta": true,
-      "blocked_until": "2026-09-18T12:10:35.820937+00:00"
-    },
-    {
       "key": "instagram:noticia:https://news.google.com/rss/articles/cbmizgfbvv95cuxoztczzvhubzrwmg94ehharuzluxnsr0nzq05vqtvfaerwz3dkt3von0x1wkhtbwnda3prnfrtwgzfwhf2r09hafextnbkzxdtwwc3bgzqvnbkz0jerwfyr3pqluzey3n1vzm3zxhcdknxyw5wzu5zsglzzk9nrfzqwjdimwrit1cznf84swmtb3zxu2nfdv9fzfdyxzlunwljvvpntkhncln3z1kxb1n6cxjqmk9ween3yxhiahbwzljya1pkzjdltfjgmvn5udib3afbvv95cuxnxznhanfmyli5wudszti1b1rqcmfqahd6tw5iajdldfhhdthmx2jzsdb0qndjbuxfnddjahr1thg4vee3wwf4bg9uvexdaxyxtgo5um5jrjlqovuysxdpn1zrnw1ta1juskdrs1q5smwzdxnyz1nrmwjjqvkzddnitk1hs0hrzfjtdte1rhfsm2m3eetxdwizctdsczboqkxrre5vtfv4dezmv2zsmeh4m1roq0hhwkfedldmaxbjbuu5ckdywkuyu0haqlvzckfwvelveki4v1pvm2qx?oc=5",
       "post_file": "instagram/fila/automatica/smeh4m1roq0hhwkfedldmaxbjbuu5ckdywkuyu0haqlvzckfwvelveki4v1pvm2qx-oc-5-1429a08e16.json",
       "reserved_at": "2026-09-20T01:06:17.686021+00:00",
@@ -105,6 +95,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-20T02:06:31.614215+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://www.gov.br/mj/pt-br/assuntos/noticias-1/brasil-recebe-mundial-feminino-2027-e-define-regras-para-trabalho-de-estrangeiros",
+      "post_file": "instagram/fila/automatica/be-mundial-feminino-2027-e-define-regras-para-trabalho-de-estrangeiros-e625cca860.json",
+      "reserved_at": "2026-09-23T20:18:55.875000+00:00",
+      "last_attempt_at": "2026-09-23T20:18:55.875000+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
