@@ -1,7 +1,7 @@
 {
-  "versao": "1.1",
-  "inicio": "2026-09-24T12:19:53-03:00",
-  "fim": "2026-09-24T12:21:21-03:00",
+  "versao": "1.2",
+  "inicio": "2026-09-24T12:23:50-03:00",
+  "fim": "2026-09-24T12:25:09-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -158,6 +158,26 @@
       "resultados": 0
     },
     {
+      "hub": "https://ludopedio.org.br/agenda-de-eventos/",
+      "resultados": 12
+    },
+    {
+      "hub": "https://ludopedio.org.br/agenda-de-eventos/?pagina=2",
+      "resultados": 8
+    },
+    {
+      "hub": "https://www.cob.org.br/cultura-educacao/cursos-do-iob",
+      "resultados": 2
+    },
+    {
+      "hub": "https://www.cob.org.br/time-brasil/mulher-no-esporte",
+      "resultados": 3
+    },
+    {
+      "hub": "https://prefeitura.rio/esporte/",
+      "resultados": 4
+    },
+    {
       "hub": "https://www.prefeitura.poa.br/secopa2027",
       "resultados": 1
     },
@@ -173,7 +193,7 @@
     },
     {
       "hub": "https://avai.com.br/categoria/futebol-feminino/",
-      "resultados": 3
+      "resultados": 5
     },
     {
       "hub": "https://mineirao.com.br/noticias",
@@ -186,17 +206,16 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 41,
-  "adicionadas": 1,
-  "atualizadas": 0,
-  "total_arquivo": 39,
+  "oportunidades_validas_na_execucao": 43,
+  "adicionadas": 2,
+  "atualizadas": 1,
+  "total_arquivo": 41,
   "erros": [
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/24-09-2026/21-02-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>",
-    "page:https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?t=1353&conteudo=932:HTTPError:HTTP Error 403: Forbidden"
+    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {
     "noticias": "inalterado",
