@@ -1,7 +1,7 @@
 {
   "cycle_id": "20260924-10",
-  "started_at": "2026-09-24T10:39:55-03:00",
-  "completed_at": "2026-09-24T10:42:22-03:00",
+  "started_at": "2026-09-24T10:47:00-03:00",
+  "completed_at": "2026-09-24T10:48:55-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -17,12 +17,12 @@
   ],
   "sugestoes_lidas": 30,
   "sugestoes_noticias_lidas": 25,
-  "candidatos_publicos": 73,
-  "aprovados_novos": 1,
-  "rejeitados": 101,
+  "candidatos_publicos": 82,
+  "aprovados_novos": 0,
+  "rejeitados": 111,
   "duplicados": 0,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "auditoria": [
     {
       "origem": "airtable",
@@ -295,8 +295,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027 ganha novas frentes na Bahia - atarde.com.br",
-      "fonte": "atarde.com.br",
+      "titulo": "Copa do Mundo Feminina 2027 ganha novas frentes na Bahia - A TARDE",
+      "fonte": "A TARDE",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNSzZseFpfTGxHWkxTSEJRNk9nQUhWQ3dCX3lpeTRSdGc5elI1SDFGZ1U1NnE0M1M3c3duSmtTc3Myamw2UkVkMWhkYjV3bi01amxua1BoZ0pQNjVJNE9Xc19xcFpTWkxGWVhfSFhxbEtGbHBIMy1iY3V2RDJzWnAzUnI5aV91RDZJSV9pMjEwRXF2VWQ4RDRaX2x2d9IBowFBVV95cUxQUHd4RDJkY3hadUw2dDZPems5YmJPR1dtZEVpZFJseUZVdnRtT0l1Z042V0ZHVE9HOFhlQkJJdlJBX3pTOWNBaXJmMEtaUGg0ZUQ1SHdtZ1VHczNnUkVoSUgtS1NJU0xpYld6NWpwQXJocjV5c1paTEZsbmR0UGlSSzBxWlkwZERodHpRbXBrSG1iMlpuejBBUlhRR1Fra091QkRZ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -423,8 +423,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Portugal continua invencível na qualificação para o Mundial feminino 2027 - comiteolimpicoportugal.pt",
-      "fonte": "comiteolimpicoportugal.pt",
+      "titulo": "Portugal continua invencível na qualificação para o Mundial feminino 2027 - Comité Olímpico de Portugal",
+      "fonte": "Comité Olímpico de Portugal",
       "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPNllwcXJ1Z3lEWkdzOW01V2ZDWUFOaENwQ1laNXVCUXN4dG1vc2NCUXVjWUYtbGpXQjd0azdULUhHVXFBX3pUTU5IeVJhc2N5OVFrNEVaM0wyZ2pQUTJKa1dDZ0ZkLUlYTzZyWEdFMGtjWklNbFdkMjRXdEI2S09wLVhVSjl1cHFheU9XVXRSelVLcGI0ekFGU3ZicHJwQ3pCRHpYRUZqS1lha0tQNzhPTVd2Q2JPNG8zVHhKWVVyaXRUTEF4S19KTGxCYmhzMmVjXzd0QkNIaw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
@@ -442,14 +442,6 @@
       "titulo": "Debate aponta necessidade de investir no futebol feminino para Copa de 2027 - Senado Federal",
       "fonte": "Senado Federal",
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQWTltNXB3VkV5VkhmZ255d19hQ0tFUGZHUmxMNjZCdnJvb1Q4eVd6bkRQZVRJMGhqNlNoY1VLYlM1bkxZZHhoQXN0cUw0NE01SGJUZ1plMk10a2g1anY1UU1PRFJleTZDTEtTUGVQLV81TWt1NzhBSzdKQ1pzYjFabGR5NzdaY2lYNlB1M1NvZDdkTDdhclROZHNoaGVtY3ZPSDJ1akdtSkphS0xPWFNKYWdyS3phTXVnVW5CLTA0UExTVmxjVVE?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Destaque do Bahia, Yanne é convocada pela primeira vez para a Seleção Brasileira Feminina - Bahia Notícias",
-      "fonte": "Bahia Notícias",
-      "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxNQzJ0OWoweHlYNUY4Wno2elg1eW9RQmotZ21hLW00X0ZpVERJU1FLSk9NZHZER0Q3MnFmemlXdV9pMDhPdFZDRUpmR0NXWnZtVDhSTkh2a0xTcEdlbTZVd1lfbW84Z1FRbHRKTWJpeDRiSEFfUkRpbkdLNFlqMm1oVWUxa1BCcHJBOTdKRHpHUEZxYzBFeFUzV3dVYW1HNWtZQ0lvWE1sV0N4VHBJSE5Ub1gxZGRCTG5WVGM3Q3ZHelNFVkZNQ2pSUzlkTFYySFpDNkFfVlljVzROZw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -583,9 +575,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa estuda preços dos ingressos para a Copa Feminina de 2027 - Poder360",
-      "fonte": "Poder360",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNU2N3c1lTUlJkaUFQM2hyZlpuM2cwLXp2UXV2OVNqcXQxUVQzd1ZmRDQ5WVloX2JybHRObkpmVE1CNjhkZjNUc3dDVXJfdzRrYlFTX0s5Q2dNVkJXVHV5M09FS2VpWmh4aVhuVEZ0RkRubnBuYzJsYXA3NnJ5MU5USjhVTmNoUEpFQk9GU1daVVVFRXlVUzNmOW9Yc05NS1JueXM5YkVVQ294UQ?oc=5",
+      "titulo": "Brasília prepara evento para Copa Feminina 2027 - noticiasdoplanalto.com.br",
+      "fonte": "noticiasdoplanalto.com.br",
+      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQM0otRFpPek05NFhWWGtBQUhSZTQ3UkxydkFkbTB2S3dWdDg1X0VHSjdIbDc2Q0pKeGRSUmF2QUJJNVpneWJDZDVnSU9FV1ZSRzc5LUZhYi1DRllOSmQzcWZUT2JoNUtQNnZRNzhFX3BkZ3k1ZEx4aHJEbWpLLXU0WVFXRmVvWmFlYnc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa Feminina 2027, que traz jogos a Fortaleza, será tema no Salão do Turismo - OpiniãoCE",
+      "fonte": "OpiniãoCE",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQTDFVOWtrYjhpZzBRaGxMZ0hmSkQzdEN2a3M0NkxhZGp0bzlMczQ5SEJEbEVpWDNMUlRUZU41ODgybkRQZkJ1Z3VNdWxKRnEyUkJOSlFWVV9qV1dkNjJ2RDVXeGJUZHJ4UFJyQWJDam1BLVpzZHh5RlNGdFpFUUpjZkVOSmtYYy1aNUdENDdjM0x2ekVTSlR4NEt5Q1V3aG1pc3R4dWx2TnZXVXFFYVl3bE1yQ25UX0hKMUF3WDh2ZnBJTkE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -594,6 +594,70 @@
       "titulo": "Copa do Mundo Feminina 2027 no Brasil: veja os preços estimados dos ingressos - BPMoney",
       "fonte": "BPMoney",
       "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPV0ZmWWgwMlo3aHVJMUFQYnpLQjFYZUJWVnpsUzdCSjhoODdJNm03S0FlWUd2SklVMWF2bGlaaF9uRHJPM0I1WnllOVBERHRWaU1MdE0yNGNrMHNSYm5WZFdTN3JmRTE2dWVGYkl5WGtXb1lHa1A1Q0I3R1lrZFdpc045Qk1SNmU2SVpxV1dYakxHcW8?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa do Mundo Feminina no Brasil movimentará quase R$ 9 bilhões na economia - panrotas.com.br",
+      "fonte": "panrotas.com.br",
+      "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQUUhkdzVrd2FidnR4LVZwQVRIRXNmbG9EcGc5U3FGTWdiaS1MdmdnZFYwMjFDTS03ejhJM3FwaG1TQnVCRDY2X3B5T3dXcnp4VDVEdGtOaEhielFGdGZCcV9OVkltYnhMY2hjRTNRYmlCam9XZjhyVnpuOWZOMGpIbkpjNy1WcFZoLVNTTG44LXoxbWhKanFoRGxhSFZ5RUdVeUVfUXpoSHlmbUJ5ZHBJbER1V184Y0RmNnZTM2x2elNmdXpQbDBNbUdNQWFmOHh5YU5Md1hB?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Cetur debate oportunidades e construção de legado da Copa Feminina 2027 - Agência Sebrae de Notícias",
+      "fonte": "Agência Sebrae de Notícias",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQYzdPalFWbW00clZCU1lKUlkwdW81MG94SWpMMUozZzN3NkZJMWhkSDJ5UEVDMGNxVlBUV0xzNXdCUEdlMWhHWThfTWFkOG5OOHJVaEJwMXhkaGJGVXBwTk9HRVQ5ZER5UE5qZFU4QWdVOWptUk9vUkpJUHVwVE1LRGZsX0ZoTjBoQ0dyaEctcWVnQ3FkWTVGVUo4YWk1Wm5fejlKQ3VUSTRGRjJ5SHpEbjJmN1RGdXdsREFGcjRmV2VLOWVpQ1lUOHdCelB6VWZEeXdVRQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa Feminina 2027 pode gerar R$ 8,8 bi no Brasil - Rede 98",
+      "fonte": "Rede 98",
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQTzYwamhSaWNNaWd6ZHBaZWxSUjd4WWtoMXlyRUxXdmEyOHNZOE5jUlNCTXN1NGFhMVpnbDA2SnZURlhVRTREaDFibEI3a0s4eTRnZWxSd0ZUdmxscDZFRUJsNF9QaHdEU2tWdlhMNlVlamVWa19zX2RqZHZpYnM4QVNhbFA?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa Feminina de 2027 deve movimentar R$ 8,8 bilhões no Brasil - iBand CE",
+      "fonte": "iBand CE",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE91RndWYjJNdVc2clFNd0tKVDhZcGVwOVZHcUdqUUFuekxQMFRGcl9vXzZGOEc3aDd4Z2VaajZlcFdHMGk5LWhKRy1tRW92MlhSSlA3MGZ1NXhTUWs5dkQ0Qld1d3NVTXQ4clY5T0RLUFNBTFRJSnc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Cidades-sede da Copa do Mundo Feminina 2027 oferecem roteiros turísticos - Correio Braziliense",
+      "fonte": "Correio Braziliense",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOejIxX2pnMWkwRk9kWUFCYURFcEVaNVVOVGZxWTlTai1pTi0tNXdUb3QwYUNyNHo2c3Q0RkV0bFp1MEV1UW9BY01FM0ZzaWxqcU40VEhadFZldXlWeVlCVy0tUkphODF2S1VIemd3RldEQWc1RV9yYmFsRXdYbnpFNUh6ZmlmVVVBQV9lTHYtRndRTHNGZklEclJQTDRRemxuVXRTUHFvSGM2WXVBemtvaDdaeUNoTXZweUxSMENWYzBXMnVUU0E?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa do mundo feminina no Brasil deve movimentar R$ 8,8 Bilhões - DOL",
+      "fonte": "DOL",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQZVRBdWVlR1pMeVp6cUJWRkFzUDdQTTBMVUtpak9KblFIeEI1NjExbUlYbktiYmY3ZFg5VkpHX0RERDAwMlpZdGJZMTFqdmJSMW1ybXVJdlRjbFR2Mkp3RGhPTE9UUEw5dFpWZ0IySEpJTzVvX2FIRmxCS1ozMm5ka2tzanl1bDcxanFkSmh1Tnc0c19FNjBVTWs0SG9qNGk0NFljbFZORVdrSjkyc2fSAbYBQVVfeXFMTUw0eEg5WWdLYnJfTGVOMC05a0lfdnlDX3kwbWRRM3gtbkhyUTNfZjMxLUxVOG4zVFU3OENnVVFVR1pFc3hHQVdzQjU5U29SQjdSQ2VMWlNodFFJWUNyUXdMRm80Z3BvTG15WkoxV1U3RzRnRnJZNEpkeEdsWkdyY2NLeTJIelFPc2s2VGRUakx3eUh3VVN5N2xLdXh5cDljYUpXVUhwd3BNdk1naTQwbnl5U3ZmQ3c?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Em contagem regressiva para a Copa do Mundo Feminina de 2027, o Governo da Bahia vai inaugurar uma placa comemorativa de 365 dias, no Dique do Tororó. O marco será instalado nesta quarta-feira (24), a partir das 9h, ao lado do monumento em form - instagram.com",
+      "fonte": "instagram.com",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1sXy1PMEtRNmlLZ3A5MUt0dlVsbUpRX05rQXpUYlF0LXFqSVQ0b1pyVzN4dnFRbXphc0lPY3BSLXVhZFBubi1oWWhic0NQUVJfbHc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Fifa estuda preços dos ingressos para a Copa Feminina de 2027 - Poder360",
+      "fonte": "Poder360",
+      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNU2N3c1lTUlJkaUFQM2hyZlpuM2cwLXp2UXV2OVNqcXQxUVQzd1ZmRDQ5WVloX2JybHRObkpmVE1CNjhkZjNUc3dDVXJfdzRrYlFTX0s5Q2dNVkJXVHV5M09FS2VpWmh4aVhuVEZ0RkRubnBuYzJsYXA3NnJ5MU5USjhVTmNoUEpFQk9GU1daVVVFRXlVUzNmOW9Yc05NS1JueXM5YkVVQ294UQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -743,14 +807,6 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Copa do Mundo Feminina 2027: Fifa realiza nova vistoria na Arena Castelão - diariodonordeste.verdesmares.com.br",
-      "fonte": "diariodonordeste.verdesmares.com.br",
-      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQaWJDeHRKLW9Bdm40QW9POUV3MzVESFB0b1FpMXJFa1RFVkFQcEU5SURhalE1ZnYyRG40dWtZZXZ6Q1VtaW1zOTl4a3J1QXZhb1dtT0M4US1fdVhBaHNQRjBpU2tpTnpKREZiMmJwbVA1RVJla3FQaWVRZzJqR2Y0WUZnOE1DNHMzZzZmSVFyRG56TnozS0Y5R0w0OE1IZC1qcHdFY0ZnaFVadDVwSE1aeWljcG9JWTl5NXVTYW5TRU5KTlM2bENid1VUTjFsQQ?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "Dia Nacional do Futebol destaca avanços do futebol feminino no Brasil rumo à Copa do Mundo de 2027 - www.gov.br",
       "fonte": "www.gov.br",
       "url": "https://news.google.com/rss/articles/CBMikgJBVV95cUxPck5nWlFOOG1rRHJ6LXpIcEhreEJuZVlmc1hrNXdWS0NmN1RRc293TkhLTWJ3VkViRmNmRlNGV0xRTlcxTTNyeGpMX3lSSXp2cU9mY1B5Z1BMM0ZmM0QtaEFTY3RtNUJ0elItdGhDYV9iYzVFbTA0OUc5NEhLYk5mYnk1NlRKRFJHMHBFN2p2Q3BOckIyV0p3MkJnN2ZIaTlHOER4cTh1ODR3Yk1nY21pWEdwY19CaEFoQVF2OUdEdVFUYkJoNW9Wa3FIVVlLanRYYkt2S012S0k0TzJwUVR1bk9nT0ZNMlhDdlNZcWJWMHVEOG94MGo1Q3hid05TZlV0eDc3cXFKTFZyUUktdTh6ME5R?oc=5",
@@ -788,6 +844,22 @@
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNQi1DU1VCN29UT2NFaUFXUDhFMkdfb3pGZFlzOExOZHdlUkNPN0NEXzIxbHp3T1J2WGVjVDFFcERWTU5VazVaMWFqeGFnR2tGbUw3ZHZxcWJsWjNwdnpCVjRBYVBUaldMc1Atd3RHMVRXVm81Ty1GZW5ZMXRqZjVGTGpsV1lsamFLM3pldkJCWnZrVFFiR3R6N3RYVzlVYm42WXV3bmZ5Y3ZyNXFJc0prTncydzJjbWJvRVpLUkFSd2pYcHc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (189d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Lide RJ debate atração de investimentos e desenvolvimento do turismo com Copa Feminina de 2027 - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
+      "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxNQjRiQ0F5TV82U3R2VXl1VkxMd0RjWVI1SnpNSHdXLS1KWEdUa09rNzBEcHYtMW5zTkUzSzVZQXV2aXJOc0JxbS11eEJSNkZmcDBtSWZETmRfWnJYV2VSU3RmUVVsdE9FZGJoUlVZQmxWQ29vaFVrN0p1M3c1ZGJkc0FJV1Y0aWJXMG1xSmo1dU9BT2hwd3dhbzBNUmxaRmtGOXVOdmF3bEZmdjl5TU5Nd05FTjE4UjE2YWZTVThucjkwcVhwZEplaVJzYXljcm9Nd2lzZkdrd1Vsa2dC?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (195d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Por que a Copa do Mundo Feminina 2027 entrou no debate de um festival de inovação - Exame",
+      "fonte": "Exame",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQX1lsMms1cmotUGhZcEp5S09CNmlSb1RtM1M4dFZOVVhsUmhNNFpuT1VETm5LaVhvWmVRWkd5aGxGMWFWUDdMcDdEYXBXMks3SXpFemoyOVlSTFpJRnJYYjFLTW9ubkxFYzFiMHRLQlFxR1Q5c19XRzJ0YnVfTlZJbzJtWEs1Y1BQRUxuV2FTbl80ZnpnYmdycWw5MXpnWnRMRWtVWEdIMjFzSE8tSVhZ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (44d)."
     },
     {
       "origem": "google-news-trusted-source",

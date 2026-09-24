@@ -1,7 +1,7 @@
 {
   "versao": "1.0",
-  "inicio": "2026-09-24T10:42:22-03:00",
-  "fim": "2026-09-24T10:42:31-03:00",
+  "inicio": "2026-09-24T10:48:56-03:00",
+  "fim": "2026-09-24T10:49:07-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -29,6 +29,12 @@
       "resultados": 0
     }
   ],
+  "feeds": [
+    {
+      "feed": "https://jobs.fifa.com/postings.json",
+      "resultados": 34
+    }
+  ],
   "hubs": [
     {
       "hub": "https://jobs.fifa.com/",
@@ -44,10 +50,10 @@
     }
   ],
   "urls_avaliadas": 9,
-  "oportunidades_validas_na_execucao": 6,
-  "adicionadas": 1,
-  "atualizadas": 1,
-  "total_arquivo": 6,
+  "oportunidades_validas_na_execucao": 40,
+  "adicionadas": 34,
+  "atualizadas": 0,
+  "total_arquivo": 40,
   "erros": [
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
