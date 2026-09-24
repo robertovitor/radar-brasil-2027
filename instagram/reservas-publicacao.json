@@ -99,12 +99,10 @@
     {
       "key": "instagram:promocional:oportunidades-20260924",
       "post_file": "instagram/fila/oportunidades-20260924.json",
-      "reserved_at": "2026-09-24T17:40:28.502335+00:00",
-      "last_attempt_at": "2026-09-24T17:40:44.169812+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": true,
-      "uncertain_after_meta": true,
-      "blocked_until": "2026-09-24T18:40:40.936773+00:00"
+      "reserved_at": "2026-09-24T19:06:57.625336+00:00",
+      "last_attempt_at": "2026-09-24T19:06:57.625336+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
