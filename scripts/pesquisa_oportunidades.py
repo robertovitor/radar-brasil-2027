@@ -49,6 +49,12 @@ SEED_URLS = (
     "https://plataforma.cbfacademy.com.br/pt-br/cursos/182-nutricao-no-futebol",
 )
 
+HUB_URLS = (
+    "https://jobs.fifa.com/",
+    "https://plataforma.cbfacademy.com.br/pt-br/calendario",
+    "https://plataforma.cbfacademy.com.br/pt-br/noticias/244-futebol-feminino-brasileiro",
+)
+
 SEARCH_QUERIES = (
     'site:jobs.fifa.com Brazil "Women\'s World Cup 2027"',
     '"Copa do Mundo Feminina 2027" voluntariado inscrição',
@@ -203,6 +209,31 @@ def ddg_search(query: str) -> list[str]:
                 break
     return out
 
+def discover_hub_links(url: str) -> list[str]:
+    """Descobre páginas de inscrição/vaga em hubs oficiais sem depender de buscador."""
+    raw, final_url = request_text(url, timeout=12)
+    out, seen = [], set()
+    for m in re.finditer(r'(?is)<a\b[^>]+href=["\']([^"\']+)["\'][^>]*>', raw):
+        href = urllib.parse.urljoin(final_url, html.unescape(m.group(1)))
+        href = canonical_url(href)
+        if not trusted_url(href) or href in seen:
+            continue
+        path = (urllib.parse.urlsplit(href).path or "").lower()
+        eligible = (
+            "/postings/" in path
+            or "/cursos/" in path
+            or "summit" in path
+            or "congres" in path
+            or "workshop" in path
+            or "volunteer" in path
+        )
+        if eligible:
+            seen.add(href)
+            out.append(href)
+            if len(out) >= 40:
+                break
+    return out
+
 def contains_any(blob: str, terms) -> bool:
     b = norm(blob)
     return any(norm(t) in b for t in terms)
@@ -227,18 +258,26 @@ def relevance_score(title: str, text: str, url: str) -> int:
 
 def classify(title: str, text: str, url: str) -> str:
     b = norm(f"{title} {text[:50000]}")
-    if "jobs.fifa.com" in url or any(x in b for x in ("employment type", "tipo de emprego", "vaga", "career", "apply now")):
+    parsed = urllib.parse.urlsplit(url)
+    host = (parsed.hostname or "").lower()
+    path = parsed.path.lower()
+
+    # O tipo da oportunidade deve vencer palavras genéricas de CTA/rodapé
+    # ("Apply", "Career", "vaga"), que aparecem em páginas de cursos e voluntariado.
+    if "jobs.fifa.com" in host and "/postings/" in path:
         return "Trabalho"
-    if "volunt" in b:
+    if "volunt" in b or "volunteer" in path:
         return "Voluntariado"
-    if "summit" in b:
+    if "summit" in b or "summit" in path:
         return "Summit"
     if "congres" in b:
         return "Congresso"
     if "workshop" in b or "oficina" in b:
         return "Workshop"
-    if "curso" in b or "academy" in b or "capacita" in b or "formacao" in b:
+    if "/cursos/" in path or "curso" in b or "capacita" in b or "formacao" in b:
         return "Curso"
+    if any(x in b for x in ("employment type", "tipo de emprego", "job description", "career opportunity", "vaga de emprego")):
+        return "Trabalho"
     return "Outros"
 
 def organisation(url: str, text: str) -> str:
@@ -259,13 +298,19 @@ def organisation(url: str, text: str) -> str:
 
 def extract_mode(text: str, category: str) -> str:
     b = norm(text[:80000])
+    # Programas de voluntariado da Copa são presenciais; menções a "online"
+    # em cadastro, treinamento ou rodapé não devem alterar o formato principal.
+    if category == "Voluntariado":
+        if any(x in b for x in ("remote volunteering", "voluntariado remoto", "100% online")):
+            return "Online"
+        return "Presencial"
     if "hybrid" in b or "hibrid" in b or "semipresencial" in b:
         return "Híbrido"
     if re.search(r"\bonline\b|\bremoto\b|\bremote\b", b):
         return "Online"
     if "onsite" in b or "presencial" in b:
         return "Presencial"
-    if category in {"Trabalho", "Voluntariado"}:
+    if category == "Trabalho":
         return "Presencial"
     return ""
 
@@ -423,8 +468,16 @@ def merge(existing: list[dict], found: list[dict]) -> tuple[list[dict], int, int
         if key and key in by_url:
             old = by_url[key]
             changed = False
+            protected_curated = {
+                "Titulo", "Categoria", "Organizacao", "Modalidade", "Resumo",
+                "Publico", "GratuitoPago", "DataInicio", "DataFim",
+                "RelacaoCopa2027", "Fonte", "Abrangencia",
+            }
+            curated = norm(old.get("Origem", "")) == "curadoria inicial"
             for field, value in item.items():
                 if field == "DataDescoberta":
+                    continue
+                if curated and field in protected_curated and old.get(field) not in ("", None):
                     continue
                 if value not in ("", None) and old.get(field) != value:
                     old[field] = value
@@ -479,6 +532,17 @@ def main() -> int:
     for url in SEED_URLS:
         add_url(url)
 
+    hub_stats = []
+    for hub in HUB_URLS:
+        try:
+            links = discover_hub_links(hub)
+            hub_stats.append({"hub": hub, "resultados": len(links)})
+            for url in links:
+                add_url(url)
+        except Exception as exc:
+            hub_stats.append({"hub": hub, "resultados": 0, "erro": f"{type(exc).__name__}:{exc}"})
+            errors.append(f"hub:{hub}:{type(exc).__name__}:{exc}")
+
     for query in SEARCH_QUERIES:
         try:
             results = ddg_search(query)
@@ -508,6 +572,7 @@ def main() -> int:
         "fim": finished.isoformat(timespec="seconds"),
         "consultas_airtable": 0,
         "queries": query_stats,
+        "hubs": hub_stats,
         "urls_avaliadas": len(urls),
         "oportunidades_validas_na_execucao": len(found),
         "adicionadas": added,
