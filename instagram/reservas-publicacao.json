@@ -99,12 +99,10 @@
     {
       "key": "instagram:evento:evt-20261026-ballon-dor-lorena",
       "post_file": "instagram/fila/automatica/instagram-evento-evt-20261026-ballon-dor-lorena-a2cbf14ff4.json",
-      "reserved_at": "2026-09-24T19:07:29.094363+00:00",
-      "last_attempt_at": "2026-09-24T19:07:46.730964+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": true,
-      "uncertain_after_meta": true,
-      "blocked_until": "2026-09-24T20:07:44.396167+00:00"
+      "reserved_at": "2026-09-24T21:50:42.242594+00:00",
+      "last_attempt_at": "2026-09-24T21:50:42.242594+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
