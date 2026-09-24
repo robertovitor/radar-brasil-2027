@@ -230,7 +230,7 @@ def discover_hub_links(url: str) -> list[str]:
         if eligible:
             seen.add(href)
             out.append(href)
-            if len(out) >= 40:
+            if len(out) >= 8:
                 break
     return out
 
@@ -471,7 +471,7 @@ def merge(existing: list[dict], found: list[dict]) -> tuple[list[dict], int, int
             protected_curated = {
                 "Titulo", "Categoria", "Organizacao", "Modalidade", "Resumo",
                 "Publico", "GratuitoPago", "DataInicio", "DataFim",
-                "RelacaoCopa2027", "Fonte", "Abrangencia",
+                "RelacaoCopa2027", "Fonte", "Abrangencia", "ID", "Origem",
             }
             curated = norm(old.get("Origem", "")) == "curadoria inicial"
             for field, value in item.items():
