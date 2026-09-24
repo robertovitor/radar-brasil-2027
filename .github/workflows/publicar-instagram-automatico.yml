@@ -6,6 +6,11 @@ on:
   schedule:
     - cron: "12 * * * *"
   workflow_dispatch:
+    inputs:
+      reconciliation_hops:
+        description: "Número de continuações automáticas após reconciliação"
+        required: false
+        default: "0"
   push:
     branches: [main]
     paths:
@@ -14,6 +19,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: instagram-publisher
@@ -347,11 +353,29 @@ jobs:
             exit 1
           fi
 
-      - name: Encerrar rodada após reconciliar post existente
+      - name: Continuar imediatamente após reconciliar post existente
         if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.reconciled == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_HOPS: ${{ github.event_name == 'workflow_dispatch' && inputs.reconciliation_hops || '0' }}
         run: |
-          echo "reconciled_existing_same_run_continuation=false"
-          echo "A reconciliação consome o intervalo de 1 hora; a próxima tentativa fica para o próximo gatilho elegível."
+          set -euo pipefail
+          hops="${CURRENT_HOPS:-0}"
+          if ! [[ "$hops" =~ ^[0-9]+$ ]]; then hops=0; fi
+          echo "reconciled_existing_same_run_continuation=true"
+          echo "reconciliation_hops=$hops"
+          if [ "$hops" -ge 3 ]; then
+            echo "reconciliation_continuation_limit_reached=true"
+            echo "Limite de 3 continuações atingido; encerra sem criar novo intervalo artificial."
+            exit 0
+          fi
+          next=$((hops + 1))
+          # O ledger já foi persistido e a reserva já foi limpa antes deste ponto.
+          # A nova execução elimina o item reconciliado na seleção e tenta o próximo.
+          gh workflow run publicar-instagram-automatico.yml             --ref main             -f reconciliation_hops="$next"
+          echo "reconciliation_continuation_dispatched=true"
+          echo "reconciliation_next_hop=$next"
+          echo "Reconciliação não conta como publicação nova; próximo candidato será tentado imediatamente."
 
       - name: Registrar adiamento por rate limit sem falhar o workflow
         if: always() && steps.selecionar.outputs.found == 'true' && steps.resultado_publicacao.outputs.deferred == 'true'
