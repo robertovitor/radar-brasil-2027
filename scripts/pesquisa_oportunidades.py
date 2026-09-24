@@ -15,10 +15,17 @@ import html
 import json
 import os
 import re
+import ssl
 import tempfile
 import urllib.parse
 import urllib.request
 from pathlib import Path
+
+try:
+    import certifi
+    SSL_CONTEXT = ssl.create_default_context(cafile=certifi.where())
+except Exception:
+    SSL_CONTEXT = ssl.create_default_context()
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / "oportunidades.json"
@@ -47,6 +54,10 @@ SEED_URLS = (
     "https://jobs.fifa.com/postings/25e65e4b-c419-469a-870c-4e52dce3bc46",
     "https://cbfacademy.com.br/summit-cbf-academy-2026/",
     "https://plataforma.cbfacademy.com.br/pt-br/cursos/182-nutricao-no-futebol",
+)
+
+PINPOINT_FEEDS = (
+    "https://jobs.fifa.com/postings.json",
 )
 
 HUB_URLS = (
@@ -141,8 +152,8 @@ def request_text(url: str, timeout: int = TIMEOUT) -> tuple[str, str]:
             "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.7",
         },
     )
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        raw = resp.read(900_000)
+    with urllib.request.urlopen(req, timeout=timeout, context=SSL_CONTEXT) as resp:
+        raw = resp.read(5_000_000)
         charset = resp.headers.get_content_charset() or "utf-8"
         text = raw.decode(charset, "ignore")
         return text, resp.geturl()
@@ -456,6 +467,86 @@ def opportunity_from_url(url: str) -> dict | None:
         "Origem": "Pesquisa Editorial",
     }
 
+def pinpoint_opportunities(feed_url: str) -> list[dict]:
+    """Lê o feed público zero-auth do Pinpoint e extrai vagas da FWWC 2027."""
+    raw, _ = request_text(feed_url, timeout=15)
+    payload = json.loads(raw)
+    rows = payload.get("data", []) if isinstance(payload, dict) else []
+    if not isinstance(rows, list):
+        return []
+
+    out = []
+    found_date = now_br().date().isoformat()
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        title = str(row.get("title") or "").strip()
+        link = canonical_url(str(row.get("url") or ""))
+        html_blob = " ".join(str(row.get(k) or "") for k in (
+            "description", "key_responsibilities", "skills_knowledge_expertise", "benefits"
+        ))
+        text = visible_text(html_blob)
+        blob = f"{title}\n{text}"
+        if not title or not contains_any(blob, CORE_TERMS):
+            continue
+        if not trusted_url(link):
+            continue
+
+        employment = norm(row.get("employment_type_text") or row.get("employment_type"))
+        category = "Voluntariado" if "volunteer" in employment or "volunt" in norm(title) else "Trabalho"
+
+        workplace = norm(row.get("workplace_type_text") or row.get("workplace_type"))
+        if "hybrid" in workplace or "hibrid" in workplace:
+            mode = "Híbrido"
+        elif "remote" in workplace or "online" in workplace:
+            mode = "Online"
+        elif workplace:
+            mode = "Presencial"
+        else:
+            mode = extract_mode(text, category)
+
+        location_obj = row.get("location") if isinstance(row.get("location"), dict) else {}
+        location_name = str(location_obj.get("name") or "").strip()
+        city = uf = ""
+        area = location_name or "Brasil"
+        loc_norm = norm(location_name)
+        for host_city, host_uf in HOST_CITIES:
+            if norm(host_city) in loc_norm:
+                city, uf = host_city, host_uf
+                area = f"{city}/{uf}"
+                break
+
+        deadline_raw = str(row.get("deadline_at") or "")
+        deadline = deadline_raw[:10] if re.match(r"^20\d{2}-\d{2}-\d{2}", deadline_raw) else ""
+        status = infer_status(text + "\nApply Now", deadline)
+
+        out.append({
+            "ID": stable_id(link, title),
+            "Titulo": title[:180],
+            "Categoria": category,
+            "Organizacao": "FIFA",
+            "Modalidade": mode,
+            "Cidade": city,
+            "UF": uf,
+            "CidadeUF": f"{city}/{uf}" if city and uf else "",
+            "Abrangencia": area,
+            "DataAbertura": "",
+            "PrazoInscricao": deadline,
+            "DataInicio": "",
+            "DataFim": "",
+            "GratuitoPago": "",
+            "Resumo": extract_summary(title, text, category),
+            "Publico": "Profissionais que atendam aos requisitos da vaga",
+            "Link": link,
+            "Fonte": "FIFA Careers",
+            "DataDescoberta": found_date,
+            "UltimaVerificacao": found_date,
+            "Status": status,
+            "RelacaoCopa2027": "Alta",
+            "Origem": "Pesquisa Editorial",
+        })
+    return out[:40]
+
 def merge(existing: list[dict], found: list[dict]) -> tuple[list[dict], int, int]:
     by_url = {canonical_url(str(x.get("Link", ""))): dict(x) for x in existing if x.get("Link")}
     by_sig = {(norm(x.get("Titulo", "")), norm(x.get("Organizacao", ""))): canonical_url(str(x.get("Link", ""))) for x in existing}
@@ -529,6 +620,17 @@ def main() -> int:
             seen.add(url)
             urls.append(url)
 
+    feed_found = []
+    feed_stats = []
+    for feed in PINPOINT_FEEDS:
+        try:
+            items = pinpoint_opportunities(feed)
+            feed_stats.append({"feed": feed, "resultados": len(items)})
+            feed_found.extend(items)
+        except Exception as exc:
+            feed_stats.append({"feed": feed, "resultados": 0, "erro": f"{type(exc).__name__}:{exc}"})
+            errors.append(f"feed:{feed}:{type(exc).__name__}:{exc}")
+
     for url in SEED_URLS:
         add_url(url)
 
@@ -553,7 +655,7 @@ def main() -> int:
             errors.append(f"search:{query}:{type(exc).__name__}:{exc}")
 
     urls = urls[:MAX_PAGES_PER_RUN]
-    found = []
+    found = list(feed_found)
     for url in urls:
         try:
             item = opportunity_from_url(url)
@@ -572,6 +674,7 @@ def main() -> int:
         "fim": finished.isoformat(timespec="seconds"),
         "consultas_airtable": 0,
         "queries": query_stats,
+        "feeds": feed_stats,
         "hubs": hub_stats,
         "urls_avaliadas": len(urls),
         "oportunidades_validas_na_execucao": len(found),
@@ -588,6 +691,7 @@ def main() -> int:
     }
     atomic_dump(STATUS_PATH, telemetry)
 
+    print(f"oportunidades_feed={len(feed_found)}")
     print(f"oportunidades_urls={len(urls)}")
     print(f"oportunidades_validas={len(found)}")
     print(f"oportunidades_adicionadas={added}")
