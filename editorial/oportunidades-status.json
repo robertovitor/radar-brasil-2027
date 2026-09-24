@@ -1,7 +1,7 @@
 {
-  "versao": "1.2",
-  "inicio": "2026-09-24T12:23:50-03:00",
-  "fim": "2026-09-24T12:25:09-03:00",
+  "versao": "1.2.1",
+  "inicio": "2026-09-24T12:30:22-03:00",
+  "fim": "2026-09-24T12:32:35-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -129,35 +129,6 @@
       "resultados": 5
     },
     {
-      "hub": "https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas",
-      "resultados": 16
-    },
-    {
-      "hub": "https://www.gov.br/esporte/pt-br/noticias",
-      "resultados": 16
-    },
-    {
-      "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 3
-    },
-    {
-      "hub": "https://jogasp.prefeitura.sp.gov.br/",
-      "resultados": 1
-    },
-    {
-      "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 9
-    },
-    {
-      "hub": "https://prefeitura.pbh.gov.br/esportes",
-      "resultados": 0,
-      "erro": "HTTPError:HTTP Error 404: Not Found"
-    },
-    {
-      "hub": "https://womanifs.com/",
-      "resultados": 0
-    },
-    {
       "hub": "https://ludopedio.org.br/agenda-de-eventos/",
       "resultados": 12
     },
@@ -178,8 +149,45 @@
       "resultados": 4
     },
     {
+      "hub": "https://womanifs.com/",
+      "resultados": 0
+    },
+    {
       "hub": "https://www.prefeitura.poa.br/secopa2027",
       "resultados": 1
+    },
+    {
+      "hub": "https://avai.com.br/categoria/futebol-feminino/",
+      "resultados": 5
+    },
+    {
+      "hub": "https://mineirao.com.br/noticias",
+      "resultados": 0
+    },
+    {
+      "hub": "https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas",
+      "resultados": 6
+    },
+    {
+      "hub": "https://www.gov.br/esporte/pt-br/noticias",
+      "resultados": 6
+    },
+    {
+      "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
+      "resultados": 3
+    },
+    {
+      "hub": "https://jogasp.prefeitura.sp.gov.br/",
+      "resultados": 1
+    },
+    {
+      "hub": "https://prefeitura.sp.gov.br/web/esportes",
+      "resultados": 6
+    },
+    {
+      "hub": "https://prefeitura.pbh.gov.br/esportes",
+      "resultados": 0,
+      "erro": "HTTPError:HTTP Error 404: Not Found"
     },
     {
       "hub": "https://www.futebolpaulista.com.br/Noticias",
@@ -192,24 +200,16 @@
       "erro": "HTTPError:HTTP Error 500: Internal Server Error"
     },
     {
-      "hub": "https://avai.com.br/categoria/futebol-feminino/",
-      "resultados": 5
-    },
-    {
-      "hub": "https://mineirao.com.br/noticias",
-      "resultados": 0
-    },
-    {
       "hub": "https://www.guiafutfem.com.br/eventos/24-09-2026/21-02-2027",
       "resultados": 0,
       "erro": "HTTPError:HTTP Error 403: Forbidden"
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 43,
-  "adicionadas": 2,
-  "atualizadas": 1,
-  "total_arquivo": 41,
+  "oportunidades_validas_na_execucao": 53,
+  "adicionadas": 9,
+  "atualizadas": 3,
+  "total_arquivo": 50,
   "erros": [
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
