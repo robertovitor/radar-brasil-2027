@@ -20,3 +20,18 @@ O publicador usa a Instagram Graph API e só é executado manualmente pelo workf
 6. Confirmar o novo registro em `instagram/publicados.json`.
 
 A ligação automática com a rotina do Radar somente deve ser habilitada depois que o teste manual for concluído com sucesso.
+
+## Política visual automática
+
+A política visual fica em `instagram/visual-policy.json` e altera somente a camada de arte. Ela não muda schedule, deduplicação, cooldown, reservas, reconciliação ou publicação na Meta.
+
+- `evento` → `text_art`: arte textual própria com data e local.
+- `noticia` → `radar_art`: arte editorial própria do Radar.
+- `oportunidade` → `radar_art_opportunity`: arte própria com destaque para prazo e participação.
+- `fallback_to_legacy=true`: se o novo renderizador falhar, o fluxo visual anterior continua disponível.
+- `opportunity_instagram_enabled=true`: oportunidades abertas de `oportunidades.json` podem entrar na seleção do Instagram.
+
+### Rollback visual seguro
+
+Para voltar temporariamente ao comportamento visual anterior sem tocar na schedule, defina `enabled=false` em `instagram/visual-policy.json`. Para desativar apenas Oportunidades no Instagram, defina `opportunity_instagram_enabled=false`.
+
