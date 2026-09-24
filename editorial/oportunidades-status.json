@@ -1,7 +1,7 @@
 {
   "versao": "1.1",
-  "inicio": "2026-09-24T12:11:47-03:00",
-  "fim": "2026-09-24T12:13:10-03:00",
+  "inicio": "2026-09-24T12:19:53-03:00",
+  "fim": "2026-09-24T12:21:21-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -130,15 +130,15 @@
     },
     {
       "hub": "https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas",
-      "resultados": 10
+      "resultados": 16
     },
     {
       "hub": "https://www.gov.br/esporte/pt-br/noticias",
-      "resultados": 10
+      "resultados": 16
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 2
+      "resultados": 3
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
@@ -146,7 +146,7 @@
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 8
+      "resultados": 9
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -156,15 +156,45 @@
     {
       "hub": "https://womanifs.com/",
       "resultados": 0
+    },
+    {
+      "hub": "https://www.prefeitura.poa.br/secopa2027",
+      "resultados": 1
+    },
+    {
+      "hub": "https://www.futebolpaulista.com.br/Noticias",
+      "resultados": 0,
+      "erro": "HTTPError:HTTP Error 403: Forbidden"
+    },
+    {
+      "hub": "https://cepe.usp.br/courses/",
+      "resultados": 0,
+      "erro": "HTTPError:HTTP Error 500: Internal Server Error"
+    },
+    {
+      "hub": "https://avai.com.br/categoria/futebol-feminino/",
+      "resultados": 3
+    },
+    {
+      "hub": "https://mineirao.com.br/noticias",
+      "resultados": 0
+    },
+    {
+      "hub": "https://www.guiafutfem.com.br/eventos/24-09-2026/21-02-2027",
+      "resultados": 0,
+      "erro": "HTTPError:HTTP Error 403: Forbidden"
     }
   ],
-  "urls_avaliadas": 35,
-  "oportunidades_validas_na_execucao": 40,
-  "adicionadas": 0,
+  "urls_avaliadas": 40,
+  "oportunidades_validas_na_execucao": 41,
+  "adicionadas": 1,
   "atualizadas": 0,
-  "total_arquivo": 38,
+  "total_arquivo": 39,
   "erros": [
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
+    "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
+    "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
+    "hub:https://www.guiafutfem.com.br/eventos/24-09-2026/21-02-2027:HTTPError:HTTP Error 403: Forbidden",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>",
     "page:https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?t=1353&conteudo=932:HTTPError:HTTP Error 403: Forbidden"
   ],
