@@ -616,45 +616,56 @@ def _apply_time_fields(event,candidate,default_timezone='America/Sao_Paulo'):
     return event
 
 def _convocation_events_from_rss(rss):
-    """Reconhece convocação da Seleção Feminina principal como evento datado.
+    """Extrai convocação apenas com evidência explícita da data do EVENTO.
 
-    Usa somente candidatos públicos já coletados na execução; não lê Airtable nem
-    faz nova requisição. Exige convocação + Seleção Feminina/Brasileira, exclui base
-    e só materializa quando a data vem do próprio pubDate RSS. Para pauta publicada
-    no mesmo dia, a data do evento é esse dia; textos futuros continuam fail-closed
-    até haver data explícita estruturável.
+    Nunca usa pubDate/data da notícia como data da convocação. Matérias de repercussão
+    ("convocadas", lista, atletas de um estado/clube etc.) permanecem somente notícias.
     """
     out=[]; seen=set()
-    from email.utils import parsedate_to_datetime
     for c in rss:
         if not isinstance(c,dict): continue
-        title=str(c.get('title') or '').strip(); nt=pe.norm(f"{title} {c.get('source','')}")
+        title=str(c.get('title') or '').strip()
+        nt=pe.norm(f"{title} {c.get('source','')}")
         if 'convoc' not in nt: continue
         if any(x in nt for x in ('sub 17','sub17','sub 20','sub20','selecao base','categoria de base')): continue
         women=('selecao brasileira feminina' in nt) or ('selecao feminina' in nt) or (('brasil' in nt or 'brasileira' in nt) and 'feminina' in nt)
         if not women: continue
-        try:
-            dt=parsedate_to_datetime(str(c.get('pub') or ''))
-            if dt.tzinfo is None: dt=dt.replace(tzinfo=pe.BRT)
-            d=dt.astimezone(pe.BRT).date()
-        except Exception: continue
-        # Só transforma automaticamente notícia do próprio dia em evento. Isso evita
-        # inferir que uma matéria antiga/futura seja a data da convocação.
-        if d != pe.now().date(): continue
-        date=d.isoformat(); key=(date,'convocacao-selecao-feminina')
-        if key in seen: continue
-        seen.add(key)
+
         source_url=str(c.get('url') or ''); body=''; final_url=source_url
         try:
             body,final_url=pe.fetch_article_excerpt(source_url)
         except Exception:
             body=''
-        event_time=_extract_explicit_event_time(f"{title} {body}",('convocacao','convocação','convoca'))
-        candidate={'origin':'convocation-rss-v5.8','title':title,'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(final_url or source_url),'pub':str(c.get('pub') or ''),'event_date':date}
+        evidence=f"{title} {body}"
+        ne=pe.norm(evidence)
+
+        # Exige linguagem inequívoca de anúncio/agendamento da convocação.
+        explicit_call=any(x in ne for x in (
+            'convocacao sera','convocacao acontece','convocacao ocorrera',
+            'vai convocar','ira convocar','anunciara a convocacao',
+            'lista sera anunciada','lista sera divulgada'
+        ))
+        if not explicit_call:
+            print(f'convocation_news_only_no_explicit_event={title[:140]}')
+            continue
+
+        # A data deve estar no conteúdo da fonte; pubDate nunca é data do evento.
+        explicit_dates=_extract_explicit_dates(evidence)
+        if not explicit_dates:
+            print(f'convocation_news_only_no_explicit_date={title[:140]}')
+            continue
+        future_or_today=[d for d in explicit_dates if d >= pe.now().date()]
+        if not future_or_today:
+            continue
+        d=min(future_or_today); date=d.isoformat()
+        key=(date,'convocacao-selecao-feminina')
+        if key in seen: continue
+        seen.add(key)
+        event_time=_extract_explicit_event_time(evidence,('convocacao','convocação','convoca'))
+        candidate={'origin':'convocation-rss-v5.9','title':title,'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(final_url or source_url),'pub':str(c.get('pub') or ''),'event_date':date}
         if event_time:
             candidate['event_time']=event_time
             candidate['event_timezone']='America/Sao_Paulo'
-            print(f'convocation_event_time={date}|{event_time}')
         out.append(candidate)
         print(f'convocation_event_evidence={date}|{title[:140]}')
     print(f'convocation_event_candidates={len(out)}'); return out
@@ -775,7 +786,7 @@ def _events_from_candidates(candidates):
             out.append(event)
             print(f'future_event_extracted={date}|{event_title}|{city}')
             continue
-        if origin=='convocation-rss-v5.8':
+        if origin in ('convocation-rss-v5.8','convocation-rss-v5.9'):
             date=str(c.get('event_date') or '')
             event_title='Convocação da Seleção Brasileira Feminina'; key=(date,pe.norm(event_title),pe.norm('Rio de Janeiro'))
             if not date:
