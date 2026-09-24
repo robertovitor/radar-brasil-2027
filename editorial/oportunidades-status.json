@@ -1,7 +1,7 @@
 {
   "versao": "1.0",
-  "inicio": "2026-09-24T10:34:42-03:00",
-  "fim": "2026-09-24T10:34:48-03:00",
+  "inicio": "2026-09-24T10:42:22-03:00",
+  "fim": "2026-09-24T10:42:31-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -29,12 +29,28 @@
       "resultados": 0
     }
   ],
-  "urls_avaliadas": 5,
-  "oportunidades_validas_na_execucao": 5,
-  "adicionadas": 0,
-  "atualizadas": 5,
-  "total_arquivo": 5,
-  "erros": [],
+  "hubs": [
+    {
+      "hub": "https://jobs.fifa.com/",
+      "resultados": 0
+    },
+    {
+      "hub": "https://plataforma.cbfacademy.com.br/pt-br/calendario",
+      "resultados": 0
+    },
+    {
+      "hub": "https://plataforma.cbfacademy.com.br/pt-br/noticias/244-futebol-feminino-brasileiro",
+      "resultados": 5
+    }
+  ],
+  "urls_avaliadas": 9,
+  "oportunidades_validas_na_execucao": 6,
+  "adicionadas": 1,
+  "atualizadas": 1,
+  "total_arquivo": 6,
+  "erros": [
+    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+  ],
   "isolamento": {
     "noticias": "inalterado",
     "eventos": "inalterado",
