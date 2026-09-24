@@ -19,6 +19,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: instagram-dedup-guard
@@ -48,3 +49,163 @@ jobs:
           git commit -m "Bloqueia pautas duplicadas antes do Instagram"
           git pull --rebase --autostash origin main
           git push origin HEAD:main
+
+      - name: Recuperar Instagram somente se schedule estiver realmente atrasada
+        if: github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -u
+
+          echo "instagram_watchdog_enabled=true"
+          echo "instagram_watchdog_source=existing_dedup_schedule"
+
+          # Falha fechada: se não for possível ler o estado do Actions, não dispara nada.
+          if ! runs_json="$(gh run list --repo "$GH_REPO" --workflow publicar-instagram-automatico.yml --limit 10 --json createdAt,status,conclusion,event,databaseId 2>/dev/null)"; then
+            echo "instagram_watchdog_lookup_failed=true"
+            echo "instagram_watchdog_dispatch=false"
+            exit 0
+          fi
+
+          decision="$(RUNS_JSON="$runs_json" python - <<'PY'
+          import datetime as dt
+          import json
+          import os
+          from pathlib import Path
+
+          now = dt.datetime.now(dt.timezone.utc)
+
+          def parse_stamp(raw):
+              value = dt.datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+              if value.tzinfo is None:
+                  value = value.replace(tzinfo=dt.timezone.utc)
+              return value.astimezone(dt.timezone.utc)
+
+          try:
+              runs = json.loads(os.environ.get("RUNS_JSON") or "[]")
+          except Exception:
+              print("dispatch=false")
+              print("reason=invalid_runs_json")
+              raise SystemExit(0)
+
+          if not isinstance(runs, list):
+              runs = []
+
+          active = [
+              row for row in runs
+              if isinstance(row, dict) and str(row.get("status") or "") in ("queued", "in_progress", "waiting", "pending")
+          ]
+          if active:
+              print("dispatch=false")
+              print("reason=instagram_run_active")
+              print("active_run_id=" + str(active[0].get("databaseId") or ""))
+              raise SystemExit(0)
+
+          latest = None
+          latest_stamp = None
+          for row in runs:
+              if not isinstance(row, dict) or not row.get("createdAt"):
+                  continue
+              try:
+                  stamp = parse_stamp(row["createdAt"])
+              except Exception:
+                  continue
+              if latest_stamp is None or stamp > latest_stamp:
+                  latest = row
+                  latest_stamp = stamp
+
+          if latest_stamp is None:
+              # Sem histórico confiável, falha fechada para não criar duplicidade.
+              print("dispatch=false")
+              print("reason=no_reliable_instagram_run_history")
+              raise SystemExit(0)
+
+          age = max(0.0, (now - latest_stamp).total_seconds())
+          print("latest_run_age_seconds=" + str(int(age)))
+          print("latest_run_id=" + str((latest or {}).get("databaseId") or ""))
+          print("latest_run_event=" + str((latest or {}).get("event") or ""))
+          print("latest_run_status=" + str((latest or {}).get("status") or ""))
+
+          if age <= 5400:
+              print("dispatch=false")
+              print("reason=instagram_run_fresh")
+              raise SystemExit(0)
+
+          # Mesmo com schedule atrasada, nunca acorda o publicador antes de 60 min
+          # desde a última publicação real.
+          ledger_path = Path("instagram/publicados.json")
+          latest_publication = None
+          if ledger_path.exists():
+              try:
+                  ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+              except Exception:
+                  ledger = {}
+              for row in ledger.get("published", []) if isinstance(ledger, dict) else []:
+                  if not isinstance(row, dict) or not row.get("published_at"):
+                      continue
+                  try:
+                      stamp = parse_stamp(row["published_at"])
+                  except Exception:
+                      continue
+                  if stamp > now + dt.timedelta(minutes=5):
+                      continue
+                  if stamp > now:
+                      stamp = now
+                  if latest_publication is None or stamp > latest_publication:
+                      latest_publication = stamp
+
+          if latest_publication is not None:
+              pub_age = max(0.0, (now - latest_publication).total_seconds())
+              print("latest_publication_age_seconds=" + str(int(pub_age)))
+              if pub_age < 3600:
+                  print("dispatch=false")
+                  print("reason=publication_within_60m")
+                  raise SystemExit(0)
+
+          # Respeita cooldown já registrado pela Meta.
+          rate_path = Path("instagram/meta-rate-limit.json")
+          if rate_path.exists():
+              try:
+                  state = json.loads(rate_path.read_text(encoding="utf-8"))
+              except Exception:
+                  state = {}
+              raw = str(state.get("blocked_until") or "").strip() if isinstance(state, dict) else ""
+              if isinstance(state, dict) and state.get("active") and raw:
+                  try:
+                      blocked_until = parse_stamp(raw)
+                  except Exception:
+                      blocked_until = None
+                  if blocked_until is not None and now < blocked_until:
+                      print("meta_blocked_until=" + blocked_until.isoformat())
+                      print("dispatch=false")
+                      print("reason=meta_cooldown_active")
+                      raise SystemExit(0)
+
+          print("dispatch=true")
+          print("reason=instagram_schedule_stale_over_90m")
+          PY
+          )"
+
+          echo "$decision"
+          dispatch="$(printf '%s\n' "$decision" | sed -n 's/^dispatch=//p' | tail -1)"
+          reason="$(printf '%s\n' "$decision" | sed -n 's/^reason=//p' | tail -1)"
+
+          if [ "$dispatch" != "true" ]; then
+            echo "instagram_watchdog_dispatch=false"
+            echo "instagram_watchdog_reason=${reason:-safe_noop}"
+            exit 0
+          fi
+
+          # Único ponto de recuperação: reutiliza o workflow existente.
+          # A concorrência e a trava de 60 min continuam no próprio publicador.
+          if gh workflow run publicar-instagram-automatico.yml --repo "$GH_REPO" --ref main; then
+            echo "instagram_watchdog_dispatch=true"
+            echo "instagram_watchdog_reason=${reason:-stale_schedule}"
+          else
+            echo "instagram_watchdog_dispatch_failed=true"
+            echo "instagram_watchdog_dispatch=false"
+            # Não derruba a rotina de deduplicação por uma falha de recuperação.
+            exit 0
+          fi
