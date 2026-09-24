@@ -4,7 +4,7 @@ let O=[];
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
-function group(v){const x=norm(v);if(x.includes('volunt'))return'Voluntariado';if(/trabalho|vaga|emprego|estagio/.test(x))return'Trabalho';if(/curso|capacit|formacao|mentoria/.test(x))return'Cursos e capacitações';if(/summit|congres|forum|workshop|semin/.test(x))return'Congressos & Summits';return'Outros'}
+function group(v){const x=norm(v);if(x.includes('volunt'))return'Voluntariado';if(/trabalho|vaga|emprego|estagio/.test(x))return'Trabalho';if(/curso|capacit|formacao|mentoria/.test(x))return'Cursos e capacitações';if(/summit|congres|forum|workshop|semin/.test(x))return'Congressos & Summits';if(/chamada|submiss|programa/.test(x))return'Chamadas e programas';if(/seletiva|peneira|avaliacao/.test(x))return'Seletivas';return'Outros'}
 function days(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(String(v||'')))return null;const t=new Date(new Date().toLocaleString('en-US',{timeZone:'America/Sao_Paulo'}));t.setHours(0,0,0,0);const[y,m,d]=v.split('-').map(Number);return Math.round((new Date(y,m-1,d)-t)/86400000)}
 function status(o){const d=days(o.PrazoInscricao);if(d!==null){if(d<0)return'Encerrada';if(d<=7)return'Encerra em breve'}return o.Status||'Inscrições abertas'}
 function dateBR(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(String(v||'')))return'';const[y,m,d]=v.split('-');return`${d}/${m}/${y}`}
