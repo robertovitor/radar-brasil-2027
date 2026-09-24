@@ -16,12 +16,12 @@ EVENTS_SHEET = "02_Eventos"
 NEWS_SHEET = "06_Noticias"
 
 EVENT_FIELDS = [
-    "ID", "Titulo", "Status", "Data", "DataBR", "DataFim", "Hora", "HoraFim", "FusoHorario",
+    "ID", "Titulo", "Status", "Data", "DataBR", "DataCalendario", "DataFim", "Hora", "HoraFim", "FusoHorario",
     "UF", "Cidade", "Categoria", "Organizador", "Publico", "Patrocinador", "Local",
     "Latitude", "Longitude", "Link", "Observacoes", "Mes", "Ano", "Regiao",
 ]
-EVENT_OPTIONAL_FIELDS = {"Titulo", "DataBR", "DataFim", "Mes", "Ano", "Regiao", "Hora", "HoraFim", "FusoHorario"}
-EVENT_TIME_FIELDS = ("DataFim", "Hora", "HoraFim", "FusoHorario")
+EVENT_OPTIONAL_FIELDS = {"Titulo", "DataBR", "DataCalendario", "DataFim", "Mes", "Ano", "Regiao", "Hora", "HoraFim", "FusoHorario"}
+EVENT_TIME_FIELDS = ("DataCalendario", "DataFim", "Hora", "HoraFim", "FusoHorario")
 NEWS_FIELDS = [
     "Data", "Titulo", "Tema", "CidadeUF", "Veiculo", "Link",
     "Sentimento", "Impacto", "Resumo",
@@ -166,11 +166,13 @@ def sync_sheet(ws, rows, fields):
             copy_row_style(ws, template_row, row_num)
         for field, col_num in columns.items():
             value = item.get(field)
-            if field in ("Data", "DataFim"):
+            if field in ("Data", "DataCalendario", "DataFim"):
                 value = as_excel_date(value)
             ws.cell(row_num, col_num).value = value
         if "Data" in columns:
             ws.cell(row_num, columns["Data"]).number_format = "dd/mm/yyyy"
+        if "DataCalendario" in columns:
+            ws.cell(row_num, columns["DataCalendario"]).number_format = "dd/mm/yyyy"
         if "DataFim" in columns:
             ws.cell(row_num, columns["DataFim"]).number_format = "dd/mm/yyyy"
 
