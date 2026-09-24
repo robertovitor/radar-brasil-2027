@@ -15,7 +15,7 @@ NEWS_OUTPUT = Path(os.environ.get("NEWS_OUTPUT_FILE", "noticias.json"))
 SHEET = "02_Eventos"
 NEWS_SHEET = "06_Noticias"
 FIELDS = [
-    "ID", "Titulo", "Status", "Data", "DataBR", "Hora", "HoraFim", "FusoHorario",
+    "ID", "Titulo", "Status", "Data", "DataBR", "DataFim", "Hora", "HoraFim", "FusoHorario",
     "UF", "Cidade", "Categoria", "Organizador", "Publico", "Patrocinador", "Local",
     "Latitude", "Longitude", "Link", "Observacoes", "Mes", "Ano", "Regiao",
 ]
@@ -147,13 +147,13 @@ def main():
         # Compatibilidade com planilhas antigas: se as colunas de horário ainda não
         # existirem, preserva o valor já publicado em dados.json. Se a coluna existir
         # e estiver vazia, respeita o vazio para permitir correção/remoção manual.
-        for field in ("Hora", "HoraFim", "FusoHorario"):
+        for field in ("DataFim", "Hora", "HoraFim", "FusoHorario"):
             if field not in columns and existing.get(field) not in (None, ""):
                 event[field] = existing.get(field)
         date = as_date(event["Data"])
         for field in ("ID", "Status", "UF", "Cidade", "Categoria", "Organizador",
                       "Titulo", "Patrocinador", "Local", "Link", "Observacoes", "Regiao",
-                      "Hora", "HoraFim", "FusoHorario"):
+                      "DataFim", "Hora", "HoraFim", "FusoHorario"):
             event[field] = "" if event[field] is None else str(event[field]).strip()
         if event["Status"] == "Confirmado":
             event["Status"] = "Planejado"
