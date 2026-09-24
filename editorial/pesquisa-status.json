@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260924-19",
-  "started_at": "2026-09-24T19:43:11-03:00",
-  "completed_at": "2026-09-24T19:45:49-03:00",
+  "cycle_id": "20260924-20",
+  "started_at": "2026-09-24T20:43:41-03:00",
+  "completed_at": "2026-09-24T20:46:16-03:00",
   "stage": "completed",
   "executor": "automation-operational",
   "airtable_reads_total": 2,
@@ -20,109 +20,91 @@
   "sugestoes_lidas": 30,
   "sugestoes_noticias_lidas": 25,
   "candidatos_publicos": 12,
-  "aprovados_novos": 1,
-  "rejeitados": 0,
+  "aprovados_novos": 0,
+  "rejeitados": 1,
   "duplicados": 11,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "auditoria": [
     {
       "origem": "airtable",
       "tabela": "Sugestões",
       "record_id": "recFn5AE6yaKMQT9z",
       "titulo": "Vaquejada e repescagem na Arena de Pernambuco",
-      "url": "https://www.diariodepernambuco.com.br/esportes-dp/internacional/2026/08/11722675-vaquejada-pode-tirar-repescagem-da-copa-do-mundo-feminina-da-arena-de-pernambuco.html",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada do evento; busca profunda em cadência reduzida ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada do evento; nova busca profunda ainda não devida pela cadência de seis horas."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões",
       "record_id": "recP6kI5u5OGdQwTK",
       "titulo": "Futebol para mulheres: Entre a prática e a Copa — Módulo 2",
-      "url": "https://www.sescsp.org.br/programacao/futebol-para-mulheres-entre-a-pratica-e-a-copa-modulo-2/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; busca profunda em cadência reduzida ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; nova busca profunda ainda não devida."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões",
       "record_id": "recQ4zM6IsWbh9enY",
       "titulo": "Marta e Alice Carvalho em painel da CCXP",
-      "url": "https://oglobo.globo.com/cultura/noticia/2026/09/02/marta-e-alice-carvalho-sao-confirmadas-em-painel-da-ccxp.ghtml",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: faltam título estruturado e data confirmada do painel; busca profunda em cadência reduzida ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: faltam título estruturado e data confirmada do painel; nova busca profunda ainda não devida."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões",
       "record_id": "recQBuyA4LbpIou87",
       "titulo": "Futebol para mulheres: Entre a prática e a Copa — Módulo 2",
-      "url": "https://www.sescsp.org.br/programacao/futebol-para-mulheres-entre-a-pratica-e-a-copa-modulo-2/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; busca profunda em cadência reduzida ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; nova busca profunda ainda não devida."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões",
       "record_id": "recdy7jR4nrz3Iwr0",
       "titulo": "Futebol para mulheres: Entre a prática e a Copa — Módulo 2",
-      "url": "https://www.sescsp.org.br/programacao/futebol-para-mulheres-entre-a-pratica-e-a-copa-modulo-2/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; busca profunda em cadência reduzida ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; nova busca profunda ainda não devida."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões de Notícias",
       "record_id": "recEMozafV2fHIZQc",
       "titulo": "Instagram reel Da_H8zNpHxf",
-      "url": "https://www.instagram.com/reel/Da_H8zNpHxf/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda em cadência reduzida ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; nova busca profunda ainda não devida."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões de Notícias",
       "record_id": "recJNn7oMAYYkDUgX",
       "titulo": "Instagram post DdSZg6MFM0_",
-      "url": "https://www.instagram.com/p/DdSZg6MFM0_/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda em cadência reduzida ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; nova busca profunda ainda não devida."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões de Notícias",
       "record_id": "recQuPg65uTMtnBjR",
       "titulo": "Instagram post DdcLeukn84d",
-      "url": "https://www.instagram.com/p/DdcLeukn84d/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda em cadência reduzida ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; nova busca profunda ainda não devida."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões de Notícias",
       "record_id": "recZAi2P031UGM3TD",
       "titulo": "Instagram post DdRZR07Oauw",
-      "url": "https://www.instagram.com/p/DdRZR07Oauw/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda em cadência reduzida ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; nova busca profunda ainda não devida."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões de Notícias",
       "record_id": "recjGnj9vzNbaZrxz",
       "titulo": "Instagram post Dc13T1guTMZ",
-      "url": "https://www.instagram.com/p/Dc13T1guTMZ/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda em cadência reduzida ainda não devida."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "FGF articula treino aberto da Seleção Feminina antes do amistoso em Porto Alegre",
-      "fonte": "GZH",
-      "url": "https://gauchazh.clicrbs.com.br/esportes/futebol-feminino/noticia/2026/09/selecao-feminina-pode-realizar-treino-aberto-em-porto-alegre-antes-de-amistoso-contra-a-argentina-entenda-cmufuzht600jw01icjpb9ia0k.html",
-      "decisao": "aprovado",
-      "motivo": "Pauta nova e verificável sobre potencial oportunidade de engajamento dos torcedores; incluída como notícia, com ressalva explícita de que o treino ainda está em articulação."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; nova busca profunda ainda não devida."
     },
     {
       "origem": "pesquisa_publica",
@@ -130,39 +112,31 @@
       "fonte": "FIFA",
       "url": "https://inside.fifa.com/news/brazil-2027-host-city-stadium-inspections-martin-ianuzzi",
       "decisao": "duplicado",
-      "motivo": "O mesmo fato já estava no editorial/inbox.json no início desta execução."
+      "motivo": "Já incorporado em noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Copa do Mundo Feminina 2027: Fifa conclui terceira rodada de inspeções em estádios",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMi_gFBVV95cUxPNUhYenNOdUc5Q2lUZlg2MHFxODlldjVmcEZLd2R6a1E4TFdpN3dNX0E4NHJwYnhQeVcweFZWcnJUSjM1bWd3NjRUUE9JcHdMc0lONGw0cVRhV1UxaVFZYTg0VGk2Z0xCMTdxRnBqWEZYdm11dmw3MGdPNEloQ2ZhTmZoS2l6MktGTmgtcUlYdTB0dElMbDFjbEZqd1h3UE5ZTEZybExCMVlxNk8wazdVZVlWemZRNEZmSS1oNnB2QXlhTzVwTTRYaWpQc0dLcnlaVlJFRk01b0FVTUtEREk3VGJKeHZNMm42VThNOWZMNTRKYTNpQ1RCMGlNLXh0Zw?oc=5",
-      "decisao": "duplicado",
-      "motivo": "Mesmo ciclo de inspeções já enfileirado."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Fifa conclui inspeções nos estádios da Copa do Mundo Feminina no Brasil",
-      "fonte": "Itatiaia",
-      "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPbFhNVE9WM2tmMHlLR3B5dVhqZXg2blp4ZnVoRGhwYVpPckFucWxpMWZTb3VKOHZPV2VYRkd1M2RvR0g1bk5lR0kwOVpMRm5MSndSRS1nMXprWlFNZ3Q5ZmpfVTRBeDBKNVZKc1NUYUo5c0VPY3BjU0kzc1BGa1pCQmZWaG9xMFFrb2VEeU5kWDhwUi02UkFweXBIWFhoeThKeFlmdlhSbnJlTkJGbHRKdU4wZW5WOVRCcWRfS1FXWkF6WjZCdWVZOE1RTmJxczk5WDJwZ1VsT3ZIODdvbXZ6MVpBbkpXRmtp?oc=5",
-      "decisao": "duplicado",
-      "motivo": "Mesmo fato das inspeções, com fonte diferente, já enfileirado."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Metade das convocadas tem passagem pela dupla Gre-Nal",
+      "titulo": "FGF articula treino aberto da Seleção Feminina antes do amistoso em Porto Alegre",
       "fonte": "GZH",
-      "url": "https://news.google.com/rss/articles/CBMingJBVV95cUxNb01EZjNxY0hRV3ZhMnI3QjlyVGkwZDNSOU1ocTAwSk94dU04akx2VnVTbFNpNV9LUEVJVi13X3Rxa1U1RnhXbmZIc0pkNWZVdDdZYTlIQnZxSmF1OXRJbTZuUjNkNDJmYWJya1Nad0E4Zzk2TXFoYW4ta0VfZTgzcW80SGlPNlh4cFowbTJTSnZ6eDVxc2p2VTNxUnJVMzVwRGhtY3FQaW5sMnhzOEY2ajJ4Y2F5VlY2UzFDaGRNWXRSTUp5Ykl1RFplTXZTOF9TM25NUEZkQTVyVWxjYmNoMWYtZG9zOVM4WDJBSUtUTC1Ia1NuV0pmbV90bVRzQUJUb3g0a0t0Z2dwV0FfcDJhcXI3WFc1aUFfSW9KWlhB?oc=5",
+      "url": "https://gauchazh.clicrbs.com.br/esportes/futebol-feminino/noticia/2026/09/selecao-feminina-pode-realizar-treino-aberto-em-porto-alegre-antes-de-amistoso-contra-a-argentina-entenda-cmufuzht600jw01icjpb9ia0k.html",
       "decisao": "duplicado",
-      "motivo": "Item já estava no inbox no início da execução."
+      "motivo": "Incluído na rodada anterior e já incorporado em noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Fifa abre inscrições para programa de voluntários da Copa Feminina",
-      "fonte": "Correio do Povo",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOWW5xYWhHX1JVOThoSjg1ZUdwYjd6aFE1MFZPQm9sTFB2NU5RempxZnBBeWpwengyUHd5ZnREZVBVVkNVTGpwM0xKMVV1UlUxQTRlZEI1T0pOSXdVeEV4YmlpQUQ0Ni1IcGlmaFhTUVZUN1Z4MTBncVpBQnVkc2xrZHNJY3pxZGwzSTF1WEdQQ0haOWZScGFNeTZFWE1GVE9wcFhvSW1CLTVVVUVNUnNYbkktTXFnSWVXb0E?oc=5",
+      "titulo": "Seleção Feminina: Arthur Elias convoca para jogos contra a Argentina",
+      "fonte": "ge",
+      "url": "https://ge.globo.com/futebol/futebol-feminino/noticia/2026/09/22/convocadas-da-selecao-veja-a-lista-de-arthur-elias-para-os-amistosos-contra-a-argentina.ghtml",
       "decisao": "duplicado",
-      "motivo": "Mesmo programa de voluntariado já consta no acervo e estava novamente no inbox."
+      "motivo": "Convocação e amistosos já incorporados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "FIFA abre inscrições para voluntários da Copa Feminina 2027",
+      "fonte": "FIFA",
+      "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027",
+      "decisao": "duplicado",
+      "motivo": "Programa de voluntariado já incorporado."
     },
     {
       "origem": "pesquisa_publica",
@@ -170,7 +144,7 @@
       "fonte": "FIFA",
       "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027/articles/guia-estadios-copa-mundo-feminina-2027",
       "decisao": "duplicado",
-      "motivo": "Guia e calendário dos oito estádios já incorporados."
+      "motivo": "Guia dos estádios já incorporado."
     },
     {
       "origem": "pesquisa_publica",
@@ -182,19 +156,11 @@
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "CBF tenta solução para clubes que cederão estádios",
-      "fonte": "UOL",
-      "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/08/24/cbf-garante-solucao-para-clubes-nao-perderem-mandos-na-copa-feminina.ghtm",
-      "decisao": "duplicado",
-      "motivo": "Pauta já consta em noticias.json."
-    },
-    {
-      "origem": "pesquisa_publica",
       "titulo": "Copa Feminina registra 750 mil interessados em ingressos",
       "fonte": "UOL",
       "url": "https://economia.uol.com.br/noticias/redacao/2026/08/14/copa-do-mundo-feminina-alcanca-750-mil-interessados-em-ingressos.ghtm",
       "decisao": "duplicado",
-      "motivo": "Indicadores já cobertos."
+      "motivo": "Indicador de ingressos já incorporado."
     },
     {
       "origem": "pesquisa_publica",
@@ -202,25 +168,47 @@
       "fonte": "UOL Educação",
       "url": "https://educacao.uol.com.br/noticias/2026/08/19/conselho-ferias-copa-do-mundo-futebol-feminina.ghtm",
       "decisao": "duplicado",
-      "motivo": "Parecer do CNE e evolução legislativa já incorporados."
+      "motivo": "Tema e desdobramentos legislativos já incorporados."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "A Copa das mulheres vai deixar um legado ou apenas uma fotografia?",
-      "fonte": "UOL",
-      "url": "https://noticias.uol.com.br/colunas/joildo-santos/2026/09/10/a-copa-das-mulheres-vai-deixar-um-legado-ou-apenas-uma-fotografia.ghtm",
+      "titulo": "Bahia cria novas frentes para a Copa Feminina 2027",
+      "fonte": "A TARDE",
+      "url": "https://atarde.com.br/esportes/copa-do-mundo-feminina-2027-ganha-novas-frentes-na-bahia-1403213",
       "decisao": "duplicado",
-      "motivo": "Debate sobre legado já consta em noticias.json."
+      "motivo": "Pauta já incorporada em noticias.json."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Lorena concorre a melhor jogadora e goleira",
+      "fonte": "CBF",
+      "url": "https://www.cbf.com.br/selecao-brasileira/noticias/noticias/selecao-feminina-principal/lorena-concorre-a-melhor-jogadora-e-melhor-goleira-no-bola-de-ouro-202526",
+      "decisao": "duplicado",
+      "motivo": "Pauta e evento da cerimônia já incorporados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Yanne celebra primeira convocação para a Seleção Feminina",
+      "fonte": "Globoplay",
+      "url": "https://globoplay.globo.com/v/14987251/",
+      "decisao": "duplicado",
+      "motivo": "Entrevista já incorporada em noticias.json."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Ancelotti convoca Vanderson para substituir Wesley",
+      "fonte": "Folha de S.Paulo",
+      "url": "https://www1.folha.uol.com.br/esporte/2026/09/ancelotti-convoca-vanderson-para-substituir-wesley-cortado-por-lesao.shtml",
+      "decisao": "rejeitado",
+      "motivo": "Seleção masculina; fora do escopo editorial desta rotina."
     }
   ],
   "observacoes_operacionais": [
     "Exatamente duas leituras completas do Airtable foram executadas e reutilizadas; nenhuma leitura adicional foi feita.",
     "O backlog continha cinco eventos e cinco notícias em Pendente/Em verificação.",
-    "As dez pendências tinham mais de sete dias e haviam sido verificadas há menos de seis horas; a busca profunda não foi repetida.",
-    "Nenhuma escrita no Airtable foi necessária porque nenhum Status ou Resultado mudou.",
-    "O inbox inicial continha quatro notícias; seu conteúdo foi preservado integralmente.",
-    "A pesquisa pública avaliou 12 candidatos: 1 aprovado novo e 11 duplicados comprovados.",
-    "A notícia sobre a articulação de treino aberto da Seleção em Porto Alegre foi adicionada ao inbox com ressalva explícita de que a realização ainda não está confirmada.",
-    "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado manualmente."
+    "As dez pendências tinham mais de sete dias, mas a última verificação ainda não havia completado a cadência mínima de seis horas; nenhuma busca profunda repetitiva nem escrita Airtable foi feita.",
+    "A pesquisa pública foi executada em fontes oficiais e veículos confiáveis; não surgiu item novo, confirmado e editorialmente distinto dos arquivos finais.",
+    "O editorial/inbox.json estava vazio e permaneceu inalterado.",
+    "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
