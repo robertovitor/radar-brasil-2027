@@ -422,12 +422,15 @@ def _validate_official_page(href,hint=''):
         if 'cbf.com.br' not in urllib.parse.urlparse(final_url).netloc.casefold(): return None
         raw=data[:900000].decode('utf-8','ignore'); title=v54.v2._clean_page_title(raw) or hint
         if not title or '<' in title: title=hint
-        combined=pe.norm(f'{title} {raw[:250000]}')
+        visible=html.unescape(re.sub(r'(?is)<(script|style)\\b.*?</\\1>',' ',raw[:500000]))
+        visible=html.unescape(re.sub(r'(?s)<[^>]+>',' ',visible))
+        visible=re.sub(r'\\s+',' ',visible).strip()
+        combined=pe.norm(f'{title} {visible}')
         if any(x in combined for x in ('sub 17','sub17','sub 20','sub20')) and 'selecao feminina principal' not in combined: return None
         for rule in EVENT_RULES:
             if all(pe.norm(x) in combined for x in rule['title_needles']) and any(x in combined for x in ('amistoso','amistosos','enfrenta','contra')):
                 matched=[r['opponent'] for r in EVENT_RULES if all(pe.norm(x) in combined for x in r['title_needles']) and any(x in combined for x in ('amistoso','amistosos','enfrenta','contra'))]
-                return {'origin':'cbf-primary-v5.5','title':title or hint,'source':'cbf.com.br','trusted_source_domain':'cbf.com.br','url':final_url,'pub':'','event_text':combined,'matched_event_rules':matched}
+                return {'origin':'cbf-primary-v5.5','title':title or hint,'source':'cbf.com.br','trusted_source_domain':'cbf.com.br','url':final_url,'pub':'','event_text':combined,'event_time_text':visible,'matched_event_rules':matched}
     except Exception as exc: print(f'primary_cbf_page_warning={type(exc).__name__}:{exc}')
     return None
 
@@ -478,12 +481,13 @@ def _wifs_event_candidates():
             if body.strip(): units.append(pe.norm(re.sub(r'\\s+',' ',body)))
         visible=re.sub(r'(?is)<(script|style)\\b.*?</\\1>',' ',raw)
         visible=html.unescape(re.sub(r'(?s)<[^>]+>',' ',visible))
-        units.append(pe.norm(re.sub(r'\\s+',' ',visible)))
+        visible_text=re.sub(r'\\s+',' ',visible).strip()
+        units.append(pe.norm(visible_text))
         # O HTML bruto normalizado é fallback final para atributos/data-* e blobs
         # de configuração. Não é suficiente sozinho: ainda exigimos data+cidade.
         units.append(raw_norm)
 
-        confirmed=[]
+        confirmed=[]; confirmed_times={}
         for date,city,uf in WIFS_EVENTS:
             d=pe.datetime.strptime(date,'%Y-%m-%d'); cityn=pe.norm(city)
             months=WIFS_MONTHS.get(d.month,())
@@ -502,10 +506,18 @@ def _wifs_event_candidates():
                         window=u[max(0,pos-500):pos+500]
                         if has_date(window): evidence=True; break
                     if evidence: break
-            if evidence: confirmed.append((date,city,uf)); print(f'wifs_structured_event_confirmed={date}|{city}')
+            if evidence:
+                confirmed.append((date,city,uf))
+                event_time=_extract_event_time_for_known_event(
+                    visible_text,date,city,'',('mulheres que mudam o jogo','wifs','jornada')
+                )
+                if event_time:
+                    confirmed_times[f'{date}|{city}']=event_time
+                    print(f'wifs_event_time={date}|{city}|{event_time}')
+                print(f'wifs_structured_event_confirmed={date}|{city}')
             else: print(f'wifs_event_not_confirmed={date}|{city}')
         print(f'wifs_events_validated={len(confirmed)}')
-        return [{'origin':'wifs-primary-v5.7','title':'Jornada Mulheres que Mudam o Jogo – 2027 Women’s World Cup','source':'womanifs.com','trusted_source_domain':'womanifs.com','url':final_url,'pub':'','confirmed_events':confirmed}]
+        return [{'origin':'wifs-primary-v5.7','title':'Jornada Mulheres que Mudam o Jogo – 2027 Women’s World Cup','source':'womanifs.com','trusted_source_domain':'womanifs.com','url':final_url,'pub':'','confirmed_events':confirmed,'confirmed_event_times':confirmed_times,'event_timezone':'America/Sao_Paulo'}]
     except Exception as exc:
         print(f'wifs_warning={type(exc).__name__}:{exc}'); return []
 
@@ -588,6 +600,41 @@ def _extract_explicit_event_time(text, keywords=()):
             continue
         hour=int(m.group(1)); minute=int(m.group(2) or 0)
         return f'{hour:02d}:{minute:02d}'
+    return ''
+
+def _extract_event_time_for_known_event(text,date,city='',venue='',keywords=()):
+    """Extrai horário somente perto da data/local do evento conhecido.
+
+    Isso evita aplicar ao segundo jogo o horário do primeiro quando uma mesma
+    matéria oficial contém dois ou mais eventos.
+    """
+    raw=html.unescape(str(text or ''))
+    if not raw or not date:
+        return ''
+    try:
+        d=pe.datetime.strptime(str(date)[:10],'%Y-%m-%d')
+    except Exception:
+        return ''
+    months=('janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro')
+    anchors=[
+        str(city or '').strip(), str(venue or '').strip(),
+        d.strftime('%d/%m/%Y'), d.strftime('%d/%m'),
+        f'{d.day} de {months[d.month-1]} de {d.year}',
+        f'{d.day} de {months[d.month-1]}',
+    ]
+    folded=raw.casefold()
+    windows=[]
+    for value in anchors:
+        if not value:
+            continue
+        needle=value.casefold()
+        for m in re.finditer(re.escape(needle),folded):
+            windows.append(raw[max(0,m.start()-650):min(len(raw),m.end()+650)])
+    # Só aceita o horário se ele estiver em uma janela ancorada no evento.
+    for window in windows:
+        event_time=_extract_explicit_event_time(window,keywords)
+        if event_time:
+            return event_time
     return ''
 
 def _known_event_time_keys():
@@ -806,11 +853,22 @@ def _events_from_candidates(candidates):
             print(f'convocation_event_extracted={date}|Rio de Janeiro')
             continue
         if origin in ('wifs-primary-v5.6','wifs-primary-v5.7'):
+            time_map=c.get('confirmed_event_times',{}) if isinstance(c.get('confirmed_event_times',{}),dict) else {}
             for date,city,uf in c.get('confirmed_events',[]):
                 event_title='Jornada Mulheres que Mudam o Jogo – WIFS'; key=(date,pe.norm(event_title),pe.norm(city))
-                if key in known: print(f'wifs_event_duplicate={date}|{city}'); continue
-                known.add(key)
-                out.append({'ID':f'WIFS-{date}-{uf}','Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,'Categoria':'Ativação / evento Copa Feminina 2027','Organizador':'WIFS','Publico':0,'Patrocinador':'','Local':'','Latitude':None,'Longitude':None,'Link':str(c.get('url') or WIFS_EVENT_PAGE),'Observacoes':'Evento derivado de página-fonte; data e cidade validadas no conteúdo antes da materialização.','Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':{'RS':'Sul','RJ':'Sudeste','SP':'Sudeste','MG':'Sudeste','DF':'Centro-Oeste','PE':'Nordeste','CE':'Nordeste','BA':'Nordeste'}.get(uf,'')})
+                event_time=str(time_map.get(f'{date}|{city}') or '').strip()
+                has_new_time=bool(event_time) and key not in known_time
+                if key in known and not has_new_time:
+                    print(f'wifs_event_duplicate={date}|{city}'); continue
+                if key not in known:
+                    known.add(key)
+                else:
+                    print(f'wifs_event_time_enrichment={date}|{city}|{event_time}')
+                event={'ID':f'WIFS-{date}-{uf}','Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,'Categoria':'Ativação / evento Copa Feminina 2027','Organizador':'WIFS','Publico':0,'Patrocinador':'','Local':'','Latitude':None,'Longitude':None,'Link':str(c.get('url') or WIFS_EVENT_PAGE),'Observacoes':'Evento derivado de página-fonte; data e cidade validadas no conteúdo antes da materialização.','Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':{'RS':'Sul','RJ':'Sudeste','SP':'Sudeste','MG':'Sudeste','DF':'Centro-Oeste','PE':'Nordeste','CE':'Nordeste','BA':'Nordeste'}.get(uf,'')}
+                if event_time:
+                    event=_apply_time_fields(event,{'event_time':event_time,'event_timezone':str(c.get('event_timezone') or 'America/Sao_Paulo')})
+                    known_time.add(key)
+                out.append(event)
                 print(f'wifs_event_extracted={date}|{city}')
             continue
         title=str(c.get('title') or '').strip(); nt=pe.norm(title); event_text=str(c.get('event_text') or nt)
@@ -827,10 +885,25 @@ def _events_from_candidates(candidates):
             elif not all(pe.norm(x) in nt for x in rule['title_needles']): continue
             for date,city,uf,venue in rule['events']:
                 event_title=f"Brasil x {rule['opponent']} — amistoso da Seleção Feminina"; key=(date,pe.norm(event_title),pe.norm(city))
-                if key in known: print(f'official_event_duplicate={date}|{city}|{rule["opponent"]}'); continue
-                known.add(key); source_url=str(c.get('url') or CBF_OFFICIAL_EVENT_PAGES[0])
-                out.append({'ID':f'CBF-{date}-{rule["opponent"].upper()}','Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,'Categoria':'Amistoso da Seleção Feminina','Organizador':'CBF','Publico':0,'Patrocinador':'','Local':venue,'Latitude':None,'Longitude':None,'Link':source_url,'Observacoes':f"Amistoso Brasil x {rule['opponent']} confirmado; evento materializado independentemente da notícia.",'Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':{'RS':'Sul','PE':'Nordeste'}.get(uf,'')})
-                print(f'official_event_extracted={date}|{city}|{venue}|origin={origin}')
+                time_evidence=str(c.get('event_time_text') or '')
+                event_time=_extract_event_time_for_known_event(
+                    time_evidence,date,city,venue,(rule['opponent'],'amistoso','seleção feminina','selecao feminina')
+                ) if time_evidence else ''
+                has_new_time=bool(event_time) and key not in known_time
+                if key in known and not has_new_time:
+                    print(f'official_event_duplicate={date}|{city}|{rule["opponent"]}'); continue
+                if key not in known:
+                    known.add(key)
+                else:
+                    print(f'official_event_time_enrichment={date}|{city}|{rule["opponent"]}|{event_time}')
+                source_url=str(c.get('url') or CBF_OFFICIAL_EVENT_PAGES[0])
+                event={'ID':f'CBF-{date}-{rule["opponent"].upper()}','Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,'Categoria':'Amistoso da Seleção Feminina','Organizador':'CBF','Publico':0,'Patrocinador':'','Local':venue,'Latitude':None,'Longitude':None,'Link':source_url,'Observacoes':f"Amistoso Brasil x {rule['opponent']} confirmado; evento materializado independentemente da notícia.",'Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':{'RS':'Sul','PE':'Nordeste'}.get(uf,'')}
+                if event_time:
+                    timezone='Asia/Tokyo' if uf=='JP' else 'America/Sao_Paulo'
+                    event=_apply_time_fields(event,{'event_time':event_time,'event_timezone':timezone},timezone)
+                    known_time.add(key)
+                out.append(event)
+                print(f'official_event_extracted={date}|{city}|{venue}|origin={origin}|time={event_time or "unknown"}')
     return out
 
 def rss_candidates_v55():
@@ -923,19 +996,30 @@ def _materialize_official_events():
         print('official_events_materialized=0|reason=no_extracted_events'); return 0
     inbox=pe.load(pe.INBOX,{'eventos':[],'noticias':[]})
     if not isinstance(inbox,dict): raise RuntimeError('editorial/inbox.json não é um objeto JSON')
-    existing=list(inbox.get('eventos',[]) or []); keys={(str(x.get('Data') or ''),pe.norm(x.get('Titulo')),pe.norm(x.get('Cidade'))) for x in existing if isinstance(x,dict)}; added=0
+    existing=list(inbox.get('eventos',[]) or []); keys={(str(x.get('Data') or ''),pe.norm(x.get('Titulo')),pe.norm(x.get('Cidade'))) for x in existing if isinstance(x,dict)}; added=0; enriched=0
+    index_by_key={(str(x.get('Data') or ''),pe.norm(x.get('Titulo')),pe.norm(x.get('Cidade'))):i for i,x in enumerate(existing) if isinstance(x,dict)}
     for event in extra:
         key=(str(event.get('Data') or ''),pe.norm(event.get('Titulo')),pe.norm(event.get('Cidade')))
-        if key in keys: continue
-        existing.append(event); keys.add(key); added+=1
-    if added:
+        if key in keys:
+            idx=index_by_key.get(key)
+            if idx is not None:
+                updates={}
+                for field in ('Hora','HoraFim','FusoHorario'):
+                    value=str(event.get(field) or '').strip()
+                    if value and not str(existing[idx].get(field) or '').strip():
+                        updates[field]=value
+                if updates:
+                    existing[idx]={**existing[idx],**updates}; enriched+=1
+            continue
+        existing.append(event); keys.add(key); index_by_key[key]=len(existing)-1; added+=1
+    if added or enriched:
         updated=dict(inbox); updated['eventos']=existing
         _original_dump(pe.INBOX,updated)
         verify=pe.load(pe.INBOX,{'eventos':[],'noticias':[]})
         verify_keys={(str(x.get('Data') or ''),pe.norm(x.get('Titulo')),pe.norm(x.get('Cidade'))) for x in verify.get('eventos',[]) if isinstance(x,dict)}
         missing=[e for e in extra if (str(e.get('Data') or ''),pe.norm(e.get('Titulo')),pe.norm(e.get('Cidade'))) not in verify_keys]
         if missing: raise RuntimeError(f'Falha ao persistir {len(missing)} evento(s) oficial(is) no inbox')
-    print(f'official_events_materialized={added}|extracted={len(extra)}'); return added
+    print(f'official_events_materialized={added}|time_enriched={enriched}|extracted={len(extra)}'); return added
 
 if __name__=='__main__':
     rc=pe.main()
