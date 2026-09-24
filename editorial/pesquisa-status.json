@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260924-16",
-  "started_at": "2026-09-24T16:43:56-03:00",
-  "completed_at": "2026-09-24T16:46:22-03:00",
+  "cycle_id": "20260924-17",
+  "started_at": "2026-09-24T17:47:58-03:00",
+  "completed_at": "2026-09-24T17:49:30-03:00",
   "stage": "completed",
   "executor": "automation-operational",
   "airtable_reads_total": 2,
@@ -19,10 +19,10 @@
   ],
   "sugestoes_lidas": 30,
   "sugestoes_noticias_lidas": 25,
-  "candidatos_publicos": 13,
+  "candidatos_publicos": 15,
   "aprovados_novos": 0,
   "rejeitados": 4,
-  "duplicados": 9,
+  "duplicados": 11,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "auditoria": [
@@ -96,7 +96,7 @@
       "titulo": "Instagram post DdcLeukn84d",
       "url": "https://www.instagram.com/p/DdcLeukn84d/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca pública desta rodada encontrou apenas a página genérica do Instagram, sem conteúdo verificável."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; a busca profunda desta rodada encontrou somente a página genérica do Instagram."
     },
     {
       "origem": "airtable",
@@ -134,19 +134,19 @@
     },
     {
       "origem": "pesquisa_publica",
+      "titulo": "Raí celebra Marta e reforça confiança na Seleção",
+      "fonte": "ESPN",
+      "url": "https://www.espn.com.ar/video/clip/_/id/13960053",
+      "decisao": "rejeitado",
+      "motivo": "Conteúdo antigo, sem desdobramento novo para o ciclo atual."
+    },
+    {
+      "origem": "pesquisa_publica",
       "titulo": "Arthur Elias — perfil oficial",
       "fonte": "Instagram",
       "url": "https://www.instagram.com/arthureliastreinador/",
       "decisao": "rejeitado",
       "motivo": "Perfil social sem notícia específica nova."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Atualização da Seleção Brasileira feminina",
-      "fonte": "Globo Esporte RS / Globoplay",
-      "url": "https://globoplay.globo.com/v/14987484/",
-      "decisao": "duplicado",
-      "motivo": "A convocação de Jéssica de Lima tratada no vídeo já consta em noticias.json."
     },
     {
       "origem": "pesquisa_publica",
@@ -158,43 +158,19 @@
     },
     {
       "origem": "pesquisa_publica",
+      "titulo": "Seleção feminina terá amistosos contra Argentina e Japão",
+      "fonte": "Folha de S.Paulo",
+      "url": "https://www1.folha.uol.com.br/esporte/2026/09/selecao-feminina-tera-serie-de-amistosos-contra-argentina-e-japao.shtml",
+      "decisao": "duplicado",
+      "motivo": "Os quatro amistosos, datas e sedes já estão incorporados."
+    },
+    {
+      "origem": "pesquisa_publica",
       "titulo": "Fifa abre inscrições para voluntários da Copa 2027",
       "fonte": "UOL",
       "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/09/03/fifa-abre-inscricoes-para-voluntarios-na-copa-do-mundo-feminina-de-2027.ghtm",
       "decisao": "duplicado",
       "motivo": "Programa de voluntariado já registrado."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Copa Feminina 2027: o que já está definido",
-      "fonte": "Folha de S.Paulo",
-      "url": "https://www1.folha.uol.com.br/esporte/2026/07/copa-do-mundo-feminina-de-2027-no-brasil-o-que-ja-esta-definido.shtml",
-      "decisao": "duplicado",
-      "motivo": "Síntese antiga de fatos já incorporados."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Copa Feminina registra 750 mil interessados em ingressos",
-      "fonte": "UOL",
-      "url": "https://economia.uol.com.br/noticias/redacao/2026/08/14/copa-do-mundo-feminina-alcanca-750-mil-interessados-em-ingressos.ghtm",
-      "decisao": "duplicado",
-      "motivo": "Indicadores e encontro com marcas já cobertos no acervo."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "CNE defende férias apenas nas cidades-sede",
-      "fonte": "UOL Educação",
-      "url": "https://educacao.uol.com.br/noticias/2026/08/19/conselho-ferias-copa-do-mundo-futebol-feminina.ghtm",
-      "decisao": "duplicado",
-      "motivo": "Parecer do CNE e evolução legislativa já incorporados."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Venda de ingressos da Copa 2027 ainda não começou",
-      "fonte": "UOL",
-      "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/08/20/copa-2027-venda-de-ingressos-ainda-nao-comecou-como-registrar-interesse.ghtm",
-      "decisao": "duplicado",
-      "motivo": "Cadastro de interesse e situação da venda já registrados."
     },
     {
       "origem": "pesquisa_publica",
@@ -206,28 +182,68 @@
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Raí celebra Marta e reforça confiança na Seleção",
-      "fonte": "ESPN",
-      "url": "https://www.espn.com.ar/video/clip/_/id/13960053",
-      "decisao": "rejeitado",
-      "motivo": "Conteúdo antigo, sem desdobramento novo para o ciclo atual."
+      "titulo": "Copa Feminina registra 750 mil interessados em ingressos",
+      "fonte": "UOL",
+      "url": "https://economia.uol.com.br/noticias/redacao/2026/08/14/copa-do-mundo-feminina-alcanca-750-mil-interessados-em-ingressos.ghtm",
+      "decisao": "duplicado",
+      "motivo": "Indicadores e encontro com marcas já cobertos."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Amistoso Brasil x Argentina no Beira-Rio",
-      "fonte": "Ticket and Go",
-      "url": "https://ticketandgo.com.br/evento/brasil-x-argentina-amistoso-selecao-brasileira-feminina-porto-alegre",
+      "titulo": "CNE defende férias apenas nas cidades-sede",
+      "fonte": "UOL Educação",
+      "url": "https://educacao.uol.com.br/noticias/2026/08/19/conselho-ferias-copa-do-mundo-futebol-feminina.ghtm",
       "decisao": "duplicado",
-      "motivo": "Mesmo evento já presente em dados.json."
+      "motivo": "Parecer do CNE e evolução legislativa já incorporados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "A Copa das mulheres vai deixar um legado ou apenas uma fotografia?",
+      "fonte": "UOL",
+      "url": "https://noticias.uol.com.br/colunas/joildo-santos/2026/09/10/a-copa-das-mulheres-vai-deixar-um-legado-ou-apenas-uma-fotografia.ghtm",
+      "decisao": "duplicado",
+      "motivo": "O debate sobre legado duradouro já consta em noticias.json com a mesma fonte."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Copa do Mundo Feminina da FIFA 2027 — calendário",
+      "fonte": "FIFA",
+      "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027",
+      "decisao": "duplicado",
+      "motivo": "Calendário e distribuição das 64 partidas já incorporados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Cidades-sede da Copa do Mundo Feminina 2027",
+      "fonte": "FIFA",
+      "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027/host-cities",
+      "decisao": "duplicado",
+      "motivo": "As oito cidades-sede já estão registradas."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Manifestação de interesse por ingressos",
+      "fonte": "FIFA",
+      "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027/tickets",
+      "decisao": "duplicado",
+      "motivo": "Cadastro de interesse e situação da venda já registrados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Porto Alegre apresenta preparação em workshop da FIFA",
+      "fonte": "Prefeitura de Porto Alegre",
+      "url": "https://prefeitura.poa.br/secopa2027/noticias/porto-alegre-apresenta-preparacao-para-copa-feminina-2027-em-workshop-da-fifa",
+      "decisao": "duplicado",
+      "motivo": "Mesmo II Workshop de Cidades-Sede e Estádios já incorporado."
     }
   ],
   "observacoes_operacionais": [
     "Exatamente duas leituras completas do Airtable foram executadas e reutilizadas; nenhuma leitura adicional foi feita.",
     "O backlog continha cinco eventos e cinco notícias em Pendente/Em verificação.",
-    "Nove pendências têm mais de sete dias e haviam sido verificadas há menos de seis horas; a busca profunda não foi repetida nesta rodada.",
-    "O item DdcLeukn84d, ainda dentro da janela de sete dias, foi pesquisado novamente e permaneceu PENDENTE_ENRIQUECIMENTO por falta de título verificável.",
+    "Nove pendências têm mais de sete dias e haviam sido verificadas há menos de seis horas; a busca profunda não foi repetida.",
+    "O item DdcLeukn84d, ainda dentro da janela de sete dias no início da execução, foi pesquisado novamente e permaneceu PENDENTE_ENRIQUECIMENTO por falta de título verificável.",
     "Nenhuma escrita no Airtable foi necessária porque nenhum Status ou Resultado mudou.",
-    "A pesquisa pública avaliou 13 candidatos: 4 rejeitados por motivo editorial e 9 duplicados comprovados.",
+    "A pesquisa pública avaliou 15 candidatos: 4 rejeitados por motivo editorial e 11 duplicados comprovados.",
     "Nenhuma novidade qualificada foi adicionada ao inbox. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
