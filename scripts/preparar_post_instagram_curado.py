@@ -419,9 +419,17 @@ def main():
         if not clean(manual_post.get('image_url')) or not clean(manual_post.get('caption')):
             continue
         manual_candidates.append((manual_key,p))
+    curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and all(clean(x.get(field)) for field in ('image_source_url','source_page_url','credito','licenca'))}
+    ranked=candidates(events,news,published,pending,published_titles(ledger))
+    # Tentativas ambíguas liberadas pelo cooldown vêm sempre antes de pauta nova.
+    ranked.sort(key=lambda item: 0 if item['key'] in strict_pending else 1)
+    # Reconciliações realmente elegíveis continuam acima de post manual novo.
+    # Reservas históricas que já não estão no ranking não bloqueiam a fila manual.
     strict_manual=[row for row in manual_candidates if row[0] in strict_pending]
-    if strict_manual or (manual_candidates and not strict_pending):
-        manual_key,p=(strict_manual or manual_candidates)[0]
+    strict_ranked=[item for item in ranked if item['key'] in strict_pending]
+    chosen_manual=(strict_manual[0] if strict_manual else (manual_candidates[0] if manual_candidates and not strict_ranked else None))
+    if chosen_manual:
+        manual_key,p=chosen_manual
         batch=pathlib.Path('instagram/fila/automatica/lote-atual.json')
         batch.parent.mkdir(parents=True,exist_ok=True)
         batch.write_text(json.dumps({'posts':[str(p)]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
@@ -429,10 +437,6 @@ def main():
         print('found=true')
         print('batch_file='+str(batch))
         return 0
-    curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and all(clean(x.get(field)) for field in ('image_source_url','source_page_url','credito','licenca'))}
-    ranked=candidates(events,news,published,pending,published_titles(ledger))
-    # Tentativas ambíguas liberadas pelo cooldown vêm sempre antes de pauta nova.
-    ranked.sort(key=lambda item: 0 if item['key'] in strict_pending else 1)
     if ranked and ranked[0]['key'] in strict_pending:
         print('priority_strict_reconciliation='+ranked[0]['key'])
     if not ranked: print('found=false'); print('reason=no_eligible_item'); return 0
