@@ -399,6 +399,36 @@ def main():
             stamps.append(stamp.astimezone(dt.timezone.utc))
         except (ValueError,TypeError): pass
     if stamps and (now-max(stamps)).total_seconds()<3600: print('found=false'); print('reason=minimum_interval'); return 0
+    # Fila manual opcional para publicacoes excepcionais. Quando vazia ou ausente,
+    # o comportamento historico da selecao automatica permanece inalterado.
+    manual_queue=load('instagram/fila/manual-pendente.json',{'posts':[]})
+    manual_candidates=[]
+    for manual_path in manual_queue.get('posts',[]) if isinstance(manual_queue,dict) else []:
+        p=pathlib.Path(clean(manual_path))
+        if not p.exists():
+            continue
+        try:
+            manual_post=load(p,{})
+        except Exception:
+            continue
+        manual_key=clean(manual_post.get('idempotency_key') or manual_post.get('id'))
+        if not manual_key or manual_key in published:
+            continue
+        if manual_post.get('approved') is not True:
+            continue
+        if not clean(manual_post.get('image_url')) or not clean(manual_post.get('caption')):
+            continue
+        manual_candidates.append((manual_key,p))
+    strict_manual=[row for row in manual_candidates if row[0] in strict_pending]
+    if strict_manual or (manual_candidates and not strict_pending):
+        manual_key,p=(strict_manual or manual_candidates)[0]
+        batch=pathlib.Path('instagram/fila/automatica/lote-atual.json')
+        batch.parent.mkdir(parents=True,exist_ok=True)
+        batch.write_text(json.dumps({'posts':[str(p)]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+        print('priority_manual_post='+manual_key)
+        print('found=true')
+        print('batch_file='+str(batch))
+        return 0
     curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and all(clean(x.get(field)) for field in ('image_source_url','source_page_url','credito','licenca'))}
     ranked=candidates(events,news,published,pending,published_titles(ledger))
     # Tentativas ambíguas liberadas pelo cooldown vêm sempre antes de pauta nova.
