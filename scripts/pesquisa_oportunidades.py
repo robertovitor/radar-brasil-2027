@@ -96,23 +96,23 @@ HUB_URLS = (
     "https://jobs.fifa.com/",
     "https://plataforma.cbfacademy.com.br/pt-br/calendario",
     "https://plataforma.cbfacademy.com.br/pt-br/noticias/244-futebol-feminino-brasileiro",
+    "https://ludopedio.org.br/agenda-de-eventos/",
+    "https://ludopedio.org.br/agenda-de-eventos/?pagina=2",
+    "https://www.cob.org.br/cultura-educacao/cursos-do-iob",
+    "https://www.cob.org.br/time-brasil/mulher-no-esporte",
+    "https://prefeitura.rio/esporte/",
+    "https://womanifs.com/",
+    "https://www.prefeitura.poa.br/secopa2027",
+    "https://avai.com.br/categoria/futebol-feminino/",
+    "https://mineirao.com.br/noticias",
     "https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas",
     "https://www.gov.br/esporte/pt-br/noticias",
     "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
     "https://jogasp.prefeitura.sp.gov.br/",
     "https://prefeitura.sp.gov.br/web/esportes",
     "https://prefeitura.pbh.gov.br/esportes",
-    "https://womanifs.com/",
-    "https://ludopedio.org.br/agenda-de-eventos/",
-    "https://ludopedio.org.br/agenda-de-eventos/?pagina=2",
-    "https://www.cob.org.br/cultura-educacao/cursos-do-iob",
-    "https://www.cob.org.br/time-brasil/mulher-no-esporte",
-    "https://prefeitura.rio/esporte/",
-    "https://www.prefeitura.poa.br/secopa2027",
     "https://www.futebolpaulista.com.br/Noticias",
     "https://cepe.usp.br/courses/",
-    "https://avai.com.br/categoria/futebol-feminino/",
-    "https://mineirao.com.br/noticias",
 )
 
 SEARCH_QUERIES = (
@@ -369,7 +369,9 @@ def discover_hub_links(url: str) -> list[str]:
         if any(term in blob for term in eligible_terms) or guide_event:
             seen.add(href)
             out.append(href)
-            if len(out) >= 16:
+            high_signal = any(x in hub_host for x in ("ludopedio.org.br", "guiafutfem.com.br"))
+            hub_limit = 12 if high_signal else 6
+            if len(out) >= hub_limit:
                 break
     return out
 
@@ -398,15 +400,32 @@ def relevance_score(title: str, text: str, url: str) -> int:
     return score
 
 def classify(title: str, text: str, url: str) -> str:
+    title_b = norm(title)
     b = norm(f"{title} {text[:50000]}")
     parsed = urllib.parse.urlsplit(url)
     host = (parsed.hostname or "").lower()
     path = parsed.path.lower()
 
-    # O tipo da oportunidade deve vencer palavras genéricas de CTA/rodapé
-    # ("Apply", "Career", "vaga"), que aparecem em páginas de cursos e voluntariado.
     if "jobs.fifa.com" in host and "/postings/" in path:
         return "Trabalho"
+
+    # O título é a evidência mais forte do tipo; evita que palavras de menu/rodapé
+    # façam um curso virar congresso ou uma chamada virar curso.
+    if "volunt" in title_b:
+        return "Voluntariado"
+    if "curso" in title_b or "capacit" in title_b or "formacao" in title_b:
+        return "Curso"
+    if "summit" in title_b:
+        return "Summit"
+    if "congres" in title_b:
+        return "Congresso"
+    if "seletiva" in title_b or "peneira" in title_b or "avaliacao" in title_b:
+        return "Seletiva"
+    if "chamada" in title_b or "submiss" in title_b or "call for papers" in title_b:
+        return "Chamada"
+    if "workshop" in title_b or "oficina" in title_b:
+        return "Workshop"
+
     if "volunt" in b or "volunteer" in path:
         return "Voluntariado"
     if "summit" in b or "summit" in path:
@@ -541,18 +560,27 @@ def parse_named_date(day: str, month_name: str, year: str | None) -> str:
 def extract_deadline(text: str) -> str:
     compact = re.sub(r"\s+", " ", text[:120000])
 
-    m = re.search(
-        r"(?i)(?:data limite inscri[cç][aã]o|data de encerramento|prazo(?: para)? submiss[aã]o|submiss[oõ]es?\s*(?:at[eé])?|inscri[cç][oõ]es?\s*(?:at[eé])?)\s*[:\-]?\s*(?:at[eé]\s*)?(\d{1,2})/(\d{1,2})/(20\d{2})",
-        compact,
-    )
-    if m:
+    def numeric_after(labels: str) -> str:
+        m = re.search(
+            rf"(?i)(?:{labels})\s*[:\-]?\s*(?:at[eé]\s*)?(\d{{1,2}})/(\d{{1,2}})/(20\d{{2}})",
+            compact,
+        )
+        if not m:
+            return ""
         try:
             return dt.date(int(m.group(3)), int(m.group(2)), int(m.group(1))).isoformat()
         except ValueError:
-            pass
+            return ""
+
+    # Ordem semântica: prazo de inscrição/submissão > encerramento geral da atividade.
+    deadline = numeric_after(
+        r"data limite inscri[cç][aã]o|prazo(?: para)? submiss[aã]o|submiss[oõ]es?\s*(?:at[eé])?|inscri[cç][oõ]es?\s*(?:at[eé])?"
+    )
+    if deadline:
+        return deadline
 
     patterns = (
-        r"(?i)(?:application deadline|deadline|data limite inscri[cç][aã]o|data de encerramento|prazo(?: de)? inscri[cç][aã]o|prazo(?: para)? submiss[aã]o|submiss[oõ]es? at[eé]|inscri[cç][oõ]es? at[eé]|est[aá] aberta at[eé])\s*[:\-]?\s*(?:at[eé]\s*)?(\d{1,2})\s+(?:de\s+)?([A-Za-zÀ-ÿ]+)(?:\s+(?:de\s+)?(20\d{2}))?",
+        r"(?i)(?:application deadline|deadline|data limite inscri[cç][aã]o|prazo(?: de)? inscri[cç][aã]o|prazo(?: para)? submiss[aã]o|submiss[oõ]es? at[eé]|inscri[cç][oõ]es? at[eé]|est[aá] aberta at[eé])\s*[:\-]?\s*(?:at[eé]\s*)?(\d{1,2})\s+(?:de\s+)?([A-Za-zÀ-ÿ]+)(?:\s+(?:de\s+)?(20\d{2}))?",
         r"(?i)(?:application deadline|deadline|prazo(?: de)? inscri[cç][aã]o|inscri[cç][oõ]es? at[eé])\s*[:\-]?\s*([A-Za-zÀ-ÿ]+)\s+(\d{1,2}),?\s+(20\d{2})",
         r"(?i)(?:application deadline|deadline|prazo(?: de)? inscri[cç][aã]o|inscri[cç][oõ]es? at[eé])\s*[:\-]?\s*(20\d{2})-(\d{2})-(\d{2})",
     )
@@ -568,7 +596,8 @@ def extract_deadline(text: str) -> str:
             return dt.date(int(m.group(1)), int(m.group(2)), int(m.group(3))).isoformat()
         except ValueError:
             pass
-    return ""
+
+    return numeric_after(r"data de encerramento")
 
 def infer_status(text: str, deadline: str) -> str:
     today = now_br().date()
@@ -655,18 +684,20 @@ def role_focus_pt(title: str) -> str:
 
 def extract_summary(title: str, text: str, category: str, org: str = "") -> str:
     lines = [re.sub(r"\s+", " ", x).strip() for x in text.splitlines()]
-    candidates = []
+    participation_candidates = []
+    context_candidates = []
     for line in lines:
         if len(line) < 55 or len(line) > 420:
             continue
         b = norm(line)
         if norm(title) in b:
             continue
-        if contains_any(line, CORE_TERMS) or contains_any(line, WOMEN_FOOTBALL_TERMS) or contains_any(line, PARTICIPATION_TERMS):
-            candidates.append(line)
+        if contains_any(line, PARTICIPATION_TERMS):
+            participation_candidates.append(line)
+        elif contains_any(line, CORE_TERMS) or contains_any(line, WOMEN_FOOTBALL_TERMS) or contains_any(line, WOMEN_SPORT_TERMS):
+            context_candidates.append(line)
 
-    # Texto editorial já em português pode ser reaproveitado.
-    for candidate in candidates:
+    for candidate in participation_candidates + context_candidates:
         if looks_portuguese(candidate):
             return candidate[:320]
 
@@ -951,7 +982,7 @@ def main() -> int:
 
     finished = now_br()
     telemetry = {
-        "versao": "1.2",
+        "versao": "1.2.1",
         "inicio": started.isoformat(timespec="seconds"),
         "fim": finished.isoformat(timespec="seconds"),
         "consultas_airtable": 0,
