@@ -1,13 +1,38 @@
 {
   "versao": "1.0",
-  "inicio": "2026-09-24T10:09:00-03:00",
-  "fim": "2026-09-24T10:09:00-03:00",
+  "inicio": "2026-09-24T10:34:42-03:00",
+  "fim": "2026-09-24T10:34:48-03:00",
   "consultas_airtable": 0,
-  "queries": [],
+  "queries": [
+    {
+      "query": "site:jobs.fifa.com Brazil \"Women's World Cup 2027\"",
+      "resultados": 0
+    },
+    {
+      "query": "\"Copa do Mundo Feminina 2027\" voluntariado inscrição",
+      "resultados": 0
+    },
+    {
+      "query": "\"Copa do Mundo Feminina 2027\" vagas trabalho",
+      "resultados": 0
+    },
+    {
+      "query": "\"futebol feminino\" curso inscrições Brasil",
+      "resultados": 0
+    },
+    {
+      "query": "\"futebol feminino\" summit congresso inscrições Brasil",
+      "resultados": 0
+    },
+    {
+      "query": "\"CBF Academy\" inscreva-se 2026",
+      "resultados": 0
+    }
+  ],
   "urls_avaliadas": 5,
   "oportunidades_validas_na_execucao": 5,
-  "adicionadas": 5,
-  "atualizadas": 0,
+  "adicionadas": 0,
+  "atualizadas": 5,
   "total_arquivo": 5,
   "erros": [],
   "isolamento": {
@@ -15,6 +40,5 @@
     "eventos": "inalterado",
     "instagram": "inalterado",
     "alertas": "inalterado"
-  },
-  "observacao": "Carga inicial verificada em fontes oficiais; próxima execução passa a usar pesquisa automática conservadora."
+  }
 }
