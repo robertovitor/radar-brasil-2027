@@ -6,6 +6,24 @@ from zoneinfo import ZoneInfo
 from PIL import Image, ImageDraw, ImageFont
 from publicar_instagram import same_topic as publisher_same_topic
 
+try:
+    from instagram_visual_policy import (
+        load_policy as load_visual_policy,
+        render_owned_art,
+        visual_mode as policy_visual_mode,
+    )
+except Exception:
+    render_owned_art = None
+    def load_visual_policy():
+        return {
+            "enabled": False,
+            "fallback_to_legacy": True,
+            "opportunity_instagram_enabled": False,
+            "types": {},
+        }
+    def policy_visual_mode(kind, policy=None):
+        return "legacy"
+
 ROOT='https://raw.githubusercontent.com/robertovitor/radar-brasil-2027/main/'
 COMMONS_API='https://commons.wikimedia.org/w/api.php'
 SAFE_LEFT=150
@@ -169,23 +187,52 @@ def radar_content_ok(item):
         return any(norm(x) in text for x in RADAR_FOOTBALL_CONTENT_MARKERS)
     return True
 
-def candidates(events,news,published,pending,prior_titles=()):
+def candidates(events,news,opportunities,published,pending,prior_titles=()):
     out=[]
+    today_brt=dt.datetime.now(ZoneInfo('America/Sao_Paulo')).date()
     for x in events:
         title=clean(x.get('Titulo')); d=date(x.get('Data')); key='instagram:evento:'+clean(x.get('ID') or title).casefold()
         if title and d and key not in published and not base(x) and not any(duplicate_title(title,old) for old in prior_titles):
             place=', '.join(filter(None,[clean(x.get('Local')),clean(x.get('Cidade')),clean(x.get('UF'))]))
             subtitle=(clean(x.get('DataBR')) or d.strftime('%d/%m/%Y'))+' • '+(place or 'Local a definir')
             search_context=' '.join(filter(None,[title,clean(x.get('Cidade')),clean(x.get('UF')),clean(x.get('Local')),clean(x.get('Organizador'))]))
-            out.append(dict(key=key,title=title,date=d,type='evento',subtitle=subtitle,search_context=search_context,visual_places=place,caption=f"📅 {title}\n\nQuando: {clean(x.get('DataBR')) or d.strftime('%d/%m/%Y')}\nOnde: {place or 'Local a definir'}\n\n{clean(x.get('Observacoes'))}\n\nFonte: {clean(x.get('Organizador')) or 'Radar Brasil 2027'}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
+            event_date=clean(x.get('DataBR')) or d.strftime('%d/%m/%Y')
+            out.append(dict(key=key,title=title,date=d,type='evento',subtitle=subtitle,search_context=search_context,visual_places=place,display_date=event_date,display_place=place or 'Local a definir',caption=f"📅 {title}\n\nQuando: {event_date}\nOnde: {place or 'Local a definir'}\n\n{clean(x.get('Observacoes'))}\n\nFonte: {clean(x.get('Organizador')) or 'Radar Brasil 2027'}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     for x in news:
         title=clean(x.get('Titulo')); d=date(x.get('Data')); key='instagram:noticia:'+clean(x.get('Link') or title).casefold()
         if title and d and d<=dt.datetime.now(dt.timezone.utc).date() and key not in published and not base(x) and radar_content_ok(x) and not any(duplicate_title(title,old) for old in prior_titles):
             subtitle=(clean(x.get('Veiculo')) or 'Radar Brasil 2027')+' • '+d.strftime('%d/%m/%Y')
             search_context=' '.join(filter(None,[title,clean(x.get('Tema')),clean(x.get('CidadeUF')),clean(x.get('Veiculo'))]))
-            out.append(dict(key=key,title=title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,visual_places=clean(x.get('CidadeUF')),caption=f"📰 {title}\n\n{clean(x.get('Resumo'))}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
+            out.append(dict(key=key,title=title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,visual_places=clean(x.get('CidadeUF')),display_date=d.strftime('%d/%m/%Y'),display_place=clean(x.get('CidadeUF')),caption=f"📰 {title}\n\n{clean(x.get('Resumo'))}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
+    for x in opportunities:
+        title=clean(x.get('Titulo'))
+        status=norm(x.get('Status'))
+        link=clean(x.get('Link'))
+        if not title or not link or 'abert' not in status:
+            continue
+        deadline=date(x.get('PrazoInscricao'))
+        if deadline and deadline < today_brt:
+            continue
+        discovered=date(x.get('DataDescoberta')) or date(x.get('UltimaVerificacao')) or today_brt
+        key='instagram:oportunidade:'+clean(x.get('ID') or link or title).casefold()
+        if key in published or any(duplicate_title(title,old) for old in prior_titles):
+            continue
+        category=clean(x.get('Categoria')) or 'Oportunidade'
+        organization=clean(x.get('Organizacao')) or clean(x.get('Fonte')) or 'Radar Brasil 2027'
+        modality=clean(x.get('Modalidade'))
+        reach=clean(x.get('CidadeUF')) or clean(x.get('Abrangencia')) or 'Brasil'
+        where=' • '.join(v for v in (modality,reach) if v)
+        deadline_text='Prazo: '+deadline.strftime('%d/%m/%Y') if deadline else 'Inscrições abertas'
+        subtitle=' • '.join(v for v in (category,organization) if v)
+        summary=clean(x.get('Resumo'))
+        search_context=' '.join(filter(None,[title,category,organization,modality,reach]))
+        out.append(dict(
+            key=key,title=title,date=discovered,type='oportunidade',subtitle=subtitle,
+            search_context=search_context,visual_places=reach,display_date=deadline_text,
+            display_place=where,category=category,organization=organization,
+            caption=f"🎯 {title}\n\nTipo: {category}\nOrganização: {organization}\n{('Modalidade: '+modality) if modality else ''}\n{deadline_text}\n\n{summary}\n\nFonte: {clean(x.get('Fonte')) or organization}\n\n#RadarBrasil2027 #Oportunidades #CopaFeminina2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"
+        ))
     pending_order={clean(key):idx for idx,key in enumerate(pending)}
-    today_brt=dt.datetime.now(ZoneInfo('America/Sao_Paulo')).date()
     def rank(i):
         # Evento que acontece hoje tem prioridade editorial sobre a fila normal.
         # Depois dele, preserva exatamente a ordenação histórica da fila.
@@ -195,7 +242,7 @@ def candidates(events,news,published,pending,prior_titles=()):
         pending_idx=pending_order.get(i['key'])
         pending_tie=0 if pending_idx is not None else 1
         recent_pending=-(pending_idx if pending_idx is not None else -1)
-        type_tie=0 if i['type']=='evento' else 1
+        type_tie={'evento':0,'noticia':1,'oportunidade':2}.get(i['type'],3)
         return (today_event_tie,-i['date'].toordinal(),pending_tie,recent_pending,type_tie,i['key'])
     return sorted(out,key=rank)
 
@@ -353,7 +400,7 @@ def make_original_art(out,title,kind,subtitle,key):
     return readable and f.size>=MIN_TITLE_FONT and len(lines)<=MAX_TITLE_LINES, f.size, len(lines)
 
 def main():
-    events=load('dados.json',[]); news=load('noticias.json',[]); ledger=load('instagram/publicados.json',{'published':[]}); state=load('instagram/conteudo-conhecido.json',{'pending_new':[]}); catalog=load('instagram/imagens-curadas.json',{'items':[]}); blocked=load('instagram/bloqueados-publicacao.json',{'blocked_keys':[]}); reservations=load('instagram/reservas-publicacao.json',{'reservations':[]})
+    events=load('dados.json',[]); news=load('noticias.json',[]); opportunities=load('oportunidades.json',[]); visual_policy=load_visual_policy(); ledger=load('instagram/publicados.json',{'published':[]}); state=load('instagram/conteudo-conhecido.json',{'pending_new':[]}); catalog=load('instagram/imagens-curadas.json',{'items':[]}); blocked=load('instagram/bloqueados-publicacao.json',{'blocked_keys':[]}); reservations=load('instagram/reservas-publicacao.json',{'reservations':[]})
     now=dt.datetime.now(dt.timezone.utc)
     ledger_keys={clean(x.get('key')) for x in ledger.get('published',[]) if isinstance(x,dict)}
     active_reservations=set()
@@ -420,7 +467,7 @@ def main():
             continue
         manual_candidates.append((manual_key,p))
     curated={clean(x.get('idempotency_key')):x for x in catalog.get('items',[]) if x.get('reutilizacao_permitida') is True and all(clean(x.get(field)) for field in ('image_source_url','source_page_url','credito','licenca'))}
-    ranked=candidates(events,news,published,pending,published_titles(ledger))
+    ranked=candidates(events,news,opportunities if visual_policy.get('opportunity_instagram_enabled') else [],published,pending,published_titles(ledger))
     # Tentativas ambíguas liberadas pelo cooldown vêm sempre antes de pauta nova.
     ranked.sort(key=lambda item: 0 if item['key'] in strict_pending else 1)
     # Reconciliações realmente elegíveis continuam acima de post manual novo.
@@ -440,6 +487,42 @@ def main():
     if ranked and ranked[0]['key'] in strict_pending:
         print('priority_strict_reconciliation='+ranked[0]['key'])
     if not ranked: print('found=false'); print('reason=no_eligible_item'); return 0
+    fallback_item=ranked[0]
+    owned_mode=policy_visual_mode(fallback_item.get('type'),visual_policy)
+    if render_owned_art is not None and owned_mode != 'legacy':
+        item=fallback_item
+        s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'
+        try:
+            readable,font_size,line_count,owned_meta=render_owned_art(
+                art,item,font=font,wrap=wrap,fit_title=fit_title,policy=visual_policy
+            )
+            title_ok=bool(readable and font_size>=MIN_TITLE_FONT and line_count<=MAX_TITLE_LINES)
+            if not title_ok:
+                raise RuntimeError('owned_art_title_readability_failed')
+            common={
+                'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],
+                'image_url':ROOT+art,'caption':item['caption'],'SEMANTIC_IMAGE_OK':True,
+                'TITLE_READABILITY_OK':True,'title_font_px':font_size,'title_lines':line_count,
+                'image_source_url':'','image_page_url':''
+            }
+            common.update(owned_meta)
+            pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True)
+            pathlib.Path(post).write_text(json.dumps(common,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+            pathlib.Path(batch).write_text(json.dumps({'posts':[post]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+            print('visual_policy_mode='+owned_mode)
+            print('visual_mode='+clean(common.get('visual_mode')))
+            print('SEMANTIC_IMAGE_OK=true')
+            print('TITLE_READABILITY_OK=true')
+            print('title_font_px='+str(font_size))
+            print('title_lines='+str(line_count))
+            print('found=true')
+            print('batch_file='+batch)
+            return 0
+        except Exception as exc:
+            print('owned_art_failed='+item['key']+':'+type(exc).__name__)
+            if not visual_policy.get('fallback_to_legacy',True):
+                print('found=false'); print('reason=owned_art_failed'); return 1
+            print('owned_art_fallback_to_legacy=true')
     # Prioriza conteúdo que possua fotografia real válida. Só usa a arte textual
     # quando nenhum dos itens elegíveis tiver imagem segura e não repetida.
     fallback_item=ranked[0]; item=None; c=None
