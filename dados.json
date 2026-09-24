@@ -1404,7 +1404,10 @@
     "Observacoes": "Sessão “Copa do Mundo Feminina FIFA 2027 no Brasil: mídia, visibilidade e construção de legado”, em 03/10/2026, das 9h30 às 11h30, durante a COB Expo 2026.",
     "Mes": "Out",
     "Ano": 2026,
-    "Regiao": "Sudeste"
+    "Regiao": "Sudeste",
+    "Hora": "09:30",
+    "HoraFim": "11:30",
+    "FusoHorario": "America/Sao_Paulo"
   },
   {
     "ID": "EVT-0085",
@@ -1845,7 +1848,11 @@
     "Observacoes": "Encontro Nacional do Futebol Feminino previsto para 24 e 25/09/2026, na Arena do Grêmio, em Porto Alegre. A programação propõe conectar gestão, mercado, políticas públicas, marcas e oportunidades no futebol feminino, com foco especial no legado do Mundial Feminino de 2027 no Brasil. Item incluído por relevância direta para o ecossistema, ativações e oportunidades de engajamento ligadas à Copa 2027.",
     "Mes": "Set",
     "Ano": 2026,
-    "Regiao": "Sul"
+    "Regiao": "Sul",
+    "Hora": "08:00",
+    "HoraFim": "18:00",
+    "DataFim": "2026-09-25",
+    "FusoHorario": "America/Sao_Paulo"
   },
   {
     "ID": "EVT-0105",
@@ -1929,7 +1936,9 @@
     "Observacoes": "",
     "Mes": "",
     "Ano": 2026,
-    "Regiao": ""
+    "Regiao": "",
+    "Hora": "17:00",
+    "FusoHorario": "America/Sao_Paulo"
   },
   {
     "ID": "CBF-2026-10-10-ARGENTINA",
@@ -2225,6 +2234,9 @@
     "Observacoes": "A goleira Lorena, titular da Seleção Brasileira principal, é a única brasileira indicada no futebol feminino da Bola de Ouro 2026 e concorre às categorias de melhor jogadora e melhor goleira. A CBF confirma a cerimônia para 26/10/2026, em Londres. A pauta acompanha o reconhecimento internacional de atleta central no ciclo da Copa Feminina 2027.",
     "Mes": "Out",
     "Ano": 2026,
-    "Regiao": ""
+    "Regiao": "",
+    "Hora": "20:00",
+    "HoraFim": "22:00",
+    "FusoHorario": "Europe/London"
   }
 ]
