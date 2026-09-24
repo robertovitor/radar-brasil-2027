@@ -33,8 +33,8 @@ STATUS_PATH = ROOT / "editorial" / "oportunidades-status.json"
 
 USER_AGENT = "RadarBrasil2027/1.0 (+https://radarfutebolfeminino2027.com.br/)"
 TIMEOUT = 12
-MAX_SEARCH_RESULTS_PER_QUERY = 5
-MAX_PAGES_PER_RUN = 28
+MAX_SEARCH_RESULTS_PER_QUERY = 6
+MAX_PAGES_PER_RUN = 40
 
 TRUSTED_DOMAINS = (
     "fifa.com",
@@ -46,6 +46,19 @@ TRUSTED_DOMAINS = (
     "sympla.com.br",
     "eventbrite.com.br",
     "womanifs.com",
+    "gov.br",
+    "prefeitura.sp.gov.br",
+    "fortaleza.ce.gov.br",
+    "prefeitura.pbh.gov.br",
+    "recife.pe.gov.br",
+    "salvador.ba.gov.br",
+    "portoalegre.rs.gov.br",
+    "rio.rj.gov.br",
+    "df.gov.br",
+    "fferj.com.br",
+    "fpf.org.br",
+    "cob.org.br",
+    "ifce.edu.br",
 )
 
 SEED_URLS = (
@@ -64,15 +77,34 @@ HUB_URLS = (
     "https://jobs.fifa.com/",
     "https://plataforma.cbfacademy.com.br/pt-br/calendario",
     "https://plataforma.cbfacademy.com.br/pt-br/noticias/244-futebol-feminino-brasileiro",
+    "https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas",
+    "https://www.gov.br/esporte/pt-br/noticias",
+    "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
+    "https://jogasp.prefeitura.sp.gov.br/",
+    "https://prefeitura.sp.gov.br/web/esportes",
+    "https://prefeitura.pbh.gov.br/esportes",
+    "https://womanifs.com/",
 )
 
 SEARCH_QUERIES = (
-    'site:jobs.fifa.com Brazil "Women\'s World Cup 2027"',
-    '"Copa do Mundo Feminina 2027" voluntariado inscrição',
-    '"Copa do Mundo Feminina 2027" vagas trabalho',
-    '"futebol feminino" curso inscrições Brasil',
-    '"futebol feminino" summit congresso inscrições Brasil',
-    '"CBF Academy" inscreva-se 2026',
+    '"Copa do Mundo Feminina 2027" voluntariado inscrição Brasil',
+    '"Copa do Mundo Feminina 2027" vaga trabalho contratação Brasil',
+    '"Copa do Mundo Feminina 2027" curso capacitação inscrições Brasil',
+    '"futebol feminino" curso inscrições Brasil 2026 2027',
+    '"futebol feminino" summit congresso workshop inscrições Brasil 2026 2027',
+    'site:sympla.com.br "futebol feminino" curso OR workshop OR congresso OR summit',
+    'site:eventbrite.com.br "futebol feminino" curso OR workshop OR congresso',
+    'site:womanifs.com inscrição OR registration',
+    'site:gov.br/esporte "futebol feminino" inscrição OR curso OR capacitação OR edital',
+    'site:prefeitura.sp.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
+    'site:fortaleza.ce.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
+    'site:prefeitura.pbh.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
+    'site:recife.pe.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
+    'site:salvador.ba.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
+    'site:portoalegre.rs.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
+    'site:df.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
+    'site:fferj.com.br "futebol feminino" inscrição OR curso OR workshop',
+    'site:fpf.org.br "futebol feminino" inscrição OR curso OR workshop',
 )
 
 HOST_CITIES = (
@@ -210,7 +242,7 @@ def ddg_search(query: str) -> list[str]:
     url = "https://html.duckduckgo.com/html/?" + urllib.parse.urlencode({"q": query})
     raw, _ = request_text(url, timeout=10)
     out, seen = [], set()
-    for m in re.finditer(r'(?is)<a\b[^>]+href=["\']([^"\']+)["\'][^>]*>', raw):
+    for m in re.finditer(r'(?is)<a\\b[^>]+href=["\\']([^"\\']+)["\\'][^>]*>', raw):
         href = html.unescape(m.group(1))
         if "uddg=" in href:
             try:
@@ -226,28 +258,66 @@ def ddg_search(query: str) -> list[str]:
                 break
     return out
 
+def bing_rss_search(query: str) -> list[str]:
+    """Fallback simples: o RSS do Bing expõe links finais sem JavaScript."""
+    url = "https://www.bing.com/search?" + urllib.parse.urlencode({"q": query, "format": "rss"})
+    raw, _ = request_text(url, timeout=10)
+    out, seen = [], set()
+    for item in re.findall(r"(?is)<item>(.*?)</item>", raw):
+        m = re.search(r"(?is)<link>(.*?)</link>", item)
+        if not m:
+            continue
+        href = html.unescape(m.group(1).strip())
+        href = re.sub(r"^<!\\[CDATA\\[(.*?)\\]\\]>$", r"\\1", href, flags=re.S)
+        href = canonical_url(href)
+        if href.startswith("http") and trusted_url(href) and href not in seen:
+            seen.add(href)
+            out.append(href)
+            if len(out) >= MAX_SEARCH_RESULTS_PER_QUERY:
+                break
+    return out
+
+def search_web(query: str) -> tuple[list[str], dict]:
+    """Combina motores e registra o que cada um conseguiu descobrir."""
+    out, seen = [], set()
+    engines = {}
+    for name, fn in (("duckduckgo", ddg_search), ("bing_rss", bing_rss_search)):
+        try:
+            results = fn(query)
+            engines[name] = len(results)
+            for href in results:
+                if href not in seen:
+                    seen.add(href)
+                    out.append(href)
+                    if len(out) >= MAX_SEARCH_RESULTS_PER_QUERY:
+                        break
+        except Exception as exc:
+            engines[name] = f"erro:{type(exc).__name__}"
+        if len(out) >= MAX_SEARCH_RESULTS_PER_QUERY:
+            break
+    return out, engines
+
 def discover_hub_links(url: str) -> list[str]:
-    """Descobre páginas de inscrição/vaga em hubs oficiais sem depender de buscador."""
+    """Descobre links com sinal de inscrição/participação em hubs confiáveis."""
     raw, final_url = request_text(url, timeout=12)
     out, seen = [], set()
-    for m in re.finditer(r'(?is)<a\b[^>]+href=["\']([^"\']+)["\'][^>]*>', raw):
+    for m in re.finditer(r'(?is)<a\\b[^>]+href=["\\']([^"\\']+)["\\'][^>]*>(.*?)</a>', raw):
         href = urllib.parse.urljoin(final_url, html.unescape(m.group(1)))
         href = canonical_url(href)
         if not trusted_url(href) or href in seen:
             continue
-        path = (urllib.parse.urlsplit(href).path or "").lower()
-        eligible = (
-            "/postings/" in path
-            or "/cursos/" in path
-            or "summit" in path
-            or "congres" in path
-            or "workshop" in path
-            or "volunteer" in path
+        label = norm(visible_text(m.group(2)))
+        path = norm(urllib.parse.urlsplit(href).path or "")
+        blob = f"{label} {path}"
+        eligible_terms = (
+            "inscri", "matricul", "volunt", "curso", "capacit", "formacao",
+            "summit", "congres", "workshop", "semin", "forum", "vaga",
+            "career", "job", "processo seletivo", "chamamento", "edital",
         )
-        if eligible:
+        if any(term in blob for term in eligible_terms):
             seen.add(href)
             out.append(href)
-            if len(out) >= 8:
+            if len(out) >= 10:
                 break
     return out
 
@@ -291,14 +361,18 @@ def classify(title: str, text: str, url: str) -> str:
         return "Congresso"
     if "workshop" in b or "oficina" in b:
         return "Workshop"
-    if "/cursos/" in path or "curso" in b or "capacita" in b or "formacao" in b:
+    if "/cursos/" in path or "curso" in b or "capacita" in b or "formacao" in b or "matricula" in b:
         return "Curso"
-    if any(x in b for x in ("employment type", "tipo de emprego", "job description", "career opportunity", "vaga de emprego")):
+    if any(x in b for x in (
+        "employment type", "tipo de emprego", "job description", "career opportunity",
+        "vaga de emprego", "processo seletivo", "contratacao", "recursos humanos",
+    )):
         return "Trabalho"
     return "Outros"
 
 def organisation(url: str, text: str) -> str:
     host = (urllib.parse.urlsplit(url).hostname or "").lower()
+    path = urllib.parse.urlsplit(url).path
     if "fifa.com" in host:
         return "FIFA"
     if "cbfacademy.com.br" in host:
@@ -311,6 +385,32 @@ def organisation(url: str, text: str) -> str:
         return "Eventbrite"
     if "womanifs.com" in host:
         return "Women in Football Summit"
+    if host.endswith("gov.br") and "/esporte/" in path:
+        return "Ministério do Esporte"
+    if "prefeitura.sp.gov.br" in host:
+        return "Prefeitura de São Paulo"
+    if "fortaleza.ce.gov.br" in host:
+        return "Prefeitura de Fortaleza"
+    if "prefeitura.pbh.gov.br" in host:
+        return "Prefeitura de Belo Horizonte"
+    if "recife.pe.gov.br" in host:
+        return "Prefeitura do Recife"
+    if "salvador.ba.gov.br" in host:
+        return "Prefeitura de Salvador"
+    if "portoalegre.rs.gov.br" in host:
+        return "Prefeitura de Porto Alegre"
+    if "rio.rj.gov.br" in host:
+        return "Prefeitura do Rio de Janeiro"
+    if host.endswith(".df.gov.br") or host == "df.gov.br":
+        return "Governo do Distrito Federal"
+    if "fferj.com.br" in host:
+        return "FERJ"
+    if "fpf.org.br" in host:
+        return "FPF"
+    if "cob.org.br" in host:
+        return "COB"
+    if "ifce.edu.br" in host:
+        return "IFCE"
     return host.replace("www.", "")
 
 def extract_mode(text: str, category: str) -> str:
@@ -724,11 +824,12 @@ def main() -> int:
 
     for query in SEARCH_QUERIES:
         try:
-            results = ddg_search(query)
-            query_stats.append({"query": query, "resultados": len(results)})
+            results, engines = search_web(query)
+            query_stats.append({"query": query, "resultados": len(results), "motores": engines})
             for url in results:
                 add_url(url)
         except Exception as exc:
+            query_stats.append({"query": query, "resultados": 0, "erro": f"{type(exc).__name__}:{exc}"})
             errors.append(f"search:{query}:{type(exc).__name__}:{exc}")
 
     urls = urls[:MAX_PAGES_PER_RUN]
@@ -746,7 +847,7 @@ def main() -> int:
 
     finished = now_br()
     telemetry = {
-        "versao": "1.0",
+        "versao": "1.1",
         "inicio": started.isoformat(timespec="seconds"),
         "fim": finished.isoformat(timespec="seconds"),
         "consultas_airtable": 0,
