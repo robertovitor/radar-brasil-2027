@@ -1,9 +1,10 @@
 name: Mesclar inbox editorial
 
 on:
-  # Um único executor: schedule e manual entram neste mesmo workflow.
+  # Executor principal :00 + recuperação direta :03.
   schedule:
     - cron: "0 * * * *"
+    - cron: "3 * * * *"
   workflow_dispatch:
   push:
     branches: [main]
@@ -12,6 +13,7 @@ on:
       - 'editorial/executar-automatico.txt'
 
 permissions:
+  actions: read
   contents: write
 
 concurrency:
@@ -26,21 +28,88 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+
+      - name: Decidir execução principal ou recuperação
+        id: gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          CURRENT_RUN_ID: ${{ github.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          should_run=true
+          recovery=false
+          schedule_expr="${{ github.event.schedule || '' }}"
+
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            hour_start="$(date -u +%Y-%m-%dT%H:00:00Z)"
+            runs="$(gh run list --repo "$GH_REPO" --workflow mesclar-inbox-editorial.yml --event schedule --limit 12 --json databaseId,createdAt,status,conclusion,event)"
+            other="$(echo "$runs" | jq -c --argjson current "$CURRENT_RUN_ID" --arg hour "$hour_start" '
+              [ .[]
+                | select(.databaseId != $current)
+                | select(.createdAt >= $hour)
+              ]
+              | sort_by(.createdAt)
+              | last // empty
+            ')"
+
+            if [ -n "$other" ]; then
+              other_status="$(echo "$other" | jq -r '.status')"
+              other_conclusion="$(echo "$other" | jq -r '.conclusion // ""')"
+              echo "merge_same_cycle_other=$other"
+
+              if [ "$other_status" = "queued" ] || [ "$other_status" = "in_progress" ]; then
+                should_run=false
+              elif [ "$other_status" = "completed" ] && [[ "$other_conclusion" =~ ^(success|neutral|skipped)$ ]]; then
+                should_run=false
+              fi
+            fi
+
+            if [ "$schedule_expr" = "3 * * * *" ] && [ "$should_run" = "true" ]; then
+              recovery=true
+            fi
+          fi
+
+          echo "should_run=$should_run" >> "$GITHUB_OUTPUT"
+          echo "recovery=$recovery" >> "$GITHUB_OUTPUT"
+          echo "merge_schedule_expression=$schedule_expr"
+          echo "merge_recovery=$recovery"
+
       - uses: actions/setup-python@v5
+        if: steps.gate.outputs.should_run == 'true'
         with:
           python-version: '3.12'
+
       - name: Registrar origem do gatilho
+        if: steps.gate.outputs.should_run == 'true'
         run: |
           echo "merge_direct_schedule=${{ github.event_name == 'schedule' }}"
           echo "trigger_event=${{ github.event_name }}"
+          echo "trigger_schedule=${{ github.event.schedule || '' }}"
+          echo "merge_recovery=${{ steps.gate.outputs.recovery }}"
           echo "triggered_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+      - name: Registrar skip redundante
+        if: steps.gate.outputs.should_run != 'true'
+        run: |
+          echo "merge_redundant_schedule_skipped=true"
+          echo "trigger_schedule=${{ github.event.schedule || '' }}"
+
       - name: Instalar dependências da planilha
+        if: steps.gate.outputs.should_run == 'true'
         run: pip install openpyxl==3.1.5
+
       - name: Mesclar itens aprovados e enfileirar novidades
+        if: steps.gate.outputs.should_run == 'true'
         run: python scripts/mesclar_inbox_editorial.py
+
       - name: Sincronizar planilha com os dados atuais
+        if: steps.gate.outputs.should_run == 'true'
         run: python scripts/sincronizar_planilha.py
+
       - name: Publicar alterações
+        if: steps.gate.outputs.should_run == 'true'
         run: |
           if git diff --quiet -- dados.json noticias.json Radar_Brasil_2027.xlsx editorial/inbox.json instagram/conteudo-conhecido.json; then
             echo 'Nenhuma inclusão nova.'

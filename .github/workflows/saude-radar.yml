@@ -22,102 +22,121 @@ jobs:
       - name: Registrar agenda nativa da saúde
         run: |
           echo "health_native_scheduler=true"
-          echo "health_scheduler_registration=v4"
+          echo "health_scheduler_registration=v5"
           echo "scheduled_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
-      - name: Verificar frescor da pesquisa editorial nativa
+      - name: Verificar pesquisa editorial nativa
+        id: pesquisa
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         shell: bash
         run: |
           set -euo pipefail
-          latest="$(gh run list --repo "$GH_REPO" --workflow pesquisa-editorial.yml --event schedule --limit 1 --json createdAt,status,conclusion,event --jq '.[0]')"
+          latest="$(gh run list --repo "$GH_REPO" --workflow pesquisa-editorial.yml --event schedule --limit 1 --json databaseId,createdAt,status,conclusion,event --jq '.[0]')"
           if [ -z "$latest" ] || [ "$latest" = "null" ]; then
             echo 'pesquisa_run_missing=true'
             exit 1
           fi
           echo "pesquisa_latest=$latest"
-          created="$(echo "$latest" | jq -r '.createdAt')"
-          status="$(echo "$latest" | jq -r '.status')"
-          conclusion="$(echo "$latest" | jq -r '.conclusion // ""')"
-          event="$(echo "$latest" | jq -r '.event')"
-          python - "$created" "$status" "$conclusion" "$event" <<'PY'
-          import datetime as dt
-          import sys
-          raw, status, conclusion, event = sys.argv[1:]
-          stamp = dt.datetime.fromisoformat(raw.replace('Z', '+00:00'))
-          age = (dt.datetime.now(dt.timezone.utc) - stamp.astimezone(dt.timezone.utc)).total_seconds()
-          print(f'pesquisa_run_age_seconds={int(age)}')
-          print(f'pesquisa_run_status={status}')
-          print(f'pesquisa_run_conclusion={conclusion}')
-          print(f'pesquisa_run_event={event}')
-          if event != 'schedule':
+          python - "$latest" <<'PY'
+          import datetime as dt, json, sys
+          run=json.loads(sys.argv[1])
+          stamp=dt.datetime.fromisoformat(run['createdAt'].replace('Z','+00:00'))
+          age=(dt.datetime.now(dt.timezone.utc)-stamp.astimezone(dt.timezone.utc)).total_seconds()
+          print(f"pesquisa_run_age_seconds={int(age)}")
+          print(f"pesquisa_run_status={run.get('status')}")
+          print(f"pesquisa_run_conclusion={run.get('conclusion')}")
+          print(f"pesquisa_run_event={run.get('event')}")
+          if run.get('event')!='schedule':
               raise SystemExit('pesquisa_run_not_direct_schedule=true')
-          if age > 5400:
+          if age>5400:
               raise SystemExit('pesquisa_run_stale_over_90m=true')
-          if status == 'completed' and conclusion not in ('success', 'neutral', 'skipped'):
+          if run.get('status')!='completed':
+              raise SystemExit('pesquisa_run_not_completed=true')
+          if run.get('conclusion') not in ('success','neutral','skipped'):
               raise SystemExit('pesquisa_run_failed=true')
           PY
 
-      - name: Verificar frescor do merge editorial
+      - name: Verificar merge direto do ciclo atual
+        id: merge
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         shell: bash
         run: |
           set -euo pipefail
-          latest="$(gh run list --repo "$GH_REPO" --workflow mesclar-inbox-editorial.yml --limit 1 --json createdAt,status,conclusion,event --jq '.[0]')"
-          if [ -z "$latest" ] || [ "$latest" = "null" ]; then
-            echo 'merge_run_missing=true'
-            exit 1
-          fi
-          echo "merge_latest=$latest"
-          created="$(echo "$latest" | jq -r '.createdAt')"
-          status="$(echo "$latest" | jq -r '.status')"
-          conclusion="$(echo "$latest" | jq -r '.conclusion // ""')"
-          python - "$created" "$status" "$conclusion" <<'PY'
-          import datetime as dt
-          import sys
-          raw, status, conclusion = sys.argv[1:]
-          stamp = dt.datetime.fromisoformat(raw.replace('Z', '+00:00'))
-          age = (dt.datetime.now(dt.timezone.utc) - stamp.astimezone(dt.timezone.utc)).total_seconds()
-          print(f'merge_run_age_seconds={int(age)}')
-          print(f'merge_run_status={status}')
-          print(f'merge_run_conclusion={conclusion}')
-          if age > 7200:
-              raise SystemExit('merge_run_stale_over_2h=true')
-          if status == 'completed' and conclusion not in ('success', 'neutral', 'skipped'):
-              raise SystemExit('merge_run_failed=true')
+          runs="$(gh run list --repo "$GH_REPO" --workflow mesclar-inbox-editorial.yml --event schedule --limit 12 --json databaseId,createdAt,status,conclusion,event)"
+          python - "$runs" <<'PY'
+          import datetime as dt, json, sys
+          runs=json.loads(sys.argv[1])
+          now=dt.datetime.now(dt.timezone.utc)
+          hour=now.replace(minute=0,second=0,microsecond=0)
+          cycle=[]
+          for run in runs:
+              stamp=dt.datetime.fromisoformat(run['createdAt'].replace('Z','+00:00'))
+              if stamp>=hour and run.get('event')=='schedule':
+                  cycle.append((stamp,run))
+          cycle.sort(key=lambda x:x[0])
+          print('merge_cycle_runs='+json.dumps([r for _,r in cycle],ensure_ascii=False))
+          if not cycle:
+              raise SystemExit('merge_direct_schedule_missing_current_cycle=true')
+          good=[(s,r) for s,r in cycle if r.get('status')=='completed' and r.get('conclusion') in ('success','neutral','skipped')]
+          if not good:
+              raise SystemExit('merge_current_cycle_without_success=true')
+          stamp,run=good[-1]
+          print(f"merge_verified_run_id={run.get('databaseId')}")
+          print(f"merge_verified_created_at={run.get('createdAt')}")
+          print(f"merge_verified_conclusion={run.get('conclusion')}")
           PY
 
-      - name: Verificar frescor do workflow do Instagram
+      - name: Verificar Instagram direto do ciclo atual
+        id: instagram
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         shell: bash
         run: |
           set -euo pipefail
-          latest="$(gh run list --repo "$GH_REPO" --workflow publicar-instagram-automatico.yml --limit 1 --json createdAt,status,conclusion,event --jq '.[0]')"
-          if [ -z "$latest" ] || [ "$latest" = "null" ]; then
-            echo 'instagram_run_missing=true'
+          runs="$(gh run list --repo "$GH_REPO" --workflow publicar-instagram-automatico.yml --event schedule --limit 12 --json databaseId,createdAt,status,conclusion,event)"
+          python - "$runs" <<'PY'
+          import datetime as dt, json, sys
+          runs=json.loads(sys.argv[1])
+          now=dt.datetime.now(dt.timezone.utc)
+          hour=now.replace(minute=0,second=0,microsecond=0)
+          cycle=[]
+          for run in runs:
+              stamp=dt.datetime.fromisoformat(run['createdAt'].replace('Z','+00:00'))
+              if stamp>=hour and run.get('event')=='schedule':
+                  cycle.append((stamp,run))
+          cycle.sort(key=lambda x:x[0])
+          print('instagram_cycle_runs='+json.dumps([r for _,r in cycle],ensure_ascii=False))
+          if not cycle:
+              raise SystemExit('instagram_direct_schedule_missing_current_cycle=true')
+          good=[(s,r) for s,r in cycle if r.get('status')=='completed' and r.get('conclusion') in ('success','neutral','skipped')]
+          if not good:
+              raise SystemExit('instagram_current_cycle_without_success=true')
+          stamp,run=good[-1]
+          print(f"instagram_verified_run_id={run.get('databaseId')}")
+          print(f"instagram_verified_created_at={run.get('createdAt')}")
+          print(f"instagram_verified_conclusion={run.get('conclusion')}")
+          PY
+
+      - name: Consolidar saúde operacional
+        if: always()
+        shell: bash
+        run: |
+          pesquisa="${{ steps.pesquisa.outcome }}"
+          merge="${{ steps.merge.outcome }}"
+          instagram="${{ steps.instagram.outcome }}"
+          echo "health_pesquisa=$pesquisa"
+          echo "health_merge=$merge"
+          echo "health_instagram=$instagram"
+          if [ "$pesquisa" != "success" ] || [ "$merge" != "success" ] || [ "$instagram" != "success" ]; then
+            echo "health_overall=failed"
             exit 1
           fi
-          echo "instagram_latest=$latest"
-          created="$(echo "$latest" | jq -r '.createdAt')"
-          status="$(echo "$latest" | jq -r '.status')"
-          conclusion="$(echo "$latest" | jq -r '.conclusion // ""')"
-          python - "$created" "$status" "$conclusion" <<'PY'
-          import datetime as dt
-          import sys
-          raw, status, conclusion = sys.argv[1:]
-          stamp = dt.datetime.fromisoformat(raw.replace('Z', '+00:00'))
-          age = (dt.datetime.now(dt.timezone.utc) - stamp.astimezone(dt.timezone.utc)).total_seconds()
-          print(f'instagram_run_age_seconds={int(age)}')
-          print(f'instagram_run_status={status}')
-          print(f'instagram_run_conclusion={conclusion}')
-          if age > 5400:
-              raise SystemExit('instagram_run_stale_over_90m=true')
-          if status == 'completed' and conclusion not in ('success', 'neutral', 'skipped'):
-              raise SystemExit('instagram_run_failed=true')
-          PY
+          echo "health_overall=success"
