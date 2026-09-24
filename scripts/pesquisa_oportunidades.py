@@ -238,7 +238,7 @@ def ddg_search(query: str) -> list[str]:
     url = "https://html.duckduckgo.com/html/?" + urllib.parse.urlencode({"q": query})
     raw, _ = request_text(url, timeout=10)
     out, seen = [], set()
-    for m in re.finditer(r'(?is)<a\\b[^>]+href=["\\']([^"\\']+)["\\'][^>]*>', raw):
+    for m in re.finditer(r'''(?is)<a\b[^>]+href=["']([^"']+)["'][^>]*>''', raw):
         href = html.unescape(m.group(1))
         if "uddg=" in href:
             try:
@@ -297,7 +297,7 @@ def discover_hub_links(url: str) -> list[str]:
     """Descobre links com sinal de inscrição/participação em hubs confiáveis."""
     raw, final_url = request_text(url, timeout=12)
     out, seen = [], set()
-    for m in re.finditer(r'(?is)<a\\b[^>]+href=["\\']([^"\\']+)["\\'][^>]*>(.*?)</a>', raw):
+    for m in re.finditer(r'''(?is)<a\b[^>]+href=["']([^"']+)["'][^>]*>(.*?)</a>''', raw):
         href = urllib.parse.urljoin(final_url, html.unescape(m.group(1)))
         href = canonical_url(href)
         if not trusted_url(href) or href in seen:
