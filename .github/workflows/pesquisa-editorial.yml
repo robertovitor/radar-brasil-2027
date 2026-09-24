@@ -98,6 +98,12 @@ jobs:
           git pull --rebase origin main
           git push origin main
 
+      - name: Falhar workflow se oportunidades falhou
+        if: steps.oportunidades.outputs.exit_code != '0'
+        run: |
+          echo "Pesquisa de oportunidades falhou com código ${{ steps.oportunidades.outputs.exit_code }}."
+          exit 1
+
       - name: Falhar workflow se a pesquisa falhou
         if: steps.pesquisa.outputs.exit_code != '0'
         run: |
