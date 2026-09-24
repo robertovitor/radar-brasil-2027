@@ -79,10 +79,52 @@ def seq(a,b):
 
 
 def parse_date(v):
-    try:
-        return datetime.strptime(str(v or '')[:10],'%Y-%m-%d').date()
-    except Exception:
+    """Parser tolerante: aceita ISO e formatos brasileiros comuns sem adivinhar datas."""
+    raw = str(v or '').strip()
+    if not raw:
         return None
+    raw = raw.split('T', 1)[0].strip()
+    for fmt in ('%Y-%m-%d', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%Y'):
+        try:
+            return datetime.strptime(raw[:10], fmt).date()
+        except Exception:
+            pass
+    m = re.search(r'\b(\d{1,2})[/-](\d{1,2})[/-](\d{4})\b', raw)
+    if m:
+        try:
+            return date(int(m.group(3)), int(m.group(2)), int(m.group(1)))
+        except ValueError:
+            pass
+    return None
+
+
+def normalize_date_field(item):
+    """Normaliza Data para ISO quando o valor puder ser interpretado com segurança."""
+    parsed = parse_date(item.get('Data') or item.get('DataBR'))
+    if parsed:
+        item = dict(item)
+        item['Data'] = parsed.isoformat()
+        item.setdefault('DataBR', parsed.strftime('%d/%m/%Y'))
+    return item
+
+
+def event_ready(item):
+    """Publicação exige só o mínimo seguro; demais campos podem ser enriquecidos depois."""
+    if not str(item.get('Titulo') or item.get('Título') or '').strip():
+        return False, 'titulo_ausente'
+    if parse_date(item.get('Data') or item.get('DataBR')) is None:
+        return False, 'data_pendente'
+    return True, 'apto'
+
+
+def news_ready(item):
+    if not str(item.get('Titulo') or item.get('Título') or '').strip():
+        return False, 'titulo_ausente'
+    if not (str(item.get('Link') or '').strip() or str(item.get('Veiculo') or item.get('Fonte') or '').strip()):
+        return False, 'fonte_ou_link_ausente'
+    if parse_date(item.get('Data') or item.get('DataBR')) is None:
+        return False, 'data_pendente'
+    return True, 'apto'
 
 
 def news_is_fresh(item, today=None):
@@ -220,8 +262,14 @@ def main():
     events,news,removed_events,removed_news=explicit_cleanup(events,news)
     inbox=load(INBOX,{'eventos':[],'noticias':[]})
 
-    fresh_events=[]; enriched_events=0
-    for x in inbox.get('eventos',[]):
+    fresh_events=[]; pending_events=[]; enriched_events=0
+    for raw in inbox.get('eventos',[]):
+        x=normalize_date_field(raw)
+        ready, pending_reason = event_ready(x)
+        if not ready:
+            pending_events.append(x)
+            print(f"evento_pendente_enriquecimento={pending_reason}|{x.get('Data','')}|{x.get('Titulo','')}")
+            continue
         merged=False
         for idx,y in enumerate(events):
             if not duplicate_incoming(x,y,'eventos'):
@@ -254,8 +302,14 @@ def main():
         if not merged:
             fresh_events.append(x)
 
-    fresh_news=[]; stale_news=[]
-    for x in inbox.get('noticias',[]):
+    fresh_news=[]; stale_news=[]; pending_news=[]
+    for raw in inbox.get('noticias',[]):
+        x=normalize_date_field(raw)
+        ready, pending_reason = news_ready(x)
+        if not ready:
+            pending_news.append(x)
+            print(f"noticia_pendente_enriquecimento={pending_reason}|{x.get('Data','')}|{x.get('Titulo','')}")
+            continue
         fresh, reason = news_is_fresh(x)
         if not fresh:
             stale_news.append((x, reason))
@@ -292,15 +346,18 @@ def main():
     if state != original_state:
         IG_STATE.write_text(json.dumps(state,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     if inbox.get('eventos') or inbox.get('noticias'):
-        INBOX.write_text(json.dumps({'eventos':[],'noticias':[]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+        # Itens incompletos não somem: ficam represados para enriquecimento na próxima rodada.
+        INBOX.write_text(json.dumps({'eventos':pending_events,'noticias':pending_news},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
-    duplicate_discarded=(len(inbox.get('eventos',[]))-len(fresh_events)) + (len(inbox.get('noticias',[]))-len(fresh_news)-len(stale_news))
+    duplicate_discarded=(len(inbox.get('eventos',[]))-len(fresh_events)-len(pending_events)) + (len(inbox.get('noticias',[]))-len(fresh_news)-len(stale_news)-len(pending_news))
     print(f'eventos_duplicados_removidos={len(removed_events)}')
     print(f'noticias_duplicadas_removidas={len(removed_news)}')
     print(f'eventos_incluidos={len(fresh_events)}')
     print(f'eventos_enriquecidos_com_horario={enriched_events}')
     print(f'noticias_incluidas={len(fresh_news)}')
     print(f'noticias_descartadas_por_frescor={len(stale_news)}')
+    print(f'eventos_pendentes_enriquecimento={len(pending_events)}')
+    print(f'noticias_pendentes_enriquecimento={len(pending_news)}')
     print(f'itens_descartados_como_duplicados={max(0,duplicate_discarded)}')
     print(f'chaves_instagram_removidas={len(drop)}')
     return 0
