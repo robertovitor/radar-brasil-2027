@@ -15,9 +15,9 @@ NEWS_OUTPUT = Path(os.environ.get("NEWS_OUTPUT_FILE", "noticias.json"))
 SHEET = "02_Eventos"
 NEWS_SHEET = "06_Noticias"
 FIELDS = [
-    "ID", "Titulo", "Status", "Data", "DataBR", "UF", "Cidade", "Categoria",
-    "Organizador", "Publico", "Patrocinador", "Local", "Latitude",
-    "Longitude", "Link", "Observacoes", "Mes", "Ano", "Regiao",
+    "ID", "Titulo", "Status", "Data", "DataBR", "Hora", "HoraFim", "FusoHorario",
+    "UF", "Cidade", "Categoria", "Organizador", "Publico", "Patrocinador", "Local",
+    "Latitude", "Longitude", "Link", "Observacoes", "Mes", "Ano", "Regiao",
 ]
 MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
           "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
@@ -123,16 +123,16 @@ def main():
     if missing:
         raise RuntimeError("Campos obrigatórios ausentes: " + ", ".join(missing))
 
-    existing_titles = {}
+    existing_by_id = {}
     if OUTPUT.is_file():
         try:
-            existing_titles = {
-                str(item.get("ID", "")): str(item.get("Titulo", "")).strip()
+            existing_by_id = {
+                str(item.get("ID", "")): item
                 for item in json.loads(OUTPUT.read_text(encoding="utf-8"))
-                if item.get("ID") and item.get("Titulo")
+                if isinstance(item, dict) and item.get("ID")
             }
         except (OSError, ValueError, TypeError):
-            existing_titles = {}
+            existing_by_id = {}
 
     events = []
     for row in sheet.iter_rows(min_row=header_row + 1, values_only=True):
@@ -143,14 +143,22 @@ def main():
             field: row[columns[field]] if field in columns else None
             for field in FIELDS
         }
+        existing = existing_by_id.get(str(event_id).strip(), {})
+        # Compatibilidade com planilhas antigas: se as colunas de horário ainda não
+        # existirem, preserva o valor já publicado em dados.json. Se a coluna existir
+        # e estiver vazia, respeita o vazio para permitir correção/remoção manual.
+        for field in ("Hora", "HoraFim", "FusoHorario"):
+            if field not in columns and existing.get(field) not in (None, ""):
+                event[field] = existing.get(field)
         date = as_date(event["Data"])
         for field in ("ID", "Status", "UF", "Cidade", "Categoria", "Organizador",
-                      "Titulo", "Patrocinador", "Local", "Link", "Observacoes", "Regiao"):
+                      "Titulo", "Patrocinador", "Local", "Link", "Observacoes", "Regiao",
+                      "Hora", "HoraFim", "FusoHorario"):
             event[field] = "" if event[field] is None else str(event[field]).strip()
         if event["Status"] == "Confirmado":
             event["Status"] = "Planejado"
         if not event["Titulo"]:
-            event["Titulo"] = existing_titles.get(event["ID"]) or fallback_title(event)
+            event["Titulo"] = str(existing.get("Titulo") or "").strip() or fallback_title(event)
         event["Data"] = date.isoformat()
         event["DataBR"] = date.strftime("%d/%m/%Y")
         event["Publico"] = as_number(event["Publico"], 0)
