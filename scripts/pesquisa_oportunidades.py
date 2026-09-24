@@ -532,6 +532,14 @@ def extract_mode(text: str, category: str) -> str:
         return "Presencial"
     return ""
 
+def normalize_area(value: str) -> str:
+    """Normaliza abrangências equivalentes para evitar filtros duplicados."""
+    raw = str(value or "").strip()
+    key = norm(raw)
+    if key in {"brazil", "brasil", "8 cidades-sede", "8 cidades sede"}:
+        return "Brasil"
+    return raw
+
 def extract_location(title: str, text: str) -> tuple[str, str, str]:
     blob = norm(f"{title}\n{text[:35000]}")
     found = []
@@ -542,7 +550,7 @@ def extract_location(title: str, text: str) -> tuple[str, str, str]:
         city, uf = found[0]
         return city, uf, f"{city}/{uf}"
     if len(found) > 1:
-        return "", "", "8 cidades-sede" if len(found) >= 6 else "Brasil"
+        return "", "", "Brasil"
     if re.search(r"\bbrazil\b|\bbrasil\b", blob):
         return "", "", "Brasil"
     return "", "", "Online" if "online" in blob else "Brasil"
@@ -819,7 +827,7 @@ def pinpoint_opportunities(feed_url: str) -> list[dict]:
         location_obj = row.get("location") if isinstance(row.get("location"), dict) else {}
         location_name = str(location_obj.get("name") or "").strip()
         city = uf = ""
-        area = location_name or "Brasil"
+        area = normalize_area(location_name or "Brasil")
         loc_norm = norm(location_name)
         for host_city, host_uf in HOST_CITIES:
             if norm(host_city) in loc_norm:
@@ -898,6 +906,7 @@ def merge(existing: list[dict], found: list[dict]) -> tuple[list[dict], int, int
     rows = list(by_url.values())
     today = now_br().date()
     for row in rows:
+        row["Abrangencia"] = normalize_area(row.get("Abrangencia", ""))
         deadline = row.get("PrazoInscricao")
         if deadline:
             try:
