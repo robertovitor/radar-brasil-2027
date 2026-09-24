@@ -1,0 +1,20 @@
+{
+  "versao": "1.0",
+  "inicio": "2026-09-24T10:09:00-03:00",
+  "fim": "2026-09-24T10:09:00-03:00",
+  "consultas_airtable": 0,
+  "queries": [],
+  "urls_avaliadas": 5,
+  "oportunidades_validas_na_execucao": 5,
+  "adicionadas": 5,
+  "atualizadas": 0,
+  "total_arquivo": 5,
+  "erros": [],
+  "isolamento": {
+    "noticias": "inalterado",
+    "eventos": "inalterado",
+    "instagram": "inalterado",
+    "alertas": "inalterado"
+  },
+  "observacao": "Carga inicial verificada em fontes oficiais; próxima execução passa a usar pesquisa automática conservadora."
+}
