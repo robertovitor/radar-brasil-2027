@@ -401,7 +401,62 @@ def relation_level(title: str, text: str, url: str) -> str:
     score = relevance_score(title, text, url)
     return "Alta" if score >= 8 else "Média"
 
-def extract_summary(title: str, text: str, category: str) -> str:
+def looks_portuguese(text: str) -> bool:
+    """Heurística conservadora para não publicar resumo bruto em outro idioma."""
+    b = f" {norm(text)} "
+    markers = (
+        " oportunidade ", " inscri", " futebol ", " profissionais ", " curso ",
+        " capacita", " voluntari", " particip", " trabalho ", " vaga ", " brasil ",
+        " organizacao ", " evento ", " publico ", " atuacao ", " equipe ",
+    )
+    return sum(1 for marker in markers if marker in b) >= 2
+
+def role_focus_pt(title: str) -> str:
+    """Traduz o foco funcional de títulos recorrentes do FIFA Careers."""
+    t = norm(title)
+    rules = (
+        ("accounts payable", "contas a pagar e rotinas financeiras"),
+        ("access management systems", "sistemas e aplicações de controle de acesso"),
+        ("data protection", "proteção de dados e privacidade"),
+        ("digital product", "produtos digitais"),
+        ("dressing and signage", "ambientação, identidade visual e sinalização"),
+        ("hospitality operations", "operações de hospitalidade e infraestrutura nos locais do torneio"),
+        ("host broadcast", "operações de transmissão da emissora anfitriã"),
+        ("iptv", "serviços de IPTV e distribuição de TV"),
+        ("legal", "coordenação jurídica"),
+        ("non-competition venue dressing", "ambientação e sinalização de locais não competitivos"),
+        ("recruitment & reporting", "recrutamento, indicadores e relatórios de pessoas"),
+        ("recruitment and reporting", "recrutamento, indicadores e relatórios de pessoas"),
+        ("business intelligence", "inteligência de negócios e dados"),
+        ("stadium safety", "segurança e proteção nos estádios"),
+        ("venue safety", "segurança e proteção nos locais do torneio"),
+        ("ticketing crm communication", "CRM e canais de comunicação da operação de ingressos"),
+        ("ticketing crm qa", "qualidade e testes de aceitação de sistemas de ingressos e CRM"),
+        ("commercial partners", "relacionamento com parceiros comerciais e clientes do mercado local na operação de ingressos"),
+        ("digital communications", "comunicação digital da operação de ingressos"),
+        ("customer care analyst", "atendimento ao público na operação de ingressos"),
+        ("customer care coordinator", "coordenação de atendimento ao público na operação de ingressos"),
+        ("general public customer care manager", "gestão do atendimento ao público na operação de ingressos"),
+        ("group sales", "vendas para grupos na operação de ingressos"),
+        ("member associations customer care", "atendimento às associações-membro na operação de ingressos"),
+        ("sales & strategy", "vendas e estratégia de ingressos"),
+        ("sales and strategy", "vendas e estratégia de ingressos"),
+        ("ticketing system", "sistemas da operação de ingressos"),
+        ("ticketing training", "treinamento da equipe de ingressos"),
+        ("venue technology", "tecnologia nos locais do torneio"),
+        ("volunteer operations", "operações do programa de voluntariado"),
+        ("warehouse & distribution", "armazenagem e distribuição"),
+        ("warehouse and distribution", "armazenagem e distribuição"),
+        ("workforce planning", "planejamento e operações de força de trabalho"),
+        ("travel", "operações de viagens"),
+        ("uniforms", "uniformes e operações de força de trabalho"),
+    )
+    for key, value in rules:
+        if key in t:
+            return value
+    return ""
+
+def extract_summary(title: str, text: str, category: str, org: str = "") -> str:
     lines = [re.sub(r"\s+", " ", x).strip() for x in text.splitlines()]
     candidates = []
     for line in lines:
@@ -412,15 +467,31 @@ def extract_summary(title: str, text: str, category: str) -> str:
             continue
         if contains_any(line, CORE_TERMS) or contains_any(line, WOMEN_FOOTBALL_TERMS) or contains_any(line, PARTICIPATION_TERMS):
             candidates.append(line)
-    if candidates:
-        return candidates[0][:320]
-    defaults = {
-        "Trabalho": "Oportunidade profissional relacionada ao ecossistema do futebol e à organização de grandes eventos.",
-        "Voluntariado": "Oportunidade de voluntariado relacionada à Copa do Mundo Feminina 2027 e ao futebol feminino.",
-        "Curso": "Curso ou capacitação com inscrição para profissionais e interessados no ecossistema do futebol.",
-        "Summit": "Encontro com inscrição para participação, networking e debates sobre o ecossistema do futebol.",
-    }
-    return defaults.get(category, "Oportunidade com inscrição para participação no ecossistema do futebol feminino.")
+
+    # Texto editorial já em português pode ser reaproveitado.
+    for candidate in candidates:
+        if looks_portuguese(candidate):
+            return candidate[:320]
+
+    focus = role_focus_pt(title)
+    org_name = org or "A organização"
+    if category == "Trabalho":
+        if focus:
+            return f"Oportunidade profissional da {org_name} ligada à organização da Copa do Mundo Feminina da FIFA 2027 no Brasil, com atuação em {focus}."
+        return f"Oportunidade profissional da {org_name} ligada à organização da Copa do Mundo Feminina da FIFA 2027 no Brasil. Consulte a vaga para responsabilidades e requisitos."
+    if category == "Voluntariado":
+        if focus:
+            return f"Oportunidade da {org_name} ligada à Copa do Mundo Feminina da FIFA 2027 no Brasil, com atuação em {focus}."
+        return f"Oportunidade de voluntariado da {org_name} relacionada à Copa do Mundo Feminina da FIFA 2027 e ao futebol feminino."
+    if category == "Curso":
+        return f"Curso ou capacitação da {org_name}, com inscrição para profissionais e interessados no ecossistema do futebol."
+    if category == "Summit":
+        return f"Encontro da {org_name} com inscrição para participação, networking e debates sobre o ecossistema do futebol."
+    if category == "Congresso":
+        return f"Congresso da {org_name} com inscrição para participação e troca de conhecimento sobre o ecossistema do futebol."
+    if category == "Workshop":
+        return f"Workshop da {org_name} com inscrição para formação prática e desenvolvimento de competências ligadas ao futebol."
+    return f"Oportunidade da {org_name} com inscrição para participação no ecossistema do futebol feminino."
 
 def stable_id(url: str, title: str) -> str:
     return "OPP-" + hashlib.sha1((canonical_url(url) + "|" + norm(title)).encode("utf-8")).hexdigest()[:12].upper()
@@ -462,7 +533,7 @@ def opportunity_from_url(url: str) -> dict | None:
         "DataInicio": "",
         "DataFim": "",
         "GratuitoPago": "",
-        "Resumo": extract_summary(title, text, category),
+        "Resumo": extract_summary(title, text, category, org),
         "Publico": "",
         "Link": final_url,
         "Fonte": org,
@@ -541,7 +612,7 @@ def pinpoint_opportunities(feed_url: str) -> list[dict]:
             "DataInicio": "",
             "DataFim": "",
             "GratuitoPago": "",
-            "Resumo": extract_summary(title, text, category),
+            "Resumo": extract_summary(title, text, category, "FIFA"),
             "Publico": "Profissionais que atendam aos requisitos da vaga",
             "Link": link,
             "Fonte": "FIFA Careers",
