@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260924-13",
-  "started_at": "2026-09-24T13:45:55-03:00",
-  "completed_at": "2026-09-24T13:48:58-03:00",
+  "cycle_id": "20260924-14",
+  "started_at": "2026-09-24T14:44:32-03:00",
+  "completed_at": "2026-09-24T14:46:09-03:00",
   "stage": "completed",
   "executor": "automation-operational",
   "airtable_reads_total": 2,
@@ -19,56 +19,112 @@
   ],
   "sugestoes_lidas": 30,
   "sugestoes_noticias_lidas": 25,
-  "candidatos_publicos": 18,
-  "aprovados_novos": 1,
-  "rejeitados": 7,
-  "duplicados": 10,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "candidatos_publicos": 26,
+  "aprovados_novos": 0,
+  "rejeitados": 9,
+  "duplicados": 17,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "auditoria": [
     {
       "origem": "airtable",
       "tabela": "Sugestões de Notícias",
       "record_id": "recEMozafV2fHIZQc",
       "titulo": "Instagram reel Da_H8zNpHxf",
-      "url": "https://www.instagram.com/reel/Da_H8zNpHxf/?stkn=MW8xNmYyNTExc3FtaA==",
+      "url": "https://www.instagram.com/reel/Da_H8zNpHxf/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: reel sem título, data, autoria ou descrição verificáveis em fonte pública indexada."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: título, data, autoria e descrição ainda não são verificáveis em fonte pública indexada."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões de Notícias",
       "record_id": "recJNn7oMAYYkDUgX",
       "titulo": "Instagram post DdSZg6MFM0_",
-      "url": "https://www.instagram.com/p/DdSZg6MFM0_/?stkn=MXBhMmY5Z25ydXhjcg==",
+      "url": "https://www.instagram.com/p/DdSZg6MFM0_/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: publicação sem conteúdo verificável fora da plataforma; faltam título, data e fonte identificável."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: conteúdo público insuficiente; faltam título, data e fonte identificável."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões de Notícias",
       "record_id": "recQuPg65uTMtnBjR",
       "titulo": "Instagram post DdcLeukn84d",
-      "url": "https://www.instagram.com/p/DdcLeukn84d/?stkn=MTJnZDBtcGR2cWU0MQ==",
+      "url": "https://www.instagram.com/p/DdcLeukn84d/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: publicação sem título, data ou descrição recuperáveis em fonte pública."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: título, data e descrição continuam sem confirmação pública."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões de Notícias",
       "record_id": "recZAi2P031UGM3TD",
       "titulo": "Instagram post DdRZR07Oauw",
-      "url": "https://www.instagram.com/p/DdRZR07Oauw/?stkn=MWowY3Mybm00MTZwbg==",
+      "url": "https://www.instagram.com/p/DdRZR07Oauw/",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: publicação sem título, data ou descrição recuperáveis em fonte pública."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: título, data e descrição continuam sem confirmação pública."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Brasil perde para Espanha e é eliminado nas quartas da Copa feminina Sub-20",
+      "titulo": "Miami sediará fase decisiva da Copa dos Campeões feminina de 2027",
+      "fonte": "Folha de S.Paulo",
+      "url": "https://www1.folha.uol.com.br/esporte/2026/09/miami-sediara-fase-decisiva-da-copa-dos-campeoes-feminina-de-2027.shtml",
+      "decisao": "rejeitado",
+      "motivo": "Torneio mundial de clubes nos Estados Unidos, fora do escopo do Radar Brasil 2027."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Brasil perde para Espanha nas quartas da Copa feminina Sub-20",
       "fonte": "UOL",
       "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/09/19/brasil-espanha-copa-do-mundo-feminina-sub-20.ghtm",
       "decisao": "rejeitado",
       "motivo": "Categoria Sub-20, excluída pela regra editorial."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Corinthians elimina Bahia e avança à final do Brasileiro Feminino",
+      "fonte": "Folha de S.Paulo",
+      "url": "https://www1.folha.uol.com.br/esporte/2026/09/corinthians-elimina-o-bahia-e-avanca-a-10a-final-consecutiva-do-brasileiro-feminino.shtml",
+      "decisao": "rejeitado",
+      "motivo": "Notícia de clubes; menção à presença de Arthur Elias não constitui desdobramento próprio da Seleção."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "CBV comenta regra que impacta Tifanny",
+      "fonte": "UOL",
+      "url": "https://www.uol.com.br/esporte/ultimas-noticias/2026/09/18/cbv-foi-coerente-justifica-presidente-sobre-medida-que-impacta-tifanny.ghtm",
+      "decisao": "rejeitado",
+      "motivo": "Voleibol, fora do escopo."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Fifa anuncia investimentos de R$ 4,2 bilhões na Copa 2027",
+      "fonte": "Agência Brasil",
+      "url": "https://agenciabrasil.ebc.com.br/esportes/noticia/2026-03/fifa-anuncia-investimentos-de-r-42-bilhoes-na-copa-feminina-de-2027",
+      "decisao": "duplicado",
+      "motivo": "Anúncio de março de 2026 já incorporado."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Seleção Brasileira convocada para jogos contra Argentina",
+      "fonte": "SportsCenter Brasil / Threads",
+      "url": "https://www.threads.com/%40sportscenterbr/post/DdmYF8DFZ5z/",
+      "decisao": "duplicado",
+      "motivo": "Convocação de 22/09/2026 já está no acervo."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Cidades-sede repercutem calendário da Copa 2027",
+      "fonte": "Lance!",
+      "url": "https://www.lance.com.br/copa-do-mundo-feminina/prefeituras-repercutem-definicao-dos-jogos-da-copa-do-mundo-feminina-de-2027.html",
+      "decisao": "duplicado",
+      "motivo": "Calendário e distribuição de jogos já incorporados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Convite ao voluntariado da Copa Feminina 2027",
+      "fonte": "Instagram",
+      "url": "https://www.instagram.com/",
+      "decisao": "duplicado",
+      "motivo": "Mesmo programa de voluntariado já registrado; resultado não oferece fato novo."
     },
     {
       "origem": "pesquisa_publica",
@@ -80,107 +136,131 @@
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Arthur Elias — perfil no Instagram",
-      "fonte": "Instagram",
-      "url": "https://www.instagram.com/arthureliastreinador/",
-      "decisao": "rejeitado",
-      "motivo": "Perfil social genérico, sem notícia ou evento específico verificável."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "FINAL FANTASY XIV FAN FESTIVAL 2026",
-      "fonte": "Square Enix",
-      "url": "https://fanfest.finalfantasyxiv.com/",
-      "decisao": "rejeitado",
-      "motivo": "Resultado homônimo sem relação com futebol feminino."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Nota oficial: lesão de Paloma Maciel",
-      "fonte": "CBF",
-      "url": "https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/nota-oficial-selecao-feminina-paloma",
+      "titulo": "Convocação: lista para jogos contra Argentina",
+      "fonte": "O Popular",
+      "url": "https://opopular.com.br/esporte/convocac-o-da-selec-o-veja-a-lista-de-arthur-elias-para-jogos-do-brasil-contra-argentina-1.3459190",
       "decisao": "duplicado",
-      "motivo": "Fato de 17/06/2026 já coberto no acervo; não há desdobramento recente."
+      "motivo": "Mesma convocação já incorporada."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "CNE define regras para calendário escolar durante a Copa 2027",
-      "fonte": "FGM-GO",
-      "url": "https://www.fgm-go.org.br/Imprensa/Noticias/Cne-define-regras-para-calendario-escolar-durante-a-copa-do-mundo-feminina-2027-e-garante-autonomia-a-municipios-1086/",
+      "titulo": "Mineirão recebe visita técnica da FIFA",
+      "fonte": "O Tempo",
+      "url": "https://www.otempo.com.br/sports/futebol-feminino/2026/9/15/mineirao-recebe-visita-tecnica-da-fifa-visando-a-copa-do-mundo-feminina-2027",
       "decisao": "duplicado",
-      "motivo": "Decisão e tramitação sobre férias escolares já incorporadas."
+      "motivo": "Visita técnica de 15/09/2026 já registrada."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Yanne celebra primeira convocação para a Seleção Brasileira Feminina",
-      "fonte": "Globo Esporte BA / Globoplay",
-      "url": "https://globoplay.globo.com/v/14987251/",
-      "decisao": "aprovado",
-      "motivo": "Primeira convocação e entrevista de atleta da Seleção principal; pauta nova e relevante para renovação do ciclo 2027."
+      "titulo": "Futebol feminino: audiência e oportunidade",
+      "fonte": "Sousa Advocacia",
+      "url": "https://sousaf.com.br/futebol-feminino-quando-a-audiencia-se-transforma-em-oportunidade/",
+      "decisao": "rejeitado",
+      "motivo": "Artigo opinativo genérico, sem anúncio, evento ou oportunidade nova confirmada."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Yanne vive expectativa por convocação após campanha do Bahia",
+      "titulo": "Fifa define jogos da repescagem da Copa 2027",
       "fonte": "ge",
-      "url": "https://ge.globo.com/ba/futebol/times/bahia/noticia/2026/09/22/yanne-elogia-campanha-historica-do-bahia-e-vive-expectativa-por-convocacao-sonho.ghtml",
+      "url": "https://ge.globo.com/futebol/futebol-internacional/noticia/2026/08/20/fifa-define-jogos-da-repescagem-que-decidira-ultimas-tres-vagas-para-copa-do-mundo-feminina.ghtml",
+      "decisao": "duplicado",
+      "motivo": "Formato e datas da repescagem já incorporados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Seleção feminina é convocada para amistosos contra Argentina",
+      "fonte": "SCTD",
+      "url": "https://sctd.com.br/esporte/selecao-brasileira-feminina-e-convocada-para-amistosos-contra-a-argentina/",
+      "decisao": "duplicado",
+      "motivo": "Mesma convocação já incorporada."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Pôsteres das cidades da Copa Feminina 2027",
+      "fonte": "Folha de S.Paulo",
+      "url": "https://www1.folha.uol.com.br/esporte/2026/02/fifa-divulga-posteres-das-cidades-da-copa-do-mundo-feminina-no-brasil-veja.shtml",
+      "decisao": "duplicado",
+      "motivo": "Pôsteres divulgados em fevereiro de 2026 já cobertos."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Consulta pública sobre legado da Copa 2027",
+      "fonte": "Agência Brasil / UOL",
+      "url": "https://noticias.uol.com.br/ultimas-noticias/agencia-brasil/2026/04/28/governo-abre-consulta-publica-para-construir-legado-da-copa-de-2027.htm",
+      "decisao": "duplicado",
+      "motivo": "Consulta de abril de 2026 já incorporada."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Convocação para amistoso na Arena de Pernambuco",
+      "fonte": "JC",
+      "url": "https://jc.uol.com.br/blog-do-torcedor/futebol/2026/09/22/selecao-feminina-e-convocada-para-amistoso-contra-a-argentina-na-arena-de-pernambuco.html",
+      "decisao": "duplicado",
+      "motivo": "Mesma convocação e amistosos já registrados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Perfil da secretária extraordinária da Copa 2027",
+      "fonte": "LinkedIn",
+      "url": "https://br.linkedin.com/in/d%C3%A9bora-rios-garcia-1a1b27b9",
       "decisao": "rejeitado",
-      "motivo": "Matéria anterior à convocação e centrada no clube; supersedida pelo fato confirmado e pela entrevista posterior."
+      "motivo": "Perfil profissional, sem fato novo editorial."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Brasil x Argentina no Beira-Rio — venda de ingressos",
-      "fonte": "Ticket and Go",
-      "url": "https://ticketandgo.com.br/evento/brasil-x-argentina-amistoso-selecao-brasileira-feminina-porto-alegre",
-      "decisao": "duplicado",
-      "motivo": "Amistoso de 10/10/2026 já registrado como evento; página comercial não traz desdobramento editorial novo."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Sorteio dos grupos da Copa Feminina 2027 será em 11 de dezembro",
-      "fonte": "Olympics.com",
-      "url": "https://www.olympics.com/pt/noticias/copa-do-mundo-feminina-2027-sorteio-grupos",
-      "decisao": "duplicado",
-      "motivo": "Data e local do sorteio já constam no acervo."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Credenciamento para convocação da Seleção Feminina",
-      "fonte": "CBF",
-      "url": "https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/convocacao-da-selecao-feminina-cbf-abre-credenciamento-para-imprensa",
-      "decisao": "duplicado",
-      "motivo": "Convocação de 22/09/2026 já registrada; credenciamento não é novo fato editorial."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Fifa abre inscrições para voluntários da Copa 2027",
-      "fonte": "Jornal Nacional / Facebook",
-      "url": "https://www.facebook.com/JornalNacional/videos/fifa-abre-inscri%C3%A7%C3%B5es-para-volunt%C3%A1rios-na-copa-do-mundo-feminina-2027ao-todo-ser%C3%A3/1642153144239559/",
-      "decisao": "duplicado",
-      "motivo": "Mesmo programa de voluntariado já registrado."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "A Copa do Mundo Feminina 2027 está chegando",
-      "fonte": "Instagram",
-      "url": "https://www.instagram.com/reel/Da_Nzd9jQ7v/",
+      "titulo": "A Copa do Mundo Feminina 2027 vai ser no Brasil",
+      "fonte": "Boqnews",
+      "url": "https://www.boqnews.com/esportes/a-copa-do-mundo-feminina-de-futebol-2027-vai-ser-no-brasil/",
       "decisao": "rejeitado",
-      "motivo": "Conteúdo social promocional genérico, sem novidade verificável."
+      "motivo": "Conteúdo antigo e genérico de maio de 2024."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Governo negocia ingressos populares para a Copa 2027",
-      "fonte": "ge",
-      "url": "https://ge.globo.com/futebol/copa-do-mundo/noticia/2026/09/09/copa-feminina-governo-negocia-ingressos-populares-e-cre-em-torneio-blindado-da-crise-na-fifa.ghtml",
+      "titulo": "Yanne é convocada para amistosos da Seleção",
+      "fonte": "Reddit",
+      "url": "https://www.reddit.com/r/futebol/comments/1wni9az/",
       "decisao": "duplicado",
-      "motivo": "Pauta já consta em noticias.json com a mesma URL."
+      "motivo": "Primeira convocação de Yanne já incorporada em noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Fifa abre inscrições para voluntários na Copa Feminina 2027",
+      "titulo": "Arquivo de esporte sobre a Lei Geral da Copa",
+      "fonte": "Na Boca da Noite",
+      "url": "https://nabocadanoite.com.br/category/esporte/",
+      "decisao": "rejeitado",
+      "motivo": "Página de arquivo com conteúdo genérico e antigo, sem URL editorial específica nova."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Voluntariado na Copa Feminina 2027",
+      "fonte": "Campo Grande News",
+      "url": "https://www.campograndenews.com.br/esportes/fifa-abre-cadastro-para-voluntarios-da-copa-do-mundo-feminina-de-2027",
+      "decisao": "duplicado",
+      "motivo": "Mesmo programa de voluntariado já incorporado."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Arthur Elias convoca 28 para amistosos contra Argentina",
+      "fonte": "Campo Grande News",
+      "url": "https://www.campograndenews.com.br/esportes/sem-marta-arthur-elias-convoca-28-para-amistosos-do-brasil-contra-a-argentina",
+      "decisao": "duplicado",
+      "motivo": "Mesma convocação já incorporada."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Seleção feminina é convocada para amistoso em Pernambuco",
+      "fonte": "Folha de Pernambuco",
+      "url": "https://www.folhape.com.br/esportes/selecao-brasileira-feminina-de-futebol-e-convocada-para-amistoso-em/514123/",
+      "decisao": "duplicado",
+      "motivo": "Mesma convocação e amistoso já incorporados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Fifa abre inscrições para voluntários na Copa 2027",
       "fonte": "UOL",
       "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/09/03/fifa-abre-inscricoes-para-voluntarios-na-copa-do-mundo-feminina-de-2027.ghtm",
       "decisao": "duplicado",
-      "motivo": "Mesmo programa de voluntariado já registrado."
+      "motivo": "Mesmo programa de voluntariado já incorporado."
     },
     {
       "origem": "pesquisa_publica",
@@ -188,31 +268,15 @@
       "fonte": "UOL",
       "url": "https://economia.uol.com.br/noticias/redacao/2026/08/14/copa-do-mundo-feminina-alcanca-750-mil-interessados-em-ingressos.ghtm",
       "decisao": "duplicado",
-      "motivo": "Indicadores e summit de patrocinadores já cobertos; matéria antiga sem atualização."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Seleção feminina terá amistosos contra Argentina e Japão",
-      "fonte": "Folha de S.Paulo",
-      "url": "https://www1.folha.uol.com.br/esporte/2026/09/selecao-feminina-tera-serie-de-amistosos-contra-argentina-e-japao.shtml",
-      "decisao": "duplicado",
-      "motivo": "Os quatro amistosos e suas datas já estão incorporados."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Brasil vence Pré-Olímpico Feminino de Vôlei",
-      "fonte": "UOL",
-      "url": "https://www.uol.com.br/esporte/ultimas-noticias/2026/09/13/pre-olimpico-volei-brasil-argentina-resultado-vaga-olimpiada.ghtm",
-      "decisao": "rejeitado",
-      "motivo": "Voleibol, fora do escopo do Radar."
+      "motivo": "Indicadores de interesse e patrocinadores já cobertos, sem atualização nova."
     }
   ],
   "observacoes_operacionais": [
     "Exatamente duas leituras completas do Airtable foram executadas e reutilizadas; nenhuma leitura adicional foi feita.",
     "Não havia eventos no backlog processável. Quatro sugestões de notícias permanecem Em verificação com PENDENTE_ENRIQUECIMENTO.",
-    "Nenhuma escrita no Airtable foi necessária: os quatro registros já continham status e resultado de enriquecimento compatíveis com a evidência desta rodada.",
-    "A pesquisa pública avaliou 18 candidatos: 1 aprovado, 7 rejeitados por motivo editorial e 10 duplicados comprovados.",
-    "A notícia sobre a primeira convocação de Yanne foi adicionada a editorial/inbox.json no commit efa0ad3466dd049df82a0ac0e22f915ea9c43ec3 e confirmada por releitura.",
-    "dados.json, noticias.json e a planilha não foram alterados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+    "Nenhuma escrita no Airtable foi necessária porque os quatro registros já continham status e justificativa adequados.",
+    "A pesquisa pública avaliou 26 candidatos: 9 rejeitados por motivo editorial e 17 duplicados comprovados contra os arquivos lidos no início da rodada.",
+    "A notícia sobre Yanne da rodada anterior já estava incorporada em noticias.json; editorial/inbox.json estava vazio.",
+    "Nenhuma novidade qualificada foi adicionada ao inbox. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
