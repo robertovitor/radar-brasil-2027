@@ -18,6 +18,8 @@ import urllib.parse
 import urllib.request
 import ssl
 from pathlib import Path
+from datetime import timedelta
+from zoneinfo import ZoneInfo
 
 V54_SCRIPT = Path(__file__).with_name('pesquisa_editorial_compat_v5_4.py')
 spec = importlib.util.spec_from_file_location('pesquisa_editorial_compat_v5_4', V54_SCRIPT)
@@ -651,15 +653,53 @@ def _known_event_time_keys():
                 keys.add((date,title,city))
     return keys
 
-def _apply_time_fields(event,candidate,default_timezone='America/Sao_Paulo'):
+BRASILIA_TIMEZONE='America/Sao_Paulo'
+
+def _wall_time_to_brasilia(date,time,source_timezone):
+    """Converte data/hora local da fonte para o horário oficial de Brasília."""
+    source_tz=str(source_timezone or BRASILIA_TIMEZONE).strip() or BRASILIA_TIMEZONE
+    base=pe.datetime.strptime(f'{date} {time}','%Y-%m-%d %H:%M').replace(tzinfo=ZoneInfo(source_tz))
+    converted=base.astimezone(ZoneInfo(BRASILIA_TIMEZONE))
+    return converted.date().isoformat(), converted.strftime('%H:%M')
+
+def _apply_time_fields(event,candidate,default_timezone=BRASILIA_TIMEZONE):
     hora=str(candidate.get('event_time') or '').strip()
     hora_fim=str(candidate.get('event_end_time') or '').strip()
     if not re.fullmatch(r'(?:[01]\d|2[0-3]):[0-5]\d',hora):
         return event
-    event=dict(event); event['Hora']=hora
+    event=dict(event)
+    source_timezone=str(candidate.get('event_timezone') or '').strip() or default_timezone
+    source_date=str(event.get('Data') or '').strip()
+    if not re.fullmatch(r'\d{4}-\d{2}-\d{2}',source_date):
+        return event
+    try:
+        start_date,start_time=_wall_time_to_brasilia(source_date,hora,source_timezone)
+    except Exception as exc:
+        print(f'event_time_timezone_conversion_failed={source_date}|{hora}|{source_timezone}|{type(exc).__name__}')
+        return event
+
+    event['Hora']=start_time
+    event['FusoHorario']=BRASILIA_TIMEZONE
+    if start_date != source_date:
+        event['DataCalendario']=start_date
+    else:
+        event.pop('DataCalendario',None)
+
     if re.fullmatch(r'(?:[01]\d|2[0-3]):[0-5]\d',hora_fim):
-        event['HoraFim']=hora_fim
-    event['FusoHorario']=str(candidate.get('event_timezone') or '').strip() or default_timezone
+        source_end_date=source_date
+        try:
+            start_source=pe.datetime.strptime(f'{source_date} {hora}','%Y-%m-%d %H:%M')
+            end_source=pe.datetime.strptime(f'{source_date} {hora_fim}','%Y-%m-%d %H:%M')
+            if end_source <= start_source:
+                source_end_date=(end_source+timedelta(days=1)).date().isoformat()
+            end_date,end_time=_wall_time_to_brasilia(source_end_date,hora_fim,source_timezone)
+            event['HoraFim']=end_time
+            if end_date != start_date:
+                event['DataFim']=end_date
+            elif event.get('DataFim') and str(event.get('DataFim')) != source_end_date:
+                event.pop('DataFim',None)
+        except Exception as exc:
+            print(f'event_end_time_timezone_conversion_failed={source_date}|{hora_fim}|{source_timezone}|{type(exc).__name__}')
     return event
 
 def _convocation_events_from_rss(rss):
@@ -899,7 +939,7 @@ def _events_from_candidates(candidates):
                 source_url=str(c.get('url') or CBF_OFFICIAL_EVENT_PAGES[0])
                 event={'ID':f'CBF-{date}-{rule["opponent"].upper()}','Titulo':event_title,'Status':'Planejado','Data':date,'DataBR':pe.datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'UF':uf,'Cidade':city,'Categoria':'Amistoso da Seleção Feminina','Organizador':'CBF','Publico':0,'Patrocinador':'','Local':venue,'Latitude':None,'Longitude':None,'Link':source_url,'Observacoes':f"Amistoso Brasil x {rule['opponent']} confirmado; evento materializado independentemente da notícia.",'Mes':('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')[int(date[5:7])-1],'Ano':int(date[:4]),'Regiao':{'RS':'Sul','PE':'Nordeste'}.get(uf,'')}
                 if event_time:
-                    timezone='Asia/Tokyo' if uf=='JP' else 'America/Sao_Paulo'
+                    timezone='Asia/Tokyo' if uf=='JP' else BRASILIA_TIMEZONE
                     event=_apply_time_fields(event,{'event_time':event_time,'event_timezone':timezone},timezone)
                     known_time.add(key)
                 out.append(event)
