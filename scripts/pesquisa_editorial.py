@@ -106,6 +106,42 @@ def processable(fields):
     st=norm(first(fields,'Status','status'))
     return st in ('','pendente','em verificacao','em verificação','aprovado')
 
+def pending_enrichment_reason(fields, kind):
+    """Retorna motivo apenas para entrada humana estruturalmente incompleta.
+
+    Não transforma falha editorial real em pendência: se título/link/data mínimos já
+    estão presentes e a validação rejeitou fonte, relevância, duplicidade ou frescor,
+    o chamador mantém a rejeição normal.
+    """
+    title=str(first(fields,'Título','Titulo','Título da notícia','Titulo da noticia','Nome','Evento','Evento sugerido')).strip()
+    desc=str(first(fields,'Descrição','Descricao','Resumo','Observações','Observacoes')).strip()
+    link=str(first(fields,'Link','URL','Link da notícia','Link da noticia','Fonte ou link')).strip()
+    source=str(first(fields,'Fonte','Veículo','Veiculo','Origem')).strip()
+
+    if kind=='eventos':
+        # Entrada tolerante: texto descritivo + alguma referência de fonte.
+        if not ((title or desc) and (link or source)):
+            return ''
+        raw_date=str(first(fields,'Data informada','Data','Data do evento','Data do Evento')).strip()
+        missing=[]
+        if not title: missing.append('título estruturado')
+        if not link: missing.append('link verificável')
+        if not raw_date: missing.append('data do evento')
+        if missing:
+            return 'PENDENTE_ENRIQUECIMENTO: falta ' + ', '.join(missing) + '.'
+        return ''
+
+    if kind=='noticias':
+        # Entrada tolerante: link sozinho OU texto/título + fonte.
+        if not (link or ((title or desc) and source)):
+            return ''
+        missing=[]
+        if not title: missing.append('título estruturado')
+        if not link: missing.append('link verificável')
+        if missing:
+            return 'PENDENTE_ENRIQUECIMENTO: falta ' + ', '.join(missing) + '.'
+    return ''
+
 def existing_keys():
     keys=set()
     for path in (ROOT/'dados.json', ROOT/'noticias.json', INBOX):
@@ -274,7 +310,7 @@ def public_research(keys):
 
 def main():
     started=now(); cycle=started.strftime('%Y%m%d-%H')
-    status={'cycle_id':cycle,'started_at':iso(started),'completed_at':None,'stage':'started','executor':'github-actions-native','airtable_reads_total':0,'airtable_reads':[],'sugestoes_lidas':0,'sugestoes_noticias_lidas':0,'candidatos_publicos':0,'aprovados_novos':0,'rejeitados':0,'duplicados':0,'inbox_itens_adicionados':0,'inbox_commit_needed':False,'auditoria':[],'observacoes_operacionais':''}
+    status={'cycle_id':cycle,'started_at':iso(started),'completed_at':None,'stage':'started','executor':'github-actions-native','airtable_reads_total':0,'airtable_reads':[],'sugestoes_lidas':0,'sugestoes_noticias_lidas':0,'candidatos_publicos':0,'aprovados_novos':0,'pendentes_enriquecimento':0,'rejeitados':0,'duplicados':0,'inbox_itens_adicionados':0,'inbox_commit_needed':False,'auditoria':[],'observacoes_operacionais':''}
     inbox=load(INBOX,{'eventos':[],'noticias':[]}); before=json.loads(json.dumps(inbox)); keys=existing_keys()
     try:
         if not TOKEN: raise RuntimeError('AIRTABLE_TOKEN ausente nos GitHub Actions Secrets')
@@ -291,8 +327,24 @@ def main():
                 audit_base={'origem':'airtable','tabela':table_name,'record_id':rec.get('id',''),'titulo':raw_title,'url':raw_link}
                 cand=candidate_from_record(rec,kind)
                 if not cand:
+                    pending_reason=pending_enrichment_reason(f,kind)
+                    if pending_reason:
+                        status['pendentes_enriquecimento']+=1
+                        status['auditoria'].append({**audit_base,'decisao':'pendente_enriquecimento','motivo':pending_reason})
+                        # Evita escrita repetitiva: só atualiza Airtable quando o estado/motivo muda.
+                        upd={}
+                        current_status=norm(first(f,'Status','status'))
+                        current_result=str(first(f,'Resultado da verificação','Resultado da verificacao')).strip()
+                        if 'Status' in f and current_status not in ('pendente','em verificacao','em verificação'):
+                            upd['Status']='Pendente'
+                        if 'Resultado da verificação' in f and current_result!=pending_reason:
+                            upd['Resultado da verificação']=pending_reason
+                        if 'Última verificação' in f and upd:
+                            upd['Última verificação']=iso()
+                        if upd: airtable_patch(table,rec['id'],upd)
+                        continue
                     status['rejeitados']+=1
-                    status['auditoria'].append({**audit_base,'decisao':'rejeitado','motivo':'Registro processável sem título/link válidos ou, para evento, sem data ISO válida.'})
+                    status['auditoria'].append({**audit_base,'decisao':'rejeitado','motivo':'Registro não pôde ser aprovado após validação estrutural/editorial; não classificado como pendência de enriquecimento.'})
                     continue
                 dup=('u:'+urlnorm(cand.get('Link'))) in keys or ('t:'+norm(cand.get('Titulo'))) in keys
                 if dup:
@@ -320,7 +372,7 @@ def main():
         status['inbox_commit_needed']=inbox!=before
         if inbox!=before: dump(INBOX,inbox)
         status['stage']='completed'
-        status['observacoes_operacionais']='Execução nativa GitHub. Exatamente duas leituras Airtable; pesquisa pública ampliada em múltiplos eixos via Google News RSS + GDELT, com deduplicação, filtro anti-base, confiança de domínio, validação de conteúdo e trilha de auditoria gravada no pesquisa-status.json. A auditoria reutiliza os dados já lidos e não faz chamadas adicionais ao Airtable.'
+        status['observacoes_operacionais']='Execução nativa GitHub. Exatamente duas leituras Airtable; pendências estruturais são reavaliadas com os mesmos registros já lidos, sem leitura Airtable adicional. Pesquisa pública ampliada em múltiplos eixos via Google News RSS + GDELT, com deduplicação, filtro anti-base, confiança de domínio, validação de conteúdo e trilha de auditoria gravada no pesquisa-status.json.'
         code=0
     except Exception as e:
         status['stage']='failed'; status['observacoes_operacionais']=f'{type(e).__name__}: {e}'

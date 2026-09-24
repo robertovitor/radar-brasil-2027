@@ -130,7 +130,7 @@ pe.request_bytes=_request_bytes_cbf_verified
 # Nenhuma leitura adicional do Airtable é feita.
 _original_candidate_from_record_v55 = pe.candidate_from_record
 _event_date_rescues = 0
-MAX_EVENT_DATE_RESCUES = 2
+MAX_EVENT_DATE_RESCUES = 4
 _EVENT_RESCUE_STOP = {
     'evento','eventos','cidade','cidades','brasil','copa','2027','para','com',
     'uma','das','dos','de','do','da','em','no','na','ao','aos'
@@ -147,15 +147,32 @@ _HOST_CITIES = {
     'brasilia':('Brasília','DF'),'brasília':('Brasília','DF'),
 }
 
-def _recent_record_for_rescue(record, max_age_days=7):
+def _event_rescue_age_days(record):
     raw=str(record.get('createdTime') or '').strip()
     if not raw:
-        return False
+        return None
     try:
         dt=pe.datetime.fromisoformat(raw.replace('Z','+00:00'))
-        return (pe.now().date()-dt.astimezone(pe.BRT).date()).days <= max_age_days
+        return max(0,(pe.now().date()-dt.astimezone(pe.BRT).date()).days)
     except Exception:
-        return False
+        return None
+
+def _event_rescue_due(record):
+    """Mantém retentativa indefinida sem martelar fontes públicas.
+
+    Até 7 dias, o registro é elegível em toda rodada. Depois disso, continua pendente
+    e recebe busca pública profunda uma vez a cada 6 horas, em slot estável por ID.
+    A reavaliação local do registro continua acontecendo em todas as rodadas.
+    """
+    age=_event_rescue_age_days(record)
+    if age is None or age <= 7:
+        return True
+    rid=str(record.get('id') or '')
+    slot=sum(ord(ch) for ch in rid) % 6
+    due=(pe.now().hour % 6)==slot
+    if not due:
+        print(f'event_date_rescue_deferred={rid}|age_days={age}|retry_slot={slot}')
+    return due
 
 def _event_rescue_tokens(title):
     return [x for x in pe.norm(title).split() if len(x)>=4 and x not in _EVENT_RESCUE_STOP]
@@ -265,7 +282,7 @@ def _date_from_event_text(text, published=None):
 
 def _recover_missing_event_date(record):
     global _event_date_rescues
-    if _event_date_rescues >= MAX_EVENT_DATE_RESCUES or not _recent_record_for_rescue(record):
+    if _event_date_rescues >= MAX_EVENT_DATE_RESCUES or not _event_rescue_due(record):
         return None
     fields=dict(record.get('fields',{}) or {})
     title=str(v54.compat.find_title(fields,'eventos') or v54._infer_title(fields,'')).strip()
