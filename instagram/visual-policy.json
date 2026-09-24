@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "enabled": true,
+  "fallback_to_legacy": true,
+  "opportunity_instagram_enabled": true,
+  "types": {
+    "evento": "text_art",
+    "noticia": "radar_art",
+    "oportunidade": "radar_art_opportunity"
+  }
+}
