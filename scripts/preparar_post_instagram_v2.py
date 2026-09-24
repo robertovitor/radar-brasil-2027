@@ -137,13 +137,13 @@ base.fit_title = fit_title_complete
 smart.base.fit_title = fit_title_complete
 
 def make_clean_fallback(out, title, kind, subtitle, key):
-    bg = (5,69,48) if kind == 'evento' else (12,61,84)
+    bg = (5,69,48) if kind == 'evento' else (194,151,23) if kind == 'oportunidade' else (12,61,84)
     im = Image.new('RGB', (1080,1080), bg)
     draw = ImageDraw.Draw(im, 'RGBA')
     safe_left, safe_right = 115, 965
     width = safe_right - safe_left
     draw.text((safe_left,38), 'RADAR BRASIL 2027', font=base.font(36,True), fill='white')
-    label = 'EVENTO' if kind == 'evento' else 'NOTÍCIA'
+    label = 'EVENTO' if kind == 'evento' else 'OPORTUNIDADE' if kind == 'oportunidade' else 'NOTÍCIA'
     draw.rounded_rectangle((safe_left,170,safe_left+205,228), radius=14, fill=(255,220,0,255))
     draw.text((safe_left+22,184), label, font=base.font(24,True), fill=(20,45,35))
     f, lines, readable = fit_title_complete(draw, title, width, start_size=82, min_size=58, max_lines=4)
@@ -271,14 +271,24 @@ def normalize_image_gate(batch_path='instagram/fila/automatica/lote-atual.json')
             post = json.loads(p.read_text(encoding='utf-8'))
         except Exception:
             continue
-        original_title = base.clean((post.get('caption') or '').split('\n',1)[0].lstrip('📅📰 '))
+        original_title = base.clean((post.get('caption') or '').split('\n',1)[0].lstrip('📅📰🎯 '))
         render_meta = TITLE_RENDER_META.get(original_title)
         if render_meta:
             post.update(render_meta)
             changed = True
         has_external = bool(base.clean(post.get('image_source_url')) or base.clean(post.get('image_page_url')))
-        fallback = base.clean(post.get('visual_mode')) == 'fallback_visual'
-        if fallback or not has_external:
+        visual_mode = base.clean(post.get('visual_mode'))
+        owned_art = visual_mode.startswith('radar_')
+        fallback = visual_mode == 'fallback_visual'
+        if owned_art:
+            post.update({
+                'SEMANTIC_IMAGE_SEARCH_DONE':False,
+                'SEMANTIC_IMAGE_OK':True,
+                'TEXT_FALLBACK':False,
+                'OWNED_ART':True,
+            })
+            changed = True
+        elif fallback or not has_external:
             post.update({'SEMANTIC_IMAGE_SEARCH_DONE':True,'SEMANTIC_IMAGE_OK':False,'TEXT_FALLBACK':True})
             changed = True
         if changed:
