@@ -59,6 +59,16 @@ TRUSTED_DOMAINS = (
     "fpf.org.br",
     "cob.org.br",
     "ifce.edu.br",
+    "prefeitura.poa.br",
+    "futebolpaulista.com.br",
+    "fpfacademia.futebolpaulista.com.br",
+    "usp.br",
+    "cepe.usp.br",
+    "guiafutfem.com.br",
+    "fenapaf.org.br",
+    "corporategamesbrasil.com",
+    "avai.com.br",
+    "mineirao.com.br",
 )
 
 SEED_URLS = (
@@ -67,6 +77,8 @@ SEED_URLS = (
     "https://jobs.fifa.com/postings/25e65e4b-c419-469a-870c-4e52dce3bc46",
     "https://cbfacademy.com.br/summit-cbf-academy-2026/",
     "https://plataforma.cbfacademy.com.br/pt-br/cursos/182-nutricao-no-futebol",
+    "https://www.sympla.com.br/evento/lgc/3568808",
+    "https://fenapaf.org.br/curso-integridade-futebol/",
 )
 
 PINPOINT_FEEDS = (
@@ -84,6 +96,11 @@ HUB_URLS = (
     "https://prefeitura.sp.gov.br/web/esportes",
     "https://prefeitura.pbh.gov.br/esportes",
     "https://womanifs.com/",
+    "https://www.prefeitura.poa.br/secopa2027",
+    "https://www.futebolpaulista.com.br/Noticias",
+    "https://cepe.usp.br/courses/",
+    "https://avai.com.br/categoria/futebol-feminino/",
+    "https://mineirao.com.br/noticias",
 )
 
 SEARCH_QUERIES = (
@@ -132,7 +149,8 @@ PARTICIPATION_TERMS = (
     "inscri", "inscreva", "matricul", "candidat", "apply", "application", "volunt",
     "vaga", "career", "job", "processo seletivo", "contrat", "edital", "chamamento",
     "curso", "summit", "congres", "workshop", "semin", "forum", "fórum",
-    "mentoria", "capacita", "credenciamento",
+    "mentoria", "capacita", "credenciamento", "seletiva", "peneira",
+    "chamada de artigo", "chamada de trabalhos", "formacao gratuita", "bolsa", "estagio",
 )
 CORE_TERMS = (
     "copa do mundo feminina", "copa feminina 2027", "mundial feminino 2027",
@@ -293,6 +311,14 @@ def search_web(query: str) -> tuple[list[str], dict]:
             break
     return out, engines
 
+def dynamic_hub_urls() -> list[str]:
+    """Fontes cuja URL depende da janela atual de oportunidades."""
+    today = now_br().date()
+    end = today + dt.timedelta(days=150)
+    return [
+        f"https://www.guiafutfem.com.br/eventos/{today.strftime('%d-%m-%Y')}/{end.strftime('%d-%m-%Y')}",
+    ]
+
 def discover_hub_links(url: str) -> list[str]:
     """Descobre links com sinal de inscrição/participação em hubs confiáveis."""
     raw, final_url = request_text(url, timeout=12)
@@ -309,11 +335,22 @@ def discover_hub_links(url: str) -> list[str]:
             "inscri", "matricul", "volunt", "curso", "capacit", "formacao",
             "summit", "congres", "workshop", "semin", "forum", "vaga",
             "career", "job", "processo seletivo", "chamamento", "edital",
+            "seletiva", "peneira", "chamada", "estagio", "bolsa",
         )
-        if any(term in blob for term in eligible_terms):
+        guide_event = False
+        hub_host = (urllib.parse.urlsplit(final_url).hostname or "").lower()
+        if "guiafutfem.com.br" in hub_host:
+            href_path = urllib.parse.urlsplit(href).path or ""
+            # Aceita páginas individuais de oportunidades/eventos, mas evita
+            # recircular para as páginas de arquivo por intervalo de datas.
+            guide_event = (
+                href_path.startswith("/eventos/")
+                and not re.match(r"^/eventos/\d{2}-\d{2}-\d{4}/\d{2}-\d{2}-\d{4}", href_path)
+            )
+        if any(term in blob for term in eligible_terms) or guide_event:
             seen.add(href)
             out.append(href)
-            if len(out) >= 10:
+            if len(out) >= 16:
                 break
     return out
 
@@ -407,6 +444,22 @@ def organisation(url: str, text: str) -> str:
         return "COB"
     if "ifce.edu.br" in host:
         return "IFCE"
+    if "prefeitura.poa.br" in host:
+        return "Prefeitura de Porto Alegre"
+    if "futebolpaulista.com.br" in host:
+        return "Federação Paulista de Futebol"
+    if "usp.br" in host:
+        return "Universidade de São Paulo"
+    if "guiafutfem.com.br" in host:
+        return "Guia do Futebol Feminino"
+    if "fenapaf.org.br" in host:
+        return "FENAPAF"
+    if "corporategamesbrasil.com" in host:
+        return "Corporate Games Brasil"
+    if "avai.com.br" in host:
+        return "Avaí FC"
+    if "mineirao.com.br" in host:
+        return "Mineirão"
     return host.replace("www.", "")
 
 def extract_mode(text: str, category: str) -> str:
@@ -808,7 +861,8 @@ def main() -> int:
         add_url(url)
 
     hub_stats = []
-    for hub in HUB_URLS:
+    all_hubs = list(HUB_URLS) + dynamic_hub_urls()
+    for hub in all_hubs:
         try:
             links = discover_hub_links(hub)
             hub_stats.append({"hub": hub, "resultados": len(links)})
