@@ -17,6 +17,7 @@ on:
       - 'scripts/pesquisa_editorial_compat_v5_3.py'
       - 'scripts/pesquisa_editorial_compat_v5_4.py'
       - 'scripts/pesquisa_editorial_compat_v5_5.py'
+      - 'scripts/pesquisa_oportunidades.py'
       - 'scripts/limpar_resumos_noticias.py'
       - '.github/workflows/pesquisa-editorial.yml'
 
@@ -63,6 +64,16 @@ jobs:
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
 
+      - name: Atualizar oportunidades (isolado)
+        id: oportunidades
+        shell: bash
+        run: |
+          set +e
+          python scripts/pesquisa_oportunidades.py
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
       - name: Sanear resumos contaminados já publicados
         shell: bash
         run: |
@@ -76,7 +87,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-          git add editorial/inbox.json editorial/pesquisa-status.json noticias.json
+          git add editorial/inbox.json editorial/pesquisa-status.json noticias.json oportunidades.json editorial/oportunidades-status.json
 
           if git diff --cached --quiet; then
             echo 'ERRO: pesquisa não alterou inbox, pesquisa-status.json nem resumos.'
