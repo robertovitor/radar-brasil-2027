@@ -16,10 +16,12 @@ EVENTS_SHEET = "02_Eventos"
 NEWS_SHEET = "06_Noticias"
 
 EVENT_FIELDS = [
-    "ID", "Titulo", "Status", "Data", "DataBR", "UF", "Cidade", "Categoria",
-    "Organizador", "Publico", "Patrocinador", "Local", "Latitude", "Longitude",
-    "Link", "Observacoes", "Mes", "Ano", "Regiao",
+    "ID", "Titulo", "Status", "Data", "DataBR", "Hora", "HoraFim", "FusoHorario",
+    "UF", "Cidade", "Categoria", "Organizador", "Publico", "Patrocinador", "Local",
+    "Latitude", "Longitude", "Link", "Observacoes", "Mes", "Ano", "Regiao",
 ]
+EVENT_OPTIONAL_FIELDS = {"Titulo", "DataBR", "Mes", "Ano", "Regiao", "Hora", "HoraFim", "FusoHorario"}
+EVENT_TIME_FIELDS = ("Hora", "HoraFim", "FusoHorario")
 NEWS_FIELDS = [
     "Data", "Titulo", "Tema", "CidadeUF", "Veiculo", "Link",
     "Sentimento", "Impacto", "Resumo",
@@ -73,7 +75,7 @@ def find_header(ws, fields, max_rows=50):
             best = (row_num, found)
         required = set(fields)
         if fields == EVENT_FIELDS:
-            required -= {"Titulo", "DataBR", "Mes", "Ano", "Regiao"}
+            required -= EVENT_OPTIONAL_FIELDS
         if required.issubset(found):
             return row_num, found
     if best:
@@ -106,10 +108,11 @@ def copy_row_style(ws, source_row, target_row):
         dst_dim.outlineLevel = src_dim.outlineLevel
 
 
-def update_filters_and_tables(ws, header_row, last_row):
+def update_filters_and_tables(ws, header_row, last_row, data_max_col=None):
     if ws.auto_filter and ws.auto_filter.ref:
         min_col, min_row, max_col, _ = range_boundaries(ws.auto_filter.ref)
         if min_row == header_row:
+            max_col = max(max_col, data_max_col or max_col)
             ws.auto_filter.ref = (
                 f"{get_column_letter(min_col)}{header_row}:"
                 f"{get_column_letter(max_col)}{last_row}"
@@ -117,6 +120,7 @@ def update_filters_and_tables(ws, header_row, last_row):
     for table in ws.tables.values():
         min_col, min_row, max_col, _ = range_boundaries(table.ref)
         if min_row == header_row:
+            max_col = max(max_col, data_max_col or max_col)
             table.ref = (
                 f"{get_column_letter(min_col)}{header_row}:"
                 f"{get_column_letter(max_col)}{last_row}"
@@ -125,6 +129,28 @@ def update_filters_and_tables(ws, header_row, last_row):
 
 def sync_sheet(ws, rows, fields):
     header_row, columns = find_header(ws, fields)
+
+    # A planilha histórica não possuía colunas de horário. Criamos somente as
+    # colunas opcionais de tempo quando ausentes, preservando todas as demais.
+    if fields == EVENT_FIELDS:
+        next_col = max(ws.max_column, max(columns.values(), default=0)) + 1
+        style_source_col = max(columns.values(), default=1)
+        for field in EVENT_TIME_FIELDS:
+            if field in columns:
+                continue
+            col_num = next_col
+            next_col += 1
+            columns[field] = col_num
+            src = ws.cell(header_row, style_source_col)
+            dst = ws.cell(header_row, col_num)
+            dst.value = field
+            if src.has_style:
+                dst._style = copy.copy(src._style)
+            if src.alignment:
+                dst.alignment = copy.copy(src.alignment)
+            if src.protection:
+                dst.protection = copy.copy(src.protection)
+
     first_data_row = header_row + 1
     old_last_row = ws.max_row
     template_row = first_data_row if first_data_row <= old_last_row else header_row
@@ -147,7 +173,9 @@ def sync_sheet(ws, rows, fields):
             ws.cell(row_num, columns["Data"]).number_format = "dd/mm/yyyy"
 
     last_row = max(header_row + len(rows), header_row + 1)
-    update_filters_and_tables(ws, header_row, last_row)
+    update_filters_and_tables(
+        ws, header_row, last_row, data_max_col=max(columns.values(), default=ws.max_column)
+    )
     return len(rows)
 
 
