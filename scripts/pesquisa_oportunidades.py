@@ -46,6 +46,10 @@ TRUSTED_DOMAINS = (
     "sympla.com.br",
     "eventbrite.com.br",
     "womanifs.com",
+    "ludopedio.org.br",
+    "cobexpo.com.br",
+    "cobexpo.soudaliga.com.br",
+    "prefeitura.rio",
     "gov.br",
     "prefeitura.sp.gov.br",
     "fortaleza.ce.gov.br",
@@ -79,6 +83,9 @@ SEED_URLS = (
     "https://plataforma.cbfacademy.com.br/pt-br/cursos/182-nutricao-no-futebol",
     "https://www.sympla.com.br/evento/lgc/3568808",
     "https://fenapaf.org.br/curso-integridade-futebol/",
+    "https://ludopedio.org.br/agenda-de-eventos/congresso-brasileiro-de-futebol-e-futsal-feminino/",
+    "https://prefeitura.rio/cidade/a-um-ano-da-copa-futebol-feminino-ja-e-realidade-em-projetos-da-secretaria-municipal-de-esportes/",
+    "https://cobexpo.com.br/venue/getv/",
 )
 
 PINPOINT_FEEDS = (
@@ -96,6 +103,11 @@ HUB_URLS = (
     "https://prefeitura.sp.gov.br/web/esportes",
     "https://prefeitura.pbh.gov.br/esportes",
     "https://womanifs.com/",
+    "https://ludopedio.org.br/agenda-de-eventos/",
+    "https://ludopedio.org.br/agenda-de-eventos/?pagina=2",
+    "https://www.cob.org.br/cultura-educacao/cursos-do-iob",
+    "https://www.cob.org.br/time-brasil/mulher-no-esporte",
+    "https://prefeitura.rio/esporte/",
     "https://www.prefeitura.poa.br/secopa2027",
     "https://www.futebolpaulista.com.br/Noticias",
     "https://cepe.usp.br/courses/",
@@ -150,7 +162,8 @@ PARTICIPATION_TERMS = (
     "vaga", "career", "job", "processo seletivo", "contrat", "edital", "chamamento",
     "curso", "summit", "congres", "workshop", "semin", "forum", "fórum",
     "mentoria", "capacita", "credenciamento", "seletiva", "peneira",
-    "chamada de artigo", "chamada de trabalhos", "formacao gratuita", "bolsa", "estagio",
+    "chamada", "chamada de artigo", "chamada de trabalhos", "submiss", "formacao gratuita",
+    "bolsa", "estagio", "avaliacao",
 )
 CORE_TERMS = (
     "copa do mundo feminina", "copa feminina 2027", "mundial feminino 2027",
@@ -158,8 +171,14 @@ CORE_TERMS = (
     "brazil 2027", "brasil 2027",
 )
 WOMEN_FOOTBALL_TERMS = (
-    "futebol feminino", "women's football", "womens football",
-    "seleção feminina", "selecao feminina", "women athlete", "mulheres no jogo",
+    "futebol feminino", "futebol de mulheres", "futebol por mulheres",
+    "women's football", "womens football", "seleção feminina", "selecao feminina",
+    "women athlete", "mulheres no jogo", "mulheres no futebol",
+)
+WOMEN_SPORT_TERMS = (
+    "mulher no esporte", "mulheres no esporte", "igualdade de gênero no esporte",
+    "igualdade de genero no esporte", "liderança feminina na gestão esportiva",
+    "lideranca feminina na gestao esportiva",
 )
 
 def now_br() -> dt.datetime:
@@ -335,7 +354,7 @@ def discover_hub_links(url: str) -> list[str]:
             "inscri", "matricul", "volunt", "curso", "capacit", "formacao",
             "summit", "congres", "workshop", "semin", "forum", "vaga",
             "career", "job", "processo seletivo", "chamamento", "edital",
-            "seletiva", "peneira", "chamada", "estagio", "bolsa",
+            "seletiva", "peneira", "chamada", "submiss", "avaliacao", "estagio", "bolsa",
         )
         guide_event = False
         hub_host = (urllib.parse.urlsplit(final_url).hostname or "").lower()
@@ -366,6 +385,8 @@ def relevance_score(title: str, text: str, url: str) -> int:
         score += 6
     if contains_any(blob, WOMEN_FOOTBALL_TERMS):
         score += 4
+    if contains_any(blob, WOMEN_SPORT_TERMS):
+        score += 3
     if "jobs.fifa.com" in url and ("2027" in b or "women" in b):
         score += 5
     if ("cbfacademy.com.br" in url or "plataforma.cbfacademy.com.br" in url) and ("futebol" in b or "football" in b):
@@ -392,8 +413,14 @@ def classify(title: str, text: str, url: str) -> str:
         return "Summit"
     if "congres" in b:
         return "Congresso"
+    if "seletiva" in b or "peneira" in b or "avaliacao" in b:
+        return "Seletiva"
+    if "chamada" in b or "submiss" in b or "call for papers" in b:
+        return "Chamada"
     if "workshop" in b or "oficina" in b:
         return "Workshop"
+    if "projeto" in b and ("vaga" in b or "inscri" in b or "matricul" in b):
+        return "Programa"
     if "/cursos/" in path or "curso" in b or "capacita" in b or "formacao" in b or "matricula" in b:
         return "Curso"
     if any(x in b for x in (
@@ -418,6 +445,12 @@ def organisation(url: str, text: str) -> str:
         return "Eventbrite"
     if "womanifs.com" in host:
         return "Women in Football Summit"
+    if "ludopedio.org.br" in host:
+        return "Ludopédio"
+    if "cobexpo.com.br" in host or "cobexpo.soudaliga.com.br" in host:
+        return "COB Expo"
+    if "prefeitura.rio" in host:
+        return "Prefeitura do Rio de Janeiro"
     if host.endswith("gov.br") and "/esporte/" in path:
         return "Ministério do Esporte"
     if "prefeitura.sp.gov.br" in host:
@@ -507,8 +540,19 @@ def parse_named_date(day: str, month_name: str, year: str | None) -> str:
 
 def extract_deadline(text: str) -> str:
     compact = re.sub(r"\s+", " ", text[:120000])
+
+    m = re.search(
+        r"(?i)(?:data limite inscri[cç][aã]o|data de encerramento|prazo(?: para)? submiss[aã]o|submiss[oõ]es?\s*(?:at[eé])?|inscri[cç][oõ]es?\s*(?:at[eé])?)\s*[:\-]?\s*(?:at[eé]\s*)?(\d{1,2})/(\d{1,2})/(20\d{2})",
+        compact,
+    )
+    if m:
+        try:
+            return dt.date(int(m.group(3)), int(m.group(2)), int(m.group(1))).isoformat()
+        except ValueError:
+            pass
+
     patterns = (
-        r"(?i)(?:application deadline|deadline|prazo(?: de)? inscri[cç][aã]o|inscri[cç][oõ]es? at[eé])\s*[:\-]?\s*(\d{1,2})\s+(?:de\s+)?([A-Za-zÀ-ÿ]+)\s+(?:de\s+)?(20\d{2})",
+        r"(?i)(?:application deadline|deadline|data limite inscri[cç][aã]o|data de encerramento|prazo(?: de)? inscri[cç][aã]o|prazo(?: para)? submiss[aã]o|submiss[oõ]es? at[eé]|inscri[cç][oõ]es? at[eé]|est[aá] aberta at[eé])\s*[:\-]?\s*(?:at[eé]\s*)?(\d{1,2})\s+(?:de\s+)?([A-Za-zÀ-ÿ]+)(?:\s+(?:de\s+)?(20\d{2}))?",
         r"(?i)(?:application deadline|deadline|prazo(?: de)? inscri[cç][aã]o|inscri[cç][oõ]es? at[eé])\s*[:\-]?\s*([A-Za-zÀ-ÿ]+)\s+(\d{1,2}),?\s+(20\d{2})",
         r"(?i)(?:application deadline|deadline|prazo(?: de)? inscri[cç][aã]o|inscri[cç][oõ]es? at[eé])\s*[:\-]?\s*(20\d{2})-(\d{2})-(\d{2})",
     )
@@ -538,7 +582,11 @@ def infer_status(text: str, deadline: str) -> str:
         except ValueError:
             pass
     b = norm(text[:120000])
-    if any(x in b for x in ("applications are now open", "inscricoes ja estao abertas", "inscricoes abertas", "apply now", "inscreva-se", "me inscrever")):
+    if any(x in b for x in (
+        "applications are now open", "inscricoes ja estao abertas", "inscricoes abertas",
+        "apply now", "inscreva-se", "me inscrever", "vagas disponiveis",
+        "fazer inscricao", "garanta seu curso", "garanta sua participacao",
+    )):
         return "Inscrições abertas"
     if any(x in b for x in ("avise-me", "abertura dos ingressos", "register your interest", "express your interest")):
         return "Inscrições em breve"
@@ -640,6 +688,12 @@ def extract_summary(title: str, text: str, category: str, org: str = "") -> str:
         return f"Congresso da {org_name} com inscrição para participação e troca de conhecimento sobre o ecossistema do futebol."
     if category == "Workshop":
         return f"Workshop da {org_name} com inscrição para formação prática e desenvolvimento de competências ligadas ao futebol."
+    if category == "Chamada":
+        return f"Chamada aberta divulgada por {org_name} para submissão ou participação em iniciativa ligada ao futebol feminino e à Copa de 2027."
+    if category == "Seletiva":
+        return f"Seletiva com inscrições abertas divulgada por {org_name} para participação no futebol feminino."
+    if category == "Programa":
+        return f"Programa de participação divulgado por {org_name}, com vagas ou inscrições relacionadas ao desenvolvimento do futebol feminino."
     return f"Oportunidade da {org_name} com inscrição para participação no ecossistema do futebol feminino."
 
 def stable_id(url: str, title: str) -> str:
@@ -897,7 +951,7 @@ def main() -> int:
 
     finished = now_br()
     telemetry = {
-        "versao": "1.1",
+        "versao": "1.2",
         "inicio": started.isoformat(timespec="seconds"),
         "fim": finished.isoformat(timespec="seconds"),
         "consultas_airtable": 0,
