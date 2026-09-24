@@ -92,19 +92,14 @@ SEARCH_QUERIES = (
     '"Copa do Mundo Feminina 2027" curso capacitação inscrições Brasil',
     '"futebol feminino" curso inscrições Brasil 2026 2027',
     '"futebol feminino" summit congresso workshop inscrições Brasil 2026 2027',
-    'site:sympla.com.br "futebol feminino" curso OR workshop OR congresso OR summit',
-    'site:eventbrite.com.br "futebol feminino" curso OR workshop OR congresso',
-    'site:womanifs.com inscrição OR registration',
-    'site:gov.br/esporte "futebol feminino" inscrição OR curso OR capacitação OR edital',
-    'site:prefeitura.sp.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
-    'site:fortaleza.ce.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
-    'site:prefeitura.pbh.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
-    'site:recife.pe.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
-    'site:salvador.ba.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
-    'site:portoalegre.rs.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
-    'site:df.gov.br "futebol feminino" inscrição OR curso OR voluntariado',
-    'site:fferj.com.br "futebol feminino" inscrição OR curso OR workshop',
-    'site:fpf.org.br "futebol feminino" inscrição OR curso OR workshop',
+    'site:sympla.com.br "futebol feminino" curso OR workshop OR congresso OR summit 2026 2027',
+    'site:eventbrite.com.br "futebol feminino" curso OR workshop OR congresso 2026 2027',
+    'site:womanifs.com inscrição OR registration 2026 2027',
+    'site:gov.br/esporte "futebol feminino" inscrição OR curso OR capacitação OR edital 2026 2027',
+    '"futebol feminino" inscrições "São Paulo" OR Fortaleza OR "Belo Horizonte" 2026 2027',
+    '"futebol feminino" inscrições Recife OR Salvador OR "Porto Alegre" OR Brasília 2026 2027',
+    'site:fferj.com.br "futebol feminino" inscrição OR curso OR workshop 2026 2027',
+    'site:fpf.org.br "futebol feminino" inscrição OR curso OR workshop 2026 2027',
 )
 
 HOST_CITIES = (
@@ -134,9 +129,10 @@ MONTHS = {
 }
 
 PARTICIPATION_TERMS = (
-    "inscri", "inscreva", "candidat", "apply", "application", "volunt",
-    "vaga", "career", "job", "curso", "summit", "congres", "workshop",
-    "semin", "forum", "fórum", "mentoria", "capacita", "credenciamento",
+    "inscri", "inscreva", "matricul", "candidat", "apply", "application", "volunt",
+    "vaga", "career", "job", "processo seletivo", "contrat", "edital", "chamamento",
+    "curso", "summit", "congres", "workshop", "semin", "forum", "fórum",
+    "mentoria", "capacita", "credenciamento",
 )
 CORE_TERMS = (
     "copa do mundo feminina", "copa feminina 2027", "mundial feminino 2027",
