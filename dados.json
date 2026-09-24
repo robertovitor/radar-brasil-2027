@@ -1959,7 +1959,9 @@
     "Observacoes": "Amistoso Brasil x Argentina confirmado; evento materializado independentemente da notícia.",
     "Mes": "Out",
     "Ano": 2026,
-    "Regiao": "Sul"
+    "Regiao": "Sul",
+    "Hora": "16:30",
+    "FusoHorario": "America/Sao_Paulo"
   },
   {
     "ID": "CBF-2026-10-13-ARGENTINA",
@@ -1980,7 +1982,9 @@
     "Observacoes": "Amistoso Brasil x Argentina confirmado; evento materializado independentemente da notícia.",
     "Mes": "Out",
     "Ano": 2026,
-    "Regiao": "Nordeste"
+    "Regiao": "Nordeste",
+    "Hora": "20:30",
+    "FusoHorario": "America/Sao_Paulo"
   },
   {
     "ID": "WIFS-2027-06-23-RJ",
@@ -2235,8 +2239,8 @@
     "Mes": "Out",
     "Ano": 2026,
     "Regiao": "",
-    "Hora": "20:00",
-    "HoraFim": "22:00",
-    "FusoHorario": "Europe/London"
+    "Hora": "17:00",
+    "HoraFim": "19:00",
+    "FusoHorario": "America/Sao_Paulo"
   }
 ]
