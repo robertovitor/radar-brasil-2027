@@ -121,7 +121,8 @@ def now_br() -> dt.datetime:
 
 def norm(value: str) -> str:
     import unicodedata
-    value = unicodedata.normalize("NFD", str(value or ""))
+    value = str(value or "").replace("’", "'").replace("‘", "'")
+    value = unicodedata.normalize("NFD", value)
     value = "".join(ch for ch in value if unicodedata.category(ch) != "Mn")
     return re.sub(r"\s+", " ", value).strip().lower()
 
