@@ -1,4 +1,51 @@
 {
-  "eventos": [],
-  "noticias": []
+  "eventos": [
+    {
+      "ID": "CBF-CONVOCACAO-2026-09-24",
+      "Titulo": "Convocação da Seleção Brasileira Feminina",
+      "Status": "Planejado",
+      "Data": "2026-09-24",
+      "DataBR": "24/09/2026",
+      "UF": "RJ",
+      "Cidade": "Rio de Janeiro",
+      "Categoria": "Convocação da Seleção Feminina",
+      "Organizador": "CBF",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "",
+      "Latitude": null,
+      "Longitude": null,
+      "Link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPaG1GUVdlOTBhS0l6Uk9QMDUzeTBNTHBmVmhud2ZxNXMzWFpObE5ERGt2Q0VKd0xZSFdCU3V3OUZoUUplbUxUb2xwSzExcm03Q1FJX1lKeV96NUNnT3JUeFF4bVVsdTQyZ1IzLWJJWjlQVDBjX1o5dHBLWnRVdW5IQ1R4M094RHhOZU5hRUhvNXRIU0J5TkxmNWc0N1pMeGphNWtNZ0h3?oc=5&hl=en-US&gl=US&ceid=US:en",
+      "Observacoes": "Convocação da Seleção Brasileira Feminina identificada em cobertura pública do próprio dia; seleções de base são excluídas.",
+      "Mes": "Set",
+      "Ano": 2026,
+      "Regiao": "Sudeste"
+    }
+  ],
+  "noticias": [
+    {
+      "Data": "2026-09-23",
+      "DataBR": "23/09/2026",
+      "Titulo": "Capital recebe Encontro Nacional do Futebol Feminino com foco no legado da Copa 2027 - Prefeitura de Porto Alegre",
+      "Tema": "Copa Feminina 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "prefeitura.poa.br",
+      "Link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNTGNLOVJ3cnpmU19zTDZEek1vZkdXTTFrZC1WMTVMNmZrVm9wTTM4eWV5VWdIYlRQYWt0UFV0RmN4eEtUQWdONG0tR0FZSjl6a1hqTFlxUDZNY3YxelZXRlFyVkY3MTR2MWZxX1BxUnZlZEJrMDI2djlzem5lZW1RU2E4YzEzSGFpMnltdWRvNE9PUXp4RzYtdkFuLUJoalpoSW5UTUJzVi1HMzFyeF9janVkVEVkaldLU0J0WXIwQnJsYmM?oc=5",
+      "Sentimento": "Neutro",
+      "Impacto": "Médio",
+      "Resumo": "Fonte: prefeitura.poa.br. Descoberta via Google News; URL editorial direta não resolvida automaticamente."
+    },
+    {
+      "Data": "2026-09-22",
+      "DataBR": "22/09/2026",
+      "Titulo": "Metade das convocadas para a Seleção Brasileira Feminina tem passagem pela dupla Gre-Nal - GZH",
+      "Tema": "Copa Feminina 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "gzh.com.br",
+      "Link": "https://news.google.com/rss/articles/CBMingJBVV95cUxNb01EZjNxY0hRV3ZhMnI3QjlyVGkwZDNSOU1ocTAwSk94dU04akx2VnVTbFNpNV9LUEVJVi13X3Rxa1U1RnhXbmZIc0pkNWZVdDdZYTlIQnZxSmF1OXRJbTZuUjNkNDJmYWJya1Nad0E4Zzk2TXFoYW4ta0VfZTgzcW80SGlPNlh4cFowbTJTSnZ6eDVxc2p2VTNxUnJVMzVwRGhtY3FQaW5sMnhzOEY2ajJ4Y2F5VlY2UzFDaGRNWXRSTUp5Ykl1RFplTXZTOF9TM25NUEZkQTVyVWxjYmNoMWYtZG9zOVM4WDJBSUtUTC1Ia1NuV0pmbV90bVRzQUJUb3g0a0t0Z2dwV0FfcDJhcXI3WFc1aUFfSW9KWlhB?oc=5",
+      "Sentimento": "Neutro",
+      "Impacto": "Médio",
+      "Resumo": "Fonte: gzh.com.br. Descoberta via Google News; URL editorial direta não resolvida automaticamente."
+    }
+  ]
 }
