@@ -6,7 +6,7 @@ sys.path. Ele faz quatro coisas:
 2) bloqueia notícias com mais de 30 dias antes da seleção para o Instagram;
 3) torna a consulta ao Wikimedia Commons mais estável, com cache, espaçamento
    entre chamadas e retry curto em HTTP 429 para preservar a busca de fotos;
-4) exige confirmação da entidade quando a pauta é sobre a Seleção Brasileira feminina.
+4) exige confirmação da entidade quando a pauta é sobre a Seleção Brasileira feminina;\n5) qualquer foto que mostre jogadora/equipe feminina só é aceita se os metadados confirmarem a Seleção Brasileira feminina.
 """
 from __future__ import annotations
 
@@ -134,6 +134,32 @@ def _brazil_wnt_item(item):
     return brazil and selection and female
 
 
+def _looks_like_women_player_photo(descriptor):
+    """Detecta metadados que indicam jogadora, elenco ou ação de futebol feminino.
+
+    É deliberadamente conservador: estádio/cidade/torcida não entram neste gate.
+    """
+    if _base is None:
+        return False
+    d = _base.norm(descriptor)
+    markers = (
+        r"\\bjogadora(?:s)?\\b",
+        r"\\bplayer(?:s)?\\b",
+        r"\\bfootballer(?:s)?\\b",
+        r"\\bsoccer player(?:s)?\\b",
+        r"\\bwomen(?:s)? (?:football|soccer) team\\b",
+        r"\\bfemale (?:football|soccer) team\\b",
+        r"\\bwomen(?:s)? national (?:football|soccer) team\\b",
+        r"\\bline[- ]?up\\b",
+        r"\\bsquad\\b",
+        r"\\bteam photo\\b",
+        r"\\btraining\\b",
+        r"\\btreino\\b",
+    )
+    female_context = bool(re.search(r"\\b(feminin[ao]|women|womens|woman|female)\\b", d))
+    return female_context and any(re.search(pattern, d) for pattern in markers)
+
+
 def _brazil_wnt_confirmed(descriptor):
     if _base is None:
         return False
@@ -162,9 +188,16 @@ if _base is not None and not getattr(_base, "_brazil_wnt_entity_gate_installed",
         if not ok or not _brazil_wnt_item(item):
             return ok, reason
         descriptor = _base.commons_descriptor(page, meta)
-        if not _brazil_wnt_confirmed(descriptor):
+        # Regra global: se a fotografia retrata jogadora(s)/equipe feminina,
+        # ela precisa ser inequivocamente da Seleção Brasileira feminina,
+        # mesmo quando a pauta não contém literalmente "Seleção Brasileira".
+        if _looks_like_women_player_photo(descriptor) and not _brazil_wnt_confirmed(descriptor):
+            return False, "non_brazil_wnt_player_photo_blocked"
+        if _brazil_wnt_item(item) and not _brazil_wnt_confirmed(descriptor):
             return False, "brazil_wnt_entity_not_confirmed"
-        return True, "brazil_wnt_entity_confirmed"
+        if _brazil_wnt_confirmed(descriptor):
+            return True, "brazil_wnt_entity_confirmed"
+        return ok, reason
 
     def _strict_curated_image_policy_ok(item, image):
         ok, reason = _original_curated_image_policy_ok(item, image)
@@ -177,9 +210,13 @@ if _base is not None and not getattr(_base, "_brazil_wnt_entity_gate_installed",
             _base.clean(image.get("visual_description")),
             _base.clean(image.get("tags")),
         ]))
-        if not _brazil_wnt_confirmed(descriptor):
+        if _looks_like_women_player_photo(descriptor) and not _brazil_wnt_confirmed(descriptor):
+            return False, "non_brazil_wnt_player_photo_blocked"
+        if _brazil_wnt_item(item) and not _brazil_wnt_confirmed(descriptor):
             return False, "brazil_wnt_entity_not_confirmed"
-        return True, "brazil_wnt_entity_confirmed"
+        if _brazil_wnt_confirmed(descriptor):
+            return True, "brazil_wnt_entity_confirmed"
+        return ok, reason
 
     _base.semantic_image_ok = _strict_semantic_image_ok
     _base.curated_image_policy_ok = _strict_curated_image_policy_ok
