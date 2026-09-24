@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-09-24T14:50:43-03:00",
-  "fim": "2026-09-24T14:52:25-03:00",
+  "inicio": "2026-09-24T15:02:24-03:00",
+  "fim": "2026-09-24T15:04:26-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -46,10 +46,10 @@
     },
     {
       "query": "site:sympla.com.br \"futebol feminino\" curso OR workshop OR congresso OR summit 2026 2027",
-      "resultados": 4,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 4
+        "bing_rss": 0
       }
     },
     {
