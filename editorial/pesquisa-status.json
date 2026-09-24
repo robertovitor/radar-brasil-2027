@@ -1,7 +1,7 @@
 {
   "cycle_id": "20260924-10",
   "started_at": "2026-09-24T10:44:43-03:00",
-  "completed_at": "2026-09-24T10:51:24-03:00",
+  "completed_at": "2026-09-24T10:51:58-03:00",
   "stage": "completed",
   "executor": "scheduled-operational",
   "airtable_reads_total": 2,
@@ -237,5 +237,5 @@
       "motivo": "O mesmo workshop já consta em dados.json e noticias.json."
     }
   ],
-  "observacoes_operacionais": "Executadas exatamente duas leituras Airtable, uma por tabela, sem paginação adicional. O backlog foi processado de forma tolerante: cinco itens sem conteúdo público suficiente permaneceram Em verificação com PENDENTE_ENRIQUECIMENTO; duplicatas comprovadas foram reconciliadas; quatro itens novos foram adicionados ao inbox. Pesquisa pública em fontes oficiais e veículos confiáveis, com exclusão de categorias de base. Nenhum merge, e-mail ou Instagram foi disparado. A primeira tentativa de gravação do status recebeu conflito 409 por atualização concorrente; o SHA corrente foi recuperado e a escrita foi reaplicada sem alterar os demais arquivos finais."
+  "observacoes_operacionais": "Executadas exatamente duas leituras Airtable, uma por tabela, sem paginação adicional. O backlog foi processado de forma tolerante: cinco itens sem conteúdo público suficiente permaneceram Em verificação com PENDENTE_ENRIQUECIMENTO; duplicatas comprovadas foram reconciliadas; quatro itens novos foram adicionados ao inbox. Pesquisa pública em fontes oficiais e veículos confiáveis, com exclusão de categorias de base. Nenhum merge, e-mail ou Instagram foi disparado manualmente. A primeira tentativa de gravação do status recebeu conflito 409 por atualização concorrente; o SHA corrente foi recuperado e a escrita foi reaplicada sem alterar os demais arquivos finais. Na verificação final, o inbox já estava vazio porque o push acionou automaticamente o fluxo existente do repositório; os quatro itens foram confirmados em dados.json/noticias.json. Nenhum disparo adicional foi feito."
 }
