@@ -164,8 +164,13 @@ def canonical_url(url: str) -> str:
         p = urllib.parse.urlsplit(html.unescape(url.strip()))
         q = urllib.parse.parse_qsl(p.query, keep_blank_values=True)
         q = [(k, v) for k, v in q if not k.lower().startswith("utm_") and k.lower() not in {"fbclid", "gclid", "ref", "source"}]
+        host = p.netloc.lower()
         path = re.sub(r"/+$", "", p.path) or "/"
-        return urllib.parse.urlunsplit((p.scheme.lower() or "https", p.netloc.lower(), path, urllib.parse.urlencode(q), ""))
+        # FIFA Careers publica a mesma vaga com e sem prefixo de idioma.
+        # Normalizar evita duplicidade entre /en/postings/<id> e /postings/<id>.
+        if host == "jobs.fifa.com":
+            path = re.sub(r"^/(?:en|pt|es|fr)/postings/", "/postings/", path, flags=re.I)
+        return urllib.parse.urlunsplit((p.scheme.lower() or "https", host, path, urllib.parse.urlencode(q), ""))
     except Exception:
         return url.strip()
 
