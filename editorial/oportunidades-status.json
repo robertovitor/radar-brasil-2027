@@ -1,32 +1,112 @@
 {
-  "versao": "1.0",
-  "inicio": "2026-09-24T11:46:12-03:00",
-  "fim": "2026-09-24T11:46:20-03:00",
+  "versao": "1.1",
+  "inicio": "2026-09-24T12:11:47-03:00",
+  "fim": "2026-09-24T12:13:10-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
-      "query": "site:jobs.fifa.com Brazil \"Women's World Cup 2027\"",
-      "resultados": 0
+      "query": "\"Copa do Mundo Feminina 2027\" voluntariado inscrição Brasil",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
     },
     {
-      "query": "\"Copa do Mundo Feminina 2027\" voluntariado inscrição",
-      "resultados": 0
+      "query": "\"Copa do Mundo Feminina 2027\" vaga trabalho contratação Brasil",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
     },
     {
-      "query": "\"Copa do Mundo Feminina 2027\" vagas trabalho",
-      "resultados": 0
+      "query": "\"Copa do Mundo Feminina 2027\" curso capacitação inscrições Brasil",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
     },
     {
-      "query": "\"futebol feminino\" curso inscrições Brasil",
-      "resultados": 0
+      "query": "\"futebol feminino\" curso inscrições Brasil 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
     },
     {
-      "query": "\"futebol feminino\" summit congresso inscrições Brasil",
-      "resultados": 0
+      "query": "\"futebol feminino\" summit congresso workshop inscrições Brasil 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
     },
     {
-      "query": "\"CBF Academy\" inscreva-se 2026",
-      "resultados": 0
+      "query": "site:sympla.com.br \"futebol feminino\" curso OR workshop OR congresso OR summit 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
+    },
+    {
+      "query": "site:eventbrite.com.br \"futebol feminino\" curso OR workshop OR congresso 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
+    },
+    {
+      "query": "site:womanifs.com inscrição OR registration 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
+    },
+    {
+      "query": "site:gov.br/esporte \"futebol feminino\" inscrição OR curso OR capacitação OR edital 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
+    },
+    {
+      "query": "\"futebol feminino\" inscrições \"São Paulo\" OR Fortaleza OR \"Belo Horizonte\" 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
+    },
+    {
+      "query": "\"futebol feminino\" inscrições Recife OR Salvador OR \"Porto Alegre\" OR Brasília 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
+    },
+    {
+      "query": "site:fferj.com.br \"futebol feminino\" inscrição OR curso OR workshop 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
+    },
+    {
+      "query": "site:fpf.org.br \"futebol feminino\" inscrição OR curso OR workshop 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
     }
   ],
   "feeds": [
@@ -38,7 +118,7 @@
   "hubs": [
     {
       "hub": "https://jobs.fifa.com/",
-      "resultados": 0
+      "resultados": 1
     },
     {
       "hub": "https://plataforma.cbfacademy.com.br/pt-br/calendario",
@@ -47,15 +127,46 @@
     {
       "hub": "https://plataforma.cbfacademy.com.br/pt-br/noticias/244-futebol-feminino-brasileiro",
       "resultados": 5
+    },
+    {
+      "hub": "https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas",
+      "resultados": 10
+    },
+    {
+      "hub": "https://www.gov.br/esporte/pt-br/noticias",
+      "resultados": 10
+    },
+    {
+      "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
+      "resultados": 2
+    },
+    {
+      "hub": "https://jogasp.prefeitura.sp.gov.br/",
+      "resultados": 1
+    },
+    {
+      "hub": "https://prefeitura.sp.gov.br/web/esportes",
+      "resultados": 8
+    },
+    {
+      "hub": "https://prefeitura.pbh.gov.br/esportes",
+      "resultados": 0,
+      "erro": "HTTPError:HTTP Error 404: Not Found"
+    },
+    {
+      "hub": "https://womanifs.com/",
+      "resultados": 0
     }
   ],
-  "urls_avaliadas": 9,
+  "urls_avaliadas": 35,
   "oportunidades_validas_na_execucao": 40,
   "adicionadas": 0,
   "atualizadas": 0,
   "total_arquivo": 38,
   "erros": [
-    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+    "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
+    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>",
+    "page:https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?t=1353&conteudo=932:HTTPError:HTTP Error 403: Forbidden"
   ],
   "isolamento": {
     "noticias": "inalterado",
