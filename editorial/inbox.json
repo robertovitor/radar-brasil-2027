@@ -1,4 +1,42 @@
 {
-  "eventos": [],
-  "noticias": []
+  "eventos": [
+    {
+      "ID": "EVT-20260924-OABRJ-LEGADO-COPA-2027",
+      "Titulo": "OAB-RJ debate legado social da Copa Feminina 2027 e prevenção da violência",
+      "Status": "Realizado",
+      "Data": "2026-09-24",
+      "DataBR": "24/09/2026",
+      "UF": "RJ",
+      "Cidade": "Rio de Janeiro",
+      "Categoria": "Debate e legado social",
+      "Organizador": "Comissão de Direito Desportivo da OABRJ",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "OABRJ — Plenário Carlos Maurício Martins Rodrigues",
+      "Latitude": null,
+      "Longitude": null,
+      "Link": "https://oabrj.org.br/eventos/nfl-more-legado-copa-mundo-feminina-fifa-2027-brasil",
+      "Observacoes": "Encontro gratuito sobre o esporte como ferramenta de prevenção da violência contra mulheres e meninas e a construção do legado social da Copa do Mundo Feminina FIFA 2027. A programação reuniu representantes da FIFA, CBF, Ministério do Esporte, Ministério das Mulheres, ONU Mulheres, UNESCO, Globo, EBC, Petrobras, NFL e No More.",
+      "Mes": "Set",
+      "Ano": 2026,
+      "Regiao": "Sudeste",
+      "Hora": "09:00",
+      "HoraFim": "13:00",
+      "FusoHorario": "America/Sao_Paulo"
+    }
+  ],
+  "noticias": [
+    {
+      "Data": "2026-07-19",
+      "DataBR": "19/07/2026",
+      "Titulo": "Globo escolhe “Maria, Maria” para embalar chamada da Copa Feminina 2027",
+      "Tema": "Mídia / promoção / Copa Feminina 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "Instagram / Globo",
+      "Link": "https://www.instagram.com/reel/Da_H8zNpHxf/?stkn=MW8xNmYyNTExc3FtaA==",
+      "Sentimento": "Positivo",
+      "Impacto": "Médio",
+      "Resumo": "A Globo escolheu a canção “Maria, Maria” para embalar uma chamada dedicada à Copa do Mundo Feminina de 2027. A peça reforça a promoção midiática do torneio que será realizado no Brasil."
+    }
+  ]
 }
