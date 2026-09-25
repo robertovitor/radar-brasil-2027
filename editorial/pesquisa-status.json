@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-18",
-  "started_at": "2026-09-25T18:43:59-03:00",
-  "completed_at": "2026-09-25T18:45:41-03:00",
+  "cycle_id": "20260925-20",
+  "started_at": "2026-09-25T20:52:36-03:00",
+  "completed_at": "2026-09-25T20:56:25-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -11,18 +11,18 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 10,
-  "aprovados_novos": 1,
-  "rejeitados": 2,
+  "aprovados_novos": 0,
+  "rejeitados": 3,
   "duplicados": 7,
-  "inbox_itens_adicionados": 2,
+  "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras integrais do Airtable, uma por tabela, com pageSize 1000 e sem filtros, sort, schema ou paginação; os resultados foram reutilizados.",
-    "As três pendências antigas de notícias continuam com PENDENTE_ENRIQUECIMENTO por falta de título estruturado. Como a busca profunda anterior ocorreu há menos de seis horas, não houve nova consulta individual nem escrita repetitiva.",
-    "A pesquisa pública recente avaliou Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Dez candidatos foram processados: sete duplicatas, dois excluídos por inadequação editorial ou ausência de fato verificável e um aprovado.",
-    "Aprovado o evento realizado em 24/09/2026 na OAB-RJ sobre legado social da Copa Feminina 2027 e prevenção da violência contra mulheres e meninas, com fonte oficial, data, horário e local confirmados.",
-    "A chamada da Globo com “Maria, Maria” permanece aprovada no Airtable e ausente de noticias.json; por isso foi preservada no envio ao inbox junto do novo evento.",
-    "Nenhum registro do Airtable precisou ser alterado nesta rodada.",
+    "As três pendências antigas de notícias foram submetidas à busca profunda após mais de seis horas desde a tentativa anterior. Nenhum dos três códigos de publicação do Instagram revelou título, autoria ou contexto verificável; os itens permanecem em PENDENTE_ENRIQUECIMENTO e somente o horário da tentativa foi atualizado.",
+    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Dez candidatos foram processados: sete duplicatas dos arquivos finais e três excluídos por inadequação editorial, incluindo conteúdo de categoria de base.",
+    "O evento da OAB-RJ sobre legado social da Copa Feminina 2027 já foi confirmado em dados.json e não foi reenfileirado.",
+    "A chamada da Globo com “Maria, Maria” permanece aprovada no Airtable e ausente de noticias.json; por isso foi reenfileirada no inbox editorial.",
+    "Nenhum novo registro público foi aprovado nesta rodada e nenhum registro do Airtable foi rejeitado.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
