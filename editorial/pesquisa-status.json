@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-06",
-  "started_at": "2026-09-25T06:46:29-03:00",
-  "completed_at": "2026-09-25T06:48:47-03:00",
+  "cycle_id": "20260925-07",
+  "started_at": "2026-09-25T07:45:42-03:00",
+  "completed_at": "2026-09-25T07:49:56-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": [
@@ -18,36 +18,34 @@
   ],
   "sugestoes_lidas": 30,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 7,
-  "aprovados_novos": 0,
-  "rejeitados": 1,
-  "duplicados": 6,
-  "inbox_itens_adicionados": 0,
-  "inbox_commit_needed": false,
+  "candidatos_publicos": 12,
+  "aprovados_novos": 1,
+  "rejeitados": 2,
+  "duplicados": 4,
+  "inbox_itens_adicionados": 1,
+  "inbox_commit_needed": true,
   "auditoria": [
     {
-      "origem": "airtable",
-      "tabela": "Sugestões de Notícias",
-      "record_id": "recL1TuwzsOvJbLsQ",
-      "titulo": "Treino aberto da seleção brasileira",
-      "decisao": "recusada_duplicata",
-      "motivo": "DUPLICATA_COMPROVADA: repete a pauta já incorporada em noticias.json como “FGF articula treino aberto da Seleção Feminina antes do amistoso em Porto Alegre”; a publicação confirma apenas que a ação está em negociação, sem novo fato independente."
+      "origem": "pesquisa_publica",
+      "titulo": "Fecomércio-RS Debate — Impactos da Copa do Mundo Feminina no Turismo e Comércio do RS",
+      "decisao": "aprovado_evento",
+      "motivo": "Evento novo, futuro e verificável, marcado para 14/10/2026, das 11h30 às 14h, em Porto Alegre, com fonte oficial e inscrição pública."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões",
       "record_id": "recFn5AE6yaKMQT9z",
-      "titulo": "Vaquejada e repescagem na Arena de Pernambuco",
+      "titulo": "Vaquejada pode tirar repescagem da Copa do Mundo Feminina da Arena de Pernambuco",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada do evento; busca profunda não repetida porque a última ocorreu há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: a busca confirmou apenas que a etapa ocorrerá em novembro; falta data exata verificável."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões de Notícias",
       "record_id": "recEMozafV2fHIZQc",
-      "titulo": "",
+      "titulo": "Globo escolhe “Maria, Maria” para embalar chamada da Copa Feminina 2027",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última ocorreu há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: título e conteúdo identificados na fonte; falta data de publicação verificável."
     },
     {
       "origem": "airtable",
@@ -55,7 +53,7 @@
       "record_id": "recJNn7oMAYYkDUgX",
       "titulo": "",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última ocorreu há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: busca profunda pelo código da publicação não revelou título estruturado ou confirmação independente suficiente."
     },
     {
       "origem": "airtable",
@@ -63,7 +61,7 @@
       "record_id": "recZAi2P031UGM3TD",
       "titulo": "",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última ocorreu há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: busca profunda pelo código da publicação não revelou título estruturado ou confirmação independente suficiente."
     },
     {
       "origem": "airtable",
@@ -71,65 +69,51 @@
       "record_id": "recjGnj9vzNbaZrxz",
       "titulo": "",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última ocorreu há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: busca profunda pelo código da publicação não revelou título estruturado ou confirmação independente suficiente."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "AS GURIAS NA CAPITAL — possibilidade de treino aberto da Seleção em Porto Alegre",
-      "fonte": "Instagram/FGF",
+      "titulo": "Arena de Pernambuco recebe inspeção da FIFA",
       "decisao": "duplicado",
-      "motivo": "Mesmo fato já incorporado em noticias.json em 24/09/2026."
+      "motivo": "Pauta já incorporada em noticias.json em 22/09/2026."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Copa dos Campeões de futebol feminino em Miami",
-      "fonte": "pesquisa pública",
+      "titulo": "Convocação da Seleção Brasileira Feminina para amistosos contra a Argentina",
+      "decisao": "duplicado",
+      "motivo": "Convocação e amistosos já incorporados em dados.json e noticias.json."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Cadastro de interesse em ingressos e voluntariado da Copa Feminina 2027",
+      "decisao": "duplicado",
+      "motivo": "Ingressos e voluntariado já incorporados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Escolas de Mato Grosso do Sul durante a Copa Feminina 2027",
+      "decisao": "duplicado",
+      "motivo": "Pauta educacional e orientação sobre calendário escolar já incorporadas."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Copa do Mundo Feminina Sub-20",
       "decisao": "rejeitado",
-      "motivo": "Fora do escopo: competição de clubes em Miami, sem relação editorial direta com a Copa Feminina FIFA 2027 no Brasil."
+      "motivo": "Categoria de base, expressamente fora do escopo."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Sorteio da Copa do Mundo Feminina marcado para 11 de dezembro",
-      "fonte": "pesquisa pública",
-      "decisao": "duplicado",
-      "motivo": "Data do sorteio já incorporada em noticias.json."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Mais de 750 mil torcedores manifestam interesse em ingressos",
-      "fonte": "pesquisa pública",
-      "decisao": "duplicado",
-      "motivo": "Demanda por ingressos já incorporada em noticias.json."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Seleções classificadas para a Copa Feminina 2027",
-      "fonte": "pesquisa pública",
-      "decisao": "duplicado",
-      "motivo": "Atualização de classificadas já incorporada em noticias.json."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Maracanã receberá abertura e final da Copa Feminina 2027",
-      "fonte": "pesquisa pública",
-      "decisao": "duplicado",
-      "motivo": "Sede da abertura e da final já incorporada em dados.json e noticias.json."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Panorama de sedes, calendário e formato da Copa Feminina 2027",
-      "fonte": "pesquisa pública",
-      "decisao": "duplicado",
-      "motivo": "Informações gerais já incorporadas nos arquivos públicos."
+      "titulo": "Seleção Brasileira masculina e ciclo de 2030",
+      "decisao": "rejeitado",
+      "motivo": "Falso positivo sem relação com a Seleção Feminina principal ou a Copa Feminina 2027."
     }
   ],
   "observacoes_operacionais": [
     "Exatamente duas leituras Airtable executadas, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
     "Os quatro arquivos obrigatórios do GitHub main foram lidos uma vez antes do processamento, com conteúdo e SHA.",
-    "Uma nova sugestão de notícia foi verificada e recusada no Airtable por duplicidade comprovada; essa foi a única escrita Airtable necessária.",
-    "Cinco registros permanecem em PENDENTE_ENRIQUECIMENTO; a busca profunda não foi repetida porque a última tentativa ocorreu há menos de seis horas.",
-    "Sete candidatos públicos foram avaliados: seis duplicados e um fora do escopo.",
-    "Nenhum item atingiu novidade editorial suficiente; o inbox permaneceu inalterado.",
+    "As cinco pendências antigas receberam nova busca profunda após o intervalo mínimo de seis horas; nenhuma foi rejeitada por idade.",
+    "Um registro pendente teve título enriquecido e passou a aguardar somente data de publicação verificável; os demais mantiveram os campos editoriais inalterados, com atualização apenas do horário da tentativa.",
+    "Um evento público novo foi aprovado e adicionado ao inbox em commit próprio.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
