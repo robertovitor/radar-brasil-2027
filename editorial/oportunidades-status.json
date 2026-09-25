@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-09-25T09:21:19-03:00",
-  "fim": "2026-09-25T09:23:32-03:00",
+  "inicio": "2026-09-25T14:35:44-03:00",
+  "fim": "2026-09-25T14:37:35-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -62,10 +62,10 @@
     },
     {
       "query": "site:womanifs.com inscrição OR registration 2026 2027",
-      "resultados": 0,
+      "resultados": 4,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": 4
       }
     },
     {
@@ -174,7 +174,7 @@
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 3
+      "resultados": 4
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
@@ -206,16 +206,15 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 50,
+  "oportunidades_validas_na_execucao": 51,
   "adicionadas": 0,
-  "atualizadas": 2,
+  "atualizadas": 4,
   "total_arquivo": 50,
   "erros": [
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/25-09-2026/22-02-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://www.sympla.com.br/evento/lgc/3568808:HTTPError:HTTP Error 404: Not Found",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {
