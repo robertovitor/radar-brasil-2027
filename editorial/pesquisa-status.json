@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260924-22",
-  "started_at": "2026-09-24T22:42:25-03:00",
-  "completed_at": "2026-09-24T22:44:05-03:00",
+  "cycle_id": "20260924-23",
+  "started_at": "2026-09-24T23:44:18-03:00",
+  "completed_at": "2026-09-24T23:46:33-03:00",
   "stage": "completed",
   "executor": "automation-operational",
   "airtable_reads_total": 2,
@@ -19,10 +19,10 @@
   ],
   "sugestoes_lidas": 30,
   "sugestoes_noticias_lidas": 25,
-  "candidatos_publicos": 10,
+  "candidatos_publicos": 8,
   "aprovados_novos": 0,
   "rejeitados": 2,
-  "duplicados": 8,
+  "duplicados": 6,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "auditoria": [
@@ -32,7 +32,7 @@
       "record_id": "recFn5AE6yaKMQT9z",
       "titulo": "Vaquejada e repescagem na Arena de Pernambuco",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; busca profunda ainda não devida pela cadência de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; busca profunda não repetida porque a última verificação ocorreu há menos de seis horas."
     },
     {
       "origem": "airtable",
@@ -40,7 +40,7 @@
       "record_id": "recEMozafV2fHIZQc",
       "titulo": "Instagram reel Da_H8zNpHxf",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda ainda não devida pela cadência de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última verificação ocorreu há menos de seis horas."
     },
     {
       "origem": "airtable",
@@ -48,7 +48,7 @@
       "record_id": "recJNn7oMAYYkDUgX",
       "titulo": "Instagram post DdSZg6MFM0_",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda ainda não devida pela cadência de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última verificação ocorreu há menos de seis horas."
     },
     {
       "origem": "airtable",
@@ -56,7 +56,7 @@
       "record_id": "recZAi2P031UGM3TD",
       "titulo": "Instagram post DdRZR07Oauw",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda ainda não devida pela cadência de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última verificação ocorreu há menos de seis horas."
     },
     {
       "origem": "airtable",
@@ -64,31 +64,39 @@
       "record_id": "recjGnj9vzNbaZrxz",
       "titulo": "Instagram post Dc13T1guTMZ",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda ainda não devida pela cadência de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última verificação ocorreu há menos de seis horas."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "FIFA conclui terceira rodada de inspeções nos oito estádios",
-      "fonte": "ge/FIFA",
-      "url": "https://ge.globo.com/futebol/copa-do-mundo-feminina/noticia/2026/09/24/copa-do-mundo-feminina-2027-fifa-conclui-terceira-rodada-de-inspecoes-em-estadios.ghtml",
+      "titulo": "Performance, histórico, calendário e projeção para Copa: os critérios de Arthur Elias",
+      "fonte": "CBF",
+      "url": "https://www.cbf.com.br/selecao-brasileira/noticias/convocacoes/convocacoes-selecao-feminina/performance-historico-calendario-e-projecao-para-copa-os-criterios-de-arthur-elias-para-a-convocacao",
       "decisao": "duplicado",
-      "motivo": "Fato já incorporado em noticias.json."
+      "motivo": "Desdobramento da mesma convocação de 22/09 já incorporada em noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Mineirão terá gramado híbrido para a Copa Feminina 2027",
-      "fonte": "Central da Toca/Rede 98",
-      "url": "https://www.centraldatoca.com.br/mineirao/2026/09/24/cruzeiro-de-olho-mineirao-prepara-mudanca-do-gramado-natural/",
+      "titulo": "Arthur Elias convoca seleção feminina para amistosos contra Argentina",
+      "fonte": "Agência Brasil",
+      "url": "https://agenciabrasil.ebc.com.br/esportes/noticia/2026-09/arthur-elias-convoca-selecao-feminina-para-amistosos-contra-argentina",
       "decisao": "duplicado",
-      "motivo": "Mesma intervenção incorporada na rodada anterior."
+      "motivo": "Convocação e amistosos já incorporados no Radar."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Seleção Feminina pode realizar treino aberto em Porto Alegre",
-      "fonte": "GZH/Pioneiro",
-      "url": "https://pioneiro.clicrbs.com.br/esportes/futebol-feminino/noticia/2026/09/selecao-feminina-pode-realizar-treino-aberto-em-porto-alegre-antes-de-amistoso-contra-a-argentina-entenda-cmufuzht600jw01icjpb9ia0k.html",
-      "decisao": "duplicado",
-      "motivo": "Pauta já incorporada."
+      "titulo": "Corinthians elimina o Bahia e avança à final do Brasileiro Feminino",
+      "fonte": "Folha de S.Paulo",
+      "url": "https://www1.folha.uol.com.br/esporte/2026/09/corinthians-elimina-o-bahia-e-avanca-a-10a-final-consecutiva-do-brasileiro-feminino.shtml",
+      "decisao": "rejeitado",
+      "motivo": "Resultado de competição de clubes sem novidade operacional específica sobre a Copa 2027 ou a Seleção principal."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Brasil é eliminado pela Espanha nas quartas da Copa Feminina Sub-20",
+      "fonte": "UOL",
+      "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/09/19/brasil-espanha-copa-do-mundo-feminina-sub-20.ghtm",
+      "decisao": "rejeitado",
+      "motivo": "Categoria de base, explicitamente fora do escopo desta rotina."
     },
     {
       "origem": "pesquisa_publica",
@@ -96,62 +104,38 @@
       "fonte": "Prefeitura de Porto Alegre",
       "url": "https://www.prefeitura.poa.br/secopa2027/noticias/capital-tera-encontro-nacional-do-futebol-feminino-com-foco-no-legado-da-copa",
       "decisao": "duplicado",
-      "motivo": "Evento ENFF já consta em dados.json."
+      "motivo": "O ENFF já consta em dados.json e noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Prefeitura destaca oportunidades para a Copa 2027 no ENFF",
+      "titulo": "Prefeitura destaca oportunidades para a Copa 2027 no Encontro Nacional do Futebol Feminino",
       "fonte": "Prefeitura de Porto Alegre",
       "url": "https://prefeitura.poa.br/secopa2027/noticias/prefeitura-destaca-oportunidades-para-copa-2027-no-encontro-nacional-do-futebol",
       "decisao": "duplicado",
-      "motivo": "Cobertura da abertura do mesmo ENFF, sem anúncio operacional novo confirmado."
+      "motivo": "Cobertura da abertura do ENFF já representado no Radar; não acrescenta anúncio operacional independente."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Goleira Yanne Lopes se emociona com primeira convocação",
-      "fonte": "R7",
-      "url": "https://esportes.r7.com/futebol/goleira-yanne-lopes-se-emociona-com-primeira-convocacao-para-a-selecao-feminina-muito-feliz-24092026/",
+      "titulo": "Copa Feminina FIFA 2027 abre inscrições para voluntários em Porto Alegre",
+      "fonte": "Prefeitura de Porto Alegre",
+      "url": "https://prefeitura.poa.br/secopa2027",
       "decisao": "duplicado",
-      "motivo": "Mesma primeira convocação e entrevista já incorporadas."
+      "motivo": "A abertura das inscrições oficiais e o voluntariado já estão incorporados em dados.json e noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Convocação da Seleção Feminina Brasileira: lista completa",
-      "fonte": "iFood",
-      "url": "https://institucional.ifood.com.br/selecao/convocacao-da-selecao-feminina-brasileira/",
+      "titulo": "Prefeitura protocola projeto de lei com regras especiais para a Copa Feminina 2027",
+      "fonte": "Prefeitura de Porto Alegre",
+      "url": "https://prefeitura.poa.br/secopa2027/noticias/prefeitura-protocola-projeto-de-lei-com-regras-especiais-para-copa-feminina",
       "decisao": "duplicado",
-      "motivo": "Lista de convocadas já incorporada por fonte esportiva oficial."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Credenciamento de imprensa para amistosos contra a Argentina",
-      "fonte": "CBF",
-      "url": "https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/credenciamento-de-imprensa-para-amistosos-da-selecao-feminina-contra-a-argentina-esta-aberto",
-      "decisao": "duplicado",
-      "motivo": "Serviço restrito à imprensa; não representa nova oportunidade para torcedores e os amistosos já constam no Radar."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Seleção Brasileira Feminina de Futsal é convocada contra o Japão",
-      "fonte": "ge",
-      "url": "https://ge.globo.com/pr/futsal/noticia/2026/09/24/selecao-brasileira-feminina-de-futsal-e-convocada-para-amistosos-contra-o-japao-veja-detalhes.ghtml",
-      "decisao": "rejeitado",
-      "motivo": "Futsal fora do escopo desta rotina."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Seleção Feminina Sub-20 de Beach Soccer se prepara para desafios",
-      "fonte": "CBF",
-      "url": "https://www.cbf.com.br/selecao-brasileira/noticias/noticias/beach-soccer/selecao-feminina-sub-20-de-beach-soccer-se-prepara-para-primeiros-desafios-da-sua-historia",
-      "decisao": "rejeitado",
-      "motivo": "Categoria de base e beach soccer; fora do escopo."
+      "motivo": "Pauta de regras locais, ingressos, transporte e operação já incorporada no conjunto editorial existente."
     }
   ],
   "observacoes_operacionais": [
     "Exatamente duas leituras completas do Airtable foram executadas e reutilizadas; nenhuma leitura adicional foi feita.",
     "O backlog processável continha um evento e quatro notícias em Pendente/Em verificação.",
-    "As cinco pendências haviam sido verificadas há menos de seis horas; nenhuma busca profunda repetitiva nem escrita Airtable foi feita.",
-    "A pesquisa pública foi executada; todos os candidatos qualificados eram duplicatas, desdobramentos sem novidade operacional ou itens fora do escopo.",
+    "As cinco pendências haviam sido verificadas há menos de seis horas; nenhuma busca profunda repetitiva nem escrita Airtable foi necessária.",
+    "A pesquisa pública recente foi executada em fontes oficiais e jornalísticas; os candidatos pertinentes eram duplicatas e dois itens ficaram fora do escopo.",
     "O editorial/inbox.json estava vazio e permaneceu inalterado.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
