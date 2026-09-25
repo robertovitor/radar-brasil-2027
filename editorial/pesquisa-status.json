@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-05",
-  "started_at": "2026-09-25T05:42:36-03:00",
-  "completed_at": "2026-09-25T05:43:32-03:00",
+  "cycle_id": "20260925-06",
+  "started_at": "2026-09-25T06:46:29-03:00",
+  "completed_at": "2026-09-25T06:48:47-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": [
@@ -17,14 +17,22 @@
     }
   ],
   "sugestoes_lidas": 30,
-  "sugestoes_noticias_lidas": 25,
-  "candidatos_publicos": 8,
+  "sugestoes_noticias_lidas": 26,
+  "candidatos_publicos": 7,
   "aprovados_novos": 0,
-  "rejeitados": 0,
-  "duplicados": 8,
+  "rejeitados": 1,
+  "duplicados": 6,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "auditoria": [
+    {
+      "origem": "airtable",
+      "tabela": "Sugestões de Notícias",
+      "record_id": "recL1TuwzsOvJbLsQ",
+      "titulo": "Treino aberto da seleção brasileira",
+      "decisao": "recusada_duplicata",
+      "motivo": "DUPLICATA_COMPROVADA: repete a pauta já incorporada em noticias.json como “FGF articula treino aberto da Seleção Feminina antes do amistoso em Porto Alegre”; a publicação confirma apenas que a ação está em negociação, sem novo fato independente."
+    },
     {
       "origem": "airtable",
       "tabela": "Sugestões",
@@ -67,67 +75,61 @@
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Fifa conclui terceira rodada de inspeções em estádios",
-      "fonte": "ge",
+      "titulo": "AS GURIAS NA CAPITAL — possibilidade de treino aberto da Seleção em Porto Alegre",
+      "fonte": "Instagram/FGF",
       "decisao": "duplicado",
-      "motivo": "Já incorporado em noticias.json em 24/09/2026."
+      "motivo": "Mesmo fato já incorporado em noticias.json em 24/09/2026."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Tudo o que você precisa saber sobre a Copa do Mundo Feminina 2027",
-      "fonte": "Instagram",
-      "decisao": "duplicado",
-      "motivo": "Calendário, sorteio e sedes já incorporados."
+      "titulo": "Copa dos Campeões de futebol feminino em Miami",
+      "fonte": "pesquisa pública",
+      "decisao": "rejeitado",
+      "motivo": "Fora do escopo: competição de clubes em Miami, sem relação editorial direta com a Copa Feminina FIFA 2027 no Brasil."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Governo negocia ingressos populares para a Copa do Mundo Feminina 2027",
-      "fonte": "Instagram/UOL",
+      "titulo": "Sorteio da Copa do Mundo Feminina marcado para 11 de dezembro",
+      "fonte": "pesquisa pública",
       "decisao": "duplicado",
-      "motivo": "Pauta de ingressos populares já incorporada."
+      "motivo": "Data do sorteio já incorporada em noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Fifa abre inscrições para voluntários na Copa do Mundo Feminina de 2027",
-      "fonte": "UOL",
+      "titulo": "Mais de 750 mil torcedores manifestam interesse em ingressos",
+      "fonte": "pesquisa pública",
       "decisao": "duplicado",
-      "motivo": "Programa de voluntariado já incorporado."
+      "motivo": "Demanda por ingressos já incorporada em noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Seleção feminina terá série de amistosos contra Argentina e Japão",
-      "fonte": "Folha de S.Paulo",
+      "titulo": "Seleções classificadas para a Copa Feminina 2027",
+      "fonte": "pesquisa pública",
       "decisao": "duplicado",
-      "motivo": "Amistosos já incorporados como eventos e notícias."
+      "motivo": "Atualização de classificadas já incorporada em noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "CBF tenta solução para clubes que vão ceder estádios na Copa Feminina",
-      "fonte": "UOL",
+      "titulo": "Maracanã receberá abertura e final da Copa Feminina 2027",
+      "fonte": "pesquisa pública",
       "decisao": "duplicado",
-      "motivo": "Adaptação do calendário e cessão dos estádios já incorporadas."
+      "motivo": "Sede da abertura e da final já incorporada em dados.json e noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Conselho defende férias na Copa apenas em cidades-sede",
-      "fonte": "UOL",
+      "titulo": "Panorama de sedes, calendário e formato da Copa Feminina 2027",
+      "fonte": "pesquisa pública",
       "decisao": "duplicado",
-      "motivo": "Orientação do CNE já incorporada."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Copa do Mundo Feminina de 2027 no Brasil: o que já está definido",
-      "fonte": "Folha de S.Paulo",
-      "decisao": "duplicado",
-      "motivo": "Síntese de sedes, calendário e formato já incorporada."
+      "motivo": "Informações gerais já incorporadas nos arquivos públicos."
     }
   ],
   "observacoes_operacionais": [
     "Exatamente duas leituras Airtable executadas, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
     "Os quatro arquivos obrigatórios do GitHub main foram lidos uma vez antes do processamento, com conteúdo e SHA.",
-    "Cinco registros permanecem em PENDENTE_ENRIQUECIMENTO; a busca profunda não foi repetida porque ocorreu na rodada anterior, dentro da janela de seis horas.",
-    "Oito candidatos públicos relevantes foram comparados aos arquivos atuais e todos eram duplicados.",
-    "Nenhuma escrita Airtable ou alteração do inbox foi necessária.",
+    "Uma nova sugestão de notícia foi verificada e recusada no Airtable por duplicidade comprovada; essa foi a única escrita Airtable necessária.",
+    "Cinco registros permanecem em PENDENTE_ENRIQUECIMENTO; a busca profunda não foi repetida porque a última tentativa ocorreu há menos de seis horas.",
+    "Sete candidatos públicos foram avaliados: seis duplicados e um fora do escopo.",
+    "Nenhum item atingiu novidade editorial suficiente; o inbox permaneceu inalterado.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
