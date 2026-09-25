@@ -105,14 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
-    },
-    {
-      "key": "instagram:oportunidade:opp-0d105c9fbd35",
-      "post_file": "instagram/fila/automatica/instagram-oportunidade-opp-0d105c9fbd35-27c0f698ac.json",
-      "reserved_at": "2026-09-25T20:46:20.503437+00:00",
-      "last_attempt_at": "2026-09-25T20:46:20.503437+00:00",
-      "attempts": 2,
-      "requires_strict_reconciliation": true
     }
   ]
 }
