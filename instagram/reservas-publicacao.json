@@ -105,6 +105,14 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:evento:evt-20261014-fecomercio-rs-debate-copa-2027",
+      "post_file": "instagram/fila/automatica/instagram-evento-evt-20261014-fecomercio-rs-debate-copa-2027-f3b210a8d1.json",
+      "reserved_at": "2026-09-25T12:17:59.630821+00:00",
+      "last_attempt_at": "2026-09-25T12:17:59.630821+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false
     }
   ]
 }
