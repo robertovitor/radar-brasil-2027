@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-12",
-  "started_at": "2026-09-25T12:43:31-03:00",
-  "completed_at": "2026-09-25T12:46:31-03:00",
+  "cycle_id": "20260925-13",
+  "started_at": "2026-09-25T13:47:54-03:00",
+  "completed_at": "2026-09-25T13:49:56-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,17 +10,18 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 10,
-  "aprovados_novos": 1,
-  "rejeitados": 2,
-  "duplicados": 7,
+  "candidatos_publicos": 11,
+  "aprovados_novos": 0,
+  "rejeitados": 1,
+  "duplicados": 8,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas do Airtable, sem filtros, sort, schema ou paginação adicional; os resultados foram reutilizados em todo o processamento.",
-    "Uma sugestão de notícia foi enriquecida e aprovada: chamada da Globo para a Copa Feminina 2027 embalada por “Maria, Maria”, corroborada por publicação pública de 19/07/2026 e não localizada em dados.json ou noticias.json.",
-    "Quatro registros permanecem em PENDENTE_ENRIQUECIMENTO. A cadência reduzida de seis horas ainda não havia vencido para nova busca profunda; não houve regravação dos itens sem mudança.",
-    "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; conteúdos de categorias de base foram excluídos.",
-    "O inbox recebeu um item em commit próprio. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+    "A sugestão de evento sobre vaquejada foi resolvida como duplicata comprovada: a mesma URL já consta em noticias.json e o conteúdo é notícia sobre impacto no gramado e na repescagem, não evento editorial autônomo.",
+    "Três registros permanecem em PENDENTE_ENRIQUECIMENTO por falta de título verificável. A busca profunda desta rodada não encontrou elementos seguros; apenas o horário da tentativa foi atualizado, sem regravar Status ou Resultado.",
+    "A chamada da Globo com “Maria, Maria”, aprovada na rodada anterior mas ainda ausente de noticias.json, foi reenfileirada no inbox para incorporação.",
+    "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
+    "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
