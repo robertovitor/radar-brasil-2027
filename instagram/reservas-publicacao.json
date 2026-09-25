@@ -109,12 +109,10 @@
     {
       "key": "instagram:oportunidade:opp-11a6f2f999a4",
       "post_file": "instagram/fila/automatica/instagram-oportunidade-opp-11a6f2f999a4-08e2b23e6d.json",
-      "reserved_at": "2026-09-25T20:48:07.197797+00:00",
-      "last_attempt_at": "2026-09-25T20:48:25.236045+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": true,
-      "uncertain_after_meta": true,
-      "blocked_until": "2026-09-25T21:48:22.809195+00:00"
+      "reserved_at": "2026-09-25T22:17:10.476056+00:00",
+      "last_attempt_at": "2026-09-25T22:17:10.476056+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
