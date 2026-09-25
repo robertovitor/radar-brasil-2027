@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-00",
-  "started_at": "2026-09-25T00:44:08-03:00",
-  "completed_at": "2026-09-25T00:45:58-03:00",
+  "cycle_id": "20260925-01",
+  "started_at": "2026-09-25T01:44:55-03:00",
+  "completed_at": "2026-09-25T01:46:12-03:00",
   "stage": "completed",
   "executor": "automation-operational",
   "airtable_reads_total": 2,
@@ -19,10 +19,10 @@
   ],
   "sugestoes_lidas": 30,
   "sugestoes_noticias_lidas": 25,
-  "candidatos_publicos": 9,
+  "candidatos_publicos": 8,
   "aprovados_novos": 0,
   "rejeitados": 3,
-  "duplicados": 6,
+  "duplicados": 5,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "auditoria": [
@@ -32,7 +32,7 @@
       "record_id": "recFn5AE6yaKMQT9z",
       "titulo": "Vaquejada e repescagem na Arena de Pernambuco",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; última busca profunda há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; busca profunda ainda não devida pela cadência de seis horas."
     },
     {
       "origem": "airtable",
@@ -40,7 +40,7 @@
       "record_id": "recEMozafV2fHIZQc",
       "titulo": "Instagram reel Da_H8zNpHxf",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; última busca profunda há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda ainda não devida pela cadência de seis horas."
     },
     {
       "origem": "airtable",
@@ -48,7 +48,7 @@
       "record_id": "recJNn7oMAYYkDUgX",
       "titulo": "Instagram post DdSZg6MFM0_",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; última busca profunda há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda ainda não devida pela cadência de seis horas."
     },
     {
       "origem": "airtable",
@@ -56,7 +56,7 @@
       "record_id": "recZAi2P031UGM3TD",
       "titulo": "Instagram post DdRZR07Oauw",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; última busca profunda há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda ainda não devida pela cadência de seis horas."
     },
     {
       "origem": "airtable",
@@ -64,86 +64,78 @@
       "record_id": "recjGnj9vzNbaZrxz",
       "titulo": "Instagram post Dc13T1guTMZ",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; última busca profunda há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda ainda não devida pela cadência de seis horas."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Corinthians elimina o Bahia e avança à final do Brasileiro Feminino",
+      "titulo": "Miami sediará fase decisiva da Copa dos Campeões feminina de 2027",
       "fonte": "Folha de S.Paulo",
-      "url": "https://www1.folha.uol.com.br/esporte/2026/09/corinthians-elimina-o-bahia-e-avanca-a-10a-final-consecutiva-do-brasileiro-feminino.shtml",
+      "url": "https://www1.folha.uol.com.br/esporte/2026/09/miami-sediara-fase-decisiva-da-copa-dos-campeoes-feminina-de-2027.shtml",
       "decisao": "rejeitado",
-      "motivo": "Resultado de competição de clubes sem novidade operacional específica da Copa 2027 ou da Seleção principal."
+      "motivo": "Competição mundial de clubes nos Estados Unidos, sem vínculo operacional com a Copa Feminina FIFA 2027 no Brasil ou com a Seleção principal."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Brasil vence Argentina e conquista vaga olímpica no vôlei masculino",
+      "titulo": "Copa do Mundo Feminina já registra 750 mil interessados em ingressos",
       "fonte": "UOL",
-      "url": "https://www.uol.com.br/esporte/ultimas-noticias/2026/09/20/brasil-x-argentina---sul-americano-de-volei.ghtm",
-      "decisao": "rejeitado",
-      "motivo": "Modalidade masculina e fora do escopo."
+      "url": "https://economia.uol.com.br/noticias/redacao/2026/08/14/copa-do-mundo-feminina-alcanca-750-mil-interessados-em-ingressos.ghtm",
+      "decisao": "duplicado",
+      "motivo": "Interesse em ingressos, voluntariado e encontro com marcas já constam em noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Seleção masculina faz atividade antifuso na Austrália",
+      "titulo": "FIFA abre inscrições para voluntários na Copa do Mundo Feminina de 2027",
       "fonte": "UOL",
-      "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/09/22/selecao-treina-na-australia-com-apenas-10-em-campo-e-em-atividade-antifuso.ghtm",
+      "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/09/03/fifa-abre-inscricoes-para-voluntarios-na-copa-do-mundo-feminina-de-2027.ghtm",
+      "decisao": "duplicado",
+      "motivo": "Abertura oficial do voluntariado já incorporada em dados.json e noticias.json."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Copa do Mundo Feminina de 2027 no Brasil: o que já está definido",
+      "fonte": "Folha de S.Paulo",
+      "url": "https://www1.folha.uol.com.br/esporte/2026/07/copa-do-mundo-feminina-de-2027-no-brasil-o-que-ja-esta-definido.shtml",
+      "decisao": "duplicado",
+      "motivo": "Compilação antiga de calendário, sedes e ingressos já representados no Radar."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Seleção feminina terá série de amistosos contra Argentina e Japão",
+      "fonte": "Folha de S.Paulo",
+      "url": "https://www1.folha.uol.com.br/esporte/2026/09/selecao-feminina-tera-serie-de-amistosos-contra-argentina-e-japao.shtml",
+      "decisao": "duplicado",
+      "motivo": "Os quatro amistosos já constam em dados.json e noticias.json."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Copa 2027: venda de ingressos ainda não começou; como registrar interesse",
+      "fonte": "UOL",
+      "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/08/20/copa-2027-venda-de-ingressos-ainda-nao-comecou-como-registrar-interesse.ghtm",
+      "decisao": "duplicado",
+      "motivo": "Cadastro de interesse e ausência de venda aberta já incorporados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "2027 FIFA Women's World Cup",
+      "fonte": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/2027_FIFA_Women%27s_World_Cup",
       "decisao": "rejeitado",
-      "motivo": "Seleção masculina; fora do escopo."
+      "motivo": "Página enciclopédica sem fato recente independente e sem vantagem sobre as fontes oficiais já usadas."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "FIFA anuncia oito cidades-sede e estádios para a Copa Feminina 2027",
-      "fonte": "Goal",
-      "url": "https://www.goal.com/en-ng/lists/fifa-announces-eight-host-cities-and-stadiums-for-2027-women-s-world-cup-in-brazil/blt2e131a505449647a",
-      "decisao": "duplicado",
-      "motivo": "Cidades e estádios já amplamente incorporados em dados.json e noticias.json."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Oito estádios brasileiros confirmados para a Copa Feminina 2027",
-      "fonte": "National Daily",
-      "url": "https://nationaldailyng.com/full-list-eight-stadiums-to-host-2027-womens-world-cup-in-brazil/",
-      "decisao": "duplicado",
-      "motivo": "Repetição internacional da lista de sedes já incorporada."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Copa do Mundo Feminina da FIFA 2027",
-      "fonte": "FIFA",
-      "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027",
-      "decisao": "duplicado",
-      "motivo": "Página-base do torneio; calendário e sedes já representados no Radar."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Cidades-sede da Copa do Mundo Feminina 2027",
-      "fonte": "FIFA",
-      "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027/host-cities",
-      "decisao": "duplicado",
-      "motivo": "Informações de cidades-sede já incorporadas."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Manifeste interesse por ingressos da Copa do Mundo Feminina 2027",
-      "fonte": "FIFA",
-      "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027/tickets",
-      "decisao": "duplicado",
-      "motivo": "Manifestação de interesse e pautas de ingressos já incorporadas; não houve abertura de nova fase de venda."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Seminário As Mulheres em Campo",
-      "fonte": "Prefeitura de Porto Alegre",
-      "url": "https://prefeitura.poa.br/secopa2027/noticias/seminario-mulheres-em-campo-ocorre-nesta-sexta-feira",
-      "decisao": "duplicado",
-      "motivo": "Evento já consta em dados.json."
+      "titulo": "Copa Feminina 2027: escolha das cidades-sede e futuro do Brasil",
+      "fonte": "Super Finanças",
+      "url": "https://superfinancas.com.br/inicio/",
+      "decisao": "rejeitado",
+      "motivo": "Conteúdo de maio de 2025, antigo e sem novidade material para esta rodada."
     }
   ],
   "observacoes_operacionais": [
     "Exatamente duas leituras completas do Airtable foram executadas e reutilizadas; nenhuma leitura adicional foi feita.",
     "O backlog processável continha um evento e quatro notícias em Pendente/Em verificação.",
-    "As cinco pendências haviam sido verificadas há menos de seis horas; nenhuma busca profunda repetitiva nem escrita Airtable foi necessária.",
-    "A pesquisa pública recente foi executada; seis candidatos eram fatos já incorporados e três itens estavam fora do escopo.",
+    "As cinco pendências continuavam dentro da janela de seis horas desde a última busca profunda; nenhuma escrita Airtable repetitiva foi realizada.",
+    "A pesquisa pública recente foi executada; não surgiu fato novo com mínimo seguro de publicação.",
     "O editorial/inbox.json estava vazio e permaneceu inalterado.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
