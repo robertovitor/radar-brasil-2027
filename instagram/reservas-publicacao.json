@@ -110,9 +110,11 @@
       "key": "instagram:oportunidade:opp-0d105c9fbd35",
       "post_file": "instagram/fila/automatica/instagram-oportunidade-opp-0d105c9fbd35-27c0f698ac.json",
       "reserved_at": "2026-09-25T17:35:08.645574+00:00",
-      "last_attempt_at": "2026-09-25T17:35:08.645574+00:00",
+      "last_attempt_at": "2026-09-25T17:35:25.267904+00:00",
       "attempts": 1,
-      "requires_strict_reconciliation": false
+      "requires_strict_reconciliation": true,
+      "uncertain_after_meta": true,
+      "blocked_until": "2026-09-25T18:35:22.292861+00:00"
     }
   ]
 }
