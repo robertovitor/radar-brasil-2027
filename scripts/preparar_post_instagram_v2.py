@@ -22,7 +22,6 @@ TITLE_COMPRESSION_RULES = (
     (r'\bCopa do Mundo Feminina de 2027\b', 'Copa Feminina 2027'),
     (r'\bCopa do Mundo Feminina 2027\b', 'Copa Feminina 2027'),
     (r'\bCopa do Mundo Feminina no Brasil(?: em 2027)?\b', 'Copa Feminina 2027'),
-    (r'\bCopa do Mundo Feminina no Brasil\b', 'Copa Feminina 2027'),
     (r'\bpor exigência da FIFA para a Copa Feminina 2027\b', 'para a Copa Feminina 2027'),
     (r'\bpor exigência da Fifa para a Copa Feminina 2027\b', 'para a Copa Feminina 2027'),
     (r'\bDistrito Federal\b', 'DF'),
@@ -36,7 +35,7 @@ TITLE_COMPRESSION_RULES = (
 def editorial_short_title(title):
     """Cria headline editorial completa para a ARTE; legenda mantém o título original."""
     t = base.clean(title)
-    # Remove apenas sufixo editorial do veículo/domínio, nunca informação da pauta.
+    # Remove somente sufixo de veículo/domínio ao fim do título da arte.
     t = base.clean(re.sub(
         r'\s+-\s+(?:www\.)?[a-z0-9.-]+\.(?:com|com\.br|org|org\.br|net|net\.br|br)    money = re.search(r'(R\$\s*[\d.,]+\s*(?:milhões|milhão|bilhões|bilhão|mil|bi|mi)?)', t, re.I)
     place = re.search(r'\b(Bahia|Ceará|Fortaleza|Salvador|Brasília|DF|Rio de Janeiro|São Paulo|Recife|Pernambuco|Belo Horizonte|Minas Gerais|Porto Alegre|Rio Grande do Sul|Belém|Pará|João Pessoa|Paraíba|Natal|Manaus|Cuiabá)\b', t, re.I)
@@ -112,8 +111,8 @@ def fit_title_complete(draw, title, width, start_size=88, min_size=58, max_lines
             print('title_shortened_automatically=true')
             print('art_title=' + candidate)
             return f, lines, True
-    # Último fallback: nunca usa reticências. Tenta remover apenas caudas
-    # explicativas inteiras, preservando uma headline gramaticalmente fechada.
+    # Último fallback: nunca corta com reticências. Remove apenas caudas
+    # explicativas completas; se ainda não couber, o gate falha fechado.
     cleaned = editorial_short_title(original)
     clause_candidates = [cleaned]
     for pattern in (
@@ -3098,7 +3097,7 @@ if __name__ == '__main__':
                     print('art_title=' + candidate)
                 return f, lines, True
 
-    # Caso extremo: falha fechado em vez de publicar título cortado.
+    # Caso extremo (por exemplo, palavra isolada excepcionalmente longa):
     # mantém o comportamento fail-closed do gate em vez de aprovar arte ilegível.
     f = base.font(min_size, True)
     lines = base.wrap(draw, original, f, width)
