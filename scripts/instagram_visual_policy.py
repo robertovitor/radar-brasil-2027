@@ -252,6 +252,34 @@ def _draw_news_ribbons(draw):
     draw.polygon([(0,860),(1080,600),(1080,690),(0,960)],fill=(255,255,255,18))
     draw.line((45,775,650,625),fill=(255,220,0,95),width=10)
 
+def _news_headline(title):
+    t=clean(title)
+    t=re.sub(r'\s+-\s+(?:www\.)?[a-z0-9.-]+\.(?:com|com\.br|org|org\.br|net|net\.br|br)$','',t,flags=re.I)
+    t=re.sub(r'^Fifa\b','FIFA',t)
+    for pattern,repl in (
+        (r'\bCopa do Mundo Feminina no Brasil(?: em 2027)?\b','Copa Feminina 2027'),
+        (r'\bCopa do Mundo Feminina de 2027\b','Copa Feminina 2027'),
+        (r'\bCopa do Mundo Feminina 2027\b','Copa Feminina 2027'),
+        (r'\bpor exigência da FIFA para a Copa Feminina 2027\b','para a Copa Feminina 2027'),
+        (r'\bpor exigência da Fifa para a Copa Feminina 2027\b','para a Copa Feminina 2027'),
+    ):
+        t=clean(re.sub(pattern,repl,t,flags=re.I))
+    return t
+
+
+def _fit_news_headline(draw,title,width,font_fn,wrap_fn):
+    original=clean(title)
+    headline=_news_headline(original)
+    for size in range(78,57,-2):
+        f=font_fn(size,True)
+        lines=wrap_fn(draw,headline,f,width)
+        if len(lines)<=4:
+            return f,lines,True,headline
+    f=font_fn(58,True)
+    lines=wrap_fn(draw,headline,f,width)
+    return f,lines,len(lines)<=4,headline
+
+
 def render_news_art(out, item, *, font, wrap, fit_title):
     variant=_variant_for(item,4)
     palettes=[
@@ -264,10 +292,9 @@ def render_news_art(out, item, *, font, wrap, fit_title):
     im=Image.new("RGB",(1080,1080),top)
     draw=ImageDraw.Draw(im,"RGBA")
     left=105
-    text_right=760
+    text_right=800
     width=text_right-left
 
-    # Fundo mais elaborado, mas mantendo amplo espaço limpo para headline.
     draw.polygon([(0,760),(1080,455),(1080,1080),(0,1080)],fill=(*bottom,255))
     draw.polygon([(735,0),(1080,0),(1080,290)],fill=(255,218,0,238))
     _draw_news_ribbons(draw)
@@ -275,28 +302,27 @@ def render_news_art(out, item, *, font, wrap, fit_title):
     draw.text((left,36),"RADAR BRASIL 2027",font=font(36,True),fill="white")
     _pill(draw,(left,166,left+220,228),"NOTÍCIA",font(25,True),(255,220,0,255),(17,43,52,255))
 
-    # Quatro composições visuais para reduzir repetição. Nenhuma usa a antiga
-    # bola decorativa no canto inferior direito.
     if variant==0:
-        _draw_stadium_lights(draw,860,190,0.78,(255,255,255,105))
-        _draw_stadium_lights(draw,1005,170,0.62,(255,255,255,82))
-        _draw_footballer(draw,900,405,0.72)
-        draw.arc((735,680,1080,1015),200,340,fill=(255,255,255,70),width=9)
+        _draw_stadium_lights(draw,875,190,0.72,(255,255,255,105))
+        _draw_stadium_lights(draw,1010,170,0.58,(255,255,255,82))
+        _draw_footballer(draw,925,405,0.66)
+        draw.arc((760,680,1080,1010),200,340,fill=(255,255,255,70),width=9)
     elif variant==1:
-        _draw_trophy(draw,905,455,1.0)
-        _draw_stadium_scene(draw,900,790,0.72)
-        draw.line((770,260,1010,215),fill=(255,255,255,55),width=8)
+        _draw_trophy(draw,925,455,0.95)
+        _draw_stadium_scene(draw,915,790,0.68)
+        draw.line((790,260,1020,215),fill=(255,255,255,55),width=8)
     elif variant==2:
-        _draw_city_skyline(draw,700,900,0.86)
-        _draw_stadium_lights(draw,980,250,0.55,(255,255,255,80))
-        draw.arc((755,225,1070,540),210,345,fill=(255,220,0,125),width=9)
+        _draw_city_skyline(draw,720,900,0.82)
+        _draw_stadium_lights(draw,990,250,0.50,(255,255,255,80))
+        draw.arc((780,225,1070,540),210,345,fill=(255,220,0,125),width=9)
     else:
-        _draw_stadium_scene(draw,895,585,0.92)
-        _draw_stadium_lights(draw,780,210,0.54,(255,255,255,80))
-        _draw_stadium_lights(draw,1020,205,0.52,(255,255,255,70))
-        draw.rounded_rectangle((792,845,1015,930),radius=18,fill=(4,40,54,165),outline=(255,220,0,110),width=3)
+        _draw_stadium_scene(draw,915,585,0.86)
+        _draw_stadium_lights(draw,800,210,0.50,(255,255,255,80))
+        _draw_stadium_lights(draw,1020,205,0.48,(255,255,255,70))
+        draw.rounded_rectangle((805,845,1015,930),radius=18,fill=(4,40,54,165),outline=(255,220,0,110),width=3)
 
-    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    original_title=clean(item.get("title"))
+    f,lines,readable,art_title=_fit_news_headline(draw,original_title,width,font,wrap)
     y=292
     for line in lines[:4]:
         draw.text((left,y),line,font=f,fill="white")
@@ -310,7 +336,7 @@ def render_news_art(out, item, *, font, wrap, fit_title):
             draw.text((left,sy),line,font=sf,fill=(230,244,240))
             sy+=33
 
-    draw.rounded_rectangle((left,922,650,980),radius=18,fill=(5,54,54,225),outline=(255,220,0,205),width=2)
+    draw.rounded_rectangle((left,922,660,980),radius=18,fill=(5,54,54,225),outline=(255,220,0,205),width=2)
     draw.text((left+24,938),"Saiba mais pelo link da bio",font=font(20,True),fill="white")
     pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
     im.save(out,"JPEG",quality=94,optimize=True)
@@ -320,7 +346,11 @@ def render_news_art(out, item, *, font, wrap, fit_title):
         "semantic_reason":"owned_illustrated_news_bank_v2",
         "image_credit":"Arte própria do Radar Brasil 2027",
         "license_note":"arte_propria",
+        "original_title":original_title,
+        "art_title":art_title,
+        "title_shortened":art_title != original_title,
     }
+
 
 def render_opportunity_art(out, item, *, font, wrap, fit_title):
     variant=_variant_for(item,2)
