@@ -539,43 +539,118 @@ def _bank_place_ok(row,topic,specific):
         return _contains_phrase(desc,aliases)
     return False
 
+def _news_bank_context(item):
+    return ' '.join([
+        clean(item.get('title')),
+        clean(item.get('search_context')),
+        clean(item.get('visual_places')),
+    ])
+
+def _news_bank_score(item,row,topic,specific):
+    """Pontua aderência do catálogo. Retorna negativo quando a imagem é insegura."""
+    desc=_bank_descriptor(row)
+    context=_news_bank_context(item)
+    category=clean(row.get('categoria'))
+
+    allowed,reason=restricted_visual_domain(desc,context)
+    if not allowed:
+        return -1,reason
+
+    context_tokens={norm(x) for x in distinct_terms(context)}
+    desc_tokens={norm(x) for x in distinct_terms(desc)}
+    overlap=len(context_tokens & desc_tokens)
+
+    female_desc=_contains_phrase(desc,FEMALE_MARKERS)
+    women_cup_desc=_contains_phrase(desc,WOMEN_CUP_MARKERS)
+    context_female=_contains_phrase(context,FEMALE_MARKERS)
+    context_cup=_contains_phrase(context,WOMEN_CUP_MARKERS) or 'copa feminina' in norm(context) or 'mundial feminino' in norm(context)
+    context_fans=any(x in norm(context) for x in ('torcida','torcedor','torcedora','torcedores','fas','fãs','publico','público','engajamento'))
+    desc_fans=any(x in norm(desc) for x in ('torcida','torcedor','torcedora','torcedores','fans','supporters','spectators'))
+
+    if topic=='cidade_sede':
+        if not _bank_place_ok(row,topic,specific):
+            return -1,'city_exact_match_required'
+        return 100,'host_city_exact_match'
+
+    if topic=='estadio_sede':
+        if not _bank_place_ok(row,topic,specific):
+            return -1,'stadium_exact_match_required'
+        return 100,'host_stadium_exact_match'
+
+    if category=='selecao_brasileira':
+        if not _bank_selection_ok(row):
+            return -1,'brazil_women_selection_gate'
+        score=8*overlap
+        if topic=='selecao_brasileira_feminina':
+            score+=28
+        if overlap>=1:
+            score+=10
+        return score,'brazil_women_selection_catalog'
+
+    if category=='futebol_feminino':
+        if not female_desc and not women_cup_desc:
+            return -1,'female_metadata_required'
+        score=8*overlap
+        if context_female:
+            score+=8
+        if context_cup and women_cup_desc:
+            score+=5
+        return score,'women_football_catalog'
+
+    if category.startswith('copa_feminina_'):
+        if not women_cup_desc and not female_desc:
+            return -1,'womens_world_cup_metadata_required'
+        score=8*overlap
+        if context_cup:
+            score+=8
+        if _contains_phrase(desc,BANK_FOREIGN_ONLY_BLOCKERS) and overlap<2:
+            return -1,'foreign_team_without_context_match'
+        return score,'womens_world_cup_catalog'
+
+    if category=='torcida':
+        if not context_fans or not desc_fans:
+            return -1,'fan_context_required'
+        if not female_desc and not women_cup_desc:
+            return -1,'women_fan_metadata_required'
+        return 20+8*overlap,'women_fans_catalog'
+
+    return -1,'unsupported_catalog_category'
+
 def choose_news_bank_image(item,bank_catalog,ledger):
     if clean(item.get('type'))!='noticia':
         return None
-    # Mantém variedade: nunca coloca duas Notícias fotográficas seguidas.
-    if recent_real_news_photo(ledger):
-        print('news_real_bank_skipped=previous_news_already_real')
-        return None
+
     topic,specific=classify_real_news_topic(item)
-    if topic=='outro':
-        return None
     used=used_real_image_refs(ledger)
     candidates=[]
+
     for row in bank_catalog if isinstance(bank_catalog,list) else []:
         if not isinstance(row,dict) or not _bank_row_base_ok(row,used):
             continue
-        category=clean(row.get('categoria'))
-        if topic=='selecao_brasileira_feminina':
-            if category!='selecao_brasileira' or not _bank_selection_ok(row):
-                continue
-        elif not _bank_place_ok(row,topic,specific):
+        score,reason=_news_bank_score(item,row,topic,specific)
+        if score < 16:
             continue
-        # Ordenação determinística por pauta evita aleatoriedade entre reexecuções.
         seed=hashlib.sha256((clean(item.get('key'))+'|'+clean(row.get('id'))).encode('utf-8')).hexdigest()
-        candidates.append((seed,row))
+        candidates.append((-score,seed,row,reason))
+
     if not candidates:
-        print('news_real_bank_no_safe_match='+topic+(':'+specific if specific else ''))
+        print('news_catalog_no_safe_match='+topic+(':'+specific if specific else ''))
         return None
-    candidates.sort(key=lambda x:x[0])
-    row=candidates[0][1]
+
+    candidates.sort(key=lambda x:(x[0],x[1]))
+    neg_score,_,row,reason=candidates[0]
+    score=-neg_score
+    print('news_catalog_priority_match='+clean(row.get('id'))+':score='+str(score)+':'+reason)
     return {
         'image_source_url':clean(row.get('url_thumbnail') or row.get('url_direta')),
         'source_page_url':clean(row.get('pagina_origem')),
         'credito':clean(row.get('atribuicao') or row.get('autor') or row.get('fonte')),
         'licenca':clean(row.get('licenca')),
         'bank_image_id':clean(row.get('id')),
-        'bank_topic':topic,
+        'bank_topic':topic if topic!='outro' else clean(row.get('categoria')),
         'bank_specific':specific,
+        'bank_score':score,
+        'bank_reason':reason,
     }
 
 def make_original_art(out,title,kind,subtitle,key):
@@ -685,9 +760,9 @@ def main():
         print('priority_strict_reconciliation='+ranked[0]['key'])
     if not ranked: print('found=false'); print('reason=no_eligible_item'); return 0
     fallback_item=ranked[0]
-    # Notícias podem alternar arte ilustrada com fotografia real do banco,
-    # mas somente para Seleção Brasileira feminina, cidade-sede ou estádio-sede
-    # com correspondência forte no metadata. Qualquer dúvida cai para arte própria.
+    # Notícias priorizam o catálogo editorial inteiro. O catálogo só vence a
+    # arte própria quando há aderência material no metadata e imagem não repetida.
+    # Sem match seguro, o fallback permanece a arte ilustrada do Radar.
     if clean(fallback_item.get('type'))=='noticia':
         bank_image=choose_news_bank_image(fallback_item,bank_catalog,ledger)
         if bank_image:
@@ -703,7 +778,7 @@ def main():
                         'id':s,'idempotency_key':item['key'],'approved':True,'source_type':'noticia',
                         'image_url':ROOT+art,'caption':item['caption'],'visual_mode':'news_real_bank_v1',
                         'SEMANTIC_IMAGE_OK':True,'TITLE_READABILITY_OK':True,
-                        'semantic_reason':'curated_bank_high_confidence:'+clean(bank_image.get('bank_topic')),
+                        'semantic_reason':'catalog_priority:'+clean(bank_image.get('bank_reason') or bank_image.get('bank_topic')),
                         'title_font_px':font_size,'title_lines':line_count,
                         'image_source_url':clean(bank_image.get('image_source_url')),
                         'image_page_url':clean(bank_image.get('source_page_url')),
@@ -712,6 +787,7 @@ def main():
                         'bank_image_id':clean(bank_image.get('bank_image_id')),
                         'bank_topic':clean(bank_image.get('bank_topic')),
                         'bank_specific':clean(bank_image.get('bank_specific')),
+                        'bank_score':bank_image.get('bank_score'),
                     }
                     pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True)
                     pathlib.Path(post).write_text(json.dumps(common,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
