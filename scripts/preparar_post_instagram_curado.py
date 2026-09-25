@@ -381,6 +381,203 @@ def make_photo_art(url,out,title,kind,credit):
     pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True); im.save(out,'JPEG',quality=92,optimize=True)
     return readable and f.size>=MIN_TITLE_FONT and len(lines)<=MAX_TITLE_LINES, f.size, len(lines)
 
+
+HOST_CITY_ALIASES={
+    'belo horizonte':('belo horizonte','bh'),
+    'brasilia':('brasilia','brasília'),
+    'fortaleza':('fortaleza',),
+    'porto alegre':('porto alegre',),
+    'recife':('recife','sao lourenco da mata','são lourenço da mata'),
+    'rio de janeiro':('rio de janeiro','rio'),
+    'salvador':('salvador',),
+    'sao paulo':('sao paulo','são paulo'),
+}
+HOST_STADIUM_ALIASES={
+    'mineirao':('mineirao','mineirão'),
+    'mane garrincha':('mane garrincha','mané garrincha','estadio nacional de brasilia','estádio nacional de brasília'),
+    'castelao':('castelao','castelão','arena castelao','arena castelão'),
+    'beira-rio':('beira-rio','beira rio'),
+    'arena pernambuco':('arena pernambuco',),
+    'maracana':('maracana','maracanã'),
+    'fonte nova':('fonte nova','arena fonte nova'),
+    'neo quimica arena':('neo quimica arena','neo química arena','arena corinthians'),
+}
+BRAZIL_WOMEN_BANK_MARKERS=(
+    "brazil women's national football team","brazil women soccer team",
+    "brazil women football","team brazil","teambrazil",
+    "selecao brasileira feminina","seleção brasileira feminina",
+    "atletas da selecao brasileira de futebol feminino",
+    "atletas da seleção brasileira de futebol feminino",
+)
+BRAZIL_WOMEN_PLAYER_MARKERS=(
+    'marta','formiga','debinha','cristiane','kerolin','adriana','gabi nunes','tamires',
+    'bia zaneratto','andressa alves','ary borges','rafaelle','ludmila','geyse','angelina',
+    'yasmim','tarciane','amanda gutierres','lorena','luciana','barbara','bárbara'
+)
+BANK_FOREIGN_ONLY_BLOCKERS=(
+    'german football team','germany women','zimbabwe','sweden women','usa women','canada women',
+    'france women','england women','spain women','japan women'
+)
+
+def _contains_phrase(text,values):
+    n=norm(text)
+    return any(norm(v) in n for v in values)
+
+def _specific_host_city(text):
+    n=norm(text)
+    for canonical,aliases in HOST_CITY_ALIASES.items():
+        if any(norm(alias) in n for alias in aliases):
+            return canonical
+    return ''
+
+def _specific_host_stadium(text):
+    n=norm(text)
+    for canonical,aliases in HOST_STADIUM_ALIASES.items():
+        if any(norm(alias) in n for alias in aliases):
+            return canonical
+    return ''
+
+def classify_real_news_topic(item):
+    text=' '.join([
+        clean(item.get('title')),clean(item.get('search_context')),
+        clean(item.get('visual_places')),clean(item.get('caption'))
+    ])
+    n=norm(text)
+    stadium=_specific_host_stadium(text)
+    if stadium:
+        return 'estadio_sede',stadium
+    city=_specific_host_city(text)
+    # Seleção só ganha da cidade quando há sinal explícito da equipe feminina.
+    selection_explicit=(
+        'selecao brasileira feminina' in n or
+        'selecao feminina' in n or
+        ('convocacao' in n and 'brasil' in n) or
+        ('amistoso' in n and 'brasil' in n)
+    )
+    if selection_explicit:
+        return 'selecao_brasileira_feminina',''
+    if city:
+        return 'cidade_sede',city
+    return 'outro',''
+
+def recent_real_news_photo(ledger):
+    for row in reversed(ledger.get('published',[])):
+        if not isinstance(row,dict): continue
+        p=pathlib.Path(clean(row.get('post_file')))
+        if not p.exists(): continue
+        try: post=load(p,{})
+        except Exception: continue
+        if clean(post.get('source_type'))!='noticia':
+            continue
+        return clean(post.get('visual_mode'))=='news_real_bank_v1'
+    return False
+
+def used_real_image_refs(ledger):
+    used=set()
+    for row in ledger.get('published',[]):
+        if not isinstance(row,dict): continue
+        p=pathlib.Path(clean(row.get('post_file')))
+        if not p.exists(): continue
+        try: post=load(p,{})
+        except Exception: continue
+        for field in ('bank_image_id','image_source_url','image_page_url'):
+            value=clean(post.get(field))
+            if value: used.add(value)
+    return used
+
+def _bank_descriptor(row):
+    return ' '.join([
+        clean(row.get('titulo')),clean(row.get('pessoa_local')),clean(row.get('observacoes')),
+        clean(row.get('fonte')),clean(row.get('atribuicao'))
+    ])
+
+def _bank_row_base_ok(row,used):
+    if clean(row.get('instagram_ok')).upper()!='SIM':
+        return False
+    if clean(row.get('status_licenca')).upper() not in ('APROVADA','APROVADA_AUTO'):
+        return False
+    url=clean(row.get('url_thumbnail') or row.get('url_direta'))
+    page=clean(row.get('pagina_origem'))
+    image_id=clean(row.get('id'))
+    if not url or not page or not image_id:
+        return False
+    if image_id in used or url in used or page in used:
+        return False
+    desc=_bank_descriptor(row)
+    if _contains_phrase(desc,POLITICAL_IMAGE_BLOCKERS):
+        return False
+    if _contains_phrase(desc,MALE_BLOCKERS):
+        return False
+    return True
+
+def _bank_selection_ok(row):
+    desc=_bank_descriptor(row)
+    n=norm(desc)
+    strong=_contains_phrase(desc,BRAZIL_WOMEN_BANK_MARKERS) or any(norm(x) in n for x in BRAZIL_WOMEN_PLAYER_MARKERS)
+    if not strong:
+        return False
+    # Títulos claramente de outra seleção são rejeitados, mesmo quando a descrição cita Brasil.
+    title=clean(row.get('titulo'))
+    if _contains_phrase(title,BANK_FOREIGN_ONLY_BLOCKERS) and not _contains_phrase(title,BRAZIL_WOMEN_BANK_MARKERS):
+        return False
+    return True
+
+def _bank_place_ok(row,topic,specific):
+    if not specific:
+        return False
+    desc=_bank_descriptor(row)
+    category=clean(row.get('categoria'))
+    if topic=='cidade_sede':
+        if category!='cidades_sedes_2027':
+            return False
+        aliases=HOST_CITY_ALIASES.get(specific,(specific,))
+        return _contains_phrase(desc,aliases)
+    if topic=='estadio_sede':
+        if category!='estadios_sedes_2027':
+            return False
+        aliases=HOST_STADIUM_ALIASES.get(specific,(specific,))
+        return _contains_phrase(desc,aliases)
+    return False
+
+def choose_news_bank_image(item,bank_catalog,ledger):
+    if clean(item.get('type'))!='noticia':
+        return None
+    # Mantém variedade: nunca coloca duas Notícias fotográficas seguidas.
+    if recent_real_news_photo(ledger):
+        print('news_real_bank_skipped=previous_news_already_real')
+        return None
+    topic,specific=classify_real_news_topic(item)
+    if topic=='outro':
+        return None
+    used=used_real_image_refs(ledger)
+    candidates=[]
+    for row in bank_catalog if isinstance(bank_catalog,list) else []:
+        if not isinstance(row,dict) or not _bank_row_base_ok(row,used):
+            continue
+        category=clean(row.get('categoria'))
+        if topic=='selecao_brasileira_feminina':
+            if category!='selecao_brasileira' or not _bank_selection_ok(row):
+                continue
+        elif not _bank_place_ok(row,topic,specific):
+            continue
+        # Ordenação determinística por pauta evita aleatoriedade entre reexecuções.
+        seed=hashlib.sha256((clean(item.get('key'))+'|'+clean(row.get('id'))).encode('utf-8')).hexdigest()
+        candidates.append((seed,row))
+    if not candidates:
+        print('news_real_bank_no_safe_match='+topic+(':'+specific if specific else ''))
+        return None
+    candidates.sort(key=lambda x:x[0])
+    row=candidates[0][1]
+    return {
+        'image_source_url':clean(row.get('url_thumbnail') or row.get('url_direta')),
+        'source_page_url':clean(row.get('pagina_origem')),
+        'credito':clean(row.get('atribuicao') or row.get('autor') or row.get('fonte')),
+        'licenca':clean(row.get('licenca')),
+        'bank_image_id':clean(row.get('id')),
+        'bank_topic':topic,
+        'bank_specific':specific,
+    }
+
 def make_original_art(out,title,kind,subtitle,key):
     import math
     seed=int(hashlib.sha256(key.encode()).hexdigest()[:8],16); im=Image.new('RGB',(1080,1080),(8,74,52) if kind=='evento' else (18,56,92)); draw=ImageDraw.Draw(im,'RGBA')
@@ -400,7 +597,7 @@ def make_original_art(out,title,kind,subtitle,key):
     return readable and f.size>=MIN_TITLE_FONT and len(lines)<=MAX_TITLE_LINES, f.size, len(lines)
 
 def main():
-    events=load('dados.json',[]); news=load('noticias.json',[]); opportunities=load('oportunidades.json',[]); visual_policy=load_visual_policy(); ledger=load('instagram/publicados.json',{'published':[]}); state=load('instagram/conteudo-conhecido.json',{'pending_new':[]}); catalog=load('instagram/imagens-curadas.json',{'items':[]}); blocked=load('instagram/bloqueados-publicacao.json',{'blocked_keys':[]}); reservations=load('instagram/reservas-publicacao.json',{'reservations':[]})
+    events=load('dados.json',[]); news=load('noticias.json',[]); opportunities=load('oportunidades.json',[]); visual_policy=load_visual_policy(); ledger=load('instagram/publicados.json',{'published':[]}); state=load('instagram/conteudo-conhecido.json',{'pending_new':[]}); catalog=load('instagram/imagens-curadas.json',{'items':[]}); bank_catalog=load('banco_imagens/catalogo.json',[]); blocked=load('instagram/bloqueados-publicacao.json',{'blocked_keys':[]}); reservations=load('instagram/reservas-publicacao.json',{'reservations':[]})
     now=dt.datetime.now(dt.timezone.utc)
     ledger_keys={clean(x.get('key')) for x in ledger.get('published',[]) if isinstance(x,dict)}
     active_reservations=set()
@@ -488,6 +685,49 @@ def main():
         print('priority_strict_reconciliation='+ranked[0]['key'])
     if not ranked: print('found=false'); print('reason=no_eligible_item'); return 0
     fallback_item=ranked[0]
+    # Notícias podem alternar arte ilustrada com fotografia real do banco,
+    # mas somente para Seleção Brasileira feminina, cidade-sede ou estádio-sede
+    # com correspondência forte no metadata. Qualquer dúvida cai para arte própria.
+    if clean(fallback_item.get('type'))=='noticia':
+        bank_image=choose_news_bank_image(fallback_item,bank_catalog,ledger)
+        if bank_image:
+            item=fallback_item
+            s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'
+            try:
+                readable,font_size,line_count=make_photo_art(
+                    clean(bank_image.get('image_source_url')),art,item['title'],item['type'],clean(bank_image.get('credito'))
+                )
+                title_ok=bool(readable and font_size>=MIN_TITLE_FONT and line_count<=MAX_TITLE_LINES)
+                if title_ok:
+                    common={
+                        'id':s,'idempotency_key':item['key'],'approved':True,'source_type':'noticia',
+                        'image_url':ROOT+art,'caption':item['caption'],'visual_mode':'news_real_bank_v1',
+                        'SEMANTIC_IMAGE_OK':True,'TITLE_READABILITY_OK':True,
+                        'semantic_reason':'curated_bank_high_confidence:'+clean(bank_image.get('bank_topic')),
+                        'title_font_px':font_size,'title_lines':line_count,
+                        'image_source_url':clean(bank_image.get('image_source_url')),
+                        'image_page_url':clean(bank_image.get('source_page_url')),
+                        'image_credit':clean(bank_image.get('credito')),
+                        'license_note':clean(bank_image.get('licenca')),
+                        'bank_image_id':clean(bank_image.get('bank_image_id')),
+                        'bank_topic':clean(bank_image.get('bank_topic')),
+                        'bank_specific':clean(bank_image.get('bank_specific')),
+                    }
+                    pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True)
+                    pathlib.Path(post).write_text(json.dumps(common,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+                    pathlib.Path(batch).write_text(json.dumps({'posts':[post]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+                    print('visual_mode=news_real_bank_v1')
+                    print('news_real_bank_image_id='+clean(bank_image.get('bank_image_id')))
+                    print('news_real_bank_topic='+clean(bank_image.get('bank_topic')))
+                    print('SEMANTIC_IMAGE_OK=true')
+                    print('TITLE_READABILITY_OK=true')
+                    print('found=true')
+                    print('batch_file='+batch)
+                    return 0
+                print('news_real_bank_rejected=title_readability')
+            except Exception as exc:
+                print('news_real_bank_failed='+type(exc).__name__)
+            print('news_real_bank_fallback=illustrated_art')
     owned_mode=policy_visual_mode(fallback_item.get('type'),visual_policy)
     if render_owned_art is not None and owned_mode != 'legacy':
         item=fallback_item
