@@ -1,5 +1,28 @@
 {
-  "eventos": [],
+  "eventos": [
+    {
+      "ID": "EVT-SUMMIT-20260925",
+      "Titulo": "Summit Internacional das Estrelas debate o futuro do futebol feminino rumo a 2027",
+      "Status": "Planejado",
+      "Data": "2026-09-25",
+      "DataBR": "25/09/2026",
+      "Horario": "09:00–18:20",
+      "UF": "SP",
+      "Cidade": "São Paulo",
+      "Categoria": "Summit",
+      "Organizador": "Em Busca de uma Estrela",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "Hotel Transamerica Executive Nova Paulista",
+      "Latitude": -23.589,
+      "Longitude": -46.634,
+      "Link": "https://embuscadeumaestrela.com.br/summit-internacional-das-estrelas/",
+      "Observacoes": "Encontro sobre formação, carreira, mercado, mídia, conteúdo, inovação e marcas no futebol feminino. A programação encerra com a dinâmica “2027 como ponto de partida”, conectando marca, mídia e cultura à construção da modalidade.",
+      "Mes": "Set",
+      "Ano": 2026,
+      "Regiao": "Sudeste"
+    }
+  ],
   "noticias": [
     {
       "Data": "2026-09-22",
