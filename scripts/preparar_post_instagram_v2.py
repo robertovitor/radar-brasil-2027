@@ -360,8 +360,7 @@ def run_with_quality_retry(max_attempts=8):
 if __name__ == '__main__':
     result = run_with_quality_retry()
     normalize_image_gate()
-    raise SystemExit(result)
-,
+    raise SystemExit(result),
         '',
         t,
         flags=re.I,
@@ -706,8 +705,7 @@ def run_with_quality_retry(max_attempts=8):
 if __name__ == '__main__':
     result = run_with_quality_retry()
     normalize_image_gate()
-    raise SystemExit(result)
-,
+    raise SystemExit(result),
         r'\s+com\s+foco\s+.*    # mantém o comportamento fail-closed do gate em vez de aprovar arte ilegível.
     f = base.font(min_size, True)
     lines = base.wrap(draw, original, f, width)
@@ -952,8 +950,7 @@ def run_with_quality_retry(max_attempts=8):
 if __name__ == '__main__':
     result = run_with_quality_retry()
     normalize_image_gate()
-    raise SystemExit(result)
-,
+    raise SystemExit(result),
         '',
         t,
         flags=re.I,
@@ -1298,8 +1295,7 @@ def run_with_quality_retry(max_attempts=8):
 if __name__ == '__main__':
     result = run_with_quality_retry()
     normalize_image_gate()
-    raise SystemExit(result)
-,
+    raise SystemExit(result),
         r'\s+durante\s+.*    # mantém o comportamento fail-closed do gate em vez de aprovar arte ilegível.
     f = base.font(min_size, True)
     lines = base.wrap(draw, original, f, width)
@@ -1544,8 +1540,7 @@ def run_with_quality_retry(max_attempts=8):
 if __name__ == '__main__':
     result = run_with_quality_retry()
     normalize_image_gate()
-    raise SystemExit(result)
-,
+    raise SystemExit(result),
         '',
         t,
         flags=re.I,
@@ -1890,8 +1885,7 @@ def run_with_quality_retry(max_attempts=8):
 if __name__ == '__main__':
     result = run_with_quality_retry()
     normalize_image_gate()
-    raise SystemExit(result)
-,
+    raise SystemExit(result),
         r'\s+ap[oó]s\s+.*    # mantém o comportamento fail-closed do gate em vez de aprovar arte ilegível.
     f = base.font(min_size, True)
     lines = base.wrap(draw, original, f, width)
@@ -2136,8 +2130,7 @@ def run_with_quality_retry(max_attempts=8):
 if __name__ == '__main__':
     result = run_with_quality_retry()
     normalize_image_gate()
-    raise SystemExit(result)
-,
+    raise SystemExit(result),
         '',
         t,
         flags=re.I,
@@ -2482,8 +2475,7 @@ def run_with_quality_retry(max_attempts=8):
 if __name__ == '__main__':
     result = run_with_quality_retry()
     normalize_image_gate()
-    raise SystemExit(result)
-,
+    raise SystemExit(result),
         r'\s+para\s+ações\s+.*    # mantém o comportamento fail-closed do gate em vez de aprovar arte ilegível.
     f = base.font(min_size, True)
     lines = base.wrap(draw, original, f, width)
@@ -2728,8 +2720,7 @@ def run_with_quality_retry(max_attempts=8):
 if __name__ == '__main__':
     result = run_with_quality_retry()
     normalize_image_gate()
-    raise SystemExit(result)
-,
+    raise SystemExit(result),
         '',
         t,
         flags=re.I,
@@ -3074,8 +3065,7 @@ def run_with_quality_retry(max_attempts=8):
 if __name__ == '__main__':
     result = run_with_quality_retry()
     normalize_image_gate()
-    raise SystemExit(result)
-,
+    raise SystemExit(result),
     ):
         reduced = base.clean(re.sub(pattern, '', cleaned, flags=re.I))
         if len(reduced) >= 28 and reduced not in clause_candidates:
@@ -3342,8 +3332,7 @@ def run_with_quality_retry(max_attempts=8):
 if __name__ == '__main__':
     result = run_with_quality_retry()
     normalize_image_gate()
-    raise SystemExit(result)
-,
+    raise SystemExit(result),
         '',
         t,
         flags=re.I,
