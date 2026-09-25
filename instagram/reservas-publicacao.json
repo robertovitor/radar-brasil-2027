@@ -109,12 +109,10 @@
     {
       "key": "instagram:evento:evt-summit-20260925",
       "post_file": "instagram/fila/automatica/instagram-evento-evt-summit-20260925-888eb7bf94.json",
-      "reserved_at": "2026-09-25T13:43:58.772779+00:00",
-      "last_attempt_at": "2026-09-25T13:44:16.630314+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": true,
-      "uncertain_after_meta": true,
-      "blocked_until": "2026-09-25T14:44:14.146491+00:00"
+      "reserved_at": "2026-09-25T17:33:53.447229+00:00",
+      "last_attempt_at": "2026-09-25T17:33:53.447229+00:00",
+      "attempts": 2,
+      "requires_strict_reconciliation": true
     }
   ]
 }
