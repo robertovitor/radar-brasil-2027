@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-07",
-  "started_at": "2026-09-25T07:45:42-03:00",
-  "completed_at": "2026-09-25T07:49:56-03:00",
+  "cycle_id": "20260925-08",
+  "started_at": "2026-09-25T08:46:47-03:00",
+  "completed_at": "2026-09-25T08:48:36-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": [
@@ -18,18 +18,18 @@
   ],
   "sugestoes_lidas": 30,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 12,
+  "candidatos_publicos": 8,
   "aprovados_novos": 1,
   "rejeitados": 2,
-  "duplicados": 4,
+  "duplicados": 5,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "auditoria": [
     {
       "origem": "pesquisa_publica",
-      "titulo": "Fecomércio-RS Debate — Impactos da Copa do Mundo Feminina no Turismo e Comércio do RS",
-      "decisao": "aprovado_evento",
-      "motivo": "Evento novo, futuro e verificável, marcado para 14/10/2026, das 11h30 às 14h, em Porto Alegre, com fonte oficial e inscrição pública."
+      "titulo": "Arena de Pernambuco prepara novo gramado e iluminação LED padrão FIFA para 2027",
+      "decisao": "aprovado_noticia",
+      "motivo": "Processos públicos da Empetur confirmam licitação em andamento para substituição do gramado e processo em rascunho para iluminação LED padrão FIFA; pauta nova e não localizada em dados.json ou noticias.json."
     },
     {
       "origem": "airtable",
@@ -37,7 +37,7 @@
       "record_id": "recFn5AE6yaKMQT9z",
       "titulo": "Vaquejada pode tirar repescagem da Copa do Mundo Feminina da Arena de Pernambuco",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: a busca confirmou apenas que a etapa ocorrerá em novembro; falta data exata verificável."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data exata do evento; busca profunda não repetida porque a última tentativa ocorreu há menos de seis horas."
     },
     {
       "origem": "airtable",
@@ -45,7 +45,7 @@
       "record_id": "recEMozafV2fHIZQc",
       "titulo": "Globo escolhe “Maria, Maria” para embalar chamada da Copa Feminina 2027",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: título e conteúdo identificados na fonte; falta data de publicação verificável."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data de publicação verificável; busca profunda não repetida porque a última tentativa ocorreu há menos de seis horas."
     },
     {
       "origem": "airtable",
@@ -53,7 +53,7 @@
       "record_id": "recJNn7oMAYYkDUgX",
       "titulo": "",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: busca profunda pelo código da publicação não revelou título estruturado ou confirmação independente suficiente."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última tentativa ocorreu há menos de seis horas."
     },
     {
       "origem": "airtable",
@@ -61,7 +61,7 @@
       "record_id": "recZAi2P031UGM3TD",
       "titulo": "",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: busca profunda pelo código da publicação não revelou título estruturado ou confirmação independente suficiente."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última tentativa ocorreu há menos de seis horas."
     },
     {
       "origem": "airtable",
@@ -69,51 +69,58 @@
       "record_id": "recjGnj9vzNbaZrxz",
       "titulo": "",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: busca profunda pelo código da publicação não revelou título estruturado ou confirmação independente suficiente."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última tentativa ocorreu há menos de seis horas."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Arena de Pernambuco recebe inspeção da FIFA",
+      "titulo": "Programa de voluntariado da Copa Feminina 2027",
       "decisao": "duplicado",
-      "motivo": "Pauta já incorporada em noticias.json em 22/09/2026."
+      "motivo": "Programa já incorporado."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Convocação da Seleção Brasileira Feminina para amistosos contra a Argentina",
+      "titulo": "Venda de ingressos para Brasil x Argentina",
       "decisao": "duplicado",
-      "motivo": "Convocação e amistosos já incorporados em dados.json e noticias.json."
+      "motivo": "Amistosos, horários e venda de ingressos já incorporados."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Cadastro de interesse em ingressos e voluntariado da Copa Feminina 2027",
+      "titulo": "Convocação da Seleção Feminina contra a Argentina",
       "decisao": "duplicado",
-      "motivo": "Ingressos e voluntariado já incorporados."
+      "motivo": "Convocação já incorporada."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Escolas de Mato Grosso do Sul durante a Copa Feminina 2027",
+      "titulo": "Panorama comercial a nove meses da Copa Feminina 2027",
       "decisao": "duplicado",
-      "motivo": "Pauta educacional e orientação sobre calendário escolar já incorporadas."
+      "motivo": "Síntese sem fato novo independente em relação às pautas já incorporadas."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Visita técnica da FIFA à Arena de Pernambuco",
+      "decisao": "duplicado",
+      "motivo": "Visita já incorporada em noticias.json."
     },
     {
       "origem": "pesquisa_publica",
       "titulo": "Copa do Mundo Feminina Sub-20",
       "decisao": "rejeitado",
-      "motivo": "Categoria de base, expressamente fora do escopo."
+      "motivo": "Categoria de base, fora do escopo."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Seleção Brasileira masculina e ciclo de 2030",
+      "titulo": "Copa do Mundo de vôlei feminino 2027",
       "decisao": "rejeitado",
-      "motivo": "Falso positivo sem relação com a Seleção Feminina principal ou a Copa Feminina 2027."
+      "motivo": "Modalidade diferente e fora do escopo editorial."
     }
   ],
   "observacoes_operacionais": [
     "Exatamente duas leituras Airtable executadas, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
     "Os quatro arquivos obrigatórios do GitHub main foram lidos uma vez antes do processamento, com conteúdo e SHA.",
-    "As cinco pendências antigas receberam nova busca profunda após o intervalo mínimo de seis horas; nenhuma foi rejeitada por idade.",
-    "Um registro pendente teve título enriquecido e passou a aguardar somente data de publicação verificável; os demais mantiveram os campos editoriais inalterados, com atualização apenas do horário da tentativa.",
-    "Um evento público novo foi aprovado e adicionado ao inbox em commit próprio.",
+    "Nenhum novo registro entrou no Airtable desde a rodada anterior.",
+    "Cinco registros permanecem em PENDENTE_ENRIQUECIMENTO; a busca profunda não foi repetida porque a última tentativa ocorreu há menos de seis horas.",
+    "Uma pauta pública nova sobre adequações da Arena de Pernambuco foi adicionada ao inbox em commit próprio.",
+    "Nenhuma escrita Airtable foi necessária nesta rodada.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
