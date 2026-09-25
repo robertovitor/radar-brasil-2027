@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-09",
-  "started_at": "2026-09-25T09:45:51-03:00",
-  "completed_at": "2026-09-25T09:50:22-03:00",
+  "cycle_id": "20260925-10",
+  "started_at": "2026-09-25T10:44:07-03:00",
+  "completed_at": "2026-09-25T10:48:10-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,18 +10,17 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 8,
-  "aprovados_novos": 1,
-  "rejeitados": 0,
-  "duplicados": 7,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "candidatos_publicos": 7,
+  "aprovados_novos": 0,
+  "rejeitados": 2,
+  "duplicados": 5,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas do Airtable, sem filtros, sort, schema ou paginação adicional.",
-    "Nova sugestão recebida e enriquecida: Summit Internacional das Estrelas, em 25/09/2026, São Paulo/SP; fonte oficial confirma programação ampla do futebol feminino e painel específico sobre 2027.",
-    "Registro do Summit atualizado no Airtable para Aprovado e adicionado ao inbox.",
-    "Cinco pendências de enriquecimento anteriores foram reavaliadas com os dados já lidos; a última tentativa profunda ainda estava dentro da janela de seis horas e nenhuma escrita repetitiva foi realizada.",
-    "Pesquisa pública analisou fontes recentes sobre Seleção principal, estádios, infraestrutura, voluntariado, ingressos, marcas e cidades-sede; os demais candidatos eram duplicados dos arquivos públicos.",
-    "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+    "O Summit Internacional das Estrelas, aprovado na rodada anterior, foi confirmado em dados.json; o registro correspondente foi reconciliado no Airtable e marcado como publicado.",
+    "Cinco registros permanecem em PENDENTE_ENRIQUECIMENTO. A última tentativa profunda ainda estava dentro da janela de seis horas; não houve regravação sem mudança.",
+    "A pesquisa pública recente cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, hospitalidade, ingressos, voluntariado, patrocinadores, marcas e federações. Os candidatos relevantes já constavam nos arquivos públicos; conteúdos de base foram excluídos.",
+    "Nenhuma alteração no inbox foi necessária. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
