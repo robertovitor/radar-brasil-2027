@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260924-20",
-  "started_at": "2026-09-24T20:43:41-03:00",
-  "completed_at": "2026-09-24T20:46:16-03:00",
+  "cycle_id": "20260924-21",
+  "started_at": "2026-09-24T21:42:50-03:00",
+  "completed_at": "2026-09-24T21:46:27-03:00",
   "stage": "completed",
   "executor": "automation-operational",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 30,
   "sugestoes_noticias_lidas": 25,
-  "candidatos_publicos": 12,
-  "aprovados_novos": 0,
+  "candidatos_publicos": 7,
+  "aprovados_novos": 2,
   "rejeitados": 1,
-  "duplicados": 11,
-  "inbox_itens_adicionados": 0,
-  "inbox_commit_needed": false,
+  "duplicados": 9,
+  "inbox_itens_adicionados": 2,
+  "inbox_commit_needed": true,
   "auditoria": [
     {
       "origem": "airtable",
@@ -32,39 +32,49 @@
       "record_id": "recFn5AE6yaKMQT9z",
       "titulo": "Vaquejada e repescagem na Arena de Pernambuco",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada do evento; nova busca profunda ainda não devida pela cadência de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: fontes confirmam que a vaquejada permanece prevista, mas não informam data verificável."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões",
       "record_id": "recP6kI5u5OGdQwTK",
       "titulo": "Futebol para mulheres: Entre a prática e a Copa — Módulo 2",
-      "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; nova busca profunda ainda não devida."
-    },
-    {
-      "origem": "airtable",
-      "tabela": "Sugestões",
-      "record_id": "recQ4zM6IsWbh9enY",
-      "titulo": "Marta e Alice Carvalho em painel da CCXP",
-      "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: faltam título estruturado e data confirmada do painel; nova busca profunda ainda não devida."
+      "decisao": "duplicado",
+      "motivo": "O mesmo evento já consta em dados.json."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões",
       "record_id": "recQBuyA4LbpIou87",
       "titulo": "Futebol para mulheres: Entre a prática e a Copa — Módulo 2",
-      "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; nova busca profunda ainda não devida."
+      "decisao": "duplicado",
+      "motivo": "O mesmo evento já consta em dados.json."
     },
     {
       "origem": "airtable",
       "tabela": "Sugestões",
       "record_id": "recdy7jR4nrz3Iwr0",
       "titulo": "Futebol para mulheres: Entre a prática e a Copa — Módulo 2",
-      "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; nova busca profunda ainda não devida."
+      "decisao": "duplicado",
+      "motivo": "O mesmo evento já consta em dados.json."
+    },
+    {
+      "origem": "airtable",
+      "tabela": "Sugestões",
+      "record_id": "recQ4zM6IsWbh9enY",
+      "titulo": "Marta e Alice Carvalho em painel da CCXP",
+      "decisao": "duplicado",
+      "motivo": "O painel já consta em dados.json."
+    },
+    {
+      "origem": "airtable",
+      "tabela": "Sugestões de Notícias",
+      "record_id": "recQuPg65uTMtnBjR",
+      "titulo": "CNDH recebe coordenação da Copa Feminina 2027 em reunião ordinária",
+      "fonte": "CNDH",
+      "url": "https://www.instagram.com/p/DdcLeukn84d/",
+      "decisao": "aprovado",
+      "motivo": "Fonte institucional identificada e pauta relevante para a preparação e a dimensão de direitos humanos do torneio."
     },
     {
       "origem": "airtable",
@@ -72,7 +82,7 @@
       "record_id": "recEMozafV2fHIZQc",
       "titulo": "Instagram reel Da_H8zNpHxf",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; nova busca profunda ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: busca profunda não encontrou título, autoria ou descrição pública verificável."
     },
     {
       "origem": "airtable",
@@ -80,15 +90,7 @@
       "record_id": "recJNn7oMAYYkDUgX",
       "titulo": "Instagram post DdSZg6MFM0_",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; nova busca profunda ainda não devida."
-    },
-    {
-      "origem": "airtable",
-      "tabela": "Sugestões de Notícias",
-      "record_id": "recQuPg65uTMtnBjR",
-      "titulo": "Instagram post DdcLeukn84d",
-      "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; nova busca profunda ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: busca profunda não encontrou título, autoria ou descrição pública verificável."
     },
     {
       "origem": "airtable",
@@ -96,7 +98,7 @@
       "record_id": "recZAi2P031UGM3TD",
       "titulo": "Instagram post DdRZR07Oauw",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; nova busca profunda ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: busca profunda não encontrou título, autoria ou descrição pública verificável."
     },
     {
       "origem": "airtable",
@@ -104,111 +106,71 @@
       "record_id": "recjGnj9vzNbaZrxz",
       "titulo": "Instagram post Dc13T1guTMZ",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; nova busca profunda ainda não devida."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: busca profunda não encontrou título, autoria ou descrição pública verificável."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Mineirão terá gramado híbrido por conta da Copa do Mundo Feminina de 2027",
+      "fonte": "Rede 98",
+      "url": "https://rede98.com.br/esportes/futebol-minas/mineirao-troca-gramado-copa-do-mundo-feminina-2027/",
+      "decisao": "aprovado",
+      "motivo": "Nova intervenção de infraestrutura, exigida pela FIFA e específica do estádio de Belo Horizonte."
     },
     {
       "origem": "pesquisa_publica",
       "titulo": "FIFA conclui terceira rodada de inspeções nos oito estádios",
-      "fonte": "FIFA",
-      "url": "https://inside.fifa.com/news/brazil-2027-host-city-stadium-inspections-martin-ianuzzi",
+      "fonte": "ge/FIFA",
+      "url": "https://ge.globo.com/futebol/copa-do-mundo-feminina/noticia/2026/09/24/copa-do-mundo-feminina-2027-fifa-conclui-terceira-rodada-de-inspecoes-em-estadios.ghtml",
       "decisao": "duplicado",
-      "motivo": "Já incorporado em noticias.json."
+      "motivo": "Mesmo fato já incorporado em noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "FGF articula treino aberto da Seleção Feminina antes do amistoso em Porto Alegre",
+      "titulo": "Seleção Feminina pode realizar treino aberto em Porto Alegre",
       "fonte": "GZH",
       "url": "https://gauchazh.clicrbs.com.br/esportes/futebol-feminino/noticia/2026/09/selecao-feminina-pode-realizar-treino-aberto-em-porto-alegre-antes-de-amistoso-contra-a-argentina-entenda-cmufuzht600jw01icjpb9ia0k.html",
       "decisao": "duplicado",
-      "motivo": "Incluído na rodada anterior e já incorporado em noticias.json."
+      "motivo": "Pauta incorporada na rodada anterior."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Seleção Feminina: Arthur Elias convoca para jogos contra a Argentina",
-      "fonte": "ge",
-      "url": "https://ge.globo.com/futebol/futebol-feminino/noticia/2026/09/22/convocadas-da-selecao-veja-a-lista-de-arthur-elias-para-os-amistosos-contra-a-argentina.ghtml",
+      "titulo": "Copa Feminina deve criar mais de 70 mil postos de trabalho",
+      "fonte": "Jornal do Comércio",
+      "url": "https://www.jornaldocomercio.com/economia/2026/09/1264550-copa-do-mundo-feminina-2027-deve-movimentar-criar-mais-de-70-mil-postos-de-trabalho-no-brasil-aponta-fgv.html",
       "decisao": "duplicado",
-      "motivo": "Convocação e amistosos já incorporados."
+      "motivo": "Reapresenta o mesmo estudo da FGV e os R$ 8,8 bilhões já incorporados."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "FIFA abre inscrições para voluntários da Copa Feminina 2027",
-      "fonte": "FIFA",
-      "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027",
-      "decisao": "duplicado",
-      "motivo": "Programa de voluntariado já incorporado."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Conheça os estádios da Copa do Mundo Feminina 2027",
-      "fonte": "FIFA",
-      "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027/articles/guia-estadios-copa-mundo-feminina-2027",
-      "decisao": "duplicado",
-      "motivo": "Guia dos estádios já incorporado."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Maracanã receberá abertura e final da Copa 2027",
-      "fonte": "Reuters",
-      "url": "https://www.reuters.com/sports/soccer/brazils-iconic-maracana-stage-womens-world-cup-opener-final-2027-2026-08-20/",
-      "decisao": "duplicado",
-      "motivo": "Abertura, final e sedes já incorporadas."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Copa Feminina registra 750 mil interessados em ingressos",
-      "fonte": "UOL",
-      "url": "https://economia.uol.com.br/noticias/redacao/2026/08/14/copa-do-mundo-feminina-alcanca-750-mil-interessados-em-ingressos.ghtm",
-      "decisao": "duplicado",
-      "motivo": "Indicador de ingressos já incorporado."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "CNE defende férias apenas nas cidades-sede",
-      "fonte": "UOL Educação",
-      "url": "https://educacao.uol.com.br/noticias/2026/08/19/conselho-ferias-copa-do-mundo-futebol-feminina.ghtm",
-      "decisao": "duplicado",
-      "motivo": "Tema e desdobramentos legislativos já incorporados."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Bahia cria novas frentes para a Copa Feminina 2027",
+      "titulo": "Nova geração baiana ganha espaço na Seleção Brasileira Feminina",
       "fonte": "A TARDE",
-      "url": "https://atarde.com.br/esportes/copa-do-mundo-feminina-2027-ganha-novas-frentes-na-bahia-1403213",
+      "url": "https://atarde.com.br/esportes/nova-geracao-baiana-ganha-espaco-na-selecao-brasileira-feminina-1403335",
       "decisao": "duplicado",
-      "motivo": "Pauta já incorporada em noticias.json."
+      "motivo": "Reapresenta a mesma convocação e a primeira chamada de Yanne já incorporadas."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Lorena concorre a melhor jogadora e goleira",
-      "fonte": "CBF",
-      "url": "https://www.cbf.com.br/selecao-brasileira/noticias/noticias/selecao-feminina-principal/lorena-concorre-a-melhor-jogadora-e-melhor-goleira-no-bola-de-ouro-202526",
+      "titulo": "Catarinenses são convocadas para a Seleção Brasileira Feminina",
+      "fonte": "Rádio Clube de Canoinhas",
+      "url": "https://www.radioclubedecanoinhas.com.br/catarinenses-sao-convocadas-para-a-selecao-brasileira-feminina",
       "decisao": "duplicado",
-      "motivo": "Pauta e evento da cerimônia já incorporados."
+      "motivo": "Mesmo ato de convocação já incorporado; recorte regional sem desdobramento novo."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Yanne celebra primeira convocação para a Seleção Feminina",
-      "fonte": "Globoplay",
-      "url": "https://globoplay.globo.com/v/14987251/",
-      "decisao": "duplicado",
-      "motivo": "Entrevista já incorporada em noticias.json."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Ancelotti convoca Vanderson para substituir Wesley",
-      "fonte": "Folha de S.Paulo",
-      "url": "https://www1.folha.uol.com.br/esporte/2026/09/ancelotti-convoca-vanderson-para-substituir-wesley-cortado-por-lesao.shtml",
+      "titulo": "Seleção Brasileira Feminina de Futsal é convocada para amistosos contra o Japão",
+      "fonte": "ge",
+      "url": "https://ge.globo.com/pr/futsal/noticia/2026/09/24/selecao-brasileira-feminina-de-futsal-e-convocada-para-amistosos-contra-o-japao-veja-detalhes.ghtml",
       "decisao": "rejeitado",
-      "motivo": "Seleção masculina; fora do escopo editorial desta rotina."
+      "motivo": "Futsal fora do escopo desta rotina de futebol de campo e Copa Feminina 2027."
     }
   ],
   "observacoes_operacionais": [
     "Exatamente duas leituras completas do Airtable foram executadas e reutilizadas; nenhuma leitura adicional foi feita.",
-    "O backlog continha cinco eventos e cinco notícias em Pendente/Em verificação.",
-    "As dez pendências tinham mais de sete dias, mas a última verificação ainda não havia completado a cadência mínima de seis horas; nenhuma busca profunda repetitiva nem escrita Airtable foi feita.",
-    "A pesquisa pública foi executada em fontes oficiais e veículos confiáveis; não surgiu item novo, confirmado e editorialmente distinto dos arquivos finais.",
-    "O editorial/inbox.json estava vazio e permaneceu inalterado.",
+    "A janela de seis horas foi atingida e a busca profunda foi executada para as dez pendências antigas.",
+    "Quatro eventos pendentes foram reconciliados como duplicados; uma notícia institucional do CNDH foi enriquecida e aprovada; cinco itens continuam pendentes por informação insuficiente.",
+    "As escritas Airtable foram limitadas às mudanças necessárias de decisão, resultado e horário da verificação.",
+    "O inbox foi preservado e recebeu duas notícias novas: CNDH e gramado híbrido do Mineirão.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
