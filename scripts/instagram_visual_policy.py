@@ -215,55 +215,109 @@ def _draw_volunteer_scene(draw, x, y, scale=1.0):
         yy=y+245*scale+n*18*scale
         draw.line((x-220*scale,yy,x+220*scale,yy),fill=(255,255,255,55),width=max(2,int(3*scale)))
 
+
+def _draw_city_skyline(draw, base_x, base_y, scale=1.0):
+    dark=(6,43,62,255)
+    light=(255,255,255,105)
+    yellow=(255,219,48,220)
+    buildings=[
+        (0,120,72),(78,180,88),(172,145,62),(240,235,96),(344,165,72)
+    ]
+    for i,(dx,h,w) in enumerate(buildings):
+        x0=base_x+dx*scale; y0=base_y-h*scale
+        x1=x0+w*scale; y1=base_y
+        fill=dark if i%2==0 else (10,68,86,255)
+        draw.rectangle((x0,y0,x1,y1),fill=fill)
+        for wy in range(18,int(h)-18,34):
+            for wx in range(14,int(w)-12,28):
+                draw.rectangle((x0+wx*scale,y0+wy*scale,x0+(wx+8)*scale,y0+(wy+12)*scale),fill=light)
+    draw.ellipse((base_x+285*scale,base_y-285*scale,base_x+355*scale,base_y-215*scale),fill=yellow)
+
+def _draw_stadium_scene(draw, cx, cy, scale=1.0):
+    white=(255,255,255,120)
+    yellow=(255,220,0,180)
+    dark=(4,48,56,255)
+    # arquibancadas estilizadas
+    for i in range(5):
+        pad=i*20*scale
+        draw.arc((cx-230*scale+pad,cy-120*scale+pad,cx+230*scale-pad,cy+190*scale-pad),180,360,fill=white,width=max(4,int(8*scale)))
+    draw.ellipse((cx-165*scale,cy+35*scale,cx+165*scale,cy+120*scale),outline=yellow,width=max(5,int(8*scale)))
+    draw.line((cx-165*scale,cy+78*scale,cx+165*scale,cy+78*scale),fill=white,width=max(3,int(5*scale)))
+    draw.line((cx,cy+38*scale,cx,cy+118*scale),fill=white,width=max(3,int(5*scale)))
+    draw.rectangle((cx-28*scale,cy-165*scale,cx+28*scale,cy-95*scale),fill=dark,outline=white,width=max(2,int(4*scale)))
+    draw.line((cx,cy-95*scale,cx,cy-25*scale),fill=white,width=max(3,int(5*scale)))
+
+def _draw_news_ribbons(draw):
+    draw.polygon([(0,790),(1080,520),(1080,650),(0,920)],fill=(255,220,0,28))
+    draw.polygon([(0,860),(1080,600),(1080,690),(0,960)],fill=(255,255,255,18))
+    draw.line((45,775,650,625),fill=(255,220,0,95),width=10)
+
 def render_news_art(out, item, *, font, wrap, fit_title):
-    variant=_variant_for(item,2)
-    im=Image.new("RGB",(1080,1080),(9,47,100) if variant==0 else (8,58,88))
+    variant=_variant_for(item,4)
+    palettes=[
+        ((8,47,96),(8,106,76)),
+        ((8,58,88),(12,104,78)),
+        ((15,61,110),(8,92,76)),
+        ((7,54,82),(10,112,83)),
+    ]
+    top,bottom=palettes[variant]
+    im=Image.new("RGB",(1080,1080),top)
     draw=ImageDraw.Draw(im,"RGBA")
-    left,right=105,975
-    text_right=690
+    left=105
+    text_right=760
     width=text_right-left
 
-    # Base ilustrada própria: o texto ocupa a esquerda e a ilustração, a direita.
-    draw.polygon([(0,720),(1080,410),(1080,1080),(0,1080)],fill=(8,106,76,255))
-    draw.polygon([(690,0),(1080,0),(1080,260)],fill=(255,218,0,235))
-    for yy in (210,380,550):
-        draw.line((30,yy,620,yy-120),fill=(255,255,255,16),width=18)
-    draw.rectangle((0,0,1080,128),fill=(4,34,54,235))
+    # Fundo mais elaborado, mas mantendo amplo espaço limpo para headline.
+    draw.polygon([(0,760),(1080,455),(1080,1080),(0,1080)],fill=(*bottom,255))
+    draw.polygon([(735,0),(1080,0),(1080,290)],fill=(255,218,0,238))
+    _draw_news_ribbons(draw)
+    draw.rectangle((0,0,1080,128),fill=(4,34,54,238))
     draw.text((left,36),"RADAR BRASIL 2027",font=font(36,True),fill="white")
     _pill(draw,(left,166,left+220,228),"NOTÍCIA",font(25,True),(255,220,0,255),(17,43,52,255))
 
+    # Quatro composições visuais para reduzir repetição. Nenhuma usa a antiga
+    # bola decorativa no canto inferior direito.
     if variant==0:
-        _draw_stadium_lights(draw,820,205,0.8,(255,255,255,100))
-        _draw_stadium_lights(draw,970,170,0.65,(255,255,255,85))
-        _draw_footballer(draw,855,390,0.82)
-        _draw_ball(draw,925,840,92)
+        _draw_stadium_lights(draw,860,190,0.78,(255,255,255,105))
+        _draw_stadium_lights(draw,1005,170,0.62,(255,255,255,82))
+        _draw_footballer(draw,900,405,0.72)
+        draw.arc((735,680,1080,1015),200,340,fill=(255,255,255,70),width=9)
+    elif variant==1:
+        _draw_trophy(draw,905,455,1.0)
+        _draw_stadium_scene(draw,900,790,0.72)
+        draw.line((770,260,1010,215),fill=(255,255,255,55),width=8)
+    elif variant==2:
+        _draw_city_skyline(draw,700,900,0.86)
+        _draw_stadium_lights(draw,980,250,0.55,(255,255,255,80))
+        draw.arc((755,225,1070,540),210,345,fill=(255,220,0,125),width=9)
     else:
-        _draw_trophy(draw,880,470,1.05)
-        _draw_ball(draw,955,790,82)
-        draw.arc((710,250,1080,620),205,350,fill=(255,220,0,115),width=10)
+        _draw_stadium_scene(draw,895,585,0.92)
+        _draw_stadium_lights(draw,780,210,0.54,(255,255,255,80))
+        _draw_stadium_lights(draw,1020,205,0.52,(255,255,255,70))
+        draw.rounded_rectangle((792,845,1015,930),radius=18,fill=(4,40,54,165),outline=(255,220,0,110),width=3)
 
-    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=80,max_lines=4)
-    y=300
+    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    y=292
     for line in lines[:4]:
         draw.text((left,y),line,font=f,fill="white")
         y+=f.size+10
 
     subtitle=clean(item.get("subtitle"))
     if subtitle:
-        sy=max(700,y+30)
-        sf=font(24,True)
+        sy=max(705,y+30)
+        sf=font(23,True)
         for line in wrap(draw,subtitle,sf,width)[:2]:
             draw.text((left,sy),line,font=sf,fill=(230,244,240))
-            sy+=34
+            sy+=33
 
-    draw.rounded_rectangle((left,922,625,978),radius=18,fill=(5,54,54,230),outline=(255,220,0,210),width=2)
-    draw.text((left+24,937),"Saiba mais pelo link da bio",font=font(20,True),fill="white")
+    draw.rounded_rectangle((left,922,650,980),radius=18,fill=(5,54,54,225),outline=(255,220,0,205),width=2)
+    draw.text((left+24,938),"Saiba mais pelo link da bio",font=font(20,True),fill="white")
     pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
     im.save(out,"JPEG",quality=94,optimize=True)
     return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
-        "visual_mode":"radar_news_illustrated_bank_v1",
+        "visual_mode":"radar_news_illustrated_bank_v2",
         "visual_variant":f"news-{variant+1:02d}",
-        "semantic_reason":"owned_illustrated_news_bank",
+        "semantic_reason":"owned_illustrated_news_bank_v2",
         "image_credit":"Arte própria do Radar Brasil 2027",
         "license_note":"arte_propria",
     }
