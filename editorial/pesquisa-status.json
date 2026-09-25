@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-17",
-  "started_at": "2026-09-25T17:45:50-03:00",
-  "completed_at": "2026-09-25T17:48:18-03:00",
+  "cycle_id": "20260925-18",
+  "started_at": "2026-09-25T18:43:59-03:00",
+  "completed_at": "2026-09-25T18:45:41-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,18 +10,19 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 12,
-  "aprovados_novos": 0,
-  "rejeitados": 3,
-  "duplicados": 9,
-  "inbox_itens_adicionados": 1,
+  "candidatos_publicos": 10,
+  "aprovados_novos": 1,
+  "rejeitados": 2,
+  "duplicados": 7,
+  "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
-    "Executadas exatamente duas leituras completas do Airtable, com pageSize 1000, sem filtros, sort, schema ou paginação adicional; os resultados foram reutilizados em todo o processamento.",
-    "Três registros antigos permanecem em PENDENTE_ENRIQUECIMENTO. A última busca pública profunda individual ocorreu há menos de seis horas, portanto não foi repetida e não houve escrita redundante no Airtable.",
-    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Doze candidatos foram avaliados: nove eram duplicatas do acervo e três foram excluídos por inadequação editorial, ausência de fato novo ou fora de escopo.",
-    "Nenhuma pauta pública nova atingiu os critérios de publicação nesta rodada.",
-    "A chamada da Globo com “Maria, Maria”, já aprovada no Airtable e ainda ausente de noticias.json, foi reenfileirada no inbox editorial.",
+    "Executadas exatamente duas leituras integrais do Airtable, uma por tabela, com pageSize 1000 e sem filtros, sort, schema ou paginação; os resultados foram reutilizados.",
+    "As três pendências antigas de notícias continuam com PENDENTE_ENRIQUECIMENTO por falta de título estruturado. Como a busca profunda anterior ocorreu há menos de seis horas, não houve nova consulta individual nem escrita repetitiva.",
+    "A pesquisa pública recente avaliou Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Dez candidatos foram processados: sete duplicatas, dois excluídos por inadequação editorial ou ausência de fato verificável e um aprovado.",
+    "Aprovado o evento realizado em 24/09/2026 na OAB-RJ sobre legado social da Copa Feminina 2027 e prevenção da violência contra mulheres e meninas, com fonte oficial, data, horário e local confirmados.",
+    "A chamada da Globo com “Maria, Maria” permanece aprovada no Airtable e ausente de noticias.json; por isso foi preservada no envio ao inbox junto do novo evento.",
+    "Nenhum registro do Airtable precisou ser alterado nesta rodada.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
