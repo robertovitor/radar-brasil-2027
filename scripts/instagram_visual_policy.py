@@ -252,6 +252,873 @@ def _draw_news_ribbons(draw):
     draw.polygon([(0,860),(1080,600),(1080,690),(0,960)],fill=(255,255,255,18))
     draw.line((45,775,650,625),fill=(255,220,0,95),width=10)
 
+
+def _news_headline(title):
+    t=clean(title)
+    # Veículo/domínio no fim pertence à fonte, não à headline da arte.
+    t=re.sub(
+        r'\s+-\s+(?:www\.)?[a-z0-9.-]+\.(?:com|com\.br|org|org\.br|net|net\.br|br)    variant=_variant_for(item,4)
+    palettes=[
+        ((8,47,96),(8,106,76)),
+        ((8,58,88),(12,104,78)),
+        ((15,61,110),(8,92,76)),
+        ((7,54,82),(10,112,83)),
+    ]
+    top,bottom=palettes[variant]
+    im=Image.new("RGB",(1080,1080),top)
+    draw=ImageDraw.Draw(im,"RGBA")
+    left=105
+    text_right=760
+    width=text_right-left
+
+    # Fundo mais elaborado, mas mantendo amplo espaço limpo para headline.
+    draw.polygon([(0,760),(1080,455),(1080,1080),(0,1080)],fill=(*bottom,255))
+    draw.polygon([(735,0),(1080,0),(1080,290)],fill=(255,218,0,238))
+    _draw_news_ribbons(draw)
+    draw.rectangle((0,0,1080,128),fill=(4,34,54,238))
+    draw.text((left,36),"RADAR BRASIL 2027",font=font(36,True),fill="white")
+    _pill(draw,(left,166,left+220,228),"NOTÍCIA",font(25,True),(255,220,0,255),(17,43,52,255))
+
+    # Quatro composições visuais para reduzir repetição. Nenhuma usa a antiga
+    # bola decorativa no canto inferior direito.
+    if variant==0:
+        _draw_stadium_lights(draw,860,190,0.78,(255,255,255,105))
+        _draw_stadium_lights(draw,1005,170,0.62,(255,255,255,82))
+        _draw_footballer(draw,900,405,0.72)
+        draw.arc((735,680,1080,1015),200,340,fill=(255,255,255,70),width=9)
+    elif variant==1:
+        _draw_trophy(draw,905,455,1.0)
+        _draw_stadium_scene(draw,900,790,0.72)
+        draw.line((770,260,1010,215),fill=(255,255,255,55),width=8)
+    elif variant==2:
+        _draw_city_skyline(draw,700,900,0.86)
+        _draw_stadium_lights(draw,980,250,0.55,(255,255,255,80))
+        draw.arc((755,225,1070,540),210,345,fill=(255,220,0,125),width=9)
+    else:
+        _draw_stadium_scene(draw,895,585,0.92)
+        _draw_stadium_lights(draw,780,210,0.54,(255,255,255,80))
+        _draw_stadium_lights(draw,1020,205,0.52,(255,255,255,70))
+        draw.rounded_rectangle((792,845,1015,930),radius=18,fill=(4,40,54,165),outline=(255,220,0,110),width=3)
+
+    original_title=clean(item.get("title"))
+    f,lines,readable,art_title=_fit_news_headline(draw,original_title,width,font,wrap)
+    y=292
+    for line in lines[:4]:
+        draw.text((left,y),line,font=f,fill="white")
+        y+=f.size+10
+
+    subtitle=clean(item.get("subtitle"))
+    if subtitle:
+        sy=max(705,y+30)
+        sf=font(23,True)
+        for line in wrap(draw,subtitle,sf,width)[:2]:
+            draw.text((left,sy),line,font=sf,fill=(230,244,240))
+            sy+=33
+
+    draw.rounded_rectangle((left,922,650,980),radius=18,fill=(5,54,54,225),outline=(255,220,0,205),width=2)
+    draw.text((left+24,938),"Saiba mais pelo link da bio",font=font(20,True),fill="white")
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+    im.save(out,"JPEG",quality=94,optimize=True)
+    return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
+        "visual_mode":"radar_news_illustrated_bank_v2",
+        "visual_variant":f"news-{variant+1:02d}",
+        "semantic_reason":"owned_illustrated_news_bank_v2",
+        "image_credit":"Arte própria do Radar Brasil 2027",
+        "license_note":"arte_propria",
+        "original_title":original_title,
+        "art_title":art_title,
+        "title_shortened":art_title != original_title,
+    }
+
+def render_opportunity_art(out, item, *, font, wrap, fit_title):
+    variant=_variant_for(item,2)
+    im=Image.new("RGB",(1080,1080),(249,200,47) if variant==0 else (252,211,66))
+    draw=ImageDraw.Draw(im,"RGBA")
+    left,right=105,975
+    text_right=685
+    width=text_right-left
+    dark=(5,69,48,255)
+
+    draw.polygon([(0,0),(580,0),(0,310)],fill=(7,82,57,58))
+    draw.polygon([(700,1080),(1080,820),(1080,1080)],fill=(11,91,66,255))
+    for yy in (250,430,610):
+        draw.line((20,yy,625,yy-95),fill=(8,78,57,25),width=18)
+    draw.text((left,42),"RADAR BRASIL 2027",font=font(36,True),fill=dark)
+    _pill(draw,(left,176,left+330,240),"OPORTUNIDADE",font(24,True),(255,255,255,238),dark)
+
+    if variant==0:
+        _draw_laptop_bundle(draw,715,720,0.9)
+    else:
+        _draw_volunteer_scene(draw,865,610,0.9)
+        draw.ellipse((815,240,930,355),fill=(255,221,62,255),outline=dark,width=5)
+        draw.line((872,355,872,410),fill=dark,width=8)
+
+    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    y=320
+    for line in lines[:4]:
+        draw.text((left,y),line,font=f,fill=dark)
+        y+=f.size+10
+
+    category=clean(item.get("category"))
+    org=clean(item.get("organization"))
+    details=" • ".join(x for x in (category,org) if x)
+    if details:
+        sy=max(700,y+24)
+        sf=font(24,True)
+        for line in wrap(draw,details,sf,width)[:2]:
+            draw.text((left,sy),line,font=sf,fill=(17,66,52))
+            sy+=34
+
+    deadline=clean(item.get("display_date"))
+    if deadline:
+        draw.rounded_rectangle((left,842,625,905),radius=18,fill=dark)
+        draw.text((left+22,859),deadline,font=font(24,True),fill="white")
+
+    draw.rounded_rectangle((left,936,625,994),radius=18,fill=dark)
+    draw.text((left+22,952),"Confira e participe • link na bio",font=font(19,True),fill="white")
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+    im.save(out,"JPEG",quality=94,optimize=True)
+    return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
+        "visual_mode":"radar_opportunity_illustrated_bank_v1",
+        "visual_variant":f"opportunity-{variant+1:02d}",
+        "semantic_reason":"owned_illustrated_opportunity_bank",
+        "image_credit":"Arte própria do Radar Brasil 2027",
+        "license_note":"arte_propria",
+    }
+
+def render_owned_art(out, item, *, font, wrap, fit_title, policy=None):
+    mode=visual_mode(clean(item.get("type")),policy)
+    if mode=="text_art":
+        return render_event_text_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    if mode=="radar_art":
+        return render_news_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    if mode=="radar_art_opportunity":
+        return render_opportunity_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    raise ValueError("legacy_visual_mode")
+,
+        '',
+        t,
+        flags=re.I,
+    )
+    t=re.sub(r'^Fifa\b','FIFA',t)
+    replacements=(
+        (r'\bCopa do Mundo Feminina da FIFA Brasil 2027\b','Copa Feminina 2027'),
+        (r'\bCopa do Mundo Feminina FIFA 2027\b','Copa Feminina 2027'),
+        (r'\bCopa do Mundo Feminina de 2027\b','Copa Feminina 2027'),
+        (r'\bCopa do Mundo Feminina 2027\b','Copa Feminina 2027'),
+        (r'\bCopa do Mundo Feminina no Brasil(?: em 2027)?\b','Copa Feminina 2027'),
+        (r'\bpor exigência da FIFA para a Copa Feminina 2027\b','para a Copa Feminina 2027'),
+        (r'\bpor exigência da Fifa para a Copa Feminina 2027\b','para a Copa Feminina 2027'),
+    )
+    for pattern,repl in replacements:
+        t=clean(re.sub(pattern,repl,t,flags=re.I))
+    return t
+
+def _fit_news_headline(draw,title,width,font_fn,wrap_fn):
+    original=clean(title)
+    headline=_news_headline(original)
+    candidates=[headline]
+
+    # Só remove caudas explicativas completas; nunca usa reticências.
+    for pattern in (
+        r'\s+com foco\s+.*    variant=_variant_for(item,4)
+    palettes=[
+        ((8,47,96),(8,106,76)),
+        ((8,58,88),(12,104,78)),
+        ((15,61,110),(8,92,76)),
+        ((7,54,82),(10,112,83)),
+    ]
+    top,bottom=palettes[variant]
+    im=Image.new("RGB",(1080,1080),top)
+    draw=ImageDraw.Draw(im,"RGBA")
+    left=105
+    text_right=760
+    width=text_right-left
+
+    # Fundo mais elaborado, mas mantendo amplo espaço limpo para headline.
+    draw.polygon([(0,760),(1080,455),(1080,1080),(0,1080)],fill=(*bottom,255))
+    draw.polygon([(735,0),(1080,0),(1080,290)],fill=(255,218,0,238))
+    _draw_news_ribbons(draw)
+    draw.rectangle((0,0,1080,128),fill=(4,34,54,238))
+    draw.text((left,36),"RADAR BRASIL 2027",font=font(36,True),fill="white")
+    _pill(draw,(left,166,left+220,228),"NOTÍCIA",font(25,True),(255,220,0,255),(17,43,52,255))
+
+    # Quatro composições visuais para reduzir repetição. Nenhuma usa a antiga
+    # bola decorativa no canto inferior direito.
+    if variant==0:
+        _draw_stadium_lights(draw,860,190,0.78,(255,255,255,105))
+        _draw_stadium_lights(draw,1005,170,0.62,(255,255,255,82))
+        _draw_footballer(draw,900,405,0.72)
+        draw.arc((735,680,1080,1015),200,340,fill=(255,255,255,70),width=9)
+    elif variant==1:
+        _draw_trophy(draw,905,455,1.0)
+        _draw_stadium_scene(draw,900,790,0.72)
+        draw.line((770,260,1010,215),fill=(255,255,255,55),width=8)
+    elif variant==2:
+        _draw_city_skyline(draw,700,900,0.86)
+        _draw_stadium_lights(draw,980,250,0.55,(255,255,255,80))
+        draw.arc((755,225,1070,540),210,345,fill=(255,220,0,125),width=9)
+    else:
+        _draw_stadium_scene(draw,895,585,0.92)
+        _draw_stadium_lights(draw,780,210,0.54,(255,255,255,80))
+        _draw_stadium_lights(draw,1020,205,0.52,(255,255,255,70))
+        draw.rounded_rectangle((792,845,1015,930),radius=18,fill=(4,40,54,165),outline=(255,220,0,110),width=3)
+
+    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    y=292
+    for line in lines[:4]:
+        draw.text((left,y),line,font=f,fill="white")
+        y+=f.size+10
+
+    subtitle=clean(item.get("subtitle"))
+    if subtitle:
+        sy=max(705,y+30)
+        sf=font(23,True)
+        for line in wrap(draw,subtitle,sf,width)[:2]:
+            draw.text((left,sy),line,font=sf,fill=(230,244,240))
+            sy+=33
+
+    draw.rounded_rectangle((left,922,650,980),radius=18,fill=(5,54,54,225),outline=(255,220,0,205),width=2)
+    draw.text((left+24,938),"Saiba mais pelo link da bio",font=font(20,True),fill="white")
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+    im.save(out,"JPEG",quality=94,optimize=True)
+    return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
+        "visual_mode":"radar_news_illustrated_bank_v2",
+        "visual_variant":f"news-{variant+1:02d}",
+        "semantic_reason":"owned_illustrated_news_bank_v2",
+        "image_credit":"Arte própria do Radar Brasil 2027",
+        "license_note":"arte_propria",
+    }
+
+def render_opportunity_art(out, item, *, font, wrap, fit_title):
+    variant=_variant_for(item,2)
+    im=Image.new("RGB",(1080,1080),(249,200,47) if variant==0 else (252,211,66))
+    draw=ImageDraw.Draw(im,"RGBA")
+    left,right=105,975
+    text_right=685
+    width=text_right-left
+    dark=(5,69,48,255)
+
+    draw.polygon([(0,0),(580,0),(0,310)],fill=(7,82,57,58))
+    draw.polygon([(700,1080),(1080,820),(1080,1080)],fill=(11,91,66,255))
+    for yy in (250,430,610):
+        draw.line((20,yy,625,yy-95),fill=(8,78,57,25),width=18)
+    draw.text((left,42),"RADAR BRASIL 2027",font=font(36,True),fill=dark)
+    _pill(draw,(left,176,left+330,240),"OPORTUNIDADE",font(24,True),(255,255,255,238),dark)
+
+    if variant==0:
+        _draw_laptop_bundle(draw,715,720,0.9)
+    else:
+        _draw_volunteer_scene(draw,865,610,0.9)
+        draw.ellipse((815,240,930,355),fill=(255,221,62,255),outline=dark,width=5)
+        draw.line((872,355,872,410),fill=dark,width=8)
+
+    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    y=320
+    for line in lines[:4]:
+        draw.text((left,y),line,font=f,fill=dark)
+        y+=f.size+10
+
+    category=clean(item.get("category"))
+    org=clean(item.get("organization"))
+    details=" • ".join(x for x in (category,org) if x)
+    if details:
+        sy=max(700,y+24)
+        sf=font(24,True)
+        for line in wrap(draw,details,sf,width)[:2]:
+            draw.text((left,sy),line,font=sf,fill=(17,66,52))
+            sy+=34
+
+    deadline=clean(item.get("display_date"))
+    if deadline:
+        draw.rounded_rectangle((left,842,625,905),radius=18,fill=dark)
+        draw.text((left+22,859),deadline,font=font(24,True),fill="white")
+
+    draw.rounded_rectangle((left,936,625,994),radius=18,fill=dark)
+    draw.text((left+22,952),"Confira e participe • link na bio",font=font(19,True),fill="white")
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+    im.save(out,"JPEG",quality=94,optimize=True)
+    return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
+        "visual_mode":"radar_opportunity_illustrated_bank_v1",
+        "visual_variant":f"opportunity-{variant+1:02d}",
+        "semantic_reason":"owned_illustrated_opportunity_bank",
+        "image_credit":"Arte própria do Radar Brasil 2027",
+        "license_note":"arte_propria",
+    }
+
+def render_owned_art(out, item, *, font, wrap, fit_title, policy=None):
+    mode=visual_mode(clean(item.get("type")),policy)
+    if mode=="text_art":
+        return render_event_text_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    if mode=="radar_art":
+        return render_news_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    if mode=="radar_art_opportunity":
+        return render_opportunity_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    raise ValueError("legacy_visual_mode")
+,
+        r'\s+durante\s+.*    variant=_variant_for(item,4)
+    palettes=[
+        ((8,47,96),(8,106,76)),
+        ((8,58,88),(12,104,78)),
+        ((15,61,110),(8,92,76)),
+        ((7,54,82),(10,112,83)),
+    ]
+    top,bottom=palettes[variant]
+    im=Image.new("RGB",(1080,1080),top)
+    draw=ImageDraw.Draw(im,"RGBA")
+    left=105
+    text_right=760
+    width=text_right-left
+
+    # Fundo mais elaborado, mas mantendo amplo espaço limpo para headline.
+    draw.polygon([(0,760),(1080,455),(1080,1080),(0,1080)],fill=(*bottom,255))
+    draw.polygon([(735,0),(1080,0),(1080,290)],fill=(255,218,0,238))
+    _draw_news_ribbons(draw)
+    draw.rectangle((0,0,1080,128),fill=(4,34,54,238))
+    draw.text((left,36),"RADAR BRASIL 2027",font=font(36,True),fill="white")
+    _pill(draw,(left,166,left+220,228),"NOTÍCIA",font(25,True),(255,220,0,255),(17,43,52,255))
+
+    # Quatro composições visuais para reduzir repetição. Nenhuma usa a antiga
+    # bola decorativa no canto inferior direito.
+    if variant==0:
+        _draw_stadium_lights(draw,860,190,0.78,(255,255,255,105))
+        _draw_stadium_lights(draw,1005,170,0.62,(255,255,255,82))
+        _draw_footballer(draw,900,405,0.72)
+        draw.arc((735,680,1080,1015),200,340,fill=(255,255,255,70),width=9)
+    elif variant==1:
+        _draw_trophy(draw,905,455,1.0)
+        _draw_stadium_scene(draw,900,790,0.72)
+        draw.line((770,260,1010,215),fill=(255,255,255,55),width=8)
+    elif variant==2:
+        _draw_city_skyline(draw,700,900,0.86)
+        _draw_stadium_lights(draw,980,250,0.55,(255,255,255,80))
+        draw.arc((755,225,1070,540),210,345,fill=(255,220,0,125),width=9)
+    else:
+        _draw_stadium_scene(draw,895,585,0.92)
+        _draw_stadium_lights(draw,780,210,0.54,(255,255,255,80))
+        _draw_stadium_lights(draw,1020,205,0.52,(255,255,255,70))
+        draw.rounded_rectangle((792,845,1015,930),radius=18,fill=(4,40,54,165),outline=(255,220,0,110),width=3)
+
+    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    y=292
+    for line in lines[:4]:
+        draw.text((left,y),line,font=f,fill="white")
+        y+=f.size+10
+
+    subtitle=clean(item.get("subtitle"))
+    if subtitle:
+        sy=max(705,y+30)
+        sf=font(23,True)
+        for line in wrap(draw,subtitle,sf,width)[:2]:
+            draw.text((left,sy),line,font=sf,fill=(230,244,240))
+            sy+=33
+
+    draw.rounded_rectangle((left,922,650,980),radius=18,fill=(5,54,54,225),outline=(255,220,0,205),width=2)
+    draw.text((left+24,938),"Saiba mais pelo link da bio",font=font(20,True),fill="white")
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+    im.save(out,"JPEG",quality=94,optimize=True)
+    return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
+        "visual_mode":"radar_news_illustrated_bank_v2",
+        "visual_variant":f"news-{variant+1:02d}",
+        "semantic_reason":"owned_illustrated_news_bank_v2",
+        "image_credit":"Arte própria do Radar Brasil 2027",
+        "license_note":"arte_propria",
+    }
+
+def render_opportunity_art(out, item, *, font, wrap, fit_title):
+    variant=_variant_for(item,2)
+    im=Image.new("RGB",(1080,1080),(249,200,47) if variant==0 else (252,211,66))
+    draw=ImageDraw.Draw(im,"RGBA")
+    left,right=105,975
+    text_right=685
+    width=text_right-left
+    dark=(5,69,48,255)
+
+    draw.polygon([(0,0),(580,0),(0,310)],fill=(7,82,57,58))
+    draw.polygon([(700,1080),(1080,820),(1080,1080)],fill=(11,91,66,255))
+    for yy in (250,430,610):
+        draw.line((20,yy,625,yy-95),fill=(8,78,57,25),width=18)
+    draw.text((left,42),"RADAR BRASIL 2027",font=font(36,True),fill=dark)
+    _pill(draw,(left,176,left+330,240),"OPORTUNIDADE",font(24,True),(255,255,255,238),dark)
+
+    if variant==0:
+        _draw_laptop_bundle(draw,715,720,0.9)
+    else:
+        _draw_volunteer_scene(draw,865,610,0.9)
+        draw.ellipse((815,240,930,355),fill=(255,221,62,255),outline=dark,width=5)
+        draw.line((872,355,872,410),fill=dark,width=8)
+
+    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    y=320
+    for line in lines[:4]:
+        draw.text((left,y),line,font=f,fill=dark)
+        y+=f.size+10
+
+    category=clean(item.get("category"))
+    org=clean(item.get("organization"))
+    details=" • ".join(x for x in (category,org) if x)
+    if details:
+        sy=max(700,y+24)
+        sf=font(24,True)
+        for line in wrap(draw,details,sf,width)[:2]:
+            draw.text((left,sy),line,font=sf,fill=(17,66,52))
+            sy+=34
+
+    deadline=clean(item.get("display_date"))
+    if deadline:
+        draw.rounded_rectangle((left,842,625,905),radius=18,fill=dark)
+        draw.text((left+22,859),deadline,font=font(24,True),fill="white")
+
+    draw.rounded_rectangle((left,936,625,994),radius=18,fill=dark)
+    draw.text((left+22,952),"Confira e participe • link na bio",font=font(19,True),fill="white")
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+    im.save(out,"JPEG",quality=94,optimize=True)
+    return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
+        "visual_mode":"radar_opportunity_illustrated_bank_v1",
+        "visual_variant":f"opportunity-{variant+1:02d}",
+        "semantic_reason":"owned_illustrated_opportunity_bank",
+        "image_credit":"Arte própria do Radar Brasil 2027",
+        "license_note":"arte_propria",
+    }
+
+def render_owned_art(out, item, *, font, wrap, fit_title, policy=None):
+    mode=visual_mode(clean(item.get("type")),policy)
+    if mode=="text_art":
+        return render_event_text_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    if mode=="radar_art":
+        return render_news_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    if mode=="radar_art_opportunity":
+        return render_opportunity_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    raise ValueError("legacy_visual_mode")
+,
+        r'\s+ap[oó]s\s+.*    variant=_variant_for(item,4)
+    palettes=[
+        ((8,47,96),(8,106,76)),
+        ((8,58,88),(12,104,78)),
+        ((15,61,110),(8,92,76)),
+        ((7,54,82),(10,112,83)),
+    ]
+    top,bottom=palettes[variant]
+    im=Image.new("RGB",(1080,1080),top)
+    draw=ImageDraw.Draw(im,"RGBA")
+    left=105
+    text_right=760
+    width=text_right-left
+
+    # Fundo mais elaborado, mas mantendo amplo espaço limpo para headline.
+    draw.polygon([(0,760),(1080,455),(1080,1080),(0,1080)],fill=(*bottom,255))
+    draw.polygon([(735,0),(1080,0),(1080,290)],fill=(255,218,0,238))
+    _draw_news_ribbons(draw)
+    draw.rectangle((0,0,1080,128),fill=(4,34,54,238))
+    draw.text((left,36),"RADAR BRASIL 2027",font=font(36,True),fill="white")
+    _pill(draw,(left,166,left+220,228),"NOTÍCIA",font(25,True),(255,220,0,255),(17,43,52,255))
+
+    # Quatro composições visuais para reduzir repetição. Nenhuma usa a antiga
+    # bola decorativa no canto inferior direito.
+    if variant==0:
+        _draw_stadium_lights(draw,860,190,0.78,(255,255,255,105))
+        _draw_stadium_lights(draw,1005,170,0.62,(255,255,255,82))
+        _draw_footballer(draw,900,405,0.72)
+        draw.arc((735,680,1080,1015),200,340,fill=(255,255,255,70),width=9)
+    elif variant==1:
+        _draw_trophy(draw,905,455,1.0)
+        _draw_stadium_scene(draw,900,790,0.72)
+        draw.line((770,260,1010,215),fill=(255,255,255,55),width=8)
+    elif variant==2:
+        _draw_city_skyline(draw,700,900,0.86)
+        _draw_stadium_lights(draw,980,250,0.55,(255,255,255,80))
+        draw.arc((755,225,1070,540),210,345,fill=(255,220,0,125),width=9)
+    else:
+        _draw_stadium_scene(draw,895,585,0.92)
+        _draw_stadium_lights(draw,780,210,0.54,(255,255,255,80))
+        _draw_stadium_lights(draw,1020,205,0.52,(255,255,255,70))
+        draw.rounded_rectangle((792,845,1015,930),radius=18,fill=(4,40,54,165),outline=(255,220,0,110),width=3)
+
+    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    y=292
+    for line in lines[:4]:
+        draw.text((left,y),line,font=f,fill="white")
+        y+=f.size+10
+
+    subtitle=clean(item.get("subtitle"))
+    if subtitle:
+        sy=max(705,y+30)
+        sf=font(23,True)
+        for line in wrap(draw,subtitle,sf,width)[:2]:
+            draw.text((left,sy),line,font=sf,fill=(230,244,240))
+            sy+=33
+
+    draw.rounded_rectangle((left,922,650,980),radius=18,fill=(5,54,54,225),outline=(255,220,0,205),width=2)
+    draw.text((left+24,938),"Saiba mais pelo link da bio",font=font(20,True),fill="white")
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+    im.save(out,"JPEG",quality=94,optimize=True)
+    return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
+        "visual_mode":"radar_news_illustrated_bank_v2",
+        "visual_variant":f"news-{variant+1:02d}",
+        "semantic_reason":"owned_illustrated_news_bank_v2",
+        "image_credit":"Arte própria do Radar Brasil 2027",
+        "license_note":"arte_propria",
+    }
+
+def render_opportunity_art(out, item, *, font, wrap, fit_title):
+    variant=_variant_for(item,2)
+    im=Image.new("RGB",(1080,1080),(249,200,47) if variant==0 else (252,211,66))
+    draw=ImageDraw.Draw(im,"RGBA")
+    left,right=105,975
+    text_right=685
+    width=text_right-left
+    dark=(5,69,48,255)
+
+    draw.polygon([(0,0),(580,0),(0,310)],fill=(7,82,57,58))
+    draw.polygon([(700,1080),(1080,820),(1080,1080)],fill=(11,91,66,255))
+    for yy in (250,430,610):
+        draw.line((20,yy,625,yy-95),fill=(8,78,57,25),width=18)
+    draw.text((left,42),"RADAR BRASIL 2027",font=font(36,True),fill=dark)
+    _pill(draw,(left,176,left+330,240),"OPORTUNIDADE",font(24,True),(255,255,255,238),dark)
+
+    if variant==0:
+        _draw_laptop_bundle(draw,715,720,0.9)
+    else:
+        _draw_volunteer_scene(draw,865,610,0.9)
+        draw.ellipse((815,240,930,355),fill=(255,221,62,255),outline=dark,width=5)
+        draw.line((872,355,872,410),fill=dark,width=8)
+
+    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    y=320
+    for line in lines[:4]:
+        draw.text((left,y),line,font=f,fill=dark)
+        y+=f.size+10
+
+    category=clean(item.get("category"))
+    org=clean(item.get("organization"))
+    details=" • ".join(x for x in (category,org) if x)
+    if details:
+        sy=max(700,y+24)
+        sf=font(24,True)
+        for line in wrap(draw,details,sf,width)[:2]:
+            draw.text((left,sy),line,font=sf,fill=(17,66,52))
+            sy+=34
+
+    deadline=clean(item.get("display_date"))
+    if deadline:
+        draw.rounded_rectangle((left,842,625,905),radius=18,fill=dark)
+        draw.text((left+22,859),deadline,font=font(24,True),fill="white")
+
+    draw.rounded_rectangle((left,936,625,994),radius=18,fill=dark)
+    draw.text((left+22,952),"Confira e participe • link na bio",font=font(19,True),fill="white")
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+    im.save(out,"JPEG",quality=94,optimize=True)
+    return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
+        "visual_mode":"radar_opportunity_illustrated_bank_v1",
+        "visual_variant":f"opportunity-{variant+1:02d}",
+        "semantic_reason":"owned_illustrated_opportunity_bank",
+        "image_credit":"Arte própria do Radar Brasil 2027",
+        "license_note":"arte_propria",
+    }
+
+def render_owned_art(out, item, *, font, wrap, fit_title, policy=None):
+    mode=visual_mode(clean(item.get("type")),policy)
+    if mode=="text_art":
+        return render_event_text_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    if mode=="radar_art":
+        return render_news_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    if mode=="radar_art_opportunity":
+        return render_opportunity_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    raise ValueError("legacy_visual_mode")
+,
+        r'\s+enquanto\s+.*    variant=_variant_for(item,4)
+    palettes=[
+        ((8,47,96),(8,106,76)),
+        ((8,58,88),(12,104,78)),
+        ((15,61,110),(8,92,76)),
+        ((7,54,82),(10,112,83)),
+    ]
+    top,bottom=palettes[variant]
+    im=Image.new("RGB",(1080,1080),top)
+    draw=ImageDraw.Draw(im,"RGBA")
+    left=105
+    text_right=760
+    width=text_right-left
+
+    # Fundo mais elaborado, mas mantendo amplo espaço limpo para headline.
+    draw.polygon([(0,760),(1080,455),(1080,1080),(0,1080)],fill=(*bottom,255))
+    draw.polygon([(735,0),(1080,0),(1080,290)],fill=(255,218,0,238))
+    _draw_news_ribbons(draw)
+    draw.rectangle((0,0,1080,128),fill=(4,34,54,238))
+    draw.text((left,36),"RADAR BRASIL 2027",font=font(36,True),fill="white")
+    _pill(draw,(left,166,left+220,228),"NOTÍCIA",font(25,True),(255,220,0,255),(17,43,52,255))
+
+    # Quatro composições visuais para reduzir repetição. Nenhuma usa a antiga
+    # bola decorativa no canto inferior direito.
+    if variant==0:
+        _draw_stadium_lights(draw,860,190,0.78,(255,255,255,105))
+        _draw_stadium_lights(draw,1005,170,0.62,(255,255,255,82))
+        _draw_footballer(draw,900,405,0.72)
+        draw.arc((735,680,1080,1015),200,340,fill=(255,255,255,70),width=9)
+    elif variant==1:
+        _draw_trophy(draw,905,455,1.0)
+        _draw_stadium_scene(draw,900,790,0.72)
+        draw.line((770,260,1010,215),fill=(255,255,255,55),width=8)
+    elif variant==2:
+        _draw_city_skyline(draw,700,900,0.86)
+        _draw_stadium_lights(draw,980,250,0.55,(255,255,255,80))
+        draw.arc((755,225,1070,540),210,345,fill=(255,220,0,125),width=9)
+    else:
+        _draw_stadium_scene(draw,895,585,0.92)
+        _draw_stadium_lights(draw,780,210,0.54,(255,255,255,80))
+        _draw_stadium_lights(draw,1020,205,0.52,(255,255,255,70))
+        draw.rounded_rectangle((792,845,1015,930),radius=18,fill=(4,40,54,165),outline=(255,220,0,110),width=3)
+
+    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    y=292
+    for line in lines[:4]:
+        draw.text((left,y),line,font=f,fill="white")
+        y+=f.size+10
+
+    subtitle=clean(item.get("subtitle"))
+    if subtitle:
+        sy=max(705,y+30)
+        sf=font(23,True)
+        for line in wrap(draw,subtitle,sf,width)[:2]:
+            draw.text((left,sy),line,font=sf,fill=(230,244,240))
+            sy+=33
+
+    draw.rounded_rectangle((left,922,650,980),radius=18,fill=(5,54,54,225),outline=(255,220,0,205),width=2)
+    draw.text((left+24,938),"Saiba mais pelo link da bio",font=font(20,True),fill="white")
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+    im.save(out,"JPEG",quality=94,optimize=True)
+    return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
+        "visual_mode":"radar_news_illustrated_bank_v2",
+        "visual_variant":f"news-{variant+1:02d}",
+        "semantic_reason":"owned_illustrated_news_bank_v2",
+        "image_credit":"Arte própria do Radar Brasil 2027",
+        "license_note":"arte_propria",
+    }
+
+def render_opportunity_art(out, item, *, font, wrap, fit_title):
+    variant=_variant_for(item,2)
+    im=Image.new("RGB",(1080,1080),(249,200,47) if variant==0 else (252,211,66))
+    draw=ImageDraw.Draw(im,"RGBA")
+    left,right=105,975
+    text_right=685
+    width=text_right-left
+    dark=(5,69,48,255)
+
+    draw.polygon([(0,0),(580,0),(0,310)],fill=(7,82,57,58))
+    draw.polygon([(700,1080),(1080,820),(1080,1080)],fill=(11,91,66,255))
+    for yy in (250,430,610):
+        draw.line((20,yy,625,yy-95),fill=(8,78,57,25),width=18)
+    draw.text((left,42),"RADAR BRASIL 2027",font=font(36,True),fill=dark)
+    _pill(draw,(left,176,left+330,240),"OPORTUNIDADE",font(24,True),(255,255,255,238),dark)
+
+    if variant==0:
+        _draw_laptop_bundle(draw,715,720,0.9)
+    else:
+        _draw_volunteer_scene(draw,865,610,0.9)
+        draw.ellipse((815,240,930,355),fill=(255,221,62,255),outline=dark,width=5)
+        draw.line((872,355,872,410),fill=dark,width=8)
+
+    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    y=320
+    for line in lines[:4]:
+        draw.text((left,y),line,font=f,fill=dark)
+        y+=f.size+10
+
+    category=clean(item.get("category"))
+    org=clean(item.get("organization"))
+    details=" • ".join(x for x in (category,org) if x)
+    if details:
+        sy=max(700,y+24)
+        sf=font(24,True)
+        for line in wrap(draw,details,sf,width)[:2]:
+            draw.text((left,sy),line,font=sf,fill=(17,66,52))
+            sy+=34
+
+    deadline=clean(item.get("display_date"))
+    if deadline:
+        draw.rounded_rectangle((left,842,625,905),radius=18,fill=dark)
+        draw.text((left+22,859),deadline,font=font(24,True),fill="white")
+
+    draw.rounded_rectangle((left,936,625,994),radius=18,fill=dark)
+    draw.text((left+22,952),"Confira e participe • link na bio",font=font(19,True),fill="white")
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+    im.save(out,"JPEG",quality=94,optimize=True)
+    return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
+        "visual_mode":"radar_opportunity_illustrated_bank_v1",
+        "visual_variant":f"opportunity-{variant+1:02d}",
+        "semantic_reason":"owned_illustrated_opportunity_bank",
+        "image_credit":"Arte própria do Radar Brasil 2027",
+        "license_note":"arte_propria",
+    }
+
+def render_owned_art(out, item, *, font, wrap, fit_title, policy=None):
+    mode=visual_mode(clean(item.get("type")),policy)
+    if mode=="text_art":
+        return render_event_text_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    if mode=="radar_art":
+        return render_news_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    if mode=="radar_art_opportunity":
+        return render_opportunity_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    raise ValueError("legacy_visual_mode")
+,
+        r'\s+para ações\s+.*    variant=_variant_for(item,4)
+    palettes=[
+        ((8,47,96),(8,106,76)),
+        ((8,58,88),(12,104,78)),
+        ((15,61,110),(8,92,76)),
+        ((7,54,82),(10,112,83)),
+    ]
+    top,bottom=palettes[variant]
+    im=Image.new("RGB",(1080,1080),top)
+    draw=ImageDraw.Draw(im,"RGBA")
+    left=105
+    text_right=760
+    width=text_right-left
+
+    # Fundo mais elaborado, mas mantendo amplo espaço limpo para headline.
+    draw.polygon([(0,760),(1080,455),(1080,1080),(0,1080)],fill=(*bottom,255))
+    draw.polygon([(735,0),(1080,0),(1080,290)],fill=(255,218,0,238))
+    _draw_news_ribbons(draw)
+    draw.rectangle((0,0,1080,128),fill=(4,34,54,238))
+    draw.text((left,36),"RADAR BRASIL 2027",font=font(36,True),fill="white")
+    _pill(draw,(left,166,left+220,228),"NOTÍCIA",font(25,True),(255,220,0,255),(17,43,52,255))
+
+    # Quatro composições visuais para reduzir repetição. Nenhuma usa a antiga
+    # bola decorativa no canto inferior direito.
+    if variant==0:
+        _draw_stadium_lights(draw,860,190,0.78,(255,255,255,105))
+        _draw_stadium_lights(draw,1005,170,0.62,(255,255,255,82))
+        _draw_footballer(draw,900,405,0.72)
+        draw.arc((735,680,1080,1015),200,340,fill=(255,255,255,70),width=9)
+    elif variant==1:
+        _draw_trophy(draw,905,455,1.0)
+        _draw_stadium_scene(draw,900,790,0.72)
+        draw.line((770,260,1010,215),fill=(255,255,255,55),width=8)
+    elif variant==2:
+        _draw_city_skyline(draw,700,900,0.86)
+        _draw_stadium_lights(draw,980,250,0.55,(255,255,255,80))
+        draw.arc((755,225,1070,540),210,345,fill=(255,220,0,125),width=9)
+    else:
+        _draw_stadium_scene(draw,895,585,0.92)
+        _draw_stadium_lights(draw,780,210,0.54,(255,255,255,80))
+        _draw_stadium_lights(draw,1020,205,0.52,(255,255,255,70))
+        draw.rounded_rectangle((792,845,1015,930),radius=18,fill=(4,40,54,165),outline=(255,220,0,110),width=3)
+
+    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    y=292
+    for line in lines[:4]:
+        draw.text((left,y),line,font=f,fill="white")
+        y+=f.size+10
+
+    subtitle=clean(item.get("subtitle"))
+    if subtitle:
+        sy=max(705,y+30)
+        sf=font(23,True)
+        for line in wrap(draw,subtitle,sf,width)[:2]:
+            draw.text((left,sy),line,font=sf,fill=(230,244,240))
+            sy+=33
+
+    draw.rounded_rectangle((left,922,650,980),radius=18,fill=(5,54,54,225),outline=(255,220,0,205),width=2)
+    draw.text((left+24,938),"Saiba mais pelo link da bio",font=font(20,True),fill="white")
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+    im.save(out,"JPEG",quality=94,optimize=True)
+    return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
+        "visual_mode":"radar_news_illustrated_bank_v2",
+        "visual_variant":f"news-{variant+1:02d}",
+        "semantic_reason":"owned_illustrated_news_bank_v2",
+        "image_credit":"Arte própria do Radar Brasil 2027",
+        "license_note":"arte_propria",
+    }
+
+def render_opportunity_art(out, item, *, font, wrap, fit_title):
+    variant=_variant_for(item,2)
+    im=Image.new("RGB",(1080,1080),(249,200,47) if variant==0 else (252,211,66))
+    draw=ImageDraw.Draw(im,"RGBA")
+    left,right=105,975
+    text_right=685
+    width=text_right-left
+    dark=(5,69,48,255)
+
+    draw.polygon([(0,0),(580,0),(0,310)],fill=(7,82,57,58))
+    draw.polygon([(700,1080),(1080,820),(1080,1080)],fill=(11,91,66,255))
+    for yy in (250,430,610):
+        draw.line((20,yy,625,yy-95),fill=(8,78,57,25),width=18)
+    draw.text((left,42),"RADAR BRASIL 2027",font=font(36,True),fill=dark)
+    _pill(draw,(left,176,left+330,240),"OPORTUNIDADE",font(24,True),(255,255,255,238),dark)
+
+    if variant==0:
+        _draw_laptop_bundle(draw,715,720,0.9)
+    else:
+        _draw_volunteer_scene(draw,865,610,0.9)
+        draw.ellipse((815,240,930,355),fill=(255,221,62,255),outline=dark,width=5)
+        draw.line((872,355,872,410),fill=dark,width=8)
+
+    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    y=320
+    for line in lines[:4]:
+        draw.text((left,y),line,font=f,fill=dark)
+        y+=f.size+10
+
+    category=clean(item.get("category"))
+    org=clean(item.get("organization"))
+    details=" • ".join(x for x in (category,org) if x)
+    if details:
+        sy=max(700,y+24)
+        sf=font(24,True)
+        for line in wrap(draw,details,sf,width)[:2]:
+            draw.text((left,sy),line,font=sf,fill=(17,66,52))
+            sy+=34
+
+    deadline=clean(item.get("display_date"))
+    if deadline:
+        draw.rounded_rectangle((left,842,625,905),radius=18,fill=dark)
+        draw.text((left+22,859),deadline,font=font(24,True),fill="white")
+
+    draw.rounded_rectangle((left,936,625,994),radius=18,fill=dark)
+    draw.text((left+22,952),"Confira e participe • link na bio",font=font(19,True),fill="white")
+    pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True)
+    im.save(out,"JPEG",quality=94,optimize=True)
+    return readable and f.size>=58 and len(lines)<=4, f.size, len(lines), {
+        "visual_mode":"radar_opportunity_illustrated_bank_v1",
+        "visual_variant":f"opportunity-{variant+1:02d}",
+        "semantic_reason":"owned_illustrated_opportunity_bank",
+        "image_credit":"Arte própria do Radar Brasil 2027",
+        "license_note":"arte_propria",
+    }
+
+def render_owned_art(out, item, *, font, wrap, fit_title, policy=None):
+    mode=visual_mode(clean(item.get("type")),policy)
+    if mode=="text_art":
+        return render_event_text_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    if mode=="radar_art":
+        return render_news_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    if mode=="radar_art_opportunity":
+        return render_opportunity_art(out,item,font=font,wrap=wrap,fit_title=fit_title)
+    raise ValueError("legacy_visual_mode")
+,
+    ):
+        reduced=clean(re.sub(pattern,'',headline,flags=re.I))
+        if len(reduced)>=28 and reduced not in candidates:
+            candidates.append(reduced)
+
+    if ':' in headline:
+        left=clean(headline.split(':',1)[0])
+        if 28<=len(left)<=90 and left not in candidates:
+            candidates.append(left)
+
+    # Prioriza a versão mais completa que caiba.
+    for candidate in candidates:
+        for size in range(78,57,-2):
+            f=font_fn(size,True)
+            lines=wrap_fn(draw,candidate,f,width)
+            if len(lines)<=4:
+                return f,lines,True,candidate
+
+    # Falha fechada: melhor não publicar uma arte cortada.
+    f=font_fn(58,True)
+    lines=wrap_fn(draw,headline,f,width)
+    return f,lines,len(lines)<=4,headline
+
 def render_news_art(out, item, *, font, wrap, fit_title):
     variant=_variant_for(item,4)
     palettes=[
