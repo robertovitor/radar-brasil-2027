@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260924-23",
-  "started_at": "2026-09-24T23:44:18-03:00",
-  "completed_at": "2026-09-24T23:46:33-03:00",
+  "cycle_id": "20260925-00",
+  "started_at": "2026-09-25T00:44:08-03:00",
+  "completed_at": "2026-09-25T00:45:58-03:00",
   "stage": "completed",
   "executor": "automation-operational",
   "airtable_reads_total": 2,
@@ -19,9 +19,9 @@
   ],
   "sugestoes_lidas": 30,
   "sugestoes_noticias_lidas": 25,
-  "candidatos_publicos": 8,
+  "candidatos_publicos": 9,
   "aprovados_novos": 0,
-  "rejeitados": 2,
+  "rejeitados": 3,
   "duplicados": 6,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
@@ -32,7 +32,7 @@
       "record_id": "recFn5AE6yaKMQT9z",
       "titulo": "Vaquejada e repescagem na Arena de Pernambuco",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; busca profunda não repetida porque a última verificação ocorreu há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada; última busca profunda há menos de seis horas."
     },
     {
       "origem": "airtable",
@@ -40,7 +40,7 @@
       "record_id": "recEMozafV2fHIZQc",
       "titulo": "Instagram reel Da_H8zNpHxf",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última verificação ocorreu há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; última busca profunda há menos de seis horas."
     },
     {
       "origem": "airtable",
@@ -48,7 +48,7 @@
       "record_id": "recJNn7oMAYYkDUgX",
       "titulo": "Instagram post DdSZg6MFM0_",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última verificação ocorreu há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; última busca profunda há menos de seis horas."
     },
     {
       "origem": "airtable",
@@ -56,7 +56,7 @@
       "record_id": "recZAi2P031UGM3TD",
       "titulo": "Instagram post DdRZR07Oauw",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última verificação ocorreu há menos de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; última busca profunda há menos de seis horas."
     },
     {
       "origem": "airtable",
@@ -64,23 +64,7 @@
       "record_id": "recjGnj9vzNbaZrxz",
       "titulo": "Instagram post Dc13T1guTMZ",
       "decisao": "pendente",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda não repetida porque a última verificação ocorreu há menos de seis horas."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Performance, histórico, calendário e projeção para Copa: os critérios de Arthur Elias",
-      "fonte": "CBF",
-      "url": "https://www.cbf.com.br/selecao-brasileira/noticias/convocacoes/convocacoes-selecao-feminina/performance-historico-calendario-e-projecao-para-copa-os-criterios-de-arthur-elias-para-a-convocacao",
-      "decisao": "duplicado",
-      "motivo": "Desdobramento da mesma convocação de 22/09 já incorporada em noticias.json."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Arthur Elias convoca seleção feminina para amistosos contra Argentina",
-      "fonte": "Agência Brasil",
-      "url": "https://agenciabrasil.ebc.com.br/esportes/noticia/2026-09/arthur-elias-convoca-selecao-feminina-para-amistosos-contra-argentina",
-      "decisao": "duplicado",
-      "motivo": "Convocação e amistosos já incorporados no Radar."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; última busca profunda há menos de seis horas."
     },
     {
       "origem": "pesquisa_publica",
@@ -88,54 +72,78 @@
       "fonte": "Folha de S.Paulo",
       "url": "https://www1.folha.uol.com.br/esporte/2026/09/corinthians-elimina-o-bahia-e-avanca-a-10a-final-consecutiva-do-brasileiro-feminino.shtml",
       "decisao": "rejeitado",
-      "motivo": "Resultado de competição de clubes sem novidade operacional específica sobre a Copa 2027 ou a Seleção principal."
+      "motivo": "Resultado de competição de clubes sem novidade operacional específica da Copa 2027 ou da Seleção principal."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Brasil é eliminado pela Espanha nas quartas da Copa Feminina Sub-20",
+      "titulo": "Brasil vence Argentina e conquista vaga olímpica no vôlei masculino",
       "fonte": "UOL",
-      "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/09/19/brasil-espanha-copa-do-mundo-feminina-sub-20.ghtm",
+      "url": "https://www.uol.com.br/esporte/ultimas-noticias/2026/09/20/brasil-x-argentina---sul-americano-de-volei.ghtm",
       "decisao": "rejeitado",
-      "motivo": "Categoria de base, explicitamente fora do escopo desta rotina."
+      "motivo": "Modalidade masculina e fora do escopo."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Capital terá Encontro Nacional do Futebol Feminino com foco no legado da Copa 2027",
-      "fonte": "Prefeitura de Porto Alegre",
-      "url": "https://www.prefeitura.poa.br/secopa2027/noticias/capital-tera-encontro-nacional-do-futebol-feminino-com-foco-no-legado-da-copa",
-      "decisao": "duplicado",
-      "motivo": "O ENFF já consta em dados.json e noticias.json."
+      "titulo": "Seleção masculina faz atividade antifuso na Austrália",
+      "fonte": "UOL",
+      "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/09/22/selecao-treina-na-australia-com-apenas-10-em-campo-e-em-atividade-antifuso.ghtm",
+      "decisao": "rejeitado",
+      "motivo": "Seleção masculina; fora do escopo."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Prefeitura destaca oportunidades para a Copa 2027 no Encontro Nacional do Futebol Feminino",
-      "fonte": "Prefeitura de Porto Alegre",
-      "url": "https://prefeitura.poa.br/secopa2027/noticias/prefeitura-destaca-oportunidades-para-copa-2027-no-encontro-nacional-do-futebol",
+      "titulo": "FIFA anuncia oito cidades-sede e estádios para a Copa Feminina 2027",
+      "fonte": "Goal",
+      "url": "https://www.goal.com/en-ng/lists/fifa-announces-eight-host-cities-and-stadiums-for-2027-women-s-world-cup-in-brazil/blt2e131a505449647a",
       "decisao": "duplicado",
-      "motivo": "Cobertura da abertura do ENFF já representado no Radar; não acrescenta anúncio operacional independente."
+      "motivo": "Cidades e estádios já amplamente incorporados em dados.json e noticias.json."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Copa Feminina FIFA 2027 abre inscrições para voluntários em Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
-      "url": "https://prefeitura.poa.br/secopa2027",
+      "titulo": "Oito estádios brasileiros confirmados para a Copa Feminina 2027",
+      "fonte": "National Daily",
+      "url": "https://nationaldailyng.com/full-list-eight-stadiums-to-host-2027-womens-world-cup-in-brazil/",
       "decisao": "duplicado",
-      "motivo": "A abertura das inscrições oficiais e o voluntariado já estão incorporados em dados.json e noticias.json."
+      "motivo": "Repetição internacional da lista de sedes já incorporada."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Prefeitura protocola projeto de lei com regras especiais para a Copa Feminina 2027",
-      "fonte": "Prefeitura de Porto Alegre",
-      "url": "https://prefeitura.poa.br/secopa2027/noticias/prefeitura-protocola-projeto-de-lei-com-regras-especiais-para-copa-feminina",
+      "titulo": "Copa do Mundo Feminina da FIFA 2027",
+      "fonte": "FIFA",
+      "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027",
       "decisao": "duplicado",
-      "motivo": "Pauta de regras locais, ingressos, transporte e operação já incorporada no conjunto editorial existente."
+      "motivo": "Página-base do torneio; calendário e sedes já representados no Radar."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Cidades-sede da Copa do Mundo Feminina 2027",
+      "fonte": "FIFA",
+      "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027/host-cities",
+      "decisao": "duplicado",
+      "motivo": "Informações de cidades-sede já incorporadas."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Manifeste interesse por ingressos da Copa do Mundo Feminina 2027",
+      "fonte": "FIFA",
+      "url": "https://www.fifa.com/pt/tournaments/womens/womensworldcup/brazil-2027/tickets",
+      "decisao": "duplicado",
+      "motivo": "Manifestação de interesse e pautas de ingressos já incorporadas; não houve abertura de nova fase de venda."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Seminário As Mulheres em Campo",
+      "fonte": "Prefeitura de Porto Alegre",
+      "url": "https://prefeitura.poa.br/secopa2027/noticias/seminario-mulheres-em-campo-ocorre-nesta-sexta-feira",
+      "decisao": "duplicado",
+      "motivo": "Evento já consta em dados.json."
     }
   ],
   "observacoes_operacionais": [
     "Exatamente duas leituras completas do Airtable foram executadas e reutilizadas; nenhuma leitura adicional foi feita.",
     "O backlog processável continha um evento e quatro notícias em Pendente/Em verificação.",
     "As cinco pendências haviam sido verificadas há menos de seis horas; nenhuma busca profunda repetitiva nem escrita Airtable foi necessária.",
-    "A pesquisa pública recente foi executada em fontes oficiais e jornalísticas; os candidatos pertinentes eram duplicatas e dois itens ficaram fora do escopo.",
+    "A pesquisa pública recente foi executada; seis candidatos eram fatos já incorporados e três itens estavam fora do escopo.",
     "O editorial/inbox.json estava vazio e permaneceu inalterado.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
