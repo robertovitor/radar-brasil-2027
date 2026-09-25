@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-16",
-  "started_at": "2026-09-25T16:47:50-03:00",
-  "completed_at": "2026-09-25T16:50:35-03:00",
+  "cycle_id": "20260925-17",
+  "started_at": "2026-09-25T17:45:50-03:00",
+  "completed_at": "2026-09-25T17:48:18-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,17 +10,17 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 11,
+  "candidatos_publicos": 12,
   "aprovados_novos": 0,
   "rejeitados": 3,
-  "duplicados": 8,
+  "duplicados": 9,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas do Airtable, com pageSize 1000, sem filtros, sort, schema ou paginação adicional; os resultados foram reutilizados em todo o processamento.",
-    "A pauta sobre a projeção da FGV, aprovada na rodada anterior, já consta em noticias.json e não foi reenfileirada.",
-    "Três registros antigos permanecem em PENDENTE_ENRIQUECIMENTO; a busca pública profunda individual ocorreu há menos de seis horas, portanto não foi repetida e não houve escrita redundante no Airtable.",
-    "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Onze candidatos foram avaliados: oito eram duplicatas e três foram excluídos por inadequação editorial ou fora de escopo.",
+    "Três registros antigos permanecem em PENDENTE_ENRIQUECIMENTO. A última busca pública profunda individual ocorreu há menos de seis horas, portanto não foi repetida e não houve escrita redundante no Airtable.",
+    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Doze candidatos foram avaliados: nove eram duplicatas do acervo e três foram excluídos por inadequação editorial, ausência de fato novo ou fora de escopo.",
+    "Nenhuma pauta pública nova atingiu os critérios de publicação nesta rodada.",
     "A chamada da Globo com “Maria, Maria”, já aprovada no Airtable e ainda ausente de noticias.json, foi reenfileirada no inbox editorial.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
