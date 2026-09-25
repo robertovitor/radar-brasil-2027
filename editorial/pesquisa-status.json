@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-03",
-  "started_at": "2026-09-25T03:47:57-03:00",
-  "completed_at": "2026-09-25T03:49:44-03:00",
+  "cycle_id": "20260925-04",
+  "started_at": "2026-09-25T04:47:38-03:00",
+  "completed_at": "2026-09-25T04:49:22-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": [
@@ -18,12 +18,12 @@
   ],
   "sugestoes_lidas": 30,
   "sugestoes_noticias_lidas": 25,
-  "candidatos_publicos": 6,
-  "aprovados_novos": 0,
+  "candidatos_publicos": 9,
+  "aprovados_novos": 1,
   "rejeitados": 1,
-  "duplicados": 5,
-  "inbox_itens_adicionados": 0,
-  "inbox_commit_needed": false,
+  "duplicados": 3,
+  "inbox_itens_adicionados": 1,
+  "inbox_commit_needed": true,
   "auditoria": [
     {
       "origem": "airtable",
@@ -31,7 +31,7 @@
       "record_id": "recFn5AE6yaKMQT9z",
       "titulo": "Vaquejada e repescagem na Arena de Pernambuco",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada do evento; busca profunda ainda não devida pela cadência de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta data confirmada do evento. Busca pública profunda refeita nesta rodada, sem confirmação suficiente; preservado sem regravação."
     },
     {
       "origem": "airtable",
@@ -39,7 +39,7 @@
       "record_id": "recEMozafV2fHIZQc",
       "titulo": "",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda ainda não devida pela cadência de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado. Código público do Instagram pesquisado, sem conteúdo verificável; preservado sem regravação."
     },
     {
       "origem": "airtable",
@@ -47,7 +47,7 @@
       "record_id": "recJNn7oMAYYkDUgX",
       "titulo": "",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda ainda não devida pela cadência de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado. Código público do Instagram pesquisado, sem conteúdo verificável; preservado sem regravação."
     },
     {
       "origem": "airtable",
@@ -55,7 +55,7 @@
       "record_id": "recZAi2P031UGM3TD",
       "titulo": "",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda ainda não devida pela cadência de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado. Código público do Instagram pesquisado, sem conteúdo verificável; preservado sem regravação."
     },
     {
       "origem": "airtable",
@@ -63,57 +63,51 @@
       "record_id": "recjGnj9vzNbaZrxz",
       "titulo": "",
       "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado; busca profunda ainda não devida pela cadência de seis horas."
+      "motivo": "PENDENTE_ENRIQUECIMENTO: falta título estruturado. Código público do Instagram pesquisado, sem conteúdo verificável; preservado sem regravação."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Miami sediará fase decisiva da Copa dos Campeões feminina de 2027",
-      "fonte": "Folha de S.Paulo",
-      "decisao": "rejeitado",
-      "motivo": "Fora do escopo: competição de clubes nos Estados Unidos, não Copa Feminina FIFA 2027 no Brasil nem Seleção Brasileira principal."
+      "titulo": "Neo Química Arena recebe visita técnica para a Copa do Mundo Feminina da FIFA 2027",
+      "fonte": "Federação Paulista de Futebol",
+      "url": "https://futebolpaulista.com.br/Noticias/Detalhe.aspx?Noticia=33285",
+      "decisao": "aprovado",
+      "motivo": "Fonte federativa verificável; visita realizada em 18/09/2026, diretamente ligada à preparação da sede paulista e ainda ausente de dados.json, noticias.json e inbox."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Fifa abre inscrições para voluntários na Copa do Mundo Feminina de 2027",
-      "fonte": "UOL",
+      "titulo": "Convocação da Seleção Feminina principal para amistosos contra a Argentina",
+      "fonte": "CBF Media",
       "decisao": "duplicado",
-      "motivo": "Programa de voluntariado já incorporado."
+      "motivo": "Convocação e seus desdobramentos já amplamente incorporados em noticias.json."
     },
     {
       "origem": "pesquisa_publica",
       "titulo": "Copa do Mundo Feminina já registra 750 mil interessados em ingressos",
       "fonte": "UOL",
       "decisao": "duplicado",
-      "motivo": "Interesse em ingressos e voluntariado já incorporados."
+      "motivo": "Interesse em ingressos, patrocinadores e voluntariado já incorporados."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Copa do Mundo Feminina de 2027 no Brasil: o que já está definido",
-      "fonte": "Folha de S.Paulo",
-      "decisao": "duplicado",
-      "motivo": "Síntese de calendário, sedes e formato já incorporados."
+      "titulo": "FIFA inicia escolha de cidades-sede da Copa do Mundo Feminina 2027",
+      "fonte": "CBF",
+      "decisao": "rejeitado",
+      "motivo": "Notícia de 03/09/2024, antiga e já superada pela definição das cidades-sede."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Seleção feminina terá série de amistosos contra Argentina e Japão",
-      "fonte": "Folha de S.Paulo",
+      "titulo": "Vaquejada pode tirar repescagem da Arena de Pernambuco",
+      "fonte": "Diário de Pernambuco",
       "decisao": "duplicado",
-      "motivo": "Amistosos já incorporados."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Copa 2027: venda de ingressos ainda não começou; como registrar interesse",
-      "fonte": "UOL",
-      "decisao": "duplicado",
-      "motivo": "Cadastro de interesse e situação da venda de ingressos já incorporados."
+      "motivo": "O conteúdo noticioso já está incorporado; a sugestão de evento permanece pendente somente pela data não confirmada."
     }
   ],
   "observacoes_operacionais": [
     "Exatamente duas leituras Airtable executadas, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
     "Os quatro arquivos obrigatórios do GitHub main foram lidos uma vez antes do processamento, com conteúdo e SHA.",
-    "Cinco registros permanecem em PENDENTE_ENRIQUECIMENTO; o último aprofundamento ocorreu há menos de seis horas, portanto não foram regravados nem pesquisados profundamente nesta rodada.",
-    "A busca pública recente avaliou seis candidatos relevantes: cinco duplicados e um fora do escopo. Nenhum item novo foi aprovado.",
-    "O inbox já continha dois itens de fluxo preexistente e foi preservado sem alteração nesta execução.",
+    "A cadência de seis horas permitiu busca profunda dos cinco itens pendentes nesta rodada; nenhum obteve os campos faltantes, e nenhuma escrita repetitiva foi feita no Airtable.",
+    "Uma visita técnica nova e verificável à Neo Química Arena foi aprovada e adicionada ao inbox como evento realizado.",
+    "O inbox foi atualizado em commit próprio; este status é gravado em commit separado.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
