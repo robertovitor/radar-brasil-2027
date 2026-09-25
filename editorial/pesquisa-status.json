@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-01",
-  "started_at": "2026-09-25T01:44:55-03:00",
-  "completed_at": "2026-09-25T01:46:12-03:00",
+  "cycle_id": "20260925-02",
+  "started_at": "2026-09-25T02:47:14-03:00",
+  "completed_at": "2026-09-25T02:48:33-03:00",
   "stage": "completed",
   "executor": "automation-operational",
   "airtable_reads_total": 2,
@@ -19,10 +19,10 @@
   ],
   "sugestoes_lidas": 30,
   "sugestoes_noticias_lidas": 25,
-  "candidatos_publicos": 8,
+  "candidatos_publicos": 12,
   "aprovados_novos": 0,
-  "rejeitados": 3,
-  "duplicados": 5,
+  "rejeitados": 2,
+  "duplicados": 10,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "auditoria": [
@@ -68,19 +68,59 @@
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Miami sediará fase decisiva da Copa dos Campeões feminina de 2027",
-      "fonte": "Folha de S.Paulo",
-      "url": "https://www1.folha.uol.com.br/esporte/2026/09/miami-sediara-fase-decisiva-da-copa-dos-campeoes-feminina-de-2027.shtml",
+      "titulo": "Copa do Mundo Feminina da FIFA de 2027",
+      "fonte": "Wikipedia",
+      "url": "https://pt.wikipedia.org/wiki/Copa_do_Mundo_Feminina_da_FIFA_de_2027",
       "decisao": "rejeitado",
-      "motivo": "Competição mundial de clubes nos Estados Unidos, sem vínculo operacional com a Copa Feminina FIFA 2027 no Brasil ou com a Seleção principal."
+      "motivo": "Página enciclopédica sem fato recente independente e inferior às fontes oficiais."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Copa do Mundo Feminina já registra 750 mil interessados em ingressos",
-      "fonte": "UOL",
-      "url": "https://economia.uol.com.br/noticias/redacao/2026/08/14/copa-do-mundo-feminina-alcanca-750-mil-interessados-em-ingressos.ghtm",
+      "titulo": "Copa do Mundo Feminina 2027: estádios onde a Seleção vai jogar",
+      "fonte": "Vila Rica News",
+      "url": "https://vilaricanews.com.br/noticia/63430/copa-do-mundo-feminina-2027-veja-os-estadios-onde-a-selecao-vai-jogar",
       "decisao": "duplicado",
-      "motivo": "Interesse em ingressos, voluntariado e encontro com marcas já constam em noticias.json."
+      "motivo": "Roteiro da Seleção e estádios já incorporados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "FIFA abre cadastro de interesse para voluntários",
+      "fonte": "Ministério do Esporte",
+      "url": "https://www.gov.br/esporte/pt-br/noticias/quer-viver-a-copa-do-mundo-feminina-2027-de-perto-fifa-abre-cadastro-de-interesse-para-voluntarios",
+      "decisao": "duplicado",
+      "motivo": "Cadastro e abertura do voluntariado já incorporados."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Doze cidades iniciam processo de seleção para a Copa 2027",
+      "fonte": "Gazeta Digital",
+      "url": "https://www.gazetadigital.com.br/editorias/esporte/doze-cidades-iniciam-processo-de-selecao-para-a-copa-do-mundo-feminina-de-2027/782701",
+      "decisao": "duplicado",
+      "motivo": "Processo de candidaturas de 2024, superado pela lista oficial de oito sedes."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Copa do Mundo Feminina 2027 será disputada em oito cidades brasileiras",
+      "fonte": "Portal Marcos Santos",
+      "url": "https://www.portalmarcossantos.com.br/2026/06/24/copa-do-mundo-feminina-de-2027-sera-disputada-em-oito-cidades-brasileiras/",
+      "decisao": "duplicado",
+      "motivo": "Sedes, estádios e classificadas já constam no Radar."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "FIFA anuncia estádios que receberão jogos da Copa do Mundo Feminina",
+      "fonte": "O Progresso",
+      "url": "https://oprogressonet.com/noticia/45567/fifa-anuncia-estadios-receberao-jogos-copa-mundo",
+      "decisao": "duplicado",
+      "motivo": "Lista de sedes já incorporada."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Maracanã receberá abertura e final da Copa Feminina 2027",
+      "fonte": "O Poti",
+      "url": "https://opoti.com.br/maracana-vai-receber-a-abertura-da-copa-do-mundo-feminina-2027-veja-calendario-de-jogos/",
+      "decisao": "duplicado",
+      "motivo": "Calendário, abertura, final e distribuição de jogos já incorporados."
     },
     {
       "origem": "pesquisa_publica",
@@ -88,19 +128,27 @@
       "fonte": "UOL",
       "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/09/03/fifa-abre-inscricoes-para-voluntarios-na-copa-do-mundo-feminina-de-2027.ghtm",
       "decisao": "duplicado",
-      "motivo": "Abertura oficial do voluntariado já incorporada em dados.json e noticias.json."
+      "motivo": "Abertura oficial do voluntariado já incorporada."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Copa do Mundo Feminina de 2027 no Brasil: o que já está definido",
-      "fonte": "Folha de S.Paulo",
-      "url": "https://www1.folha.uol.com.br/esporte/2026/07/copa-do-mundo-feminina-de-2027-no-brasil-o-que-ja-esta-definido.shtml",
+      "titulo": "Copa do Mundo Feminina já registra 750 mil interessados em ingressos",
+      "fonte": "UOL",
+      "url": "https://economia.uol.com.br/noticias/redacao/2026/08/14/copa-do-mundo-feminina-alcanca-750-mil-interessados-em-ingressos.ghtm",
       "decisao": "duplicado",
-      "motivo": "Compilação antiga de calendário, sedes e ingressos já representados no Radar."
+      "motivo": "Dados de ingressos, voluntariado e marcas já incorporados."
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Seleção feminina terá série de amistosos contra Argentina e Japão",
+      "titulo": "Conselho defende férias na Copa apenas em cidades-sede",
+      "fonte": "UOL Educação",
+      "url": "https://educacao.uol.com.br/noticias/2026/08/19/conselho-ferias-copa-do-mundo-futebol-feminina.ghtm",
+      "decisao": "duplicado",
+      "motivo": "Parecer do CNE sobre calendário escolar já incorporado."
+    },
+    {
+      "origem": "pesquisa_publica",
+      "titulo": "Seleção feminina terá amistosos contra Argentina e Japão",
       "fonte": "Folha de S.Paulo",
       "url": "https://www1.folha.uol.com.br/esporte/2026/09/selecao-feminina-tera-serie-de-amistosos-contra-argentina-e-japao.shtml",
       "decisao": "duplicado",
@@ -108,34 +156,18 @@
     },
     {
       "origem": "pesquisa_publica",
-      "titulo": "Copa 2027: venda de ingressos ainda não começou; como registrar interesse",
+      "titulo": "A Copa das mulheres vai deixar um legado ou apenas uma fotografia?",
       "fonte": "UOL",
-      "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/08/20/copa-2027-venda-de-ingressos-ainda-nao-comecou-como-registrar-interesse.ghtm",
-      "decisao": "duplicado",
-      "motivo": "Cadastro de interesse e ausência de venda aberta já incorporados."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "2027 FIFA Women's World Cup",
-      "fonte": "Wikipedia",
-      "url": "https://en.wikipedia.org/wiki/2027_FIFA_Women%27s_World_Cup",
+      "url": "https://noticias.uol.com.br/colunas/joildo-santos/2026/09/10/a-copa-das-mulheres-vai-deixar-um-legado-ou-apenas-uma-fotografia.ghtm",
       "decisao": "rejeitado",
-      "motivo": "Página enciclopédica sem fato recente independente e sem vantagem sobre as fontes oficiais já usadas."
-    },
-    {
-      "origem": "pesquisa_publica",
-      "titulo": "Copa Feminina 2027: escolha das cidades-sede e futuro do Brasil",
-      "fonte": "Super Finanças",
-      "url": "https://superfinancas.com.br/inicio/",
-      "decisao": "rejeitado",
-      "motivo": "Conteúdo de maio de 2025, antigo e sem novidade material para esta rodada."
+      "motivo": "Artigo opinativo de duas semanas atrás, sem anúncio operacional novo e com foco parcial em categorias de base."
     }
   ],
   "observacoes_operacionais": [
     "Exatamente duas leituras completas do Airtable foram executadas e reutilizadas; nenhuma leitura adicional foi feita.",
     "O backlog processável continha um evento e quatro notícias em Pendente/Em verificação.",
-    "As cinco pendências continuavam dentro da janela de seis horas desde a última busca profunda; nenhuma escrita Airtable repetitiva foi realizada.",
-    "A pesquisa pública recente foi executada; não surgiu fato novo com mínimo seguro de publicação.",
+    "As cinco pendências permaneciam dentro da janela de seis horas desde a última busca profunda; nenhuma escrita Airtable repetitiva foi necessária.",
+    "A pesquisa pública recente foi executada; dez candidatos eram duplicatas e dois não apresentavam novidade editorial publicável.",
     "O editorial/inbox.json estava vazio e permaneceu inalterado.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
