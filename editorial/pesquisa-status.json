@@ -1,7 +1,7 @@
 {
   "cycle_id": "20260924-21",
   "started_at": "2026-09-24T21:42:50-03:00",
-  "completed_at": "2026-09-24T21:46:27-03:00",
+  "completed_at": "2026-09-24T21:46:56-03:00",
   "stage": "completed",
   "executor": "automation-operational",
   "airtable_reads_total": 2,
@@ -171,6 +171,13 @@
     "Quatro eventos pendentes foram reconciliados como duplicados; uma notícia institucional do CNDH foi enriquecida e aprovada; cinco itens continuam pendentes por informação insuficiente.",
     "As escritas Airtable foram limitadas às mudanças necessárias de decisão, resultado e horário da verificação.",
     "O inbox foi preservado e recebeu duas notícias novas: CNDH e gramado híbrido do Mineirão.",
-    "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
-  ]
+    "Não houve disparo manual de merge, e-mail ou Instagram nem alteração de schedule.",
+    "Na releitura final, o inbox já estava vazio porque o commit de inclusão acionou e foi consumido pelo fluxo automático preexistente do repositório."
+  ],
+  "verificacao_final": {
+    "status_confirmado": true,
+    "inbox_commit_sha": "b2ab92bac155f7ebf237f62d708d9542510fc9a3",
+    "inbox_releitura_sha": "23dfbfcecc98abe9921fe362890398af4f111996",
+    "inbox_releitura_estado": "vazio após consumo automático pelo fluxo preexistente"
+  }
 }
