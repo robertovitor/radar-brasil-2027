@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-14",
-  "started_at": "2026-09-25T14:42:14-03:00",
-  "completed_at": "2026-09-25T14:43:41-03:00",
+  "cycle_id": "20260925-15",
+  "started_at": "2026-09-25T15:47:34-03:00",
+  "completed_at": "2026-09-25T15:48:55-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -11,16 +11,17 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 12,
-  "aprovados_novos": 0,
-  "rejeitados": 2,
-  "duplicados": 10,
-  "inbox_itens_adicionados": 1,
+  "aprovados_novos": 1,
+  "rejeitados": 3,
+  "duplicados": 8,
+  "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas do Airtable, sem filtros, sort, schema ou paginação adicional; os resultados foram reutilizados em todo o processamento.",
-    "Três registros permanecem em PENDENTE_ENRIQUECIMENTO. A última tentativa profunda ocorreu há menos de seis horas; não houve nova busca individual nem regravação no Airtable.",
-    "A pesquisa pública desta rodada cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Resultados relevantes já constavam no acervo ou na fila; categorias de base e ruído foram excluídos.",
-    "O inbox existente, com dois itens, foi preservado integralmente. A pauta aprovada da Globo com “Maria, Maria”, ainda ausente de noticias.json, foi adicionada como terceiro item.",
+    "Três registros permanecem em PENDENTE_ENRIQUECIMENTO. A última busca profunda individual ocorreu há menos de seis horas; não houve nova escrita no Airtable.",
+    "Nova pauta pública aprovada: projeção atribuída à FGV de mais de 70 mil postos de trabalho, R$ 8,8 bilhões em movimentação econômica e R$ 4,5 bilhões em renda associados à Copa Feminina 2027.",
+    "A chamada da Globo com “Maria, Maria”, aprovada anteriormente mas ainda ausente de noticias.json, foi novamente incluída junto da nova pauta no inbox.",
+    "A pesquisa cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base e ruído foram excluídos.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
