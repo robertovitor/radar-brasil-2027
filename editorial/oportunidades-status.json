@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-09-26T07:19:55-03:00",
-  "fim": "2026-09-26T07:22:02-03:00",
+  "inicio": "2026-09-26T15:07:46-03:00",
+  "fim": "2026-09-26T15:09:34-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -158,8 +158,7 @@
     },
     {
       "hub": "https://avai.com.br/categoria/futebol-feminino/",
-      "resultados": 0,
-      "erro": "URLError:<urlopen error timed out>"
+      "resultados": 5
     },
     {
       "hub": "https://mineirao.com.br/noticias",
@@ -208,12 +207,11 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 48,
+  "oportunidades_validas_na_execucao": 49,
   "adicionadas": 0,
   "atualizadas": 2,
   "total_arquivo": 50,
   "erros": [
-    "hub:https://avai.com.br/categoria/futebol-feminino/:URLError:<urlopen error timed out>",
     "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
