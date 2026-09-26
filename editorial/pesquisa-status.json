@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260926-13",
-  "started_at": "2026-09-26T13:46:42-03:00",
-  "completed_at": "2026-09-26T13:48:09-03:00",
+  "cycle_id": "20260926-14",
+  "started_at": "2026-09-26T14:47:51-03:00",
+  "completed_at": "2026-09-26T14:49:16-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,18 +10,19 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 8,
-  "aprovados_novos": 0,
+  "candidatos_publicos": 9,
+  "aprovados_novos": 1,
   "rejeitados": 2,
   "duplicados": 6,
-  "inbox_itens_adicionados": 1,
+  "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Foram executadas exatamente duas leituras integrais do Airtable, uma por tabela, com pageSize 1000, sem filtros, ordenação, schema ou paginação; ambas retornaram sem cursor.",
-    "As três notícias em PENDENTE_ENRIQUECIMENTO foram reavaliadas a partir das mesmas leituras. A última busca profunda ocorreu às 10h45 no horário de Brasília, cerca de três horas antes desta rodada; por isso não houve nova busca individual nem escrita repetitiva no Airtable.",
+    "As três notícias em PENDENTE_ENRIQUECIMENTO foram reavaliadas a partir das mesmas leituras. A última busca profunda ocorreu às 10h45 no horário de Brasília, cerca de quatro horas antes desta rodada; por isso não houve nova busca individual nem escrita repetitiva no Airtable.",
     "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, marcas, patrocinadores e federações. Categorias de base foram excluídas.",
-    "Oito candidatos públicos foram avaliados: seis eram fatos já representados nos arquivos finais e dois ficaram fora do recorte editorial. A notícia do dia sobre entrega dos estádios 14 dias antes da Copa e a conclusão da terceira rodada de inspeções já constavam no Radar.",
-    "Nenhuma nova pauta foi aprovada. A pauta aprovada da Globo com “Maria, Maria” continuava ausente de noticias.json e foi reenfileirada no inbox em commit próprio.",
-    "dados.json, noticias.json e planilha não foram alterados. Nenhum merge, e-mail, publicação em Instagram ou alteração de schedule foi disparado."
+    "Nove candidatos públicos foram avaliados: seis eram fatos já representados nos arquivos finais, dois ficaram fora do recorte editorial e um foi aprovado como pauta nova.",
+    "A nova pauta oficial da Federação Bahiana de Futebol trata da reunião com a FIFA sobre legado, infraestrutura, formação e profissionalização do futebol feminino na Bahia, além de vistoria técnica na Arena Fonte Nova.",
+    "A pauta aprovada da Globo com “Maria, Maria” seguia ausente de noticias.json e foi reenfileirada junto com a nova pauta. dados.json, noticias.json e planilha não foram alterados.",
+    "Nenhum merge, e-mail, publicação em Instagram ou alteração de schedule foi disparado."
   ]
 }
