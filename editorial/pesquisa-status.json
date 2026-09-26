@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260926-07",
-  "started_at": "2026-09-26T07:44:14-03:00",
-  "completed_at": "2026-09-26T07:45:38-03:00",
+  "cycle_id": "20260926-08",
+  "started_at": "2026-09-26T08:47:52-03:00",
+  "completed_at": "2026-09-26T08:51:04-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -11,17 +11,16 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 12,
-  "aprovados_novos": 1,
-  "rejeitados": 3,
-  "duplicados": 8,
-  "inbox_itens_adicionados": 2,
+  "aprovados_novos": 0,
+  "rejeitados": 2,
+  "duplicados": 10,
+  "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
-    "Executadas exatamente duas leituras integrais do Airtable, uma por tabela, com pageSize 1000 e sem filtros, sort, schema ou paginação; os resultados foram reutilizados.",
-    "As três pendências antigas em PENDENTE_ENRIQUECIMENTO foram reavaliadas usando o cache desta rodada. A última busca profunda ocorreu há menos de seis horas; por isso não houve nova busca individual nem escrita repetitiva de Status, Resultado ou horário.",
-    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Doze candidatos foram processados: oito duplicatas, três exclusões editoriais e uma pauta nova aprovada.",
-    "A pauta nova registra 12.418 ingressos vendidos em menos de 24 horas para Brasil x Argentina na Arena de Pernambuco, com os setores Leste Inferior e Oeste Inferior esgotados.",
-    "O inbox já continha duas pautas, que foram preservadas. Foram acrescentadas a novidade dos ingressos em Recife e a chamada da Globo com “Maria, Maria”, aprovada no Airtable e ainda ausente de noticias.json.",
-    "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+    "As duas tabelas do Airtable foram lidas uma única vez, com pageSize 1000, sem filtros, ordenação, schema ou paginação; nenhum cursor adicional foi retornado.",
+    "Três sugestões de notícias permanecem em PENDENTE_ENRIQUECIMENTO. A última busca profunda individual ocorreu há menos de seis horas; Status e Resultado da verificação não foram regravados porque nada mudou.",
+    "A pesquisa pública recente cobriu Seleção principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, voluntariado, ingressos, marcas e federações. Dez candidatos eram fatos já representados e dois não acrescentavam fato editorial novo; categorias de base foram excluídas.",
+    "A pauta aprovada da Globo com “Maria, Maria” continua ausente de noticias.json e foi reenfileirada no inbox sem alterar dados.json, noticias.json ou planilha.",
+    "Nenhum merge, e-mail ou publicação em Instagram foi disparado."
   ]
 }
