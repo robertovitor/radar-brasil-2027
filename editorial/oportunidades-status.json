@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-09-25T21:12:21-03:00",
-  "fim": "2026-09-25T21:14:35-03:00",
+  "inicio": "2026-09-26T02:35:52-03:00",
+  "fim": "2026-09-26T02:37:44-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -134,7 +134,7 @@
     },
     {
       "hub": "https://ludopedio.org.br/agenda-de-eventos/?pagina=2",
-      "resultados": 7
+      "resultados": 6
     },
     {
       "hub": "https://www.cob.org.br/cultura-educacao/cursos-do-iob",
@@ -182,8 +182,7 @@
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 0,
-      "erro": "HTTPError:HTTP Error 403: Forbidden"
+      "resultados": 6
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -201,7 +200,7 @@
       "erro": "HTTPError:HTTP Error 500: Internal Server Error"
     },
     {
-      "hub": "https://www.guiafutfem.com.br/eventos/25-09-2026/22-02-2027",
+      "hub": "https://www.guiafutfem.com.br/eventos/26-09-2026/23-02-2027",
       "resultados": 0,
       "erro": "HTTPError:HTTP Error 403: Forbidden"
     }
@@ -209,14 +208,13 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 49,
   "adicionadas": 0,
-  "atualizadas": 2,
+  "atualizadas": 47,
   "total_arquivo": 50,
   "erros": [
-    "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
-    "hub:https://www.guiafutfem.com.br/eventos/25-09-2026/22-02-2027:HTTPError:HTTP Error 403: Forbidden",
+    "hub:https://www.guiafutfem.com.br/eventos/26-09-2026/23-02-2027:HTTPError:HTTP Error 403: Forbidden",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {
