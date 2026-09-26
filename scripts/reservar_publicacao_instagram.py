@@ -26,6 +26,23 @@ def stable_key(post: dict) -> str:
     )
     return hashlib.sha256(canonical.encode()).hexdigest()
 
+def reservation_image_meta(post: dict) -> dict:
+    """Persiste a identidade da imagem-fonte já comprometida pela reserva."""
+    meta = {}
+    source = str(post.get("image_source_url") or "").strip()
+    page = str(post.get("image_page_url") or post.get("source_page_url") or "").strip()
+    bank_id = str(post.get("bank_image_id") or "").strip()
+    visual_mode = str(post.get("visual_mode") or "").strip()
+    if source:
+        meta["image_source_url"] = source
+    if page:
+        meta["image_page_url"] = page
+    if bank_id:
+        meta["bank_image_id"] = bank_id
+    if visual_mode:
+        meta["visual_mode"] = visual_mode
+    return meta
+
 
 def parse_timestamp(value: object) -> dt.datetime | None:
     raw = str(value or "").strip()
@@ -120,10 +137,11 @@ def main() -> int:
                 row["last_attempt_at"] = now
                 if blocked_until:
                     row["blocked_until"] = blocked_until
+                row.update(reservation_image_meta(post))
                 if row != before:
                     changed = True
             if not found:
-                rows.append({
+                row = {
                     "key": key,
                     "post_file": str(post_path),
                     "reserved_at": now,
@@ -132,7 +150,9 @@ def main() -> int:
                     "requires_strict_reconciliation": True,
                     "uncertain_after_meta": True,
                     "blocked_until": blocked_until,
-                })
+                }
+                row.update(reservation_image_meta(post))
+                rows.append(row)
                 changed = True
             if changed:
                 args.reservations.parent.mkdir(parents=True, exist_ok=True)
@@ -196,14 +216,16 @@ def main() -> int:
         rows = [x for x in rows if str(x.get("key") or "") != key]
 
     stamp = now.isoformat()
-    rows.append({
+    row = {
         "key": key,
         "post_file": str(post_path),
         "reserved_at": stamp,
         "last_attempt_at": stamp,
         "attempts": previous_attempts + 1,
         "requires_strict_reconciliation": previous_attempts > 0,
-    })
+    }
+    row.update(reservation_image_meta(post))
+    rows.append(row)
 
     args.reservations.parent.mkdir(parents=True, exist_ok=True)
     args.reservations.write_text(

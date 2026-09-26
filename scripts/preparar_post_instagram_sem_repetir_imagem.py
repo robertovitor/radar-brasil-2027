@@ -47,23 +47,50 @@ def image_identity(value):
 
 
 def used_image_identities():
-    ledger = base.load('instagram/publicados.json', {'published': []})
+    """Identidades já usadas ou já comprometidas para publicação.
+
+    Não depende apenas de publicados.json: entre preparar/reservar e reconciliar
+    com a Meta pode existir uma janela em que a próxima rodada já começa.
+    """
     used = set()
-    for row in ledger.get('published', []):
-        post_file = str(row.get('post_file') or '').strip()
-        if not post_file:
-            continue
-        p = pathlib.Path(post_file)
-        if not p.exists():
-            continue
+
+    def add_post_file(post_file):
+        p = pathlib.Path(str(post_file or '').strip())
+        if not p.exists() or p.name == 'lote-atual.json':
+            return
         try:
             post = json.loads(p.read_text(encoding='utf-8'))
         except Exception:
-            continue
-        for field in ('image_page_url', 'source_page_url', 'image_source_url', 'image_url'):
+            return
+        # Para antirrepetição interessa a imagem-fonte, não o JPEG final da arte.
+        for field in ('image_page_url', 'source_page_url', 'image_source_url'):
             ident = image_identity(post.get(field))
             if ident:
                 used.add(ident)
+
+    ledger = base.load('instagram/publicados.json', {'published': []})
+    for row in ledger.get('published', []):
+        if isinstance(row, dict):
+            add_post_file(row.get('post_file'))
+
+    # Reservas fecham a janela entre seleção e confirmação/reconciliação.
+    reservations = base.load('instagram/reservas-publicacao.json', {'reservations': []})
+    for row in reservations.get('reservations', []):
+        if not isinstance(row, dict):
+            continue
+        for field in ('image_page_url', 'source_page_url', 'image_source_url'):
+            ident = image_identity(row.get(field))
+            if ident:
+                used.add(ident)
+        add_post_file(row.get('post_file'))
+
+    # Também considera posts já preparados e persistidos no repositório.
+    # Isso protege contra uma reserva ainda não gravada ou um ledger atrasado.
+    queue_dir = pathlib.Path('instagram/fila/automatica')
+    if queue_dir.exists():
+        for p in queue_dir.glob('*.json'):
+            add_post_file(p)
+
     return used
 
 
