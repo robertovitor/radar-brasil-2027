@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260926-15",
-  "started_at": "2026-09-26T15:44:09-03:00",
-  "completed_at": "2026-09-26T15:46:04-03:00",
+  "cycle_id": "20260926-16",
+  "started_at": "2026-09-26T16:44:56-03:00",
+  "completed_at": "2026-09-26T16:47:08-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -17,11 +17,12 @@
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
-    "Foram executadas exatamente duas leituras integrais do Airtable, uma por tabela, com pageSize 1000, sem filtros, ordenação, schema ou paginação; ambas retornaram sem cursor.",
-    "As três notícias em PENDENTE_ENRIQUECIMENTO foram reavaliadas a partir das mesmas leituras. A última busca profunda ocorreu às 10h45 no horário de Brasília, cerca de cinco horas antes desta rodada; por isso não houve nova busca individual nem escrita repetitiva no Airtable.",
-    "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, marcas, patrocinadores e federações. Categorias de base foram excluídas.",
-    "Oito candidatos públicos foram avaliados: seis eram fatos já representados nos arquivos finais e dois ficaram fora do recorte editorial. Nenhuma nova pauta foi aprovada.",
-    "A pauta da FIFA e FBF foi confirmada em noticias.json. As pautas já aprovadas sobre as 14 convocadas com passagem pela dupla Gre-Nal e sobre a chamada da Globo com “Maria, Maria” continuavam ausentes e foram reenfileiradas.",
-    "dados.json, noticias.json e planilha não foram alterados. Nenhum merge, e-mail, publicação em Instagram ou alteração de schedule foi disparado."
+    "Executadas exatamente duas leituras Airtable, uma por tabela, com pageSize 1000, sem filtros, ordenação, schema ou paginação adicional.",
+    "Três registros PENDENTE_ENRIQUECIMENTO atingiram a cadência de seis horas e foram submetidos a busca pública profunda; não foi encontrado título ou contexto verificável para os códigos DdSZg6MFM0_, DdRZR07Oauw e Dc13T1guTMZ.",
+    "Somente o campo de última tentativa de verificação desses três registros foi atualizado para 2026-09-26T19:46:30.070Z; Status e Resultado da verificação foram preservados.",
+    "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
+    "Nenhum candidato público novo foi aprovado: seis resultados já estavam incorporados ou duplicados e dois foram excluídos por não atenderem ao escopo editorial.",
+    "A pauta da FBF foi confirmada em noticias.json. As pautas sobre as convocadas com passagem pela dupla Gre-Nal e sobre a chamada da Globo com Maria, Maria permaneciam ausentes e foram reenfileiradas no inbox.",
+    "Nenhuma alteração foi feita em dados.json, noticias.json ou planilha. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
