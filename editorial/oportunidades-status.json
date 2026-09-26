@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-09-25T14:35:44-03:00",
-  "fim": "2026-09-25T14:37:35-03:00",
+  "inicio": "2026-09-25T21:12:21-03:00",
+  "fim": "2026-09-25T21:14:35-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -62,10 +62,10 @@
     },
     {
       "query": "site:womanifs.com inscrição OR registration 2026 2027",
-      "resultados": 4,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 4
+        "bing_rss": 0
       }
     },
     {
@@ -112,7 +112,7 @@
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 32
+      "resultados": 30
     }
   ],
   "hubs": [
@@ -182,7 +182,8 @@
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 6
+      "resultados": 0,
+      "erro": "HTTPError:HTTP Error 403: Forbidden"
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -206,11 +207,12 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 51,
+  "oportunidades_validas_na_execucao": 49,
   "adicionadas": 0,
-  "atualizadas": 4,
+  "atualizadas": 2,
   "total_arquivo": 50,
   "erros": [
+    "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
