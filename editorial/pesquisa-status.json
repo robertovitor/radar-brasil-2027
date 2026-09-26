@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-22",
-  "started_at": "2026-09-25T22:44:44-03:00",
-  "completed_at": "2026-09-25T22:46:21-03:00",
+  "cycle_id": "20260925-23",
+  "started_at": "2026-09-25T23:44:54-03:00",
+  "completed_at": "2026-09-25T23:46:30-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,19 +10,18 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 9,
-  "aprovados_novos": 0,
-  "rejeitados": 3,
-  "duplicados": 6,
-  "inbox_itens_adicionados": 1,
+  "candidatos_publicos": 10,
+  "aprovados_novos": 1,
+  "rejeitados": 2,
+  "duplicados": 7,
+  "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras integrais do Airtable, uma por tabela, com pageSize 1000 e sem filtros, sort, schema ou paginação; os resultados foram reutilizados.",
     "As três pendências antigas permanecem em PENDENTE_ENRIQUECIMENTO por falta de título estruturado. A busca profunda anterior ocorreu há menos de seis horas; por isso não houve nova consulta individual nem escrita repetitiva.",
-    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Nove candidatos foram processados: seis duplicatas dos arquivos finais e três excluídos por ausência de fato novo datável ou inadequação editorial.",
-    "A página ativa de venda para Brasil x Argentina em Porto Alegre confirmou data, horário, local e regras de acesso, mas não apresenta data de anúncio; como o evento já consta em dados.json, não foi convertida em notícia nova sem marco temporal seguro.",
-    "As matérias regionais sobre jogadoras convocadas repetem a mesma convocação da Seleção principal já coberta em noticias.json e foram tratadas como duplicatas editoriais.",
-    "A chamada da Globo com “Maria, Maria” permanece aprovada no Airtable e ausente de noticias.json; por isso foi reenfileirada no inbox editorial.",
+    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Dez candidatos foram processados: sete duplicatas dos arquivos finais, dois excluídos por inadequação editorial ou ausência de fato novo e um aprovado.",
+    "Aprovada a notícia oficial da Prefeitura de Porto Alegre, publicada em 23/09/2026, sobre o início da venda de ingressos para Brasil x Argentina em 10/10/2026, às 16h30, no Beira-Rio.",
+    "A chamada da Globo com “Maria, Maria” permanece aprovada no Airtable e ausente de noticias.json; por isso foi preservada no envio ao inbox junto da nova pauta.",
     "Nenhum registro do Airtable precisou ser alterado nesta rodada.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
