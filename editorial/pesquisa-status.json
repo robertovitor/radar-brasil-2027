@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260926-16",
-  "started_at": "2026-09-26T16:44:56-03:00",
-  "completed_at": "2026-09-26T16:47:08-03:00",
+  "cycle_id": "20260926-17",
+  "started_at": "2026-09-26T17:46:13-03:00",
+  "completed_at": "2026-09-26T17:49:24-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -12,17 +12,16 @@
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 8,
   "aprovados_novos": 0,
-  "rejeitados": 2,
-  "duplicados": 6,
+  "rejeitados": 1,
+  "duplicados": 7,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras Airtable, uma por tabela, com pageSize 1000, sem filtros, ordenação, schema ou paginação adicional.",
-    "Três registros PENDENTE_ENRIQUECIMENTO atingiram a cadência de seis horas e foram submetidos a busca pública profunda; não foi encontrado título ou contexto verificável para os códigos DdSZg6MFM0_, DdRZR07Oauw e Dc13T1guTMZ.",
-    "Somente o campo de última tentativa de verificação desses três registros foi atualizado para 2026-09-26T19:46:30.070Z; Status e Resultado da verificação foram preservados.",
+    "As três pendências PENDENTE_ENRIQUECIMENTO tiveram busca profunda registrada na rodada anterior, há cerca de uma hora; por estarem acima de sete dias e abaixo da cadência mínima de seis horas, foram preservadas sem nova busca profunda e sem escrita Airtable repetitiva.",
     "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Nenhum candidato público novo foi aprovado: seis resultados já estavam incorporados ou duplicados e dois foram excluídos por não atenderem ao escopo editorial.",
-    "A pauta da FBF foi confirmada em noticias.json. As pautas sobre as convocadas com passagem pela dupla Gre-Nal e sobre a chamada da Globo com Maria, Maria permaneciam ausentes e foram reenfileiradas no inbox.",
+    "Nenhum candidato público novo foi aprovado: sete resultados eram duplicatas já incorporadas sobre amistosos, ingressos ou inspeções de estádios; um resultado de credenciamento de imprensa foi excluído por não constituir pauta editorial autônoma.",
+    "As pautas sobre as convocadas com passagem pela dupla Gre-Nal e sobre a chamada da Globo com Maria, Maria continuavam ausentes de noticias.json e foram reenfileiradas no inbox.",
     "Nenhuma alteração foi feita em dados.json, noticias.json ou planilha. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
