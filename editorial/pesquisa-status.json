@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260926-18",
-  "started_at": "2026-09-26T18:42:56-03:00",
-  "completed_at": "2026-09-26T18:45:15-03:00",
+  "cycle_id": "20260926-19",
+  "started_at": "2026-09-26T19:43:22-03:00",
+  "completed_at": "2026-09-26T19:44:47-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -11,8 +11,8 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 10,
-  "aprovados_novos": 1,
-  "rejeitados": 1,
+  "aprovados_novos": 0,
+  "rejeitados": 2,
   "duplicados": 8,
   "inbox_itens_adicionados": 3,
   "inbox_commit_needed": true,
@@ -20,9 +20,8 @@
     "Executadas exatamente duas leituras Airtable, uma por tabela, com pageSize 1000, sem filtros, ordenação, schema ou paginação adicional.",
     "As três pendências PENDENTE_ENRIQUECIMENTO tiveram busca profunda registrada em 2026-09-26T19:46:30.070Z; por estarem acima de sete dias e abaixo da cadência mínima de seis horas, foram preservadas sem nova busca profunda e sem escrita Airtable repetitiva.",
     "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Uma pauta pública nova foi aprovada: conclusão da terceira rodada de inspeções da FIFA nos oito estádios-sede, com uso exclusivo das arenas 14 dias antes do primeiro jogo em cada local.",
-    "Oito resultados eram duplicatas já incorporadas ou desdobramentos sem fato autônomo; o credenciamento de imprensa foi excluído por não constituir pauta editorial autônoma.",
-    "A pauta nova e as duas pautas aprovadas ainda ausentes de noticias.json — convocadas com passagem pela dupla Gre-Nal e chamada da Globo com Maria, Maria — foram adicionadas ao inbox.",
+    "Nenhuma pauta pública nova foi aprovada nesta rodada. Oito resultados eram duplicatas ou desdobramentos já cobertos; dois foram excluídos por não constituírem pauta autônoma ou estarem fora do escopo.",
+    "A pauta nacional sobre as inspeções da FIFA e as pautas aprovadas sobre as convocadas com passagem pela dupla Gre-Nal e a chamada da Globo com Maria, Maria continuavam ausentes de noticias.json e foram reenfileiradas no inbox.",
     "Nenhuma alteração foi feita em dados.json, noticias.json ou planilha. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
