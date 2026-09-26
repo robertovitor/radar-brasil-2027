@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260926-10",
-  "started_at": "2026-09-26T10:43:37-03:00",
-  "completed_at": "2026-09-26T10:45:35-03:00",
+  "cycle_id": "20260926-11",
+  "started_at": "2026-09-26T11:45:22-03:00",
+  "completed_at": "2026-09-26T11:46:40-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,18 +10,18 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 10,
+  "candidatos_publicos": 8,
   "aprovados_novos": 0,
-  "rejeitados": 1,
-  "duplicados": 9,
+  "rejeitados": 2,
+  "duplicados": 6,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Foram executadas exatamente duas leituras integrais do Airtable, uma por tabela, com pageSize 1000, sem filtros, ordenação, schema ou paginação; ambas retornaram sem cursor.",
-    "A busca profunda dos três registros PENDENTE_ENRIQUECIMENTO foi executada após mais de seis horas. Nenhum título ou contexto verificável foi localizado; apenas o campo de última verificação foi atualizado, preservando Status e Resultado.",
+    "Três notícias permanecem em PENDENTE_ENRIQUECIMENTO. A última busca profunda ocorreu há aproximadamente uma hora; nenhuma busca individual ou escrita repetitiva foi feita nesta rodada.",
     "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, marcas, patrocinadores e federações. Categorias de base foram excluídas.",
-    "Nove candidatos eram fatos já representados nos arquivos finais e um não acrescentava fato editorial autônomo. Nenhuma nova pauta foi aprovada.",
-    "Jéssica Lima já estava incorporada em noticias.json. A pauta aprovada da Globo com “Maria, Maria” seguia ausente e foi reenfileirada. dados.json, noticias.json e planilha não foram alterados.",
+    "Seis candidatos eram fatos já representados nos arquivos finais e dois ficaram fora do recorte editorial por não acrescentarem fato ligado à Seleção principal ou à Copa 2027. Nenhuma nova pauta foi aprovada.",
+    "A pauta aprovada da Globo com “Maria, Maria” seguia ausente de noticias.json e foi reenfileirada. dados.json, noticias.json e planilha não foram alterados.",
     "Nenhum merge, e-mail ou publicação em Instagram foi disparado."
   ]
 }
