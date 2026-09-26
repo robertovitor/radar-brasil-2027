@@ -74,7 +74,9 @@ def render_event_text_art(out, item, *, font, wrap, fit_title):
     draw.line((840,180,1010,350),fill=(255,220,0,80),width=8)
     draw.ellipse((825,250,1045,470),outline=(255,255,255,40),width=6)
 
-    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=82,max_lines=4)
+    original_title=clean(item.get("title"))
+    art_source=clean(item.get("art_title") or original_title)
+    f,lines,readable=_fit(draw,art_source,width,fit_title,start=82,max_lines=4)
     y=286
     for line in lines[:4]:
         draw.text((left,y),line,font=f,fill="white")
@@ -322,7 +324,8 @@ def render_news_art(out, item, *, font, wrap, fit_title):
         draw.rounded_rectangle((805,845,1015,930),radius=18,fill=(4,40,54,165),outline=(255,220,0,110),width=3)
 
     original_title=clean(item.get("title"))
-    f,lines,readable,art_title=_fit_news_headline(draw,original_title,width,font,wrap)
+    art_source=clean(item.get("art_title") or original_title)
+    f,lines,readable,art_title=_fit_news_headline(draw,art_source,width,font,wrap)
     y=292
     for line in lines[:4]:
         draw.text((left,y),line,font=f,fill="white")
@@ -349,6 +352,7 @@ def render_news_art(out, item, *, font, wrap, fit_title):
         "original_title":original_title,
         "art_title":art_title,
         "title_shortened":art_title != original_title,
+        "title_translated_to_pt":art_source != original_title,
     }
 
 
@@ -375,7 +379,9 @@ def render_opportunity_art(out, item, *, font, wrap, fit_title):
         draw.ellipse((815,240,930,355),fill=(255,221,62,255),outline=dark,width=5)
         draw.line((872,355,872,410),fill=dark,width=8)
 
-    f,lines,readable=_fit(draw,item.get("title"),width,fit_title,start=78,max_lines=4)
+    original_title=clean(item.get("title"))
+    art_title=clean(item.get("art_title") or original_title)
+    f,lines,readable=_fit(draw,art_title,width,fit_title,start=78,max_lines=4)
     y=320
     for line in lines[:4]:
         draw.text((left,y),line,font=f,fill=dark)
@@ -406,6 +412,9 @@ def render_opportunity_art(out, item, *, font, wrap, fit_title):
         "semantic_reason":"owned_illustrated_opportunity_bank",
         "image_credit":"Arte própria do Radar Brasil 2027",
         "license_note":"arte_propria",
+        "original_title":original_title,
+        "art_title":art_title,
+        "title_translated_to_pt":art_title != original_title,
     }
 
 def render_owned_art(out, item, *, font, wrap, fit_title, policy=None):

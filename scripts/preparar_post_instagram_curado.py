@@ -187,6 +187,93 @@ def radar_content_ok(item):
         return any(norm(x) in text for x in RADAR_FOOTBALL_CONTENT_MARKERS)
     return True
 
+ENGLISH_TITLE_MARKERS=(
+    ' the ',' and ',' for ',' with ',' from ',' manager',' coordinator',' specialist',
+    ' customer ',' care ',' ticketing',' general public',' operations',' programme',' program',
+    ' world cup',' women ',' women\'s ',' stadium',' host city',' jobs',' job ',' careers',
+)
+PORTUGUESE_TEXT_MARKERS=(
+    ' para ',' com ',' da ',' do ',' das ',' dos ',' no ',' na ',' em ',' uma ',' um ',
+    ' oportunidade ',' trabalho ',' atendimento ',' público ',' ingressos ',' copa ',' futebol ',
+)
+
+def looks_english_title(value):
+    t=' '+clean(value).casefold()+' '
+    hits=sum(1 for marker in ENGLISH_TITLE_MARKERS if marker in t)
+    pt=sum(1 for marker in PORTUGUESE_TEXT_MARKERS if marker in t)
+    return hits>=2 and hits>pt
+
+def looks_portuguese_text(value):
+    t=' '+clean(value).casefold()+' '
+    return sum(1 for marker in PORTUGUESE_TEXT_MARKERS if marker in t)>=2
+
+def concise_portuguese_headline(value,max_chars=112):
+    s=clean(value)
+    if not s:
+        return ''
+    # Primeira frase; depois remove caudas explicativas completas para caber na arte.
+    s=re.split(r'(?<=[.!?])\s+',s,maxsplit=1)[0].rstrip(' .')
+    if len(s)<=max_chars:
+        return s
+    for sep in (';',' — ',' – ', ', com ', ', que ', ' com ', ' durante ', ' para '):
+        pos=s.casefold().find(sep.casefold())
+        if 38<=pos<=max_chars:
+            return clean(s[:pos].rstrip(' ,;:-'))
+    words=s.split()
+    out=[]
+    for word in words:
+        candidate=' '.join(out+[word])
+        if len(candidate)>max_chars:
+            break
+        out.append(word)
+    return clean(' '.join(out).rstrip(' ,;:-'))
+
+def art_title_pt(kind,title,summary='',organization='',category=''):
+    original=clean(title)
+    if not original or not looks_english_title(original):
+        return original
+
+    direct={
+        'ticketing general public customer care manager':
+            'Gerente de atendimento ao público na operação de ingressos',
+    }
+    mapped=direct.get(original.casefold())
+    if mapped:
+        return mapped
+
+    summary=clean(summary)
+    organization=clean(organization)
+    category=clean(category)
+
+    # Para vagas/oportunidades, o resumo editorial já está em português e é
+    # fonte mais segura do que uma tradução literal incompleta do cargo.
+    if kind=='oportunidade' and summary and looks_portuguese_text(summary):
+        match=re.search(r'com atuação em\s+([^.;]+)',summary,flags=re.I)
+        if match and organization:
+            role=concise_portuguese_headline(match.group(1),82)
+            if role:
+                return clean(f'{organization} abre vaga para {role}')
+        if category.casefold()=='trabalho' and organization:
+            if 'copa' in norm(summary):
+                return clean(f'{organization} abre oportunidade de trabalho para a Copa Feminina 2027')
+            return clean(f'Oportunidade de trabalho na {organization}')
+        candidate=concise_portuguese_headline(summary)
+        if candidate:
+            return candidate
+
+    # Notícias com título estrangeiro usam o resumo editorial em português.
+    if kind=='noticia' and summary and looks_portuguese_text(summary):
+        candidate=concise_portuguese_headline(summary)
+        if candidate:
+            return candidate
+
+    # Fail closed editorial: nunca coloca inglês na arte.
+    if kind=='oportunidade':
+        return clean(f'Oportunidade {("na "+organization) if organization else "para a Copa Feminina 2027"}')
+    if kind=='noticia':
+        return 'Notícia sobre a Copa Feminina 2027'
+    return 'Radar Brasil 2027'
+
 def candidates(events,news,opportunities,published,pending,prior_titles=()):
     out=[]
     today_brt=dt.datetime.now(ZoneInfo('America/Sao_Paulo')).date()
@@ -197,13 +284,15 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
             subtitle=(clean(x.get('DataBR')) or d.strftime('%d/%m/%Y'))+' • '+(place or 'Local a definir')
             search_context=' '.join(filter(None,[title,clean(x.get('Cidade')),clean(x.get('UF')),clean(x.get('Local')),clean(x.get('Organizador'))]))
             event_date=clean(x.get('DataBR')) or d.strftime('%d/%m/%Y')
-            out.append(dict(key=key,title=title,date=d,type='evento',subtitle=subtitle,search_context=search_context,visual_places=place,display_date=event_date,display_place=place or 'Local a definir',caption=f"📅 {title}\n\nQuando: {event_date}\nOnde: {place or 'Local a definir'}\n\n{clean(x.get('Observacoes'))}\n\nFonte: {clean(x.get('Organizador')) or 'Radar Brasil 2027'}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
+            out.append(dict(key=key,title=title,art_title=title,date=d,type='evento',subtitle=subtitle,search_context=search_context,visual_places=place,display_date=event_date,display_place=place or 'Local a definir',caption=f"📅 {title}\n\nQuando: {event_date}\nOnde: {place or 'Local a definir'}\n\n{clean(x.get('Observacoes'))}\n\nFonte: {clean(x.get('Organizador')) or 'Radar Brasil 2027'}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     for x in news:
         title=clean(x.get('Titulo')); d=date(x.get('Data')); key='instagram:noticia:'+clean(x.get('Link') or title).casefold()
         if title and d and d<=dt.datetime.now(dt.timezone.utc).date() and key not in published and not base(x) and radar_content_ok(x) and not any(duplicate_title(title,old) for old in prior_titles):
             subtitle=(clean(x.get('Veiculo')) or 'Radar Brasil 2027')+' • '+d.strftime('%d/%m/%Y')
+            summary=clean(x.get('Resumo'))
+            art_title=art_title_pt('noticia',title,summary=summary)
             search_context=' '.join(filter(None,[title,clean(x.get('Tema')),clean(x.get('CidadeUF')),clean(x.get('Veiculo'))]))
-            out.append(dict(key=key,title=title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,visual_places=clean(x.get('CidadeUF')),display_date=d.strftime('%d/%m/%Y'),display_place=clean(x.get('CidadeUF')),caption=f"📰 {title}\n\n{clean(x.get('Resumo'))}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
+            out.append(dict(key=key,title=title,art_title=art_title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,visual_places=clean(x.get('CidadeUF')),display_date=d.strftime('%d/%m/%Y'),display_place=clean(x.get('CidadeUF')),caption=f"📰 {title}\n\n{summary}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     for x in opportunities:
         title=clean(x.get('Titulo'))
         status=norm(x.get('Status'))
@@ -225,9 +314,10 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
         deadline_text='Prazo: '+deadline.strftime('%d/%m/%Y') if deadline else 'Inscrições abertas'
         subtitle=' • '.join(v for v in (category,organization) if v)
         summary=clean(x.get('Resumo'))
+        art_title=art_title_pt('oportunidade',title,summary=summary,organization=organization,category=category)
         search_context=' '.join(filter(None,[title,category,organization,modality,reach]))
         out.append(dict(
-            key=key,title=title,date=discovered,type='oportunidade',subtitle=subtitle,
+            key=key,title=title,art_title=art_title,date=discovered,type='oportunidade',subtitle=subtitle,
             search_context=search_context,visual_places=reach,display_date=deadline_text,
             display_place=where,category=category,organization=organization,
             caption=f"🎯 {title}\n\nTipo: {category}\nOrganização: {organization}\n{('Modalidade: '+modality) if modality else ''}\n{deadline_text}\n\n{summary}\n\nFonte: {clean(x.get('Fonte')) or organization}\n\n#RadarBrasil2027 #Oportunidades #CopaFeminina2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"
@@ -770,7 +860,7 @@ def main():
             s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'
             try:
                 readable,font_size,line_count=make_photo_art(
-                    clean(bank_image.get('image_source_url')),art,item['title'],item['type'],clean(bank_image.get('credito'))
+                    clean(bank_image.get('image_source_url')),art,clean(item.get('art_title') or item['title']),item['type'],clean(bank_image.get('credito'))
                 )
                 title_ok=bool(readable and font_size>=MIN_TITLE_FONT and line_count<=MAX_TITLE_LINES)
                 if title_ok:
@@ -788,6 +878,9 @@ def main():
                         'bank_topic':clean(bank_image.get('bank_topic')),
                         'bank_specific':clean(bank_image.get('bank_specific')),
                         'bank_score':bank_image.get('bank_score'),
+                        'original_title':item['title'],
+                        'art_title':clean(item.get('art_title') or item['title']),
+                        'title_translated_to_pt':clean(item.get('art_title') or item['title']) != clean(item['title']),
                     }
                     pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True)
                     pathlib.Path(post).write_text(json.dumps(common,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
@@ -819,7 +912,10 @@ def main():
                 'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],
                 'image_url':ROOT+art,'caption':item['caption'],'SEMANTIC_IMAGE_OK':True,
                 'TITLE_READABILITY_OK':True,'title_font_px':font_size,'title_lines':line_count,
-                'image_source_url':'','image_page_url':''
+                'image_source_url':'','image_page_url':'',
+                'original_title':item['title'],
+                'art_title':clean(item.get('art_title') or item['title']),
+                'title_translated_to_pt':clean(item.get('art_title') or item['title']) != clean(item['title'])
             }
             common.update(owned_meta)
             pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True)
@@ -873,14 +969,14 @@ def main():
     s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'; source_mode='fallback_visual'; semantic_ok=True; semantic_reason='text_art_no_external_photo'
     if c:
         try:
-            readable,font_size,line_count=make_photo_art(clean(c['image_source_url']),art,item['title'],item['type'],clean(c.get('credito'))); source_mode='auto_commons_photo' if c.get('auto_found') else 'curated_photo'; semantic_reason=clean(c.get('semantic_reason')) or 'curated_semantic_gate'
+            readable,font_size,line_count=make_photo_art(clean(c['image_source_url']),art,clean(item.get('art_title') or item['title']),item['type'],clean(c.get('credito'))); source_mode='auto_commons_photo' if c.get('auto_found') else 'curated_photo'; semantic_reason=clean(c.get('semantic_reason')) or 'curated_semantic_gate'
         except Exception as exc:
-            print('photo_failed='+item['key']+':'+type(exc).__name__); readable,font_size,line_count=make_original_art(art,item['title'],item['type'],item['subtitle'],item['key']); source_mode='fallback_visual'; semantic_reason='photo_failed_fallback_text_art'
+            print('photo_failed='+item['key']+':'+type(exc).__name__); readable,font_size,line_count=make_original_art(art,clean(item.get('art_title') or item['title']),item['type'],item['subtitle'],item['key']); source_mode='fallback_visual'; semantic_reason='photo_failed_fallback_text_art'
     else: readable,font_size,line_count=make_original_art(art,item['title'],item['type'],item['subtitle'],item['key'])
     title_ok=bool(readable and font_size>=MIN_TITLE_FONT and line_count<=MAX_TITLE_LINES)
     if not semantic_ok or not title_ok:
         print('found=false'); print('reason=quality_gate_failed'); print('SEMANTIC_IMAGE_OK='+str(bool(semantic_ok)).lower()); print('TITLE_READABILITY_OK='+str(bool(title_ok)).lower()); return 1
-    common={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'visual_mode':source_mode,'SEMANTIC_IMAGE_OK':True,'TITLE_READABILITY_OK':True,'semantic_reason':semantic_reason,'title_font_px':font_size,'title_lines':line_count}
+    common={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'visual_mode':source_mode,'SEMANTIC_IMAGE_OK':True,'TITLE_READABILITY_OK':True,'semantic_reason':semantic_reason,'title_font_px':font_size,'title_lines':line_count,'original_title':item['title'],'art_title':clean(item.get('art_title') or item['title']),'title_translated_to_pt':clean(item.get('art_title') or item['title']) != clean(item['title'])}
     if source_mode in ('curated_photo','auto_commons_photo'):
         common.update({'image_source_url':clean(c['image_source_url']),'image_page_url':clean(c['source_page_url']),'image_credit':clean(c['credito']),'license_note':clean(c['licenca'])})
     else:
