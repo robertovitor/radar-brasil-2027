@@ -218,6 +218,23 @@ def relaxed_commons_image(item, used):
                 # O gate restrito é definitivo; contexto textual não pode liberar
                 # imagens de política, governo ou de fora do universo permitido.
                 continue
+
+            # Cidade/estádio genérico não pode ser usado só porque a pauta menciona
+            # "Brasil". Exige entidade geográfica específica e a mesma entidade
+            # precisa aparecer nos metadados reais da imagem.
+            if semantic_reason == 'relevant_brazilian_city_or_landmark':
+                item_place = base._specific_host_city(item_text) if hasattr(base, '_specific_host_city') else ''
+                aliases = base.HOST_CITY_ALIASES.get(item_place, (item_place,)) if item_place else ()
+                if not item_place or not any(base.norm(alias) in base.norm(descriptor) for alias in aliases):
+                    print('image_rejected=generic_brazil_landmark_without_exact_city')
+                    continue
+            if semantic_reason == 'relevant_stadium':
+                item_stadium = base._specific_host_stadium(item_text) if hasattr(base, '_specific_host_stadium') else ''
+                aliases = base.HOST_STADIUM_ALIASES.get(item_stadium, (item_stadium,)) if item_stadium else ()
+                if not item_stadium or not any(base.norm(alias) in base.norm(descriptor) for alias in aliases):
+                    print('image_rejected=generic_stadium_without_exact_match')
+                    continue
+
             url = base.clean(info.get('url'))
             if not url:
                 continue
