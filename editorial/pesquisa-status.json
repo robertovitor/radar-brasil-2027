@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260926-03",
-  "started_at": "2026-09-26T03:46:17-03:00",
-  "completed_at": "2026-09-26T03:48:44-03:00",
+  "cycle_id": "20260926-04",
+  "started_at": "2026-09-26T04:44:11-03:00",
+  "completed_at": "2026-09-26T04:46:11-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,18 +10,17 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 10,
+  "candidatos_publicos": 11,
   "aprovados_novos": 0,
-  "rejeitados": 3,
-  "duplicados": 7,
+  "rejeitados": 1,
+  "duplicados": 10,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras integrais do Airtable, uma por tabela, com pageSize 1000 e sem filtros, sort, schema ou paginação; os resultados foram reutilizados.",
-    "As três pendências antigas ultrapassaram seis horas desde a tentativa anterior e receberam busca profunda nesta rodada. As pesquisas pelos códigos das publicações não localizaram título ou contexto verificável, e a leitura pública direta do Instagram foi bloqueada.",
-    "Os três registros foram preservados em PENDENTE_ENRIQUECIMENTO com o resultado existente, sem rejeição nem regravação de Status/Resultado. Somente o horário da tentativa foi atualizado para 2026-09-26T06:47:51.618Z.",
-    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Dez candidatos foram processados: sete duplicatas dos arquivos finais e três excluídos por categoria de base, fora do escopo ou ausência de fato editorial novo.",
-    "A pauta sobre o financiamento do gramado do Castelão foi confirmada em noticias.json. A chamada da Globo com “Maria, Maria” permanece aprovada no Airtable e ausente de noticias.json; por isso foi reenfileirada.",
+    "As três pendências antigas em PENDENTE_ENRIQUECIMENTO foram reavaliadas a partir do cache. Como a última busca profunda ocorreu há menos de seis horas, nenhuma nova busca individual nem escrita repetitiva de Status, Resultado ou horário foi realizada nesta rodada.",
+    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Onze candidatos editoriais foram processados: dez já constavam nos arquivos finais e um foi excluído por não trazer vínculo editorial novo com a Copa Feminina 2027 ou a Seleção principal.",
+    "Nenhuma nova pauta pública foi aprovada. A chamada da Globo com “Maria, Maria” permanece aprovada no Airtable e ausente de noticias.json; por isso foi reenfileirada no inbox.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
