@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260926-08",
-  "started_at": "2026-09-26T08:47:52-03:00",
-  "completed_at": "2026-09-26T08:51:04-03:00",
+  "cycle_id": "20260926-09",
+  "started_at": "2026-09-26T09:42:13-03:00",
+  "completed_at": "2026-09-26T09:43:59-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -11,16 +11,17 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 12,
-  "aprovados_novos": 0,
-  "rejeitados": 2,
-  "duplicados": 10,
-  "inbox_itens_adicionados": 1,
+  "aprovados_novos": 1,
+  "rejeitados": 0,
+  "duplicados": 11,
+  "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
-    "As duas tabelas do Airtable foram lidas uma única vez, com pageSize 1000, sem filtros, ordenação, schema ou paginação; nenhum cursor adicional foi retornado.",
-    "Três sugestões de notícias permanecem em PENDENTE_ENRIQUECIMENTO. A última busca profunda individual ocorreu há menos de seis horas; Status e Resultado da verificação não foram regravados porque nada mudou.",
-    "A pesquisa pública recente cobriu Seleção principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, voluntariado, ingressos, marcas e federações. Dez candidatos eram fatos já representados e dois não acrescentavam fato editorial novo; categorias de base foram excluídas.",
-    "A pauta aprovada da Globo com “Maria, Maria” continua ausente de noticias.json e foi reenfileirada no inbox sem alterar dados.json, noticias.json ou planilha.",
+    "Foram executadas exatamente duas leituras integrais do Airtable, uma por tabela, com pageSize 1000, sem filtros, ordenação, schema ou paginação; ambas retornaram sem cursor.",
+    "Três notícias permanecem em PENDENTE_ENRIQUECIMENTO. A última busca profunda individual ainda estava dentro da janela mínima de seis horas; nenhuma escrita repetitiva foi feita no Airtable.",
+    "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, marcas, patrocinadores e federações. Conteúdos de categorias de base foram excluídos.",
+    "Foi aprovada a pauta sobre Jéssica Lima integrar a comissão técnica de Arthur Elias nos amistosos contra a Argentina. Onze candidatos públicos eram fatos já representados nos arquivos finais.",
+    "A pauta aprovada da Globo com “Maria, Maria” seguia ausente de noticias.json e foi reenfileirada junto da nova notícia. dados.json, noticias.json e planilha não foram alterados.",
     "Nenhum merge, e-mail ou publicação em Instagram foi disparado."
   ]
 }
