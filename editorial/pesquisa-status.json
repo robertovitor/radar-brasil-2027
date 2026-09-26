@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260926-02",
-  "started_at": "2026-09-26T02:46:39-03:00",
-  "completed_at": "2026-09-26T02:48:33-03:00",
+  "cycle_id": "20260926-03",
+  "started_at": "2026-09-26T03:46:17-03:00",
+  "completed_at": "2026-09-26T03:48:44-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -18,12 +18,10 @@
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras integrais do Airtable, uma por tabela, com pageSize 1000 e sem filtros, sort, schema ou paginação; os resultados foram reutilizados.",
-    "As três pendências antigas permanecem em PENDENTE_ENRIQUECIMENTO por falta de título estruturado. A última busca profunda ainda não havia completado seis horas no início desta execução; por isso não houve nova consulta individual nem escrita repetitiva.",
-    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Dez candidatos foram processados: sete duplicatas dos arquivos finais ou do inbox já existente e três excluídos por categoria de base, fora do escopo ou ausência de fato editorial novo.",
-    "A pauta sobre a FIFA financiar metade do novo gramado do Castelão foi validada como pertinente e já estava presente no inbox lido no início desta execução; foi preservada sem duplicação.",
-    "O inbox inicial continha três notícias de uma execução nativa paralela do mesmo ciclo; todo o conteúdo foi preservado. A chamada da Globo com “Maria, Maria”, aprovada no Airtable e ainda ausente de noticias.json, foi acrescentada.",
-    "A telemetria desta execução foi produzida do zero e não reutiliza os números da execução nativa paralela.",
-    "Nenhum registro do Airtable precisou ser alterado nesta rodada.",
+    "As três pendências antigas ultrapassaram seis horas desde a tentativa anterior e receberam busca profunda nesta rodada. As pesquisas pelos códigos das publicações não localizaram título ou contexto verificável, e a leitura pública direta do Instagram foi bloqueada.",
+    "Os três registros foram preservados em PENDENTE_ENRIQUECIMENTO com o resultado existente, sem rejeição nem regravação de Status/Resultado. Somente o horário da tentativa foi atualizado para 2026-09-26T06:47:51.618Z.",
+    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Dez candidatos foram processados: sete duplicatas dos arquivos finais e três excluídos por categoria de base, fora do escopo ou ausência de fato editorial novo.",
+    "A pauta sobre o financiamento do gramado do Castelão foi confirmada em noticias.json. A chamada da Globo com “Maria, Maria” permanece aprovada no Airtable e ausente de noticias.json; por isso foi reenfileirada.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
