@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260926-04",
-  "started_at": "2026-09-26T04:44:11-03:00",
-  "completed_at": "2026-09-26T04:46:11-03:00",
+  "cycle_id": "20260926-05",
+  "started_at": "2026-09-26T05:42:35-03:00",
+  "completed_at": "2026-09-26T05:43:56-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -18,8 +18,9 @@
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras integrais do Airtable, uma por tabela, com pageSize 1000 e sem filtros, sort, schema ou paginação; os resultados foram reutilizados.",
-    "As três pendências antigas em PENDENTE_ENRIQUECIMENTO foram reavaliadas a partir do cache. Como a última busca profunda ocorreu há menos de seis horas, nenhuma nova busca individual nem escrita repetitiva de Status, Resultado ou horário foi realizada nesta rodada.",
-    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Onze candidatos editoriais foram processados: dez já constavam nos arquivos finais e um foi excluído por não trazer vínculo editorial novo com a Copa Feminina 2027 ou a Seleção principal.",
+    "As três pendências antigas em PENDENTE_ENRIQUECIMENTO foram reavaliadas usando o cache desta rodada. A última busca profunda ocorreu há menos de seis horas; por isso não houve nova busca individual nem escrita repetitiva de Status, Resultado ou horário.",
+    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Onze candidatos editoriais foram processados: dez eram duplicatas dos arquivos finais e um foi excluído por estar fora do recorte da Copa Feminina 2027 e da Seleção principal.",
+    "O Encontro Nacional do Futebol Feminino em Porto Alegre, o painel Futebol & Cidadania em Salvador, a visita técnica ao Mineirão e as pautas de voluntariado já estavam incorporados em dados.json ou noticias.json.",
     "Nenhuma nova pauta pública foi aprovada. A chamada da Globo com “Maria, Maria” permanece aprovada no Airtable e ausente de noticias.json; por isso foi reenfileirada no inbox.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
