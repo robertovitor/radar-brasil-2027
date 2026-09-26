@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260925-23",
-  "started_at": "2026-09-25T23:44:54-03:00",
-  "completed_at": "2026-09-25T23:46:30-03:00",
+  "cycle_id": "20260926-00",
+  "started_at": "2026-09-26T00:47:42-03:00",
+  "completed_at": "2026-09-26T00:52:06-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,18 +10,19 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 10,
+  "candidatos_publicos": 11,
   "aprovados_novos": 1,
   "rejeitados": 2,
-  "duplicados": 7,
+  "duplicados": 8,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras integrais do Airtable, uma por tabela, com pageSize 1000 e sem filtros, sort, schema ou paginação; os resultados foram reutilizados.",
-    "As três pendências antigas permanecem em PENDENTE_ENRIQUECIMENTO por falta de título estruturado. A busca profunda anterior ocorreu há menos de seis horas; por isso não houve nova consulta individual nem escrita repetitiva.",
-    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Dez candidatos foram processados: sete duplicatas dos arquivos finais, dois excluídos por inadequação editorial ou ausência de fato novo e um aprovado.",
-    "Aprovada a notícia oficial da Prefeitura de Porto Alegre, publicada em 23/09/2026, sobre o início da venda de ingressos para Brasil x Argentina em 10/10/2026, às 16h30, no Beira-Rio.",
-    "A chamada da Globo com “Maria, Maria” permanece aprovada no Airtable e ausente de noticias.json; por isso foi preservada no envio ao inbox junto da nova pauta.",
+    "As três pendências antigas permanecem em PENDENTE_ENRIQUECIMENTO por falta de título estruturado. A última busca profunda ocorreu há menos de seis horas; por isso não houve nova consulta individual nem escrita repetitiva.",
+    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Onze candidatos foram processados: oito duplicatas dos arquivos finais, dois excluídos por inadequação editorial ou ausência de fonte direta estável e um aprovado.",
+    "Aprovada a pauta do SINDHA, publicada em 16/09/2026, sobre a preparação conjunta do trade turístico de Porto Alegre para 2027, com foco em receptivo, ambientação e estimativa local de 700 a mil voluntários.",
+    "A pauta de ingressos para Brasil x Argentina já consta em noticias.json. A chamada da Globo com “Maria, Maria” permanece aprovada no Airtable e ausente de noticias.json; por isso foi reenfileirada junto da nova pauta.",
+    "O consumidor automático esvaziou o primeiro envio do inbox durante a rodada; os dois itens foram gravados novamente em commit subsequente usando o SHA corrente, sem disparo manual do consumidor.",
     "Nenhum registro do Airtable precisou ser alterado nesta rodada.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
