@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260927-07",
-  "started_at": "2026-09-27T07:44:39-03:00",
-  "completed_at": "2026-09-27T07:46:46-03:00",
+  "cycle_id": "20260927-08",
+  "started_at": "2026-09-27T08:45:54-03:00",
+  "completed_at": "2026-09-27T08:48:41-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -19,8 +19,9 @@
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas do Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
     "Backlog processado exclusivamente com os dois resultados obtidos; não havia registros Pendente ou Em verificação e nenhuma escrita no Airtable foi necessária.",
-    "A pesquisa pública aprovou a pauta sobre Clarinha na Seleção Brasileira Feminina principal e sua oportunidade no ciclo da Copa 2027; a URL e o tema não constavam nos arquivos finais.",
-    "A pauta Gre-Nal e a chamada da Globo com “Maria, Maria”, aprovadas e ainda ausentes de noticias.json, foram reenfileiradas preservando o inbox existente.",
+    "A pauta sobre Clarinha, aprovada na rodada anterior, foi confirmada em noticias.json e não foi reenfileirada.",
+    "A pesquisa pública aprovou uma pauta sobre a final do Brasileiro Feminino entre Corinthians e São Paulo, publicada pelo ge em 26/09/2026.",
+    "As pautas Gre-Nal e da chamada da Globo com “Maria, Maria”, aprovadas e ainda ausentes de noticias.json, foram reenfileiradas preservando o inbox existente.",
     "A pesquisa cobriu Seleção principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
