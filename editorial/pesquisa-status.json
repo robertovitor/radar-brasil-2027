@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260927-18",
-  "started_at": "2026-09-27T18:46:03-03:00",
-  "completed_at": "2026-09-27T18:47:30-03:00",
+  "cycle_id": "20260927-19",
+  "started_at": "2026-09-27T19:43:25-03:00",
+  "completed_at": "2026-09-27T19:44:38-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -20,11 +20,11 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 10,
-  "aprovados_novos": 0,
+  "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 5,
+  "rejeitados": 4,
   "duplicados": 5,
-  "inbox_itens_adicionados": 2,
+  "inbox_itens_adicionados": 3,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação nem necessidade de escrita no Airtable. Dez resultados públicos recentes ou correlatos foram avaliados: cinco eram duplicatas do conteúdo final e cinco foram descartados por fora do escopo, categorias masculinas/base ou falta de novidade editorial. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação nem necessidade de escrita no Airtable. A pesquisa pública aprovou a pauta do patrocínio de três anos do Sicoob às principais competições nacionais de futebol feminino; cinco resultados já estavam representados nos arquivos finais e quatro foram descartados por falta de novidade ou escopo editorial. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, também foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
