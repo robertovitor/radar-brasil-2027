@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260927-00",
-  "started_at": "2026-09-27T00:44:44-03:00",
-  "completed_at": "2026-09-27T00:46:50-03:00",
+  "cycle_id": "20260927-01",
+  "started_at": "2026-09-27T01:46:49-03:00",
+  "completed_at": "2026-09-27T01:48:05-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -18,9 +18,9 @@
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas do Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
-    "Backlog reavaliado exclusivamente com os dois resultados já lidos; não havia registros Pendente ou Em verificação e nenhuma escrita no Airtable foi necessária.",
-    "A pauta sobre marcas foi confirmada em noticias.json pelo fluxo incremental. As pautas Gre-Nal e Globo/Maria, ainda ausentes dos arquivos finais, foram preservadas e reenfileiradas no inbox.",
-    "A pesquisa pública recente cobriu Seleção principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, voluntariado, ingressos, marcas e federações; os resultados eram duplicatas já cobertas ou itens fora do recorte editorial.",
+    "Backlog processado apenas com as duas leituras já obtidas; não havia registros Pendente ou Em verificação e nenhuma escrita no Airtable foi necessária.",
+    "A pauta Gre-Nal e a chamada da Globo com “Maria, Maria”, ambas aprovadas e ainda ausentes de noticias.json, foram reenfileiradas preservando o inbox existente.",
+    "A pesquisa pública recente cobriu Seleção principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, marcas, patrocinadores e federações; não houve nova pauta elegível.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
