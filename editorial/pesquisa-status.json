@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260927-17",
-  "started_at": "2026-09-27T17:47:01-03:00",
-  "completed_at": "2026-09-27T17:49:34-03:00",
+  "cycle_id": "20260927-18",
+  "started_at": "2026-09-27T18:46:03-03:00",
+  "completed_at": "2026-09-27T18:47:30-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -22,9 +22,9 @@
   "candidatos_publicos": 10,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 1,
-  "duplicados": 9,
+  "rejeitados": 5,
+  "duplicados": 5,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução operacional concluída com exatamente duas leituras Airtable, sem paginação adicional. Não havia registros pendentes nem necessidade de escrita no Airtable. A pesquisa pública recente não encontrou pauta inédita com mínimo seguro; os resultados pertinentes já constavam nos arquivos finais e um resultado era fora do escopo. As pautas aprovadas sobre Gre-Nal e a chamada “Maria, Maria”, ainda ausentes de noticias.json, foram reenfileiradas preservando o item existente no inbox. Nenhum merge, e-mail, Instagram ou alteração de agenda foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação nem necessidade de escrita no Airtable. Dez resultados públicos recentes ou correlatos foram avaliados: cinco eram duplicatas do conteúdo final e cinco foram descartados por fora do escopo, categorias masculinas/base ou falta de novidade editorial. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
