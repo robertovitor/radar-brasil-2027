@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260927-11",
-  "started_at": "2026-09-27T11:42:51-03:00",
-  "completed_at": "2026-09-27T11:44:22-03:00",
+  "cycle_id": "20260927-12",
+  "started_at": "2026-09-27T12:46:52-03:00",
+  "completed_at": "2026-09-27T12:49:35-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -11,17 +11,16 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 10,
-  "aprovados_novos": 1,
+  "aprovados_novos": 0,
   "rejeitados": 2,
-  "duplicados": 7,
-  "inbox_itens_adicionados": 3,
-  "inbox_commit_needed": true,
+  "duplicados": 8,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas do Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
-    "Backlog processado exclusivamente com os dois resultados obtidos; não havia registros Pendente ou Em verificação e nenhuma escrita no Airtable foi necessária.",
-    "A pesquisa pública aprovou a pauta sobre a vitória do São Paulo por 2 a 1 sobre o Corinthians na ida da final do Brasileiro Feminino A1, com recorde de público nacional feminino em 2026.",
-    "As pautas aprovadas Gre-Nal e da chamada da Globo com “Maria, Maria”, ainda ausentes de noticias.json, foram reenfileiradas preservando o inbox existente.",
-    "A pesquisa cobriu Seleção principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+    "Backlog processado exclusivamente com os dois resultados obtidos; os 31 registros de Sugestões e os 26 de Sugestões de Notícias estavam encerrados, sem Status vazio, Pendente ou Em verificação, e nenhuma escrita no Airtable foi necessária.",
+    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
+    "Nenhuma pauta pública nova atingiu o mínimo editorial após comparação com dados.json, noticias.json e os três itens já presentes no inbox; resultados aproveitáveis eram duplicados ou já estavam enfileirados.",
+    "O inbox existente foi preservado sem regravação porque não houve item novo; nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
