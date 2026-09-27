@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260927-09",
-  "started_at": "2026-09-27T09:42:45-03:00",
-  "completed_at": "2026-09-27T09:44:10-03:00",
+  "cycle_id": "20260927-10",
+  "started_at": "2026-09-27T10:43:46-03:00",
+  "completed_at": "2026-09-27T10:45:04-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -14,15 +14,15 @@
   "aprovados_novos": 0,
   "rejeitados": 2,
   "duplicados": 8,
-  "inbox_itens_adicionados": 1,
+  "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas do Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
     "Backlog processado exclusivamente com os dois resultados obtidos; não havia registros Pendente ou Em verificação e nenhuma escrita no Airtable foi necessária.",
     "A pauta sobre a final Corinthians x São Paulo foi confirmada em noticias.json e não foi reenfileirada.",
-    "A pesquisa pública não encontrou pauta nova segura: os resultados relevantes já estavam publicados, eram duplicados, pertenciam à categoria de base ou estavam fora do escopo.",
-    "O inbox existente foi preservado e a pauta aprovada da chamada da Globo com “Maria, Maria”, ainda ausente de noticias.json, foi adicionada.",
-    "A pesquisa cobriu Seleção principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
+    "A pesquisa pública não encontrou pauta nova segura; resultados relevantes eram duplicados ou antigos, e conteúdos masculinos ou de categorias de base foram excluídos.",
+    "As pautas aprovadas Gre-Nal e da chamada da Globo com “Maria, Maria”, ainda ausentes de noticias.json, foram reenfileiradas preservando o inbox existente.",
+    "A pesquisa cobriu Seleção principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
