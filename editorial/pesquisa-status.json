@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260927-14",
-  "started_at": "2026-09-27T14:46:50-03:00",
-  "completed_at": "2026-09-27T14:48:35-03:00",
+  "cycle_id": "20260927-15",
+  "started_at": "2026-09-27T15:42:22-03:00",
+  "completed_at": "2026-09-27T15:44:12-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -11,17 +11,17 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 10,
-  "aprovados_novos": 0,
+  "aprovados_novos": 1,
   "rejeitados": 2,
-  "duplicados": 8,
-  "inbox_itens_adicionados": 2,
+  "duplicados": 7,
+  "inbox_itens_adicionados": 3,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas do Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
     "Backlog processado exclusivamente com os dois resultados obtidos; não havia Status vazio, Pendente ou Em verificação, e nenhuma escrita no Airtable foi necessária.",
     "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "A pauta publicada em 27/09/2026 sobre a preparação de Belo Horizonte já constava em noticias.json; os demais resultados pertinentes também eram duplicados ou já estavam cobertos.",
-    "As pautas aprovadas Gre-Nal e da chamada da Globo com “Maria, Maria”, ainda ausentes de noticias.json, foram reenfileiradas no inbox.",
+    "Aprovada a pauta do ge publicada em 25/09/2026 sobre o encerramento das inscrições para mais de seis mil vagas de voluntariado em 7 de outubro, nas oito cidades-sede.",
+    "As pautas aprovadas Gre-Nal e da chamada da Globo com “Maria, Maria”, ainda ausentes de noticias.json, foram reenfileiradas junto da pauta nova.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
