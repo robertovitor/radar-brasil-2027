@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260927-03",
-  "started_at": "2026-09-27T03:45:12-03:00",
-  "completed_at": "2026-09-27T03:46:42-03:00",
+  "cycle_id": "20260927-04",
+  "started_at": "2026-09-27T04:43:14-03:00",
+  "completed_at": "2026-09-27T04:44:43-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,18 +10,17 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 14,
+  "candidatos_publicos": 10,
   "aprovados_novos": 0,
   "rejeitados": 2,
-  "duplicados": 12,
+  "duplicados": 8,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas do Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
-    "Backlog reavaliado apenas com os dois resultados já lidos; não havia registros Pendente ou Em verificação e nenhuma escrita no Airtable foi necessária.",
+    "Backlog processado apenas com os dois resultados obtidos; não havia registros Pendente ou Em verificação e nenhuma escrita no Airtable foi necessária.",
     "A pauta Gre-Nal e a chamada da Globo com “Maria, Maria”, aprovadas e ainda ausentes de noticias.json, foram reenfileiradas preservando o inbox existente.",
-    "A pesquisa pública recente cobriu Seleção principal, cidades-sede, estádios, turismo, mobilidade, voluntariado, hospitalidade, ingressos, marcas e federações; resultados de futsal e categorias de base foram excluídos, e os demais eram duplicatas.",
-    "A telemetria foi produzida nesta execução e não reutiliza a auditoria automática da rodada anterior.",
+    "A pesquisa pública recente cobriu Seleção principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, marcas e federações; não houve nova pauta elegível.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
