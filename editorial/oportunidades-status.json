@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-09-27T14:20:59-03:00",
-  "fim": "2026-09-27T14:23:14-03:00",
+  "inicio": "2026-09-27T17:27:45-03:00",
+  "fim": "2026-09-27T17:29:12-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -174,7 +174,7 @@
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 4
+      "resultados": 5
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
@@ -208,7 +208,7 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 49,
   "adicionadas": 0,
-  "atualizadas": 4,
+  "atualizadas": 2,
   "total_arquivo": 50,
   "erros": [
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
