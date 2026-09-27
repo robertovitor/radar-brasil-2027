@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-09-27T09:32:31-03:00",
-  "fim": "2026-09-27T09:34:57-03:00",
+  "inicio": "2026-09-27T14:20:59-03:00",
+  "fim": "2026-09-27T14:23:14-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -30,38 +30,6 @@
     },
     {
       "query": "\"futebol feminino\" curso inscrições Brasil 2026 2027",
-      "resultados": 1,
-      "motores": {
-        "duckduckgo": 0,
-        "bing_rss": 1
-      }
-    },
-    {
-      "query": "\"futebol feminino\" summit congresso workshop inscrições Brasil 2026 2027",
-      "resultados": 1,
-      "motores": {
-        "duckduckgo": 0,
-        "bing_rss": 1
-      }
-    },
-    {
-      "query": "site:sympla.com.br \"futebol feminino\" curso OR workshop OR congresso OR summit 2026 2027",
-      "resultados": 1,
-      "motores": {
-        "duckduckgo": 0,
-        "bing_rss": 1
-      }
-    },
-    {
-      "query": "site:eventbrite.com.br \"futebol feminino\" curso OR workshop OR congresso 2026 2027",
-      "resultados": 1,
-      "motores": {
-        "duckduckgo": 0,
-        "bing_rss": 1
-      }
-    },
-    {
-      "query": "site:womanifs.com inscrição OR registration 2026 2027",
       "resultados": 0,
       "motores": {
         "duckduckgo": 0,
@@ -69,51 +37,82 @@
       }
     },
     {
-      "query": "site:gov.br/esporte \"futebol feminino\" inscrição OR curso OR capacitação OR edital 2026 2027",
-      "resultados": 1,
+      "query": "\"futebol feminino\" summit congresso workshop inscrições Brasil 2026 2027",
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
+      }
+    },
+    {
+      "query": "site:sympla.com.br \"futebol feminino\" curso OR workshop OR congresso OR summit 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
+    },
+    {
+      "query": "site:eventbrite.com.br \"futebol feminino\" curso OR workshop OR congresso 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
+      }
+    },
+    {
+      "query": "site:womanifs.com inscrição OR registration 2026 2027",
+      "resultados": 2,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 2
+      }
+    },
+    {
+      "query": "site:gov.br/esporte \"futebol feminino\" inscrição OR curso OR capacitação OR edital 2026 2027",
+      "resultados": 0,
+      "motores": {
+        "duckduckgo": 0,
+        "bing_rss": 0
       }
     },
     {
       "query": "\"futebol feminino\" inscrições \"São Paulo\" OR Fortaleza OR \"Belo Horizonte\" 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     },
     {
       "query": "\"futebol feminino\" inscrições Recife OR Salvador OR \"Porto Alegre\" OR Brasília 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     },
     {
       "query": "site:fferj.com.br \"futebol feminino\" inscrição OR curso OR workshop 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     },
     {
       "query": "site:fpf.org.br \"futebol feminino\" inscrição OR curso OR workshop 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     }
   ],
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 0,
-      "erro": "URLError:<urlopen error [Errno 104] Connection reset by peer>"
+      "resultados": 30
     }
   ],
   "hubs": [
@@ -207,24 +206,16 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 15,
+  "oportunidades_validas_na_execucao": 49,
   "adicionadas": 0,
-  "atualizadas": 3,
+  "atualizadas": 4,
   "total_arquivo": 50,
   "erros": [
-    "feed:https://jobs.fifa.com/postings.json:URLError:<urlopen error [Errno 104] Connection reset by peer>",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/27-09-2026/24-02-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://jobs.fifa.com/postings/25e65e4b-c419-469a-870c-4e52dce3bc46:URLError:<urlopen error [Errno 104] Connection reset by peer>",
-    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>",
-    "page:https://ludopedio.org.br/agenda-de-eventos/chamada-dossie-futebol-e-mulheres-2027:URLError:<urlopen error [Errno 104] Connection reset by peer>",
-    "page:https://ludopedio.org.br/agenda-de-eventos/setor-norte-chamada-de-artigo-futebol-do-norte-do-brasil:URLError:<urlopen error [Errno 104] Connection reset by peer>",
-    "page:https://ludopedio.org.br/agenda-de-eventos/chamada-de-artigos-ha-79-mulheres-no-futebol:URLError:<urlopen error [Errno 104] Connection reset by peer>",
-    "page:https://ludopedio.org.br/agenda-de-eventos/18a-conferencia-internacional-sobre-esporte-e-sociedade:URLError:<urlopen error [Errno 104] Connection reset by peer>",
-    "page:https://transparencia.prefeitura.rio/:URLError:<urlopen error [Errno -3] Temporary failure in name resolution>",
-    "page:https://prefeitura.rio/esporte/secretaria-municipal-de-esportes-abre-inscricoes-para-colonias-de-ferias-nas-vilas-olimpicas:URLError:<urlopen error _ssl.c:993: The handshake operation timed out>"
+    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {
     "noticias": "inalterado",
