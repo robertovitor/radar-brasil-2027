@@ -1,4 +1,41 @@
 {
   "eventos": [],
-  "noticias": []
+  "noticias": [
+    {
+      "Data": "2026-09-22",
+      "DataBR": "22/09/2026",
+      "Titulo": "Metade das convocadas para a Seleção Brasileira Feminina tem passagem pela dupla Gre-Nal",
+      "Tema": "Seleção Brasileira / convocação / futebol gaúcho",
+      "CidadeUF": "Brasil/RS",
+      "Veiculo": "GZH",
+      "Link": "https://gauchazh.clicrbs.com.br/esportes/futebol-feminino/noticia/2026/09/metade-das-convocadas-para-a-selecao-brasileira-feminina-tem-passagem-pela-dupla-gre-nal-cmud50o5h00oy014xpggwlctx.html",
+      "Sentimento": "Positivo",
+      "Impacto": "Médio",
+      "Resumo": "Das 28 jogadoras convocadas por Arthur Elias para os amistosos da Seleção Brasileira Feminina principal contra a Argentina, 14 têm passagem por Grêmio ou Internacional. A lista inclui nomes como Lorena, Carlinha, Mariza, Tayla, Priscila, Tamara Bolt e Duda Sampaio."
+    },
+    {
+      "Data": "2026-07-19",
+      "DataBR": "19/07/2026",
+      "Titulo": "Globo escolhe “Maria, Maria” para embalar chamada da Copa Feminina 2027",
+      "Tema": "Mídia / promoção / Copa Feminina 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "Instagram / Globo",
+      "Link": "https://www.instagram.com/reel/Da_H8zNpHxf/?stkn=MW8xNmYyNTExc3FtaA==",
+      "Sentimento": "Positivo",
+      "Impacto": "Médio",
+      "Resumo": "A Globo escolheu a canção “Maria, Maria” para embalar uma chamada dedicada à Copa do Mundo Feminina de 2027. A peça reforça a promoção midiática do torneio que será realizado no Brasil."
+    },
+    {
+      "Data": "2026-09-25",
+      "DataBR": "25/09/2026",
+      "Titulo": "Clarinha ganha oportunidade na Seleção principal de olho na Copa do Mundo 2027",
+      "Tema": "Seleção Brasileira / convocação / ciclo 2027",
+      "CidadeUF": "Brasil/GO",
+      "Veiculo": "O Popular",
+      "Link": "https://opopular.com.br/esporte/como-jogadora-goiana-pode-aproveitar-amistosos-e-entrar-na-briga-por-vaga-na-copa-do-mundo-2027-1.3460564",
+      "Sentimento": "Positivo",
+      "Impacto": "Médio",
+      "Resumo": "A meia Clarinha, de 20 anos, foi convocada por Arthur Elias para os amistosos da Seleção Brasileira Feminina principal contra a Argentina. A oportunidade coloca a jogadora goiana na disputa por espaço no grupo que se prepara para a Copa do Mundo de 2027 no Brasil."
+    }
+  ]
 }
