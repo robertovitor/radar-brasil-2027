@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260927-12",
-  "started_at": "2026-09-27T12:46:52-03:00",
-  "completed_at": "2026-09-27T12:49:35-03:00",
+  "cycle_id": "20260927-13",
+  "started_at": "2026-09-27T13:43:40-03:00",
+  "completed_at": "2026-09-27T13:45:31-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -14,13 +14,14 @@
   "aprovados_novos": 0,
   "rejeitados": 2,
   "duplicados": 8,
-  "inbox_itens_adicionados": 0,
-  "inbox_commit_needed": false,
+  "inbox_itens_adicionados": 2,
+  "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas do Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
-    "Backlog processado exclusivamente com os dois resultados obtidos; os 31 registros de Sugestões e os 26 de Sugestões de Notícias estavam encerrados, sem Status vazio, Pendente ou Em verificação, e nenhuma escrita no Airtable foi necessária.",
+    "Backlog processado exclusivamente com os dois resultados obtidos; não havia Status vazio, Pendente ou Em verificação, e nenhuma escrita no Airtable foi necessária.",
     "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Nenhuma pauta pública nova atingiu o mínimo editorial após comparação com dados.json, noticias.json e os três itens já presentes no inbox; resultados aproveitáveis eram duplicados ou já estavam enfileirados.",
-    "O inbox existente foi preservado sem regravação porque não houve item novo; nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+    "Nenhuma pauta pública nova atingiu o mínimo editorial; os resultados pertinentes já constavam nos arquivos finais ou representavam desdobramentos já cobertos.",
+    "As pautas aprovadas sobre a passagem de metade das convocadas pela dupla Gre-Nal e a chamada da Globo com “Maria, Maria”, ainda ausentes de noticias.json, foram reenfileiradas no inbox.",
+    "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
