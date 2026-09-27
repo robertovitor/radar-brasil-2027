@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260927-05",
-  "started_at": "2026-09-27T05:43:59-03:00",
-  "completed_at": "2026-09-27T05:47:20-03:00",
+  "cycle_id": "20260927-06",
+  "started_at": "2026-09-27T06:44:30-03:00",
+  "completed_at": "2026-09-27T06:45:43-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -11,17 +11,17 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 10,
-  "aprovados_novos": 2,
-  "rejeitados": 1,
-  "duplicados": 7,
-  "inbox_itens_adicionados": 4,
+  "aprovados_novos": 0,
+  "rejeitados": 2,
+  "duplicados": 8,
+  "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas do Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
     "Backlog processado exclusivamente com os dois resultados obtidos; não havia registros Pendente ou Em verificação e nenhuma escrita no Airtable foi necessária.",
+    "As pautas sobre ingressos em Pernambuco e preparação de Salvador, aprovadas na rodada anterior, já estavam incorporadas em noticias.json nesta execução.",
     "A pauta Gre-Nal e a chamada da Globo com “Maria, Maria”, aprovadas e ainda ausentes de noticias.json, foram reenfileiradas preservando o inbox existente.",
-    "A pesquisa pública recente aprovou duas pautas ausentes dos arquivos finais: venda de ingressos para Brasil x Argentina em Pernambuco e preparação de Salvador em turismo, conectividade e mobilidade.",
-    "A pesquisa cobriu Seleção principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
+    "A pesquisa pública cobriu Seleção principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; não houve nova pauta elegível e categorias de base foram excluídas.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
   ]
 }
