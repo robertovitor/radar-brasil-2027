@@ -105,17 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
-    },
-    {
-      "key": "instagram:noticia:https://ge.globo.com/gato-mestre/noticia/2026/09/26/no-topo-das-estatisticas-corinthians-e-sao-paulo-decidem-brasileiro-feminino.ghtml",
-      "post_file": "instagram/fila/automatica/estatisticas-corinthians-e-sao-paulo-decidem-brasileiro-feminino-ghtml-675419f2ce.json",
-      "reserved_at": "2026-09-27T13:35:37.688337+00:00",
-      "last_attempt_at": "2026-09-27T13:35:37.688337+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Esta%C3%A7%C3%A3o_Rufino_de_Almeida_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "image_page_url": "https://commons.wikimedia.org/wiki/File:Esta%C3%A7%C3%A3o_Rufino_de_Almeida_02.jpg",
-      "visual_mode": "auto_commons_photo"
     }
   ]
 }
