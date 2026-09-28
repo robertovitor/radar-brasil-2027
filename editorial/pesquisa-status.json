@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260928-17",
-  "started_at": "2026-09-28T17:40:11-03:00",
-  "completed_at": "2026-09-28T17:41:32-03:00",
+  "cycle_id": "20260928-18",
+  "started_at": "2026-09-28T18:42:49-03:00",
+  "completed_at": "2026-09-28T18:45:01-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -26,5 +26,5 @@
   "duplicados": 6,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas. A pesquisa pública incremental avaliou dez candidatos: seis eram duplicatas de pautas já presentes e quatro foram descartados por categoria de base, futebol masculino, antiguidade ou baixa relevância editorial; nenhuma pauta pública inédita foi aprovada. Gre-Nal e “Maria, Maria”, aprovados no Airtable e ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Não havia registros pendentes/em verificação/PENDENTE_ENRIQUECIMENTO e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. A pesquisa pública incremental avaliou dez candidatos recentes: seis eram duplicatas de pautas já presentes e quatro foram descartados por antiguidade, categoria de base/futebol masculino ou baixa relevância editorial; nenhuma pauta pública inédita foi aprovada. Gre-Nal e “Maria, Maria”, aprovados no Airtable e ainda ausentes de noticias.json, foram reenfileirados em editorial/inbox.json. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
