@@ -1,8 +1,8 @@
 {
-  "cycle_id": "20260928-10",
-  "started_at": "2026-09-28T10:48:22-03:00",
-  "completed_at": "2026-09-28T10:49:56-03:00",
-  "stage": "completed",
+  "cycle_id": "20260928-11",
+  "started_at": "2026-09-28T11:40:30-03:00",
+  "completed_at": "2026-09-28T11:42:28-03:00",
+  "stage": "failed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
   "airtable_reads": [
@@ -26,5 +26,5 @@
   "duplicados": 6,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação e nenhuma escrita no Airtable foi necessária. A pesquisa pública incremental avaliou dez candidatos: seis eram páginas gerais, duplicatas ou republicações de pautas já presentes; quatro foram descartados por categoria de base, foco na Copa masculina, antiguidade ou baixa relevância editorial. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "FALHA OPERACIONAL: a leitura inicial obrigatória de editorial/pesquisa-status.json no GitHub foi realmente executada, mas o conector encerrou a conexão sem resposta (RemoteProtocolError), impedindo obter conteúdo e SHA nesta rodada. As duas leituras Airtable foram concluídas exatamente uma vez cada; não havia pendentes/em verificação e nenhuma escrita Airtable foi necessária. A pesquisa pública incremental não encontrou pauta inédita; seis candidatos eram duplicatas ou republicações e quatro foram descartados por escopo, antiguidade ou baixa relevância. Gre-Nal e “Maria, Maria” foram reenfileirados. O status de falha foi gravado usando o SHA confirmado na execução imediatamente anterior, sem repetir a leitura inicial. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
