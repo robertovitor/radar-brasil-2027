@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260928-08",
-  "started_at": "2026-09-28T08:46:45-03:00",
-  "completed_at": "2026-09-28T08:49:06-03:00",
+  "cycle_id": "20260928-09",
+  "started_at": "2026-09-28T09:50:46-03:00",
+  "completed_at": "2026-09-28T09:52:22-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -26,5 +26,5 @@
   "duplicados": 6,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação e nenhuma escrita no Airtable foi necessária. A pesquisa pública incremental avaliou dez candidatos: seis eram duplicatas ou republicações de pautas já presentes e quatro foram descartados por categoria de base, futebol masculino, antiguidade ou baixa relevância editorial. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação e nenhuma escrita no Airtable foi necessária. A pesquisa pública incremental avaliou dez candidatos: seis eram duplicatas ou republicações de pautas já presentes, incluindo voluntariado, preparação da Bahia, convocação e amistosos; quatro foram descartados por categoria de base, futebol masculino, antiguidade ou baixa relevância editorial. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados. A primeira consulta pública retornou erro transitório e foi repetida sem impacto nas leituras Airtable. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
