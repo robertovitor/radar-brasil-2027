@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260927-21",
-  "started_at": "2026-09-27T21:42:53-03:00",
-  "completed_at": "2026-09-27T21:44:40-03:00",
+  "cycle_id": "20260927-22",
+  "started_at": "2026-09-27T22:47:31-03:00",
+  "completed_at": "2026-09-27T22:49:19-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -26,5 +26,5 @@
   "duplicados": 6,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação nem necessidade de escrita no Airtable. A pesquisa pública não encontrou pauta inédita com mínimo seguro: seis resultados já estavam representados em noticias.json e quatro foram descartados por falta de novidade, fonte secundária redundante ou fora do escopo. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação nem necessidade de escrita no Airtable. A pesquisa pública recente não encontrou pauta inédita com mínimo seguro: seis resultados já estavam representados em noticias.json e quatro foram descartados por falta de novidade, fonte secundária redundante ou fora do escopo. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados. O primeiro envio do status encontrou conflito de concorrência porque o consumidor avançou a branch após o commit do inbox; a escrita foi repetida sem nova leitura do Airtable. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
