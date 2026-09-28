@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-09-28T06:01:47-03:00",
-  "fim": "2026-09-28T06:03:43-03:00",
+  "inicio": "2026-09-28T14:52:10-03:00",
+  "fim": "2026-09-28T14:54:28-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -112,7 +112,7 @@
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 30
+      "resultados": 32
     }
   ],
   "hubs": [
@@ -130,11 +130,11 @@
     },
     {
       "hub": "https://ludopedio.org.br/agenda-de-eventos/",
-      "resultados": 12
+      "resultados": 10
     },
     {
       "hub": "https://ludopedio.org.br/agenda-de-eventos/?pagina=2",
-      "resultados": 8
+      "resultados": 10
     },
     {
       "hub": "https://www.cob.org.br/cultura-educacao/cursos-do-iob",
@@ -182,7 +182,8 @@
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 6
+      "resultados": 0,
+      "erro": "HTTPError:HTTP Error 403: Forbidden"
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -206,16 +207,16 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 47,
-  "adicionadas": 0,
-  "atualizadas": 45,
-  "total_arquivo": 50,
+  "oportunidades_validas_na_execucao": 50,
+  "adicionadas": 2,
+  "atualizadas": 3,
+  "total_arquivo": 52,
   "erros": [
+    "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/28-09-2026/25-02-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://www.sympla.com.br/evento/lgc/3568808:HTTPError:HTTP Error 404: Not Found",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {
