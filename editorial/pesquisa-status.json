@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260928-13",
-  "started_at": "2026-09-28T13:41:53-03:00",
-  "completed_at": "2026-09-28T13:43:54-03:00",
+  "cycle_id": "20260928-14",
+  "started_at": "2026-09-28T14:40:45-03:00",
+  "completed_at": "2026-09-28T14:42:32-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -20,11 +20,11 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 10,
-  "aprovados_novos": 0,
+  "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 4,
+  "rejeitados": 3,
   "duplicados": 6,
-  "inbox_itens_adicionados": 2,
+  "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas. A pesquisa pública incremental avaliou dez candidatos: seis eram duplicatas ou republicações de pautas já presentes e quatro foram descartados por categoria de base, futebol masculino, antiguidade ou baixa relevância editorial. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas. A pesquisa pública incremental avaliou dez candidatos: seis eram duplicatas de pautas já presentes, três foram descartados por categoria de base, futebol masculino, antiguidade ou baixa relevância editorial e uma pauta inédita sobre o impacto financeiro das restrições a patrocínios de bets no futebol feminino foi aprovada e adicionada ao inbox. Os dois itens já existentes no inbox foram preservados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
