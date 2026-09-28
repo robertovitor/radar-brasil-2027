@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260928-04",
-  "started_at": "2026-09-28T04:46:22-03:00",
-  "completed_at": "2026-09-28T04:47:51-03:00",
+  "cycle_id": "20260928-05",
+  "started_at": "2026-09-28T05:45:52-03:00",
+  "completed_at": "2026-09-28T05:47:24-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -26,5 +26,5 @@
   "duplicados": 6,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação e nenhuma escrita no Airtable foi necessária. A pauta de segurança do MPCE já estava incorporada em noticias.json. A pesquisa pública incremental não encontrou pauta inédita com mínimo seguro: seis resultados eram duplicatas ou republicações e quatro foram descartados por conteúdo masculino, categoria de base ou baixa relevância editorial. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação e nenhuma escrita no Airtable foi necessária. A pesquisa pública incremental não encontrou pauta inédita com mínimo seguro: seis resultados eram duplicatas ou republicações e quatro foram descartados por conteúdo masculino, categoria de base, antiguidade ou baixa relevância editorial. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
