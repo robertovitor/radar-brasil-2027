@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260928-02",
-  "started_at": "2026-09-28T02:47:16-03:00",
-  "completed_at": "2026-09-28T02:49:24-03:00",
+  "cycle_id": "20260928-03",
+  "started_at": "2026-09-28T03:44:50-03:00",
+  "completed_at": "2026-09-28T03:47:04-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -20,11 +20,11 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 10,
-  "aprovados_novos": 0,
+  "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 4,
-  "duplicados": 6,
-  "inbox_itens_adicionados": 2,
+  "rejeitados": 2,
+  "duplicados": 7,
+  "inbox_itens_adicionados": 3,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação nem necessidade de escrita no Airtable. A pesquisa pública recente não encontrou pauta inédita com mínimo seguro: seis resultados já estavam representados em noticias.json e quatro foram descartados por falta de novidade, fonte secundária redundante ou fora do escopo. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados no inbox. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, sem filtros, sort ou paginação adicional. Não havia registros pendentes/em verificação e nenhuma escrita no Airtable foi necessária. Entre dez candidatos públicos, uma pauta nova foi aprovada: articulação do MPCE com CBF e FIFA sobre protocolos de segurança para a Copa Feminina 2027; sete ocorrências eram duplicatas e duas foram descartadas por acesso restrito à imprensa ou categoria de base. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados junto com a pauta nova. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
