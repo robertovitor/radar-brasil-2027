@@ -478,7 +478,7 @@ def make_photo_art(url,out,title,kind,credit):
     draw=ImageDraw.Draw(im,'RGBA'); draw.rectangle((0,0,1080,125),fill=(0,0,0,135)); draw.text((SAFE_LEFT,32),'RADAR BRASIL 2027',font=font(36,True),fill='white'); draw.rectangle((0,610,1080,1080),fill=(0,0,0,182))
     f,lines,readable=fit_title(draw,title,SAFE_WIDTH,start_size=88); y=650; step=f.size+10
     for line in lines[:MAX_TITLE_LINES]: draw.text((SAFE_LEFT,y),line,font=f,fill='white'); y+=step
-    label='EVENTO' if kind=='evento' else 'NOTÍCIA'; draw.text((SAFE_LEFT,1012),label,font=font(22,True),fill=(255,223,0))
+    label='EVENTO' if kind=='evento' else 'OPORTUNIDADE' if kind=='oportunidade' else 'NOTÍCIA'; draw.text((SAFE_LEFT,1012),label,font=font(22,True),fill=(255,223,0))
     if credit:
         cf=font(16); credit_lines=wrap(draw,'Imagem: '+credit,cf,SAFE_WIDTH-145); draw.text((SAFE_LEFT+145,1017),credit_lines[0] if credit_lines else '',font=cf,fill=(240,240,240))
     pathlib.Path(out).parent.mkdir(parents=True,exist_ok=True); im.save(out,'JPEG',quality=92,optimize=True)
@@ -576,16 +576,35 @@ def recent_real_news_photo(ledger):
     return False
 
 def used_real_image_refs(ledger):
+    """Refs de catálogo já publicadas ou comprometidas em fila/reserva."""
     used=set()
-    for row in ledger.get('published',[]):
-        if not isinstance(row,dict): continue
-        p=pathlib.Path(clean(row.get('post_file')))
-        if not p.exists(): continue
+
+    def ingest_post_file(post_file):
+        p=pathlib.Path(clean(post_file))
+        if not p.exists() or p.name=='lote-atual.json':
+            return
         try: post=load(p,{})
-        except Exception: continue
+        except Exception: return
         for field in ('bank_image_id','image_source_url','image_page_url'):
             value=clean(post.get(field))
             if value: used.add(value)
+
+    for row in ledger.get('published',[]):
+        if isinstance(row,dict):
+            ingest_post_file(row.get('post_file'))
+
+    reservations=load('instagram/reservas-publicacao.json',{'reservations':[]})
+    for row in reservations.get('reservations',[]):
+        if not isinstance(row,dict): continue
+        for field in ('bank_image_id','image_source_url','image_page_url'):
+            value=clean(row.get(field))
+            if value: used.add(value)
+        ingest_post_file(row.get('post_file'))
+
+    queue_dir=pathlib.Path('instagram/fila/automatica')
+    if queue_dir.exists():
+        for p in queue_dir.glob('*.json'):
+            ingest_post_file(p)
     return used
 
 def _bank_descriptor(row):
@@ -756,6 +775,144 @@ def choose_news_bank_image(item,bank_catalog,ledger):
         'bank_reason':reason,
     }
 
+OPPORTUNITY_BANK_NEUTRAL_MARKERS=(
+    'official match ball','match ball','spielball','mascot','tazuni',
+    'fanzone','fan zone','football museum','museu do futebol',
+    'general image of','general view of','world cup countdown',
+    'women world cup countdown',"women's world cup countdown",
+)
+OPPORTUNITY_BANK_STADIUM_MARKERS=('stadium','estadio','estádio','arena')
+OPPORTUNITY_BANK_FAN_MARKERS=('fanzone','fan zone','fans','supporters','torcida')
+OPPORTUNITY_BANK_SPECIFIC_SUBJECT_MARKERS=(
+    ' player ',' players ',' jogadora ',' jogadoras ',' athlete ',' athletes ',
+    ' team ',' equipe ',' coach ',' treinador ',' treinadora ',
+)
+
+def _opportunity_bank_context(item):
+    return ' '.join([
+        clean(item.get('title')),clean(item.get('art_title')),
+        clean(item.get('search_context')),clean(item.get('caption')),
+        clean(item.get('category')),clean(item.get('organization')),
+        clean(item.get('visual_places')),
+    ])
+
+def _opportunity_bank_score(item,row):
+    """Catálogo para oportunidades: só visuais genéricos e claramente seguros."""
+    context=_opportunity_bank_context(item)
+    desc=_bank_descriptor(row)
+    category=clean(row.get('categoria'))
+    ncontext=' '+norm(context)+' '
+    ndesc=' '+norm(desc)+' '
+
+    allowed,reason=restricted_visual_domain(desc,context)
+    if not allowed:
+        return -1,reason
+
+    context_cup=(
+        'fifa' in ncontext or 'copa feminina' in ncontext or
+        'copa do mundo feminina' in ncontext or 'mundial feminino' in ncontext
+    )
+    if not context_cup:
+        return -1,'opportunity_without_cup_context'
+
+    neutral=any(norm(x) in ndesc for x in OPPORTUNITY_BANK_NEUTRAL_MARKERS)
+    stadium=any(norm(x) in ndesc for x in OPPORTUNITY_BANK_STADIUM_MARKERS)
+    fan=any(norm(x) in ndesc for x in OPPORTUNITY_BANK_FAN_MARKERS)
+    specific_subject=any(norm(x) in ndesc for x in OPPORTUNITY_BANK_SPECIFIC_SUBJECT_MARKERS)
+    brazil=_contains_phrase(desc,BRAZIL_MARKERS) or _contains_phrase(desc,BRAZIL_WOMEN_BANK_MARKERS)
+
+    volunteer=any(x in ncontext for x in ('voluntar','volunteer','torcida','fan zone','fanzone'))
+    infrastructure=any(x in ncontext for x in ('infraestrutura','infrastructure','venue','estadio','estádio','stadium','hospitalidade','hospitality'))
+    digital=any(x in ncontext for x in ('digital','produto','product','tecnologia','technology'))
+    ticketing=any(x in ncontext for x in ('ingresso','ticketing','customer care','atendimento'))
+    travel=any(x in ncontext for x in ('viagem','travel','transporte','transport'))
+
+    score=-1
+    why='unsupported_opportunity_catalog_image'
+
+    if category.startswith('copa_feminina_'):
+        # Nunca usa atleta/equipe estrangeira como ilustração genérica de vaga.
+        # Objetos, fan zones, museu, mascote e vistas gerais de estádio são seguros.
+        if neutral:
+            score=46
+            why='generic_womens_world_cup_visual'
+        elif stadium and ('general image' in ndesc or 'general view' in ndesc):
+            score=42
+            why='generic_womens_world_cup_stadium'
+        else:
+            return -1,'specific_world_cup_subject_not_suitable_for_opportunity'
+
+        if specific_subject and not any(norm(x) in ndesc for x in ('match ball','spielball','mascot','tazuni','fanzone','fan zone','football museum','general image','general view')):
+            return -1,'specific_person_or_team_blocked_for_opportunity'
+
+        if volunteer and fan:
+            score+=20; why='volunteer_fanzone_match'
+        if infrastructure and stadium:
+            score+=18; why='infrastructure_stadium_match'
+        if digital and any(norm(x) in ndesc for x in ('football museum','mascot','tazuni')):
+            score+=10; why='digital_generic_fifa_match'
+        if ticketing and fan:
+            score+=10; why='ticketing_fanzone_match'
+        if travel and (fan or stadium):
+            score+=8; why='travel_venue_match'
+
+    elif category=='futebol_feminino':
+        # Só permite imagens brasileiras e não individualizadas para vaga genérica.
+        if brazil and not specific_subject and stadium:
+            score=34
+            why='brazil_womens_football_venue'
+        else:
+            return -1,'women_football_image_too_specific_for_opportunity'
+
+    elif category=='selecao_brasileira':
+        # Seleção só ilustra oportunidade explicitamente ligada à Seleção.
+        if 'selecao' in ncontext and _bank_selection_ok(row):
+            score=40
+            why='brazil_selection_opportunity_match'
+        else:
+            return -1,'selection_not_relevant_to_opportunity'
+
+    elif category=='torcida':
+        if volunteer and fan and not specific_subject:
+            score=38
+            why='volunteer_fan_match'
+        else:
+            return -1,'fan_image_not_relevant_to_opportunity'
+
+    return score,why
+
+def choose_opportunity_bank_image(item,bank_catalog,ledger):
+    if clean(item.get('type'))!='oportunidade':
+        return None
+    used=used_real_image_refs(ledger)
+    candidates=[]
+    for row in bank_catalog if isinstance(bank_catalog,list) else []:
+        if not isinstance(row,dict) or not _bank_row_base_ok(row,used):
+            continue
+        score,reason=_opportunity_bank_score(item,row)
+        if score < 34:
+            continue
+        seed=hashlib.sha256((clean(item.get('key'))+'|'+clean(row.get('id'))).encode('utf-8')).hexdigest()
+        candidates.append((-score,seed,row,reason))
+    if not candidates:
+        print('opportunity_catalog_no_safe_match=true')
+        return None
+    candidates.sort(key=lambda x:(x[0],x[1]))
+    neg_score,_,row,reason=candidates[0]
+    score=-neg_score
+    print('opportunity_catalog_priority_match='+clean(row.get('id'))+':score='+str(score)+':'+reason)
+    return {
+        'image_source_url':clean(row.get('url_thumbnail') or row.get('url_direta')),
+        'source_page_url':clean(row.get('pagina_origem')),
+        'credito':clean(row.get('atribuicao') or row.get('autor') or row.get('fonte')),
+        'licenca':clean(row.get('licenca')),
+        'bank_image_id':clean(row.get('id')),
+        'bank_topic':'opportunity_catalog',
+        'bank_specific':'',
+        'bank_score':score,
+        'bank_reason':reason,
+    }
+
 def make_original_art(out,title,kind,subtitle,key):
     import math
     seed=int(hashlib.sha256(key.encode()).hexdigest()[:8],16); im=Image.new('RGB',(1080,1080),(8,74,52) if kind=='evento' else (18,56,92)); draw=ImageDraw.Draw(im,'RGBA')
@@ -765,7 +922,7 @@ def make_original_art(out,title,kind,subtitle,key):
     bx=790+(seed%70); by=270+((seed>>8)%90); br=125; draw.ellipse((bx-br,by-br,bx+br,by+br),fill=(245,245,235,235),outline=(20,40,35,170),width=8); draw.regular_polygon((bx,by,45),5,rotation=18,fill=(25,55,48,220))
     for ang in (18,90,162,234,306):
         x1=bx+42*math.cos(math.radians(ang)); y1=by+42*math.sin(math.radians(ang)); x2=bx+105*math.cos(math.radians(ang)); y2=by+105*math.sin(math.radians(ang)); draw.line((x1,y1,x2,y2),fill=(25,55,48,180),width=7)
-    draw.rectangle((0,0,1080,125),fill=(0,0,0,90)); draw.text((SAFE_LEFT,32),'RADAR BRASIL 2027',font=font(36,True),fill='white'); label='EVENTO' if kind=='evento' else 'NOTÍCIA'; draw.rounded_rectangle((SAFE_LEFT,180,SAFE_LEFT+202,244),radius=16,fill=(255,223,0,235)); draw.text((SAFE_LEFT+25,194),label,font=font(25,True),fill=(15,45,35))
+    draw.rectangle((0,0,1080,125),fill=(0,0,0,90)); draw.text((SAFE_LEFT,32),'RADAR BRASIL 2027',font=font(36,True),fill='white'); label='EVENTO' if kind=='evento' else 'OPORTUNIDADE' if kind=='oportunidade' else 'NOTÍCIA'; draw.rounded_rectangle((SAFE_LEFT,180,SAFE_LEFT+202,244),radius=16,fill=(255,223,0,235)); draw.text((SAFE_LEFT+25,194),label,font=font(25,True),fill=(15,45,35))
     f,lines,readable=fit_title(draw,title,620,start_size=84); y=285
     for line in lines[:MAX_TITLE_LINES]: draw.text((SAFE_LEFT,y),line,font=f,fill='white'); y+=f.size+10
     if subtitle:
@@ -863,53 +1020,73 @@ def main():
         print('priority_strict_reconciliation='+ranked[0]['key'])
     if not ranked: print('found=false'); print('reason=no_eligible_item'); return 0
     fallback_item=ranked[0]
-    # Notícias priorizam o catálogo editorial inteiro. O catálogo só vence a
-    # arte própria quando há aderência material no metadata e imagem não repetida.
-    # Sem match seguro, o fallback permanece a arte ilustrada do Radar.
-    if clean(fallback_item.get('type'))=='noticia':
+    kind=clean(fallback_item.get('type'))
+    catalog_attempted=kind in ('noticia','oportunidade')
+    catalog_selected=False
+    catalog_reason='not_applicable'
+    bank_image=None
+
+    # Notícias e Oportunidades tentam primeiro o catálogo editorial.
+    # A arte própria só entra quando não existe match seguro, licenciado e único.
+    if kind=='noticia':
         bank_image=choose_news_bank_image(fallback_item,bank_catalog,ledger)
-        if bank_image:
-            item=fallback_item
-            s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'
-            try:
-                readable,font_size,line_count=make_photo_art(
-                    clean(bank_image.get('image_source_url')),art,clean(item.get('art_title') or item['title']),item['type'],clean(bank_image.get('credito'))
-                )
-                title_ok=bool(readable and font_size>=MIN_TITLE_FONT and line_count<=MAX_TITLE_LINES)
-                if title_ok:
-                    common={
-                        'id':s,'idempotency_key':item['key'],'approved':True,'source_type':'noticia',
-                        'image_url':ROOT+art,'caption':item['caption'],'visual_mode':'news_real_bank_v1',
-                        'SEMANTIC_IMAGE_OK':True,'TITLE_READABILITY_OK':True,
-                        'semantic_reason':'catalog_priority:'+clean(bank_image.get('bank_reason') or bank_image.get('bank_topic')),
-                        'title_font_px':font_size,'title_lines':line_count,
-                        'image_source_url':clean(bank_image.get('image_source_url')),
-                        'image_page_url':clean(bank_image.get('source_page_url')),
-                        'image_credit':clean(bank_image.get('credito')),
-                        'license_note':clean(bank_image.get('licenca')),
-                        'bank_image_id':clean(bank_image.get('bank_image_id')),
-                        'bank_topic':clean(bank_image.get('bank_topic')),
-                        'bank_specific':clean(bank_image.get('bank_specific')),
-                        'bank_score':bank_image.get('bank_score'),
-                        'original_title':item['title'],
-                        'art_title':clean(item.get('art_title') or item['title']),
-                        'title_translated_to_pt':clean(item.get('art_title') or item['title']) != clean(item['title']),
-                    }
-                    pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True)
-                    pathlib.Path(post).write_text(json.dumps(common,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-                    pathlib.Path(batch).write_text(json.dumps({'posts':[post]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-                    print('visual_mode=news_real_bank_v1')
-                    print('news_real_bank_image_id='+clean(bank_image.get('bank_image_id')))
-                    print('news_real_bank_topic='+clean(bank_image.get('bank_topic')))
-                    print('SEMANTIC_IMAGE_OK=true')
-                    print('TITLE_READABILITY_OK=true')
-                    print('found=true')
-                    print('batch_file='+batch)
-                    return 0
-                print('news_real_bank_rejected=title_readability')
-            except Exception as exc:
-                print('news_real_bank_failed='+type(exc).__name__)
-            print('news_real_bank_fallback=illustrated_art')
+        catalog_reason='no_safe_match' if not bank_image else 'safe_match'
+    elif kind=='oportunidade':
+        bank_image=choose_opportunity_bank_image(fallback_item,bank_catalog,ledger)
+        catalog_reason='no_safe_match' if not bank_image else 'safe_match'
+
+    if bank_image:
+        item=fallback_item
+        s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'
+        try:
+            readable,font_size,line_count=make_photo_art(
+                clean(bank_image.get('image_source_url')),art,clean(item.get('art_title') or item['title']),item['type'],clean(bank_image.get('credito'))
+            )
+            title_ok=bool(readable and font_size>=MIN_TITLE_FONT and line_count<=MAX_TITLE_LINES)
+            if title_ok:
+                visual_mode='news_real_bank_v1' if kind=='noticia' else 'opportunity_real_bank_v1'
+                catalog_selected=True
+                common={
+                    'id':s,'idempotency_key':item['key'],'approved':True,'source_type':kind,
+                    'image_url':ROOT+art,'caption':item['caption'],'visual_mode':visual_mode,
+                    'SEMANTIC_IMAGE_OK':True,'TITLE_READABILITY_OK':True,
+                    'semantic_reason':'catalog_priority:'+clean(bank_image.get('bank_reason') or bank_image.get('bank_topic')),
+                    'title_font_px':font_size,'title_lines':line_count,
+                    'image_source_url':clean(bank_image.get('image_source_url')),
+                    'image_page_url':clean(bank_image.get('source_page_url')),
+                    'image_credit':clean(bank_image.get('credito')),
+                    'license_note':clean(bank_image.get('licenca')),
+                    'bank_image_id':clean(bank_image.get('bank_image_id')),
+                    'bank_topic':clean(bank_image.get('bank_topic')),
+                    'bank_specific':clean(bank_image.get('bank_specific')),
+                    'bank_score':bank_image.get('bank_score'),
+                    'catalog_attempted':True,
+                    'catalog_selected':True,
+                    'catalog_reason':clean(bank_image.get('bank_reason') or 'safe_match'),
+                    'original_title':item['title'],
+                    'art_title':clean(item.get('art_title') or item['title']),
+                    'title_translated_to_pt':clean(item.get('art_title') or item['title']) != clean(item['title']),
+                }
+                pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True)
+                pathlib.Path(post).write_text(json.dumps(common,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+                pathlib.Path(batch).write_text(json.dumps({'posts':[post]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+                print('visual_mode='+visual_mode)
+                print(kind+'_catalog_image_id='+clean(bank_image.get('bank_image_id')))
+                print(kind+'_catalog_reason='+clean(bank_image.get('bank_reason')))
+                print('catalog_attempted=true')
+                print('catalog_selected=true')
+                print('SEMANTIC_IMAGE_OK=true')
+                print('TITLE_READABILITY_OK=true')
+                print('found=true')
+                print('batch_file='+batch)
+                return 0
+            catalog_reason='title_readability'
+            print(kind+'_catalog_rejected=title_readability')
+        except Exception as exc:
+            catalog_reason='render_failed:'+type(exc).__name__
+            print(kind+'_catalog_failed='+type(exc).__name__)
+        print(kind+'_catalog_fallback=illustrated_art')
+
     owned_mode=policy_visual_mode(fallback_item.get('type'),visual_policy)
     if render_owned_art is not None and owned_mode != 'legacy':
         item=fallback_item
@@ -928,7 +1105,10 @@ def main():
                 'image_source_url':'','image_page_url':'',
                 'original_title':item['title'],
                 'art_title':clean(item.get('art_title') or item['title']),
-                'title_translated_to_pt':clean(item.get('art_title') or item['title']) != clean(item['title'])
+                'title_translated_to_pt':clean(item.get('art_title') or item['title']) != clean(item['title']),
+                'catalog_attempted':catalog_attempted,
+                'catalog_selected':False,
+                'catalog_reason':catalog_reason
             }
             common.update(owned_meta)
             pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True)
@@ -985,7 +1165,7 @@ def main():
             readable,font_size,line_count=make_photo_art(clean(c['image_source_url']),art,clean(item.get('art_title') or item['title']),item['type'],clean(c.get('credito'))); source_mode='auto_commons_photo' if c.get('auto_found') else 'curated_photo'; semantic_reason=clean(c.get('semantic_reason')) or 'curated_semantic_gate'
         except Exception as exc:
             print('photo_failed='+item['key']+':'+type(exc).__name__); readable,font_size,line_count=make_original_art(art,clean(item.get('art_title') or item['title']),item['type'],item['subtitle'],item['key']); source_mode='fallback_visual'; semantic_reason='photo_failed_fallback_text_art'
-    else: readable,font_size,line_count=make_original_art(art,item['title'],item['type'],item['subtitle'],item['key'])
+    else: readable,font_size,line_count=make_original_art(art,clean(item.get('art_title') or item['title']),item['type'],item['subtitle'],item['key'])
     title_ok=bool(readable and font_size>=MIN_TITLE_FONT and line_count<=MAX_TITLE_LINES)
     if not semantic_ok or not title_ok:
         print('found=false'); print('reason=quality_gate_failed'); print('SEMANTIC_IMAGE_OK='+str(bool(semantic_ok)).lower()); print('TITLE_READABILITY_OK='+str(bool(title_ok)).lower()); return 1
