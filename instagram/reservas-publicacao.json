@@ -105,6 +105,18 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:oportunidade:opp-d66206a9e58d",
+      "post_file": "instagram/fila/automatica/instagram-oportunidade-opp-d66206a9e58d-3afbf6d77f.json",
+      "reserved_at": "2026-09-28T21:57:38.428842+00:00",
+      "last_attempt_at": "2026-09-28T21:57:38.428842+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/AAMI_Park_-_FIFAWWC_2023_%283%29.jpg/1920px-AAMI_Park_-_FIFAWWC_2023_%283%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "image_page_url": "https://commons.wikimedia.org/wiki/File:AAMI_Park_-_FIFAWWC_2023_(3).jpg",
+      "bank_image_id": "IMG0259",
+      "visual_mode": "opportunity_real_bank_v1"
     }
   ]
 }
