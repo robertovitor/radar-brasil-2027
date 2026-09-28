@@ -21,6 +21,9 @@ TITLE_COMPRESSION_RULES = (
     (r'\bCopa do Mundo Feminina FIFA 2027\b', 'Copa Feminina 2027'),
     (r'\bCopa do Mundo Feminina de 2027\b', 'Copa Feminina 2027'),
     (r'\bCopa do Mundo Feminina 2027\b', 'Copa Feminina 2027'),
+    (r'\bCopa do Mundo 2027\b', 'Copa 2027'),
+    (r'\bna Seleção principal de olho na Copa 2027\b', 'na Seleção rumo à Copa 2027'),
+    (r'\bpara planejamento e operações de força de trabalho\b', 'em planejamento e operações'),
     (r'\bDistrito Federal\b', 'DF'),
     (r'\bpara ações relacionadas à Copa Feminina 2027\b', 'para a Copa 2027'),
     (r'\bpara ações da Copa Feminina 2027\b', 'para a Copa 2027'),
@@ -47,6 +50,10 @@ def editorial_short_title(title):
         (r'\bvisando (?:a|ao)\b', 'para'),
         (r'\brumo à Copa do Mundo Feminina de 2027\b', 'rumo à Copa 2027'),
         (r'\brumo à Copa do Mundo Feminina 2027\b', 'rumo à Copa 2027'),
+        (r'\bClarinha ganha oportunidade na Seleção principal de olho na Copa(?: do Mundo)? 2027\b',
+         'Clarinha ganha oportunidade na Seleção rumo à Copa 2027'),
+        (r'\bFIFA abre vaga para planejamento e operações de força de trabalho\b',
+         'FIFA abre vaga em planejamento e operações'),
     )
     for pattern, repl in replacements:
         s = base.clean(re.sub(pattern, repl, s, flags=re.I))
@@ -106,25 +113,10 @@ def fit_title_complete(draw, title, width, start_size=88, min_size=58, max_lines
             print('title_shortened_automatically=true')
             print('art_title=' + candidate)
             return f, lines, True
-    # Último fallback: preserva a legenda completa, mas reduz somente a
-    # headline da arte por palavras até caber no gate existente. Isso evita
-    # que títulos longos bloqueiem toda a rodada sem reduzir a fonte mínima.
-    words = original.split()
-    for size in range(68, min_size - 1, -2):
-        f = base.font(size, True)
-        for keep in range(len(words) - 1, 3, -1):
-            candidate = base.clean(' '.join(words[:keep]).rstrip(' ,;:-') + '…')
-            lines = base.wrap(draw, candidate, f, width)
-            if len(lines) <= max_lines:
-                TITLE_RENDER_META[original] = {
-                    'original_title': original,
-                    'art_title': candidate,
-                    'title_shortened': True,
-                }
-                print('title_shortened_automatically=true')
-                print('title_fit_fallback=word_trim')
-                print('art_title=' + candidate)
-                return f, lines, True
+    # Nunca corta título com reticências. Se nenhuma versão editorial
+    # completa couber, falha fechado para a rodada tentar outro candidato.
+    print('title_fit_failed_without_ellipsis=true')
+    print('title_fit_policy=complete_headline_only')
 
     # Caso extremo (por exemplo, palavra isolada excepcionalmente longa):
     # mantém o comportamento fail-closed do gate em vez de aprovar arte ilegível.
