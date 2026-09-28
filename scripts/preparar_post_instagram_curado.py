@@ -192,6 +192,13 @@ ENGLISH_TITLE_MARKERS=(
     ' customer ',' care ',' ticketing',' general public',' operations',' programme',' program',
     ' world cup',' women ',' women\'s ',' stadium',' host city',' jobs',' job ',' careers',
 )
+ENGLISH_ROLE_MARKERS=(
+    ' manager',' coordinator',' specialist',' director',' analyst',' officer',' lead',
+    ' product ',' digital ',' workforce ',' planning ',' operations ',' hospitality ',
+    ' broadcast ',' venue ',' infrastructure ',' travel ',' ticketing ',' customer ',
+    ' partnerships ',' marketing ',' commercial ',' communications ',' technology ',
+    ' services ',' senior ',' junior ',
+)
 PORTUGUESE_TEXT_MARKERS=(
     ' para ',' com ',' da ',' do ',' das ',' dos ',' no ',' na ',' em ',' uma ',' um ',
     ' oportunidade ',' trabalho ',' atendimento ',' público ',' ingressos ',' copa ',' futebol ',
@@ -200,8 +207,12 @@ PORTUGUESE_TEXT_MARKERS=(
 def looks_english_title(value):
     t=' '+clean(value).casefold()+' '
     hits=sum(1 for marker in ENGLISH_TITLE_MARKERS if marker in t)
+    role_hits=sum(1 for marker in ENGLISH_ROLE_MARKERS if marker in t)
     pt=sum(1 for marker in PORTUGUESE_TEXT_MARKERS if marker in t)
-    return hits>=2 and hits>pt
+    # Títulos curtos de vagas ("Digital Product Manager", por exemplo) podem
+    # ter só um marcador gramatical. Termos inequívocos de cargo liberam a
+    # tradução quando não há nenhum sinal de português.
+    return (hits>=2 and hits>pt) or (role_hits>=1 and pt==0)
 
 def looks_portuguese_text(value):
     t=' '+clean(value).casefold()+' '
@@ -291,8 +302,9 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
             subtitle=(clean(x.get('Veiculo')) or 'Radar Brasil 2027')+' • '+d.strftime('%d/%m/%Y')
             summary=clean(x.get('Resumo'))
             art_title=art_title_pt('noticia',title,summary=summary)
+            instagram_title=art_title if art_title != title else title
             search_context=' '.join(filter(None,[title,clean(x.get('Tema')),clean(x.get('CidadeUF')),clean(x.get('Veiculo'))]))
-            out.append(dict(key=key,title=title,art_title=art_title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,visual_places=clean(x.get('CidadeUF')),display_date=d.strftime('%d/%m/%Y'),display_place=clean(x.get('CidadeUF')),caption=f"📰 {title}\n\n{summary}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
+            out.append(dict(key=key,title=title,art_title=art_title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,visual_places=clean(x.get('CidadeUF')),display_date=d.strftime('%d/%m/%Y'),display_place=clean(x.get('CidadeUF')),caption=f"📰 {instagram_title}\n\n{summary}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     for x in opportunities:
         title=clean(x.get('Titulo'))
         status=norm(x.get('Status'))
@@ -315,12 +327,13 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
         subtitle=' • '.join(v for v in (category,organization) if v)
         summary=clean(x.get('Resumo'))
         art_title=art_title_pt('oportunidade',title,summary=summary,organization=organization,category=category)
+        instagram_title=art_title if art_title != title else title
         search_context=' '.join(filter(None,[title,category,organization,modality,reach]))
         out.append(dict(
             key=key,title=title,art_title=art_title,date=discovered,type='oportunidade',subtitle=subtitle,
             search_context=search_context,visual_places=reach,display_date=deadline_text,
             display_place=where,category=category,organization=organization,
-            caption=f"🎯 {title}\n\nTipo: {category}\nOrganização: {organization}\n{('Modalidade: '+modality) if modality else ''}\n{deadline_text}\n\n{summary}\n\nFonte: {clean(x.get('Fonte')) or organization}\n\n#RadarBrasil2027 #Oportunidades #CopaFeminina2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"
+            caption=f"🎯 {instagram_title}\n\nTipo: {category}\nOrganização: {organization}\n{('Modalidade: '+modality) if modality else ''}\n{deadline_text}\n\n{summary}\n\nFonte: {clean(x.get('Fonte')) or organization}\n\n#RadarBrasil2027 #Oportunidades #CopaFeminina2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"
         ))
     pending_order={clean(key):idx for idx,key in enumerate(pending)}
     def rank(i):
