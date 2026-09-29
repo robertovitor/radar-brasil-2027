@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260929-11",
-  "started_at": "2026-09-29T11:40:35-03:00",
-  "completed_at": "2026-09-29T11:42:08-03:00",
+  "cycle_id": "20260929-12",
+  "started_at": "2026-09-29T12:41:59-03:00",
+  "completed_at": "2026-09-29T12:43:37-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -22,9 +22,9 @@
   "candidatos_publicos": 10,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 7,
-  "duplicados": 3,
+  "rejeitados": 3,
+  "duplicados": 7,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Todos os 57 registros tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. A pesquisa pública incremental avaliou dez candidatos: três já estavam incorporados e sete foram descartados por conteúdo masculino, fora de escopo ou ausência de novidade editorial; nenhuma pauta inédita foi aprovada. Gre-Nal e “Maria, Maria”, aprovados mas ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Todos os 57 registros tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. A pesquisa pública incremental avaliou dez candidatos: sete já estavam incorporados ou tratavam do mesmo fato editorial e três foram descartados por fora de escopo ou baixa aderência; nenhuma pauta inédita foi aprovada. Gre-Nal e “Maria, Maria”, aprovados mas ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
