@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260929-15",
-  "started_at": "2026-09-29T15:46:21-03:00",
-  "completed_at": "2026-09-29T15:48:11-03:00",
+  "cycle_id": "20260929-16",
+  "started_at": "2026-09-29T16:49:13-03:00",
+  "completed_at": "2026-09-29T16:50:34-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -20,11 +20,11 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 10,
-  "aprovados_novos": 1,
+  "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 0,
+  "rejeitados": 1,
   "duplicados": 9,
-  "inbox_itens_adicionados": 3,
+  "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros reutilizados já possuíam decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas no main. A pesquisa pública recente avaliou dez candidatos: nove já estavam representados em dados.json ou noticias.json e uma pauta inédita foi aprovada — a promoção internacional do Brasil e da Copa Feminina 2027 na FIT Latin America, em Buenos Aires, de 26 a 29/09/2026. Essa pauta, Gre-Nal/Seleção e “Maria, Maria”, aprovados mas ainda ausentes de noticias.json, foram adicionados ao inbox. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "observacoes_operacionais": "Rodada concluída com exatamente duas leituras Airtable integrais, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros reutilizados já tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. A pesquisa pública incremental avaliou dez candidatos: nove já estavam incorporados e um edital voltado a projetos para meninas foi rejeitado editorialmente por se enquadrar no recorte excluído de categorias de base. Nenhuma pauta inédita foi aprovada. Gre-Nal e “Maria, Maria”, aprovados e ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
