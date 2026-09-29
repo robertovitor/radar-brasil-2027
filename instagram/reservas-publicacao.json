@@ -105,18 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
-    },
-    {
-      "key": "instagram:noticia:https://veja.abril.com.br/coluna/linha-de-frente/marta-e-homenageada-em-exposicao-do-museu-da-fifa-sobre-camisas-10/",
-      "post_file": "instagram/fila/automatica/nte-marta-e-homenageada-em-exposicao-do-museu-da-fifa-sobre-camisas-10-15b73a1864.json",
-      "reserved_at": "2026-09-29T15:46:56.006903+00:00",
-      "last_attempt_at": "2026-09-29T15:46:56.006903+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/7/70/Jogadoras_da_Sele%C3%A7%C3%A3o_Brasileira_posam_para_foto%2C_Acervo_do_Museu_do_Futebol.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "image_page_url": "https://commons.wikimedia.org/wiki/File:Jogadoras_da_Sele%C3%A7%C3%A3o_Brasileira_posam_para_foto,_Acervo_do_Museu_do_Futebol.jpg",
-      "bank_image_id": "IMG0094",
-      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
