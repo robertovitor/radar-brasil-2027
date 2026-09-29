@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260929-18",
-  "started_at": "2026-09-29T18:40:49-03:00",
-  "completed_at": "2026-09-29T18:42:24-03:00",
+  "cycle_id": "20260929-19",
+  "started_at": "2026-09-29T19:43:43-03:00",
+  "completed_at": "2026-09-29T19:45:20-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -20,11 +20,11 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 10,
-  "aprovados_novos": 2,
+  "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 1,
-  "duplicados": 8,
-  "inbox_itens_adicionados": 2,
-  "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros reutilizados não continham Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO; nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas no main. A regra de decisões terminais foi aplicada: Gre-Nal não foi reenfileirado por DUPLICATA_SEMANTICA e “Maria, Maria” não foi reenfileirada por CONTEUDO_ANTIGO/FORA_DA_JANELA; ambos permaneceram ausentes do inbox. Dez candidatos públicos foram avaliados; oito eram duplicados e duas pautas inéditas da Seleção principal foram aprovadas: entrevista de Gio Garbelini sobre o ciclo de 2027 e análise da evolução das goleiras com destaque para Lorena. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "rejeitados": 4,
+  "duplicados": 6,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas no main. Dez candidatos públicos recentes foram avaliados: seis já estavam incorporados ou eram duplicatas e quatro foram descartados por antiguidade, escopo ou decisão terminal; nenhuma pauta nova atingiu os critérios editoriais. A regra de decisões terminais foi reaplicada: Gre-Nal permaneceu excluído por DUPLICATA_SEMANTICA e “Maria, Maria” permaneceu excluída por CONTEUDO_ANTIGO/FORA_DA_JANELA. O inbox permaneceu inalterado e não exigiu commit. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
