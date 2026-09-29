@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260929-00",
-  "started_at": "2026-09-29T00:43:00-03:00",
-  "completed_at": "2026-09-29T00:44:15-03:00",
+  "cycle_id": "20260929-01",
+  "started_at": "2026-09-29T01:47:48-03:00",
+  "completed_at": "2026-09-29T01:48:55-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 7,
+  "candidatos_publicos": 8,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 3,
-  "duplicados": 4,
+  "rejeitados": 2,
+  "duplicados": 6,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Todos os 57 registros tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. A pesquisa pública incremental avaliou sete candidatos: quatro eram duplicatas de amistosos, voluntariado, workshop de cidades-sede ou patrocínio já incorporados; três foram descartados por futebol masculino, categoria de base ou antiguidade sem novidade material. Nenhuma pauta pública inédita foi aprovada. Gre-Nal e “Maria, Maria”, aprovados no Airtable e ainda ausentes de noticias.json, foram reenfileirados em editorial/inbox.json. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Todos os 57 registros tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. A pesquisa pública incremental avaliou oito candidatos: seis eram duplicatas de voluntariado, lei, convocação, amistosos, calendário ou ingressos já representados, e dois foram descartados por futebol masculino ou categoria de base. Nenhuma pauta pública inédita foi aprovada. Gre-Nal e “Maria, Maria”, aprovados no Airtable e ainda ausentes de noticias.json, foram reenfileirados em editorial/inbox.json. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
