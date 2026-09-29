@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260928-20",
-  "started_at": "2026-09-28T20:49:46-03:00",
-  "completed_at": "2026-09-28T20:51:22-03:00",
+  "cycle_id": "20260928-21",
+  "started_at": "2026-09-28T21:45:28-03:00",
+  "completed_at": "2026-09-28T21:47:07-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 14,
+  "candidatos_publicos": 12,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 6,
+  "rejeitados": 4,
   "duplicados": 8,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Todos os 57 registros tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. noticias.json já continha 184 itens, incluindo três pautas incorporadas nesta hora sobre voluntariado e a nova lei do futebol feminino. A pesquisa pública incremental avaliou quatorze candidatos: oito eram duplicatas dessas pautas, da convocação ou dos amistosos, e seis foram descartados por futebol masculino, viés político, antiguidade ou falta de vínculo editorial suficiente; nenhuma pauta pública inédita foi aprovada nesta execução. Gre-Nal e “Maria, Maria”, aprovados no Airtable e ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Todos os 57 registros tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. A pesquisa pública incremental avaliou doze candidatos: oito repetiam convocação, amistosos, ingressos ou pautas já incorporadas e quatro foram descartados por futebol masculino, antiguidade ou falta de vínculo editorial suficiente; nenhuma pauta pública inédita foi aprovada. Gre-Nal e “Maria, Maria”, aprovados no Airtable e ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
