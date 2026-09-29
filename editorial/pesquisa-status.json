@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260929-13",
-  "started_at": "2026-09-29T13:40:07-03:00",
-  "completed_at": "2026-09-29T13:41:19-03:00",
+  "cycle_id": "20260929-15",
+  "started_at": "2026-09-29T15:02:34-03:00",
+  "completed_at": "2026-09-29T15:05:56-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -22,9 +22,9 @@
   "candidatos_publicos": 10,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 7,
-  "duplicados": 3,
+  "rejeitados": 5,
+  "duplicados": 5,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Todos os 57 registros tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. A pesquisa pública incremental avaliou dez candidatos: três já estavam incorporados e sete foram descartados por antiguidade, fora de escopo ou ausência de novidade editorial; nenhuma pauta inédita foi aprovada. Gre-Nal e “Maria, Maria”, aprovados mas ainda ausentes de noticias.json, foram reenfileirados. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Rodada concluída com exatamente duas leituras Airtable integrais, pageSize 1000, sem filtros, ordenação, schema ou paginação adicional. Os 57 registros reutilizados já tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, portanto nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas no main. A pesquisa pública incremental avaliou dez candidatos: cinco correspondiam a pautas já incorporadas (lei do futebol feminino, voluntariado e agenda/convocação da Seleção principal) e cinco foram descartados por tratar de futebol masculino, bets ou conteúdo sem novidade para o recorte. Nenhuma pauta pública nova foi aprovada. Os itens Gre-Nal/Seleção e “Maria, Maria”, já aprovados e ainda ausentes de noticias.json, foram reenfileirados no inbox. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
