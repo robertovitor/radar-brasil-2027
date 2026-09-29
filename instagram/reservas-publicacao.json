@@ -105,6 +105,17 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://ge.globo.com/futebol/times/sao-paulo/noticia/2026/09/28/sao-paulo-abre-venda-geral-de-ingressos-para-final-do-brasileirao-feminino-veja-valores.ghtml",
+      "post_file": "instagram/fila/automatica/ral-de-ingressos-para-final-do-brasileirao-feminino-veja-valores-ghtml-93c9d69b2b.json",
+      "reserved_at": "2026-09-29T07:33:04.833131+00:00",
+      "last_attempt_at": "2026-09-29T07:33:04.833131+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Esta%C3%A7%C3%A3o_Rufino_de_Almeida_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "image_page_url": "https://commons.wikimedia.org/wiki/File:Esta%C3%A7%C3%A3o_Rufino_de_Almeida_01.jpg",
+      "visual_mode": "auto_commons_photo"
     }
   ]
 }
