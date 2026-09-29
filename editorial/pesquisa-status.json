@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260929-04",
-  "started_at": "2026-09-29T04:40:23-03:00",
-  "completed_at": "2026-09-29T04:42:55-03:00",
+  "cycle_id": "20260929-05",
+  "started_at": "2026-09-29T05:46:49-03:00",
+  "completed_at": "2026-09-29T05:48:43-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 9,
+  "candidatos_publicos": 8,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 1,
-  "duplicados": 8,
+  "rejeitados": 4,
+  "duplicados": 4,
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Todos os 57 registros tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. A pesquisa pública incremental avaliou nove candidatos: oito eram duplicatas de voluntariado, cidades-sede, infraestrutura, calendário ou preparação já incorporadas, e um foi descartado por antiguidade sem novidade editorial. Nenhuma pauta pública nova foi aprovada. Os dois itens aprovados ainda ausentes de noticias.json — Gre-Nal e “Maria, Maria” — foram reenfileirados em editorial/inbox.json. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Todos os 57 registros tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. A pesquisa pública incremental avaliou oito candidatos: quatro eram duplicatas comprovadas de Lei do Futebol Feminino, convocação/amistosos, voluntariado ou ingressos já incorporados; quatro foram descartados por futebol masculino ou ausência de vínculo editorial com o Radar. Nenhuma pauta pública nova foi aprovada. Os dois itens aprovados ainda ausentes de noticias.json — Gre-Nal e “Maria, Maria” — foram reenfileirados em editorial/inbox.json. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
