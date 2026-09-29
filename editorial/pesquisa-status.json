@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260928-22",
-  "started_at": "2026-09-28T22:42:35-03:00",
-  "completed_at": "2026-09-28T22:44:13-03:00",
+  "cycle_id": "20260928-23",
+  "started_at": "2026-09-28T23:46:15-03:00",
+  "completed_at": "2026-09-28T23:48:52-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 13,
+  "candidatos_publicos": 6,
   "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 4,
-  "duplicados": 8,
+  "rejeitados": 1,
+  "duplicados": 4,
   "inbox_itens_adicionados": 3,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Todos os 57 registros tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. A pesquisa pública incremental avaliou treze candidatos: oito eram duplicatas de convocação, amistosos, voluntariado ou pautas já incorporadas, quatro foram descartados por futebol masculino, antiguidade ou falta de vínculo editorial suficiente e uma pauta inédita foi aprovada: venda geral de ingressos para a final do Brasileirão Feminino no Morumbis. A pauta nova, Gre-Nal e “Maria, Maria” foram adicionadas a editorial/inbox.json. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Todos os 57 registros tinham decisão editorial; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, e nenhuma escrita no Airtable foi necessária. As quatro leituras iniciais do GitHub foram concluídas no main. A pesquisa pública incremental avaliou seis candidatos: quatro eram duplicatas de convocação, lei, venda de ingressos ou WIFS já incorporadas, um resultado de categoria de base foi excluído e uma pauta inédita foi aprovada sobre Marta na exposição virtual do Museu da Fifa. A pauta nova, Gre-Nal e “Maria, Maria” foram adicionadas a editorial/inbox.json. Nenhum merge, e-mail, Instagram ou alteração de schedule foi disparado."
 }
