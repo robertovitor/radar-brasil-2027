@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260929-20",
-  "started_at": "2026-09-29T20:43:59-03:00",
-  "completed_at": "2026-09-29T20:46:08-03:00",
+  "cycle_id": "20260929-21",
+  "started_at": "2026-09-29T21:44:02-03:00",
+  "completed_at": "2026-09-29T21:45:19-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 10,
-  "aprovados_novos": 1,
+  "candidatos_publicos": 8,
+  "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 4,
-  "duplicados": 5,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas no main. Dez candidatos públicos foram avaliados; cinco já estavam incorporados ou eram duplicatas semânticas, quatro foram descartados por antiguidade, escopo ou decisão terminal e uma pauta inédita foi aprovada: a inauguração do novo centro de treinamento do futebol feminino do Grêmio em Gravataí. A notícia sobre a entrada em vigor da Lei 15.522/2026 foi considerada duplicata semântica da pauta sobre as diretrizes para o desenvolvimento do futebol feminino já presente em noticias.json. A regra de decisões terminais foi reaplicada: Gre-Nal permaneceu excluído por DUPLICATA_SEMANTICA e “Maria, Maria” permaneceu excluída por CONTEUDO_ANTIGO/FORA_DA_JANELA. O inbox recebeu um item em commit próprio. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "rejeitados": 2,
+  "duplicados": 6,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas no main. Oito candidatos públicos foram avaliados: seis já estavam incorporados ou eram duplicatas semânticas e dois foram descartados por antiguidade ou fora de escopo; nenhuma pauta inédita atingiu os critérios editoriais. A inauguração do CT do Grêmio, aprovada na rodada anterior, já estava incorporada em noticias.json. A regra de decisões terminais foi reaplicada: Gre-Nal permaneceu excluído por DUPLICATA_SEMANTICA e “Maria, Maria” permaneceu excluída por CONTEUDO_ANTIGO/FORA_DA_JANELA. O inbox permaneceu inalterado e não exigiu commit. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
