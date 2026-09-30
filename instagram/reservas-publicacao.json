@@ -105,6 +105,15 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://ge.globo.com/rs/futebol/times/gremio/noticia/2026/09/28/gremio-inaugura-ct-para-o-futebol-feminino-em-parceria-com-marcelo-grohe-e-galatto.ghtml",
+      "post_file": "instagram/fila/automatica/-para-o-futebol-feminino-em-parceria-com-marcelo-grohe-e-galatto-ghtml-0afa37c9e2.json",
+      "reserved_at": "2026-09-30T02:27:19.870848+00:00",
+      "last_attempt_at": "2026-09-30T02:27:19.870848+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "visual_mode": "fallback_visual"
     }
   ]
 }
