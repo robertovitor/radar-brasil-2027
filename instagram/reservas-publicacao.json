@@ -105,6 +105,18 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://www.365scores.com/pt-br/news/magazine/entrevista-gio-garbelini-brasil-copa-2027/",
+      "post_file": "instagram/fila/automatica/ores-com-pt-br-news-magazine-entrevista-gio-garbelini-brasil-copa-2027-bf8870dd28.json",
+      "reserved_at": "2026-09-30T00:24:41.340541+00:00",
+      "last_attempt_at": "2026-09-30T00:24:41.340541+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Equipe_da_Sele%C3%A7%C3%A3o_Brasileira_Feminina_na_Vila_Ol%C3%ADmpica%2C_Acervo_do_Museu_do_Futebol.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "image_page_url": "https://commons.wikimedia.org/wiki/File:Equipe_da_Sele%C3%A7%C3%A3o_Brasileira_Feminina_na_Vila_Ol%C3%ADmpica,_Acervo_do_Museu_do_Futebol.jpg",
+      "bank_image_id": "IMG0093",
+      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
