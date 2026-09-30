@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260930-05",
-  "started_at": "2026-09-30T05:45:14-03:00",
-  "completed_at": "2026-09-30T05:50:02-03:00",
+  "cycle_id": "20260930-06",
+  "started_at": "2026-09-30T06:45:52-03:00",
+  "completed_at": "2026-09-30T06:48:00-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 33,
-  "aprovados_novos": 1,
+  "candidatos_publicos": 29,
+  "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 23,
-  "duplicados": 9,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Trinta e três resultados públicos foram avaliados em pesquisa ampla e validação direcionada: uma atualização material foi aprovada sobre a sanção da Lei nº 15.522 em 28/09/2026, que tornou vigente a prioridade do futebol feminino e a exigência de elaboração, avaliação e consolidação do plano de legado social, esportivo e financeiro da Copa 2027; nove resultados eram duplicatas ou fatos já incorporados e vinte e três foram rejeitados por irrelevância, fonte insuficiente, antiguidade ou conteúdo fora do escopo. O inbox vazio foi preservado e recebeu apenas essa pauta em commit próprio. A regra de decisões terminais foi reaplicada: Gre-Nal não apareceu nas leituras nem foi enfileirado; “Maria, Maria” apareceu na leitura de Sugestões de Notícias já como Recusada com DECISAO_FINAL_NAO_REENFILEIRAR e permaneceu excluída. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "rejeitados": 16,
+  "duplicados": 13,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Vinte e nove resultados públicos foram avaliados em pesquisa recente e direcionada; treze eram duplicatas ou fatos já incorporados, inclusive voluntariado, ingressos, calendário, sedes e a Lei nº 15.522, e dezesseis foram rejeitados por irrelevância, antiguidade, conteúdo de base, fonte insuficiente ou escopo inadequado. Nenhuma pauta nova atingiu os critérios de publicação e o inbox permaneceu inalterado. A regra de decisões terminais foi reaplicada: Gre-Nal não apareceu nas leituras e permaneceu excluído por DUPLICATA_SEMANTICA; “Maria, Maria” apareceu na leitura de Sugestões de Notícias já como Recusada com DECISAO_FINAL_NAO_REENFILEIRAR e permaneceu excluída por CONTEUDO_ANTIGO/FORA_DA_JANELA. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
