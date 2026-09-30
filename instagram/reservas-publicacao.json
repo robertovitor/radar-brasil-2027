@@ -105,18 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
-    },
-    {
-      "key": "instagram:oportunidade:opp-0aff1dd20cf9",
-      "post_file": "instagram/fila/automatica/instagram-oportunidade-opp-0aff1dd20cf9-f1fee165cf.json",
-      "reserved_at": "2026-09-30T16:09:17.434192+00:00",
-      "last_attempt_at": "2026-09-30T16:09:17.434192+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Tazuni.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "image_page_url": "https://commons.wikimedia.org/wiki/File:Tazuni.jpg",
-      "bank_image_id": "IMG0201",
-      "visual_mode": "opportunity_real_bank_v1"
     }
   ]
 }
