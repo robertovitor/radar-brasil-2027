@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20260930-04",
-  "started_at": "2026-09-30T04:41:37-03:00",
-  "completed_at": "2026-09-30T04:44:57-03:00",
+  "cycle_id": "20260930-05",
+  "started_at": "2026-09-30T05:45:14-03:00",
+  "completed_at": "2026-09-30T05:50:02-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 55,
+  "candidatos_publicos": 33,
   "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 46,
+  "rejeitados": 23,
   "duplicados": 9,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Cinquenta e cinco resultados públicos foram avaliados em pesquisas amplas e validação direcionada: uma pauta nova foi aprovada sobre o contrato de R$ 230.525.371,93 entre MCom e Telebras para conectividade óptica e internet da Copa Feminina 2027; nove resultados relevantes eram duplicatas ou fatos já incorporados e quarenta e cinco foram rejeitados por irrelevância, falta de fonte direta, antiguidade ou conteúdo fora do escopo. O inbox já continha uma notícia sobre voluntariado; seu conteúdo foi preservado e a pauta da Telebras foi adicionada em commit próprio. A regra de decisões terminais foi reaplicada: Gre-Nal não apareceu nas leituras e permaneceu excluído por DUPLICATA_SEMANTICA; “Maria, Maria” apareceu na leitura de Sugestões de Notícias já como Recusada com DECISAO_FINAL_NAO_REENFILEIRAR, foi contabilizada entre as rejeições e permaneceu excluída por CONTEUDO_ANTIGO/FORA_DA_JANELA. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Trinta e três resultados públicos foram avaliados em pesquisa ampla e validação direcionada: uma atualização material foi aprovada sobre a sanção da Lei nº 15.522 em 28/09/2026, que tornou vigente a prioridade do futebol feminino e a exigência de elaboração, avaliação e consolidação do plano de legado social, esportivo e financeiro da Copa 2027; nove resultados eram duplicatas ou fatos já incorporados e vinte e três foram rejeitados por irrelevância, fonte insuficiente, antiguidade ou conteúdo fora do escopo. O inbox vazio foi preservado e recebeu apenas essa pauta em commit próprio. A regra de decisões terminais foi reaplicada: Gre-Nal não apareceu nas leituras nem foi enfileirado; “Maria, Maria” apareceu na leitura de Sugestões de Notícias já como Recusada com DECISAO_FINAL_NAO_REENFILEIRAR e permaneceu excluída. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
