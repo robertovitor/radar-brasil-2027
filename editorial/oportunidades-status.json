@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-09-29T18:06:16-03:00",
-  "fim": "2026-09-29T18:08:23-03:00",
+  "inicio": "2026-09-29T21:49:05-03:00",
+  "fim": "2026-09-29T21:51:28-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -146,7 +146,8 @@
     },
     {
       "hub": "https://prefeitura.rio/esporte/",
-      "resultados": 4
+      "resultados": 0,
+      "erro": "URLError:<urlopen error _ssl.c:993: The handshake operation timed out>"
     },
     {
       "hub": "https://womanifs.com/",
@@ -208,9 +209,10 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 49,
   "adicionadas": 0,
-  "atualizadas": 4,
+  "atualizadas": 2,
   "total_arquivo": 52,
   "erros": [
+    "hub:https://prefeitura.rio/esporte/:URLError:<urlopen error _ssl.c:993: The handshake operation timed out>",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
