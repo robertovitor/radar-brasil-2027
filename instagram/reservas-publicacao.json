@@ -105,6 +105,18 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://news.google.com/rss/articles/cbmiiajbvv95cuxonk0ywmn5ouvlczlwmtbzahfwvenqsej0dmhhz2tcahjjynjry0iwtdrmcfmxdflday1scthqs1nvt1gzudlms1pplwxyuudluf9frgtum2nqmfettuk3uxnddjlxzgnpenj2bnnrmezqexo1ous3ruzya21mlvitunltajzazzrpntbqus1ptu1dqu9ft19wnzlhbfbjrml0mtg2behld01mqvzlv09cqmzpwdczrmn5n01zuvuxaehdqxvuwtresmxaae1pyxdkbwfwq1uydem5uzz1vzfsugpsaev3ltncumnmmwlssvk1ddvbwlnsahutumlddvbpqwtdm0ftwhu?oc=5",
+      "post_file": "instagram/fila/automatica/m5uzz1vzfsugpsaev3ltncumnmmwlssvk1ddvbwlnsahutumlddvbpqwtdm0ftwhu-oc-5-ca4ec92887.json",
+      "reserved_at": "2026-10-01T01:50:30.780234+00:00",
+      "last_attempt_at": "2026-10-01T01:50:30.780234+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/32/US_players_post-match_USA_vs_Japan_2015_WWC_Final_2015-07-05_%2818892446053%29.jpg/1920px-US_players_post-match_USA_vs_Japan_2015_WWC_Final_2015-07-05_%2818892446053%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "image_page_url": "https://commons.wikimedia.org/wiki/File:US_players_post-match_USA_vs_Japan_2015_WWC_Final_2015-07-05_(18892446053).jpg",
+      "bank_image_id": "IMG0424",
+      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
