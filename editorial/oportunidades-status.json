@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-09-30T20:15:02-03:00",
-  "fim": "2026-09-30T20:16:53-03:00",
+  "inicio": "2026-09-30T23:30:28-03:00",
+  "fim": "2026-09-30T23:32:23-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -146,7 +146,8 @@
     },
     {
       "hub": "https://prefeitura.rio/esporte/",
-      "resultados": 4
+      "resultados": 0,
+      "erro": "TimeoutError:The read operation timed out"
     },
     {
       "hub": "https://womanifs.com/",
@@ -206,15 +207,17 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 49,
+  "oportunidades_validas_na_execucao": 48,
   "adicionadas": 0,
   "atualizadas": 2,
   "total_arquivo": 52,
   "erros": [
+    "hub:https://prefeitura.rio/esporte/:TimeoutError:The read operation timed out",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/30-09-2026/27-02-2027:HTTPError:HTTP Error 403: Forbidden",
+    "page:https://prefeitura.rio/cidade/a-um-ano-da-copa-futebol-feminino-ja-e-realidade-em-projetos-da-secretaria-municipal-de-esportes:TimeoutError:The read operation timed out",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {
