@@ -105,18 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
-    },
-    {
-      "key": "instagram:oportunidade:opp-22d98c0f8115",
-      "post_file": "instagram/fila/automatica/instagram-oportunidade-opp-22d98c0f8115-1c594c540c.json",
-      "reserved_at": "2026-10-01T23:09:52.371448+00:00",
-      "last_attempt_at": "2026-10-01T23:09:52.371448+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/QueensWharfFIFA2023_02.jpg/1920px-QueensWharfFIFA2023_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "image_page_url": "https://commons.wikimedia.org/wiki/File:QueensWharfFIFA2023_02.jpg",
-      "bank_image_id": "IMG0233",
-      "visual_mode": "opportunity_real_bank_v1"
     }
   ]
 }
