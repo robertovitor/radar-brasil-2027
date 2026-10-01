@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-01T06:28:40-03:00",
-  "fim": "2026-10-01T06:30:44-03:00",
+  "inicio": "2026-10-01T13:45:07-03:00",
+  "fim": "2026-10-01T13:47:17-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -112,7 +112,7 @@
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 31
+      "resultados": 32
     }
   ],
   "hubs": [
@@ -206,10 +206,10 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 49,
-  "adicionadas": 0,
-  "atualizadas": 47,
-  "total_arquivo": 52,
+  "oportunidades_validas_na_execucao": 50,
+  "adicionadas": 1,
+  "atualizadas": 2,
+  "total_arquivo": 53,
   "erros": [
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
