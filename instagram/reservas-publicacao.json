@@ -105,18 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
-    },
-    {
-      "key": "instagram:noticia:https://www.terra.com.br/esportes/futebol/futebol-feminino/futebol-feminino-pode-perder-milhoes-com-fim-das-bets,747bdd72e851a246c066f226267496145wgry9cd.html",
-      "post_file": "instagram/fila/automatica/milhoes-com-fim-das-bets-747bdd72e851a246c066f226267496145wgry9cd-html-902f3bc473.json",
-      "reserved_at": "2026-10-02T18:34:17.775738+00:00",
-      "last_attempt_at": "2026-10-02T18:34:17.775738+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Futebol_feminino_ol%C3%ADmpico-_Brasil_e_Su%C3%A9cia_no_Maracan%C3%A3_%2828746916140%29.jpg/1920px-Futebol_feminino_ol%C3%ADmpico-_Brasil_e_Su%C3%A9cia_no_Maracan%C3%A3_%2828746916140%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "image_page_url": "https://commons.wikimedia.org/wiki/File:Futebol_feminino_ol%C3%ADmpico-_Brasil_e_Su%C3%A9cia_no_Maracan%C3%A3_(28746916140).jpg",
-      "bank_image_id": "IMG0158",
-      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
