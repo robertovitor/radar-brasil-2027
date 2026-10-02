@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261002-18",
-  "started_at": "2026-10-02T18:40:56-03:00",
-  "completed_at": "2026-10-02T18:42:35-03:00",
+  "cycle_id": "20261002-19",
+  "started_at": "2026-10-02T19:43:54-03:00",
+  "completed_at": "2026-10-02T19:46:43-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 23,
-  "aprovados_novos": 0,
+  "candidatos_publicos": 27,
+  "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 13,
-  "duplicados": 12,
-  "inbox_itens_adicionados": 0,
+  "rejeitados": 11,
+  "duplicados": 15,
+  "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Vinte e três resultados públicos foram avaliados; dez eram duplicatas ou fatos já incorporados e treze foram rejeitados por antiguidade, irrelevância, categoria de base, fonte insuficiente ou escopo inadequado. Nenhuma pauta pública nova atingiu os critérios de publicação. O inbox continha indevidamente o Gre-Nal terminal e uma repetição da sanção da Lei nº 15.522 já incorporada em noticias.json; ambos foram removidos em commit próprio, totalizando doze duplicados/terminais tratados na rodada. A regra de decisões terminais foi reaplicada: Gre-Nal foi removido por DUPLICATA_SEMANTICA e “Maria, Maria” permaneceu ausente por CONTEUDO_ANTIGO/FORA_DA_JANELA. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Vinte e sete resultados públicos foram avaliados: quinze eram duplicatas ou fatos já incorporados, onze foram rejeitados por antiguidade, irrelevância, categoria de base, fonte insuficiente ou escopo inadequado, e uma pauta nova foi aprovada. Foi adicionado ao inbox o registro sobre a visita técnica de FIFA e CBF ao CEFAN e a confirmação do Fluminense de que o complexo será um dos centros de treinamento oficiais da Copa do Mundo Feminina FIFA 2027. A regra de decisões terminais foi reaplicada antes da escrita: Gre-Nal permaneceu ausente por DUPLICATA_SEMANTICA e “Maria, Maria” permaneceu ausente por CONTEUDO_ANTIGO/FORA_DA_JANELA. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
