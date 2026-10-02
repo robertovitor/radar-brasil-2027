@@ -346,7 +346,10 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
         pending_tie=0 if pending_idx is not None else 1
         recent_pending=-(pending_idx if pending_idx is not None else -1)
         type_tie={'evento':0,'noticia':1,'oportunidade':2}.get(i['type'],3)
-        return (today_event_tie,-i['date'].toordinal(),pending_tie,recent_pending,type_tie,i['key'])
+        # Regra de entrega: depois de evento que acontece hoje, toda pauta nova
+        # já publicada no site e marcada em pending_new vem antes do acervo comum.
+        # Isso transforma a presença no site em obrigação durável de Instagram.
+        return (today_event_tie,pending_tie,recent_pending,-i['date'].toordinal(),type_tie,i['key'])
     return sorted(out,key=rank)
 
 def http_json(url,timeout=20):
