@@ -105,6 +105,18 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:oportunidade:opp-22d98c0f8115",
+      "post_file": "instagram/fila/automatica/instagram-oportunidade-opp-22d98c0f8115-1c594c540c.json",
+      "reserved_at": "2026-10-02T09:41:36.057856+00:00",
+      "last_attempt_at": "2026-10-02T09:41:36.057856+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/7/7e/2023-07-07_Fussball%2C_Frauen%2C_L%C3%A4nderspiel%2C_Deutschland_-_Sambia_1DX_6938_by_Stepro_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "image_page_url": "https://commons.wikimedia.org/wiki/File:2023-07-07_Fussball,_Frauen,_L%C3%A4nderspiel,_Deutschland_-_Sambia_1DX_6938_by_Stepro_(cropped).jpg",
+      "bank_image_id": "IMG0296",
+      "visual_mode": "opportunity_real_bank_v1"
     }
   ]
 }
