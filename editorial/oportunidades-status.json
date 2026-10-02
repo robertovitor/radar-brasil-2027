@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-02T11:12:13-03:00",
-  "fim": "2026-10-02T11:14:17-03:00",
+  "inicio": "2026-10-02T16:35:06-03:00",
+  "fim": "2026-10-02T16:37:00-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -112,7 +112,7 @@
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 33
+      "resultados": 32
     }
   ],
   "hubs": [
@@ -206,7 +206,7 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 53,
+  "oportunidades_validas_na_execucao": 52,
   "adicionadas": 0,
   "atualizadas": 2,
   "total_arquivo": 56,
