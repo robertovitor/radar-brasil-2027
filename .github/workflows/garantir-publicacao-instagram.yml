@@ -1,0 +1,64 @@
+name: Garantir publicação no Instagram
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - dados.json
+      - noticias.json
+      - oportunidades.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: instagram-delivery-guarantee
+  cancel-in-progress: false
+
+jobs:
+  enfileirar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Atualizar estado
+        run: git pull --rebase --autostash origin main
+
+      - name: Registrar obrigações novas do site
+        id: queue
+        shell: bash
+        run: |
+          output="$(python scripts/garantir_publicacao_instagram.py)"
+          echo "$output"
+          added="$(printf '%s\n' "$output" | sed -n 's/^instagram_obligations_added=//p' | tail -1)"
+          echo "added=${added:-0}" >> "$GITHUB_OUTPUT"
+
+      - name: Persistir fila obrigatória
+        if: steps.queue.outputs.added != '0'
+        run: |
+          git config user.name "radar-instagram-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add instagram/conteudo-conhecido.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Enfileira publicações obrigatórias do Radar no Instagram"
+            git pull --rebase --autostash origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Acordar publicador após nova inclusão
+        if: steps.queue.outputs.added != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh workflow run publicar-instagram-automatico.yml --repo "$GH_REPO" --ref main
+          echo "instagram_delivery_dispatch=true"
