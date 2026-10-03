@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261003-16",
-  "started_at": "2026-10-03T16:46:35-03:00",
-  "completed_at": "2026-10-03T16:48:34-03:00",
+  "cycle_id": "20261003-17",
+  "started_at": "2026-10-03T17:48:50-03:00",
+  "completed_at": "2026-10-03T17:50:13-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -20,11 +20,11 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 10,
-  "aprovados_novos": 1,
+  "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
   "rejeitados": 0,
-  "duplicados": 9,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Dez núcleos públicos pertinentes foram avaliados. Uma pauta nova foi aprovada: ativação da Ticketmaster, que adquiriu uma cota e disponibilizou ingressos gratuitos para a final do Brasileirão Feminino no MorumBIS. Nove núcleos já estavam incorporados por URL ou equivalência semântica, incluindo serviço e escalações da final, recorde de ingressos, convocação e critérios de Arthur Elias, amistosos, voluntariado, calendário e férias escolares. O inbox inicial estava vazio e recebeu somente a pauta nova em commit próprio. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "duplicados": 10,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Dez núcleos públicos pertinentes foram avaliados e todos já estavam incorporados por URL ou equivalência semântica: recorde de ingressos, serviço, escalações e contexto da final do Brasileirão Feminino, final como vitrine da Seleção principal, cidades-sede, convocação e critérios de Arthur Elias, voluntariado e calendário da Copa. O resultado da final ainda não estava consolidado nas fontes pesquisadas durante a janela. Conteúdo masculino e categorias de base foram excluídos. O inbox inicial estava vazio e nenhum commit de inbox foi necessário. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
