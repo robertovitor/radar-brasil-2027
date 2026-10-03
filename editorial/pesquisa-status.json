@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261002-23",
-  "started_at": "2026-10-02T23:41:59-03:00",
-  "completed_at": "2026-10-02T23:43:56-03:00",
+  "cycle_id": "20261003-00",
+  "started_at": "2026-10-03T00:40:48-03:00",
+  "completed_at": "2026-10-03T00:44:13-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 18,
+  "candidatos_publicos": 25,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 5,
-  "duplicados": 15,
+  "rejeitados": 0,
+  "duplicados": 25,
   "inbox_itens_adicionados": 0,
-  "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Dezoito resultados públicos únicos foram avaliados: treze eram duplicatas ou fatos já incorporados e cinco foram rejeitados por antiguidade, irrelevância, categoria de base, fonte insuficiente ou escopo inadequado. Nenhuma pauta nova atingiu os critérios de publicação. O inbox inicial continha novamente o Gre-Nal terminal e uma repetição da sanção da Lei nº 15.522 já incorporada em noticias.json; ambos foram removidos em commit próprio, totalizando quinze duplicados/terminais tratados na rodada. A regra terminal foi reaplicada: Gre-Nal ficou ausente por DUPLICATA_SEMANTICA e “Maria, Maria” permaneceu ausente por CONTEUDO_ANTIGO/FORA_DA_JANELA. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "inbox_commit_needed": false,
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Vinte e cinco resultados públicos editoriais e URLs relevantes foram avaliados; todos correspondiam a pautas ou fatos já incorporados, incluindo prazo do voluntariado, sorteio no MAM Rio, credenciamento, amistosos contra a Argentina, ingressos/hospitalidade e final do Brasileirão Feminino. Nenhuma pauta nova atingiu os critérios de publicação. O inbox inicial já estava vazio; nenhum commit de inbox foi necessário. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
