@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261003-13",
-  "started_at": "2026-10-03T13:49:58-03:00",
-  "completed_at": "2026-10-03T13:52:27-03:00",
+  "cycle_id": "20261003-14",
+  "started_at": "2026-10-03T14:40:08-03:00",
+  "completed_at": "2026-10-03T14:41:55-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 8,
+  "candidatos_publicos": 9,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
   "rejeitados": 0,
-  "duplicados": 8,
+  "duplicados": 9,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Oito núcleos públicos pertinentes foram avaliados e todos já estavam incorporados por URL ou equivalência semântica: final do Brasileirão como vitrine da Seleção principal, critérios de Arthur Elias, convocação para os amistosos, amistosos contra Argentina e Japão, interesse em ingressos e voluntariado, calendário com abertura e final no Maracanã e férias escolares nas cidades-sede. Conteúdo da Seleção masculina, resultados irrelevantes e categorias de base foram excluídos antes da candidatura. Nenhuma pauta nova atingiu os critérios de publicação. O inbox inicial estava vazio; nenhum commit de inbox foi necessário. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Nove núcleos públicos pertinentes foram avaliados e todos já estavam incorporados por URL ou equivalência semântica: serviço da final do Brasileirão Feminino, mais de 38 mil ingressos vendidos, final como vitrine da Seleção principal, convocação e critérios de Arthur Elias, amistosos contra Argentina e Japão, interesse em ingressos e voluntariado, calendário com abertura e final no Maracanã e férias escolares nas cidades-sede. Conteúdo da Seleção masculina, resultados irrelevantes e categorias de base foram excluídos antes da candidatura. Nenhuma pauta nova atingiu os critérios de publicação. O inbox inicial estava vazio; nenhum commit de inbox foi necessário. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
