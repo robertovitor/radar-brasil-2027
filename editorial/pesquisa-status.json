@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261003-15",
-  "started_at": "2026-10-03T15:41:23-03:00",
-  "completed_at": "2026-10-03T15:43:36-03:00",
+  "cycle_id": "20261003-16",
+  "started_at": "2026-10-03T16:46:35-03:00",
+  "completed_at": "2026-10-03T16:48:34-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 9,
+  "candidatos_publicos": 10,
   "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
   "rejeitados": 0,
-  "duplicados": 10,
+  "duplicados": 9,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Nove núcleos públicos pertinentes foram avaliados. Uma atualização material foi aprovada: 44.530 ingressos vendidos para a final do Brasileirão Feminino no MorumBIS, com projeção de recorde sul-americano. Oito núcleos públicos já estavam incorporados por URL ou equivalência semântica. O inbox inicial continha duas duplicatas reintroduzidas: o Gre-Nal terminal, removido por DUPLICATA_SEMANTICA, e cobertura do Encontro Nacional do Futebol Feminino, já incorporada. O inbox foi atualizado em commit próprio, preservando somente a pauta nova. “Maria, Maria” terminal permaneceu ausente. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Dez núcleos públicos pertinentes foram avaliados. Uma pauta nova foi aprovada: ativação da Ticketmaster, que adquiriu uma cota e disponibilizou ingressos gratuitos para a final do Brasileirão Feminino no MorumBIS. Nove núcleos já estavam incorporados por URL ou equivalência semântica, incluindo serviço e escalações da final, recorde de ingressos, convocação e critérios de Arthur Elias, amistosos, voluntariado, calendário e férias escolares. O inbox inicial estava vazio e recebeu somente a pauta nova em commit próprio. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
