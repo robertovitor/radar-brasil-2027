@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261002-21",
-  "started_at": "2026-10-02T21:43:59-03:00",
-  "completed_at": "2026-10-02T21:45:37-03:00",
+  "cycle_id": "20261002-22",
+  "started_at": "2026-10-02T22:44:31-03:00",
+  "completed_at": "2026-10-02T22:46:24-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 25,
-  "aprovados_novos": 0,
+  "candidatos_publicos": 35,
+  "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 7,
-  "duplicados": 18,
-  "inbox_itens_adicionados": 0,
-  "inbox_commit_needed": false,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Vinte e cinco resultados públicos únicos foram avaliados: dezoito eram duplicatas ou fatos já incorporados e sete foram rejeitados por antiguidade, irrelevância, categoria de base, fonte insuficiente ou escopo inadequado. Nenhuma pauta nova atingiu os critérios de publicação. As três pautas aprovadas na execução anterior — PermeÖ Copa 2027, promoção das cidades-sede na ABAV Expo e mais de 38 mil ingressos na final do Brasileirão Feminino — já constam em noticias.json. O inbox permaneceu vazio; Gre-Nal terminal e “Maria, Maria” terminal continuaram ausentes. Nenhum commit de inbox, merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "rejeitados": 11,
+  "duplicados": 23,
+  "inbox_itens_adicionados": 1,
+  "inbox_commit_needed": true,
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Trinta e cinco resultados públicos únicos foram avaliados: vinte e três eram duplicatas ou fatos já incorporados, onze foram rejeitados por antiguidade, irrelevância, categoria de base, fonte insuficiente ou escopo inadequado, e uma pauta nova foi aprovada. Foi adicionada ao inbox a matéria do UOL sobre a final do Brasileirão Feminino como vitrine para jogadoras observadas por Arthur Elias visando a Seleção principal e a Copa de 2027. O inbox inicial estava vazio; Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
