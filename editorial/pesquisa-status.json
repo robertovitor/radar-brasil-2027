@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261003-05",
-  "started_at": "2026-10-03T05:48:33-03:00",
-  "completed_at": "2026-10-03T05:50:39-03:00",
+  "cycle_id": "20261003-06",
+  "started_at": "2026-10-03T06:45:32-03:00",
+  "completed_at": "2026-10-03T06:46:42-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 9,
+  "candidatos_publicos": 10,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
   "rejeitados": 0,
   "duplicados": 10,
   "inbox_itens_adicionados": 0,
-  "inbox_commit_needed": true,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Nove candidatos públicos pertinentes foram avaliados; todos eram duplicatas exatas ou semânticas de conteúdo já incorporado, incluindo Seleção principal, amistosos, ingressos/hospitalidade, voluntariado, calendário, legislação e final do Brasileirão Feminino. Resultados da Seleção masculina e categorias de base foram excluídos. Nenhuma pauta nova atingiu os critérios de publicação. O inbox inicial continha indevidamente a pauta terminal Gre-Nal; ela foi removida em commit próprio por DUPLICATA_SEMANTICA, sem adição de itens. “Maria, Maria” terminal permaneceu ausente. O inbox final ficou vazio. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "inbox_commit_needed": false,
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Dez candidatos públicos pertinentes foram avaliados e todos eram duplicatas exatas ou semânticas de conteúdo já incorporado: convocação e amistosos da Seleção principal, cidades-sede, calendário, ingressos, hospitalidade, voluntariado e final do Brasileirão Feminino. Resultados da Seleção masculina e categorias de base foram excluídos antes da candidatura. Nenhuma pauta nova atingiu os critérios de publicação. O inbox inicial estava vazio; nenhum commit de inbox foi necessário. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
