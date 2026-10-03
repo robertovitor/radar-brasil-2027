@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261003-02",
-  "started_at": "2026-10-03T02:45:24-03:00",
-  "completed_at": "2026-10-03T02:46:59-03:00",
+  "cycle_id": "20261003-03",
+  "started_at": "2026-10-03T03:48:04-03:00",
+  "completed_at": "2026-10-03T03:49:41-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 27,
+  "candidatos_publicos": 8,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
   "rejeitados": 1,
-  "duplicados": 26,
+  "duplicados": 7,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Vinte e sete candidatos públicos editoriais foram avaliados: vinte e seis eram duplicatas ou fatos já incorporados, incluindo voluntariado, convocação e amistosos contra a Argentina, ingressos, calendário, pausa do futebol e preparação das cidades-sede; uma pauta antiga sobre o cancelamento da Finalíssima ficou fora da janela editorial. Nenhuma pauta nova atingiu os critérios de publicação. O inbox inicial já estava vazio; nenhum commit de inbox foi necessário. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Oito candidatos públicos editoriais recentes foram avaliados: sete eram duplicatas ou fatos já incorporados, incluindo a inspeção da Arena de Pernambuco, voluntariado, calendário, legislação e cidades-sede; uma referência não editorial foi descartada. Nenhuma pauta nova atingiu os critérios de publicação. O inbox inicial já estava vazio; nenhum commit de inbox foi necessário. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
