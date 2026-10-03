@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261003-03",
-  "started_at": "2026-10-03T03:48:04-03:00",
-  "completed_at": "2026-10-03T03:49:41-03:00",
+  "cycle_id": "20261003-04",
+  "started_at": "2026-10-03T04:44:39-03:00",
+  "completed_at": "2026-10-03T04:47:11-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -22,9 +22,9 @@
   "candidatos_publicos": 8,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 1,
-  "duplicados": 7,
+  "rejeitados": 0,
+  "duplicados": 8,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Oito candidatos públicos editoriais recentes foram avaliados: sete eram duplicatas ou fatos já incorporados, incluindo a inspeção da Arena de Pernambuco, voluntariado, calendário, legislação e cidades-sede; uma referência não editorial foi descartada. Nenhuma pauta nova atingiu os critérios de publicação. O inbox inicial já estava vazio; nenhum commit de inbox foi necessário. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; não havia Status vazio, Pendente, Em verificação ou PENDENTE_ENRIQUECIMENTO, nem aprovado sem marcação de publicação, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Oito candidatos públicos pertinentes foram avaliados e todos eram duplicatas exatas ou semânticas de conteúdo já incorporado: amistosos da Seleção contra Argentina e Japão, convocação e critérios de Arthur Elias, ingressos/hospitalidade, patrocínio, calendário/cidades-sede, legislação educacional e a pauta da final do Brasileirão Feminino. Nenhuma pauta nova atingiu os critérios de publicação. O inbox inicial estava vazio; nenhum commit de inbox foi necessário. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
