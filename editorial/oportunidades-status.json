@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-03T15:20:00-03:00",
-  "fim": "2026-10-03T15:21:50-03:00",
+  "inicio": "2026-10-03T18:50:17-03:00",
+  "fim": "2026-10-03T18:52:14-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -209,7 +209,7 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 52,
   "adicionadas": 0,
-  "atualizadas": 3,
+  "atualizadas": 2,
   "total_arquivo": 56,
   "erros": [
     "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
