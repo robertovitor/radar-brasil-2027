@@ -105,15 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
-    },
-    {
-      "key": "instagram:noticia:https://www.ticketmaster.com.br/event/campeonato-brasileiro-de-futebol-feminino-sao-paulo-x-corinthians",
-      "post_file": "instagram/fila/automatica/vent-campeonato-brasileiro-de-futebol-feminino-sao-paulo-x-corinthians-bf9432911b.json",
-      "reserved_at": "2026-10-03T20:16:14.348212+00:00",
-      "last_attempt_at": "2026-10-03T20:16:14.348212+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "visual_mode": "fallback_visual"
     }
   ]
 }
