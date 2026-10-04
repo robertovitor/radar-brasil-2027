@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261004-02",
-  "started_at": "2026-10-04T02:45:35-03:00",
-  "completed_at": "2026-10-04T02:48:30-03:00",
+  "cycle_id": "20261004-03",
+  "started_at": "2026-10-04T03:49:27-03:00",
+  "completed_at": "2026-10-04T03:51:08-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,10 +10,10 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 36,
+  "candidatos_publicos": 39,
   "aprovados_novos": 0,
-  "rejeitados": 29,
-  "duplicados": 7,
+  "rejeitados": 23,
+  "duplicados": 16,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "airtable_writes_total": 0,
@@ -23,7 +23,8 @@
     "A pauta Maria, Maria apareceu no Airtable já como Recusada com decisão terminal CONTEUDO_ANTIGO/FORA_DA_JANELA; foi contabilizada entre os rejeitados e não foi reenfileirada nem regravada.",
     "A pauta terminal Gre-Nal não apareceu nas duas leituras e não foi reenfileirada.",
     "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas, federações e cobertura de mídia; categorias de base foram excluídas.",
-    "A matéria do UOL de 01/10/2026 sobre atletas de São Paulo e Corinthians no radar da Seleção para a Copa de 2027 já constava em noticias.json e foi tratada como duplicata.",
+    "Os resultados editoriais relevantes sobre Bianca Molina, atletas no radar da Seleção, voluntariado, ingressos, cidades-sede e amistosos contra a Argentina já constavam em noticias.json ou dados.json e foram tratados como duplicatas.",
+    "A matéria de 03/10/2026 sobre declaração política de Carlinha foi rejeitada por ter vínculo apenas incidental com a Seleção e não apresentar fato material sobre a Copa de 2027.",
     "Não houve item novo aprovado e editorial/inbox.json permaneceu inalterado e vazio.",
     "Nenhum merge, e-mail, Instagram ou alteração de agenda foi executado."
   ]
