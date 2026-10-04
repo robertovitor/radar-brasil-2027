@@ -105,18 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
-    },
-    {
-      "key": "instagram:noticia:https://ge.globo.com/pe/futebol/noticia/2026/09/21/brasil-x-argentina-ingressos-para-amistoso-na-arena-de-pernambuco-comecam-a-ser-vendidos.ghtml",
-      "post_file": "instagram/fila/automatica/ssos-para-amistoso-na-arena-de-pernambuco-comecam-a-ser-vendidos-ghtml-f82022aa49.json",
-      "reserved_at": "2026-10-04T01:57:16.043261+00:00",
-      "last_attempt_at": "2026-10-04T01:57:16.043261+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Canad%C3%A1_vence_o_Brasil_no_futebol_feminino%2C_na_Rio_2016_%2828807778010%29.jpg/1920px-Canad%C3%A1_vence_o_Brasil_no_futebol_feminino%2C_na_Rio_2016_%2828807778010%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "image_page_url": "https://commons.wikimedia.org/wiki/File:Canad%C3%A1_vence_o_Brasil_no_futebol_feminino,_na_Rio_2016_(28807778010).jpg",
-      "bank_image_id": "IMG0186",
-      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
