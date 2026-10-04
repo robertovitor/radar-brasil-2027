@@ -105,6 +105,18 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://jc.uol.com.br/blog-do-torcedor/futebol/selecao-brasileira/2026/09/23/brasil-x-argentina-na-arena-de-pernambuco-mais-de-12-mil-ingressos-foram-vendidos-com-setores-leste-e-oeste-esgotados.html",
+      "post_file": "instagram/fila/automatica/-mil-ingressos-foram-vendidos-com-setores-leste-e-oeste-esgotados-html-b19cf9b1ae.json",
+      "reserved_at": "2026-10-04T12:17:28.540553+00:00",
+      "last_attempt_at": "2026-10-04T12:17:28.540553+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/Canad%C3%A1_vence_o_Brasil_no_futebol_feminino%2C_na_Rio_2016_%2828807781090%29.jpg/1920px-Canad%C3%A1_vence_o_Brasil_no_futebol_feminino%2C_na_Rio_2016_%2828807781090%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "image_page_url": "https://commons.wikimedia.org/wiki/File:Canad%C3%A1_vence_o_Brasil_no_futebol_feminino,_na_Rio_2016_(28807781090).jpg",
+      "bank_image_id": "IMG0184",
+      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
