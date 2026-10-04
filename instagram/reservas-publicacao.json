@@ -105,15 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
-    },
-    {
-      "key": "instagram:noticia:https://www.mktesportivo.com/2026/10/bianca-molina-e-o-novo-reforco-da-ge-tv/",
-      "post_file": "instagram/fila/automatica/s-www-mktesportivo-com-2026-10-bianca-molina-e-o-novo-reforco-da-ge-tv-6782ae5963.json",
-      "reserved_at": "2026-10-04T10:14:13.453422+00:00",
-      "last_attempt_at": "2026-10-04T10:14:13.453422+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "visual_mode": "fallback_visual"
     }
   ]
 }
