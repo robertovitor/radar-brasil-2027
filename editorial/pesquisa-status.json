@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261004-10",
-  "started_at": "2026-10-04T10:46:29-03:00",
-  "completed_at": "2026-10-04T10:47:51-03:00",
+  "cycle_id": "20261004-11",
+  "started_at": "2026-10-04T11:44:05-03:00",
+  "completed_at": "2026-10-04T11:47:36-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,10 +10,10 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 21,
+  "candidatos_publicos": 25,
   "aprovados_novos": 1,
-  "rejeitados": 10,
-  "duplicados": 10,
+  "rejeitados": 4,
+  "duplicados": 20,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "airtable_writes_total": 0,
@@ -21,10 +21,10 @@
     "Executadas exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional; ambas retornaram sem cursor.",
     "Backlog integral reavaliado: nenhum registro com Status vazio, Pendente ou Em verificação e nenhum aprovado ainda não incorporado/publicado; nenhuma escrita Airtable necessária.",
     "Pesquisa pública cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Pauta nova aprovada: CBF elevou todas as cotas do Brasileirão Feminino 2026; campeão recebeu R$ 2 milhões, vice R$ 1 milhão e cada clube R$ 720 mil de participação, além de cota por jogo em rede nacional.",
-    "A pauta financeira é distinta da notícia já publicada sobre título e recorde de público.",
-    "editorial/inbox.json atualizado no commit ef3aafa1289d05c32213b1a69a91784a2d12916a.",
-    "Gre-Nal terminal e Maria, Maria terminal estavam ausentes do inbox inicial e não foram reenfileirados.",
+    "Pauta nova aprovada: painel da COB Expo 2026 sobre visibilidade, cultura de consumo, presença nos estádios e legado da Copa do Mundo Feminina FIFA 2027.",
+    "Os demais candidatos foram descartados como duplicatas semânticas de pautas já publicadas ou por conteúdo antigo/genérico sem novidade editorial suficiente.",
+    "editorial/inbox.json atualizado no commit 0d3ab2760004659d42e99db4590303e1eb56d720.",
+    "Gre-Nal terminal e Maria, Maria terminal estavam ausentes do inbox inicial e foram bloqueados antes da escrita.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
   ]
 }
