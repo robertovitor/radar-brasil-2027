@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261004-07",
-  "started_at": "2026-10-04T07:41:38-03:00",
-  "completed_at": "2026-10-04T07:43:56-03:00",
+  "cycle_id": "20261004-08",
+  "started_at": "2026-10-04T08:40:27-03:00",
+  "completed_at": "2026-10-04T08:41:30-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,20 +10,20 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 41,
-  "aprovados_novos": 1,
-  "rejeitados": 32,
-  "duplicados": 8,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "candidatos_publicos": 19,
+  "aprovados_novos": 0,
+  "rejeitados": 10,
+  "duplicados": 9,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "airtable_writes_total": 0,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional; ambas retornaram sem cursor.",
-    "Backlog das duas tabelas reavaliado integralmente: nenhum registro com Status vazio, Pendente ou Em verificação e nenhum aprovado ainda não incorporado/publicado; nenhuma escrita Airtable necessária.",
+    "Backlog integral reavaliado: nenhum registro com Status vazio, Pendente ou Em verificação e nenhum aprovado ainda não incorporado/publicado; nenhuma escrita Airtable necessária.",
+    "A pauta Flamengo Maricá aprovada na rodada anterior já consta em noticias.json; inbox inicial vazio.",
     "Pesquisa pública cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Pauta nova aprovada: parceria Flamengo Maricá com investimento anual de R$ 10 milhões no futebol feminino; registro público divulgado em 02/10/2026 vincula o projeto ao legado socioeducativo do ciclo da Copa Feminina FIFA 2027.",
-    "editorial/inbox.json atualizado no commit be780f00dc2040be9e0bcfcba68c34dfcca9628b.",
-    "Gre-Nal terminal e Maria, Maria terminal foram novamente excluídos da lista de candidatos e estavam ausentes do inbox inicial.",
-    "Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+    "Nenhum fato novo publicável: ocorrências válidas eram duplicatas do acervo; demais resultados eram futebol masculino, repercussão política, categorias de base ou análises sem fato novo.",
+    "Gre-Nal terminal e Maria, Maria terminal estavam ausentes do inbox e não foram reenfileirados.",
+    "Nenhum commit de inbox necessário. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
   ]
 }
