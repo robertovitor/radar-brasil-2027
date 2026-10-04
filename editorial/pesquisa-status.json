@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261004-01",
-  "started_at": "2026-10-04T01:46:57-03:00",
-  "completed_at": "2026-10-04T01:48:47-03:00",
+  "cycle_id": "20261004-02",
+  "started_at": "2026-10-04T02:45:35-03:00",
+  "completed_at": "2026-10-04T02:48:30-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,28 +10,21 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 31,
-  "aprovados_novos": 1,
-  "rejeitados": 20,
-  "duplicados": 10,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "candidatos_publicos": 36,
+  "aprovados_novos": 0,
+  "rejeitados": 29,
+  "duplicados": 7,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "airtable_writes_total": 0,
-  "inbox_commit_sha": "2b363136631a70a2508435ee880ebe74b5082bc7",
-  "item_aprovado": {
-    "tipo": "noticia",
-    "titulo": "Ge TV contrata Bianca Molina para reforçar cobertura rumo à Copa Feminina 2027",
-    "data": "2026-10-01",
-    "fonte": "MKT Esportivo",
-    "url": "https://www.mktesportivo.com/2026/10/bianca-molina-e-o-novo-reforco-da-ge-tv/"
-  },
   "observacoes_operacionais": [
     "Foram executadas exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, ordenação, esquema ou paginação adicional.",
     "As 31 sugestões e 26 sugestões de notícias estavam em estados terminais; não havia backlog vazio, Pendente ou Em verificação e nenhuma escrita Airtable foi necessária.",
     "A pauta Maria, Maria apareceu no Airtable já como Recusada com decisão terminal CONTEUDO_ANTIGO/FORA_DA_JANELA; foi contabilizada entre os rejeitados e não foi reenfileirada nem regravada.",
     "A pauta terminal Gre-Nal não apareceu nas duas leituras e não foi reenfileirada.",
     "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas, federações e cobertura de mídia; categorias de base foram excluídas.",
-    "A contratação de Bianca Molina pela Ge TV foi considerada nova e editorialmente relevante por reforçar a estrutura de cobertura do futebol feminino e da Copa de 2027.",
+    "A matéria do UOL de 01/10/2026 sobre atletas de São Paulo e Corinthians no radar da Seleção para a Copa de 2027 já constava em noticias.json e foi tratada como duplicata.",
+    "Não houve item novo aprovado e editorial/inbox.json permaneceu inalterado e vazio.",
     "Nenhum merge, e-mail, Instagram ou alteração de agenda foi executado."
   ]
 }
