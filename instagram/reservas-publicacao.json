@@ -105,6 +105,15 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://www.otempo.com.br/sports/cruzeiro/2026/10/3/cruzeiro-anuncia-novo-patrocinador-e-ja-antecipa-estreia-no-uniforme-do-time-feminino",
+      "post_file": "instagram/fila/automatica/a-novo-patrocinador-e-ja-antecipa-estreia-no-uniforme-do-time-feminino-54d4a37c50.json",
+      "reserved_at": "2026-10-04T21:18:08.900205+00:00",
+      "last_attempt_at": "2026-10-04T21:18:08.900205+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "visual_mode": "fallback_visual"
     }
   ]
 }
