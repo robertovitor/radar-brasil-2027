@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261003-21",
-  "started_at": "2026-10-03T21:41:58-03:00",
-  "completed_at": "2026-10-03T21:43:13-03:00",
+  "cycle_id": "20261003-22",
+  "started_at": "2026-10-03T22:44:51-03:00",
+  "completed_at": "2026-10-03T22:45:58-03:00",
   "stage": "completed",
   "executor": "codex-automation",
   "airtable_reads_total": 2,
@@ -19,12 +19,12 @@
   ],
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 11,
+  "candidatos_publicos": 12,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 0,
+  "rejeitados": 1,
   "duplicados": 11,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
-  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; todos já possuíam decisão terminal, sem Status vazio, Pendente, Em verificação, PENDENTE_ENRIQUECIMENTO ou aprovado ainda não publicado, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Onze núcleos públicos pertinentes foram avaliados; as novas repercussões do título do São Paulo, do recorde de público e da goleira Carlinha são equivalentes à pauta já incorporada, e convocação, amistosos, estádios, ingressos, voluntariado, hospitalidade e demais temas também já constavam nos arquivos. Nenhuma pauta nova foi aprovada. Conteúdo masculino, manifestação política incidental e categorias de base foram excluídos. O inbox inicial estava vazio e nenhum commit de inbox foi necessário. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
+  "observacoes_operacionais": "Execução concluída com exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional. Os 57 registros foram reutilizados; todos já possuíam decisão terminal, sem Status vazio, Pendente, Em verificação, PENDENTE_ENRIQUECIMENTO ou aprovado ainda não publicado, portanto nenhuma escrita Airtable foi necessária. As quatro leituras iniciais do GitHub foram realizadas uma vez cada no main. Doze núcleos públicos pertinentes foram avaliados. Onze eram duplicatas ou repercussões já incorporadas sobre o título do São Paulo, recorde de público, convocação, amistosos, estádios, ingressos, patrocinadores e calendário. A Portaria SPA/MF nº 2.596 foi rejeitada nesta rodada por ser conteúdo de agosto fora da janela de frescor atual. Nenhuma pauta nova foi aprovada. Conteúdo masculino e categorias de base foram excluídos. O inbox inicial estava vazio e nenhum commit de inbox foi necessário. Gre-Nal terminal e “Maria, Maria” terminal permaneceram ausentes. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
 }
