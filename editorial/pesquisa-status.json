@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261004-06",
-  "started_at": "2026-10-04T06:42:58-03:00",
-  "completed_at": "2026-10-04T06:44:08-03:00",
+  "cycle_id": "20261004-07",
+  "started_at": "2026-10-04T07:41:38-03:00",
+  "completed_at": "2026-10-04T07:43:56-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,22 +10,20 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 36,
-  "aprovados_novos": 0,
-  "rejeitados": 24,
-  "duplicados": 12,
-  "inbox_itens_adicionados": 0,
-  "inbox_commit_needed": false,
+  "candidatos_publicos": 41,
+  "aprovados_novos": 1,
+  "rejeitados": 32,
+  "duplicados": 8,
+  "inbox_itens_adicionados": 1,
+  "inbox_commit_needed": true,
   "airtable_writes_total": 0,
   "observacoes_operacionais": [
-    "Foram executadas exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, ordenação, esquema ou paginação adicional.",
-    "As 31 sugestões e 26 sugestões de notícias estavam em estados terminais; não havia backlog vazio, Pendente ou Em verificação e nenhuma escrita Airtable foi necessária.",
-    "A pauta Maria, Maria apareceu no Airtable já como Recusada com decisão terminal CONTEUDO_ANTIGO/FORA_DA_JANELA; foi contabilizada entre os rejeitados e não foi reenfileirada nem regravada.",
-    "A pauta Gre-Nal constava equivocadamente como aprovada na telemetria do executor GitHub nativo da rodada anterior; a decisão terminal DUPLICATA_SEMANTICA foi reaplicada nesta execução, o item não estava no inbox inicial e não foi reenfileirado.",
-    "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Os resultados relevantes sobre Bianca Molina, atletas no radar da Seleção, convocação e amistosos contra a Argentina já constavam em noticias.json ou dados.json e foram tratados como duplicatas.",
-    "A matéria política sobre Carlinha permaneceu fora do recorte editorial por vínculo apenas incidental com a Seleção e ausência de fato material sobre a Copa de 2027.",
-    "Não houve item novo aprovado e editorial/inbox.json permaneceu inalterado e vazio.",
-    "Nenhum merge, e-mail, Instagram ou alteração de agenda foi executado."
+    "Executadas exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional; ambas retornaram sem cursor.",
+    "Backlog das duas tabelas reavaliado integralmente: nenhum registro com Status vazio, Pendente ou Em verificação e nenhum aprovado ainda não incorporado/publicado; nenhuma escrita Airtable necessária.",
+    "Pesquisa pública cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
+    "Pauta nova aprovada: parceria Flamengo Maricá com investimento anual de R$ 10 milhões no futebol feminino; registro público divulgado em 02/10/2026 vincula o projeto ao legado socioeducativo do ciclo da Copa Feminina FIFA 2027.",
+    "editorial/inbox.json atualizado no commit be780f00dc2040be9e0bcfcba68c34dfcca9628b.",
+    "Gre-Nal terminal e Maria, Maria terminal foram novamente excluídos da lista de candidatos e estavam ausentes do inbox inicial.",
+    "Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
   ]
 }
