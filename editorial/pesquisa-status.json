@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261004-08",
-  "started_at": "2026-10-04T08:40:27-03:00",
-  "completed_at": "2026-10-04T08:41:30-03:00",
+  "cycle_id": "20261004-09",
+  "started_at": "2026-10-04T09:42:40-03:00",
+  "completed_at": "2026-10-04T09:43:45-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,20 +10,19 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 19,
+  "candidatos_publicos": 24,
   "aprovados_novos": 0,
-  "rejeitados": 10,
-  "duplicados": 9,
+  "rejeitados": 13,
+  "duplicados": 11,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "airtable_writes_total": 0,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional; ambas retornaram sem cursor.",
     "Backlog integral reavaliado: nenhum registro com Status vazio, Pendente ou Em verificação e nenhum aprovado ainda não incorporado/publicado; nenhuma escrita Airtable necessária.",
-    "A pauta Flamengo Maricá aprovada na rodada anterior já consta em noticias.json; inbox inicial vazio.",
     "Pesquisa pública cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Nenhum fato novo publicável: ocorrências válidas eram duplicatas do acervo; demais resultados eram futebol masculino, repercussão política, categorias de base ou análises sem fato novo.",
-    "Gre-Nal terminal e Maria, Maria terminal estavam ausentes do inbox e não foram reenfileirados.",
+    "Nenhum fato novo publicável: a análise sobre SAF exclusivamente feminina é desdobramento semântico da Lei nº 15.522 já presente em noticias.json; demais resultados eram duplicatas, futebol masculino, categoria de base ou ruído de busca.",
+    "Inbox inicial vazio. Gre-Nal terminal e Maria, Maria terminal estavam ausentes e não foram reenfileirados.",
     "Nenhum commit de inbox necessário. Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
   ]
 }
