@@ -105,15 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
-    },
-    {
-      "key": "instagram:noticia:https://www.fbf.org.br/noticias/detalhe/13087",
-      "post_file": "instagram/fila/automatica/instagram-noticia-https-www-fbf-org-br-noticias-detalhe-13087-0592a4cad0.json",
-      "reserved_at": "2026-10-04T04:46:55.473798+00:00",
-      "last_attempt_at": "2026-10-04T04:46:55.473798+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "visual_mode": "fallback_visual"
     }
   ]
 }
