@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261003-23",
-  "started_at": "2026-10-03T23:45:02-03:00",
-  "completed_at": "2026-10-03T23:49:23-03:00",
+  "cycle_id": "20261004-00",
+  "started_at": "2026-10-04T00:41:36-03:00",
+  "completed_at": "2026-10-04T00:43:11-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,28 +10,21 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 43,
-  "aprovados_novos": 1,
-  "rejeitados": 30,
+  "candidatos_publicos": 34,
+  "aprovados_novos": 0,
+  "rejeitados": 22,
   "duplicados": 12,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "airtable_writes_total": 0,
-  "inbox_commit_sha": "347d11e95323bdc24e302aba2017ff61f315922e",
-  "item_aprovado": {
-    "tipo": "noticia",
-    "titulo": "Belo Horizonte promove ações ligadas à Copa Feminina 2027 na FIT de Buenos Aires",
-    "data": "2026-10-01",
-    "fonte": "Prefeitura de Belo Horizonte",
-    "url": "https://prefeitura.pbh.gov.br/noticias/bh-promove-internacionalizacao-do-menuuh-em-evento-de-turismo-na-argentina"
-  },
   "observacoes_operacionais": [
     "Foram executadas exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, ordenação, esquema ou paginação adicional.",
     "As 31 sugestões e 26 sugestões de notícias estavam em estados terminais; não havia backlog vazio, Pendente ou Em verificação e nenhuma escrita Airtable foi necessária.",
-    "A pauta Maria, Maria apareceu no Airtable já como Recusada com decisão terminal CONTEUDO_ANTIGO/FORA_DA_JANELA; foi contada entre os rejeitados e não foi reenfileirada nem regravada.",
+    "A pauta Maria, Maria apareceu no Airtable já como Recusada com decisão terminal CONTEUDO_ANTIGO/FORA_DA_JANELA; foi contabilizada entre os rejeitados e não foi reenfileirada nem regravada.",
     "A pauta terminal Gre-Nal não apareceu nas duas leituras e não foi reenfileirada.",
-    "Pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Apenas a promoção internacional de Belo Horizonte na FIT, com ações relacionadas à Copa Feminina 2027, foi considerada nova após deduplicação contra inbox.json, dados.json e noticias.json.",
+    "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações, excluindo categorias de base.",
+    "Os resultados recentes eram duplicatas já publicadas, notícias da Seleção masculina, fontes antigas ou conteúdos fora do escopo; nenhum item novo foi adicionado ao inbox.",
+    "A pauta de promoção turística de Belo Horizonte aprovada na rodada anterior já estava incorporada em noticias.json.",
     "Nenhum merge, e-mail, Instagram ou alteração de agenda foi executado."
   ]
 }
