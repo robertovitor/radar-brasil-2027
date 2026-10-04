@@ -105,6 +105,17 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://www.instagram.com/p/ddcleukn84d/",
+      "post_file": "instagram/fila/automatica/instagram-noticia-https-www-instagram-com-p-ddcleukn84d-9bc4cce38e.json",
+      "reserved_at": "2026-10-04T17:29:13.815163+00:00",
+      "last_attempt_at": "2026-10-04T17:29:13.815163+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Sele%C3%A7%C3%A3o_alem%C3%A3_de_futebol_feminino_faz_primeiro_treino_em_Bras%C3%ADlia_%2828242340883%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "image_page_url": "https://commons.wikimedia.org/wiki/File:Sele%C3%A7%C3%A3o_alem%C3%A3_de_futebol_feminino_faz_primeiro_treino_em_Bras%C3%ADlia_(28242340883).jpg",
+      "visual_mode": "auto_commons_photo"
     }
   ]
 }
