@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261004-12",
-  "started_at": "2026-10-04T12:42:33-03:00",
-  "completed_at": "2026-10-04T12:44:07-03:00",
+  "cycle_id": "20261004-13",
+  "started_at": "2026-10-04T13:45:07-03:00",
+  "completed_at": "2026-10-04T13:46:14-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,21 +10,21 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 27,
+  "candidatos_publicos": 22,
   "aprovados_novos": 0,
-  "rejeitados": 6,
-  "duplicados": 21,
+  "rejeitados": 5,
+  "duplicados": 17,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "airtable_writes_total": 0,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, sort, schema ou paginação adicional; ambas retornaram sem cursor.",
     "Backlog integral reavaliado: nenhum registro com Status vazio, Pendente ou Em verificação e nenhum aprovado ainda não incorporado/publicado; nenhuma escrita Airtable necessária.",
-    "As leituras iniciais encontraram 110 eventos, 216 notícias e inbox vazio; a pauta da COB Expo e a pauta sobre regras para trabalhadores estrangeiros já estavam incorporadas em noticias.json.",
+    "As leituras iniciais encontraram 110 eventos, 216 notícias e inbox vazio.",
     "Pesquisa pública cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Nenhum candidato apresentou novidade editorial suficiente frente ao acervo atual; resultados recentes foram classificados como duplicatas semânticas ou rejeitados por escopo, frescor ou baixa relevância.",
+    "Resultados do dia sobre o título e a estrutura do São Paulo foram considerados duplicatas semânticas das pautas já publicadas sobre a conquista, o público recorde e a premiação.",
+    "Nenhum candidato apresentou novidade editorial suficiente; o inbox permaneceu inalterado.",
     "Gre-Nal terminal e Maria, Maria terminal estavam ausentes do inbox e não foram reenfileirados.",
-    "editorial/inbox.json permaneceu inalterado.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
   ]
 }
