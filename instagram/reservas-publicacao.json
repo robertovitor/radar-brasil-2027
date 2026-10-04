@@ -105,6 +105,15 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://ge.globo.com/sp/campinas-e-regiao/futebol/futebol-feminino/brasileiro-feminino/noticia/2026/10/03/sao-paulo-fatura-premiacao-recorde-do-brasileirao-feminino-veja-valor.ghtml",
+      "post_file": "instagram/fila/automatica/aulo-fatura-premiacao-recorde-do-brasileirao-feminino-veja-valor-ghtml-9db82e4f6e.json",
+      "reserved_at": "2026-10-04T14:58:38.340486+00:00",
+      "last_attempt_at": "2026-10-04T14:58:38.340486+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "visual_mode": "fallback_visual"
     }
   ]
 }
