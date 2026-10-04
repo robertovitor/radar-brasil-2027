@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-04T05:52:34-03:00",
-  "fim": "2026-10-04T05:54:20-03:00",
+  "inicio": "2026-10-04T12:02:37-03:00",
+  "fim": "2026-10-04T12:05:06-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -182,7 +182,8 @@
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 6
+      "resultados": 0,
+      "erro": "HTTPError:HTTP Error 403: Forbidden"
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -208,9 +209,10 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 52,
   "adicionadas": 0,
-  "atualizadas": 50,
+  "atualizadas": 3,
   "total_arquivo": 56,
   "erros": [
+    "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
