@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261004-04",
-  "started_at": "2026-10-04T04:41:09-03:00",
-  "completed_at": "2026-10-04T04:43:05-03:00",
+  "cycle_id": "20261004-05",
+  "started_at": "2026-10-04T05:43:33-03:00",
+  "completed_at": "2026-10-04T05:44:56-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,29 +10,23 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 33,
-  "aprovados_novos": 1,
-  "rejeitados": 21,
-  "duplicados": 11,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "candidatos_publicos": 21,
+  "aprovados_novos": 0,
+  "rejeitados": 7,
+  "duplicados": 14,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "airtable_writes_total": 0,
-  "inbox_commit_sha": "08b6e7d154784958dbed51ce54a4ebe807050431",
-  "item_aprovado": {
-    "tipo": "noticia",
-    "titulo": "Hyundai premia melhor jogadora da final do Brasileirão Feminino com carro zero",
-    "data": "2026-10-01",
-    "fonte": "Hyundai CSA News",
-    "url": "https://hyundai-csa-news.com/hyundai-vai-dar-um-veiculo-zero-quilometro-para-a-melhor-jogadora-da-final-do-brasileirao-feminino/"
-  },
   "observacoes_operacionais": [
     "Foram executadas exatamente duas leituras Airtable completas, pageSize 1000, sem filtros, ordenação, esquema ou paginação adicional.",
     "As 31 sugestões e 26 sugestões de notícias estavam em estados terminais; não havia backlog vazio, Pendente ou Em verificação e nenhuma escrita Airtable foi necessária.",
     "A pauta Maria, Maria apareceu no Airtable já como Recusada com decisão terminal CONTEUDO_ANTIGO/FORA_DA_JANELA; foi contabilizada entre os rejeitados e não foi reenfileirada nem regravada.",
     "A pauta terminal Gre-Nal não apareceu nas duas leituras e não foi reenfileirada.",
+    "A ativação da Hyundai aprovada na rodada anterior já estava incorporada em noticias.json; o consumidor havia esvaziado o inbox.",
     "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Foi aprovada como nova a ativação da Hyundai que premiou a melhor jogadora da final do Brasileirão Feminino com um veículo zero-quilômetro, vinculada à estratégia da marca como patrocinadora da Copa Feminina 2027.",
-    "A pauta não constava em noticias.json, dados.json ou no inbox lido no início da execução.",
+    "Os resultados relevantes sobre amistosos contra a Argentina, convocação, voluntariado, ingressos, legado e atletas no radar da Seleção já constavam em dados.json ou noticias.json.",
+    "A matéria política sobre Carlinha foi mantida fora do recorte por vínculo apenas incidental com a Seleção e ausência de fato material sobre a Copa de 2027.",
+    "Não houve item novo aprovado e editorial/inbox.json permaneceu inalterado e vazio.",
     "Nenhum merge, e-mail, Instagram ou alteração de agenda foi executado."
   ]
 }
