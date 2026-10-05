@@ -105,15 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
-    },
-    {
-      "key": "instagram:noticia:https://www.acordacidade.com.br/esportes/nova-regra-sobre-bets-obriga-arena-fonte-nova-a-retirar-casa-de-apostas-do-nome/",
-      "post_file": "instagram/fila/automatica/a-sobre-bets-obriga-arena-fonte-nova-a-retirar-casa-de-apostas-do-nome-1da115c705.json",
-      "reserved_at": "2026-10-05T15:56:05.559585+00:00",
-      "last_attempt_at": "2026-10-05T15:56:05.559585+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "visual_mode": "fallback_visual"
     }
   ]
 }
