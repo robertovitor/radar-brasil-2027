@@ -1,4 +1,29 @@
 {
   "eventos": [],
-  "noticias": []
+  "noticias": [
+    {
+      "Data": "2026-10-02",
+      "DataBR": "02/10/2026",
+      "Titulo": "TV Brasil fecha acordo com a FPF para exibir 41 partidas de futebol feminino em 2026 e 2027",
+      "Tema": "Mídia / transmissão / federação",
+      "CidadeUF": "Brasil",
+      "Veiculo": "Agência Brasil",
+      "Link": "https://agenciabrasil.ebc.com.br/esportes/noticia/2026-10/sp-tv-brasil-fecha-acordo-para-exibir-41-partidas-de-futebol-feminino",
+      "Sentimento": "Positivo",
+      "Impacto": "Médio",
+      "Resumo": "A TV Brasil firmou acordo com a Federação Paulista de Futebol para transmitir 41 partidas em 2026 e 2027, incluindo competições profissionais e de formação. A EBC relaciona a parceria à preparação para a Copa do Mundo Feminina de 2027 e à continuidade da modalidade na televisão pública."
+    },
+    {
+      "Data": "2026-10-05",
+      "DataBR": "05/10/2026",
+      "Titulo": "TV Brasil exibe especial sobre desafios e futuro do futebol feminino antes da Copa 2027",
+      "Tema": "Mídia / legado / visibilidade",
+      "CidadeUF": "Brasil",
+      "Veiculo": "TV Brasil",
+      "Link": "https://tvbrasil.ebc.com.br/caminhos-da-reportagem/2026/10/elas-em-campo-futebol-paixao-e-resiliencia?page=1",
+      "Sentimento": "Positivo",
+      "Impacto": "Médio",
+      "Resumo": "O Caminhos da Reportagem exibe em 5 de outubro, às 23h, o especial “Elas em campo: futebol, paixão e resiliência”. O programa reúne atletas, especialistas, gestoras e mulheres da modalidade para discutir avanços e desafios do futebol feminino a menos de um ano da Copa de 2027 no Brasil."
+    }
+  ]
 }
