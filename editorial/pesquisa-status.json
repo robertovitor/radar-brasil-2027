@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261005-09",
-  "started_at": "2026-10-05T09:45:46-03:00",
-  "completed_at": "2026-10-05T09:51:24-03:00",
+  "cycle_id": "20261005-10",
+  "started_at": "2026-10-05T10:55:08-03:00",
+  "completed_at": "2026-10-05T10:59:01-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -11,17 +11,17 @@
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 14,
-  "aprovados_novos": 2,
+  "aprovados_novos": 1,
   "rejeitados": 3,
-  "duplicados": 9,
-  "inbox_itens_adicionados": 2,
+  "duplicados": 10,
+  "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "airtable_writes_total": 0,
   "observacoes_operacionais": [
     "Foram executadas exatamente duas leituras Airtable, uma por tabela, com pageSize 1000, sem filtros, ordenação, schema ou paginação adicional.",
     "Os 57 registros foram processados exclusivamente a partir desses snapshots; não havia backlog acionável e nenhuma escrita no Airtable foi necessária.",
-    "A pesquisa recente cobriu Seleção Brasileira Feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações, excluindo categorias de base como pauta autônoma.",
-    "Foram aprovadas duas pautas oficiais da EBC/Agência Brasil: o acordo da TV Brasil com a FPF para 41 transmissões em 2026 e 2027 e o especial Caminhos da Reportagem sobre futebol feminino no ciclo da Copa 2027.",
+    "A pesquisa recente cobriu Seleção Brasileira Feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas como pauta autônoma.",
+    "Foi aprovada uma pauta sobre o impacto da MP 1.394/2026 no naming right da Arena Fonte Nova, com ressalva explícita de que a rescisão contratual e a data final de retirada do nome ainda não foram formalizadas.",
     "O inbox foi atualizado em commit próprio. Gre-Nal terminal e Maria, Maria terminal foram excluídos dos candidatos e permanecem ausentes. Nenhum merge, e-mail ou Instagram foi disparado; a agenda não foi alterada."
   ]
 }
