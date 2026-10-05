@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261005-18",
-  "started_at": "2026-10-05T18:49:40-03:00",
-  "completed_at": "2026-10-05T18:52:17-03:00",
+  "cycle_id": "20261005-19",
+  "started_at": "2026-10-05T19:49:49-03:00",
+  "completed_at": "2026-10-05T19:51:20-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,20 +10,20 @@
   },
   "sugestoes_lidas": 34,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 16,
-  "aprovados_novos": 1,
+  "candidatos_publicos": 17,
+  "aprovados_novos": 0,
   "rejeitados": 4,
   "duplicados": 13,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
-  "airtable_writes_total": 3,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
+  "airtable_writes_total": 0,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas no Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
-    "Os 60 registros foram processados exclusivamente a partir dos snapshots. O Esquenta MVA foi enriquecido com data 10/10/2026, horário 11:00 e local The Front, Porto Alegre/RS, informados pelo responsável.",
-    "O Esquenta MVA foi aprovado e enviado ao inbox como ativação de torcida vinculada ao amistoso Brasil x Argentina da Seleção Brasileira Feminina principal.",
-    "Duas sugestões idênticas de Jogo das Lendas foram consolidadas: a canônica permaneceu Pendente com PENDENTE_ENRIQUECIMENTO para vínculo editorial, horário, local e organizador; a cópia com a mesma URL, título e cidade foi marcada como duplicata comprovada.",
+    "Os 60 registros foram processados exclusivamente a partir dos snapshots. O Esquenta MVA já constava em dados.json e não foi reenfileirado.",
+    "O Jogo das Lendas permaneceu Pendente com PENDENTE_ENRIQUECIMENTO: a pesquisa não confirmou vínculo com futebol feminino ou Copa Feminina 2027, nem horário, local exato ou organizador. Como nada mudou, o registro não foi regravado.",
+    "Registros aprovados com evidência de publicação anterior foram tratados como decisões finais e não foram reabertos apenas por ausência de correspondência textual exata.",
     "Pesquisa pública recente cobriu Seleção Brasileira feminina principal, Copa Feminina FIFA 2027, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações, com categorias de base excluídas.",
-    "As pautas públicas restantes já estavam incorporadas ou cobertas semanticamente; quatro resultados foram rejeitados por fora de escopo, conteúdo político, futebol masculino ou baixa novidade editorial.",
-    "As pautas terminais Gre-Nal e Maria, Maria não foram adicionadas ao inbox. Não houve merge, e-mail, Instagram ou alteração de agenda."
+    "Convocação de Carol Gil, concentração da Seleção, voluntariado, Hyundai, Sicoob, recorde de público e Lei do Futebol Feminino já estavam incorporados ou cobertos semanticamente; quatro resultados foram rejeitados por fora de escopo, conteúdo político, futebol masculino ou baixa novidade editorial.",
+    "Nenhum item foi adicionado ao inbox. As pautas terminais Gre-Nal e Maria, Maria não constam no inbox. Não houve merge, e-mail, Instagram ou alteração de agenda."
   ]
 }
