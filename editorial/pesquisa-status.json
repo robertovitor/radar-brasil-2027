@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261005-15",
-  "started_at": "2026-10-05T15:42:59-03:00",
-  "completed_at": "2026-10-05T15:44:26-03:00",
+  "cycle_id": "20261005-16",
+  "started_at": "2026-10-05T16:48:41-03:00",
+  "completed_at": "2026-10-05T16:51:04-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,10 +10,10 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 15,
+  "candidatos_publicos": 16,
   "aprovados_novos": 0,
   "rejeitados": 4,
-  "duplicados": 11,
+  "duplicados": 12,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "airtable_writes_total": 0,
@@ -21,7 +21,7 @@
     "Executadas exatamente duas leituras completas no Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
     "Os 57 registros foram processados exclusivamente a partir dos snapshots; não havia Status vazio, Em verificação ou Pendente, nem item aprovado ainda não incorporado. Nenhuma escrita Airtable foi necessária.",
     "Pesquisa pública recente cobriu Seleção Brasileira feminina principal, Copa Feminina FIFA 2027, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações, com categorias de base excluídas.",
-    "Apresentação e preparação da Seleção em Porto Alegre, comissão técnica, patrocínio do Sicoob, voluntariado e ingressos já estavam incorporados ou cobertos semanticamente; quatro resultados foram rejeitados por fora de escopo ou baixa novidade editorial.",
+    "Preparação e agenda da Seleção, sorteio, ingressos, engajamento de torcida, patrocínios, voluntariado, cidades-sede e Flamengo–Maricá já estavam incorporados ou cobertos semanticamente; quatro resultados foram rejeitados por categoria de base, fora de escopo, baixa novidade editorial ou conteúdo político.",
     "Nenhum item foi adicionado ao inbox. As pautas terminais Gre-Nal e Maria, Maria não constam no inbox. Não houve merge, e-mail, Instagram ou alteração de agenda."
   ]
 }
