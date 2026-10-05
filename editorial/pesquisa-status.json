@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261005-13",
-  "started_at": "2026-10-05T13:46:30-03:00",
-  "completed_at": "2026-10-05T13:51:45-03:00",
+  "cycle_id": "20261005-14",
+  "started_at": "2026-10-05T14:43:49-03:00",
+  "completed_at": "2026-10-05T14:46:26-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,18 +10,18 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 18,
-  "aprovados_novos": 1,
+  "candidatos_publicos": 16,
+  "aprovados_novos": 0,
   "rejeitados": 4,
-  "duplicados": 13,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "duplicados": 12,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "airtable_writes_total": 0,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas no Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
-    "Os 57 registros foram processados a partir dos snapshots; não havia Status vazio, Em verificação ou Pendente, nem item aprovado ainda não incorporado. Nenhuma escrita Airtable foi necessária.",
+    "Os 57 registros foram processados exclusivamente a partir dos snapshots; não havia Status vazio, Em verificação ou Pendente, nem item aprovado ainda não incorporado. Nenhuma escrita Airtable foi necessária.",
     "Pesquisa pública recente cobriu Seleção Brasileira feminina principal, Copa Feminina FIFA 2027, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações, com categorias de base excluídas.",
-    "Aprovada a pauta da CBF de 05/10/2026 sobre a convocação de Carol Gil para substituir Thais Ferreira nos amistosos contra a Argentina; item novo enfileirado em commit próprio.",
-    "As pautas terminais Gre-Nal e Maria, Maria foram excluídas antes da escrita e não constam no inbox. Não houve merge, e-mail, Instagram ou alteração de agenda."
+    "Os resultados pertinentes eram duplicatas de pautas já incorporadas, incluindo voluntariado, amistosos, preparação da Seleção e recorde de público no MorumBIS; quatro resultados foram rejeitados por fora de escopo ou baixa novidade editorial.",
+    "Nenhum item foi adicionado ao inbox. As pautas terminais Gre-Nal e Maria, Maria não constam no inbox. Não houve merge, e-mail, Instagram ou alteração de agenda."
   ]
 }
