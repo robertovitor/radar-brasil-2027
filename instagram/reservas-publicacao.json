@@ -105,18 +105,6 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
-    },
-    {
-      "key": "instagram:noticia:https://tvbrasil.ebc.com.br/caminhos-da-reportagem/2026/10/elas-em-campo-futebol-paixao-e-resiliencia?page=1",
-      "post_file": "instagram/fila/automatica/a-reportagem-2026-10-elas-em-campo-futebol-paixao-e-resiliencia-page-1-e45694b912.json",
-      "reserved_at": "2026-10-05T18:01:50.537753+00:00",
-      "last_attempt_at": "2026-10-05T18:01:50.537753+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Campeonato_Paulista_de_Futebol_Feminino_Sub-20_de_2022.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "image_page_url": "https://commons.wikimedia.org/wiki/File:Campeonato_Paulista_de_Futebol_Feminino_Sub-20_de_2022.png",
-      "bank_image_id": "IMG0140",
-      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
