@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-04T19:34:13-03:00",
-  "fim": "2026-10-04T19:35:54-03:00",
+  "inicio": "2026-10-04T22:20:43-03:00",
+  "fim": "2026-10-04T22:23:14-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -182,8 +182,7 @@
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 0,
-      "erro": "HTTPError:HTTP Error 403: Forbidden"
+      "resultados": 6
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -212,11 +211,11 @@
   "atualizadas": 2,
   "total_arquivo": 56,
   "erros": [
-    "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/04-10-2026/03-03-2027:HTTPError:HTTP Error 403: Forbidden",
+    "page:https://fenapaf.org.br/curso-integridade-futebol:URLError:<urlopen error [Errno -3] Temporary failure in name resolution>",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {
