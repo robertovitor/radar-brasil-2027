@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261005-10",
-  "started_at": "2026-10-05T10:55:08-03:00",
-  "completed_at": "2026-10-05T10:59:01-03:00",
+  "cycle_id": "20261005-11",
+  "started_at": "2026-10-05T11:43:40-03:00",
+  "completed_at": "2026-10-05T11:45:59-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,18 +10,18 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 14,
-  "aprovados_novos": 1,
+  "candidatos_publicos": 12,
+  "aprovados_novos": 0,
   "rejeitados": 3,
-  "duplicados": 10,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "duplicados": 9,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "airtable_writes_total": 0,
   "observacoes_operacionais": [
     "Foram executadas exatamente duas leituras Airtable, uma por tabela, com pageSize 1000, sem filtros, ordenação, schema ou paginação adicional.",
     "Os 57 registros foram processados exclusivamente a partir desses snapshots; não havia backlog acionável e nenhuma escrita no Airtable foi necessária.",
-    "A pesquisa recente cobriu Seleção Brasileira Feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas como pauta autônoma.",
-    "Foi aprovada uma pauta sobre o impacto da MP 1.394/2026 no naming right da Arena Fonte Nova, com ressalva explícita de que a rescisão contratual e a data final de retirada do nome ainda não foram formalizadas.",
-    "O inbox foi atualizado em commit próprio. Gre-Nal terminal e Maria, Maria terminal foram excluídos dos candidatos e permanecem ausentes. Nenhum merge, e-mail ou Instagram foi disparado; a agenda não foi alterada."
+    "A pesquisa recente cobriu Seleção Brasileira Feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações, excluindo categorias de base.",
+    "Os resultados relevantes já constavam em dados.json ou noticias.json, incluindo concentração da Seleção, sorteio, patrocínio Sicoob, inspeções, ingressos e mudanças de naming rights; itens gerais, políticos ou de base foram rejeitados editorialmente.",
+    "Nenhuma pauta nova foi aprovada; o inbox permaneceu vazio e inalterado. Gre-Nal terminal e Maria, Maria terminal estão ausentes. Nenhum merge, e-mail ou Instagram foi disparado; a agenda não foi alterada."
   ]
 }
