@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-04T22:20:43-03:00",
-  "fim": "2026-10-04T22:23:14-03:00",
+  "inicio": "2026-10-05T04:44:22-03:00",
+  "fim": "2026-10-05T04:46:04-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -126,7 +126,7 @@
     },
     {
       "hub": "https://plataforma.cbfacademy.com.br/pt-br/noticias/244-futebol-feminino-brasileiro",
-      "resultados": 4
+      "resultados": 3
     },
     {
       "hub": "https://ludopedio.org.br/agenda-de-eventos/",
@@ -200,7 +200,7 @@
       "erro": "HTTPError:HTTP Error 500: Internal Server Error"
     },
     {
-      "hub": "https://www.guiafutfem.com.br/eventos/04-10-2026/03-03-2027",
+      "hub": "https://www.guiafutfem.com.br/eventos/05-10-2026/04-03-2027",
       "resultados": 0,
       "erro": "HTTPError:HTTP Error 403: Forbidden"
     }
@@ -208,14 +208,13 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 52,
   "adicionadas": 0,
-  "atualizadas": 2,
+  "atualizadas": 50,
   "total_arquivo": 56,
   "erros": [
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
-    "hub:https://www.guiafutfem.com.br/eventos/04-10-2026/03-03-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://fenapaf.org.br/curso-integridade-futebol:URLError:<urlopen error [Errno -3] Temporary failure in name resolution>",
+    "hub:https://www.guiafutfem.com.br/eventos/05-10-2026/04-03-2027:HTTPError:HTTP Error 403: Forbidden",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {
