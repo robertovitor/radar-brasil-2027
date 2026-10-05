@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-05T13:28:19-03:00",
-  "fim": "2026-10-05T13:30:40-03:00",
+  "inicio": "2026-10-05T19:58:09-03:00",
+  "fim": "2026-10-05T20:00:48-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -112,7 +112,7 @@
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 34
+      "resultados": 38
     }
   ],
   "hubs": [
@@ -146,7 +146,8 @@
     },
     {
       "hub": "https://prefeitura.rio/esporte/",
-      "resultados": 4
+      "resultados": 0,
+      "erro": "TimeoutError:The read operation timed out"
     },
     {
       "hub": "https://womanifs.com/",
@@ -207,11 +208,12 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 54,
-  "adicionadas": 1,
+  "oportunidades_validas_na_execucao": 58,
+  "adicionadas": 3,
   "atualizadas": 3,
-  "total_arquivo": 57,
+  "total_arquivo": 60,
   "erros": [
+    "hub:https://prefeitura.rio/esporte/:TimeoutError:The read operation timed out",
     "hub:https://jogasp.prefeitura.sp.gov.br/:URLError:<urlopen error timed out>",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
