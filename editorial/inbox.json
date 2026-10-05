@@ -1,4 +1,17 @@
 {
   "eventos": [],
-  "noticias": []
+  "noticias": [
+    {
+      "Data": "2026-09-30",
+      "DataBR": "30/09/2026",
+      "Titulo": "Lei permite criação de SAF dedicada apenas ao futebol feminino",
+      "Tema": "Legislação / investimento / profissionalização",
+      "CidadeUF": "Brasil",
+      "Veiculo": "Câmara dos Deputados",
+      "Link": "https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-permanentes/cespo/noticias/lei-torna-futebol-feminino-prioridade-na-politica-de-esporte",
+      "Sentimento": "Positivo",
+      "Impacto": "Alto",
+      "Resumo": "A Lei nº 15.522 alterou a Lei da Sociedade Anônima do Futebol para permitir a formação de atletas nas modalidades masculina e feminina ou apenas feminina. A mudança abre espaço para SAFs voltadas exclusivamente ao futebol feminino, reduzindo uma barreira estrutural a novos investimentos e à profissionalização da modalidade no ciclo da Copa Feminina 2027."
+    }
+  ]
 }
