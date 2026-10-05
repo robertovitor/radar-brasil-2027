@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261004-23",
-  "started_at": "2026-10-04T23:42:31-03:00",
-  "completed_at": "2026-10-04T23:43:46-03:00",
+  "cycle_id": "20261005-00",
+  "started_at": "2026-10-05T00:48:16-03:00",
+  "completed_at": "2026-10-05T00:50:24-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -19,12 +19,11 @@
   "airtable_writes_total": 0,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras Airtable completas na base appB3SvKrUP82i5V7, pageSize 1000, sem filtros, sort, schema ou paginação adicional; ambas retornaram sem cursor.",
-    "Backlog integral reavaliado: nenhum registro com Status vazio, Pendente ou Em verificação e nenhum aprovado ainda não incorporado/publicado; nenhuma escrita Airtable necessária.",
+    "Backlog integral reavaliado a partir dessas duas leituras: nenhum registro com Status vazio, Pendente ou Em verificação e nenhum aprovado ainda não incorporado/publicado; nenhuma escrita Airtable necessária.",
     "As quatro leituras iniciais do GitHub encontraram 110 eventos, 222 notícias e inbox vazio.",
     "Pesquisa pública recente cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Nenhuma pauta pública nova atingiu os critérios de novidade material e deduplicação nesta execução.",
-    "Apresentação da Seleção, amistosos, ingressos, sorteio, Fan Festival de Brasília, voluntariado, patrocínios, cobertura de mídia, final do Brasileirão e SAF feminina já constavam em noticias.json ou eram duplicatas semânticas.",
-    "Conteúdos de categorias de base, futebol masculino, páginas antigas ou fontes sem vínculo editorial foram rejeitados.",
+    "Os 18 candidatos públicos foram comparados contra dados.json, noticias.json e inbox.json: 14 eram duplicatas exatas ou semânticas e 4 estavam fora do escopo, sem novidade material ou fora da janela editorial.",
+    "Nenhuma pauta pública nova atingiu simultaneamente os critérios de escopo, frescor, fonte verificável e novidade material nesta execução.",
     "O inbox permaneceu inalterado e não houve commit de inbox.",
     "Gre-Nal terminal e Maria, Maria terminal foram excluídos dos candidatos e não foram reenfileirados.",
     "Nenhum merge, e-mail, Instagram ou alteração de schedule foi executado."
