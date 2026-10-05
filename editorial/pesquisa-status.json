@@ -1,14 +1,14 @@
 {
-  "cycle_id": "20261005-16",
-  "started_at": "2026-10-05T16:48:41-03:00",
-  "completed_at": "2026-10-05T16:51:04-03:00",
+  "cycle_id": "20261005-17",
+  "started_at": "2026-10-05T17:48:46-03:00",
+  "completed_at": "2026-10-05T17:51:45-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
     "sugestoes": 1,
     "sugestoes_noticias": 1
   },
-  "sugestoes_lidas": 31,
+  "sugestoes_lidas": 32,
   "sugestoes_noticias_lidas": 26,
   "candidatos_publicos": 16,
   "aprovados_novos": 0,
@@ -16,12 +16,13 @@
   "duplicados": 12,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
-  "airtable_writes_total": 0,
+  "airtable_writes_total": 1,
   "observacoes_operacionais": [
     "Executadas exatamente duas leituras completas no Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
-    "Os 57 registros foram processados exclusivamente a partir dos snapshots; não havia Status vazio, Em verificação ou Pendente, nem item aprovado ainda não incorporado. Nenhuma escrita Airtable foi necessária.",
+    "Os 58 registros foram processados exclusivamente a partir dos snapshots. O novo registro Esquenta MVA, em Porto Alegre, tinha título, link e cidade, porém sem data, horário e local exato verificáveis.",
+    "O registro Esquenta MVA foi mantido como Pendente e recebeu Resultado da verificação iniciado por PENDENTE_ENRIQUECIMENTO, detalhando os campos faltantes; não foi rejeitado nem enviado ao inbox.",
     "Pesquisa pública recente cobriu Seleção Brasileira feminina principal, Copa Feminina FIFA 2027, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações, com categorias de base excluídas.",
-    "Preparação e agenda da Seleção, sorteio, ingressos, engajamento de torcida, patrocínios, voluntariado, cidades-sede e Flamengo–Maricá já estavam incorporados ou cobertos semanticamente; quatro resultados foram rejeitados por categoria de base, fora de escopo, baixa novidade editorial ou conteúdo político.",
+    "As pautas públicas verificáveis sobre amistosos, estratégia CBF-FIFA, público do Brasileirão, Hyundai, Sicoob, Flamengo-Maricá e radar da Seleção já estavam incorporadas ou cobertas semanticamente; quatro resultados foram rejeitados por fora de escopo, conteúdo político, futebol masculino ou baixa novidade editorial.",
     "Nenhum item foi adicionado ao inbox. As pautas terminais Gre-Nal e Maria, Maria não constam no inbox. Não houve merge, e-mail, Instagram ou alteração de agenda."
   ]
 }
