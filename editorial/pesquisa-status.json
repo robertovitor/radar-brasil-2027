@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261005-05",
-  "started_at": "2026-10-05T05:49:32-03:00",
-  "completed_at": "2026-10-05T05:50:58-03:00",
+  "cycle_id": "20261005-06",
+  "started_at": "2026-10-05T06:47:52-03:00",
+  "completed_at": "2026-10-05T06:50:16-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,18 +10,18 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 28,
+  "candidatos_publicos": 23,
   "aprovados_novos": 0,
-  "rejeitados": 7,
-  "duplicados": 21,
+  "rejeitados": 8,
+  "duplicados": 15,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "airtable_writes_total": 0,
   "observacoes_operacionais": [
     "Foram executadas exatamente duas leituras Airtable, uma por tabela, com pageSize 1000, sem filtros, ordenação, schema ou paginação adicional.",
-    "Os 57 registros foram processados a partir dos mesmos snapshots; não havia status vazio, Pendente, Em verificação ou aprovado ainda não publicado, portanto nenhuma escrita no Airtable foi necessária.",
-    "A pesquisa pública cobriu Seleção Brasileira Feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações. Nenhuma pauta inédita segura foi identificada.",
-    "A apresentação da Seleção em Porto Alegre, o voluntariado em Fortaleza, a preparação das sedes e os ingressos já estavam cobertos semanticamente em dados.json ou noticias.json. Opinião, política, futebol masculino, categorias de base e conteúdo antigo foram rejeitados editorialmente.",
-    "O inbox permaneceu inalterado e vazio; Gre-Nal terminal e Maria, Maria terminal não foram reenfileirados. Nenhum merge, e-mail ou Instagram foi disparado; a agenda não foi alterada."
+    "Os 57 registros foram processados exclusivamente a partir desses snapshots; não havia backlog acionável, portanto nenhuma escrita no Airtable foi necessária.",
+    "A pesquisa recente cobriu Seleção Brasileira Feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações.",
+    "O anúncio do Sicoob já constava em noticias.json e a visita CBF/FIFA ao Fluminense era duplicata semântica da pauta do CEFAN. Conteúdos masculinos, políticos, antigos, de base ou irrelevantes foram rejeitados editorialmente.",
+    "Nenhuma pauta nova foi aprovada; o inbox permaneceu vazio e inalterado. Gre-Nal terminal e Maria, Maria terminal estão ausentes. Nenhum merge, e-mail ou Instagram foi disparado; a agenda não foi alterada."
   ]
 }
