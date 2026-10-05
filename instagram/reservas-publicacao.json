@@ -105,6 +105,18 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-permanentes/cespo/noticias/lei-torna-futebol-feminino-prioridade-na-politica-de-esporte",
+      "post_file": "instagram/fila/automatica/-noticias-lei-torna-futebol-feminino-prioridade-na-politica-de-esporte-dcd036fd70.json",
+      "reserved_at": "2026-10-05T06:53:32.264709+00:00",
+      "last_attempt_at": "2026-10-05T06:53:32.264709+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Canad%C3%A1_vence_o_Brasil_no_futebol_feminino%2C_na_Rio_2016_%2828807778890%29.jpg/1920px-Canad%C3%A1_vence_o_Brasil_no_futebol_feminino%2C_na_Rio_2016_%2828807778890%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "image_page_url": "https://commons.wikimedia.org/wiki/File:Canad%C3%A1_vence_o_Brasil_no_futebol_feminino,_na_Rio_2016_(28807778890).jpg",
+      "bank_image_id": "IMG0185",
+      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
