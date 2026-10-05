@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-05T04:44:22-03:00",
-  "fim": "2026-10-05T04:46:04-03:00",
+  "inicio": "2026-10-05T13:28:19-03:00",
+  "fim": "2026-10-05T13:30:40-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -112,7 +112,7 @@
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 32
+      "resultados": 34
     }
   ],
   "hubs": [
@@ -178,7 +178,8 @@
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
-      "resultados": 1
+      "resultados": 0,
+      "erro": "URLError:<urlopen error timed out>"
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
@@ -206,11 +207,12 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 52,
-  "adicionadas": 0,
-  "atualizadas": 50,
-  "total_arquivo": 56,
+  "oportunidades_validas_na_execucao": 54,
+  "adicionadas": 1,
+  "atualizadas": 3,
+  "total_arquivo": 57,
   "erros": [
+    "hub:https://jogasp.prefeitura.sp.gov.br/:URLError:<urlopen error timed out>",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
