@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261005-07",
-  "started_at": "2026-10-05T07:49:50-03:00",
-  "completed_at": "2026-10-05T07:52:24-03:00",
+  "cycle_id": "20261005-08",
+  "started_at": "2026-10-05T08:40:30-03:00",
+  "completed_at": "2026-10-05T08:42:24-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": {
@@ -10,10 +10,10 @@
   },
   "sugestoes_lidas": 31,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 24,
+  "candidatos_publicos": 11,
   "aprovados_novos": 0,
-  "rejeitados": 7,
-  "duplicados": 17,
+  "rejeitados": 3,
+  "duplicados": 8,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "airtable_writes_total": 0,
@@ -21,7 +21,7 @@
     "Foram executadas exatamente duas leituras Airtable, uma por tabela, com pageSize 1000, sem filtros, ordenação, schema ou paginação adicional.",
     "Os 57 registros foram processados exclusivamente a partir desses snapshots; não havia backlog acionável e nenhuma escrita no Airtable foi necessária.",
     "A pesquisa recente cobriu Seleção Brasileira Feminina principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações.",
-    "Amistosos, ingressos, inspeções, recorde de público e Sicoob já estavam em dados.json ou noticias.json. Conteúdo masculino, político, antigo, de base ou irrelevante foi rejeitado editorialmente.",
+    "Voluntariado, ingressos, calendário, cidades-sede e engajamento já estavam cobertos em dados.json ou noticias.json. Material antigo, de base ou fora do escopo foi rejeitado editorialmente.",
     "Nenhuma pauta nova foi aprovada; o inbox permaneceu vazio e inalterado. Gre-Nal terminal e Maria, Maria terminal estão ausentes. Nenhum merge, e-mail ou Instagram foi disparado; a agenda não foi alterada."
   ]
 }
