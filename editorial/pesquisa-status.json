@@ -1,39 +1,37 @@
 {
-  "cycle_id": "20261006-08",
-  "started_at": "2026-10-06T08:42:24-03:00",
-  "completed_at": "2026-10-06T08:44:38-03:00",
-  "stage": "completed",
-  "airtable_reads_total": 2,
+  "cycle_id": "20261006-09",
+  "started_at": "2026-10-06T09:48:01-03:00",
+  "completed_at": "2026-10-06T09:49:18-03:00",
+  "stage": "failed",
+  "airtable_reads_total": 1,
   "airtable_reads": [
     {
       "table": "Sugestões",
       "table_id": "tblf6qaCTZmKo48m2",
-      "reads": 1
+      "reads": 1,
+      "records": 34
     },
     {
       "table": "Sugestões de Notícias",
       "table_id": "tbl0iuH4F5Hog8gDD",
-      "reads": 1
+      "reads": 0,
+      "error": "502 Bad Gateway; tentativa não produziu snapshot reutilizável"
     }
   ],
   "sugestoes_lidas": 34,
-  "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 15,
+  "sugestoes_noticias_lidas": 0,
+  "candidatos_publicos": 0,
   "aprovados_novos": 0,
-  "pendentes_enriquecimento": 0,
-  "rejeitados": 5,
-  "duplicados": 14,
+  "rejeitados": 0,
+  "duplicados": 0,
   "inbox_itens_adicionados": 0,
-  "inbox_itens_removidos": 4,
-  "inbox_commit_needed": true,
-  "inbox_commit_sha": "f1389d195d0ea3a85d2ef403001b0b64a5722f76",
+  "inbox_commit_needed": false,
   "observacoes_operacionais": [
-    "Foram executadas exatamente duas leituras completas do Airtable, uma por tabela, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
-    "Os snapshots não continham backlog elegível: nenhum Status vazio, Em verificação ou Pendente e nenhum aprovado ainda não publicado. Nenhuma escrita no Airtable foi necessária.",
-    "A pesquisa pública recente cobriu Seleção Brasileira feminina principal, Copa Feminina FIFA 2027, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações, com exclusão de categorias de base.",
-    "Nenhum candidato público novo atingiu simultaneamente frescor, escopo e não duplicidade para aprovação nesta rodada.",
-    "O inbox recebido continha quatro notícias inválidas e foi saneado em commit próprio: uma pauta Gre-Nal terminal, duas duplicatas editoriais e uma pauta de futebol masculino fora do escopo.",
-    "A decisão terminal de Maria, Maria foi reencontrada no histórico do Airtable e respeitada; não houve reenfileiramento.",
-    "Gre-Nal terminal e Maria, Maria terminal ficaram ausentes do inbox final. Não foram disparados merge, e-mail ou Instagram."
+    "A leitura completa de Sugestões foi executada com pageSize 1000 e retornou 34 registros.",
+    "A leitura obrigatória de Sugestões de Notícias foi tentada uma vez, mas o Airtable respondeu 502 Bad Gateway; como não houve snapshot utilizável, ela não foi contabilizada como leitura concluída.",
+    "Não houve nova tentativa para respeitar o limite de exatamente duas chamadas totais ao Airtable nesta execução.",
+    "As quatro leituras iniciais do GitHub foram concluídas. Pesquisa pública, processamento do backlog, escritas Airtable e alteração do inbox não foram executados porque faltou o segundo snapshot obrigatório.",
+    "O inbox lido estava vazio; Gre-Nal terminal e Maria, Maria terminal não estavam presentes.",
+    "Não foram disparados merge, e-mail ou Instagram."
   ]
 }
