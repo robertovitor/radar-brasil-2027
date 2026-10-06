@@ -105,6 +105,15 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://www.cbf.com.br/selecao-brasileira/noticias/noticias/selecao-feminina-principal/presidente-da-federacao-gaucha-de-futebol-visita-selecao-feminina-em-porto-alegre",
+      "post_file": "instagram/fila/automatica/da-federacao-gaucha-de-futebol-visita-selecao-feminina-em-porto-alegre-d343b06b88.json",
+      "reserved_at": "2026-10-06T07:18:11.854165+00:00",
+      "last_attempt_at": "2026-10-06T07:18:11.854165+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "visual_mode": "fallback_visual"
     }
   ]
 }
