@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261005-22",
-  "started_at": "2026-10-05T22:49:04-03:00",
-  "completed_at": "2026-10-05T23:00:20-03:00",
+  "cycle_id": "20261005-23",
+  "started_at": "2026-10-05T23:42:09-03:00",
+  "completed_at": "2026-10-05T23:51:30-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": [
@@ -16,21 +16,21 @@
   ],
   "sugestoes_lidas": 34,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 18,
-  "aprovados_novos": 1,
+  "candidatos_publicos": 14,
+  "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 6,
-  "duplicados": 12,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
-  "airtable_writes_total": 1,
+  "rejeitados": 4,
+  "duplicados": 11,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
+  "airtable_writes_total": 0,
   "observacoes_operacionais": [
     "Foram executadas exatamente duas leituras Airtable completas, uma por tabela, com pageSize 1000, sem filtros, ordenação, schema ou paginação adicional.",
-    "Jogo das Lendas já estava incorporado em dados.json e foi reconciliado no Airtable como publicado; não foi reenfileirado.",
-    "Foi aprovada a notícia oficial da CBF sobre a presença de atletas das cinco regiões do Brasil na Seleção Feminina principal para a Data FIFA de outubro, publicada em 05/10/2026 e ausente de noticias.json e do inbox inicial.",
+    "Não havia registros com Status vazio, Em verificação, Pendente ou aprovado ainda não incorporado/publicado.",
+    "A notícia oficial da CBF sobre atletas das cinco regiões já constava em noticias.json; Jogo das Lendas e Esquenta MVA já estavam reconciliados como publicados.",
     "A pesquisa pública cobriu Seleção Brasileira feminina principal, cidades-sede, estádios, infraestrutura, mobilidade, turismo, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações; categorias de base foram excluídas.",
-    "Resultados restantes foram classificados como duplicados, antigos, fora do recorte editorial ou relacionados a conteúdo político sem novidade operacional para o Radar.",
-    "As decisões terminais Gre-Nal e Maria, Maria foram respeitadas e nenhum desses itens foi incluído no inbox.",
-    "Não foram alterados dados.json, noticias.json ou planilha; merge, e-mail e Instagram não foram acionados."
+    "Os resultados foram classificados como duplicados, antigos, políticos ou fora do recorte operacional; nenhuma pauta inédita segura foi aprovada.",
+    "As decisões terminais Gre-Nal e Maria, Maria foram respeitadas e nenhum desses itens consta no inbox.",
+    "editorial/inbox.json foi preservado sem alteração. Não foram alterados dados.json, noticias.json ou planilha; merge, e-mail e Instagram não foram acionados."
   ]
 }
