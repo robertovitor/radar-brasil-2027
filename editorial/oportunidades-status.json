@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-05T19:58:09-03:00",
-  "fim": "2026-10-05T20:00:48-03:00",
+  "inicio": "2026-10-06T00:22:50-03:00",
+  "fim": "2026-10-06T00:24:20-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -62,10 +62,10 @@
     },
     {
       "query": "site:womanifs.com inscrição OR registration 2026 2027",
-      "resultados": 0,
+      "resultados": 5,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": 5
       }
     },
     {
@@ -146,8 +146,7 @@
     },
     {
       "hub": "https://prefeitura.rio/esporte/",
-      "resultados": 0,
-      "erro": "TimeoutError:The read operation timed out"
+      "resultados": 4
     },
     {
       "hub": "https://womanifs.com/",
@@ -179,8 +178,7 @@
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
-      "resultados": 0,
-      "erro": "URLError:<urlopen error timed out>"
+      "resultados": 1
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
@@ -202,23 +200,21 @@
       "erro": "HTTPError:HTTP Error 500: Internal Server Error"
     },
     {
-      "hub": "https://www.guiafutfem.com.br/eventos/05-10-2026/04-03-2027",
+      "hub": "https://www.guiafutfem.com.br/eventos/06-10-2026/05-03-2027",
       "resultados": 0,
       "erro": "HTTPError:HTTP Error 403: Forbidden"
     }
   ],
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 58,
-  "adicionadas": 3,
-  "atualizadas": 3,
+  "adicionadas": 0,
+  "atualizadas": 56,
   "total_arquivo": 60,
   "erros": [
-    "hub:https://prefeitura.rio/esporte/:TimeoutError:The read operation timed out",
-    "hub:https://jogasp.prefeitura.sp.gov.br/:URLError:<urlopen error timed out>",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
-    "hub:https://www.guiafutfem.com.br/eventos/05-10-2026/04-03-2027:HTTPError:HTTP Error 403: Forbidden",
+    "hub:https://www.guiafutfem.com.br/eventos/06-10-2026/05-03-2027:HTTPError:HTTP Error 403: Forbidden",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {
