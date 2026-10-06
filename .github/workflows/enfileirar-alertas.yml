@@ -3,7 +3,15 @@ name: Enfileirar alertas aos assinantes
 on:
   schedule:
     - cron: "5 * * * *"
+    - cron: "12 * * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'dados.json'
+      - 'noticias.json'
+      - 'scripts/enfileirar_alertas.py'
+      - '.github/workflows/enfileirar-alertas.yml'
 
 permissions:
   contents: read
@@ -23,6 +31,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Registrar gatilho
+        run: |
+          echo "trigger_event=${{ github.event_name }}"
+          echo "trigger_schedule=${{ github.event.schedule || '' }}"
+          echo "triggered_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
       - name: Enfileirar no máximo um item pendente
         env:
           AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
