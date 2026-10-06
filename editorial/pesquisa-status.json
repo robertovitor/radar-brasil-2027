@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261006-00",
-  "started_at": "2026-10-06T00:47:17-03:00",
-  "completed_at": "2026-10-06T00:50:38-03:00",
+  "cycle_id": "20261006-01",
+  "started_at": "2026-10-06T01:40:55-03:00",
+  "completed_at": "2026-10-06T01:42:38-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": [
@@ -16,20 +16,19 @@
   ],
   "sugestoes_lidas": 34,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 21,
-  "aprovados_novos": 0,
+  "candidatos_publicos": 18,
+  "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
   "rejeitados": 1,
-  "duplicados": 3,
-  "inbox_itens_adicionados": 0,
+  "duplicados": 17,
+  "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Foram executadas exatamente duas leituras completas do Airtable, sem filtros, ordenação, schema ou paginação adicional.",
     "O backlog das duas leituras não apresentou registros com Status vazio, Pendente ou Em verificação, nem aprovados ainda não incorporados/publicados; nenhuma escrita Airtable foi necessária.",
-    "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações, com exclusão de categorias de base.",
-    "A pauta terminal Gre-Nal foi removida do inbox e não foi reenfileirada. A pauta terminal Maria, Maria não foi adicionada.",
-    "As outras duas entradas encontradas no inbox eram duplicatas já cobertas por noticias.json/dados.json e também foram removidas.",
-    "Nenhuma pauta pública nova superou simultaneamente os critérios de frescor, verificabilidade e não redundância nesta rodada.",
+    "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações, excluindo categorias de base.",
+    "A pauta nova sobre a visita do presidente da Federação Gaúcha de Futebol à Seleção Feminina em Porto Alegre foi validada em fonte oficial da CBF e adicionada ao inbox.",
+    "A ocorrência terminal Maria, Maria presente no histórico do Airtable foi respeitada como decisão final e não reenfileirada. A pauta terminal Gre-Nal não foi adicionada.",
     "Não foram disparados merge, e-mail ou Instagram."
   ]
 }
