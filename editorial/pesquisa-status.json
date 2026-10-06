@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261006-01",
-  "started_at": "2026-10-06T01:40:55-03:00",
-  "completed_at": "2026-10-06T01:42:38-03:00",
+  "cycle_id": "20261006-02",
+  "started_at": "2026-10-06T02:46:14-03:00",
+  "completed_at": "2026-10-06T02:47:45-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": [
@@ -16,18 +16,18 @@
   ],
   "sugestoes_lidas": 34,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 18,
+  "candidatos_publicos": 16,
   "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
   "rejeitados": 1,
-  "duplicados": 17,
+  "duplicados": 15,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "observacoes_operacionais": [
     "Foram executadas exatamente duas leituras completas do Airtable, sem filtros, ordenação, schema ou paginação adicional.",
-    "O backlog das duas leituras não apresentou registros com Status vazio, Pendente ou Em verificação, nem aprovados ainda não incorporados/publicados; nenhuma escrita Airtable foi necessária.",
+    "O backlog não apresentou registros com Status vazio, Pendente ou Em verificação, nem aprovados ainda não incorporados/publicados; nenhuma escrita Airtable foi necessária.",
     "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações, excluindo categorias de base.",
-    "A pauta nova sobre a visita do presidente da Federação Gaúcha de Futebol à Seleção Feminina em Porto Alegre foi validada em fonte oficial da CBF e adicionada ao inbox.",
+    "A recepção oficial da Seleção Argentina em Porto Alegre, com uso do CT Hélio Dourado e 18,7 mil ingressos vendidos para o amistoso no Beira-Rio, foi validada em fonte oficial da Prefeitura e adicionada ao inbox.",
     "A ocorrência terminal Maria, Maria presente no histórico do Airtable foi respeitada como decisão final e não reenfileirada. A pauta terminal Gre-Nal não foi adicionada.",
     "Não foram disparados merge, e-mail ou Instagram."
   ]
