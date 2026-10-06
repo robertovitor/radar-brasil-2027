@@ -1,0 +1,29 @@
+name: Enfileirar alertas aos assinantes
+
+on:
+  schedule:
+    - cron: "5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: enfileirar-alertas-assinantes
+  cancel-in-progress: false
+
+jobs:
+  enfileirar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Enfileirar no máximo um item pendente
+        env:
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+        run: python scripts/enfileirar_alertas.py
