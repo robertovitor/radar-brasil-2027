@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261006-05",
-  "started_at": "2026-10-06T05:46:14-03:00",
-  "completed_at": "2026-10-06T05:50:04-03:00",
+  "cycle_id": "20261006-06",
+  "started_at": "2026-10-06T06:48:36-03:00",
+  "completed_at": "2026-10-06T06:49:47-03:00",
   "stage": "completed",
   "airtable_reads_total": 2,
   "airtable_reads": [
@@ -16,18 +16,18 @@
   ],
   "sugestoes_lidas": 34,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 15,
+  "candidatos_publicos": 18,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 5,
-  "duplicados": 11,
+  "rejeitados": 3,
+  "duplicados": 16,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "observacoes_operacionais": [
     "Foram executadas exatamente duas leituras completas do Airtable, com pageSize 1000 e sem filtros, ordenação, schema ou paginação adicional.",
     "O backlog não apresentou registros com Status vazio, Pendente ou Em verificação, nem aprovados ainda não incorporados/publicados; nenhuma escrita Airtable foi necessária.",
     "A pesquisa pública cobriu Seleção Brasileira principal, cidades-sede, estádios, infraestrutura, turismo, mobilidade, fan zones, voluntariado, hospitalidade, ingressos, patrocinadores, marcas e federações, excluindo categorias de base.",
-    "Os candidatos públicos relevantes já estavam representados em noticias.json ou dados.json; resultados espúrios, políticos, genéricos ou sem fato editorial novo foram rejeitados pelo recorte. Nenhum item foi adicionado ao inbox.",
+    "Os candidatos relevantes já estavam representados em noticias.json ou dados.json; conteúdos de lesão, política ou resultados espúrios foram rejeitados pelo recorte. Nenhum item foi adicionado ao inbox.",
     "A ocorrência terminal Maria, Maria presente no histórico do Airtable foi respeitada como decisão final e não reenfileirada. A pauta terminal Gre-Nal não apareceu como candidata e não foi adicionada.",
     "Não foram disparados merge, e-mail ou Instagram."
   ]
