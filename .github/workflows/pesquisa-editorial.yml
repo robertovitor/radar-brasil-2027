@@ -98,6 +98,15 @@ jobs:
           git pull --rebase origin main
           git push origin main
 
+      - name: Enfileirar alertas aos assinantes
+        if: always()
+        env:
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/enfileirar_alertas.py
+
       - name: Falhar workflow se oportunidades falhou
         if: steps.oportunidades.outputs.exit_code != '0'
         run: |
