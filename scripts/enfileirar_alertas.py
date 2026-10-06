@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, os, re, sys, urllib.parse, urllib.request
+import json, os, re, subprocess, urllib.parse, urllib.request
 from datetime import datetime, timezone
 
 BASE="appB3SvKrUP82i5V7"
@@ -59,13 +59,27 @@ for r in led:
     ident=str(f.get("ID evento") or "").strip()
     email=str(f.get("Email") or "").strip().lower()
     if ident:
-        sent_any.add(ident); sent.add((ident,email))
+        sent.add((ident,email))
 
 queued=set()
 for r in queue:
     f=r.get("fields",{})
     if name(f.get("Status")) not in ("Pendente","Enviando","Enviado"): continue
     queued.add((str(f.get("Identidade") or ""),str(f.get("Email") or "").lower()))
+
+def first_seen(ident, title):
+    # Usa o histórico real do dados.json: primeiro commit em que o item apareceu.
+    needles=[x for x in (ident,title) if x]
+    for needle in needles:
+        try:
+            out=subprocess.check_output(
+                ["git","log","--reverse","--format=%cI","-S",needle,"--","dados.json"],
+                cwd=ROOT,text=True,stderr=subprocess.DEVNULL,timeout=20
+            ).strip().splitlines()
+            if out: return out[0].strip()
+        except Exception:
+            pass
+    return ""
 
 candidates=[]
 for ev in events:
@@ -76,15 +90,30 @@ for ev in events:
     ident=str(ev.get("ID") or "").strip()
     if not ident:
         ident=norm(title)+"-"+norm(date)+"-"+norm(ev.get("Link") or ev.get("Fonte") or "")
-    if ident in sent_any: continue
-    # itens publicados mais recentemente sem ledger; datas futuras não bloqueiam
-    candidates.append((date,title,ident,ev))
+    published=first_seen(ident,title)
+    if not published:
+        print("skip_without_first_seen="+ident)
+        continue
+
+    recipients=[]
+    for email,meta in eligible.items():
+        if (ident,email) in sent or (ident,email) in queued: continue
+        confirmed=meta["confirmed"]
+        # Anti-backlog: quem confirmou depois da publicação não recebe item antigo.
+        if confirmed and confirmed > published:
+            continue
+        recipients.append(email)
+    if recipients:
+        candidates.append((published,date,title,ident,ev,recipients))
 
 if not candidates:
     print("no_pending=true"); raise SystemExit(0)
-# maior data de evento primeiro; suficiente para backlog atual e uma unidade por rodada
-candidates.sort(key=lambda x:(x[0],x[1]),reverse=True)
-date,title,ident,ev=candidates[0]
+
+# Novidade real primeiro: data da primeira publicação no Radar, nunca data futura do evento.
+candidates.sort(key=lambda x:(x[0],x[2]),reverse=True)
+published,date,title,ident,ev,recipients=candidates[0]
+print("selected_item="+ident)
+print("selected_first_seen="+published)
 
 records=[]
 for email,meta in eligible.items():
