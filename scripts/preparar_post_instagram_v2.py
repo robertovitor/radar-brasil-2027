@@ -324,7 +324,7 @@ def retry_candidate_key(output):
 
 def run_with_quality_retry(max_attempts=8):
     """Continua para outro item quando a combinação atual falha em gates editoriais."""
-    blocked_path = pathlib.Path('instagram/bloqueados.json')
+    blocked_path = pathlib.Path('instagram/bloqueados-publicacao.json')
     original = blocked_path.read_bytes() if blocked_path.exists() else None
     recoverable_reasons = {
         'quality_gate_failed',
@@ -359,9 +359,14 @@ def run_with_quality_retry(max_attempts=8):
                 blocked = json.loads(blocked_path.read_text(encoding='utf-8')) if blocked_path.exists() else {}
             except Exception:
                 blocked = {}
-            if isinstance(blocked, list):
-                blocked = {str(x):True for x in blocked}
-            blocked[key] = {'reason':'temporary_quality_retry','attempt':attempt,'failure_reason':reason or 'quality_gate_failed'}
+            if not isinstance(blocked, dict):
+                blocked = {'blocked_keys': []}
+            keys = blocked.get('blocked_keys', [])
+            if not isinstance(keys, list):
+                keys = []
+            if key not in keys:
+                keys.append(key)
+            blocked['blocked_keys'] = keys
             blocked_path.write_text(json.dumps(blocked, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
             print(f'quality_retry_attempt={attempt}')
             print('quality_retry_reason=' + (reason or 'quality_gate_failed'))
