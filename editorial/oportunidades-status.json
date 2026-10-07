@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-07T06:22:12-03:00",
-  "fim": "2026-10-07T06:23:51-03:00",
+  "inicio": "2026-10-07T19:19:21-03:00",
+  "fim": "2026-10-07T19:21:43-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -166,16 +166,17 @@
     },
     {
       "hub": "https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas",
-      "resultados": 6
+      "resultados": 0,
+      "erro": "URLError:<urlopen error [Errno 101] Network is unreachable>"
     },
     {
       "hub": "https://www.gov.br/esporte/pt-br/noticias",
-      "resultados": 6
+      "resultados": 0,
+      "erro": "URLError:<urlopen error [Errno 101] Network is unreachable>"
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 0,
-      "erro": "HTTPError:HTTP Error 503: Service Unavailable"
+      "resultados": 3
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
@@ -208,11 +209,12 @@
   ],
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 60,
-  "adicionadas": 0,
-  "atualizadas": 58,
-  "total_arquivo": 63,
+  "adicionadas": 1,
+  "atualizadas": 3,
+  "total_arquivo": 64,
   "erros": [
-    "hub:https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer:HTTPError:HTTP Error 503: Service Unavailable",
+    "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:URLError:<urlopen error [Errno 101] Network is unreachable>",
+    "hub:https://www.gov.br/esporte/pt-br/noticias:URLError:<urlopen error [Errno 101] Network is unreachable>",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
