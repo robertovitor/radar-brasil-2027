@@ -113,6 +113,17 @@ def fit_title_complete(draw, title, width, start_size=88, min_size=58, max_lines
             print('title_shortened_automatically=true')
             print('art_title=' + candidate)
             return f, lines, True
+    # Última tentativa: ajuste tipográfico apenas para a arte textual.
+    # Não corta palavras nem usa reticências; o título da legenda permanece intacto.
+    if min_size <= 50 and max_lines >= 5:
+        for candidate in compact_title_candidates(original):
+            for size in range(min(48, start_size), 31, -2):
+                f = base.font(size, True)
+                lines = base.wrap(draw, candidate, f, width)
+                if len(lines) <= max_lines and all(draw.textbbox((0, 0), line, font=f)[2] <= width for line in lines):
+                    TITLE_RENDER_META[original] = {'original_title': original, 'art_title': candidate, 'title_shortened': candidate != original}
+                    print('text_fallback_typography_adjusted=true')
+                    return f, lines, True
     # Nunca corta título com reticências. Se nenhuma versão editorial
     # completa couber, falha fechado para a rodada tentar outro candidato.
     print('title_fit_failed_without_ellipsis=true')
@@ -150,7 +161,7 @@ def make_clean_fallback(out, title, kind, subtitle, key):
     draw.text((safe_left,1012), 'Copa do Mundo Feminina 2027 • Brasil', font=base.font(20,True), fill='white')
     pathlib.Path(out).parent.mkdir(parents=True, exist_ok=True)
     im.save(out, 'JPEG', quality=94, optimize=True)
-    return readable and f.size >= 50 and len(lines) <= 5, f.size, len(lines)
+    return readable and f.size >= 32 and len(lines) <= 5 and y <= 960, f.size, len(lines)
 
 base.make_original_art = make_clean_fallback
 smart.base.make_original_art = make_clean_fallback
