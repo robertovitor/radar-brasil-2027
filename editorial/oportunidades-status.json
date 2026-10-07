@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-06T22:51:50-03:00",
-  "fim": "2026-10-06T22:54:02-03:00",
+  "inicio": "2026-10-07T06:22:12-03:00",
+  "fim": "2026-10-07T06:23:51-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -134,7 +134,7 @@
     },
     {
       "hub": "https://ludopedio.org.br/agenda-de-eventos/?pagina=2",
-      "resultados": 9
+      "resultados": 7
     },
     {
       "hub": "https://www.cob.org.br/cultura-educacao/cursos-do-iob",
@@ -175,7 +175,7 @@
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
       "resultados": 0,
-      "erro": "HTTPError:HTTP Error 500: Internal Server Error"
+      "erro": "HTTPError:HTTP Error 503: Service Unavailable"
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
@@ -201,7 +201,7 @@
       "erro": "HTTPError:HTTP Error 500: Internal Server Error"
     },
     {
-      "hub": "https://www.guiafutfem.com.br/eventos/06-10-2026/05-03-2027",
+      "hub": "https://www.guiafutfem.com.br/eventos/07-10-2026/06-03-2027",
       "resultados": 0,
       "erro": "HTTPError:HTTP Error 403: Forbidden"
     }
@@ -209,14 +209,14 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 60,
   "adicionadas": 0,
-  "atualizadas": 2,
+  "atualizadas": 58,
   "total_arquivo": 63,
   "erros": [
-    "hub:https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer:HTTPError:HTTP Error 500: Internal Server Error",
+    "hub:https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer:HTTPError:HTTP Error 503: Service Unavailable",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
-    "hub:https://www.guiafutfem.com.br/eventos/06-10-2026/05-03-2027:HTTPError:HTTP Error 403: Forbidden",
+    "hub:https://www.guiafutfem.com.br/eventos/07-10-2026/06-03-2027:HTTPError:HTTP Error 403: Forbidden",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {
