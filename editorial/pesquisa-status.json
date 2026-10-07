@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261006-18",
-  "started_at": "2026-10-06T18:54:21-03:00",
-  "completed_at": "2026-10-06T18:56:25-03:00",
+  "cycle_id": "20261006-22",
+  "started_at": "2026-10-06T22:49:56-03:00",
+  "completed_at": "2026-10-06T22:51:50-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -17,10 +17,10 @@
   ],
   "sugestoes_lidas": 34,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 71,
+  "candidatos_publicos": 70,
   "aprovados_novos": 3,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 77,
+  "rejeitados": 76,
   "duplicados": 0,
   "inbox_itens_adicionados": 3,
   "inbox_commit_needed": true,
@@ -428,14 +428,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "FIFA lança marca da Copa Feminina 2027 no Rio - CGTN",
-      "fonte": "CGTN",
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFB6ejEzekx1SmJHOEk3cms0TG54bURwdlZBMUJ1YnlqbHRFM05UYVNBWi1GOGcwa1lzWWQ5SHVETlVfOGFEX3VEMnZCX20wdHhvX05fck5YelR4bTlFRTFSd1BmVlFvbXlR?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Fan Festival da Copa Feminina no DF será na Torre de TV - TV Sim Brasil",
       "fonte": "TV Sim Brasil",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQOFF0OFNmUmlwSS16cVIxajZqSXFxd0VNYnYzMDFZS3pZUWFYSnhocmJ4NGVIZEtGcjItcUV3VmtsZVVRdENHX0cwNUpKaTNSYWhlYkZTdU5PdDh3ZWxKUWhWeU9raFQ5ZzN4dEFIbzF3SlJoSnFxa2ItZ0x5Y2MyRDdYbThUWVRGTDY3ZENiM1ExOVdBcy1FeUVXV3Itdk5rUVpPcThORzU?oc=5",
@@ -492,6 +484,14 @@
     },
     {
       "origem": "google-news-trusted-source",
+      "titulo": "Prefeitura de Belo Horizonte faz reunião de planejamento para Copa do Mundo Feminina 2027 - O TEMPO",
+      "fonte": "O TEMPO",
+      "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxNN0tQcmdqRFNsb2xrUjNMTFJqVlM1djV6dWJVR2N5b0YtdnJFUkRGREoyeElLdzV2bTZlejR2Z0QxNjF4bk01NUJyd1Z1TUJVV1BaMjVpanFWVDVsVVFRUl93S3BJSXFEQ2ZuUjAxb0xqcV8zNm5lMWswZnZOV29EZHZhM2FLTWxWcDFzN0xxR2IyMVNTLW1ac243N3FVRDQzT1RHLXFtODVyUGRxOHFFV1dBYTY1VDhJazZ3UGdMQkRIckJ4OFZYanViX2xaY0R4dW11VWZ3SDRfOWhiMzV5TkJsVQ?oc=5",
+      "decisao": "aprovado",
+      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
+    },
+    {
+      "origem": "google-news-trusted-source",
       "titulo": "Brasil será sede da Copa do Mundo Feminina de 2027 - GE",
       "fonte": "GE",
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNc0FUVzVraHphQ0FSRkROWkNvbU96SVVndkJHTW80eDhJQ1lJdlRWYWZTbTlHd2p0QjVGaHhUd0xIUFFRY3Z4U2h5M0FQZnl6M2hDUHlsUDRZVkdaaENneEhDUnZ1a1pOYjFSZXZTdUVYVzlpbXEtRU9mTXF3LXJSRFFmS0NRVTJYSmllVG5ud0VKMDNUS1JBa3Zra0VLY3dWYWYwaXVJN1JJbHdIQ3gwVWVxVG0zT2dVZDVPZHpocWZqc3ZVWVHSAdQBQVVfeXFMUGEzcjF2UWlvUG1mQnNFTElsak5XeFpFTXNtMkhkdEdRTVh2TGZlYlQyZFVTTWlEVG1NQm9JajRoUVJWR25mVUNQSW1Iem1fbEYyY2F3SW9rRlpIcU1Wc3lXRDc5LWdmYWdzV2lhZFpySFUzZWo4SUVzYXIxeXZNOUhkZlJwRFRWdTMxVlZiZXl3YVZPSzJ0dGhkaG9yN1lRbE5FV3NEWUlCampmZTJVY3dKS21FVUt3ajdWTHFuNkFXVnJVdWVCYUhBQzlMUzd3Y2FNdXA?oc=5",
@@ -500,17 +500,9 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Zagueira formada pelo Inter é convocada para amistoso da Seleção Brasileira Feminina - GZH",
-      "fonte": "GZH",
-      "url": "https://news.google.com/rss/articles/CBMimAJBVV95cUxNRGRfVXVmaXRRZ29ueE42V0wtYUN0TmVOTTRqTk1EVXlvU01SYzc5VGxTWlFJbUNzQUl0NllVZzlOaTA5ZHBuX25qakptUnZ3N1puTFNOOXh4SE5RcnAwbXBad2JqVjFkcXp4bWNDTXp5MlZxMlcxeEJDRXpMWk1Wdms1OVRvV3F3dlQ0YVNXMEo5V3VjZnNRZXhkX3dNaDByYlRzRGVhT1JLcncydGxDT2t2NXhWR3pMVWlndUNzejlXOXFSRHNLWTZhT1Z2STZSQmt3WE16RU5Hd3dSZlRSX0xNdjVTTEM5REZZSndQQWFQbWNvYy1oWjd4a3lvelZfQVdhQkpXeFNaS0prNGFRM3J3NUdUMFls?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Brasil x Argentina: datas, horários e onde assistir os amistosos do futebol feminino - Exame",
-      "fonte": "Exame",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOMXJUWjZOa25pNU9QSGlBdkxmYlFyQW1YM1c1Z215ODRfUldzd0FwNHY0VC1ZVXVWb0FJOWMybTY0X1lHS1lVUjViemtsSzRCSmJfMzl6dTNIcFBiT3d1OFBNR0xwUklLZEZ5WC1QbnV4OWladTJlaXFwcENrcGVTT2hIUGFBT3hlTFhaeHZVcDQtY2tYQU9sUUR6TVJ6cnRwU0RBR2V3aFZXQTJCVVE?oc=5",
+      "titulo": "Nova geração de baianas é convocada para amistosos da Seleção Brasileira Feminina em outubro - ba.gov.br",
+      "fonte": "ba.gov.br",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxObEJFcnlpTE9Gb3F0b0RUdVdwLTFKQWpXNUctcS12ZzN4SF9uUWxnOVAtVjZGX1VnMXgzcGFDU1gxamtEVUdRWHpyYWc3LUdlXzVRZHUtLURxQU5TWkdLZEVWeENSOWxEdlpWcVR4a0J4V0k4WUhJV3hVam9Eb21RbUswcEIzeHk0MjhXcDdZSklOMGoxYW11NVp3amZNTEtILXZzcDctVzk4eWQ0U3NTOWNrbmY0Nk1RdGhqeGdKWnJMZw?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
@@ -596,6 +588,14 @@
     },
     {
       "origem": "google-news-trusted-source",
+      "titulo": "Abertura, final e jogos no Mineirão: Fifa marca data para revelar calendário da Copa Feminina 2027 - O TEMPO",
+      "fonte": "O TEMPO",
+      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxOa2ZsWU9RVmNOcnp0TENFdjNmMTFtZzl6eDdKaThEaHJkZDdfWTJ1Y05WMzl0M0QtdjdHU3VQTkNsV05PS3B1T0JJMVhzcGpRN0ZZSFVZaU9uLWE2SjM0dXZsUDMyYW1kSnNwMzRxdFMxcjk2LTV6bHNsQURoenQyTjlNeU5BQWdWSnZMcEtqZnhobkgxQWZvMFZ5Q0lGVnlnZTVsMGdoZ0tzM2RZT0FKMFRDNHNhLWRpWWhIRGpTX2FvOElNX3h2by1YdTNvX1laZVMwWmpnT3NhN2RJUHFCSm1lZ2JoV09XbXNRZHJ4c05OazTSAfgBQVVfeXFMUDN6Rlh0ZHdUeWk5cVFWY1dFUThMNUczTmVXY0FIWWhQaFhySXQ5U2s5MTh5TEYyYjdURXV4UXh2dTR2Q0dQak9xTUd2UWJiWlZud1MzbkZDNjR5b19LVXpIVmN2b1hLekFRVnNLZk93SDFBTFB3UDVlanM2YVFsdDVBd0FrRjgyZEFVclE1cnlzWHN1c2ZWMlJKLUpfaU5oMkZLa0E0elBlbGFHQlc4bF94dlROTnZqMWw0UlpUT0NzQVdGM1dPUTFSRkdVeWVfeTZNbTNJM25oazI2bFBCM1ZXbFEtTi1WckxfN3MyR29UQXhiMGR6ZGo?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (53d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
       "titulo": "Visa acredita que Copa Feminina 2027 no Brasil deve potencializar geração de novos negócios - Máquina do Esporte",
       "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQQnVrNWswUW5BU1Z6LWR2YzhmODdEUFZua1lXeEVSUDVjZmU3UEo4ZlhkZ1pGNWN4TjBER3VEcUdIaXlWbDlDemMteE1EZVluQ0dtd0ZtZjdzc05nOTg2OE40M0dQd0MwMGxyQU9Fb0h2ZkxkRWZCaFlITFJTeWdTcTM2Z25tMUdkQWU4TUxSYWh3OXRLaGFuRWpIenVFYzhDSmw2ckdlRXpGVGdBMGRBb2F6Z2lVaHc0QlQ3RFA4YnY5MzhUSXFySzlGaDAtN1BFdEI2VE1JRTgwejFDc3pLODd0TQ?oc=5",
@@ -665,14 +665,6 @@
       "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQUHN0d05Tc1F2X2Qxc1UzRDdNVzVDVUd1RnFHWUJnN1FzcjZsVUpyTGRWRDF6MjRLYTBvX1lYZW9FWHg3N1JiZmoxcGpmblRpaUE0QzUta3c3TlhBQlhQWk41U28zZWZuNVlXUU82cGNNdHVhcU9nblFMRExsRWpUeVNlZzhHMlJQMkpNYWpORW1GOFRlWUZLMlRYUnFLTUpfWWhYSVptTlpRSTI1SHBkN2xILXNKYlV1Rks1TTZ0Z1daYjdxbEo4UWtWb2R3SGpmaVNydkwxTWhwejJRcjNr0gHuAUFVX3lxTE5mVndUdXJKX2VVenNfVGVLR1BaRzNXd25mTDc2VWg5Y1d4SU0yenRTYTJTcUtsMV9heEtXYThJQnJwMVF6Ynkta3BrN0MzYUpDRlR2NlRLRVVrTlZkN08zUGFORzZvUWpWVjdOQ2lqdWdnY09NRW9KUjhoUDZGRm12Y1ZUQll1TWVTcGN3bTNxR3FKb09oYWNmR1VOX180RmxnVTE0MWlSeHNWVWpBd3NkSXJJcU9UaHFPMjcySDBNRUFsVEtXOW9qWS0zRjBwWXdxYlpzTzdOZXlaaVE1V0o3czNTVUpORnc0ZHV0WUE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (47d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Diretor da Fifa trata paralisação do futebol com naturalidade na Copa de 2027: \"É um projeto de país\" - ge",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNTnMtN1hEdWZ2MmF5VW5jNjRjdDdBeEhOMURwWTFCS0psLUJ0WUFSQzJSWF92VEl6WlRkNXpQOGJzbHRXM3VPMmRya0I3OGh1SFF4VGtfSEJ4SXVmemh5c2xjYy1vUmNVTzNzbnVMVzhkVkI5OXEyZ3dBTDNvbVZoTjlKd2tFTWxSOF9MSGNtMGJuWGQ1OHVYOTItZ0thT2diQWU1dmRoeE5aanFYamZRazdpWGVBOElkajJKOTZ0T3QyVzhmd3M5akJaanpSZzdtMDNCME1mQlJFZFhWTTJmTThlaThlV0szdlVpTHd4Q2dJRGJFQW9hREtUQUVucTUxR1HSAZACQVVfeXFMTXUxM1V1TEZRcDVKVWhrOWkzc1hiQjlpYmpldUVqRUdxWjBGdUdwSS1IbUxoeEtGT2lwYk5xZVBXSk0zU010OGdYUFcweHczODhJZjROaDNOS3paWVJfYU1OT2gybHBIczFfb1AxVVVRU0wzbzhWcVpYNTEzTDJkLWhUZXlpSWRZb1BiNkViNTNLY19oQzQtU0tYVDAwUlZzQXJQMFV2YW9BSXJ1NEM3VGxuV3E4R3VIYWpCcTAxWnNyWXcwMGZfdnYzOVNWY2tUWUE1dXlaZnlITjNlcU1zTEhQRHpLblRNZUd3RjFPTXEwdzExc1MteVZ1S3ExTi1qbHJhdFBCMXJHRkl3R2NKQ1E?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (53d)."
     }
   ],
   "observacoes_operacionais": "Execução nativa GitHub. Exatamente duas leituras Airtable; pendências estruturais são reavaliadas com os mesmos registros já lidos, sem leitura Airtable adicional. Pesquisa pública ampliada em múltiplos eixos via Google News RSS + GDELT, com deduplicação, filtro anti-base, confiança de domínio, validação de conteúdo e trilha de auditoria gravada no pesquisa-status.json."
