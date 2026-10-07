@@ -138,7 +138,10 @@ def make_clean_fallback(out, title, kind, subtitle, key):
     label = 'EVENTO' if kind == 'evento' else 'OPORTUNIDADE' if kind == 'oportunidade' else 'NOTÍCIA'
     draw.rounded_rectangle((safe_left,170,safe_left+205,228), radius=14, fill=(255,220,0,255))
     draw.text((safe_left+22,184), label, font=base.font(24,True), fill=(20,45,35))
-    f, lines, readable = fit_title_complete(draw, title, width, start_size=82, min_size=58, max_lines=4)
+    # Fallback textual tem mais área útil que uma arte sobre foto. Permite uma
+    # quinta linha e redução moderada da fonte, sempre mantendo a headline
+    # completa/editada e sem reticências.
+    f, lines, readable = fit_title_complete(draw, title, width, start_size=82, min_size=50, max_lines=5)
     y = 300
     for line in lines:
         draw.text((safe_left,y), line, font=f, fill='white')
@@ -147,7 +150,7 @@ def make_clean_fallback(out, title, kind, subtitle, key):
     draw.text((safe_left,1012), 'Copa do Mundo Feminina 2027 • Brasil', font=base.font(20,True), fill='white')
     pathlib.Path(out).parent.mkdir(parents=True, exist_ok=True)
     im.save(out, 'JPEG', quality=94, optimize=True)
-    return readable and f.size >= 58 and len(lines) <= 4, f.size, len(lines)
+    return readable and f.size >= 50 and len(lines) <= 5, f.size, len(lines)
 
 base.make_original_art = make_clean_fallback
 smart.base.make_original_art = make_clean_fallback
