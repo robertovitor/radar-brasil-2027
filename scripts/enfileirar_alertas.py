@@ -32,6 +32,22 @@ def name(v):
 def norm(s):
     return re.sub(r"[^a-z0-9]+","-",str(s or "").lower()).strip("-")
 
+# Bloqueio conservador: outras modalidades não devem gerar alertas de futebol.
+# Expressões explícitas apenas; não bloquear textos genéricos sobre esporte feminino.
+OTHER_SPORTS=re.compile(
+    r"\\b(?:v[oô]lei|voleibol|volleyball|basquete|basketball|handebol|handball|"
+    r"futsal|beach volleyball|v[oô]lei de praia|gin[aá]stica|nata[cç][aã]o)\\b",
+    re.IGNORECASE,
+)
+FOOTBALL_CONTEXT=re.compile(r"\\b(?:futebol|football|soccer|fifa|cbf)\\b",re.IGNORECASE)
+
+def unrelated_sport_news(item):
+    title=str(item.get("Titulo") or "")
+    # Título de outra modalidade prevalece sobre rótulos genéricos da curadoria.
+    if OTHER_SPORTS.search(title) and not FOOTBALL_CONTEXT.search(title):
+        return True
+    return False
+
 def load_json(path):
     with open(os.path.join(ROOT,path),encoding="utf-8") as fh: return json.load(fh)
 
@@ -132,6 +148,9 @@ for news in load_json("noticias.json"):
     title=str(news.get("Titulo") or "").strip()
     link=str(news.get("Link") or "").strip()
     if not title or not link: continue
+    if unrelated_sport_news(news):
+        print("skipped_unrelated_sport="+title)
+        continue
     ident=link
     published=first_seen("noticias.json",[link,title])
     if not published: continue
