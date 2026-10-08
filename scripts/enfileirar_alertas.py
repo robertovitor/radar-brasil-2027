@@ -51,6 +51,27 @@ def unrelated_sport_news(item):
 def load_json(path):
     with open(os.path.join(ROOT,path),encoding="utf-8") as fh: return json.load(fh)
 
+# Verifica os mesmos arquivos públicos carregados pelo frontend antes de enfileirar.
+# Falha fechada: erro HTTP, JSON inválido ou item ausente => nenhum novo e-mail.
+PUBLIC_SITE=os.environ.get("RADAR_PUBLIC_SITE","https://radarfutebolfeminino2027.com.br").rstrip("/")
+
+def public_items(path):
+    url=PUBLIC_SITE+"/"+path
+    req=urllib.request.Request(url,headers={"User-Agent":"RadarBrasil2027-alertas/1.0","Cache-Control":"no-cache"})
+    with urllib.request.urlopen(req,timeout=20) as response:
+        if response.status!=200: raise RuntimeError("public_site_http="+str(response.status))
+        data=json.load(response)
+    if not isinstance(data,list): raise RuntimeError("public_site_invalid_json="+path)
+    return data
+
+def event_identity(ev):
+    title=str(ev.get("Titulo") or "").strip()
+    date=str(ev.get("Data") or "")
+    return str(ev.get("ID") or "").strip() or norm(title)+"-"+norm(date)+"-"+norm(ev.get("Link") or ev.get("Fonte") or "")
+
+def news_identity(item):
+    return str(item.get("Link") or "").strip()
+
 def first_seen(path, needles):
     for needle in [str(x or "").strip() for x in needles if str(x or "").strip()]:
         try:
@@ -123,6 +144,18 @@ for r in queue:
     if name(f.get("Status")) not in ("Pendente","Enviando","Enviado"): continue
     queued.add((name(f.get("Tipo")),str(f.get("Identidade") or "").strip(),str(f.get("Email") or "").strip().lower()))
 
+# Gate de publicação: arquivos do site, não apenas conteúdo local do GitHub.
+# Consultas HTTP públicas não consomem API do Airtable.
+try:
+    live_events=public_items("dados.json")
+    live_news=public_items("noticias.json")
+except Exception as exc:
+    raise SystemExit("public_site_unavailable_no_enqueue="+str(exc))
+published_events={event_identity(e) for e in live_events if isinstance(e,dict)}
+published_news={news_identity(n) for n in live_news if isinstance(n,dict)}
+print("public_site_events="+str(len(published_events)))
+print("public_site_news="+str(len(published_news)))
+
 candidates=[]
 
 for ev in load_json("dados.json"):
@@ -130,7 +163,10 @@ for ev in load_json("dados.json"):
     if date and date < CUTOFF: continue
     title=str(ev.get("Titulo") or "").strip()
     if not title: continue
-    ident=str(ev.get("ID") or "").strip() or norm(title)+"-"+norm(date)+"-"+norm(ev.get("Link") or ev.get("Fonte") or "")
+    ident=event_identity(ev)
+    if ident not in published_events:
+        print("skipped_not_on_site_event="+ident)
+        continue
     published=first_seen("dados.json",[ident,title])
     if not published: continue
     recipients=[]
@@ -152,6 +188,9 @@ for news in load_json("noticias.json"):
         print("skipped_unrelated_sport="+title)
         continue
     ident=link
+    if ident not in published_news:
+        print("skipped_not_on_site_news="+ident)
+        continue
     published=first_seen("noticias.json",[link,title])
     if not published: continue
     recipients=[]
