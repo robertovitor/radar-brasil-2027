@@ -41,24 +41,82 @@ def _social_suggestion_needs_review(fields, kind):
     return host.casefold().removeprefix('www.') in ('instagram.com', 'facebook.com', 'tiktok.com')
 
 def _social_page_details(url):
-    """Lê metadados públicos, sem contornar bloqueios ou exigir login."""
+    """Recupera legenda pública de JSON incorporado, JSON-LD e metatags.
+
+    Não usa sessão, credenciais ou bypass de bloqueios. Loga somente métricas.
+    """
     try:
-        data, final_url, _ = pe.request_bytes(
-            url, headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/2.0)'}, timeout=12)
-        host = (urllib.parse.urlparse(final_url).hostname or '').casefold()
-        if not any(host == h or host.endswith('.' + h) for h in ('instagram.com', 'facebook.com', 'tiktok.com')):
+        data, final_url, headers = pe.request_bytes(
+            url, headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/2.0)',
+                          'Accept': 'text/html,application/xhtml+xml'}, timeout=12)
+        host = (urllib.parse.urlparse(final_url).hostname or '').casefold().removeprefix('www.')
+        if host not in ('instagram.com', 'facebook.com', 'tiktok.com'):
+            print('social_caption_capture=redirect_unexpected')
             return ''
-        raw = data[:500000].decode('utf-8', 'ignore')
+        if 'html' not in str(headers.get('Content-Type', '')).casefold():
+            print('social_caption_capture=non_html')
+            return ''
+        raw = data[:1000000].decode('utf-8', 'ignore')
         values = []
+        sources = set()
+
+        def add(value, source):
+            if not isinstance(value, str):
+                return
+            value = html.unescape(value).strip()
+            if value and len(value) <= 20000 and value not in values:
+                values.append(value)
+                sources.add(source)
+
         for tag in re.findall(r'<meta\b[^>]*>', raw, flags=re.I):
-            attrs = dict((k.casefold(), html.unescape(v)) for k,v in re.findall(
-                r'([\w:-]+)\s*=\s*["\x27]([^"\x27]*)["\x27]', tag))
+            attrs = dict((k.casefold(), html.unescape(v)) for k, quote, v in re.findall(
+                r'([\w:-]+)\s*=\s*(["\x27])(.*?)\2', tag, flags=re.S))
             if attrs.get('property', attrs.get('name', '')).casefold() in (
                 'og:description', 'description', 'twitter:description'):
-                values.append(attrs.get('content', ''))
-        return ' '.join(dict.fromkeys(v for v in values if v))[:5000]
+                add(attrs.get('content', ''), 'meta')
+
+        def walk(obj, depth=0):
+            if depth > 18:
+                return
+            if isinstance(obj, dict):
+                for key, value in obj.items():
+                    if key in ('caption', 'articleBody', 'description', 'text', 'accessibility_caption'):
+                        if isinstance(value, str):
+                            add(value, 'embedded_json')
+                        elif isinstance(value, dict) and isinstance(value.get('text'), str):
+                            add(value['text'], 'embedded_json')
+                    if isinstance(value, (dict, list)):
+                        walk(value, depth + 1)
+            elif isinstance(obj, list):
+                for value in obj[:200]:
+                    walk(value, depth + 1)
+
+        for match in re.finditer(r'<script\b([^>]*)>(.*?)</script>', raw, re.I | re.S):
+            attrs, body = match.groups()
+            if 'application/ld+json' in attrs.casefold():
+                try:
+                    walk(json.loads(html.unescape(body)))
+                except (ValueError, TypeError):
+                    pass
+            elif body.lstrip().startswith(('{', '[')) and len(body) < 400000:
+                try:
+                    walk(json.loads(body))
+                except (ValueError, TypeError):
+                    pass
+
+        # Legendas às vezes vêm como texto JSON escapado em scripts de hidratação.
+        for match in re.finditer(r'"(?:caption|articleBody|description)"\s*:\s*("(?:\\.|[^"\\])*")', raw):
+            try:
+                add(json.loads(match.group(1)), 'embedded_string')
+            except ValueError:
+                pass
+
+        result = max(values, key=len, default='')
+        print(f'social_caption_capture=ok|sources={",".join(sorted(sources)) or "none"}'
+              f'|candidates={len(values)}|caption_chars={len(result)}')
+        return result[:12000]
     except Exception as exc:
-        print(f'social_enrichment_unavailable={type(exc).__name__}')
+        print(f'social_caption_capture=unavailable|error={type(exc).__name__}')
         return ''
 
 def _social_enriched_candidate(record, kind):
