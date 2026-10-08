@@ -105,6 +105,15 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://news.google.com/rss/articles/cbmivafbvv95cuxomfblalvrr2hkrndrmhe0d21lqlfzbhhprgxjbnlynjd1uwrkvfleltlgd2vtb2ewmmi1egjbmuq4swhmngxhaxfwt1nvrejqvuxjrvdvwg8yvmnwnfi2m25iuwq4d1fhatkxcljtrfr6wgdvwekybdnqz1hsu2jvblk0enfdovhqzzvtek5kztnotljnm3rpsvbdr1zrdkvgbulualyzwi15yljjymd3sfb2nk93nddmedbeug?oc=5",
+      "post_file": "instagram/fila/automatica/k5kztnotljnm3rpsvbdr1zrdkvgbulualyzwi15yljjymd3sfb2nk93nddmedbeug-oc-5-7651868a3f.json",
+      "reserved_at": "2026-10-08T01:56:32.379518+00:00",
+      "last_attempt_at": "2026-10-08T01:56:32.379518+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "visual_mode": "fallback_visual"
     }
   ]
 }
