@@ -231,7 +231,7 @@ if len(news_candidates)>1:
         items.sort(key=lambda c:(c[0],c[3]),reverse=True)
         # Uma identidade estável por conjunto; não repetir conjuntos já enfileirados.
         import hashlib
-        digest_id="resumo-"+hashlib.sha256(("\\n".join(sorted(c[4] for c in items))).encode()).hexdigest()[:24]
+        digest_id="resumo-"+hashlib.sha256(("\n".join(sorted(c[4] for c in items))).encode()).hexdigest()[:24]
         if ("Notícia",digest_id,email) in queued:
             continue
         lines=["Resumo de notícias do Radar Brasil 2027","",f"{len(items)} notícias ainda não enviadas individualmente:",""]
@@ -242,7 +242,7 @@ if len(news_candidates)>1:
             "Chave":"noticia:"+digest_id+":"+email,"Email":email,"Tipo":"Notícia",
             "Identidade":digest_id,"Título":"Resumo de notícias pendentes",
             "Assunto":"Radar Brasil 2027 — resumo de notícias pendentes",
-            "Corpo":"\\n".join(lines),"Status":"Pendente",
+            "Corpo":"\n".join(lines),"Status":"Pendente",
             "Criado em":datetime.now(timezone.utc).isoformat()
         }})
     if digest_records:
