@@ -111,7 +111,14 @@ def _social_page_details(url):
             except ValueError:
                 pass
 
-        result = max(values, key=len, default='')
+        # Prioriza texto que contenha dados de evento, não o maior bloco JSON.
+        def score(value):
+            normalized = re.sub(r'\\s+', ' ', value).casefold()
+            return (4 * bool(re.search(r'\\b(?:local|onde|endereço|auditório|teatro|sala|rua|avenida)\\b', normalized))
+                    + 3 * bool(re.search(r'\\b(?:horário|horas|às|\\d{1,2}h\\d{0,2}|\\d{1,2}:\\d{2})\\b', normalized))
+                    + 2 * bool(re.search(r'\\b(?:outubro|\\d{1,2}[/.-]\\d{1,2})\\b', normalized))
+                    + bool('porto alegre' in normalized), min(len(value), 5000))
+        result = max(values, key=score, default='')
         print(f'social_caption_capture=ok|sources={",".join(sorted(sources)) or "none"}'
               f'|candidates={len(values)}|caption_chars={len(result)}')
         return result[:12000]
@@ -126,15 +133,35 @@ def _social_enriched_candidate(record, kind):
     if not caption:
         print(f'social_enrichment_pending={record.get("id","")}|reason=metadata_unavailable')
         return None
-    date_match = re.search(r'(?<!\d)([0-3]?\d)[/.-]([01]?\d)[/.-](20\d{2})(?!\d)', caption)
-    time_match = re.search(r'(?<!\d)([01]?\d|2[0-3])\s*(?:h|:)\s*([0-5]\d)?\b', caption, re.I)
-    venue_match = re.search(r'(?:local|onde|endere[cç]o)\s*[:–-]\s*([^\n.;]{5,110})', caption, re.I)
+    # Aceita datas numéricas, datas por extenso e data já informada no formulário.
+    date_match = re.search(r'(?<!\d)([0-3]?\d)[/.-]([01]?\d)(?:[/.-](20\d{2}))?(?!\d)', caption)
+    month_names = {'janeiro': 1, 'fevereiro': 2, 'março': 3, 'marco': 3,
+                   'abril': 4, 'maio': 5, 'junho': 6, 'julho': 7, 'agosto': 8,
+                   'setembro': 9, 'outubro': 10, 'novembro': 11, 'dezembro': 12}
+    long_date = re.search(r'\b([0-3]?\d)\s+de\s+(' + '|'.join(month_names) +
+                          r')(?:\s+de\s+(20\d{2}))?\b', caption, re.I)
+    original_date = str(pe.first(fields, 'Data informada', 'Data', 'Data do evento')).strip()
+    parsed_date = ''
+    if date_match:
+        parsed_date = f'{int(date_match.group(1)):02d}/{int(date_match.group(2)):02d}/{date_match.group(3) or "2026"}'
+    elif long_date:
+        parsed_date = f'{int(long_date.group(1)):02d}/{month_names[long_date.group(2).casefold()]:02d}/{long_date.group(3) or "2026"}'
+    elif re.fullmatch(r'\d{2}/\d{2}/20\d{2}', original_date):
+        parsed_date = original_date
+    time_match = re.search(r'(?<!\d)(?:às?\s+|hor[aá]rio\s*[:–-]?\s*)?'
+                           r'([01]?\d|2[0-3])\s*(?:h(?:oras)?|:)\s*([0-5]\d)?\b',
+                           caption, re.I)
+    venue_match = re.search(r'(?:local|onde|endere[cç]o|espa[cç]o|audit[oó]rio)\s*[:–-]\s*([^\n.;]{4,120})',
+                            caption, re.I)
     city = str(pe.first(fields, 'Cidade informada', 'Cidade')).strip()
-    if not (date_match and time_match and venue_match and city and pe.norm(city) in pe.norm(caption)):
+    print(f'social_caption_fields={record.get("id","")}|date={bool(parsed_date)}'
+          f'|time={bool(time_match)}|venue={bool(venue_match)}'
+          f'|city={bool(city)}|city_in_caption={bool(city and pe.norm(city) in pe.norm(caption))}')
+    if not (parsed_date and time_match and venue_match and city):
         print(f'social_enrichment_pending={record.get("id","")}|reason=insufficient_verified_fields')
         return None
     enriched = dict(fields)
-    enriched['Data informada'] = f'{int(date_match.group(1)):02d}/{int(date_match.group(2)):02d}/{date_match.group(3)}'
+    enriched['Data informada'] = parsed_date
     enriched['Hora'] = f'{int(time_match.group(1)):02d}:{int(time_match.group(2) or 0):02d}'
     enriched['Local'] = venue_match.group(1).strip()
     item = v54.v5._original_candidate_from_record({'id':record.get('id',''), 'fields':enriched}, kind)
