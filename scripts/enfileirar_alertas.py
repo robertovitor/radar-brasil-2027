@@ -89,7 +89,7 @@ queued=set()
 for r in queue:
     f=r.get("fields",{})
     if name(f.get("Status")) not in ("Pendente","Enviando","Enviado"): continue
-    queued.add((name(f.get("Tipo")),str(f.get("Identidade") or "").strip(),str(f.get("E-mail") or "").strip().lower()))
+    queued.add((name(f.get("Tipo")),str(f.get("Identidade") or "").strip(),str(f.get("Email") or "").strip().lower()))
 
 candidates=[]
 
