@@ -138,6 +138,16 @@ for r in queue:
     if email and sent_at:
         backlog_news_cutoff[email]=max(backlog_news_cutoff.get(email,""),sent_at)
 
+# Links já incluídos em resumos enviados ou em processamento não voltam
+# a ser tratados como notícias individuais.
+digest_covered={}
+for r in queue:
+    fields=r.get("fields",{})
+    if str(fields.get("Identidade") or "").startswith("resumo-") and name(fields.get("Status")) in ("Pendente","Enviando","Enviado"):
+        email=str(fields.get("Email") or "").strip().lower()
+        body=str(fields.get("Corpo") or "")
+        digest_covered.setdefault(email,set()).update(re.findall(r"https?://[^\\s]+",body))
+
 queued=set()
 for r in queue:
     f=r.get("fields",{})
@@ -200,6 +210,7 @@ for news in load_json("noticias.json"):
             cutoff=backlog_news_cutoff[email]
             if datetime.fromisoformat(published.replace("Z","+00:00")) <= datetime.fromisoformat(cutoff.replace("Z","+00:00")):
                 continue
+        if link in digest_covered.get(email,set()): continue
         if (link,email) in sent_news or ("Notícia",ident,email) in queued: continue
         confirmed=meta["confirmed"]
         if confirmed and confirmed > published: continue
@@ -210,7 +221,7 @@ for news in load_json("noticias.json"):
 # Recuperação em lote: um único resumo por assinante, não um e-mail por notícia.
 # A identidade determinística impede reenvio do mesmo conjunto após a primeira fila.
 news_candidates=[c for c in candidates if c[1]=="Notícia"]
-if news_candidates:
+if len(news_candidates)>1:
     by_email={}
     for c in news_candidates:
         for email in c[6]:
