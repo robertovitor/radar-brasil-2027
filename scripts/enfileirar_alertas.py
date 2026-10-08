@@ -51,7 +51,7 @@ def subscriber_map(rows, blocked):
     out={}
     for r in rows:
         f=r.get("fields",{})
-        email=str(f.get("Email") or "").strip().lower()
+        email=str(f.get("E-mail") or "").strip().lower()
         if not email or email in blocked: continue
         if f.get("Consentimento") is True and name(f.get("Status"))=="Ativo" and name(f.get("Confirmação"))=="Confirmado":
             out[email]={"confirmed":str(f.get("Confirmado em") or "")}
@@ -62,7 +62,7 @@ blocked=set()
 for r in unsubs:
     f=r.get("fields",{})
     if name(f.get("Confirmação"))=="Confirmado" or name(f.get("Status")) in ("Confirmado","Processado"):
-        email=str(f.get("Email") or "").strip().lower()
+        email=str(f.get("E-mail") or "").strip().lower()
         if email: blocked.add(email)
 
 event_subs=subscriber_map(all_records(T_EVENT_SUB),blocked)
@@ -73,23 +73,23 @@ sent_event=set()
 for r in event_led:
     f=r.get("fields",{})
     if name(f.get("Status"))=="Enviado":
-        ident=str(f.get("ID evento") or "").strip()
-        email=str(f.get("Email") or "").strip().lower()
+        ident=str(f.get("ID do evento") or "").strip()
+        email=str(f.get("E-mail") or "").strip().lower()
         if ident and email: sent_event.add((ident,email))
 
 sent_news=set()
 for r in news_led:
     f=r.get("fields",{})
     if name(f.get("Status"))=="Enviado":
-        link=str(f.get("Link") or "").strip()
-        email=str(f.get("Email") or "").strip().lower()
+        link=str(f.get("Link da notícia") or "").strip()
+        email=str(f.get("E-mail") or "").strip().lower()
         if link and email: sent_news.add((link,email))
 
 queued=set()
 for r in queue:
     f=r.get("fields",{})
     if name(f.get("Status")) not in ("Pendente","Enviando","Enviado"): continue
-    queued.add((name(f.get("Tipo")),str(f.get("Identidade") or "").strip(),str(f.get("Email") or "").strip().lower()))
+    queued.add((name(f.get("Tipo")),str(f.get("Identidade") or "").strip(),str(f.get("E-mail") or "").strip().lower()))
 
 candidates=[]
 
