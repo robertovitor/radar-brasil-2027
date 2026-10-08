@@ -207,6 +207,42 @@ for news in load_json("noticias.json"):
     if recipients:
         candidates.append((published,"Notícia",date,title,ident,news,recipients))
 
+# Recuperação em lote: um único resumo por assinante, não um e-mail por notícia.
+# A identidade determinística impede reenvio do mesmo conjunto após a primeira fila.
+news_candidates=[c for c in candidates if c[1]=="Notícia"]
+if news_candidates:
+    by_email={}
+    for c in news_candidates:
+        for email in c[6]:
+            by_email.setdefault(email,[]).append(c)
+    digest_records=[]
+    for email,items in by_email.items():
+        items.sort(key=lambda c:(c[0],c[3]),reverse=True)
+        # Uma identidade estável por conjunto; não repetir conjuntos já enfileirados.
+        import hashlib
+        digest_id="resumo-"+hashlib.sha256(("\\n".join(sorted(c[4] for c in items))).encode()).hexdigest()[:24]
+        if ("Notícia",digest_id,email) in queued:
+            continue
+        lines=["Resumo de notícias do Radar Brasil 2027","",f"{len(items)} notícias ainda não enviadas individualmente:",""]
+        for c in items:
+            lines.extend(["• "+c[3],c[4],""])
+        lines.append("Radar: https://radarfutebolfeminino2027.com.br/")
+        digest_records.append({"fields":{
+            "Chave":"noticia:"+digest_id+":"+email,"Email":email,"Tipo":"Notícia",
+            "Identidade":digest_id,"Título":"Resumo de notícias pendentes",
+            "Assunto":"Radar Brasil 2027 — resumo de notícias pendentes",
+            "Corpo":"\\n".join(lines),"Status":"Pendente",
+            "Criado em":datetime.now(timezone.utc).isoformat()
+        }})
+    if digest_records:
+        for i in range(0,len(digest_records),10):
+            api("POST",T_QUEUE,{"records":digest_records[i:i+10],"typecast":True})
+        print("digest_queued_recipients="+str(len(digest_records)))
+        print("digest_unique_news="+str(len({c[4] for c in news_candidates})))
+        raise SystemExit(0)
+    # Não voltar a enfileirar os mesmos itens individualmente.
+    candidates=[c for c in candidates if c[1]!="Notícia"]
+
 if not candidates:
     print("no_pending=true"); raise SystemExit(0)
 
