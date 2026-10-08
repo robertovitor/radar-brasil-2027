@@ -85,6 +85,22 @@ for r in news_led:
         email=str(f.get("E-mail") or "").strip().lower()
         if link and email: sent_news.add((link,email))
 
+# O resumo de backlog de 06/10 já comunicou notícias anteriores a esse envio.
+# Não reabrir alertas individuais antigos para os destinatários do resumo.
+backlog_news_cutoff={}
+for r in queue:
+    f=r.get("fields",{})
+    if name(f.get("Tipo"))!="Notícia" or name(f.get("Status"))!="Enviado":
+        continue
+    ident=str(f.get("Identidade") or "").strip()
+    key=str(f.get("Chave") or "").strip()
+    if not (ident.startswith("backlog-") or key.startswith("backlog-")):
+        continue
+    email=str(f.get("Email") or "").strip().lower()
+    sent_at=str(f.get("Criado em") or r.get("createdTime") or "").strip()
+    if email and sent_at:
+        backlog_news_cutoff[email]=max(backlog_news_cutoff.get(email,""),sent_at)
+
 queued=set()
 for r in queue:
     f=r.get("fields",{})
@@ -121,6 +137,11 @@ for news in load_json("noticias.json"):
     if not published: continue
     recipients=[]
     for email,meta in news_subs.items():
+        # Conteúdo anterior ao resumo já foi comunicado em lote.
+        if email in backlog_news_cutoff:
+            cutoff=backlog_news_cutoff[email]
+            if datetime.fromisoformat(published.replace("Z","+00:00")) <= datetime.fromisoformat(cutoff.replace("Z","+00:00")):
+                continue
         if (link,email) in sent_news or ("Notícia",ident,email) in queued: continue
         confirmed=meta["confirmed"]
         if confirmed and confirmed > published: continue
