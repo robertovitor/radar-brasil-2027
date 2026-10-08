@@ -157,13 +157,20 @@ def _social_enriched_candidate(record, kind):
     print(f'social_caption_fields={record.get("id","")}|date={bool(parsed_date)}'
           f'|time={bool(time_match)}|venue={bool(venue_match)}'
           f'|city={bool(city)}|city_in_caption={bool(city and pe.norm(city) in pe.norm(caption))}')
-    if not (parsed_date and time_match and venue_match and city):
+    # Dados fornecidos pelo usuário são válidos como informação declarada.
+    # A cidade é o fallback de local; nunca inventar endereço/estabelecimento.
+    suggested_venue = str(pe.first(fields, 'Local', 'Local informado', 'Endereço', 'Endereço informado')).strip()
+    venue = suggested_venue or (venue_match.group(1).strip() if venue_match else '') or city
+    if not (parsed_date and city and (time_match or pe.first(fields, 'Hora', 'Horário'))):
         print(f'social_enrichment_pending={record.get("id","")}|reason=insufficient_verified_fields')
         return None
     enriched = dict(fields)
     enriched['Data informada'] = parsed_date
-    enriched['Hora'] = f'{int(time_match.group(1)):02d}:{int(time_match.group(2) or 0):02d}'
-    enriched['Local'] = venue_match.group(1).strip()
+    if time_match:
+        enriched['Hora'] = f'{int(time_match.group(1)):02d}:{int(time_match.group(2) or 0):02d}'
+    enriched['Local'] = venue
+    print(f'social_enrichment_location_source={record.get("id","")}|source='
+          f'{"suggestion" if suggested_venue else "caption" if venue_match else "suggested_city"}')
     item = v54.v5._original_candidate_from_record({'id':record.get('id',''), 'fields':enriched}, kind)
     if item:
         print(f'social_enrichment_verified={record.get("id","")}|date_time_venue_city=ok')
