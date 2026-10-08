@@ -40,14 +40,58 @@ def _social_suggestion_needs_review(fields, kind):
     host = urllib.parse.urlparse(link).hostname or ''
     return host.casefold().removeprefix('www.') in ('instagram.com', 'facebook.com', 'tiktok.com')
 
+def _social_page_details(url):
+    """Lê metadados públicos, sem contornar bloqueios ou exigir login."""
+    try:
+        data, final_url, _ = pe.request_bytes(
+            url, headers={'User-Agent': 'Mozilla/5.0 (compatible; RadarBrasil2027/2.0)'}, timeout=12)
+        host = (urllib.parse.urlparse(final_url).hostname or '').casefold()
+        if not any(host == h or host.endswith('.' + h) for h in ('instagram.com', 'facebook.com', 'tiktok.com')):
+            return ''
+        raw = data[:500000].decode('utf-8', 'ignore')
+        values = []
+        for tag in re.findall(r'<meta\b[^>]*>', raw, flags=re.I):
+            attrs = dict((k.casefold(), html.unescape(v)) for k,v in re.findall(
+                r'([\w:-]+)\s*=\s*["\x27]([^"\x27]*)["\x27]', tag))
+            if attrs.get('property', attrs.get('name', '')).casefold() in (
+                'og:description', 'description', 'twitter:description'):
+                values.append(attrs.get('content', ''))
+        return ' '.join(dict.fromkeys(v for v in values if v))[:5000]
+    except Exception as exc:
+        print(f'social_enrichment_unavailable={type(exc).__name__}')
+        return ''
+
+def _social_enriched_candidate(record, kind):
+    fields = record.get('fields', {})
+    link = str(pe.first(fields, 'Link', 'URL', 'Fonte ou link')).strip()
+    caption = _social_page_details(link)
+    if not caption:
+        print(f'social_enrichment_pending={record.get("id","")}|reason=metadata_unavailable')
+        return None
+    date_match = re.search(r'(?<!\d)([0-3]?\d)[/.-]([01]?\d)[/.-](20\d{2})(?!\d)', caption)
+    time_match = re.search(r'(?<!\d)([01]?\d|2[0-3])\s*(?:h|:)\s*([0-5]\d)?\b', caption, re.I)
+    venue_match = re.search(r'(?:local|onde|endere[cç]o)\s*[:–-]\s*([^\n.;]{5,110})', caption, re.I)
+    city = str(pe.first(fields, 'Cidade informada', 'Cidade')).strip()
+    if not (date_match and time_match and venue_match and city and pe.norm(city) in pe.norm(caption)):
+        print(f'social_enrichment_pending={record.get("id","")}|reason=insufficient_verified_fields')
+        return None
+    enriched = dict(fields)
+    enriched['Data informada'] = f'{int(date_match.group(1)):02d}/{int(date_match.group(2)):02d}/{date_match.group(3)}'
+    enriched['Hora'] = f'{int(time_match.group(1)):02d}:{int(time_match.group(2) or 0):02d}'
+    enriched['Local'] = venue_match.group(1).strip()
+    item = v54.v5._original_candidate_from_record({'id':record.get('id',''), 'fields':enriched}, kind)
+    if item:
+        print(f'social_enrichment_verified={record.get("id","")}|date_time_venue_city=ok')
+    return item
+
 def pending_enrichment_reason_social(fields, kind):
     if _social_suggestion_needs_review(fields, kind):
-        return 'PENDENTE_ENRIQUECIMENTO: publicação em rede social requer confirmação independente de organizador, data, local e horário antes de publicar.'
+        return 'PENDENTE_ENRIQUECIMENTO: metadados públicos não confirmaram data, horário, local e cidade; requer leitura da legenda ou imagem.'
     return _previous_pending_enrichment_reason(fields, kind)
 
 def candidate_from_record_social(record, kind):
     if _social_suggestion_needs_review(record.get('fields', {}), kind):
-        return None
+        return _social_enriched_candidate(record, kind)
     return _previous_candidate_from_record(record, kind)
 
 def processable_preserve_history(fields):
