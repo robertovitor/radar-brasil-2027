@@ -1,7 +1,7 @@
 {
   "cycle_id": "20261008-08",
-  "started_at": "2026-10-08T08:26:05-03:00",
-  "completed_at": "2026-10-08T08:27:56-03:00",
+  "started_at": "2026-10-08T08:37:57-03:00",
+  "completed_at": "2026-10-08T08:40:33-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -17,13 +17,13 @@
   ],
   "sugestoes_lidas": 35,
   "sugestoes_noticias_lidas": 26,
-  "candidatos_publicos": 71,
-  "aprovados_novos": 1,
+  "candidatos_publicos": 72,
+  "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 71,
-  "duplicados": 0,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "rejeitados": 72,
+  "duplicados": 1,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "auditoria": [
     {
       "origem": "airtable",
@@ -31,8 +31,8 @@
       "record_id": "rec6pxuy0Dd11NXhU",
       "titulo": "Palestra Amistosos Seleção Feminina",
       "url": "https://www.instagram.com/p/DeNEDfADIcI/?stkn=aXRlZWowMmp0NW1t",
-      "decisao": "aprovado",
-      "motivo": "Sugestão estruturada, válida e não duplicada; enfileirada para o Radar."
+      "decisao": "duplicado",
+      "motivo": "Já existe em dados.json, noticias.json ou editorial/inbox.json."
     },
     {
       "origem": "google-news",
@@ -343,6 +343,14 @@
       "titulo": "Copa do Mundo Feminina 2027: veja cidades-sede, datas e jogos do Brasil - Tracklist",
       "fonte": "Tracklist",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQbXU3aVpzUVB6cnVrY1QtQ3pKeUtrQXYteFFrSkJxVHAzcThjSjFETlVaVTZJNzhRTXAxN29IdnpseG5UTTdpdWJJcmNFYzI5QTVyOWFVaTFLZnVtZlVqbnZXbG5uM1JSN2NsUkNxMHlNbXZNai12UEw0S1JnX1ZzbEtPQU9ESTVWdE41R1hSOUdUb1pkajJkY0dkQQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Veja como se cadastrar para conseguir ingressos da Copa do Mundo Feminina no Brasil - tmc.com.br",
+      "fonte": "tmc.com.br",
+      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOYkhnRzMtdURxdTNNM0E1c2V1OXJHSDh3dko2V2RleW8zeVI3WVVxQWlQQ0VGTWk5XzlTSGlWeTBwVERtdWZJZVVOVzk0RVlrMDA3YUpwSWprajhmQWVKUVZMU3dxWHEzM3V6YUtvY3F2amZVa0pmZHRDRG1YeVgyNnRmbw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
