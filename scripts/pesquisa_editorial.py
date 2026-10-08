@@ -205,7 +205,18 @@ def trusted_url(url):
     host=urllib.parse.urlparse(url).netloc.casefold().removeprefix('www.')
     return any(host==d or host.endswith('.'+d) for d in TRUSTED_DOMAINS)
 
+# A expressão "Copa do Mundo feminina" também aparece em outras modalidades.
+# Rejeitar apenas quando o TÍTULO identificar explicitamente outra modalidade,
+# sem indicar contexto de futebol; evita falsos positivos em matérias comparativas.
+OTHER_SPORT_TITLE = re.compile(
+    r'\\b(?:v[oô]lei|voleibol|volleyball|basquete|basketball|'
+    r'handebol|handball|futsal|v[oô]lei de praia|beach volleyball|'
+    r'gin[aá]stica|nata[cç][aã]o)\\b', re.I)
+FOOTBALL_TITLE_CONTEXT = re.compile(r'\\b(?:futebol|football|soccer|fifa|cbf)\\b', re.I)
+
 def article_is_relevant(title, text=''):
+    if OTHER_SPORT_TITLE.search(str(title or '')) and not FOOTBALL_TITLE_CONTEXT.search(str(title or '')):
+        return False
     blob=norm(f'{title} {text}')
     if any(norm(x) in blob for x in EXCLUDE_BASE): return False
     return any(norm(x) in blob for x in RELEVANT_TERMS)
