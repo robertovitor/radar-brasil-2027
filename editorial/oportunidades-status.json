@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-08T08:20:51-03:00",
-  "fim": "2026-10-08T08:22:39-03:00",
+  "inicio": "2026-10-08T08:27:56-03:00",
+  "fim": "2026-10-08T08:29:31-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -158,7 +158,8 @@
     },
     {
       "hub": "https://avai.com.br/categoria/futebol-feminino/",
-      "resultados": 5
+      "resultados": 0,
+      "erro": "URLError:<urlopen error [Errno 111] Connection refused>"
     },
     {
       "hub": "https://mineirao.com.br/noticias",
@@ -206,11 +207,12 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 59,
+  "oportunidades_validas_na_execucao": 58,
   "adicionadas": 0,
   "atualizadas": 2,
   "total_arquivo": 64,
   "erros": [
+    "hub:https://avai.com.br/categoria/futebol-feminino/:URLError:<urlopen error [Errno 111] Connection refused>",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
