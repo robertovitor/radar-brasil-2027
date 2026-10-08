@@ -27,6 +27,41 @@ v54 = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(v54)
 pe = v54.pe
 
+# Sugestões humanas de redes sociais: fonte não verificada não é rejeição.
+# Mantém fail-closed para publicação; registra pendência sem novas leituras Airtable.
+_previous_candidate_from_record = pe.candidate_from_record
+_previous_pending_enrichment_reason = pe.pending_enrichment_reason
+_previous_processable = pe.processable
+
+def _social_suggestion_needs_review(fields, kind):
+    if kind != 'eventos':
+        return False
+    link = str(pe.first(fields, 'Link', 'URL', 'Fonte ou link')).strip()
+    host = urllib.parse.urlparse(link).hostname or ''
+    return host.casefold().removeprefix('www.') in ('instagram.com', 'facebook.com', 'tiktok.com')
+
+def pending_enrichment_reason_social(fields, kind):
+    if _social_suggestion_needs_review(fields, kind):
+        return 'PENDENTE_ENRIQUECIMENTO: publicação em rede social requer confirmação independente de organizador, data, local e horário antes de publicar.'
+    return _previous_pending_enrichment_reason(fields, kind)
+
+def candidate_from_record_social(record, kind):
+    if _social_suggestion_needs_review(record.get('fields', {}), kind):
+        return None
+    return _previous_candidate_from_record(record, kind)
+
+def processable_preserve_history(fields):
+    status = pe.norm(pe.first(fields, 'Status', 'status'))
+    if status in ('aprovado', 'publicado', 'publicada'):
+        return False
+    if pe.first(fields, 'Incluído no Radar', 'Incluido no Radar', 'Publicada no Radar'):
+        return False
+    return _previous_processable(fields)
+
+pe.pending_enrichment_reason = pending_enrichment_reason_social
+pe.candidate_from_record = candidate_from_record_social
+pe.processable = processable_preserve_history
+
 # Fontes editoriais adicionais observadas na auditoria. Escopo propositalmente
 # estreito: não cria novas leituras Airtable nem amplia a confiança para domínios
 # desconhecidos. As pautas continuam sujeitas a relevância, frescor e deduplicação.
