@@ -10,6 +10,13 @@ Correção cirúrgica:
 - Google News permanece fallback;
 - não altera Merge, Alertas, Instagram, Saúde, schedules ou limites de frescor.
 """
+# EMERGENCIA 2026-10-09: trava de seguranca contra execucoes agendadas ja enfileiradas.
+# Reativacao exige RADAR_AIRTABLE_ALLOW=1 e revisao humana.
+import os
+if os.environ.get("RADAR_AIRTABLE_ALLOW", "") != "1":
+    print("airtable_emergency_stop=active; pesquisa_editorial skipped")
+    raise SystemExit(0)
+
 import importlib.util
 import html
 import json
