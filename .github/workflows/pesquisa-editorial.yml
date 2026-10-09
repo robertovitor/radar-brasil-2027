@@ -1,10 +1,17 @@
 name: Pesquisa editorial Radar
 
-# Manutenção 2026-09-16: ativa camada v5.5 cirúrgica sem alterar schedule nem arquitetura.
+# 2026-10-09: pesquisa pública reativada; sugestões e alertas Airtable suspensos.
 on:
-  # EMERGENCIA 2026-10-09: suspensos schedule e push para conter consumo Airtable.
-  # Reativar somente apos auditoria de chamadas e validacao do usuario.
+  schedule:
+    - cron: "45 * * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/pesquisa_editorial*.py'
+      - 'scripts/pesquisa_oportunidades.py'
+      - 'scripts/limpar_resumos_noticias.py'
+      - '.github/workflows/pesquisa-editorial.yml'
 
 permissions:
   contents: write
@@ -17,6 +24,9 @@ jobs:
   pesquisar:
     runs-on: ubuntu-latest
     timeout-minutes: 12
+    env:
+      RADAR_PUBLIC_ONLY: '1'
+      RADAR_AIRTABLE_ALLOW: '0'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,10 +47,8 @@ jobs:
           echo "trigger_event=${{ github.event_name }}"
           echo "triggered_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
-      - name: Executar pesquisa editorial nativa
+      - name: Executar pesquisa pública sem Airtable
         id: pesquisa
-        env:
-          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
         shell: bash
         run: |
           set +e
@@ -82,15 +90,6 @@ jobs:
           git commit -m 'Atualiza resultado da pesquisa editorial nativa'
           git pull --rebase origin main
           git push origin main
-
-      - name: Enfileirar alertas aos assinantes
-        if: always()
-        env:
-          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          python scripts/enfileirar_alertas.py
 
       - name: Falhar workflow se oportunidades falhou
         if: steps.oportunidades.outputs.exit_code != '0'

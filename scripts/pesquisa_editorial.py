@@ -9,7 +9,7 @@ BASE = 'appB3SvKrUP82i5V7'
 TABLE_EVENTS = 'tblf6qaCTZmKo48m2'
 TABLE_NEWS = 'tbl0iuH4F5Hog8gDD'
 BRT = timezone(timedelta(hours=-3))
-TOKEN = os.environ.get('AIRTABLE_TOKEN','').strip()
+TOKEN = '' if os.environ.get('RADAR_PUBLIC_ONLY') == '1' else os.environ.get('AIRTABLE_TOKEN','').strip()
 UA = 'RadarBrasil2027/1.2 (+https://www.radarcopafeminina2027.com.br/)'
 
 TRUSTED_DOMAINS = (
@@ -74,6 +74,9 @@ def request_bytes(url, headers=None, timeout=25):
         return r.read(), r.geturl(), dict(r.headers)
 
 def request_json(url, method='GET', payload=None):
+    host = (urllib.parse.urlparse(url).hostname or '').casefold()
+    if host == 'airtable.com' or host.endswith('.airtable.com'):
+        _require_airtable_allowed()
     headers={'User-Agent':UA}
     if TOKEN: headers['Authorization']=f'Bearer {TOKEN}'
     data=None
@@ -85,6 +88,8 @@ def request_json(url, method='GET', payload=None):
         return json.loads(r.read().decode('utf-8'))
 
 def _require_airtable_allowed():
+    if os.environ.get("RADAR_PUBLIC_ONLY", "") == "1":
+        raise RuntimeError("Airtable bloqueado no modo de pesquisa publica")
     if os.environ.get("RADAR_AIRTABLE_ALLOW", "") != "1":
         raise RuntimeError("Airtable suspenso por emergencia de consumo (2026-10-09)")
 
@@ -328,11 +333,17 @@ def public_research(keys):
 def main():
     started=now(); cycle=started.strftime('%Y%m%d-%H')
     status={'cycle_id':cycle,'started_at':iso(started),'completed_at':None,'stage':'started','executor':'github-actions-native','airtable_reads_total':0,'airtable_reads':[],'sugestoes_lidas':0,'sugestoes_noticias_lidas':0,'candidatos_publicos':0,'aprovados_novos':0,'pendentes_enriquecimento':0,'rejeitados':0,'duplicados':0,'inbox_itens_adicionados':0,'inbox_commit_needed':False,'auditoria':[],'observacoes_operacionais':''}
+    public_only = os.environ.get('RADAR_PUBLIC_ONLY') == '1'
+    status.update({'modo': 'publico_sem_airtable' if public_only else 'publico_e_sugestoes',
+                   'sugestoes_airtable_suspensas': public_only})
     inbox=load(INBOX,{'eventos':[],'noticias':[]}); before=json.loads(json.dumps(inbox)); keys=existing_keys()
     try:
-        if not TOKEN: raise RuntimeError('AIRTABLE_TOKEN ausente nos GitHub Actions Secrets')
-        ev=airtable_read(TABLE_EVENTS); status['airtable_reads_total']+=1; status['airtable_reads'].append({'table':'Sugestões','reads':1})
-        nw=airtable_read(TABLE_NEWS); status['airtable_reads_total']+=1; status['airtable_reads'].append({'table':'Sugestões de Notícias','reads':1})
+        ev=[]; nw=[]
+        if not public_only:
+            _require_airtable_allowed()
+            if not TOKEN: raise RuntimeError('AIRTABLE_TOKEN ausente nos GitHub Actions Secrets')
+            ev=airtable_read(TABLE_EVENTS); status['airtable_reads_total']+=1; status['airtable_reads'].append({'table':'Sugestões','reads':1})
+            nw=airtable_read(TABLE_NEWS); status['airtable_reads_total']+=1; status['airtable_reads'].append({'table':'Sugestões de Notícias','reads':1})
         status['sugestoes_lidas']=len(ev); status['sugestoes_noticias_lidas']=len(nw)
 
         for table,records,kind,table_name in ((TABLE_EVENTS,ev,'eventos','Sugestões'),(TABLE_NEWS,nw,'noticias','Sugestões de Notícias')):
@@ -390,6 +401,8 @@ def main():
         if inbox!=before: dump(INBOX,inbox)
         status['stage']='completed'
         status['observacoes_operacionais']='Execução nativa GitHub. Exatamente duas leituras Airtable; pendências estruturais são reavaliadas com os mesmos registros já lidos, sem leitura Airtable adicional. Pesquisa pública ampliada em múltiplos eixos via Google News RSS + GDELT, com deduplicação, filtro anti-base, confiança de domínio, validação de conteúdo e trilha de auditoria gravada no pesquisa-status.json.'
+        if public_only:
+            status['observacoes_operacionais']='Pesquisa pública nativa, sem token e sem leituras ou escritas Airtable. Sugestões e enfileiramento de alertas permanecem suspensos. Mantidas validação editorial, extração de eventos, deduplicação e auditoria das fontes públicas.'
         code=0
     except Exception as e:
         status['stage']='failed'; status['observacoes_operacionais']=f'{type(e).__name__}: {e}'

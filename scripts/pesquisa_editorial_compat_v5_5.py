@@ -2,7 +2,7 @@
 """v5.5 — fonte primária estrutural + extração segura de eventos da Seleção Feminina.
 
 Correção cirúrgica:
-- mantém todo o núcleo v5.4 e as 2 leituras Airtable;
+- mantém todo o núcleo v5.4; modo público não consulta sugestões Airtable;
 - consulta/valida a fonte oficial CBF antes dos agregadores;
 - permite que notícia confiável já descoberta materialize eventos futuros conhecidos;
 - persiste explicitamente eventos extraídos ao fim da pesquisa, sem depender do monkey-patch de dump;
@@ -11,9 +11,9 @@ Correção cirúrgica:
 - não altera Merge, Alertas, Instagram, Saúde, schedules ou limites de frescor.
 """
 # EMERGENCIA 2026-10-09: trava de seguranca contra execucoes agendadas ja enfileiradas.
-# Reativacao exige RADAR_AIRTABLE_ALLOW=1 e revisao humana.
+# Modo publico explicitamente autorizado dispensa Airtable, sem liberar suas chamadas.
 import os
-if os.environ.get("RADAR_AIRTABLE_ALLOW", "") != "1":
+if os.environ.get("RADAR_PUBLIC_ONLY", "") != "1" and os.environ.get("RADAR_AIRTABLE_ALLOW", "") != "1":
     print("airtable_emergency_stop=active; pesquisa_editorial skipped")
     raise SystemExit(0)
 
