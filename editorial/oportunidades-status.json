@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-09T06:42:25-03:00",
-  "fim": "2026-10-09T06:44:12-03:00",
+  "inicio": "2026-10-09T13:39:44-03:00",
+  "fim": "2026-10-09T13:41:48-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -208,7 +208,7 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 60,
   "adicionadas": 0,
-  "atualizadas": 58,
+  "atualizadas": 3,
   "total_arquivo": 66,
   "erros": [
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
