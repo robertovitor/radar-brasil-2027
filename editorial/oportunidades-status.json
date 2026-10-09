@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-09T13:39:44-03:00",
-  "fim": "2026-10-09T13:41:48-03:00",
+  "inicio": "2026-10-09T18:22:05-03:00",
+  "fim": "2026-10-09T18:23:43-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -154,7 +154,7 @@
     },
     {
       "hub": "https://www.prefeitura.poa.br/secopa2027",
-      "resultados": 1
+      "resultados": 0
     },
     {
       "hub": "https://avai.com.br/categoria/futebol-feminino/",
@@ -174,7 +174,7 @@
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 4
+      "resultados": 5
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
@@ -206,9 +206,9 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 60,
+  "oportunidades_validas_na_execucao": 59,
   "adicionadas": 0,
-  "atualizadas": 3,
+  "atualizadas": 2,
   "total_arquivo": 66,
   "erros": [
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
