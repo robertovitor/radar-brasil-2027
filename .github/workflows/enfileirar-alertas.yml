@@ -1,16 +1,9 @@
 name: Enfileirar alertas aos assinantes
 
 on:
-  schedule:
-    - cron: "5 * * * *"
+  # EMERGENCIA 2026-10-09: suspensos schedule e push para conter consumo Airtable.
+  # Reativar somente apos auditoria de chamadas e validacao do usuario.
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'dados.json'
-      - 'noticias.json'
-      - 'scripts/enfileirar_alertas.py'
-      - '.github/workflows/enfileirar-alertas.yml'
 
 permissions:
   contents: read
