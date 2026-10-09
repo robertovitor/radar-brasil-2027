@@ -2,24 +2,9 @@ name: Pesquisa editorial Radar
 
 # Manutenção 2026-09-16: ativa camada v5.5 cirúrgica sem alterar schedule nem arquitetura.
 on:
-  schedule:
-    - cron: "45 * * * *"
+  # EMERGENCIA 2026-10-09: suspensos schedule e push para conter consumo Airtable.
+  # Reativar somente apos auditoria de chamadas e validacao do usuario.
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/pesquisa_editorial.py'
-      - 'scripts/pesquisa_editorial_compat_v3.py'
-      - 'scripts/pesquisa_editorial_compat_v4.py'
-      - 'scripts/pesquisa_editorial_compat_v5.py'
-      - 'scripts/pesquisa_editorial_compat_v5_1.py'
-      - 'scripts/pesquisa_editorial_compat_v5_2.py'
-      - 'scripts/pesquisa_editorial_compat_v5_3.py'
-      - 'scripts/pesquisa_editorial_compat_v5_4.py'
-      - 'scripts/pesquisa_editorial_compat_v5_5.py'
-      - 'scripts/pesquisa_oportunidades.py'
-      - 'scripts/limpar_resumos_noticias.py'
-      - '.github/workflows/pesquisa-editorial.yml'
 
 permissions:
   contents: write
