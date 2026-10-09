@@ -7,6 +7,12 @@ T_EVENT_SUB="tblFNuYxkhT9bNkq8"; T_NEWS_SUB="tblZFVMQAdxXkenaS"
 T_UNSUB="tblzoncdirWtB0ntL"; T_EVENT_LED="tblnNdNX5KDhtzPoP"; T_NEWS_LED="tbloZ3eNgHf8Yg6qE"
 T_QUEUE="tbl3GXV4vzTj2etFw"
 TOKEN=os.environ.get("AIRTABLE_TOKEN","")
+# EMERGENCIA 2026-10-09: nenhuma leitura/escrita Airtable sem reativacao explicita.
+# Protege inclusive jobs antigos que ainda estejam na fila do GitHub Actions.
+if os.environ.get("RADAR_AIRTABLE_ALLOW", "") != "1":
+    print("airtable_emergency_stop=active; enfileirar_alertas skipped")
+    raise SystemExit(0)
+
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CUTOFF="2026-09-28"
 if not TOKEN: raise SystemExit("AIRTABLE_TOKEN ausente")
