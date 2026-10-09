@@ -84,7 +84,12 @@ def request_json(url, method='GET', payload=None):
     with urllib.request.urlopen(req,timeout=30) as r:
         return json.loads(r.read().decode('utf-8'))
 
+def _require_airtable_allowed():
+    if os.environ.get("RADAR_AIRTABLE_ALLOW", "") != "1":
+        raise RuntimeError("Airtable suspenso por emergencia de consumo (2026-10-09)")
+
 def airtable_read(table_id):
+    _require_airtable_allowed()
     # Exatamente uma leitura por tabela. Nenhuma auditoria faz leitura adicional.
     url=f'https://api.airtable.com/v0/{BASE}/{table_id}?pageSize=100'
     obj=request_json(url)
@@ -93,6 +98,7 @@ def airtable_read(table_id):
     return obj.get('records',[])
 
 def airtable_patch(table_id, record_id, fields):
+    _require_airtable_allowed()
     if not fields: return
     url=f'https://api.airtable.com/v0/{BASE}/{table_id}/{record_id}'
     request_json(url,'PATCH',{'fields':fields})
