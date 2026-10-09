@@ -10,6 +10,7 @@ import json
 import pathlib
 import hashlib
 import math
+import re
 from PIL import Image, ImageDraw, ImageFont
 
 POLICY_PATH = pathlib.Path("instagram/visual-policy.json")

@@ -14,6 +14,8 @@ smart.REQUEST_BUDGET['commons'] = max(48, smart.REQUEST_BUDGET.get('commons', 0)
 smart.MAX_ITEMS_WITH_EXTERNAL_SEARCH = 12
 base.MAX_TITLE_LINES = 4
 smart.base.MAX_TITLE_LINES = 4
+base.TEXT_FALLBACK_MIN_TITLE_FONT = 32
+base.TEXT_FALLBACK_MAX_TITLE_LINES = 5
 TITLE_RENDER_META = {}
 
 TITLE_COMPRESSION_RULES = (
@@ -152,7 +154,7 @@ def make_clean_fallback(out, title, kind, subtitle, key):
     # Fallback textual tem mais área útil que uma arte sobre foto. Permite uma
     # quinta linha e redução moderada da fonte, sempre mantendo a headline
     # completa/editada e sem reticências.
-    f, lines, readable = fit_title_complete(draw, title, width, start_size=82, min_size=50, max_lines=5)
+    f, lines, readable = fit_title_complete(draw, title, width, start_size=82, min_size=50, max_lines=base.TEXT_FALLBACK_MAX_TITLE_LINES)
     y = 300
     for line in lines:
         draw.text((safe_left,y), line, font=f, fill='white')
@@ -161,7 +163,8 @@ def make_clean_fallback(out, title, kind, subtitle, key):
     draw.text((safe_left,1012), 'Copa do Mundo Feminina 2027 • Brasil', font=base.font(20,True), fill='white')
     pathlib.Path(out).parent.mkdir(parents=True, exist_ok=True)
     im.save(out, 'JPEG', quality=94, optimize=True)
-    return readable and f.size >= 32 and len(lines) <= 5 and y <= 960, f.size, len(lines)
+    title_ok = base.title_readability_ok(readable and y <= 960, f.size, len(lines), text_fallback=True)
+    return title_ok, f.size, len(lines)
 
 base.make_original_art = make_clean_fallback
 smart.base.make_original_art = make_clean_fallback

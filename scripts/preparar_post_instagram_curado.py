@@ -31,6 +31,15 @@ SAFE_RIGHT=930
 SAFE_WIDTH=SAFE_RIGHT-SAFE_LEFT
 MIN_TITLE_FONT=58
 MAX_TITLE_LINES=4
+# O executor pode registrar limites próprios para a arte textual de área ampliada.
+TEXT_FALLBACK_MIN_TITLE_FONT=MIN_TITLE_FONT
+TEXT_FALLBACK_MAX_TITLE_LINES=MAX_TITLE_LINES
+
+def title_readability_ok(readable,font_size,line_count,*,text_fallback=False):
+    min_font=TEXT_FALLBACK_MIN_TITLE_FONT if text_fallback else MIN_TITLE_FONT
+    max_lines=TEXT_FALLBACK_MAX_TITLE_LINES if text_fallback else MAX_TITLE_LINES
+    return bool(readable and font_size>=min_font and 0<line_count<=max_lines)
+
 ALLOWED_LICENSE_MARKERS=(
     'cc by ', 'cc-by-', 'cc by-sa', 'cc-by-sa', 'cc0',
     'public domain', 'pd-', 'domínio público', 'dominio publico'
@@ -1169,7 +1178,10 @@ def main():
         except Exception as exc:
             print('photo_failed='+item['key']+':'+type(exc).__name__); readable,font_size,line_count=make_original_art(art,clean(item.get('art_title') or item['title']),item['type'],item['subtitle'],item['key']); source_mode='fallback_visual'; semantic_reason='photo_failed_fallback_text_art'
     else: readable,font_size,line_count=make_original_art(art,clean(item.get('art_title') or item['title']),item['type'],item['subtitle'],item['key'])
-    title_ok=bool(readable and font_size>=MIN_TITLE_FONT and line_count<=MAX_TITLE_LINES)
+    text_fallback=source_mode=='fallback_visual'
+    title_ok=title_readability_ok(readable,font_size,line_count,text_fallback=text_fallback)
+    print('title_font_px='+str(font_size)); print('title_lines='+str(line_count))
+    print('title_layout_policy='+('text_fallback' if text_fallback else 'photo'))
     if not semantic_ok or not title_ok:
         print('found=false'); print('reason=quality_gate_failed'); print('SEMANTIC_IMAGE_OK='+str(bool(semantic_ok)).lower()); print('TITLE_READABILITY_OK='+str(bool(title_ok)).lower()); return 1
     common={'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],'image_url':ROOT+art,'caption':item['caption'],'visual_mode':source_mode,'SEMANTIC_IMAGE_OK':True,'TITLE_READABILITY_OK':True,'semantic_reason':semantic_reason,'title_font_px':font_size,'title_lines':line_count,'original_title':item['title'],'art_title':clean(item.get('art_title') or item['title']),'title_translated_to_pt':clean(item.get('art_title') or item['title']) != clean(item['title'])}
