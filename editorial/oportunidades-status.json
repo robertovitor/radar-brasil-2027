@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-09T19:52:30-03:00",
-  "fim": "2026-10-09T19:54:34-03:00",
+  "inicio": "2026-10-09T23:49:36-03:00",
+  "fim": "2026-10-09T23:51:32-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -154,8 +154,7 @@
     },
     {
       "hub": "https://www.prefeitura.poa.br/secopa2027",
-      "resultados": 0,
-      "erro": "TimeoutError:The read operation timed out"
+      "resultados": 0
     },
     {
       "hub": "https://avai.com.br/categoria/futebol-feminino/",
@@ -183,8 +182,7 @@
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 0,
-      "erro": "HTTPError:HTTP Error 403: Forbidden"
+      "resultados": 6
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -213,8 +211,6 @@
   "atualizadas": 2,
   "total_arquivo": 66,
   "erros": [
-    "hub:https://www.prefeitura.poa.br/secopa2027:TimeoutError:The read operation timed out",
-    "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
