@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261011-03",
-  "started_at": "2026-10-11T03:30:03-03:00",
-  "completed_at": "2026-10-11T03:34:42-03:00",
+  "cycle_id": "20261011-10",
+  "started_at": "2026-10-11T10:33:39-03:00",
+  "completed_at": "2026-10-11T10:35:51-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
@@ -26,9 +26,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Salvador entra no roteiro internacional de promoção da Copa do Mundo Feminina 2027 - Alô Alô Bahia",
-      "fonte": "Alô Alô Bahia",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPR3YzTUdIVDZBZFBPY1ZuYW5JNmkzV0t4Ny05UnY4OXVUSGFlOUVFSkNENGY1b3Vhc0VWUk5oUTJlQTRXV2t1QTNDZDRjajB0d0NzYWFrNVFDdHpnMFFoRTlZb1NNeko2N2lkOGRpRG5ISDFCTFhXM0dVT2tKLUxrMUFEbkRPSnNZVHUwei0tekJCUHJHanI4SGtTb3o2Ulg3NFhiaTMyeHN0a19naUNOdEp2MXlZMVpFTnhicHktNmwySUZBS2c?oc=5",
+      "titulo": "Seleção Brasileira Feminina vence a Argentina por 3 a 1 em amistoso no Beira-Rio - Bahia Notícias",
+      "fonte": "Bahia Notícias",
+      "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPOS01QXM3Vy1WSXZwSW45aG5qM0dCdGVJMTJZRjQ3bWl3MFBZV1ZFdW1uTVBpTTNOWGptZHVoaHdqSmkwZW9HSk0tZzFzMGJ1VzNCTXFqWEp2MzY4dExKdjZjSGhLRERSbnhmQWlSYUtEajNtOVFyNkt2X0JxZUt4bW55T09wSkFLZmtCc1RkYUJwM05tNVBpVW5saHZCTFZ4ZmhFSDVkV3lCVVBYZDAyVzJmdkE3YWlHU1dOUzItQjdNR1hadmlDcmI1N0dzQWFVRnc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -354,9 +354,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Ministério do Esporte e Secom PR alinham estratégias de comunicação para a Copa Feminina 2027 - MT Esporte",
-      "fonte": "MT Esporte",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPcDh1ZGlNcUljZFZhclZOQ2ozOVJ6RWN0QkpqYjZfdnFpSG12STJSOFZ0bXhvX1ZmZkxlSllNclVqd3ZDRzR6RU95YXZpVExKT1gtWEp3SGtqckF4UjhFSU12MUFfVW5waEo5OFJqaTZCZ1lOemxRdHpkMG9yNFdDeW93RkM4dG9fVkMtd2tFMTJidFU2eUFzaGhfN1JXQjFKTTZ2RTJ2X3luR01zdGRkbkota2RJV2dkUVpXVlhJOTR4R3dGY1E?oc=5",
+      "titulo": "Fifa lança identidade visual da Copa do Mundo Feminina de 2027 - Poder360",
+      "fonte": "Poder360",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQRmp0MFpTLXJ3eHRscnAycm9KTDdxdmpoOEtaMWdkU0llR2RRRlk3UmFuMk1HNHJoR0lLZExERHBQWHJDRUxfUVhIVTlvQk9MYUl2MDJwb2VOY05QMDVjWU9zeGRxcWZvT04xeDR2NzNjRDFUdENtT1doaTdkcXhtSG42Vmtkekl1RXhXbWNOYnkzbFNmSXdNMmZRTzFFSWxBa3JSeGdRazkyZEU?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -418,14 +418,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Seleção feminina se prepara para data FIFA com foco em 2027 - Olimpíada Todo Dia",
-      "fonte": "Olimpíada Todo Dia",
-      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQRFVDaFZVNm5lcngyMHFua1FxMk9POERPbXFtQjY4bmxWNTZHVjd6MFRvR3E5Y2cxYzFPUk1mR2tvU1FXM3RaMzVUcXlmd2YyR1pWUGtOeG1MZHVaaUVuT05RRUlnUWR6YmFFVENNWXJ1VjVaUUJOTGV2VGZKUUZZVTdOeGk?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Seleção Brasileira Feminina enfrenta Argentina neste sábado no Beira-Rio; CBF promove caça aos ingressos - DuduNews",
       "fonte": "DuduNews",
       "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNWUVSZDA5OUJCYU03MnNWNVZDTW1UWXBreXNJc3VQZFFzUGdvTURWSGt0ODVKNGZacGlCY01OMjAxR093ZUp2MXd4ME52N0Z0R0NBX0VVS2U4ZmRWSXV4alJxSlVMamJzNnJ6alhFRGN6M2pmZnpNbEo3ZmJVUGh3Tmc5MDFwbHFOSzFCamdlTXQzSzhzUDFmeDkydVJkTWxBc0Voa1BndEwwbENLdWxZSm13cFpqY1Rld3pub1c4QXV0elctSzRJ?oc=5",
@@ -466,19 +458,19 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Copa do Mundo 2027: calendário será revelado dia 20 de agosto - ge",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOZzNaekNLeDNDOHBpT0dSMzZWejJRM3dtX3JsbHczUzFwODQ5S0hJaTZ1WjdIRmI3NEJuQjFYUU4zdjl4M19xLVhRdTcyMU5kUkNXUXZmaHF5bVdXSEpJVzhJRTBGb1dmTVF3WmRjRmdiNjZ3QjFMZENjUUdSb1ZoLVNDRkwtcGZiSkg4NEUwamZuSHViUGl2XzN2M1B4OWNpT3dQUFhjN2k1dGdGTzUwcWJyYldVemdETE4yWUF5UFh3S2Vral9kVzVFQVJnWGRXVVV30gHiAUFVX3lxTFB6dGlzRmNaQ1dIN1ZGT3VVQTd5elJFbGszUkVhNjRONnBDcDdtR3RfNFZoMFhEVFZXNDNFNWZYNzRLTjdhRlF3TUhZZjdLcERNZ2g5T1V0d1RPRm12V29zV0JqZXlhY1ZNYVgtWHh0bktLZEVpUFNmRG5la0poM2JPZGYxZ3ktQXhkQVZtWTJLOXpNTFU4OURiNnFzUW8wYU5SeW9HWlBBUDBLRTZJdmV6amJ0WFdtT04yNjNvekhNQzdGQlRYWU8zV0RXcnBKX21mZS14U0d1VFpkZkxUbm10Qmc?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (58d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "Copa Feminina: Brasil estreia no Maracanã e passará por SP e DF na 1ª fase - UOL",
       "fonte": "UOL",
       "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNamd5OEgxbGhINGlWazA2Y1MyTzFLVl92OFhfdlkxdDdWZlEyS0YtSW5yUEUyZi1KdS1HT3d3eVpFS0ZFNk9GTVRYUV94Y052Mms4TUpGQlZkOWRCR1dyVUh2Rk9JS3NUQ1FDVTVkYnlTMDdkb2tOM25DbmdMem4tZGRzTzZQSmt1UWhvVmN6QmtNRWZ0ZmQ3VFM4b01zck9OeHlNRUMyUnQyZGw1QXc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (52d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Copa do Mundo 2027: calendário será revelado dia 20 de agosto - ge",
+      "fonte": "ge",
+      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOZzNaekNLeDNDOHBpT0dSMzZWejJRM3dtX3JsbHczUzFwODQ5S0hJaTZ1WjdIRmI3NEJuQjFYUU4zdjl4M19xLVhRdTcyMU5kUkNXUXZmaHF5bVdXSEpJVzhJRTBGb1dmTVF3WmRjRmdiNjZ3QjFMZENjUUdSb1ZoLVNDRkwtcGZiSkg4NEUwamZuSHViUGl2XzN2M1B4OWNpT3dQUFhjN2k1dGdGTzUwcWJyYldVemdETE4yWUF5UFh3S2Vral9kVzVFQVJnWGRXVVV30gHiAUFVX3lxTFB6dGlzRmNaQ1dIN1ZGT3VVQTd5elJFbGszUkVhNjRONnBDcDdtR3RfNFZoMFhEVFZXNDNFNWZYNzRLTjdhRlF3TUhZZjdLcERNZ2g5T1V0d1RPRm12V29zV0JqZXlhY1ZNYVgtWHh0bktLZEVpUFNmRG5la0poM2JPZGYxZ3ktQXhkQVZtWTJLOXpNTFU4OURiNnFzUW8wYU5SeW9HWlBBUDBLRTZJdmV6amJ0WFdtT04yNjNvekhNQzdGQlRYWU8zV0RXcnBKX21mZS14U0d1VFpkZkxUbm10Qmc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (58d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -615,6 +607,14 @@
       "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQUHN0d05Tc1F2X2Qxc1UzRDdNVzVDVUd1RnFHWUJnN1FzcjZsVUpyTGRWRDF6MjRLYTBvX1lYZW9FWHg3N1JiZmoxcGpmblRpaUE0QzUta3c3TlhBQlhQWk41U28zZWZuNVlXUU82cGNNdHVhcU9nblFMRExsRWpUeVNlZzhHMlJQMkpNYWpORW1GOFRlWUZLMlRYUnFLTUpfWWhYSVptTlpRSTI1SHBkN2xILXNKYlV1Rks1TTZ0Z1daYjdxbEo4UWtWb2R3SGpmaVNydkwxTWhwejJRcjNr0gHuAUFVX3lxTE5mVndUdXJKX2VVenNfVGVLR1BaRzNXd25mTDc2VWg5Y1d4SU0yenRTYTJTcUtsMV9heEtXYThJQnJwMVF6Ynkta3BrN0MzYUpDRlR2NlRLRVVrTlZkN08zUGFORzZvUWpWVjdOQ2lqdWdnY09NRW9KUjhoUDZGRm12Y1ZUQll1TWVTcGN3bTNxR3FKb09oYWNmR1VOX180RmxnVTE0MWlSeHNWVWpBd3NkSXJJcU9UaHFPMjcySDBNRUFsVEtXOW9qWS0zRjBwWXdxYlpzTzdOZXlaaVE1V0o3czNTVUpORnc0ZHV0WUE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (52d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Diretor da Fifa trata paralisação do futebol com naturalidade na Copa de 2027: \"É um projeto de país\" - ge",
+      "fonte": "ge",
+      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNTnMtN1hEdWZ2MmF5VW5jNjRjdDdBeEhOMURwWTFCS0psLUJ0WUFSQzJSWF92VEl6WlRkNXpQOGJzbHRXM3VPMmRya0I3OGh1SFF4VGtfSEJ4SXVmemh5c2xjYy1vUmNVTzNzbnVMVzhkVkI5OXEyZ3dBTDNvbVZoTjlKd2tFTWxSOF9MSGNtMGJuWGQ1OHVYOTItZ0thT2diQWU1dmRoeE5aanFYamZRazdpWGVBOElkajJKOTZ0T3QyVzhmd3M5akJaanpSZzdtMDNCME1mQlJFZFhWTTJmTThlaThlV0szdlVpTHd4Q2dJRGJFQW9hREtUQUVucTUxR1HSAZACQVVfeXFMTXUxM1V1TEZRcDVKVWhrOWkzc1hiQjlpYmpldUVqRUdxWjBGdUdwSS1IbUxoeEtGT2lwYk5xZVBXSk0zU010OGdYUFcweHczODhJZjROaDNOS3paWVJfYU1OT2gybHBIczFfb1AxVVVRU0wzbzhWcVpYNTEzTDJkLWhUZXlpSWRZb1BiNkViNTNLY19oQzQtU0tYVDAwUlZzQXJQMFV2YW9BSXJ1NEM3VGxuV3E4R3VIYWpCcTAxWnNyWXcwMGZfdnYzOVNWY2tUWUE1dXlaZnlITjNlcU1zTEhQRHpLblRNZUd3RjFPTXEwdzExc1MteVZ1S3ExTi1qbHJhdFBCMXJHRkl3R2NKQ1E?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (58d)."
     }
   ],
   "observacoes_operacionais": "Pesquisa pública nativa, sem token e sem leituras ou escritas Airtable. Sugestões e enfileiramento de alertas permanecem suspensos. Mantidas validação editorial, extração de eventos, deduplicação e auditoria das fontes públicas.",
