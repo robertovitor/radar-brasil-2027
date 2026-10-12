@@ -1,17 +1,17 @@
 {
-  "cycle_id": "20261011-19",
-  "started_at": "2026-10-11T19:29:26-03:00",
-  "completed_at": "2026-10-11T19:31:53-03:00",
+  "cycle_id": "20261011-22",
+  "started_at": "2026-10-11T22:48:40-03:00",
+  "completed_at": "2026-10-11T22:51:09-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 76,
+  "candidatos_publicos": 77,
   "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 75,
+  "rejeitados": 76,
   "duplicados": 0,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
@@ -98,9 +98,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Ministro do Esporte entrega marco regulatório do Mundial Feminino 2027 - ncnews.com.br",
-      "fonte": "ncnews.com.br",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNbzhFQzhqaV9VV2VKMlBYQnoyTEZDenF1ZjNDckxjdDJNNDV6dTczUkVRNHJGYkpyeThwT3dqZ0QyandWQnNIOXlOS0RzbTNwWlNyTzZzdzZBbURDY2ctYWVabWxoeXp2eG1tRmJSRlhndUZ5VGFfZy1xc2c5VTdqWUZyd0R5Yi0ySENfNXlhM19XSEZ3SkVCOFV6MnI5Q2VZaDIyVWh3MA?oc=5",
+      "titulo": "EXCLUSIVO: A Adidas vai lançar a reedição da bola Brazuca do Mundial de 2014 em 2027 - Footy Headlines",
+      "fonte": "Footy Headlines",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOekdMSDJUTGVoczdPNnVDVVhaamtkQlFKS3hiTjQxYWdTRUE3NHA3T3N3U3hmWV9ueFdjOHhJUTlZVUJwaUVtdkRzbUJuWGl4d18wMGtXcGNWemJrVEN4ZE1lZHJyejZpZGdOenhmOUVjYXFvLW8xNDl6ZUJ1QjFNTG9KSzI4X0YwSk5ycXEtR1l4bnpaNm05NTVoODVTWC00TjhfZjZiNGhSZ0lmM3BfMWVfMHdzRzlOODNSVVlQVDVsM3dFblE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -114,9 +114,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "EXCLUSIVO: A Adidas vai lançar a reedição da bola Brazuca do Mundial de 2014 em 2027 - Footy Headlines",
-      "fonte": "Footy Headlines",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOekdMSDJUTGVoczdPNnVDVVhaamtkQlFKS3hiTjQxYWdTRUE3NHA3T3N3U3hmWV9ueFdjOHhJUTlZVUJwaUVtdkRzbUJuWGl4d18wMGtXcGNWemJrVEN4ZE1lZHJyejZpZGdOenhmOUVjYXFvLW8xNDl6ZUJ1QjFNTG9KSzI4X0YwSk5ycXEtR1l4bnpaNm05NTVoODVTWC00TjhfZjZiNGhSZ0lmM3BfMWVfMHdzRzlOODNSVVlQVDVsM3dFblE?oc=5",
+      "titulo": "Seleção Brasileira Feminina enfrenta a Argentina neste sábado em amistoso de preparação para a Copa do Mundo - Bnews",
+      "fonte": "Bnews",
+      "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxNbUZLLTBBaERMaDRHVlhLcjBNZGtsemxpbU9HdGIwZDV1MTUzdVBTM3owbFUxc19vRXdRR2dheERjNkN6VV9pWmpqVDA2d1VRa0J6MThrWGRROUVMTndZVUs5NVZlYW9FRVp4bThPNWtFQWFOeXoybEpKa01ua3R0eG9XZFdEd0c4RWV5U3lVZW55UVh1TWxSUEJRdTJIWHY0cmlEOExub3VYbTRZYmtpV2R0OXlyQlpEY19Rbm11YWNLeXIzcTVvTTk0MWptX1RId2JhRlV2N2FPYWhDTjVLQ1lHdVZYYW5JOXRV0gHwAUFVX3lxTE5Wd1Mya0N5OWQ1bUdrVXN6TmVPWUgzWUFORHZUS3g2OXRVNVBfLW44X3lwTzh2QlRoZk5GQy0yVDBKWTBJTWU5dU9zQjFZVEVwVkNWZnlFRHF1a3J3Q1diREtpSjNUOWY5RHowb1BlYmxpaTd5S09QNDluZU9aV2w4eHJuV2NwcGVtWm9scGxMV3pYS2lycTFKUVRyNE1jUHNCU3ZfQWdjSzFVX3czVmloRlJtenhiNnBhQUQ1bG5CUGZ4bTN1dV9UNHpjSkI3LW9lY01YM0Voc0xiMWYtUlNuaEpCOS0xRDhubGlkNVFtVQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -218,14 +218,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Nova lei da Copa Feminina pode mudar as férias escolares e autorizar feriados durante os jogos da Seleção em 2027 - Diário do Litoral",
-      "fonte": "Diário do Litoral",
-      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOSldaRFh2ZDhxdTM0ZzloSkxENjlkeS1fRTJRSnRrSGRPTC1wOTZvLVNBYU4wVUc0MlktMm9FdVAzdjJrbG5BUldKSDk5QnpmT1RSaERwY01wM1ZURENVWDRwM1FEVEkwNkZvSmtIN0ZOdk1aZEJ1YnVNVXB1X0hVTzdBYmdvMFVmb19rZ0pmTXdlcDhBd2lzMjRWRldSajJ5Ync?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Falta um ano: Salvador entra na contagem regressiva para a Copa Feminina 2027 - MundoBA",
       "fonte": "MundoBA",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQSk1UV1JNY0ZCZjZoZVVLWmEzZUpDejNyMk9vUFVXV3BvenJfODZUajZnVW9seDF6cEFPdEZDQk5HR0dsTzNLZHVpSm1DU3pEaFRUeEJHVy1MZUdIMHM5aXJ6SG1fUk5Zel9Cbm9tOTUzMEk0YWFUU2VUcWpueElDR29TT09uLWYxdnhWVkplV0R0QU55eVpqYmlLOGVNVG9vcncya2JwM211cW13?oc=5",
@@ -237,6 +229,22 @@
       "titulo": "Copa do Mundo Feminina pode levar Nordeste a novo patamar no turismo internacional - Portal NE9",
       "fonte": "Portal NE9",
       "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1JcUk4VDFaYVFlcUV0cGNUOHFSM3pDb0pjeTl6U1hocS1nWXE3cV96U0ZFRnpyeVNaQ0ZFcWhrMWFJcGZ3Z0IzNEdXRnlnaEY1bG1zelhYUzk5eFd0RHMtS1EyM2lJRmZZampaSWtR?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Nova lei da Copa Feminina pode mudar as férias escolares e autorizar feriados durante os jogos da Seleção em 2027 - Diário do Litoral",
+      "fonte": "Diário do Litoral",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOSldaRFh2ZDhxdTM0ZzloSkxENjlkeS1fRTJRSnRrSGRPTC1wOTZvLVNBYU4wVUc0MlktMm9FdVAzdjJrbG5BUldKSDk5QnpmT1RSaERwY01wM1ZURENVWDRwM1FEVEkwNkZvSmtIN0ZOdk1aZEJ1YnVNVXB1X0hVTzdBYmdvMFVmb19rZ0pmTXdlcDhBd2lzMjRWRldSajJ5Ync?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Em Copacabana, Elmano de Freitas participa do lançamento da Copa Feminina 2027 sediada no Brasil - Balada IN",
+      "fonte": "Balada IN",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxONHh4R29VenFHQnVFdUx3WWQzWl9BdGR2d3ptaE9GWng2ZFQ3NDRZUG1FWkpQamZGVDRMdHplNUxvQTI0YUp6Y2NfNVNxaldEU1pVZFM4SFZ0SERYcFNQUE0tcWI1VzlvRS1iWGx1Y0FjbkFyRHktSTdSRENxTG1iQUUyaXR2Y0poRGtsNmNHNFNfOGVMOTZqU1VIelZ4Q2xzXzRiU0hvemxsU0Z0NmhyeldtT0I1Wl8yWWFKZ3pXTzQ5UlZXYVZiRGRYS1hZU21qOUl6cw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -386,14 +394,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Enquanto a bola rola no mundial masculino, Salvador já iniciou a contagem regressiva para receber a Copa do Mundo Feminina de 2027. Na manhã desta quarta-feira (24), o Governo da Bahia inaugurou uma placa comemorativa de 365 dias para o início d - Instagram",
-      "fonte": "Instagram",
-      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1oQzlJNFNfb1p4YS1GS2NQaDlrZmhHcFZlWkVRSXZ2MDFTeHQwTExMenFyQzI1bDlLdVBfLVBqSWlVLVlsQWVfQ0NickpPallwMEhLeFRB?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Lula assina MP para proteger direitos da Copa Feminina 2027 - Jornal de Brasília",
       "fonte": "Jornal de Brasília",
       "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQaUwxMmJEckhwbnlIU09FM1RIeUxoZ25WaWhsdEJTOHRpWlBhR20xV0phV2ZkdVl0UzU5VU52YjZqY3lqNVJoaGZSWkt5TFNrYjNwNERNQVlXWk9ScFIxTm45ZjFFek5EZ1ZTeXNwSWhJSFptdWx5MVNrNTVsY1VEUnVUN1hscENRVFJpalFHUk40RjJ6ZDRwMnQ4SjZUcmJlZnc?oc=5",
@@ -413,6 +413,14 @@
       "titulo": "Governo de Pernambuco participa de formação da FIFA para sedes da Copa do Mundo Feminina 2027 - Diario de Pernambuco",
       "fonte": "Diario de Pernambuco",
       "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxPNks3bGgzN2gxWmhTRXRSdXo2U2FtQ3kwVU9VYWtuTDJ1dlNiVWtWRDlDMm5mXzBrTXowczBldk5EN2Y1ckF3VUNQZkFKa1RJSTlIV0tBdkhxMTFZbHo4ZGFVcWdQaDRXaHBydDhGR3lpOGs0Mk9ERFpScXVCSTU5cnRXaEs0YVZxMGRqbEVSZV9DdmNlem8wUnpWcWxuWDdrcDBIeVZyTFNRRERCdjFsRlhEUEk5YXJOUGdWQk8zLXlpdEFBR2JheHA4YlFFVUZiblhCSkxMWGZUZ1lLQ0hmNnl0dWJJNlhjcFVOdG1DbS1iZHpiZlQwU2ZIYXQ5VUtNd0c1ZtIBigJBVV95cUxQSmtDMks5M0N0Z25yUmtZY0ZTWDJHcFZkWFIxUE9nNjZ3ZFJoZEhWaEhVWFcxTHBmaTFzQXVkdWNOSFFjZ3VyQ194M1plXzRtNVU2WXF5VnJoY0FJbWhRY21GU3VsM0sxc05UQ0kxTjV2ZjlqMmY1S09COGs5UVpIU2hZd05LWFF1dDFaQjI1Q0kxOWQxaWc1dWZkcFVfZHQwVFoyaEFMTDRuNUJZdktvX2tVSERQSEtQcVp6Yy1ZQmQ4ckNwTDVZcVJMOXN6a2xLeElMUF9jcGZoMjhlNy1zY3RqREd2MmdpaF82TjJnNHdSQVZCQkx3eWxfOVRLS1B3eXphdWtBdkVZQQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Enquanto a bola rola no mundial masculino, Salvador já iniciou a contagem regressiva para receber a Copa do Mundo Feminina de 2027. Na manhã desta quarta-feira (24), o Governo da Bahia inaugurou uma placa comemorativa de 365 dias para o início d - Instagram",
+      "fonte": "Instagram",
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1oQzlJNFNfb1p4YS1GS2NQaDlrZmhHcFZlWkVRSXZ2MDFTeHQwTExMenFyQzI1bDlLdVBfLVBqSWlVLVlsQWVfQ0NickpPallwMEhLeFRB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },

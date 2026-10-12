@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-11T19:31:53-03:00",
-  "fim": "2026-10-11T19:33:51-03:00",
+  "inicio": "2026-10-11T22:51:09-03:00",
+  "fim": "2026-10-11T22:53:22-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -178,7 +178,8 @@
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
-      "resultados": 1
+      "resultados": 0,
+      "erro": "URLError:<urlopen error timed out>"
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
@@ -211,6 +212,7 @@
   "atualizadas": 2,
   "total_arquivo": 66,
   "erros": [
+    "hub:https://jogasp.prefeitura.sp.gov.br/:URLError:<urlopen error timed out>",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
