@@ -118,6 +118,115 @@ def norm(v):
 def date(v):
     try:return dt.date.fromisoformat(clean(v)[:10])
     except:return None
+
+PT_MONTHS={
+    'janeiro':1,'fevereiro':2,'marco':3,'março':3,'abril':4,'maio':5,'junho':6,
+    'julho':7,'agosto':8,'setembro':9,'outubro':10,'novembro':11,'dezembro':12,
+}
+DEADLINE_MARKERS=(
+    'prazo','inscricao','inscrição','inscricoes','inscrições','candidatura','candidaturas',
+    'termina','terminam','encerra','encerram','encerramento','ultimo dia','último dia',
+    'ate dia','até dia','ate ','até ','deadline','applications close','registration closes',
+)
+EVENT_DATE_MARKERS=(
+    'acontece','acontecera','acontecerá','sera realizado','será realizado','evento em',
+    'marcado para','previsto para','agendado para',
+)
+
+def _safe_calendar_date(year,month,day):
+    try:return dt.date(int(year),int(month),int(day))
+    except (TypeError,ValueError):return None
+
+def _deadline_dates_from_text(value,reference_date=None):
+    """Extrai apenas datas ligadas a prazo/encerramento; evita datas históricas soltas."""
+    text=clean(value)
+    if not text:
+        return []
+    n=norm(text)
+    if not any(norm(marker) in n for marker in DEADLINE_MARKERS):
+        return []
+
+    ref=reference_date or dt.datetime.now(ZoneInfo('America/Sao_Paulo')).date()
+    out=[]
+
+    # 07/10/2026 ou 07/10. Sem ano, usa o ano editorial de referência.
+    for m in re.finditer(r'\b(0?[1-9]|[12]\d|3[01])[/.-](0?[1-9]|1[0-2])(?:[/.-](20\d{2}))?\b',text):
+        day=int(m.group(1)); month=int(m.group(2)); year=int(m.group(3) or ref.year)
+        parsed=_safe_calendar_date(year,month,day)
+        if parsed: out.append(parsed)
+
+    # 7 de outubro [de 2026].
+    month_names='|'.join(sorted((re.escape(k) for k in PT_MONTHS),key=len,reverse=True))
+    for m in re.finditer(r'\b(0?[1-9]|[12]\d|3[01])\s+de\s+('+month_names+r')(?:\s+de\s+(20\d{2}))?\b',text,flags=re.I):
+        day=int(m.group(1)); month=PT_MONTHS[norm(m.group(2))]; year=int(m.group(3) or ref.year)
+        parsed=_safe_calendar_date(year,month,day)
+        if parsed: out.append(parsed)
+
+    # "nesta quarta (7)", "até dia 7", "termina dia 7": usa mês/ano da notícia.
+    if re.search(r'\b(?:nesta|neste)\s+(?:segunda|terca|terça|quarta|quinta|sexta|sabado|sábado|domingo)\s*\(\s*(0?[1-9]|[12]\d|3[01])\s*\)',text,flags=re.I):
+        for m in re.finditer(r'\(\s*(0?[1-9]|[12]\d|3[01])\s*\)',text):
+            parsed=_safe_calendar_date(ref.year,ref.month,int(m.group(1)))
+            if parsed: out.append(parsed)
+    for m in re.finditer(r'\b(?:ate|até|termina|terminam|encerra|encerram)(?:\s+no)?\s+dia\s+(0?[1-9]|[12]\d|3[01])\b',text,flags=re.I):
+        parsed=_safe_calendar_date(ref.year,ref.month,int(m.group(1)))
+        if parsed: out.append(parsed)
+
+    return sorted(set(out))
+
+def _event_dates_from_text(value,reference_date=None):
+    """Extrai datas explícitas quando o texto anuncia uma ação/evento futuro."""
+    text=clean(value)
+    if not text:
+        return []
+    n=norm(text)
+    if not any(norm(marker) in n for marker in EVENT_DATE_MARKERS):
+        return []
+    ref=reference_date or dt.datetime.now(ZoneInfo('America/Sao_Paulo')).date()
+    out=[]
+    for m in re.finditer(r'\b(0?[1-9]|[12]\d|3[01])[/.-](0?[1-9]|1[0-2])(?:[/.-](20\d{2}))?\b',text):
+        parsed=_safe_calendar_date(int(m.group(3) or ref.year),int(m.group(2)),int(m.group(1)))
+        if parsed: out.append(parsed)
+    month_names='|'.join(sorted((re.escape(k) for k in PT_MONTHS),key=len,reverse=True))
+    for m in re.finditer(r'\b(0?[1-9]|[12]\d|3[01])\s+de\s+('+month_names+r')(?:\s+de\s+(20\d{2}))?\b',text,flags=re.I):
+        parsed=_safe_calendar_date(int(m.group(3) or ref.year),PT_MONTHS[norm(m.group(2))],int(m.group(1)))
+        if parsed: out.append(parsed)
+    return sorted(set(out))
+
+def stale_operational_date(kind,item,today,reference_date=None):
+    """Bloqueia somente conteúdo operacional vencido, não notícia retrospectiva comum."""
+    reference_date=reference_date or date(item.get('Data')) or date(item.get('DataDescoberta')) or today
+    text=' '.join(filter(None,[
+        clean(item.get('Titulo')),clean(item.get('Resumo')),clean(item.get('Tema')),
+        clean(item.get('Observacoes')),clean(item.get('Status')),
+    ]))
+
+    # Campos estruturados têm precedência.
+    if kind=='evento':
+        event_date=date(item.get('Data'))
+        if event_date and event_date < today:
+            return event_date,'event_date_passed'
+
+    if kind=='oportunidade':
+        for field,reason in (
+            ('PrazoInscricao','application_deadline_passed'),
+            ('DataFim','opportunity_end_date_passed'),
+        ):
+            parsed=date(item.get(field))
+            if parsed and parsed < today:
+                return parsed,reason
+
+    deadlines=_deadline_dates_from_text(text,reference_date)
+    expired=[d for d in deadlines if d < today]
+    if expired:
+        return max(expired),'deadline_in_text_passed'
+
+    event_dates=_event_dates_from_text(text,reference_date)
+    expired_events=[d for d in event_dates if d < today]
+    if expired_events:
+        return max(expired_events),'announced_event_date_passed'
+
+    return None,''
+
 def base(item):
     t=norm(' '.join(clean(v) for v in item.values()))
     return bool(re.search(r'\bsub[ -]?(15|16|17|18|19|20|23)\b',t)) and ('selecao' in t or 'mundial feminino' in t)
@@ -299,6 +408,10 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
     today_brt=dt.datetime.now(ZoneInfo('America/Sao_Paulo')).date()
     for x in events:
         title=clean(x.get('Titulo')); d=date(x.get('Data')); key='instagram:evento:'+clean(x.get('ID') or title).casefold()
+        stale_date,stale_reason=stale_operational_date('evento',x,today_brt,d)
+        if stale_date:
+            print('instagram_stale_blocked=evento:'+key+':'+stale_date.isoformat()+':'+stale_reason)
+            continue
         if title and d and key not in published and not base(x) and not any(duplicate_title(title,old) for old in prior_titles):
             place=', '.join(filter(None,[clean(x.get('Local')),clean(x.get('Cidade')),clean(x.get('UF'))]))
             subtitle=(clean(x.get('DataBR')) or d.strftime('%d/%m/%Y'))+' • '+(place or 'Local a definir')
@@ -307,7 +420,11 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
             out.append(dict(key=key,title=title,art_title=title,date=d,type='evento',subtitle=subtitle,search_context=search_context,visual_places=place,display_date=event_date,display_place=place or 'Local a definir',caption=f"📅 {title}\n\nQuando: {event_date}\nOnde: {place or 'Local a definir'}\n\n{clean(x.get('Observacoes'))}\n\nFonte: {clean(x.get('Organizador')) or 'Radar Brasil 2027'}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     for x in news:
         title=clean(x.get('Titulo')); d=date(x.get('Data')); key='instagram:noticia:'+clean(x.get('Link') or title).casefold()
-        if title and d and d<=dt.datetime.now(dt.timezone.utc).date() and key not in published and not base(x) and radar_content_ok(x) and not any(duplicate_title(title,old) for old in prior_titles):
+        stale_date,stale_reason=stale_operational_date('noticia',x,today_brt,d)
+        if stale_date:
+            print('instagram_stale_blocked=noticia:'+key+':'+stale_date.isoformat()+':'+stale_reason)
+            continue
+        if title and d and d<=today_brt and key not in published and not base(x) and radar_content_ok(x) and not any(duplicate_title(title,old) for old in prior_titles):
             subtitle=(clean(x.get('Veiculo')) or 'Radar Brasil 2027')+' • '+d.strftime('%d/%m/%Y')
             summary=clean(x.get('Resumo'))
             art_title=art_title_pt('noticia',title,summary=summary)
@@ -321,7 +438,9 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
         if not title or not link or 'abert' not in status:
             continue
         deadline=date(x.get('PrazoInscricao'))
-        if deadline and deadline < today_brt:
+        stale_date,stale_reason=stale_operational_date('oportunidade',x,today_brt,date(x.get('DataDescoberta')) or date(x.get('UltimaVerificacao')) or today_brt)
+        if stale_date:
+            print('instagram_stale_blocked=oportunidade:'+clean(x.get('ID') or link or title).casefold()+':'+stale_date.isoformat()+':'+stale_reason)
             continue
         discovered=date(x.get('DataDescoberta')) or date(x.get('UltimaVerificacao')) or today_brt
         key='instagram:oportunidade:'+clean(x.get('ID') or link or title).casefold()
