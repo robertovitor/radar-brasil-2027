@@ -15,6 +15,12 @@ from PIL import Image, ImageDraw, ImageFont
 
 POLICY_PATH = pathlib.Path("instagram/visual-policy.json")
 
+# Safe zone para a grade do Instagram. A prévia atual recorta as laterais
+# do quadrado; todo texto essencial das artes próprias fica dentro desta área.
+GRID_SAFE_LEFT = 180
+GRID_SAFE_RIGHT = 900
+GRID_SAFE_WIDTH = GRID_SAFE_RIGHT - GRID_SAFE_LEFT
+
 DEFAULT_POLICY = {
     "version": 1,
     "enabled": True,
@@ -63,8 +69,8 @@ def _fit(draw, title, width, fit_title, start=82, min_size=58, max_lines=4):
 def render_event_text_art(out, item, *, font, wrap, fit_title):
     im=Image.new("RGB",(1080,1080),(5,69,48))
     draw=ImageDraw.Draw(im,"RGBA")
-    left,right=115,965
-    width=right-left
+    left,right=GRID_SAFE_LEFT,GRID_SAFE_RIGHT
+    width=GRID_SAFE_WIDTH
 
     draw.rectangle((0,0,1080,128),fill=(3,45,34,255))
     draw.text((left,36),"RADAR BRASIL 2027",font=font(36,True),fill="white")
@@ -294,8 +300,8 @@ def render_news_art(out, item, *, font, wrap, fit_title):
     top,bottom=palettes[variant]
     im=Image.new("RGB",(1080,1080),top)
     draw=ImageDraw.Draw(im,"RGBA")
-    left=105
-    text_right=800
+    left=GRID_SAFE_LEFT
+    text_right=790
     width=text_right-left
 
     draw.polygon([(0,760),(1080,455),(1080,1080),(0,1080)],fill=(*bottom,255))
@@ -361,8 +367,8 @@ def render_opportunity_art(out, item, *, font, wrap, fit_title):
     variant=_variant_for(item,2)
     im=Image.new("RGB",(1080,1080),(249,200,47) if variant==0 else (252,211,66))
     draw=ImageDraw.Draw(im,"RGBA")
-    left,right=105,975
-    text_right=685
+    left,right=GRID_SAFE_LEFT,GRID_SAFE_RIGHT
+    text_right=675
     width=text_right-left
     dark=(5,69,48,255)
 

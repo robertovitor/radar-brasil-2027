@@ -145,11 +145,13 @@ def make_clean_fallback(out, title, kind, subtitle, key):
     bg = (5,69,48) if kind == 'evento' else (194,151,23) if kind == 'oportunidade' else (12,61,84)
     im = Image.new('RGB', (1080,1080), bg)
     draw = ImageDraw.Draw(im, 'RGBA')
-    safe_left, safe_right = 115, 965
+    # Safe zone para prévia da grade: evita corte das primeiras/últimas letras.
+    safe_left, safe_right = 180, 900
     width = safe_right - safe_left
     draw.text((safe_left,38), 'RADAR BRASIL 2027', font=base.font(36,True), fill='white')
     label = 'EVENTO' if kind == 'evento' else 'OPORTUNIDADE' if kind == 'oportunidade' else 'NOTÍCIA'
-    draw.rounded_rectangle((safe_left,170,safe_left+205,228), radius=14, fill=(255,220,0,255))
+    label_width = 300 if kind == 'oportunidade' else 205
+    draw.rounded_rectangle((safe_left,170,safe_left+label_width,228), radius=14, fill=(255,220,0,255))
     draw.text((safe_left+22,184), label, font=base.font(24,True), fill=(20,45,35))
     # Fallback textual tem mais área útil que uma arte sobre foto. Permite uma
     # quinta linha e redução moderada da fonte, sempre mantendo a headline
