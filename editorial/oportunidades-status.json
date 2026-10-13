@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-13T14:50:17-03:00",
-  "fim": "2026-10-13T14:52:26-03:00",
+  "inicio": "2026-10-13T20:09:37-03:00",
+  "fim": "2026-10-13T20:11:22-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -174,7 +174,7 @@
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 5
+      "resultados": 4
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
