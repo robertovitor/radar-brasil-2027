@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261012-17",
-  "started_at": "2026-10-12T17:00:19-03:00",
-  "completed_at": "2026-10-12T17:03:08-03:00",
+  "cycle_id": "20261012-23",
+  "started_at": "2026-10-12T23:15:14-03:00",
+  "completed_at": "2026-10-12T23:17:46-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
@@ -16,6 +16,14 @@
   "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "auditoria": [
+    {
+      "origem": "google-news",
+      "titulo": "Brasil x Argentina no futebol feminino: horário e onde assistir ao vivo - Olimpíada Todo Dia",
+      "fonte": "Olimpíada Todo Dia",
+      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQTDZaOWVCYWc2NkJjVVJwUk1rWW1PbzFVV3JIb21mQ2x5ckVZWkkwemNfUHZsckt5a1dZVWZiQmNhZEZ6dnNoN244UTV3aTdEc3pQbzV1V3htbWFsRm9xQm9MbEM4TkowWHRPaXB4MmdqRjZ0QkFpYkdjZ1ZER01KVGs1NTNST0xKdFZucUNFaWlVbVNzbS00WGhoX2Z4YkRER3B3cmN6RlVLdw?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
     {
       "origem": "google-news",
       "titulo": "Salvador entra no roteiro internacional de promoção da Copa do Mundo Feminina 2027 - Alô Alô Bahia",
@@ -114,14 +122,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Seleção Brasileira Feminina enfrenta a Argentina neste sábado em amistoso de preparação para a Copa do Mundo - Bnews",
-      "fonte": "Bnews",
-      "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxNbUZLLTBBaERMaDRHVlhLcjBNZGtsemxpbU9HdGIwZDV1MTUzdVBTM3owbFUxc19vRXdRR2dheERjNkN6VV9pWmpqVDA2d1VRa0J6MThrWGRROUVMTndZVUs5NVZlYW9FRVp4bThPNWtFQWFOeXoybEpKa01ua3R0eG9XZFdEd0c4RWV5U3lVZW55UVh1TWxSUEJRdTJIWHY0cmlEOExub3VYbTRZYmtpV2R0OXlyQlpEY19Rbm11YWNLeXIzcTVvTTk0MWptX1RId2JhRlV2N2FPYWhDTjVLQ1lHdVZYYW5JOXRV0gHwAUFVX3lxTE5Wd1Mya0N5OWQ1bUdrVXN6TmVPWUgzWUFORHZUS3g2OXRVNVBfLW44X3lwTzh2QlRoZk5GQy0yVDBKWTBJTWU5dU9zQjFZVEVwVkNWZnlFRHF1a3J3Q1diREtpSjNUOWY5RHowb1BlYmxpaTd5S09QNDluZU9aV2w4eHJuV2NwcGVtWm9scGxMV3pYS2lycTFKUVRyNE1jUHNCU3ZfQWdjSzFVX3czVmloRlJtenhiNnBhQUQ1bG5CUGZ4bTN1dV9UNHpjSkI3LW9lY01YM0Voc0xiMWYtUlNuaEpCOS0xRDhubGlkNVFtVQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Seleção feminina enfrenta Argentina hoje de olho em no setor ofensivo para Mundial 2027 - A Crítica",
       "fonte": "A Crítica",
       "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQam1FRHBqMnFRbGFtSTViRkh4Y0NKNUtiVnVLX19YOVhsVllld0VieFRCOE9JcWZhbkdqNlI0UFZ0SU5DakloWDlBUklZTnpzZy1rdGI1TVYxeS03d2NCRUdJbEFrbk8zMlVTSENBOHJqV2kxVUpoMGs0enZLT1F4aHdBUUNId0hXYnZBVUQ0Z1BUamxBME9XeEVNcy10cnJTWk9nZXlRS3A5T3dpTmlLRFNId1MzdVE2OGlDRE5fX2ZlN1pwRHdIaUtR0gHKAUFVX3lxTFBqbUVEcGoycVFsYW1JNWJGSHhjQ0o1S2JWdUtfX1g5WGxWWWV3RWJ4VEI4T0lxZmFuR2o2UjRQVnRJTkNqSWhYOUFSSVlOenNnLWt0YjVNVjF5LTd3Y0JFR0lsQWtuTzMyVVNIQ0E4cmpXaTFVSmgwazR6dktPUXhod0FRQ0h3SFdidkFVRDRnUFRqbEEwT1d4RU1zLXRyclNaT2dleVFLcDlPd2lOaUtEU0h3UzN1UTY4aUNETl9fZmU3WnBEd0hpS1E?oc=5",
@@ -181,6 +181,14 @@
       "titulo": "A Arena Fonte Nova em Salvador será palco de seis jogos da fase de grupos e um das oitavas da Copa do Mundo Feminina de 2027. O calendário prévio foi divulgado nesta quinta (20) pela Fifa. No mês de junho, os jogos serão nos dias 25, 27 e 29. Já em J - Instagram",
       "fonte": "Instagram",
       "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1IRE5jamhkNnZrek5zNzBIdnhkOF9kMmtadlg1SEc1cFRBQ2NLeHlhMGVGakJCSU9MRjNSWmt0UFNndktnMENSQ1hjcGlkWXhFdnc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa Feminina 2027 terá férias escolares alinhadas aos jogos - diariodigital.com.br",
+      "fonte": "diariodigital.com.br",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPUjVGdXEyb3gzRFM1ck5zSEd5cmpaYUJIenVlNGhMNF9GcFBrYnl5YU1wSlRnNHlNR3hVQnN5aHNON0lRUU5BTEtnX1lscWt3YmZKRWNuRm9GVGdsX1ZQcVJMTXljdkpjRXhZeUlGZEhnb09mbEhQYVNyRzBZZkUtbU5BVDYxbGc0YnZNNks3T1BJd0Z0aEkwcnMzXzg3RXh40gGgAUFVX3lxTE5LbmhlcU1vdm9yQ1R5QUp3cFRJNWRudXJ5OUF6cUx2aWZNYkVuQWxwMlJianhGa3hqY1pISkxqNmZaSHhvWl9sTEdmaC1BcEFEXzM5eXo3Ql94ckxORjRTd29ZeFlUMTUyWGFJdURvOGpzOU53T1FDXzd4QW5YbEFiVGtEelE1THBtWXRfNHF4b3BITm5HLVVDRjV1MjFkMmY?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -433,14 +441,6 @@
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
-      "origem": "google-news",
-      "titulo": "Ingressos para amistoso da Seleção Brasileira Feminina começam a ser vendidos - Jornal do Comércio",
-      "fonte": "Jornal do Comércio",
-      "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPQVVJcFlDRHFaWnM5WkwzUEdtQjRHNVRfSEJraXVESk1qdEMzalRidkpab3hlUUNLUHI4VTBKa0xXVmhfMVJXakNuZ3dWaVNPSUlyWXVhaDM1UVV6UEsyX3psekoySTF3QWhHWU5sYVBLQ2EyZVR2UzlCMGtIa05BMll4TVQ5QlZnZjYzQ1VLZl9kWjVXYmFLX2JpVWNQNnBLeGgtbXZIOF9CNzJrVm9LaHduLU1KOXl3eDdDR21DZGZlbEw5Z3ZoOUJBYmhFNG9ieENsUW13?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
       "origem": "google-news-trusted-source",
       "titulo": "Brasil será sede da Copa do Mundo Feminina de 2027 - ge",
       "fonte": "ge",
@@ -450,17 +450,17 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Nova geração de baianas é convocada para amistosos da Seleção Brasileira Feminina em outubro - ba.gov.br",
-      "fonte": "ba.gov.br",
-      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPR2JHMUpQcTMxLWwwV1lyVmJfeGl2dW9peExXem5fTnlCUmx0bERUUzBzby1iVXBrTXV2aXJGVjdCOWM4MEprQk5jNk1fbllEeWJNa2FlVWdDcmtUdTZJRjJTRkg5OGJwbHhFSV9LMlBDTkJlaDk2Z2dfeXBhMF9iUXVqN3JxLWdIYmUyT2ZNMzRfODZxSGhjRDA3RDZGSFhmQ3VKa3U3NGtVcnVWMmpQLUpMdU9FNzRQLVNQbGVSYks?oc=5",
+      "titulo": "Antes do jogo na Arena de Pernambuco, Seleção Brasileira Feminina vence Argentina no Beira-Rio - JC",
+      "fonte": "JC",
+      "url": "https://news.google.com/rss/articles/CBMihgJBVV95cUxOQlNYQWUyYWpabmxyWEVKQWoxcko5Mm9qTEJIOWMtOGE0dzdIRDFHUlNlRC1yUzJ3akxEd0tELTg4RzJ6cWcyMVV3MUtMbGR5NU5zdE5tTnZKdE96aUVva0dtTjZWNHRQNk9yZmkwWjV0QkhiNEZ3VW4xVTE5dXFkQnROTnlyblZLVFRHX3RRcXV2b1B5RllYWDNaa2FER1FzdVFmMDFIaTEtRjFEQnFydGg4dlEzeGZaUW9KNnRuejVQTU9qcUo1U3dpZUVkQ3BXTlpmZFpjTjV0YVhiVkxPbVEtc0wwQ3JqOFp3RW9PZkpXcEcybU15Wi1tbWtQODBOdEx6UWhR?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Veja quais jogos o Beira-Rio vai receber na Copa do Mundo Feminina - GZH",
-      "fonte": "GZH",
-      "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxPTTR3bEYwT3h5cGhYWlpUMzVHcmNXSzN1ajNqdGxKTjhKVHRldk9aSEFiVlE2aVRud0lGMVlEWEtUT1BfU3ZtMTZ0Q1Bpd3R4cjc2bzdlTVhkamhQc2prTXpsSDhxZk15MDNiTzBReGNiLXhnY1gwOXg1ZjBXWlJPa2dPVnNXbXhQQlVYUUdRU05fX3hOUWJrMzYzS21UNVJPb1M2Rmpia2hnZlZYaGVqdjdaTzRIV1RiQ0QtckhEVWp6NmY4M0pFNVoyU1RXLXBTeXpRQ21xMEphX2tuSTV2RDVzOGlrUzI5eXhrd0FoejZmeHdXX2xxZklGbXFaZmtt?oc=5",
+      "titulo": "Nova geração de baianas é convocada para amistosos da Seleção Brasileira Feminina em outubro - ba.gov.br",
+      "fonte": "ba.gov.br",
+      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPR2JHMUpQcTMxLWwwV1lyVmJfeGl2dW9peExXem5fTnlCUmx0bERUUzBzby1iVXBrTXV2aXJGVjdCOWM4MEprQk5jNk1fbllEeWJNa2FlVWdDcmtUdTZJRjJTRkg5OGJwbHhFSV9LMlBDTkJlaDk2Z2dfeXBhMF9iUXVqN3JxLWdIYmUyT2ZNMzRfODZxSGhjRDA3RDZGSFhmQ3VKa3U3NGtVcnVWMmpQLUpMdU9FNzRQLVNQbGVSYks?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
