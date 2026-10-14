@@ -1,0 +1,59 @@
+name: Consumir sugestões Airtable (diário controlado)
+
+on:
+  schedule:
+    # 06h20 de Brasília (09h20 UTC), 1 vez ao dia.
+    - cron: "20 9 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/consumir_sugestoes_diarias.py'
+      - '.github/workflows/consumir-sugestoes-diarias.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: consumir-sugestoes-airtable-diario
+  cancel-in-progress: false
+
+jobs:
+  consumir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      RADAR_PUBLIC_ONLY: '0'
+      RADAR_AIRTABLE_ALLOW: '1'
+      AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validar sintaxe antes de acessar Airtable
+        run: |
+          python -m py_compile scripts/consumir_sugestoes_diarias.py
+          python -m py_compile scripts/pesquisa_editorial.py scripts/pesquisa_editorial_compat_v5_5.py
+
+      - name: Processar no máximo duas leituras e quatro escritas
+        run: python scripts/consumir_sugestoes_diarias.py
+
+      - name: Persistir inbox e auditoria diária
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add editorial/inbox.json editorial/sugestoes-diarias-status.json
+          if git diff --cached --quiet; then
+            echo 'Nenhuma alteração; consumo diário já realizado.'
+            exit 0
+          fi
+          git commit -m 'Processa lote diario controlado de sugestoes'
+          git pull --rebase origin main
+          git push origin main
