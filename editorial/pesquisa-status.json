@@ -1,17 +1,17 @@
 {
-  "cycle_id": "20261013-20",
-  "started_at": "2026-10-13T20:07:54-03:00",
-  "completed_at": "2026-10-13T20:09:37-03:00",
+  "cycle_id": "20261013-23",
+  "started_at": "2026-10-13T23:10:37-03:00",
+  "completed_at": "2026-10-13T23:13:04-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 77,
+  "candidatos_publicos": 75,
   "aprovados_novos": 3,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 74,
+  "rejeitados": 72,
   "duplicados": 0,
   "inbox_itens_adicionados": 3,
   "inbox_commit_needed": true,
@@ -74,17 +74,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027 terá oito sedes no Brasil - ES Brasil",
-      "fonte": "ES Brasil",
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1UUjNtemFPUExxeG95eGpyUUxjeGhiTXJ3OEJnRTc5WjhjOW00WFZHMXlRUU9JcGM5bXd3bk5CdXZidFFFbDU0a1d0RFF3VTlISFBWNmxCLVBPZUhKTDU5NzNYajlDRTgzX2tYWWFYNXEtUQ?oc=5",
+      "titulo": "Sim, é mais do que justo que o futebol masculino pare por causa da Copa do Mundo Feminina - Trivela",
+      "fonte": "Trivela",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPOEpLaVZpaDNuQ19mUWczb0w4Wll6ZldBbEZ3THdVTEVERUFRWWVXOUtwYXVQTUphbUo3cXJZejlCNlhfZ1FlbzZhVVdCTDFpQ2hzcm5jVE9oMHI5WXdNMmRHOXkyd0VRRkdWV3g3T2lGYzFVSjhMbjZnYkVfRjZhRWhEdmlxOUtubk54VW5kOEtJREc0X0dWaGxQeFdQVkdxVUdHV2pJaGtOcjlTMUJCMUVZdktOX1ZrUFdNMmlMNWtWN3pF?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Sim, é mais do que justo que o futebol masculino pare por causa da Copa do Mundo Feminina - Trivela",
-      "fonte": "Trivela",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPOEpLaVZpaDNuQ19mUWczb0w4Wll6ZldBbEZ3THdVTEVERUFRWWVXOUtwYXVQTUphbUo3cXJZejlCNlhfZ1FlbzZhVVdCTDFpQ2hzcm5jVE9oMHI5WXdNMmRHOXkyd0VRRkdWV3g3T2lGYzFVSjhMbjZnYkVfRjZhRWhEdmlxOUtubk54VW5kOEtJREc0X0dWaGxQeFdQVkdxVUdHV2pJaGtOcjlTMUJCMUVZdktOX1ZrUFdNMmlMNWtWN3pF?oc=5",
+      "titulo": "Copa do Mundo Feminina 2027 terá oito sedes no Brasil - ES Brasil",
+      "fonte": "ES Brasil",
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1UUjNtemFPUExxeG95eGpyUUxjeGhiTXJ3OEJnRTc5WjhjOW00WFZHMXlRUU9JcGM5bXd3bk5CdXZidFFFbDU0a1d0RFF3VTlISFBWNmxCLVBPZUhKTDU5NzNYajlDRTgzX2tYWWFYNXEtUQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -106,14 +106,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "EXCLUSIVO: A Adidas vai lançar a reedição da bola Brazuca do Mundial de 2014 em 2027 - Footy Headlines",
-      "fonte": "Footy Headlines",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOekdMSDJUTGVoczdPNnVDVVhaamtkQlFKS3hiTjQxYWdTRUE3NHA3T3N3U3hmWV9ueFdjOHhJUTlZVUJwaUVtdkRzbUJuWGl4d18wMGtXcGNWemJrVEN4ZE1lZHJyejZpZGdOenhmOUVjYXFvLW8xNDl6ZUJ1QjFNTG9KSzI4X0YwSk5ycXEtR1l4bnpaNm05NTVoODVTWC00TjhfZjZiNGhSZ0lmM3BfMWVfMHdzRzlOODNSVVlQVDVsM3dFblE?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Seleção feminina de futebol inicia qualificação para o Mundial-2027 com receção à Finlândia em Vizela - Diário de Notícias",
       "fonte": "Diário de Notícias",
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPaDFWREt3WnZuU0xSVGpIX2t0TXpwOUJJNVpDMHIxMW50MEtkX1JMVTFzaW5zT3p1a0xzTXVlcVpPQWl4WTNudG16SVRVWUNyd0FpdHpnSXFrR1JXd1diaEdQNDJrTDRyOExSQ1FxNEdZak9QcjVnV1JJQWhhLTdqeHVIOUlfY21wVFdHc05CZUZoWVRyX3NvQ2d5UkZzb3pKbjJIWi0xRk5WcXduV2EwOEFmY2NpYmx5cEk0?oc=5",
@@ -122,9 +114,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Seleção Brasileira Feminina enfrenta a Argentina neste sábado em amistoso de preparação para a Copa do Mundo - Bnews",
-      "fonte": "Bnews",
-      "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxNbUZLLTBBaERMaDRHVlhLcjBNZGtsemxpbU9HdGIwZDV1MTUzdVBTM3owbFUxc19vRXdRR2dheERjNkN6VV9pWmpqVDA2d1VRa0J6MThrWGRROUVMTndZVUs5NVZlYW9FRVp4bThPNWtFQWFOeXoybEpKa01ua3R0eG9XZFdEd0c4RWV5U3lVZW55UVh1TWxSUEJRdTJIWHY0cmlEOExub3VYbTRZYmtpV2R0OXlyQlpEY19Rbm11YWNLeXIzcTVvTTk0MWptX1RId2JhRlV2N2FPYWhDTjVLQ1lHdVZYYW5JOXRV0gHwAUFVX3lxTE5Wd1Mya0N5OWQ1bUdrVXN6TmVPWUgzWUFORHZUS3g2OXRVNVBfLW44X3lwTzh2QlRoZk5GQy0yVDBKWTBJTWU5dU9zQjFZVEVwVkNWZnlFRHF1a3J3Q1diREtpSjNUOWY5RHowb1BlYmxpaTd5S09QNDluZU9aV2w4eHJuV2NwcGVtWm9scGxMV3pYS2lycTFKUVRyNE1jUHNCU3ZfQWdjSzFVX3czVmloRlJtenhiNnBhQUQ1bG5CUGZ4bTN1dV9UNHpjSkI3LW9lY01YM0Voc0xiMWYtUlNuaEpCOS0xRDhubGlkNVFtVQ?oc=5",
+      "titulo": "EXCLUSIVO: A Adidas vai lançar a reedição da bola Brazuca do Mundial de 2014 em 2027 - Footy Headlines",
+      "fonte": "Footy Headlines",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOekdMSDJUTGVoczdPNnVDVVhaamtkQlFKS3hiTjQxYWdTRUE3NHA3T3N3U3hmWV9ueFdjOHhJUTlZVUJwaUVtdkRzbUJuWGl4d18wMGtXcGNWemJrVEN4ZE1lZHJyejZpZGdOenhmOUVjYXFvLW8xNDl6ZUJ1QjFNTG9KSzI4X0YwSk5ycXEtR1l4bnpaNm05NTVoODVTWC00TjhfZjZiNGhSZ0lmM3BfMWVfMHdzRzlOODNSVVlQVDVsM3dFblE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -133,14 +125,6 @@
       "titulo": "Seleção feminina enfrenta Argentina hoje de olho em no setor ofensivo para Mundial 2027 - A Crítica",
       "fonte": "A Crítica",
       "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQam1FRHBqMnFRbGFtSTViRkh4Y0NKNUtiVnVLX19YOVhsVllld0VieFRCOE9JcWZhbkdqNlI0UFZ0SU5DakloWDlBUklZTnpzZy1rdGI1TVYxeS03d2NCRUdJbEFrbk8zMlVTSENBOHJqV2kxVUpoMGs0enZLT1F4aHdBUUNId0hXYnZBVUQ0Z1BUamxBME9XeEVNcy10cnJTWk9nZXlRS3A5T3dpTmlLRFNId1MzdVE2OGlDRE5fX2ZlN1pwRHdIaUtR0gHKAUFVX3lxTFBqbUVEcGoycVFsYW1JNWJGSHhjQ0o1S2JWdUtfX1g5WGxWWWV3RWJ4VEI4T0lxZmFuR2o2UjRQVnRJTkNqSWhYOUFSSVlOenNnLWt0YjVNVjF5LTd3Y0JFR0lsQWtuTzMyVVNIQ0E4cmpXaTFVSmgwazR6dktPUXhod0FRQ0h3SFdidkFVRDRnUFRqbEEwT1d4RU1zLXRyclNaT2dleVFLcDlPd2lOaUtEU0h3UzN1UTY4aUNETl9fZmU3WnBEd0hpS1E?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Seleção Brasileira vence Argentina por 3 a 1 em amistoso de preparação para a Copa do Mundo Feminina - Imirante.com",
-      "fonte": "Imirante.com",
-      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQTlhfUV81RFRrdUxRSThDcFNoWW9NQlhOcDg3cTZQZy1YcFdxbUptS3ZaUmJPczdGcnhsUUVNS2VzbnNtc2Utelp1OWc3b3A4cUtwNC1FNG54R0Nnb2ZjVE5RRkJaWTFsT0pRUTRHTlk4T3RiVGx2U0pCbkxyZXNFcWZzcEN0c3Rqd3NCR010TllQSm4wV3BpSElNdkFiUVXSAZ8BQVVfeXFMUE5YX1FfNURUa3VMUUk4Q3BTaFlvTUJYTnA4N3E2UGctWHBXcW1KbUt2WlJiT3M3RnJ4bFFFTUtlc25zbXNlLXpadTlnN29wOHFLcDQtRTRueEdDZ29mY1ROUUZCWlkxbE9KUVE0R05ZOE90YlRsdlNKQm5McmVzRXFmc3BDdHN0andzQkdNdE5ZUEpuMFdwaUhJTXZBYlFV?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -386,6 +370,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Ministério do Esporte e Secom PR alinham estratégias de comunicação para a Copa Feminina 2027 - MT Esporte",
+      "fonte": "MT Esporte",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPcDh1ZGlNcUljZFZhclZOQ2ozOVJ6RWN0QkpqYjZfdnFpSG12STJSOFZ0bXhvX1ZmZkxlSllNclVqd3ZDRzR6RU95YXZpVExKT1gtWEp3SGtqckF4UjhFSU12MUFfVW5waEo5OFJqaTZCZ1lOemxRdHpkMG9yNFdDeW93RkM4dG9fVkMtd2tFMTJidFU2eUFzaGhfN1JXQjFKTTZ2RTJ2X3luR01zdGRkbkota2RJV2dkUVpXVlhJOTR4R3dGY1E?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Fan Festival da Copa Feminina no DF será na Torre de TV - TV Sim Brasil",
       "fonte": "TV Sim Brasil",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQOFF0OFNmUmlwSS16cVIxajZqSXFxd0VNYnYzMDFZS3pZUWFYSnhocmJ4NGVIZEtGcjItcUV3VmtsZVVRdENHX0cwNUpKaTNSYWhlYkZTdU5PdDh3ZWxKUWhWeU9raFQ5ZzN4dEFIbzF3SlJoSnFxa2ItZ0x5Y2MyRDdYbThUWVRGTDY3ZENiM1ExOVdBcy1FeUVXV3Itdk5rUVpPcThORzU?oc=5",
@@ -450,9 +442,9 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Após Copa 2026, CazéTV renova com 8 marcas para Copa do Mundo Feminina de 2027 - Máquina do Esporte",
-      "fonte": "Máquina do Esporte",
-      "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPb0Q2ZWRuOU43QWJSSmJjZHZEVTVYLWlCS0ZBb0k3c2lnckRIbDkzNXFkcW1JUThkXzh0R2M1eWNROGR1cXh3VjZZenVzenRadDlSaHR5ZDk0a3NMRGZ5dHhUVzBpOVNPbUh3aXFCRzZCSWNQalVzQmhFV1MxQlpuQU9ZdzBPaEVET1JkV1I2cUpUZ0pvd1lvVjVRUllxQmY4aWl5dGhyeHVnZWNBMVdKakZ0VjNrcEU?oc=5",
+      "titulo": "Debate sobre impactos da Copa 2027 aponta oportunidades para empresas e turismo - Prefeitura de Porto Alegre",
+      "fonte": "Prefeitura de Porto Alegre",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNRV9VTWZvb21DRUVZNVN3NEhKaV90c3hrLU9DSk5RQXgwb0dORWoyUDJ0ZUw0RV9SY1A0Yll1REY4QVBGVkNRQmxLRE9TcWRVUkRIZ1B4T2NnMXpRZGFBRHNUOGZIcFp3c1N1T0tIaEVYcmdiU3dkLWM3WkRQOWp1MEdoSDdnNkxlUXZZMXRaSUZZbWs1LVcyN3B2SGpDOENVZWZqakVnektpUmN5XzR0TUNfRndoYmdPRE9qVzd4ai1vMDg?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
@@ -469,14 +461,6 @@
       "titulo": "Nova geração de baianas é convocada para amistosos da Seleção Brasileira Feminina em outubro - ba.gov.br",
       "fonte": "ba.gov.br",
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPR2JHMUpQcTMxLWwwV1lyVmJfeGl2dW9peExXem5fTnlCUmx0bERUUzBzby1iVXBrTXV2aXJGVjdCOWM4MEprQk5jNk1fbllEeWJNa2FlVWdDcmtUdTZJRjJTRkg5OGJwbHhFSV9LMlBDTkJlaDk2Z2dfeXBhMF9iUXVqN3JxLWdIYmUyT2ZNMzRfODZxSGhjRDA3RDZGSFhmQ3VKa3U3NGtVcnVWMmpQLUpMdU9FNzRQLVNQbGVSYks?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Seleção Brasileira Feminina volta a Pernambuco após mais de dois anos; relembre jogos no estado - Terra",
-      "fonte": "Terra",
-      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxOR2dSQWhfLWh3YnNraWxUQWxibE5UU2c5aHM1MEZtWHQ3M2RNb05PRkRISDJQNW9wVFhCZWx1aWxCTzFHTmFhc2tWNEt3b3FNZ1N1STJ5TXEzRXQwZWhCN1JuOElkcGRWUk1xbzVFbW1mYWdDd3ExNm5KNnVqcW9OeE8zRm9jMG5nX2g4RVY0dWhobW1VTWFXUVo2dFVGR0MtbktMbHZvY0hOZXJpZmQ3M2gwTzV0TDNmeGEyY1QtYkJhMHpMSmhtMWE0WW9ieTY4WHhGRzlZX2FIX0pmWXg2SURwRnNVVHJWUks5bnp2UTBmWDRZRkR0WkdKQ2lBa1l0NFRvRg?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
@@ -527,14 +511,6 @@
       "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQZEU3V1Nad2xCSHBjT3A4NVM3YjkteXgzRnlEWTg5ZTRyckhTMG13VTdKRUlMMGlhUmpSWW9rZXg1VXU1U0RJdWVGc3ZOR3NncUNYQXZmOVRBYXprTTU0dVdoQVBXOUFrV0lOWXlzMXZMSndGQ2EzVmVWZ1B6OHh3UnRxMXdKcm1CSWtKLU9naGh5MnhjYlNfcERyRlBJSVV5RGxhTnB0T0lud0FtdnRDYU9aN0U5ejJWUTU0Y1NZalV4cnZXZXpXOWIzdnc4N3VnWWEyeQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (63d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Estádio de Brasília oferece só 25 camarotes à Fifa e corre risco de ser excluído da Copa feminina - ge",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxOMGZLcExDNVdHSW1ld2hMRTNkZjl4OWhja050eVQ2RDhDd0stdWtQc3BaN193YXBEbUV1OGtjRXZTdDBoNmd2bUZyZEZ3MlpzQ050R3NhNkhINlFwUG9jcmM0OWhwRXV2TWhqN0pjTGVqeHA2TnhyZmx5cngtdjlJZy1zdVY0TDh4dlJXM0JRckg3eGJvdWNVcFI0bjQ2eWZxMmxNY1FKVVNDanE1Q0dCRVFRQlJleHl2bXQ2N1JlclZzWHhFWWkwcmZkQ1Mta2Vra01idkY0RHJLTnlLc2VZQWhPaUN0djZkZ3RzRXFodHk0d9IBgAJBVV95cUxNSkdwbFlBYk50U0hiajAxQ0dOZk1Sc3BUbnpTa1ZLREZ6M0NiTmExMjBfckl2LVRBNmU3VklOMXY2ZS1FVWQwQnh2Y3IzUUt0X05ZNmpmV3lZOXN5cms1VUlqVWsydWpQaVhoVHJzV1RrQWo2RE51LVIyTjMxckpBNHhqRkZSbFF2VDZ6ak9USkNMYlVZOW96c25UbU1wdHp3bEotS0VfUXFyMlpIQ1lQOWpDUUxSMDg2TGxRa3dWWjZlRDNjZUhsWVZMQTdMMmhRMHljTWhCSk5iQkU2NTFNajR5TnN5andONGFtaGVxVmpSaDYzdkpmUXo2WFhLelR4?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (147d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -631,6 +607,14 @@
       "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNTnMtN1hEdWZ2MmF5VW5jNjRjdDdBeEhOMURwWTFCS0psLUJ0WUFSQzJSWF92VEl6WlRkNXpQOGJzbHRXM3VPMmRya0I3OGh1SFF4VGtfSEJ4SXVmemh5c2xjYy1vUmNVTzNzbnVMVzhkVkI5OXEyZ3dBTDNvbVZoTjlKd2tFTWxSOF9MSGNtMGJuWGQ1OHVYOTItZ0thT2diQWU1dmRoeE5aanFYamZRazdpWGVBOElkajJKOTZ0T3QyVzhmd3M5akJaanpSZzdtMDNCME1mQlJFZFhWTTJmTThlaThlV0szdlVpTHd4Q2dJRGJFQW9hREtUQUVucTUxR1HSAZACQVVfeXFMTXUxM1V1TEZRcDVKVWhrOWkzc1hiQjlpYmpldUVqRUdxWjBGdUdwSS1IbUxoeEtGT2lwYk5xZVBXSk0zU010OGdYUFcweHczODhJZjROaDNOS3paWVJfYU1OT2gybHBIczFfb1AxVVVRU0wzbzhWcVpYNTEzTDJkLWhUZXlpSWRZb1BiNkViNTNLY19oQzQtU0tYVDAwUlZzQXJQMFV2YW9BSXJ1NEM3VGxuV3E4R3VIYWpCcTAxWnNyWXcwMGZfdnYzOVNWY2tUWUE1dXlaZnlITjNlcU1zTEhQRHpLblRNZUd3RjFPTXEwdzExc1MteVZ1S3ExTi1qbHJhdFBCMXJHRkl3R2NKQ1E?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (60d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Porto Alegre recebe a Seleção Brasileira Feminina em amistoso contra a Argentina neste sábado - Prefeitura de Porto Alegre",
+      "fonte": "Prefeitura de Porto Alegre",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOOXpCcGg4bnV5ZjM5eDdKZ21NZWVZNnFCVzNXa1FiY1dsTmdfLVh0enpwd0pBZ2E5THRmM1N4MnlnS28yYkx3VzR3LWVFUVhhdjI1VDQ5Ul8tWF9hdm1CazhLVVVnVWZCd0I2eXdtT2RKVkctenhzLUdvd2NVeDBtenJHQWV2U2NCVkJ6Q0o5LXJTUXFFc090SUt0bjZzV3NhX09LYm5sTExqeHBHdFdhYjVEcnN3b1Zpc3NpUllBRQ?oc=5",
+      "decisao": "aprovado",
+      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     }
   ],
   "observacoes_operacionais": "Pesquisa pública nativa, sem token e sem leituras ou escritas Airtable. Sugestões e enfileiramento de alertas permanecem suspensos. Mantidas validação editorial, extração de eventos, deduplicação e auditoria das fontes públicas.",
