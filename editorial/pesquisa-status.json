@@ -1,21 +1,45 @@
 {
-  "cycle_id": "20261014-15",
-  "started_at": "2026-10-14T15:56:48-03:00",
-  "completed_at": "2026-10-14T15:58:41-03:00",
+  "cycle_id": "20261014-19",
+  "started_at": "2026-10-14T19:40:21-03:00",
+  "completed_at": "2026-10-14T19:42:35-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 78,
-  "aprovados_novos": 3,
+  "candidatos_publicos": 81,
+  "aprovados_novos": 4,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 75,
+  "rejeitados": 77,
   "duplicados": 0,
-  "inbox_itens_adicionados": 3,
+  "inbox_itens_adicionados": 4,
   "inbox_commit_needed": true,
   "auditoria": [
+    {
+      "origem": "google-news",
+      "titulo": "🛩 Excursão Alviverde! A Copa do Mundo feminina de 2027 ocorre entre os dias 24 de junho e 25 de julho, e foi decidido que o futebol brasileiro em geral vai ser paralisado durante a disputa. Antecipado, o Palmeiras já está planejando amistosos para o perío - Instagram",
+      "fonte": "Instagram",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBWYTN2YjlHN3hDcVpaZ0EydjAxWG1vclFmXzlnY3ItU28wY0h0WnR1TkpadVFZLTNpVzNjM0JTVXNmYzZ0RHo1a1UzSVhRR3B6Ymc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Fifa se reúne com federações das sedes da Copa do Mundo feminina 2027 - bahia.ba",
+      "fonte": "bahia.ba",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQRHFhc3k0dmp4b0lvaVBGdEk4QklDZ1VlUGdWX21QeEJPa2hQX0pUZlBUbzdQYmYwaHpEcUhMelhoblVZMEVwd29hYTVfQ2E1NUpRbGFJV2RBNU9kYkpjZFFkQmZiTmlhNktFZ3MxQ3BYOGFjX3JteFp3aTFiaGMyQnJkaUNNcU9KNXI1OWZSM3gySklKXzJPc1dMWQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa do Mundo Feminina pode impulsionar turismo e negócios no RS - Jornal NH",
+      "fonte": "Jornal NH",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPYk5XeFZleXpMcG54R0dWOVlwbk02a1FpOG0wazlLQzhRZ2xkdzNNa0xxd1N2MUdYOTQ0V0Zvem0zZVFlYXBaUXBMdUZobjZUZVhhNjJ5MmtFZ3VraWw5TzFMb1MyVzBEMmxDVG1aRlJ6TkxSaklCRGVyNWxaRS1ha0pkbEswX3NrenpMVnVxN2NCSG9ZSzZydU81YktnUHc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
     {
       "origem": "google-news",
       "titulo": "Governo da Bahia amplia projetos esportivos para meninas e prepara Salvador para receber sete jogos da Copa do Mundo Feminina de 2027 - Jornal Grande Bahia",
@@ -26,17 +50,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Fecomércio-RS Debate discute oportunidades da Copa do Mundo Feminina para a economia gaúcha - Jornal da Capital",
-      "fonte": "Jornal da Capital",
-      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNQ1lKM0hZbjVQYVJ6bW1lN1g1eTZldlctOWdDODFvTE9BTlQxOG9zY1Zpb09XWXZ3UGwydDB2WGRaQmlhT3M3dURFcmhJNXM3WkU5Ukp2aXg1VDJBV0F2MGJqV1VPaUJXU3R1YzZpV3REa1NmQkY3LXZSZlJ0Y1ZsT1RnQlVQRmpOdEE3M2dfYmlld2Fuc0JoU3J1VlNVeVIyd3c4eG1zdjNFVWdiaWd1OGRjb1RtdVk4UmEtdlhJZWpHRC1lUEs3U3BZTXJuYldjZ3ZLTkZNYjk?oc=5",
+      "titulo": "Baiana da Seleção Brasileira, Raissa Bahia projeta vaga na Copa do Mundo de 2027: \"Buscando evoluir a cada dia\" - Bahia Notícias",
+      "fonte": "Bahia Notícias",
+      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPelBtbVVjblJQRHlQRUNxT2U3S252NEg4WHFSYnFDXy1fRy10SmN4RWVnaUpaZnBEczVkNTBYWUxHdDkzVjdZUUFiemstcWhwRWRUNlp6RHJtMThVN2pPN3g2Wk5ad1J5U2NYenJKeXEzRXZHckt0cnZQVWVyTWFHak9pTEhlNWVJelBuR1pmakVZYzQyQnVaNXdxSXpZb05rYnMyZ0JHcTExMmI4LWxFYnJPOTk3Sm1mdDZTVDd1M0tRZVl5N2FLbEJGanZhUThDUmw1a1RtQ05TYVdOOHI1djRRY1lBUHFXcTVQYkJDZXhzT2IzdHc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Arthur Elias explica ausência de Marta e revela planejamento para a Copa do Mundo de 2027: \"Eu quero ela preparada\" - Bahia Notícias",
-      "fonte": "Bahia Notícias",
-      "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxNakFhcDZTZDU1aDZzU2dWbE5RVnF4cGtiOEMxemJ5VmZhZXdhbzU1bDJNTmlUSkxsYmN6ZmdmMHlzOEIyTURDQ3FxcWxkT0hUYnlYS2ZuZVMzc0dIVFJxU0F2TEFFNjU4Yl9qTUtNX2NYTHlqU200NDFMTHpsbklXd0MweVY1MExzQjluaDZkNU8xZDFfWkJDVFBzU1ZYWWtwcFJXbGNEQ1JjNXVDb1BiR2sxMGQxdmFKMHNjNFJ6YjR4VmRMaHdjc090cnoyeGdWTWhkYUdabUFDZk02SEtOaVpjTXE4d3FNV2lYLUxJdzVQTzVteEg5MkhWN3k?oc=5",
+      "titulo": "Fecomércio-RS Debate discute oportunidades da Copa do Mundo Feminina para a economia gaúcha - Jornal da Capital",
+      "fonte": "Jornal da Capital",
+      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNQ1lKM0hZbjVQYVJ6bW1lN1g1eTZldlctOWdDODFvTE9BTlQxOG9zY1Zpb09XWXZ3UGwydDB2WGRaQmlhT3M3dURFcmhJNXM3WkU5Ukp2aXg1VDJBV0F2MGJqV1VPaUJXU3R1YzZpV3REa1NmQkY3LXZSZlJ0Y1ZsT1RnQlVQRmpOdEE3M2dfYmlld2Fuc0JoU3J1VlNVeVIyd3c4eG1zdjNFVWdiaWd1OGRjb1RtdVk4UmEtdlhJZWpHRC1lUEs3U3BZTXJuYldjZ3ZLTkZNYjk?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -53,14 +77,6 @@
       "titulo": "Copa Feminina 2027: favoritas confirmam vaga e Polônia surpreende - Revista PLACAR",
       "fonte": "Revista PLACAR",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQbmdvU0Nwb3FFb1hFbTRwTFRfRUN5amd3M0Rva1pac2JlM3RUa01sVFBabWhyTTd1bmVESzBoV2NwOVdJQmRfRnc2U2VKNFFGdjJRY2Y3OGppU3dUd2ctclNuVHV6MDdXWVpwRVplMWRGejV0WjB3WmNZRjNuTXRGYUlCbnpydUhHSG5IcGZfSVRzT3ZRLVlPMmpaUQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "MS tem autonomia sobre férias na Copa Feminina 2027 - Campo Grande News",
-      "fonte": "Campo Grande News",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOV1hVLXBob1F0TXk2cEZ1WFB5ZWh4cm5jZ2s2M3ZycHlZTm8wRHl5VkhNcDRVZnJUdlZZRWo4MzhYenZSMnp1R2VrNTdZekRvRW1ERkE5NnlVVERXWkZGQTlNS1FIa0FzVWVrWjNMWDRkZ2ZYYW5CM2hMemxPcFJhTUc1aEVBWGNBajVhUTlIdGlEYWxobHhBSVpqY3B3NUdQZGNCenN5cmc5X2Q0RnZrX1NB0gGyAUFVX3lxTE4yUHdzakZ1eXdIUmVRYkxvQTg2TXUtVFNNNDI5RzFjMmxCdWVaNGwzZERtVFFIZmpOUzUwWk9VMW1aaEhLODZLb0RuUVl3OGxkdlBmdi1aaDMxYm56aVJXRUdBYWZJcFFUUVVNTExQcGt3UEhjd1k0Q0pWTS1TczVySXNsb3ozNG5MSXo0cTRqZE1wLU1TeTdoeXVKaVVsdUhjQlFnczVDU2Y5UTdaT3RSWHc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -133,14 +149,6 @@
       "titulo": "Seleção feminina de futebol inicia qualificação para o Mundial-2027 com receção à Finlândia em Vizela - Diário de Notícias",
       "fonte": "Diário de Notícias",
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPaDFWREt3WnZuU0xSVGpIX2t0TXpwOUJJNVpDMHIxMW50MEtkX1JMVTFzaW5zT3p1a0xzTXVlcVpPQWl4WTNudG16SVRVWUNyd0FpdHpnSXFrR1JXd1diaEdQNDJrTDRyOExSQ1FxNEdZak9QcjVnV1JJQWhhLTdqeHVIOUlfY21wVFdHc05CZUZoWVRyX3NvQ2d5UkZzb3pKbjJIWi0xRk5WcXduV2EwOEFmY2NpYmx5cEk0?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "\"Quero Marta na Copa 2027\", diz técnico da seleção após empate em Pernambuco - Diario de Pernambuco",
-      "fonte": "Diario de Pernambuco",
-      "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxQZVlWeXdybFhPeXZUSERqbnRqelhjaF9BRjAtSnc3QkZiUTl2SDNCNG1zTXFWT3hqSEkyZUJUekhNUFVlUWpNVVRDd3ItSnRCbGRNaDNHUDU3QVRfVjNXZHJQXzhoRFo0UjFFRmdsam9xOU5xMXBEZ2xLRmdjbGFOUlFsSzZKZDJSdGZVUFRCaTZ6cmpkSV9zc0VLNWFKX3JVa3U1U2xpbmpIbkNKem9iTGNKZ25yQ3FkWmtPOGZUMW5TRldGdmoxOFVwZlE2ZlRwRnFaZEMxS3dOZ0JkX3FzeEVkQXR3MWd2aUE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -457,18 +465,26 @@
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
+      "origem": "google-news",
+      "titulo": "Brasil x Estados Unidos: datas, locais e ingressos para os amistosos da seleção brasileira feminina - Olympics",
+      "fonte": "Olympics",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPM3NoY0M3OUFEUWV5ZHh6NWJhUzMwNTNyalUxQ2J6WEhtSGNzNTBNRzNzNWRadmFIamZvQlhHTXNPY1NsajhMTXdWYnVDNlVLdTk4MmRETU5SSkpLY0MzVkpocW5RODRuY0xGaHBxcGktQ3pEeUpyUXktQVJlMm0wN05QN3FYV3VGbTVNLUlMTS1Iek9WVlZuR2daNzBaWXBTTGRWTk01bE0xWXpZ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
       "origem": "google-news-trusted-source",
-      "titulo": "\"Momento dela\": Arthur Elias projeta Marta na Copa do Mundo Feminina 2027 - CNN Brasil",
-      "fonte": "CNN Brasil",
-      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPTVcwbFRwUkJOSUsyUlB3bUVmZHJaTENlcXlwZHdlamZpbklIbEdKdkRBMUpSZG5zVFgtNG1Kdm9ZWWNGTGVtbTJ3NnhJNmYwVmdyaDRDVTBrTzdENUR5OWwzYWpBeWZDc2ZaRXFrcE95Z0d0aW9wWG1TMFZMOTdhdFFGcHJFblZLTGJ2YVloN0RFakd1dGE5MktoaW1SQ1UyX0w4MDNkNEJ6cHB5Z1FENkRVWWxxUlJNYmYtYVFVcDZtcE4wWUpFaHR5WQ?oc=5",
+      "titulo": "Fifa testa operações para a Copa 2027 durante amistosos do Brasil que levaram 145 mil aos estádios - O TEMPO",
+      "fonte": "O TEMPO",
+      "url": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxNNV9NZVA0MEctY1ZoeHBxSkZkYkltRW9DQ0syVWJrMUVwM3hQdU1wY3Q2dGZaYWl2dEtKTGJEVnZCRUVGUUpRLVZNZEFvUTNXd1YyT3pmVzM3d21oRWc0VHpyODJ2dHVtSGJtaUozWkxoeU9BY1IwdWYwWHlwLWtFYnRyeHNYQVFjSFZHakFJUWlsWXNPNDZaZ2FEeXdDeDJyMlJwMHZDa3dPZkhyOXpfNWdLcjFZc0RwM2hFSUFZM3RzWWF1VUJPc3lUWXVLTlQ4RW9IM0E5ZS1Jc2VMaXdXUkpQV19nbzFybHQydDRzc3M?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Copa do Mundo Feminina de 2027 abre oportunidades para turismo e comércio no RS - Correio do Povo",
-      "fonte": "Correio do Povo",
-      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxOX1lFTDFpeVltaktpNTJqeFlSMnktYjF2N2JjeHpYcHNNSzZhQ1J2MHVDYmN1ZkVMcFdpNXdzM296UXZfXzFGWFBiYUs3ZzNhT3VEeWlIU2NwQ2NsZHVuVk9DTGlTb3FmbDQyVHdSMllITHBmREs0VE9iWlFGbUhPV0x5c080ODd6YzFkd2xmdnk3dWMyazY5bGhJZlVydnpRRDVlb25XMG02TElYNVNlOTlwNm9tdjBrNlFsU1dBMEp2cnFHbGhkc2toV19jQVhoX2t0VXRhYWRlV2ljdGc?oc=5",
+      "titulo": "CBF se une a Ministérios em campanha contra violência de gênero e plano de legado para Copa Feminina - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
+      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNejB4MHRxYnhUeG1tVU1oTlhFUmQyNUNucVk3RkptOUFvdHBqRjlqZFowYjcyMFZ3UGN1cXpFeS05UjJDemNMLVp1M3dZcFN3Q01WQjhPV3FHLUI5TkdMMk1kT0tJaXZKT3hIWU8xRmtSRjBXbEJXWGNHNGlRWnpJWkIwUWRneG1NMDkxVktSN25OeFFwV2tmLXFjRlZRLVhhNzRTdkJxWk9kYkk2Tml4djdQdnZEeERPZVhQZnpjUkVpU0ZXX0Jwbk1WenQtUTRXOGJTTmlsdU5PSmJOZGluLW9FYkY?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
@@ -487,6 +503,14 @@
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPR2JHMUpQcTMxLWwwV1lyVmJfeGl2dW9peExXem5fTnlCUmx0bERUUzBzby1iVXBrTXV2aXJGVjdCOWM4MEprQk5jNk1fbllEeWJNa2FlVWdDcmtUdTZJRjJTRkg5OGJwbHhFSV9LMlBDTkJlaDk2Z2dfeXBhMF9iUXVqN3JxLWdIYmUyT2ZNMzRfODZxSGhjRDA3RDZGSFhmQ3VKa3U3NGtVcnVWMmpQLUpMdU9FNzRQLVNQbGVSYks?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Copa Feminina: Brasil estreia no Maracanã e passará por SP e DF na 1ª fase - UOL",
+      "fonte": "UOL",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNamd5OEgxbGhINGlWazA2Y1MyTzFLVl92OFhfdlkxdDdWZlEyS0YtSW5yUEUyZi1KdS1HT3d3eVpFS0ZFNk9GTVRYUV94Y052Mms4TUpGQlZkOWRCR1dyVUh2Rk9JS3NUQ1FDVTVkYnlTMDdkb2tOM25DbmdMem4tZGRzTzZQSmt1UWhvVmN6QmtNRWZ0ZmQ3VFM4b01zck9OeHlNRUMyUnQyZGw1QXc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (55d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -618,6 +642,14 @@
     },
     {
       "origem": "google-news-trusted-source",
+      "titulo": "FIFA acompanha amistoso do Brasil e prepara novidade para a Copa de 2027 - LANCE!",
+      "fonte": "LANCE!",
+      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQRTNUMlRLUGxpYzhzUzhhRUxjT25tcHdnSGFYcFEtTy1mbW9aV1MxQi1SQkpsSU4wdFFNc3U1UXZ4X09TQXhhNmR6dFVmbzBfVG1vNTVKS014dXRqcFFGWEdibzFKaUkyLTFqaHJYaXdsZDlPQXNlMkMzM1c0aVFlb2F4cDF5TjZXa3hsd0QybWVwYmFSN1ZXWXhScGF3eEhvVlhIenc1bkV5VU9IeGE4dk1TdDRoaVk2UkRj?oc=5",
+      "decisao": "aprovado",
+      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
+    },
+    {
+      "origem": "google-news-trusted-source",
       "titulo": "Copa do Mundo feminina: São Paulo terá dez jogos, seleção brasileira e semifinal - ge",
       "fonte": "ge",
       "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQUHN0d05Tc1F2X2Qxc1UzRDdNVzVDVUd1RnFHWUJnN1FzcjZsVUpyTGRWRDF6MjRLYTBvX1lYZW9FWHg3N1JiZmoxcGpmblRpaUE0QzUta3c3TlhBQlhQWk41U28zZWZuNVlXUU82cGNNdHVhcU9nblFMRExsRWpUeVNlZzhHMlJQMkpNYWpORW1GOFRlWUZLMlRYUnFLTUpfWWhYSVptTlpRSTI1SHBkN2xILXNKYlV1Rks1TTZ0Z1daYjdxbEo4UWtWb2R3SGpmaVNydkwxTWhwejJRcjNr0gHuAUFVX3lxTE5mVndUdXJKX2VVenNfVGVLR1BaRzNXd25mTDc2VWg5Y1d4SU0yenRTYTJTcUtsMV9heEtXYThJQnJwMVF6Ynkta3BrN0MzYUpDRlR2NlRLRVVrTlZkN08zUGFORzZvUWpWVjdOQ2lqdWdnY09NRW9KUjhoUDZGRm12Y1ZUQll1TWVTcGN3bTNxR3FKb09oYWNmR1VOX180RmxnVTE0MWlSeHNWVWpBd3NkSXJJcU9UaHFPMjcySDBNRUFsVEtXOW9qWS0zRjBwWXdxYlpzTzdOZXlaaVE1V0o3czNTVUpORnc0ZHV0WUE?oc=5",
@@ -629,14 +661,6 @@
       "titulo": "Copa do Mundo 2027: calendário será revelado dia 20 de agosto - ge",
       "fonte": "ge",
       "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOZzNaekNLeDNDOHBpT0dSMzZWejJRM3dtX3JsbHczUzFwODQ5S0hJaTZ1WjdIRmI3NEJuQjFYUU4zdjl4M19xLVhRdTcyMU5kUkNXUXZmaHF5bVdXSEpJVzhJRTBGb1dmTVF3WmRjRmdiNjZ3QjFMZENjUUdSb1ZoLVNDRkwtcGZiSkg4NEUwamZuSHViUGl2XzN2M1B4OWNpT3dQUFhjN2k1dGdGTzUwcWJyYldVemdETE4yWUF5UFh3S2Vral9kVzVFQVJnWGRXVVV30gHiAUFVX3lxTFB6dGlzRmNaQ1dIN1ZGT3VVQTd5elJFbGszUkVhNjRONnBDcDdtR3RfNFZoMFhEVFZXNDNFNWZYNzRLTjdhRlF3TUhZZjdLcERNZ2g5T1V0d1RPRm12V29zV0JqZXlhY1ZNYVgtWHh0bktLZEVpUFNmRG5la0poM2JPZGYxZ3ktQXhkQVZtWTJLOXpNTFU4OURiNnFzUW8wYU5SeW9HWlBBUDBLRTZJdmV6amJ0WFdtT04yNjNvekhNQzdGQlRYWU8zV0RXcnBKX21mZS14U0d1VFpkZkxUbm10Qmc?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (61d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Diretor da Fifa trata paralisação do futebol com naturalidade na Copa de 2027: \"É um projeto de país\" - ge",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNTnMtN1hEdWZ2MmF5VW5jNjRjdDdBeEhOMURwWTFCS0psLUJ0WUFSQzJSWF92VEl6WlRkNXpQOGJzbHRXM3VPMmRya0I3OGh1SFF4VGtfSEJ4SXVmemh5c2xjYy1vUmNVTzNzbnVMVzhkVkI5OXEyZ3dBTDNvbVZoTjlKd2tFTWxSOF9MSGNtMGJuWGQ1OHVYOTItZ0thT2diQWU1dmRoeE5aanFYamZRazdpWGVBOElkajJKOTZ0T3QyVzhmd3M5akJaanpSZzdtMDNCME1mQlJFZFhWTTJmTThlaThlV0szdlVpTHd4Q2dJRGJFQW9hREtUQUVucTUxR1HSAZACQVVfeXFMTXUxM1V1TEZRcDVKVWhrOWkzc1hiQjlpYmpldUVqRUdxWjBGdUdwSS1IbUxoeEtGT2lwYk5xZVBXSk0zU010OGdYUFcweHczODhJZjROaDNOS3paWVJfYU1OT2gybHBIczFfb1AxVVVRU0wzbzhWcVpYNTEzTDJkLWhUZXlpSWRZb1BiNkViNTNLY19oQzQtU0tYVDAwUlZzQXJQMFV2YW9BSXJ1NEM3VGxuV3E4R3VIYWpCcTAxWnNyWXcwMGZfdnYzOVNWY2tUWUE1dXlaZnlITjNlcU1zTEhQRHpLblRNZUd3RjFPTXEwdzExc1MteVZ1S3ExTi1qbHJhdFBCMXJHRkl3R2NKQ1E?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (61d)."
     }
