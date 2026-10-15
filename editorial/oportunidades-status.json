@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-15T14:25:18-03:00",
-  "fim": "2026-10-15T14:27:42-03:00",
+  "inicio": "2026-10-15T17:35:40-03:00",
+  "fim": "2026-10-15T17:37:45-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -207,7 +207,7 @@
   ],
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 58,
-  "adicionadas": 1,
+  "adicionadas": 0,
   "atualizadas": 3,
   "total_arquivo": 68,
   "erros": [
@@ -215,8 +215,8 @@
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/15-10-2026/14-03-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>",
-    "page:https://admin.cob.org.br/uploads/Media_Guide_Forum_2_13bbd1ce05.pdf:TimeoutError:The read operation timed out"
+    "page:https://cobexpo.com.br/venue/getv:URLError:<urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1010)>",
+    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {
     "noticias": "inalterado",

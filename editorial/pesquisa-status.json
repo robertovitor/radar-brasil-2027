@@ -1,17 +1,17 @@
 {
-  "cycle_id": "20261015-14",
-  "started_at": "2026-10-15T14:22:53-03:00",
-  "completed_at": "2026-10-15T14:25:18-03:00",
+  "cycle_id": "20261015-17",
+  "started_at": "2026-10-15T17:33:09-03:00",
+  "completed_at": "2026-10-15T17:35:40-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 78,
+  "candidatos_publicos": 82,
   "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 77,
+  "rejeitados": 81,
   "duplicados": 0,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
@@ -26,6 +26,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Embratur promove cidades-sede da Copa do Mundo Feminina 2027 em press trip internacional - Jalapão News",
+      "fonte": "Jalapão News",
+      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNb3Exci1mcS10alpQdHA3N1UzM2lkMHBEalpXck1wbl9NVEt4NWg5eTJQekozZ0dPb2dncEp6V19fM0o5TWZ3RUcwUzdQVkJCSmlvSXdUZEdEOHFINEtaNWdCOFI1d25zczNOeVhnbkd5R3ViZVFZYWJLdVV5cjMxR1YxQmticGg1c3hBNXRPQ3ctN2t5MktORTFiclZBV0NEa09Zd1RFVmtyQjBWcXF6QTFmRDZ2X0xMLW8xNWhNUzE?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Upfront Globo 2027: emissora oficializa 'Avenida Brasil 2', Copa do Mundo Feminina e os principais lançamentos para o próximo ano - Gazeta de São Paulo",
       "fonte": "Gazeta de São Paulo",
       "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxOYzRiX2tGdnZZYURjUU45YS1hMHhBekdLa3huR0R6aDVMbkRaRlFIR2oyb1hfYTFQQmppM1lZMTVsVHVrQ2NSZm5fbTkyVnFzOFVsSF9pb3pZNXhVNzBQR3V0ckhNNE41YWdIc2M5NnZsYURUNERHQ3loZGEwUkltVE5QclhzSHNUNEZ3cTlGVjNKNmVvNUpVekV2WWZoQWNycnB0M251LVRqQUo2Sk1sRmdfX25YTWxpRkI1cXlHc1RTdVFiUzVzVmdiZnI2VzMxdWRZTy1zR1FmVFJhM2xNWjl4eHM5NDBmQVh1emtXQloxWlV3NlBfQnowRmU?oc=5",
@@ -34,9 +42,25 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina pode impulsionar turismo e negócios no RS - abc+",
-      "fonte": "abc+",
-      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPYk5XeFZleXpMcG54R0dWOVlwbk02a1FpOG0wazlLQzhRZ2xkdzNNa0xxd1N2MUdYOTQ0V0Zvem0zZVFlYXBaUXBMdUZobjZUZVhhNjJ5MmtFZ3VraWw5TzFMb1MyVzBEMmxDVG1aRlJ6TkxSaklCRGVyNWxaRS1ha0pkbEswX3NrenpMVnVxN2NCSG9ZSzZydU81YktnUHc?oc=5",
+      "titulo": "Seleção Brasileira reúne 57,8 mil torcedores em estádios da Copa do Mundo Feminina de 2027 em Porto Alegre e Recife - Jornal Grande Bahia",
+      "fonte": "Jornal Grande Bahia",
+      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPbkhXUHladEhPdVJWbVpCcDVRV0lLaVBHTWZuWTJHNFpEajR1Qi15dVE2RGdXZEJlUWtWQldmVUxONUFsSktSTVNFQ0hfUlN5R19KYjZQcklMWkprUnlQVWZmWWpEMDZhaTJ5azAtaDl0NzNUQlU0dWhnczhEV2Roa3JCWDgtb0haNUt2R3lnTTVzelBud1JaRmp2YkZCRzdVazJSNEppNzc5dlZNalBxRFk0X1hMdkFibGNIdlBOcE0xaUt0VTc4MUp0X3E5Z04yTHYyYkVPRTNzNTh5WmZTMHV5UnZCYjJzSEZnbw?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "CazéTV fecha oito patrocinadores para a Copa do Mundo Feminina de 2027 no Brasil - A Crítica de Campo Grande",
+      "fonte": "A Crítica de Campo Grande",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOSzc0QmZ0a2wyTFR0NjRFSWRkeUxnUjhPT0R4TUY1VWRzNzlGQm9wTjF1UEtMLTEwMm10aHBPQzdkUFBMdnFhRE54Q24tcEJXM0swOXZhdGlLVEk3dEhESFJhUnAwWTFLSGFHN1VwUzFyTVUwOVg4WlpJZ0RDM3RLLVJJbHZDbGRPVTBMRXVIZW51QzZUQ1hsbUgxd2RzdHlHSWNJX3pzUnRDNUZ0V05JVw?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Luís roberto é anunciado como narrador da TV Globo para a Copa do Mundo Feminina após tratar câncer - NSC Total",
+      "fonte": "NSC Total",
+      "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQaVVBaC00RkV3dmlaSkNBZ1drVkNuT2E1cEdLMVRDUTk4bWNMQTdBekYyaEcyT1lWWExfWXI5NlBqbVNkNjJqRE5GcGdTblgyM2Q4SjdzUkdwU1V4MHp6elFOS012bWZxVzZmSFRFYjJ3OW1FNm1OeFk0RkpxRGRSWWx2WF9tSGtaXzJGendrY2VTUlc5ck1hZHg4b1JtUHJBTF9mSVowbHllM0tUTXNEdEh3UEppeW9PTUV1cWZWQzJDbm5kVFRKUE1KbHFVUFlRanc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -50,9 +74,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "CazéTV fecha oito patrocinadores para a Copa do Mundo Feminina de 2027 no Brasil - A Crítica de Campo Grande",
-      "fonte": "A Crítica de Campo Grande",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOSzc0QmZ0a2wyTFR0NjRFSWRkeUxnUjhPT0R4TUY1VWRzNzlGQm9wTjF1UEtMLTEwMm10aHBPQzdkUFBMdnFhRE54Q24tcEJXM0swOXZhdGlLVEk3dEhESFJhUnAwWTFLSGFHN1VwUzFyTVUwOVg4WlpJZ0RDM3RLLVJJbHZDbGRPVTBMRXVIZW51QzZUQ1hsbUgxd2RzdHlHSWNJX3pzUnRDNUZ0V05JVw?oc=5",
+      "titulo": "Copa do Mundo Feminina pode impulsionar turismo e negócios no RS - abc+",
+      "fonte": "abc+",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPYk5XeFZleXpMcG54R0dWOVlwbk02a1FpOG0wazlLQzhRZ2xkdzNNa0xxd1N2MUdYOTQ0V0Zvem0zZVFlYXBaUXBMdUZobjZUZVhhNjJ5MmtFZ3VraWw5TzFMb1MyVzBEMmxDVG1aRlJ6TkxSaklCRGVyNWxaRS1ha0pkbEswX3NrenpMVnVxN2NCSG9ZSzZydU81YktnUHc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -98,14 +122,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027 terá oito sedes no Brasil - ES Brasil",
-      "fonte": "ES Brasil",
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1UUjNtemFPUExxeG95eGpyUUxjeGhiTXJ3OEJnRTc5WjhjOW00WFZHMXlRUU9JcGM5bXd3bk5CdXZidFFFbDU0a1d0RFF3VTlISFBWNmxCLVBPZUhKTDU5NzNYajlDRTgzX2tYWWFYNXEtUQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Sim, é mais do que justo que o futebol masculino pare por causa da Copa do Mundo Feminina - Trivela",
       "fonte": "Trivela",
       "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPOEpLaVZpaDNuQ19mUWczb0w4Wll6ZldBbEZ3THdVTEVERUFRWWVXOUtwYXVQTUphbUo3cXJZejlCNlhfZ1FlbzZhVVdCTDFpQ2hzcm5jVE9oMHI5WXdNMmRHOXkyd0VRRkdWV3g3T2lGYzFVSjhMbjZnYkVfRjZhRWhEdmlxOUtubk54VW5kOEtJREc0X0dWaGxQeFdQVkdxVUdHV2pJaGtOcjlTMUJCMUVZdktOX1ZrUFdNMmlMNWtWN3pF?oc=5",
@@ -114,9 +130,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Brasil vira a chave para sediar o Mundial Feminino de 2027 - Diário do Centro do Mundo",
-      "fonte": "Diário do Centro do Mundo",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPQkRlUEZ3UUNuRXVZeF8zS0RWcjZOM0dSWFBXMEhCWVFxemZEUkZlNTRvYlNEbE04bTlqRExCcERtN20tZjZRbVQwQU1kVGU0RUVKQnFvUHFyUWlpUDg2elgweWxUdWZJUmtFWUdMaHZLaHNqeDRSeUREeUdxaW0xTTlIWEZtNlBsblpZLTd3?oc=5",
+      "titulo": "Copa do Mundo Feminina 2027 terá oito sedes no Brasil - ES Brasil",
+      "fonte": "ES Brasil",
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1UUjNtemFPUExxeG95eGpyUUxjeGhiTXJ3OEJnRTc5WjhjOW00WFZHMXlRUU9JcGM5bXd3bk5CdXZidFFFbDU0a1d0RFF3VTlISFBWNmxCLVBPZUhKTDU5NzNYajlDRTgzX2tYWWFYNXEtUQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -125,6 +141,14 @@
       "titulo": "Mundial Feminino de 2027 será disputado em oito cidades brasileiras - Midiamax",
       "fonte": "Midiamax",
       "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNZXFOUS00cjZoOWRTa2lxSVBhRWU3OTJCQ0s3Rmp6NE81WTQ1ZkYxMHBRUDJrT21MeFA4RF91d21BbU5VeXZIV1RBSkpnanBBQzNkakxwU0RwTFYtczIyVnVmREFZSVd2Rllxb2hscWhRYlVtVUd2bVJCSUJ5djVadm8xRDZ6cTlSNk5KZlJNN3p5S3RJVFBlbWZvTHlRdU9OR2c?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Brasil vira a chave para sediar o Mundial Feminino de 2027 - Diário do Centro do Mundo",
+      "fonte": "Diário do Centro do Mundo",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPQkRlUEZ3UUNuRXVZeF8zS0RWcjZOM0dSWFBXMEhCWVFxemZEUkZlNTRvYlNEbE04bTlqRExCcERtN20tZjZRbVQwQU1kVGU0RUVKQnFvUHFyUWlpUDg2elgweWxUdWZJUmtFWUdMaHZLaHNqeDRSeUREeUdxaW0xTTlIWEZtNlBsblpZLTd3?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -154,6 +178,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Em preparação para 2027, Seleção Brasileira Feminina leva 57,8 mil torcedores a estádios da Copa separados por 3 mil km - AJN1",
+      "fonte": "AJN1",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQUWxlandhRTJoRFlOSmJIcDNOYmtTZWZXTFJ6ZngxNlVxWmI0ZGhVZ3lVb0ZRSV9FaE9qbWw1OWJwMUpSX3lJMWVDZGM3M0h4cGkxNVp2Yi1BVGVXdC1UV01ITzhyN2FhbVVvVFhlR0FXcEFwN2R2R2hDX05sMEtfMWs2aFNYVTc5V2hwYjNVTWY2NlY4aUpNRGRYNEJSMlE4VGR1TjRienFyeE1CT3BrRFY2MHBXa2pOMlFvTlZ0R3dXb0FVcVRxVk8xUFN0Q29NMTBBZg?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Seleção feminina enfrenta Argentina hoje de olho em no setor ofensivo para Mundial 2027 - A Crítica",
       "fonte": "A Crítica",
       "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQam1FRHBqMnFRbGFtSTViRkh4Y0NKNUtiVnVLX19YOVhsVllld0VieFRCOE9JcWZhbkdqNlI0UFZ0SU5DakloWDlBUklZTnpzZy1rdGI1TVYxeS03d2NCRUdJbEFrbk8zMlVTSENBOHJqV2kxVUpoMGs0enZLT1F4aHdBUUNId0hXYnZBVUQ0Z1BUamxBME9XeEVNcy10cnJTWk9nZXlRS3A5T3dpTmlLRFNId1MzdVE2OGlDRE5fX2ZlN1pwRHdIaUtR0gHKAUFVX3lxTFBqbUVEcGoycVFsYW1JNWJGSHhjQ0o1S2JWdUtfX1g5WGxWWWV3RWJ4VEI4T0lxZmFuR2o2UjRQVnRJTkNqSWhYOUFSSVlOenNnLWt0YjVNVjF5LTd3Y0JFR0lsQWtuTzMyVVNIQ0E4cmpXaTFVSmgwazR6dktPUXhod0FRQ0h3SFdidkFVRDRnUFRqbEEwT1d4RU1zLXRyclNaT2dleVFLcDlPd2lOaUtEU0h3UzN1UTY4aUNETl9fZmU3WnBEd0hpS1E?oc=5",
@@ -170,17 +202,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Seleção Brasileira Feminina vence a Argentina por 3 a 1 em amistoso no Beira-Rio - Bahia Notícias",
-      "fonte": "Bahia Notícias",
-      "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPOS01QXM3Vy1WSXZwSW45aG5qM0dCdGVJMTJZRjQ3bWl3MFBZV1ZFdW1uTVBpTTNOWGptZHVoaHdqSmkwZW9HSk0tZzFzMGJ1VzNCTXFqWEp2MzY4dExKdjZjSGhLRERSbnhmQWlSYUtEajNtOVFyNkt2X0JxZUt4bW55T09wSkFLZmtCc1RkYUJwM05tNVBpVW5saHZCTFZ4ZmhFSDVkV3lCVVBYZDAyVzJmdkE3YWlHU1dOUzItQjdNR1hadmlDcmI1N0dzQWFVRnc?oc=5",
+      "titulo": "Copa Feminina 2027: final será no Maracanã; veja calendário - SBT News",
+      "fonte": "SBT News",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOX2hjbi1Jb0IxTVh2bkktWV9DZzV0VlJ2QS1JR29aaEZkSWFGM0JCXzRFampSY3d6TEFPWTZxM2pxQmRHTGVUdW1hdGNRUnBZQldsSjV0T0NHUFlGUnc5clJXa2hMbzBTUmdtTVlYSXRzZ3NDSUl6bDZrOXRyalVtZU5JemFMd1lZZVVtTnlyTEJaQ0hkQTVFeWtvN0lQb3Ru?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Copa Feminina 2027: final será no Maracanã; veja calendário - SBT News",
-      "fonte": "SBT News",
-      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOX2hjbi1Jb0IxTVh2bkktWV9DZzV0VlJ2QS1JR29aaEZkSWFGM0JCXzRFampSY3d6TEFPWTZxM2pxQmRHTGVUdW1hdGNRUnBZQldsSjV0T0NHUFlGUnc5clJXa2hMbzBTUmdtTVlYSXRzZ3NDSUl6bDZrOXRyalVtZU5JemFMd1lZZVVtTnlyTEJaQ0hkQTVFeWtvN0lQb3Ru?oc=5",
+      "titulo": "Seleção Brasileira Feminina vence a Argentina por 3 a 1 em amistoso no Beira-Rio - Bahia Notícias",
+      "fonte": "Bahia Notícias",
+      "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPOS01QXM3Vy1WSXZwSW45aG5qM0dCdGVJMTJZRjQ3bWl3MFBZV1ZFdW1uTVBpTTNOWGptZHVoaHdqSmkwZW9HSk0tZzFzMGJ1VzNCTXFqWEp2MzY4dExKdjZjSGhLRERSbnhmQWlSYUtEajNtOVFyNkt2X0JxZUt4bW55T09wSkFLZmtCc1RkYUJwM05tNVBpVW5saHZCTFZ4ZmhFSDVkV3lCVVBYZDAyVzJmdkE3YWlHU1dOUzItQjdNR1hadmlDcmI1N0dzQWFVRnc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
