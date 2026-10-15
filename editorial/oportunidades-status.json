@@ -1,14 +1,14 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-15T17:35:40-03:00",
-  "fim": "2026-10-15T17:37:45-03:00",
+  "inicio": "2026-10-15T20:21:13-03:00",
+  "fim": "2026-10-15T20:22:50-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
       "query": "\"Copa do Mundo Feminina 2027\" voluntariado inscrição Brasil",
       "resultados": 0,
       "motores": {
-        "duckduckgo": 0,
+        "duckduckgo": "erro:URLError",
         "bing_rss": 0
       }
     },
@@ -32,7 +32,7 @@
       "query": "\"futebol feminino\" curso inscrições Brasil 2026 2027",
       "resultados": 0,
       "motores": {
-        "duckduckgo": 0,
+        "duckduckgo": "erro:URLError",
         "bing_rss": 0
       }
     },
@@ -182,7 +182,8 @@
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 6
+      "resultados": 0,
+      "erro": "HTTPError:HTTP Error 403: Forbidden"
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -211,11 +212,11 @@
   "atualizadas": 3,
   "total_arquivo": 68,
   "erros": [
+    "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/15-10-2026/14-03-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://cobexpo.com.br/venue/getv:URLError:<urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1010)>",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {

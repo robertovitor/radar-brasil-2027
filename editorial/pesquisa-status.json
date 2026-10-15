@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261015-17",
-  "started_at": "2026-10-15T17:33:09-03:00",
-  "completed_at": "2026-10-15T17:35:40-03:00",
+  "cycle_id": "20261015-20",
+  "started_at": "2026-10-15T20:18:54-03:00",
+  "completed_at": "2026-10-15T20:21:13-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
@@ -16,6 +16,14 @@
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "auditoria": [
+    {
+      "origem": "google-news",
+      "titulo": "CBF negocia seis amistosos da Seleção Feminina no Brasil em 2027 - Diário de Goiás",
+      "fonte": "Diário de Goiás",
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE95eVNRMExfbDhmZ01mb1Z5a2JLLVZJNFVWbk1tTFJETlBrNXBpYkNIRXJ2X0luZDcxcEM2X25iUS11Zm4wT1lQai1ELXFGX3JXZHFVZjdodGVGSEt1WEVjVDhnUnRVdEtoSmc4Q0RSdTZmd3NfaFM1c3Z3eTZ6dw?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
     {
       "origem": "google-news",
       "titulo": "Globo anuncia novidades para 2027: Avenida Brasil 2, BBB 27, Copa do Mundo Feminina e novas novelas; confira - Globo",
@@ -34,14 +42,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Upfront Globo 2027: emissora oficializa 'Avenida Brasil 2', Copa do Mundo Feminina e os principais lançamentos para o próximo ano - Gazeta de São Paulo",
-      "fonte": "Gazeta de São Paulo",
-      "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxOYzRiX2tGdnZZYURjUU45YS1hMHhBekdLa3huR0R6aDVMbkRaRlFIR2oyb1hfYTFQQmppM1lZMTVsVHVrQ2NSZm5fbTkyVnFzOFVsSF9pb3pZNXhVNzBQR3V0ckhNNE41YWdIc2M5NnZsYURUNERHQ3loZGEwUkltVE5QclhzSHNUNEZ3cTlGVjNKNmVvNUpVekV2WWZoQWNycnB0M251LVRqQUo2Sk1sRmdfX25YTWxpRkI1cXlHc1RTdVFiUzVzVmdiZnI2VzMxdWRZTy1zR1FmVFJhM2xNWjl4eHM5NDBmQVh1emtXQloxWlV3NlBfQnowRmU?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Seleção Brasileira reúne 57,8 mil torcedores em estádios da Copa do Mundo Feminina de 2027 em Porto Alegre e Recife - Jornal Grande Bahia",
       "fonte": "Jornal Grande Bahia",
       "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPbkhXUHladEhPdVJWbVpCcDVRV0lLaVBHTWZuWTJHNFpEajR1Qi15dVE2RGdXZEJlUWtWQldmVUxONUFsSktSTVNFQ0hfUlN5R19KYjZQcklMWkprUnlQVWZmWWpEMDZhaTJ5azAtaDl0NzNUQlU0dWhnczhEV2Roa3JCWDgtb0haNUt2R3lnTTVzelBud1JaRmp2YkZCRzdVazJSNEppNzc5dlZNalBxRFk0X1hMdkFibGNIdlBOcE0xaUt0VTc4MUp0X3E5Z04yTHYyYkVPRTNzNTh5WmZTMHV5UnZCYjJzSEZnbw?oc=5",
@@ -50,9 +50,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "CazéTV fecha oito patrocinadores para a Copa do Mundo Feminina de 2027 no Brasil - A Crítica de Campo Grande",
-      "fonte": "A Crítica de Campo Grande",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOSzc0QmZ0a2wyTFR0NjRFSWRkeUxnUjhPT0R4TUY1VWRzNzlGQm9wTjF1UEtMLTEwMm10aHBPQzdkUFBMdnFhRE54Q24tcEJXM0swOXZhdGlLVEk3dEhESFJhUnAwWTFLSGFHN1VwUzFyTVUwOVg4WlpJZ0RDM3RLLVJJbHZDbGRPVTBMRXVIZW51QzZUQ1hsbUgxd2RzdHlHSWNJX3pzUnRDNUZ0V05JVw?oc=5",
+      "titulo": "Upfront Globo 2027: emissora oficializa 'Avenida Brasil 2', Copa do Mundo Feminina e os principais lançamentos para o próximo ano - Gazeta de São Paulo",
+      "fonte": "Gazeta de São Paulo",
+      "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxOYzRiX2tGdnZZYURjUU45YS1hMHhBekdLa3huR0R6aDVMbkRaRlFIR2oyb1hfYTFQQmppM1lZMTVsVHVrQ2NSZm5fbTkyVnFzOFVsSF9pb3pZNXhVNzBQR3V0ckhNNE41YWdIc2M5NnZsYURUNERHQ3loZGEwUkltVE5QclhzSHNUNEZ3cTlGVjNKNmVvNUpVekV2WWZoQWNycnB0M251LVRqQUo2Sk1sRmdfX25YTWxpRkI1cXlHc1RTdVFiUzVzVmdiZnI2VzMxdWRZTy1zR1FmVFJhM2xNWjl4eHM5NDBmQVh1emtXQloxWlV3NlBfQnowRmU?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Oportunidades econômicas da Copa Feminina foram tema do Fecomércio-RS Debate - Expansão",
+      "fonte": "Expansão",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOYV9xWG53WXk1ZXQ3N3duVHcyZlhJYTE3NHVoblpLcDBNcXMzSkoxTDh6eFp1NlByeEcyRm5YZGIxR1lfZS0yS2hSbk54ZEFYTTNXS1VtcVp4VktWeWVyNm9nXzBLOS0xSG55RDZsR0h6X1lCTV9FY1pNNkJLUjZkT1R5R1QwYi1BeUs3QTNZT3BkdlBoeERJQVcwZ2lLSVFPbFRzY2JkczE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -66,9 +74,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa se reúne com federações das sedes da Copa do Mundo feminina 2027 - bahia.ba",
-      "fonte": "bahia.ba",
-      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQRHFhc3k0dmp4b0lvaVBGdEk4QklDZ1VlUGdWX21QeEJPa2hQX0pUZlBUbzdQYmYwaHpEcUhMelhoblVZMEVwd29hYTVfQ2E1NUpRbGFJV2RBNU9kYkpjZFFkQmZiTmlhNktFZ3MxQ3BYOGFjX3JteFp3aTFiaGMyQnJkaUNNcU9KNXI1OWZSM3gySklKXzJPc1dMWQ?oc=5",
+      "titulo": "CazéTV fecha oito patrocinadores para a Copa do Mundo Feminina de 2027 no Brasil - A Crítica de Campo Grande",
+      "fonte": "A Crítica de Campo Grande",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOSzc0QmZ0a2wyTFR0NjRFSWRkeUxnUjhPT0R4TUY1VWRzNzlGQm9wTjF1UEtMLTEwMm10aHBPQzdkUFBMdnFhRE54Q24tcEJXM0swOXZhdGlLVEk3dEhESFJhUnAwWTFLSGFHN1VwUzFyTVUwOVg4WlpJZ0RDM3RLLVJJbHZDbGRPVTBMRXVIZW51QzZUQ1hsbUgxd2RzdHlHSWNJX3pzUnRDNUZ0V05JVw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -106,14 +114,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027: Brasil estreia no Maracanã e joga em Brasília na fase de grupos - Expressão Brasiliense",
-      "fonte": "Expressão Brasiliense",
-      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPa0F5aVpmTW5PSFZMMm5oMFU1MF9jR05zTHFnS1hhNkFMNmw0eFF5VTJET0NxY2kxMFJrTEdYWFZHbHlhTDBoTVFWejNsY29YaXNIRG9TYmhqQUxjRXh5X1gyclAwZzZiQWZmbnlfdTE3R0RQTGY5aUFjejB5bG5tOWd4dEV6Wm14NnJ6SkZHZi1xOHRMMEhHOG5TNXlLQllxUzJPRlBXYmVrV2lmT1NxT2x4bUlKWlpvdG03Rng5cFlrXzBuWjRLYk80UmdJVDA?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Equador vai com tudo nas Eliminatórias para o Mundial Feminino 2027 - Conmebol",
       "fonte": "Conmebol",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNZzR0YnA5OV9IcWpHTU1HVmhuT0w1LWlVc3NONGVRbmlmYkdqeFN4M3RxSHdVMV9maUw0ZWVHXzF4TVhyamZnWDFCT0lhQXo0ZjBsMEV6bktneEVJU3NRRDJyZkhXeDh3TG9DUGdRaTZkbEU0LWkxTnBFWEtocG1KV1l6NVJpRXNNenV6dkg3LTJKUWxsZjg0YzI1NXNKTTV0dDlWaEY4OGtxSjZSWi16a05reXQ?oc=5",
@@ -122,9 +122,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Sim, é mais do que justo que o futebol masculino pare por causa da Copa do Mundo Feminina - Trivela",
-      "fonte": "Trivela",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPOEpLaVZpaDNuQ19mUWczb0w4Wll6ZldBbEZ3THdVTEVERUFRWWVXOUtwYXVQTUphbUo3cXJZejlCNlhfZ1FlbzZhVVdCTDFpQ2hzcm5jVE9oMHI5WXdNMmRHOXkyd0VRRkdWV3g3T2lGYzFVSjhMbjZnYkVfRjZhRWhEdmlxOUtubk54VW5kOEtJREc0X0dWaGxQeFdQVkdxVUdHV2pJaGtOcjlTMUJCMUVZdktOX1ZrUFdNMmlMNWtWN3pF?oc=5",
+      "titulo": "Copa do Mundo Feminina 2027: Brasil estreia no Maracanã e joga em Brasília na fase de grupos - Expressão Brasiliense",
+      "fonte": "Expressão Brasiliense",
+      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPa0F5aVpmTW5PSFZMMm5oMFU1MF9jR05zTHFnS1hhNkFMNmw0eFF5VTJET0NxY2kxMFJrTEdYWFZHbHlhTDBoTVFWejNsY29YaXNIRG9TYmhqQUxjRXh5X1gyclAwZzZiQWZmbnlfdTE3R0RQTGY5aUFjejB5bG5tOWd4dEV6Wm14NnJ6SkZHZi1xOHRMMEhHOG5TNXlLQllxUzJPRlBXYmVrV2lmT1NxT2x4bUlKWlpvdG03Rng5cFlrXzBuWjRLYk80UmdJVDA?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -133,6 +133,14 @@
       "titulo": "Copa do Mundo Feminina 2027 terá oito sedes no Brasil - ES Brasil",
       "fonte": "ES Brasil",
       "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1UUjNtemFPUExxeG95eGpyUUxjeGhiTXJ3OEJnRTc5WjhjOW00WFZHMXlRUU9JcGM5bXd3bk5CdXZidFFFbDU0a1d0RFF3VTlISFBWNmxCLVBPZUhKTDU5NzNYajlDRTgzX2tYWWFYNXEtUQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Sim, é mais do que justo que o futebol masculino pare por causa da Copa do Mundo Feminina - Trivela",
+      "fonte": "Trivela",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPOEpLaVZpaDNuQ19mUWczb0w4Wll6ZldBbEZ3THdVTEVERUFRWWVXOUtwYXVQTUphbUo3cXJZejlCNlhfZ1FlbzZhVVdCTDFpQ2hzcm5jVE9oMHI5WXdNMmRHOXkyd0VRRkdWV3g3T2lGYzFVSjhMbjZnYkVfRjZhRWhEdmlxOUtubk54VW5kOEtJREc0X0dWaGxQeFdQVkdxVUdHV2pJaGtOcjlTMUJCMUVZdktOX1ZrUFdNMmlMNWtWN3pF?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -194,14 +202,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Seleção Brasileira Feminina estreia no Beira-Rio contra a Argentina neste sábado - GO In Foco",
-      "fonte": "GO In Foco",
-      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNSVpzM3ZTQWJfOWJrOUN2aTVPMzVNb29kV2lVckFrWFRmcVd1NW93M0dMN2tGMC1JTWNSeWFNNlpUaVpnSHNIa3VFc0d5bm1FLUlqTnZveG1jZGpWT2tISWpOc2lzQjJnbFBwanhXUnRrZFpvaVFZN1JlV1lGam56aHZzQ2JjdlE4VTBmU2o4eGhBTUtGVUVCUFRNS21GR2VoN0VSZjVEdnY?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Copa Feminina 2027: final será no Maracanã; veja calendário - SBT News",
       "fonte": "SBT News",
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOX2hjbi1Jb0IxTVh2bkktWV9DZzV0VlJ2QS1JR29aaEZkSWFGM0JCXzRFampSY3d6TEFPWTZxM2pxQmRHTGVUdW1hdGNRUnBZQldsSjV0T0NHUFlGUnc5clJXa2hMbzBTUmdtTVlYSXRzZ3NDSUl6bDZrOXRyalVtZU5JemFMd1lZZVVtTnlyTEJaQ0hkQTVFeWtvN0lQb3Ru?oc=5",
@@ -258,9 +258,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Falta um ano: Salvador entra na contagem regressiva para a Copa Feminina 2027 - MundoBA",
-      "fonte": "MundoBA",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQSk1UV1JNY0ZCZjZoZVVLWmEzZUpDejNyMk9vUFVXV3BvenJfODZUajZnVW9seDF6cEFPdEZDQk5HR0dsTzNLZHVpSm1DU3pEaFRUeEJHVy1MZUdIMHM5aXJ6SG1fUk5Zel9Cbm9tOTUzMEk0YWFUU2VUcWpueElDR29TT09uLWYxdnhWVkplV0R0QU55eVpqYmlLOGVNVG9vcncya2JwM211cW13?oc=5",
+      "titulo": "Salvador intensifica preparação e reforça ações em mobilidade, turismo e estrutura para jogos da Copa Feminina 2027 na Fonte Nova - Muita Informação",
+      "fonte": "Muita Informação",
+      "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxNcFBiZnhKZVk3Z3pGUW5Id2w3R250WWZtZkRFS08tYUlDczJ3SWpTQUpyM3dWUDZWaFo1MU1oT2ZNTDZhWjdmWTZtOVdha0cwdWhtdDYtX3lEOGdETTNOMWZTUGt5dWVYYkctMXU3N195d0o3NmNVSzUyYVZXMHFaWUFKT2xSandEM2UyYWlCdldYZ0dSVmZPTDc4NGJBVTM1M0ZlaGcxeW5ZVUZTdHdEemtLUS1samx0Q1ZVRDJJekU4dDdjMEp2QnYtRS1LQzdhQXFXbkxXUGRfZXl3NHZvamEtczlwT19BT3oteEc1MVJ3a25qdTNjTGZJVkY?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -274,9 +274,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Salvador intensifica preparação e reforça ações em mobilidade, turismo e estrutura para jogos da Copa Feminina 2027 na Fonte Nova - Muita Informação",
-      "fonte": "Muita Informação",
-      "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxNcFBiZnhKZVk3Z3pGUW5Id2w3R250WWZtZkRFS08tYUlDczJ3SWpTQUpyM3dWUDZWaFo1MU1oT2ZNTDZhWjdmWTZtOVdha0cwdWhtdDYtX3lEOGdETTNOMWZTUGt5dWVYYkctMXU3N195d0o3NmNVSzUyYVZXMHFaWUFKT2xSandEM2UyYWlCdldYZ0dSVmZPTDc4NGJBVTM1M0ZlaGcxeW5ZVUZTdHdEemtLUS1samx0Q1ZVRDJJekU4dDdjMEp2QnYtRS1LQzdhQXFXbkxXUGRfZXl3NHZvamEtczlwT19BT3oteEc1MVJ3a25qdTNjTGZJVkY?oc=5",
+      "titulo": "Falta um ano: Salvador entra na contagem regressiva para a Copa Feminina 2027 - MundoBA",
+      "fonte": "MundoBA",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQSk1UV1JNY0ZCZjZoZVVLWmEzZUpDejNyMk9vUFVXV3BvenJfODZUajZnVW9seDF6cEFPdEZDQk5HR0dsTzNLZHVpSm1DU3pEaFRUeEJHVy1MZUdIMHM5aXJ6SG1fUk5Zel9Cbm9tOTUzMEk0YWFUU2VUcWpueElDR29TT09uLWYxdnhWVkplV0R0QU55eVpqYmlLOGVNVG9vcncya2JwM211cW13?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -458,9 +458,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina de 2027 terá 32 seleções e oito cidades-sede no Brasil - A Crítica de Campo Grande",
+      "titulo": "MEC define regras para férias escolares durante Copa do Mundo Feminina 2027 - A Crítica de Campo Grande",
       "fonte": "A Crítica de Campo Grande",
-      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMm5aTjFneUQxVG42MUxxUGJ1TjFmbWFDSVg1ZTlRWU5hLXZDYkpacXBNRU9nc1Rsb1IzaTRDLUZlS1V3QkhNV2J0ZU5rbzY0dVlKQk5KT29KdXpEWkNod1FGRGVkR0ZDeVhPYmFhWTFpOHpsQ1BuVlhBaExXZHY4dVRB?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPaUs3cmNCaTF4bGlycWcteUVJNUNrTG1WSV9SU2VtWlg4eDlVU2lkdC1mYTVMUGQ5a2dwOU5mU0ZaOE1xUWFTVDd4ZXQ2RktINDQyOHFFVEpIT2Q2TVhISm5iVVF6QktoaVlkZlU0MlRFNlVKd0RqNi1yLV9QSm5tUXFDNjFxWkUxQkFQa0NaekJveVBvLVE5RDlFVWVZRlVJUmdRY0xiMzd3UVh1YmZObk0xd0Q?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -474,17 +474,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Salvador participa de articulação da Fifa para fortalecer futebol feminino antes do Mundial de 2027 - deolhonacidade.net",
-      "fonte": "deolhonacidade.net",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPZkpaOVBHZllOVmVKNEY2ZUk4SnJKR2xVemhuTmRBbWNRSC1rRXVpUzZXcGloSC0weXV6NVM2bmExWnVFZzVtcFdEWk5hdXRERXQzLW1acEd3OExHTVIzVlN3ZktEaklFd0E0dFNlUnAzWHpGeFVDb19yRHo5d2R0Vzd1QUN2bEpKQnNsY2ZSQUtJRWtwZEpBX2xKeGphSS1NcWhCby1sMTB0MTdyUDBDLXlLVEFWYUI3T1ltYXl1WWd4VDNzNTcza0p3?oc=5",
+      "titulo": "Com presença de Taíse Galvão, FIFA discute melhorias para o futebol feminino brasileiro - FBF",
+      "fonte": "FBF",
+      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE95Y0dZRkI2cGRJUFNuY2RWYTZnM0NaYlRieVM2STJ5MWJwVkZFVmZsUVpUVmNBcEZUTjR4RERJWWNSWDItMnJYRWVtTW1RVWI4VEwtQktZSlg?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Com presença de Taíse Galvão, FIFA discute melhorias para o futebol feminino brasileiro - FBF",
-      "fonte": "FBF",
-      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE95Y0dZRkI2cGRJUFNuY2RWYTZnM0NaYlRieVM2STJ5MWJwVkZFVmZsUVpUVmNBcEZUTjR4RERJWWNSWDItMnJYRWVtTW1RVWI4VEwtQktZSlg?oc=5",
+      "titulo": "Salvador participa de articulação da Fifa para fortalecer futebol feminino antes do Mundial de 2027 - deolhonacidade.net",
+      "fonte": "deolhonacidade.net",
+      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPZkpaOVBHZllOVmVKNEY2ZUk4SnJKR2xVemhuTmRBbWNRSC1rRXVpUzZXcGloSC0weXV6NVM2bmExWnVFZzVtcFdEWk5hdXRERXQzLW1acEd3OExHTVIzVlN3ZktEaklFd0E0dFNlUnAzWHpGeFVDb19yRHo5d2R0Vzd1QUN2bEpKQnNsY2ZSQUtJRWtwZEpBX2xKeGphSS1NcWhCby1sMTB0MTdyUDBDLXlLVEFWYUI3T1ltYXl1WWd4VDNzNTcza0p3?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
