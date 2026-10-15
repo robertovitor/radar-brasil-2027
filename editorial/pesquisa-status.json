@@ -1,21 +1,37 @@
 {
-  "cycle_id": "20261015-09",
-  "started_at": "2026-10-15T09:09:24-03:00",
-  "completed_at": "2026-10-15T09:12:11-03:00",
+  "cycle_id": "20261015-14",
+  "started_at": "2026-10-15T14:22:53-03:00",
+  "completed_at": "2026-10-15T14:25:18-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 77,
+  "candidatos_publicos": 78,
   "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 76,
+  "rejeitados": 77,
   "duplicados": 0,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
   "auditoria": [
+    {
+      "origem": "google-news",
+      "titulo": "Globo anuncia novidades para 2027: Avenida Brasil 2, BBB 27, Copa do Mundo Feminina e novas novelas; confira - Globo",
+      "fonte": "Globo",
+      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPdDZEcm1ZSnFtSm1qd2h1ZmtzR0owdG5JaWE3a3pKakhhV24yZkNLSEx4YUNQWjdhamhfNWFBLTBXYVQ3c1BJeXVRNENlaDRUVlRCTWZlZTRPZ3pBS0c0a3p3clNQZzZkQ28ya0dJLVpmeW9oQi1vTVJNM2pxZlI1WTZRQm5qVlZPb3VUWU4tTVQ0N0VzWkh4bC0wRk16NC1EQTdNb0J4dThTX3dCc1BtSDF2RkJJclREajhQcENMdG9KQkpzQWd0VEdwTUVBUWVvMEhqd2YyM3c1aTZzdFpyVEVFSUrSAfMBQVVfeXFMT3ZxRldtZG1TNlpLRXNRNU5Ha0I4ejVJTC1jeFFEc0FYTVZRQmFJeGNDeHRSMU5xWXlwWDFGZEh5dUpCanhXS3g5UGNBOVFnS2VMd29vbm9KbnVRMHdrZU9BUjdYSVRVUUw1eXdBakJaSFlyMTZZSlJnRG9yTDE1WmJGcWphcXJKZW1nMWRucmd2bEJQN1p4UlAxSW1GNXhOWHgtLTEzMmFqTTBrdFdubUw3d09vNW0xa2VsYnZWY2laNjBNMEtmbnBvSFJuMFhKZE93b3hBbUdlX3c2RzJwWjUybGV6RFllZkgwenR2TXdIRWFF?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Upfront Globo 2027: emissora oficializa 'Avenida Brasil 2', Copa do Mundo Feminina e os principais lançamentos para o próximo ano - Gazeta de São Paulo",
+      "fonte": "Gazeta de São Paulo",
+      "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxOYzRiX2tGdnZZYURjUU45YS1hMHhBekdLa3huR0R6aDVMbkRaRlFIR2oyb1hfYTFQQmppM1lZMTVsVHVrQ2NSZm5fbTkyVnFzOFVsSF9pb3pZNXhVNzBQR3V0ckhNNE41YWdIc2M5NnZsYURUNERHQ3loZGEwUkltVE5QclhzSHNUNEZ3cTlGVjNKNmVvNUpVekV2WWZoQWNycnB0M251LVRqQUo2Sk1sRmdfX25YTWxpRkI1cXlHc1RTdVFiUzVzVmdiZnI2VzMxdWRZTy1zR1FmVFJhM2xNWjl4eHM5NDBmQVh1emtXQloxWlV3NlBfQnowRmU?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
     {
       "origem": "google-news",
       "titulo": "Copa do Mundo Feminina pode impulsionar turismo e negócios no RS - abc+",
@@ -37,22 +53,6 @@
       "titulo": "CazéTV fecha oito patrocinadores para a Copa do Mundo Feminina de 2027 no Brasil - A Crítica de Campo Grande",
       "fonte": "A Crítica de Campo Grande",
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOSzc0QmZ0a2wyTFR0NjRFSWRkeUxnUjhPT0R4TUY1VWRzNzlGQm9wTjF1UEtMLTEwMm10aHBPQzdkUFBMdnFhRE54Q24tcEJXM0swOXZhdGlLVEk3dEhESFJhUnAwWTFLSGFHN1VwUzFyTVUwOVg4WlpJZ0RDM3RLLVJJbHZDbGRPVTBMRXVIZW51QzZUQ1hsbUgxd2RzdHlHSWNJX3pzUnRDNUZ0V05JVw?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Governo da Bahia amplia projetos esportivos para meninas e prepara Salvador para receber sete jogos da Copa do Mundo Feminina de 2027 - Jornal Grande Bahia",
-      "fonte": "Jornal Grande Bahia",
-      "url": "https://news.google.com/rss/articles/CBMihgJBVV95cUxOQTJ5TmVSZW5oTFduN0ZFQXk3N1h1ZDlmSTY4NkJIOHB5ekk0RUxWaDlHS2xleDF0a2cwUFhtQTBBbjMxbklQZEkxQVMyZURFTzZVcjJYTzcyT21BSFlWR2ZtX0lrYlNqMWxFMU1VaENRem9qMWFOZWZYbU1IaEhPUGl0Ny1Td09mZHhuaHdPTTZpZ2p0UjExcFRmbGNvVVF5bHlmLXpBM2FvejdrSmlidVJwSHBJWE00STRmaU1ucDlfT0JVdTluMVYtYVlvZ0MxeThGWWdsdi1TeXpzblhlY3FTU1pOR0JfNXY3cHhBaW1BQlhoV21ZaTh1am94Vm0zRTFZT3BR?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Baiana da Seleção Brasileira, Raissa Bahia projeta vaga na Copa do Mundo de 2027: \"Buscando evoluir a cada dia\" - Bahia Notícias",
-      "fonte": "Bahia Notícias",
-      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPelBtbVVjblJQRHlQRUNxT2U3S252NEg4WHFSYnFDXy1fRy10SmN4RWVnaUpaZnBEczVkNTBYWUxHdDkzVjdZUUFiemstcWhwRWRUNlp6RHJtMThVN2pPN3g2Wk5ad1J5U2NYenJKeXEzRXZHckt0cnZQVWVyTWFHak9pTEhlNWVJelBuR1pmakVZYzQyQnVaNXdxSXpZb05rYnMyZ0JHcTExMmI4LWxFYnJPOTk3Sm1mdDZTVDd1M0tRZVl5N2FLbEJGanZhUThDUmw1a1RtQ05TYVdOOHI1djRRY1lBUHFXcTVQYkJDZXhzT2IzdHc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -125,6 +125,14 @@
       "titulo": "Mundial Feminino de 2027 será disputado em oito cidades brasileiras - Midiamax",
       "fonte": "Midiamax",
       "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNZXFOUS00cjZoOWRTa2lxSVBhRWU3OTJCQ0s3Rmp6NE81WTQ1ZkYxMHBRUDJrT21MeFA4RF91d21BbU5VeXZIV1RBSkpnanBBQzNkakxwU0RwTFYtczIyVnVmREFZSVd2Rllxb2hscWhRYlVtVUd2bVJCSUJ5djVadm8xRDZ6cTlSNk5KZlJNN3p5S3RJVFBlbWZvTHlRdU9OR2c?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Fifa aprova preparação da Fonte Nova para o Mundial Feminino 2027 - Folha do Estado da Bahia",
+      "fonte": "Folha do Estado da Bahia",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNSTlqMk9WTmx6eTZXcFU5VG5OTm5XRS1pWC1RYmJQc1dGWmppTm5HZ2YxcENHbHY3NlcwNTJTZXN3eUV0ZWRCaldaem9FY0tRdVd2d3BoLXZ3ZGJzMnF5ZFFHY2h5MlJYa0JSNUF0VUNEQkNJY1kyT1NTcnM4QzVwa1daNTd2VU1NSUZIQjYzYzhSNWpCbkVrWE5XcnZ3NWF0OFNaZWF5RXM1V0ttR0MtVA?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -226,17 +234,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Salvador intensifica preparação e reforça ações em mobilidade, turismo e estrutura para jogos da Copa Feminina 2027 na Fonte Nova - Muita Informação",
-      "fonte": "Muita Informação",
-      "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxNcFBiZnhKZVk3Z3pGUW5Id2w3R250WWZtZkRFS08tYUlDczJ3SWpTQUpyM3dWUDZWaFo1MU1oT2ZNTDZhWjdmWTZtOVdha0cwdWhtdDYtX3lEOGdETTNOMWZTUGt5dWVYYkctMXU3N195d0o3NmNVSzUyYVZXMHFaWUFKT2xSandEM2UyYWlCdldYZ0dSVmZPTDc4NGJBVTM1M0ZlaGcxeW5ZVUZTdHdEemtLUS1samx0Q1ZVRDJJekU4dDdjMEp2QnYtRS1LQzdhQXFXbkxXUGRfZXl3NHZvamEtczlwT19BT3oteEc1MVJ3a25qdTNjTGZJVkY?oc=5",
+      "titulo": "Copa do Mundo Feminina pode levar Nordeste a novo patamar no turismo internacional - Portal NE9",
+      "fonte": "Portal NE9",
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1JcUk4VDFaYVFlcUV0cGNUOHFSM3pDb0pjeTl6U1hocS1nWXE3cV96U0ZFRnpyeVNaQ0ZFcWhrMWFJcGZ3Z0IzNEdXRnlnaEY1bG1zelhYUzk5eFd0RHMtS1EyM2lJRmZZampaSWtR?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina pode levar Nordeste a novo patamar no turismo internacional - Portal NE9",
-      "fonte": "Portal NE9",
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1JcUk4VDFaYVFlcUV0cGNUOHFSM3pDb0pjeTl6U1hocS1nWXE3cV96U0ZFRnpyeVNaQ0ZFcWhrMWFJcGZ3Z0IzNEdXRnlnaEY1bG1zelhYUzk5eFd0RHMtS1EyM2lJRmZZampaSWtR?oc=5",
+      "titulo": "Salvador intensifica preparação e reforça ações em mobilidade, turismo e estrutura para jogos da Copa Feminina 2027 na Fonte Nova - Muita Informação",
+      "fonte": "Muita Informação",
+      "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxNcFBiZnhKZVk3Z3pGUW5Id2w3R250WWZtZkRFS08tYUlDczJ3SWpTQUpyM3dWUDZWaFo1MU1oT2ZNTDZhWjdmWTZtOVdha0cwdWhtdDYtX3lEOGdETTNOMWZTUGt5dWVYYkctMXU3N195d0o3NmNVSzUyYVZXMHFaWUFKT2xSandEM2UyYWlCdldYZ0dSVmZPTDc4NGJBVTM1M0ZlaGcxeW5ZVUZTdHdEemtLUS1samx0Q1ZVRDJJekU4dDdjMEp2QnYtRS1LQzdhQXFXbkxXUGRfZXl3NHZvamEtczlwT19BT3oteEc1MVJ3a25qdTNjTGZJVkY?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
