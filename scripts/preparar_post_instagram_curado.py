@@ -203,8 +203,16 @@ def stale_operational_date(kind,item,today,reference_date=None):
     # Campos estruturados têm precedência.
     if kind=='evento':
         event_date=date(item.get('Data'))
-        if event_date and event_date < today:
-            return event_date,'event_date_passed'
+        if event_date:
+            if event_date < today:
+                return event_date,'event_date_passed'
+            # Data do evento é a fonte primária. Datas históricas de cadastro,
+            # sugestão ou verificação em Observacoes não são prazos de inscrição.
+            # Somente um prazo estruturado e efetivamente vencido pode bloquear.
+            deadline=date(item.get('PrazoInscricao'))
+            if deadline and deadline < today:
+                return deadline,'application_deadline_passed'
+            return None,''
 
     if kind=='oportunidade':
         for field,reason in (
@@ -229,6 +237,13 @@ def stale_operational_date(kind,item,today,reference_date=None):
 
 def base(item):
     t=norm(' '.join(clean(v) for v in item.values()))
+    notes=norm(clean(item.get('Observacoes')))
+    category=norm(clean(item.get('Categoria')))
+    # Respeita exclusões editoriais explícitas registradas junto ao evento.
+    if 'nao tratar como pauta de instagram' in notes or 'nao publicar no instagram' in notes:
+        return True
+    if re.search(r'\bcategorias? de base\b',category):
+        return True
     return bool(re.search(r'\bsub[ -]?(15|16|17|18|19|20|23)\b',t)) and ('selecao' in t or 'mundial feminino' in t)
 def slug(key): return re.sub(r'[^a-z0-9]+','-',norm(key)).strip('-')[-70:]+'-'+hashlib.sha256(key.encode()).hexdigest()[:10]
 def font(n,b=False): return ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans%s.ttf'%('-Bold' if b else ''),n)
@@ -464,6 +479,9 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
             caption=f"🎯 {instagram_title}\n\nTipo: {category}\nOrganização: {organization}\n{('Modalidade: '+modality) if modality else ''}\n{deadline_text}\n\n{summary}\n\nFonte: {clean(x.get('Fonte')) or organization}\n\n#RadarBrasil2027 #Oportunidades #CopaFeminina2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"
         ))
     pending_order={clean(key):idx for idx,key in enumerate(pending)}
+    # Promove somente eventos incluídos recentemente, sem trazer o acervo
+    # histórico à frente das notícias ou das oportunidades atuais.
+    recent_new_event_keys=set(pending[-40:])
     def rank(i):
         # Evento que acontece hoje tem prioridade editorial sobre a fila normal.
         # Depois dele, preserva exatamente a ordenação histórica da fila.
@@ -474,10 +492,10 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
         pending_tie=0 if pending_idx is not None else 1
         recent_pending=-(pending_idx if pending_idx is not None else -1)
         type_tie={'evento':0,'noticia':1,'oportunidade':2}.get(i['type'],3)
-        # Regra de entrega: depois de evento que acontece hoje, toda pauta nova
-        # já publicada no site e marcada em pending_new vem antes do acervo comum.
-        # Isso transforma a presença no site em obrigação durável de Instagram.
-        return (today_event_tie,pending_tie,recent_pending,-i['date'].toordinal(),type_tie,i['key'])
+        new_event_tie=0 if i['type']=='evento' and i['key'] in recent_new_event_keys else 1
+        # Um evento novo elegível passa à frente de notícias mais recentes,
+        # mas a obrigação normal da fila e a deduplicação ficam preservadas.
+        return (today_event_tie,new_event_tie,pending_tie,recent_pending,-i['date'].toordinal(),type_tie,i['key'])
     return sorted(out,key=rank)
 
 def http_json(url,timeout=20):
@@ -1267,9 +1285,12 @@ def main():
     # a fila. Mantém intactas deduplicação, reserva, cooldown e reconciliação Meta.
     today_brt=dt.datetime.now(ZoneInfo('America/Sao_Paulo')).date()
     today_event=(fallback_item.get('type')=='evento' and fallback_item.get('date')==today_brt)
-    image_candidates=[fallback_item] if today_event else ranked
+    new_event_priority=(fallback_item.get('type')=='evento' and fallback_item['key'] in set(pending[-40:]))
+    image_candidates=[fallback_item] if today_event or new_event_priority else ranked
     if today_event:
         print('priority_event_today='+fallback_item['key'])
+    elif new_event_priority:
+        print('priority_new_event='+fallback_item['key'])
     for candidate in image_candidates:
         candidate_image=curated.get(candidate['key'])
         if candidate_image:
