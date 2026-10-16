@@ -1,17 +1,17 @@
 {
-  "cycle_id": "20261016-03",
-  "started_at": "2026-10-16T03:25:58-03:00",
-  "completed_at": "2026-10-16T03:27:40-03:00",
+  "cycle_id": "20261016-08",
+  "started_at": "2026-10-16T08:55:52-03:00",
+  "completed_at": "2026-10-16T08:57:37-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 83,
+  "candidatos_publicos": 84,
   "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 82,
+  "rejeitados": 83,
   "duplicados": 0,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
@@ -34,17 +34,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Embratur promove cidades-sede da Copa do Mundo Feminina 2027 em press trip internacional - Jalapão News",
-      "fonte": "Jalapão News",
-      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNb3Exci1mcS10alpQdHA3N1UzM2lkMHBEalpXck1wbl9NVEt4NWg5eTJQekozZ0dPb2dncEp6V19fM0o5TWZ3RUcwUzdQVkJCSmlvSXdUZEdEOHFINEtaNWdCOFI1d25zczNOeVhnbkd5R3ViZVFZYWJLdVV5cjMxR1YxQmticGg1c3hBNXRPQ3ctN2t5MktORTFiclZBV0NEa09Zd1RFVmtyQjBWcXF6QTFmRDZ2X0xMLW8xNWhNUzE?oc=5",
+      "titulo": "ESTÁDIO DE PITUAÇU VAI RECEBER R$ 7,8 MILHÕES DE INVESTIMENTOS PARA COPA FEMININA - Bahia Econômica",
+      "fonte": "Bahia Econômica",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNakhwMF9UWHpJMUVuRUZ3N3I0YzBKSmV4aDJHcUJCREJ3X3dnRzB3LUVhOWp5U2tkSWVPY1plaDJQTkJhVU03d3hacFo1Wk15bXV0UDdtT1pKTFBmNGlSQllqODJHUWs3eHZQVVBNeHdxYWZmTl9ueDY0X3NNdlh0QnZLVnRIWFU5WnZvbENRRjVlamw2VHJmMVNnM1Q4Y1ctOFl3YnJScncyMW5JNm1Kelg2bEYwUlFLc1ctVjYtWS1tLVlzSTlSaGRxeFY?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Globo anuncia novidades para 2027: Avenida Brasil 2, BBB 27, Copa do Mundo Feminina e novas novelas; confira - Globo",
-      "fonte": "Globo",
-      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPdDZEcm1ZSnFtSm1qd2h1ZmtzR0owdG5JaWE3a3pKakhhV24yZkNLSEx4YUNQWjdhamhfNWFBLTBXYVQ3c1BJeXVRNENlaDRUVlRCTWZlZTRPZ3pBS0c0a3p3clNQZzZkQ28ya0dJLVpmeW9oQi1vTVJNM2pxZlI1WTZRQm5qVlZPb3VUWU4tTVQ0N0VzWkh4bC0wRk16NC1EQTdNb0J4dThTX3dCc1BtSDF2RkJJclREajhQcENMdG9KQkpzQWd0VEdwTUVBUWVvMEhqd2YyM3c1aTZzdFpyVEVFSUrSAfMBQVVfeXFMT3ZxRldtZG1TNlpLRXNRNU5Ha0I4ejVJTC1jeFFEc0FYTVZRQmFJeGNDeHRSMU5xWXlwWDFGZEh5dUpCanhXS3g5UGNBOVFnS2VMd29vbm9KbnVRMHdrZU9BUjdYSVRVUUw1eXdBakJaSFlyMTZZSlJnRG9yTDE1WmJGcWphcXJKZW1nMWRucmd2bEJQN1p4UlAxSW1GNXhOWHgtLTEzMmFqTTBrdFdubUw3d09vNW0xa2VsYnZWY2laNjBNMEtmbnBvSFJuMFhKZE93b3hBbUdlX3c2RzJwWjUybGV6RFllZkgwenR2TXdIRWFF?oc=5",
+      "titulo": "Embratur promove cidades-sede da Copa do Mundo Feminina 2027 em press trip internacional - Jalapão News",
+      "fonte": "Jalapão News",
+      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNb3Exci1mcS10alpQdHA3N1UzM2lkMHBEalpXck1wbl9NVEt4NWg5eTJQekozZ0dPb2dncEp6V19fM0o5TWZ3RUcwUzdQVkJCSmlvSXdUZEdEOHFINEtaNWdCOFI1d25zczNOeVhnbkd5R3ViZVFZYWJLdVV5cjMxR1YxQmticGg1c3hBNXRPQ3ctN2t5MktORTFiclZBV0NEa09Zd1RFVmtyQjBWcXF6QTFmRDZ2X0xMLW8xNWhNUzE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -58,25 +58,25 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Fifa se reúne com federações das sedes da Copa do Mundo feminina 2027 - bahia.ba",
+      "fonte": "bahia.ba",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQRHFhc3k0dmp4b0lvaVBGdEk4QklDZ1VlUGdWX21QeEJPa2hQX0pUZlBUbzdQYmYwaHpEcUhMelhoblVZMEVwd29hYTVfQ2E1NUpRbGFJV2RBNU9kYkpjZFFkQmZiTmlhNktFZ3MxQ3BYOGFjX3JteFp3aTFiaGMyQnJkaUNNcU9KNXI1OWZSM3gySklKXzJPc1dMWQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa do Mundo Feminina pode impulsionar turismo e negócios no RS - abc+",
+      "fonte": "abc+",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPYk5XeFZleXpMcG54R0dWOVlwbk02a1FpOG0wazlLQzhRZ2xkdzNNa0xxd1N2MUdYOTQ0V0Zvem0zZVFlYXBaUXBMdUZobjZUZVhhNjJ5MmtFZ3VraWw5TzFMb1MyVzBEMmxDVG1aRlJ6TkxSaklCRGVyNWxaRS1ha0pkbEswX3NrenpMVnVxN2NCSG9ZSzZydU81YktnUHc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Upfront Globo 2027: emissora oficializa 'Avenida Brasil 2', Copa do Mundo Feminina e os principais lançamentos para o próximo ano - Gazeta de São Paulo",
       "fonte": "Gazeta de São Paulo",
       "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxOYzRiX2tGdnZZYURjUU45YS1hMHhBekdLa3huR0R6aDVMbkRaRlFIR2oyb1hfYTFQQmppM1lZMTVsVHVrQ2NSZm5fbTkyVnFzOFVsSF9pb3pZNXhVNzBQR3V0ckhNNE41YWdIc2M5NnZsYURUNERHQ3loZGEwUkltVE5QclhzSHNUNEZ3cTlGVjNKNmVvNUpVekV2WWZoQWNycnB0M251LVRqQUo2Sk1sRmdfX25YTWxpRkI1cXlHc1RTdVFiUzVzVmdiZnI2VzMxdWRZTy1zR1FmVFJhM2xNWjl4eHM5NDBmQVh1emtXQloxWlV3NlBfQnowRmU?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Oportunidades econômicas da Copa Feminina foram tema do Fecomércio-RS Debate - Expansão",
-      "fonte": "Expansão",
-      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOYV9xWG53WXk1ZXQ3N3duVHcyZlhJYTE3NHVoblpLcDBNcXMzSkoxTDh6eFp1NlByeEcyRm5YZGIxR1lfZS0yS2hSbk54ZEFYTTNXS1VtcVp4VktWeWVyNm9nXzBLOS0xSG55RDZsR0h6X1lCTV9FY1pNNkJLUjZkT1R5R1QwYi1BeUs3QTNZT3BkdlBoeERJQVcwZ2lLSVFPbFRzY2JkczE?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Luís roberto é anunciado como narrador da TV Globo para a Copa do Mundo Feminina após tratar câncer - NSC Total",
-      "fonte": "NSC Total",
-      "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQaVVBaC00RkV3dmlaSkNBZ1drVkNuT2E1cEdLMVRDUTk4bWNMQTdBekYyaEcyT1lWWExfWXI5NlBqbVNkNjJqRE5GcGdTblgyM2Q4SjdzUkdwU1V4MHp6elFOS012bWZxVzZmSFRFYjJ3OW1FNm1OeFk0RkpxRGRSWWx2WF9tSGtaXzJGendrY2VTUlc5ck1hZHg4b1JtUHJBTF9mSVowbHllM0tUTXNEdEh3UEppeW9PTUV1cWZWQzJDbm5kVFRKUE1KbHFVUFlRanc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -173,6 +173,22 @@
       "titulo": "Seleção feminina de futebol inicia qualificação para o Mundial-2027 com receção à Finlândia em Vizela - Diário de Notícias",
       "fonte": "Diário de Notícias",
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPaDFWREt3WnZuU0xSVGpIX2t0TXpwOUJJNVpDMHIxMW50MEtkX1JMVTFzaW5zT3p1a0xzTXVlcVpPQWl4WTNudG16SVRVWUNyd0FpdHpnSXFrR1JXd1diaEdQNDJrTDRyOExSQ1FxNEdZak9QcjVnV1JJQWhhLTdqeHVIOUlfY21wVFdHc05CZUZoWVRyX3NvQ2d5UkZzb3pKbjJIWi0xRk5WcXduV2EwOEFmY2NpYmx5cEk0?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "CBF inicia negociação para amistosos da Seleção feminina antes do Mundial de 2027 - Atual FM",
+      "fonte": "Atual FM",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNdmJEbEdSWjRHZlBzOHJkdkJaTkRvUmluVk5pZ2FnNS1MRGZOTzdPZURkcVpyRXd6NWt5VnpiOFZGdmRkYnNUN3dzeHk5OG1QeElNUDlXaWxvbW85eEpXeFQ5MVFCN1V4ZV95c1FxOVJZV1BDSDlRd1Vmck9nZE5KOC1LWk1XcWdmUDFkR1R4UVlVWi1kcWdFZVZsaVVfMElWQ2QwRk5YZE0?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "COPA DO MUNDO FEMININA: Seleção feminina pode jogar em Salvador antes da Copa - Tribuna da Bahia",
+      "fonte": "Tribuna da Bahia",
+      "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQRWJmV05PMDZrQ2l6Y3R2cWJpVFl4NjBBNkplMFd3YmN0S01RMFowd0pvVlpXNm03Z0lreXM0SjFuSlNCT0daMDlSN1JQZjdGRkxlYmd3eHZTV0hUVFhaRUxTYUktTTZXSENMRW1fOXNhN2ZybjlTajQ4YURfbEU1ckl6VFl6TVFGRDVKQ3hOUkFZSFRlUEhObnk5S3Zhb1gzQzAwV2MxZlB3QV9KT1piQmlrN3pXNEE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -306,6 +322,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Cetur debate oportunidades e construção de legado da Copa Feminina 2027 - Agência Sebrae de Notícias",
+      "fonte": "Agência Sebrae de Notícias",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQYzdPalFWbW00clZCU1lKUlkwdW81MG94SWpMMUozZzN3NkZJMWhkSDJ5UEVDMGNxVlBUV0xzNXdCUEdlMWhHWThfTWFkOG5OOHJVaEJwMXhkaGJGVXBwTk9HRVQ5ZER5UE5qZFU4QWdVOWptUk9vUkpJUHVwVE1LRGZsX0ZoTjBoQ0dyaEctcWVnQ3FkWTVGVUo4YWk1Wm5fejlKQ3VUSTRGRjJ5SHpEbjJmN1RGdXdsREFGcjRmV2VLOWVpQ1lUOHdCelB6VWZEeXdVRQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Copa Feminina 2027, que traz jogos a Fortaleza, será tema no Salão do Turismo - OpiniãoCE",
       "fonte": "OpiniãoCE",
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQTDFVOWtrYjhpZzBRaGxMZ0hmSkQzdEN2a3M0NkxhZGp0bzlMczQ5SEJEbEVpWDNMUlRUZU41ODgybkRQZkJ1Z3VNdWxKRnEyUkJOSlFWVV9qV1dkNjJ2RDVXeGJUZHJ4UFJyQWJDam1BLVpzZHh5RlNGdFpFUUpjZkVOSmtYYy1aNUdENDdjM0x2ekVTSlR4NEt5Q1V3aG1pc3R4dWx2TnZXVXFFYVl3bE1yQ25UX0hKMUF3WDh2ZnBJTkE?oc=5",
@@ -330,25 +354,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Cetur debate oportunidades e construção de legado da Copa Feminina 2027 - Agência Sebrae de Notícias",
-      "fonte": "Agência Sebrae de Notícias",
-      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQYzdPalFWbW00clZCU1lKUlkwdW81MG94SWpMMUozZzN3NkZJMWhkSDJ5UEVDMGNxVlBUV0xzNXdCUEdlMWhHWThfTWFkOG5OOHJVaEJwMXhkaGJGVXBwTk9HRVQ5ZER5UE5qZFU4QWdVOWptUk9vUkpJUHVwVE1LRGZsX0ZoTjBoQ0dyaEctcWVnQ3FkWTVGVUo4YWk1Wm5fejlKQ3VUSTRGRjJ5SHpEbjJmN1RGdXdsREFGcjRmV2VLOWVpQ1lUOHdCelB6VWZEeXdVRQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Embratur projeta impacto de quase R$9 bilhões da Copa do Mundo Feminina de 2027 - Brasilturis",
       "fonte": "Brasilturis",
       "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQcF8wWTRVQmdMdU1RTU9tZ1U2bGZsNExyVzVCdlJNTjlmSWVkMFFURG9lakg4SmhLQXIxQzdoTjNFbzJJRnVZU1FlQ1dONk1oazV2YVg1VlY1MllHYmdzOHdOVVpaT3M5eHR5RGhRNjB1X1lzd0hrYmtpV191aWRtcjYxX1VHYzdyM29KSGlpS2I1c3Nud0VFRzgzdERxOXBXYWc?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Cidades-sede da Copa do Mundo Feminina 2027 oferecem roteiros turísticos - Correio Braziliense",
-      "fonte": "Correio Braziliense",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOejIxX2pnMWkwRk9kWUFCYURFcEVaNVVOVGZxWTlTai1pTi0tNXdUb3QwYUNyNHo2c3Q0RkV0bFp1MEV1UW9BY01FM0ZzaWxqcU40VEhadFZldXlWeVlCVy0tUkphODF2S1VIemd3RldEQWc1RV9yYmFsRXdYbnpFNUh6ZmlmVVVBQV9lTHYtRndRTHNGZklEclJQTDRRemxuVXRTUHFvSGM2WXVBemtvaDdaeUNoTXZweUxSMENWYzBXMnVUU0E?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -365,6 +373,14 @@
       "titulo": "Copa do mundo feminina no Brasil deve movimentar R$ 8,8 Bilhões - DOL",
       "fonte": "DOL",
       "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQZVRBdWVlR1pMeVp6cUJWRkFzUDdQTTBMVUtpak9KblFIeEI1NjExbUlYbktiYmY3ZFg5VkpHX0RERDAwMlpZdGJZMTFqdmJSMW1ybXVJdlRjbFR2Mkp3RGhPTE9UUEw5dFpWZ0IySEpJTzVvX2FIRmxCS1ozMm5ka2tzanl1bDcxanFkSmh1Tnc0c19FNjBVTWs0SG9qNGk0NFljbFZORVdrSjkyc2fSAbYBQVVfeXFMTUw0eEg5WWdLYnJfTGVOMC05a0lfdnlDX3kwbWRRM3gtbkhyUTNfZjMxLUxVOG4zVFU3OENnVVFVR1pFc3hHQVdzQjU5U29SQjdSQ2VMWlNodFFJWUNyUXdMRm80Z3BvTG15WkoxV1U3RzRnRnJZNEpkeEdsWkdyY2NLeTJIelFPc2s2VGRUakx3eUh3VVN5N2xLdXh5cDljYUpXVUhwd3BNdk1naTQwbnl5U3ZmQ3c?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Cidades-sede da Copa do Mundo Feminina 2027 oferecem roteiros turísticos - Correio Braziliense",
+      "fonte": "Correio Braziliense",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOejIxX2pnMWkwRk9kWUFCYURFcEVaNVVOVGZxWTlTai1pTi0tNXdUb3QwYUNyNHo2c3Q0RkV0bFp1MEV1UW9BY01FM0ZzaWxqcU40VEhadFZldXlWeVlCVy0tUkphODF2S1VIemd3RldEQWc1RV9yYmFsRXdYbnpFNUh6ZmlmVVVBQV9lTHYtRndRTHNGZklEclJQTDRRemxuVXRTUHFvSGM2WXVBemtvaDdaeUNoTXZweUxSMENWYzBXMnVUU0E?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -498,6 +514,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Árbitro capixaba Davi Lacerda pode integrar quadro internacional da Fifa em 2027 - Folha Vitória",
+      "fonte": "Folha Vitória",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPdGRPVGV0bWZ1N1JkdWdSRGFKQTZqdC1ETjdQdHJCWWM0UlA5aWNZMVl6dmRac0NGc3hfSXJuMEdVU2ZHRWZVNXNIcFl6MzE0SEd0aURFUXVDYkFOT3NVWVQzQ3ZLT3JxUmtJRkV3ckVMcDdOdmJwOExHNWlaSGZDN2d6ODFNZmtNUDAwWFJGRTFkeVZGTkJpTHA5c3NQMWI0dFRMUnhZc3c0UW1lNjl3LUU1dWNDeF9y?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Brasil se prepara para receber a Copa do Mundo Feminina da FIFA em 2027 - maringaatual.com.br",
       "fonte": "maringaatual.com.br",
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOS2lBdnBZZGdfT3NMOUdBTnM4WHktSjZpYnM0cEJiWUdzWE54NkUxSVdwaUM3TjU1X0lscEF2UTNHajlZSWdMS3Zjd2ZTR1ZPRTlnVl92Q0NSalFzSzdWQU1mMHRHSzdHdzV6d1Y5X1ByWDNDV1BZczh6VUd1cW00b1BLYlp2X0lLU2hSRndQSThBY0lHV0VwMjRVcEdyRnR4WmJoMDRnakxraTJvYkxMWFRObWczZw?oc=5",
@@ -559,14 +583,6 @@
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQX1lsMms1cmotUGhZcEp5S09CNmlSb1RtM1M4dFZOVVhsUmhNNFpuT1VETm5LaVhvWmVRWkd5aGxGMWFWUDdMcDdEYXBXMks3SXpFemoyOVlSTFpJRnJYYjFLTW9ubkxFYzFiMHRLQlFxR1Q5c19XRzJ0YnVfTlZJbzJtWEs1Y1BQRUxuV2FTbl80ZnpnYmdycWw5MXpnWnRMRWtVWEdIMjFzSE8tSVhZ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (66d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Concluída missão técnica aos Estados Unidos para preparação da Copa Feminina 2027 - Prefeitura de Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNbDl2SGp4T1dac0dzTHVXUHJROGl2a3ZxRWxvM2pFWkgwYnhxNWFOV1lDamRWelVHVGFka0ExSlZRMmJkdFFEbmUtU3FGZ2lCOWlabm9RNjBSR2EwcDhabl9wdm5DRWZjSWstVlkwTEZJVDN0TjBqODhIVEdkSWwzNmdaQ2tMaFk1OEh5TjAzVG41bXNPelVYTkRvWTB1Z20yQlVEY1o1M3UtQVlrbU9JWXlXM1VMYWtQQk5zSWZNal9ySXhC?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (112d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -671,14 +687,6 @@
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOeGVnX1VQYnVzWGFyREl3S1ItSWRPQlltdWlNbkhnWDN0OWxhWkI4Z0VYZGlDRkFESzVjTUU3VEM5WW5OSXpoZ2JLZzE4MmJDZklsVzdzc05Lb3FlWWNYQm9ncWQ2ZUROVGlJNW5VRTc1dEEtaGV6YzQ2ZDYteXdGRDljdl9YMmg5a3hPTVV5ZjhLa2NmMVBrcDE2MW1UZUFJOVFaN001Si1xU0Jjd1dwQTJoV2dSZw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (1143d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Copa do Mundo feminina: São Paulo terá dez jogos, seleção brasileira e semifinal - ge",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQUHN0d05Tc1F2X2Qxc1UzRDdNVzVDVUd1RnFHWUJnN1FzcjZsVUpyTGRWRDF6MjRLYTBvX1lYZW9FWHg3N1JiZmoxcGpmblRpaUE0QzUta3c3TlhBQlhQWk41U28zZWZuNVlXUU82cGNNdHVhcU9nblFMRExsRWpUeVNlZzhHMlJQMkpNYWpORW1GOFRlWUZLMlRYUnFLTUpfWWhYSVptTlpRSTI1SHBkN2xILXNKYlV1Rks1TTZ0Z1daYjdxbEo4UWtWb2R3SGpmaVNydkwxTWhwejJRcjNr0gHuAUFVX3lxTE5mVndUdXJKX2VVenNfVGVLR1BaRzNXd25mTDc2VWg5Y1d4SU0yenRTYTJTcUtsMV9heEtXYThJQnJwMVF6Ynkta3BrN0MzYUpDRlR2NlRLRVVrTlZkN08zUGFORzZvUWpWVjdOQ2lqdWdnY09NRW9KUjhoUDZGRm12Y1ZUQll1TWVTcGN3bTNxR3FKb09oYWNmR1VOX180RmxnVTE0MWlSeHNWVWpBd3NkSXJJcU9UaHFPMjcySDBNRUFsVEtXOW9qWS0zRjBwWXdxYlpzTzdOZXlaaVE1V0o3czNTVUpORnc0ZHV0WUE?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (57d)."
     }
   ],
   "observacoes_operacionais": "Pesquisa pública nativa, sem token e sem leituras ou escritas Airtable. Sugestões e enfileiramento de alertas permanecem suspensos. Mantidas validação editorial, extração de eventos, deduplicação e auditoria das fontes públicas.",
