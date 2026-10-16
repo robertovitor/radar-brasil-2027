@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261015-11",
-  "started_at": "2026-10-15T11:13:41-03:00",
-  "completed_at": "2026-10-15T11:13:44-03:00",
+  "cycle_id": "20261016-11",
+  "started_at": "2026-10-16T11:02:23-03:00",
+  "completed_at": "2026-10-16T11:02:36-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -15,16 +15,26 @@
       "reads": 1
     }
   ],
-  "sugestoes_lidas": 0,
+  "sugestoes_lidas": 1,
   "sugestoes_noticias_lidas": 0,
   "candidatos_publicos": 0,
   "aprovados_novos": 0,
-  "pendentes_enriquecimento": 0,
+  "pendentes_enriquecimento": 1,
   "rejeitados": 0,
   "duplicados": 0,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
-  "auditoria": [],
+  "auditoria": [
+    {
+      "origem": "airtable",
+      "tabela": "Sugestões",
+      "record_id": "rec9jg015qT9IrsOV",
+      "titulo": "",
+      "url": "https://www.instagram.com/p/DefO0gKvCy6/?exln=azg5dmt1NTdjMnUw",
+      "decisao": "pendente_enriquecimento",
+      "motivo": "PENDENTE_ENRIQUECIMENTO: metadados públicos não confirmaram data, horário, local e cidade; requer leitura da legenda ou imagem."
+    }
+  ],
   "observacoes_operacionais": "Execução nativa GitHub. Exatamente duas leituras Airtable; pendências estruturais são reavaliadas com os mesmos registros já lidos, sem leitura Airtable adicional. Pesquisa pública ampliada em múltiplos eixos via Google News RSS + GDELT, com deduplicação, filtro anti-base, confiança de domínio, validação de conteúdo e trilha de auditoria gravada no pesquisa-status.json.",
   "modo": "publico_e_sugestoes",
   "sugestoes_airtable_suspensas": false
