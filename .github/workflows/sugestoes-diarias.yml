@@ -1,0 +1,40 @@
+name: Sugestoes Radar - diario limitado
+on:
+  schedule:
+    - cron: '15 9 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: radar-editorial-shared-write
+  cancel-in-progress: false
+jobs:
+  sugestoes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      RADAR_PUBLIC_ONLY: '0'
+      RADAR_AIRTABLE_ALLOW: '1'
+      RADAR_SUGGESTIONS_DAILY: '1'
+      AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read suggestions once per table, no Airtable writes
+        run: python -m scripts.processar_sugestoes_diarias
+      - name: Persist audit and verified inbox only
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add editorial/sugestoes-status.json editorial/inbox.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Audita sugestoes diarias com teto de duas leituras Airtable'
+            git pull --rebase origin main
+            git push origin main
+          fi
