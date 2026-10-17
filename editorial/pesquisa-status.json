@@ -1,17 +1,17 @@
 {
-  "cycle_id": "20261016-20",
-  "started_at": "2026-10-16T20:02:21-03:00",
-  "completed_at": "2026-10-16T20:04:37-03:00",
+  "cycle_id": "20261016-22",
+  "started_at": "2026-10-16T22:34:32-03:00",
+  "completed_at": "2026-10-16T22:36:16-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 82,
+  "candidatos_publicos": 81,
   "aprovados_novos": 1,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 81,
+  "rejeitados": 80,
   "duplicados": 0,
   "inbox_itens_adicionados": 1,
   "inbox_commit_needed": true,
@@ -655,14 +655,6 @@
       "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQV0k4Q3Bib3ZfaEx1TzgzMzhTRG1QWFVLSDZyY2lpdXFxODlqNmlfRlgxZll0dnNERmlCcjBsT29sOWlvdUlEaUtHaUQ4bkM5VWNNYXVxQXJITGswcDRhU0FqN3ZRNHRONHQzWkFpdEZvZHlQUEhxdUZZbHg1TXVlbVpISzdDem5JU1Y5bGZyWDBSSEZjSzJsU3llRGo2ZjVELWlIT3pIUzV2dEVrS1hoWGpDVHM2VkdJM3hXQmhNbGtBeFQx?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (132d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Lula deve receber presidente da FIFA para tratar da Copa do Mundo feminina de 2027 - O TEMPO",
-      "fonte": "O TEMPO",
-      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPU2R2UmIxTlltQ1BZd1VqMVA5U2IxUUs5dHI4SXQzQVd3UmlJZUx0aDhlNmpmSlBLQkZpNzJodUJ1SWZzeUdJS1BwM21zbUUyeXh6MlZYX041UnYtLWoySkkzZ0JkTlhsVkFKTGlTN2J4SlFOZ2w2QUZWWnR0U1hfNWx3aTlMZmQ2LV81WnlFT1oyS0N5Z2E0amdMaTdwZ25SVnVpakdJNDJ6MXYtbDU4THZCbzlWbTF5cmdEZ1JFRjBTZDJJcTdiS1M5b2M3UVBh?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (266d)."
     },
     {
       "origem": "google-news-trusted-source",
