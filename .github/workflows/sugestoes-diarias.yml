@@ -1,7 +1,6 @@
 name: Sugestoes Radar - diario limitado
 on:
-  schedule:
-    - cron: '15 9 * * *'
+  # PAUSA POR LIMITE MENSAL AIRTABLE - sem disparos automaticos
   workflow_dispatch:
 permissions:
   contents: write
@@ -14,9 +13,8 @@ jobs:
     timeout-minutes: 6
     env:
       RADAR_PUBLIC_ONLY: '0'
-      RADAR_AIRTABLE_ALLOW: '1'
+      RADAR_AIRTABLE_ALLOW: '0'
       RADAR_SUGGESTIONS_DAILY: '1'
-      AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with:
