@@ -1,15 +1,8 @@
 name: Consumir sugestões Airtable (diário controlado)
 
 on:
-  schedule:
-    # 06h20 de Brasília (09h20 UTC), 1 vez ao dia.
-    - cron: "20 9 * * *"
+  # PAUSA POR LIMITE MENSAL AIRTABLE - sem disparos automaticos
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/consumir_sugestoes_diarias.py'
-      - '.github/workflows/consumir-sugestoes-diarias.yml'
 
 permissions:
   contents: write
@@ -24,8 +17,7 @@ jobs:
     timeout-minutes: 12
     env:
       RADAR_PUBLIC_ONLY: '0'
-      RADAR_AIRTABLE_ALLOW: '1'
-      AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+      RADAR_AIRTABLE_ALLOW: '0'
     steps:
       - uses: actions/checkout@v4
         with:
