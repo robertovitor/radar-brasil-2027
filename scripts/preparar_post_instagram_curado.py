@@ -4,7 +4,7 @@ from __future__ import annotations
 import datetime as dt, difflib, hashlib, html, io, json, pathlib, re, urllib.parse, urllib.request, unicodedata
 from zoneinfo import ZoneInfo
 from PIL import Image, ImageDraw, ImageFont
-from publicar_instagram import same_topic as publisher_same_topic
+from publicar_instagram import same_topic as publisher_same_topic, is_english_opportunity_headline
 
 try:
     from instagram_visual_policy import (
@@ -331,6 +331,8 @@ ENGLISH_ROLE_MARKERS=(
     ' broadcast ',' venue ',' infrastructure ',' travel ',' ticketing ',' customer ',
     ' partnerships ',' marketing ',' commercial ',' communications ',' technology ',
     ' services ',' senior ',' junior ',
+    ' talent pool',' people with disabilities',' host cities',' training ',' readiness ',
+    ' warehouse ',' distribution ',' uniforms ',' volunteer operations ',
 )
 PORTUGUESE_TEXT_MARKERS=(
     ' para ',' com ',' da ',' do ',' das ',' dos ',' no ',' na ',' em ',' uma ',' um ',
@@ -376,6 +378,15 @@ def art_title_pt(kind,title,summary='',organization='',category=''):
     original=clean(title)
     if not original or not looks_english_title(original):
         return original
+
+    # O banco de talentos inclusivo não é um cargo tradicional com
+    # "Manager/Coordinator": preservar o público e a abrangência na tradução.
+    if kind == 'oportunidade' and re.search(r'\btalent\s+pool\b', norm(original)) and re.search(r'\bpeople\s+with\s+disabilities\b', norm(original)):
+        host_cities = re.search(r'\b(\d+)\s+host\s+cities\b', norm(original))
+        if host_cities:
+            count = {'6': 'seis', '7': 'sete', '8': 'oito'}.get(host_cities.group(1), host_cities.group(1))
+            return f'Banco de talentos para pessoas com deficiência nas {count} cidades-sede'
+        return 'Banco de talentos para pessoas com deficiência'
 
     direct={
         'ticketing general public customer care manager':
@@ -480,6 +491,11 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
         summary=clean(x.get('Resumo'))
         art_title=art_title_pt('oportunidade',title,summary=summary,organization=organization,category=category)
         instagram_title=art_title if art_title != title else title
+        # Falha fechada antes de reservar a publicação: não deixar títulos
+        # estrangeiros escapar para nenhuma modalidade de arte.
+        if is_english_opportunity_headline(instagram_title):
+            print('instagram_language_candidate_blocked=oportunidade:'+key)
+            continue
         # O original em inglês pode ser distinto, mas sua tradução genérica não.
         # Aplica o mesmo critério semântico do publicador antes de gerar a arte.
         if any(duplicate_title(instagram_title,old) for old in prior_titles):
