@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-18T16:43:33-03:00",
-  "fim": "2026-10-18T16:45:20-03:00",
+  "inicio": "2026-10-18T18:56:58-03:00",
+  "fim": "2026-10-18T18:58:50-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -33,7 +33,7 @@
       "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": "erro:URLError"
       }
     },
     {

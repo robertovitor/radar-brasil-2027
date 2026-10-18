@@ -1,20 +1,20 @@
 {
-  "cycle_id": "20261018-16",
-  "started_at": "2026-10-18T16:41:48-03:00",
-  "completed_at": "2026-10-18T16:43:33-03:00",
+  "cycle_id": "20261018-18",
+  "started_at": "2026-10-18T18:55:34-03:00",
+  "completed_at": "2026-10-18T18:56:57-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 82,
-  "aprovados_novos": 1,
+  "candidatos_publicos": 80,
+  "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 81,
+  "rejeitados": 80,
   "duplicados": 0,
-  "inbox_itens_adicionados": 1,
-  "inbox_commit_needed": true,
+  "inbox_itens_adicionados": 0,
+  "inbox_commit_needed": false,
   "auditoria": [
     {
       "origem": "google-news",
@@ -77,6 +77,14 @@
       "titulo": "Copa Feminina 2027: favoritas confirmam vaga e Polônia surpreende - Revista PLACAR",
       "fonte": "Revista PLACAR",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQbmdvU0Nwb3FFb1hFbTRwTFRfRUN5amd3M0Rva1pac2JlM3RUa01sVFBabWhyTTd1bmVESzBoV2NwOVdJQmRfRnc2U2VKNFFGdjJRY2Y3OGppU3dUd2ctclNuVHV6MDdXWVpwRVplMWRGejV0WjB3WmNZRjNuTXRGYUlCbnpydUhHSG5IcGZfSVRzT3ZRLVlPMmpaUQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Upfront Globo 2027: emissora oficializa 'Avenida Brasil 2', Copa do Mundo Feminina e os principais lançamentos para o próximo ano - Gazeta de São Paulo",
+      "fonte": "Gazeta de São Paulo",
+      "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxOYzRiX2tGdnZZYURjUU45YS1hMHhBekdLa3huR0R6aDVMbkRaRlFIR2oyb1hfYTFQQmppM1lZMTVsVHVrQ2NSZm5fbTkyVnFzOFVsSF9pb3pZNXhVNzBQR3V0ckhNNE41YWdIc2M5NnZsYURUNERHQ3loZGEwUkltVE5QclhzSHNUNEZ3cTlGVjNKNmVvNUpVekV2WWZoQWNycnB0M251LVRqQUo2Sk1sRmdfX25YTWxpRkI1cXlHc1RTdVFiUzVzVmdiZnI2VzMxdWRZTy1zR1FmVFJhM2xNWjl4eHM5NDBmQVh1emtXQloxWlV3NlBfQnowRmU?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -442,14 +450,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Fifa lança identidade visual da Copa do Mundo Feminina 2027 em cerimônia no Rio - tmc.com.br",
-      "fonte": "tmc.com.br",
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE9rMHI0anJNMHNpU0ZhOTY3ekJmRDJqb2FBeXJnakNtbTFkb3NFcDRTNUJWdVZNZzRlSl9yT3BtY0phZjdqLVZkRXdkNGpJMVVRVkZrLUZCenpSUkxoeGlPT0ZkRy1fczVJMWFtUVFBTEJ5Zw?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Salvador intensifica preparação e reforça ações em mobilidade, turismo e estrutura para jogos da Copa Feminina 2027 na Fonte Nova - Muita Informação",
       "fonte": "Muita Informação",
       "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxNcFBiZnhKZVk3Z3pGUW5Id2w3R250WWZtZkRFS08tYUlDczJ3SWpTQUpyM3dWUDZWaFo1MU1oT2ZNTDZhWjdmWTZtOVdha0cwdWhtdDYtX3lEOGdETTNOMWZTUGt5dWVYYkctMXU3N195d0o3NmNVSzUyYVZXMHFaWUFKT2xSandEM2UyYWlCdldYZ0dSVmZPTDc4NGJBVTM1M0ZlaGcxeW5ZVUZTdHdEemtLUS1samx0Q1ZVRDJJekU4dDdjMEp2QnYtRS1LQzdhQXFXbkxXUGRfZXl3NHZvamEtczlwT19BT3oteEc1MVJ3a25qdTNjTGZJVkY?oc=5",
@@ -514,14 +514,6 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Nova geração de baianas é convocada para amistosos da Seleção Brasileira Feminina em outubro - ba.gov.br",
-      "fonte": "ba.gov.br",
-      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPR2JHMUpQcTMxLWwwV1lyVmJfeGl2dW9peExXem5fTnlCUmx0bERUUzBzby1iVXBrTXV2aXJGVjdCOWM4MEprQk5jNk1fbllEeWJNa2FlVWdDcmtUdTZJRjJTRkg5OGJwbHhFSV9LMlBDTkJlaDk2Z2dfeXBhMF9iUXVqN3JxLWdIYmUyT2ZNMzRfODZxSGhjRDA3RDZGSFhmQ3VKa3U3NGtVcnVWMmpQLUpMdU9FNzRQLVNQbGVSYks?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "Mundial Feminino de 2027 será disputado em oito cidades brasileiras - Agência Brasil",
       "fonte": "Agência Brasil",
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxObjB1OTB1aFNOQ1haUC1USV9OVWFjMXZhbXA3UHh0S1I1dy1DZ2djQk0wdjJkYlNITkozR2pWdWVmXzhWN2VYSmtDblhUemZSY1hpZWhGQTlRWWFGdXFobnhKU0RDbjBMVGt1c09vbDljV2lNS0dmTk9qdy0zQ0pWQ0hnZ3lzZjl5TnU1WjJqeGhOemNmVVpkSHIxQjBFa0plQ2RiR0czMU1VNnlIdVRrUkhBMFVpR3R6VkdoUEhHdmN0bkE?oc=5",
@@ -543,14 +535,6 @@
       "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxNQjRiQ0F5TV82U3R2VXl1VkxMd0RjWVI1SnpNSHdXLS1KWEdUa09rNzBEcHYtMW5zTkUzSzVZQXV2aXJOc0JxbS11eEJSNkZmcDBtSWZETmRfWnJYV2VSU3RmUVVsdE9FZGJoUlVZQmxWQ29vaFVrN0p1M3c1ZGJkc0FJV1Y0aWJXMG1xSmo1dU9BT2hwd3dhbzBNUmxaRmtGOXVOdmF3bEZmdjl5TU5Nd05FTjE4UjE2YWZTVThucjkwcVhwZEplaVJzYXljcm9Nd2lzZkdrd1Vsa2dC?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (219d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Concluída missão técnica aos Estados Unidos para preparação da Copa Feminina 2027 - Prefeitura de Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
-      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOaTZvWlhRVUY2VW9nXzZpaEtaWHBlVk00dndvWl9Yb1ZvYkFfaXFTSDNxM3BlSWxyYU9Ia2paX204bkRKcHBIN1lUeDVhMHlmbzktcjFDek1IVTVzUGVNTzR6cEdwTE5qRUlxVzU1X2dubjNZT3JDenJVRmtuOXUwT0ZKUmZGcl9UX1lKVDJJZzFmZWt5bU5raF91SU9SeS0wdmw0MVFFdjhBVnQ3MERUa0tXWFdaSlI2b0hXN3VMTQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (114d)."
     },
     {
       "origem": "google-news-trusted-source",
