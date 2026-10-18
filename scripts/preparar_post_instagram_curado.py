@@ -380,6 +380,10 @@ def art_title_pt(kind,title,summary='',organization='',category=''):
     direct={
         'ticketing general public customer care manager':
             'Gerente de atendimento ao público na operação de ingressos',
+        'venue power and containment manager – 7 host cities (brazil)':
+            'FIFA abre vaga de gestão de energia para sete cidades-sede',
+        'venue power and containment manager - 7 host cities (brazil)':
+            'FIFA abre vaga de gestão de energia para sete cidades-sede',
     }
     mapped=direct.get(original.casefold())
     if mapped:
@@ -444,6 +448,11 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
             summary=clean(x.get('Resumo'))
             art_title=art_title_pt('noticia',title,summary=summary)
             instagram_title=art_title if art_title != title else title
+            # A trava final analisa o título da legenda, que pode ter sido traduzido.
+            # Evita selecionar repetidamente uma tradução já publicada.
+            if any(duplicate_title(instagram_title,old) for old in prior_titles):
+                print('instagram_semantic_candidate_skipped=noticia:'+key)
+                continue
             search_context=' '.join(filter(None,[title,clean(x.get('Tema')),clean(x.get('CidadeUF')),clean(x.get('Veiculo'))]))
             out.append(dict(key=key,title=title,art_title=art_title,date=d,type='noticia',subtitle=subtitle,search_context=search_context,visual_places=clean(x.get('CidadeUF')),display_date=d.strftime('%d/%m/%Y'),display_place=clean(x.get('CidadeUF')),caption=f"📰 {instagram_title}\n\n{summary}\n\nFonte: {clean(x.get('Veiculo'))}\n\n#RadarBrasil2027 #MundialFeminino2027 #FutebolFeminino\n\nSaiba mais pelo link da Bio"))
     for x in opportunities:
@@ -471,6 +480,11 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
         summary=clean(x.get('Resumo'))
         art_title=art_title_pt('oportunidade',title,summary=summary,organization=organization,category=category)
         instagram_title=art_title if art_title != title else title
+        # O original em inglês pode ser distinto, mas sua tradução genérica não.
+        # Aplica o mesmo critério semântico do publicador antes de gerar a arte.
+        if any(duplicate_title(instagram_title,old) for old in prior_titles):
+            print('instagram_semantic_candidate_skipped=oportunidade:'+key)
+            continue
         search_context=' '.join(filter(None,[title,category,organization,modality,reach]))
         out.append(dict(
             key=key,title=title,art_title=art_title,date=discovered,type='oportunidade',subtitle=subtitle,
