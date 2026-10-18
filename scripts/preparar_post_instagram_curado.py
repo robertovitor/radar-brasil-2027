@@ -433,6 +433,9 @@ def art_title_pt(kind,title,summary='',organization='',category=''):
         return 'Notícia sobre a Copa Feminina 2027'
     return 'Radar Brasil 2027'
 
+# Notícias arquivadas continuam no site, mas não são novidade para o Instagram.
+NEWS_MAX_AGE_DAYS = 7
+
 def candidates(events,news,opportunities,published,pending,prior_titles=()):
     out=[]
     today_brt=dt.datetime.now(ZoneInfo('America/Sao_Paulo')).date()
@@ -453,6 +456,9 @@ def candidates(events,news,opportunities,published,pending,prior_titles=()):
         stale_date,stale_reason=stale_operational_date('noticia',x,today_brt,d)
         if stale_date:
             print('instagram_stale_blocked=noticia:'+key+':'+stale_date.isoformat()+':'+stale_reason)
+            continue
+        if d and (today_brt-d).days > NEWS_MAX_AGE_DAYS:
+            print('instagram_stale_blocked=noticia:'+key+':'+d.isoformat()+':news_older_than_'+str(NEWS_MAX_AGE_DAYS)+'d')
             continue
         if title and d and d<=today_brt and key not in published and not base(x) and radar_content_ok(x) and not any(duplicate_title(title,old) for old in prior_titles):
             subtitle=(clean(x.get('Veiculo')) or 'Radar Brasil 2027')+' • '+d.strftime('%d/%m/%Y')
