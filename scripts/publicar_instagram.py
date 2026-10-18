@@ -16,6 +16,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import unicodedata
+from zoneinfo import ZoneInfo
 
 GRAPH_VERSION = os.getenv("INSTAGRAM_GRAPH_VERSION", "v25.0")
 FACEBOOK_GRAPH_ROOT = f"https://graph.facebook.com/{GRAPH_VERSION}"
@@ -230,6 +231,45 @@ def guard_semantic_duplicate(post: dict, published: list[dict]) -> None:
             raise SemanticDuplicateError(f"Duplicidade semântica bloqueada: '{current}' repete a pauta '{old_title}'.")
 
 
+# Segurança editorial sem chamadas ao Airtable/Meta: vale também para posts já enfileirados.
+NEWS_MAX_AGE_DAYS = 7
+
+
+def guard_news_freshness(post: dict) -> None:
+    if str(post.get("source_type") or "").casefold() != "noticia":
+        return
+
+    key = stable_key(post)
+    raw_date = post.get("source_date") or post.get("publication_date") or post.get("data_publicacao")
+    if not raw_date:
+        # Arquivos antigos da fila ainda não carregam source_date; recupera a
+        # data da notícia pelo identificador, somente lendo o JSON local.
+        try:
+            rows = load_json(pathlib.Path("noticias.json"), [])
+        except (OSError, json.JSONDecodeError) as exc:
+            raise SemanticDuplicateError(f"Notícia sem data verificável no acervo local: {key}") from exc
+        for item in rows if isinstance(rows, list) else []:
+            if not isinstance(item, dict):
+                continue
+            source_key = "instagram:noticia:" + str(item.get("Link") or item.get("Titulo") or "").strip().casefold()
+            if source_key == key:
+                raw_date = item.get("Data")
+                break
+
+    try:
+        dated = dt.date.fromisoformat(str(raw_date or "").strip()[:10])
+    except ValueError:
+        dated = None
+    if dated is None:
+        raise SemanticDuplicateError(f"Notícia sem data de publicação verificável: {key}")
+    today = dt.datetime.now(ZoneInfo("America/Sao_Paulo")).date()
+    age_days = (today - dated).days
+    if age_days < 0 or age_days > NEWS_MAX_AGE_DAYS:
+        raise SemanticDuplicateError(
+            f"Notícia fora da janela editorial ({age_days} dia(s); limite de {NEWS_MAX_AGE_DAYS}): {key}"
+        )
+
+
 def validate_post(post: dict, require_approval: bool) -> None:
     missing = [field for field in ("image_url", "caption") if not str(post.get(field, "")).strip()]
     if missing:
@@ -240,6 +280,7 @@ def validate_post(post: dict, require_approval: bool) -> None:
         raise InstagramError("A legenda excede 2.200 caracteres.")
     if require_approval and post.get("approved") is not True:
         raise InstagramError("Post bloqueado: defina approved como true após revisão editorial.")
+    guard_news_freshness(post)
     if str(post.get("source_type") or "").casefold() == "oportunidade":
         if is_english_opportunity_headline(post_title(post)) or is_english_opportunity_headline(post.get("art_title") or ""):
             raise InstagramError("Oportunidade bloqueada: título da legenda ou da arte ainda contém inglês. Traduza antes de publicar.")
