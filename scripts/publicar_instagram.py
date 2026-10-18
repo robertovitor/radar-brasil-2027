@@ -176,6 +176,23 @@ def post_title(post: dict) -> str:
     return re.sub(r"^[^\wÀ-ÿ]+", "", caption.splitlines()[0]).strip() if caption else ""
 
 
+# Trava final, independente da fonte (foto, arte própria ou lote manual).
+# Examina apenas o título, não os nomes oficiais nem o link da fonte.
+ENGLISH_OPPORTUNITY_SPANS = re.compile(
+    r'\b(?:talent\s+pool|people\s+with\s+disabilities|host\s+cities|'
+    r'manager|coordinator|specialist|analyst|officer|director|'
+    r'ticketing|workforce|recruitment|reporting|business\s+intelligence|'
+    r'customer\s+care|warehouse|distribution|uniforms|'
+    r'planning|readiness|volunteer\s+operations|'
+    r'accounts\s+payable|digital\s+product|hospitality\s+operations)\b',
+    re.IGNORECASE,
+)
+
+
+def is_english_opportunity_headline(value: str) -> bool:
+    return bool(ENGLISH_OPPORTUNITY_SPANS.search(normalize_text(value)))
+
+
 def title_tokens(value: str) -> set[str]:
     return {token[:7] for token in re.findall(r"[a-z0-9]+", normalize_text(value)) if len(token) >= 3 and token not in DEDUP_IGNORED}
 
@@ -223,6 +240,9 @@ def validate_post(post: dict, require_approval: bool) -> None:
         raise InstagramError("A legenda excede 2.200 caracteres.")
     if require_approval and post.get("approved") is not True:
         raise InstagramError("Post bloqueado: defina approved como true após revisão editorial.")
+    if str(post.get("source_type") or "").casefold() == "oportunidade":
+        if is_english_opportunity_headline(post_title(post)) or is_english_opportunity_headline(post.get("art_title") or ""):
+            raise InstagramError("Oportunidade bloqueada: título da legenda ou da arte ainda contém inglês. Traduza antes de publicar.")
 
 
 def wait_until_ready(container_id: str, token: str, graph_root: str) -> None:
