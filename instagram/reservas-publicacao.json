@@ -105,6 +105,15 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:evento:evt-20261019-cristiane-90min-fe26",
+      "post_file": "instagram/fila/automatica/instagram-evento-evt-20261019-cristiane-90min-fe26-386ca3fa95.json",
+      "reserved_at": "2026-10-19T10:26:15.358363+00:00",
+      "last_attempt_at": "2026-10-19T10:26:15.358363+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "visual_mode": "radar_event_text_art"
     }
   ]
 }
