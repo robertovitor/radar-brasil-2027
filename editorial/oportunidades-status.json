@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-20T14:35:36-03:00",
-  "fim": "2026-10-20T14:38:24-03:00",
+  "inicio": "2026-10-20T17:56:06-03:00",
+  "fim": "2026-10-20T17:57:52-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -209,7 +209,7 @@
   "oportunidades_validas_na_execucao": 56,
   "adicionadas": 1,
   "atualizadas": 3,
-  "total_arquivo": 70,
+  "total_arquivo": 71,
   "erros": [
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",

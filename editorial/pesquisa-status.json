@@ -1,21 +1,29 @@
 {
-  "cycle_id": "20261020-14",
-  "started_at": "2026-10-20T14:33:25-03:00",
-  "completed_at": "2026-10-20T14:35:35-03:00",
+  "cycle_id": "20261020-17",
+  "started_at": "2026-10-20T17:54:15-03:00",
+  "completed_at": "2026-10-20T17:56:05-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 76,
-  "aprovados_novos": 1,
+  "candidatos_publicos": 78,
+  "aprovados_novos": 2,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 75,
+  "rejeitados": 76,
   "duplicados": 0,
-  "inbox_itens_adicionados": 1,
+  "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "auditoria": [
+    {
+      "origem": "google-news",
+      "titulo": "Copa do Mundo Feminina 2027: Rabat recebe seis seleções para torneio de repescagem rumo ao Brasil - Jornal Grande Bahia",
+      "fonte": "Jornal Grande Bahia",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQNzhMT2xRTkNsaUtYYVQyRTZ2VHB0QmhYMVlkalljbllqUGdWbVFpQ1pGYXQxdllpa3prQ0VMTWJ1VEJpMU55YXJlRTlwNU0wZE1nT1lJQ2RDT01kYWN4TGhkSmpselh5ejRDeDA2R1FFSDRTWWkwWmNaNWJPSzVPYWxMUjdiU3ZJVXM2ZjFzak95bngySkVkNm5jQXY1d0dCaEJ4dC1oOExPQ3JCWUxsS2ZTUVVTYlpKWERRN1kyaFZBdzhhQzlIZEZnakxfVmVDa01KOQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
     {
       "origem": "google-news",
       "titulo": "Copa do Mundo Feminina 2027: quando começa, onde o Brasil joga e como comprar ingressos - Transmissão Política",
@@ -26,9 +34,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Eliminatórias europeias da Copa do Mundo Feminina de 2027: veja datas, grupos e vagas em disputa - Jornal Grande Bahia",
+      "titulo": "Espanha amplia liderança no ranking mundial feminino da FIFA, enquanto Maláui sobe 49 posições - Jornal Grande Bahia",
       "fonte": "Jornal Grande Bahia",
-      "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQQ1ZtN2ZBOC1IX09abE1kblVISWR2Tk85bzdzTVUteHNWRkY0UzdIOHNDLXl2N2lRcktRZkh3OVhPMG9rS3dYY0FqdHdwNUdfQmJKRFJRR2tWMXFjbFZ5WHBxeTI2UmtOM3Job3RBaXVOakxPREtnOFJwS19LeHRTVWs5MzNKd2pDV1FjOVFBMDVKaENnelpJNGp0aEo2NEF3UE9NamZJQnd2QlVRaVg3Sk9waDRZVEhKbDJ2T1F5aFU3eGNESldkYkhsNWhwcGJPcXc?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOelVjUXl4b3FudGptZjh6OEpaeE9FN3M1TjhrWXM0dVNQN2kxWUYwYlpYNkV6TGZqSDIwdHdERkZKc3lZRW9ZQUg1T2tBZjdsQW44WnozSW11WGxRbTFJQk8xNmxGSTBaYkFobnNIa3Q0ZGNIY3BSdGs4OFRNaWNxWVJtdkZORVlvMTFRYWx0aEpBQ2dzWTFKRzNGS1F6dEJTOXhjWXlqcjN5Y3ZKTUpEVGNscllLcWRuV05HNFdaOGtGYzZPZk9iME8yd3pSVWxX?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -53,14 +61,6 @@
       "titulo": "CazéTV fecha oito patrocinadores para a Copa do Mundo Feminina de 2027 no Brasil - A Crítica de Campo Grande",
       "fonte": "A Crítica de Campo Grande",
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOSzc0QmZ0a2wyTFR0NjRFSWRkeUxnUjhPT0R4TUY1VWRzNzlGQm9wTjF1UEtMLTEwMm10aHBPQzdkUFBMdnFhRE54Q24tcEJXM0swOXZhdGlLVEk3dEhESFJhUnAwWTFLSGFHN1VwUzFyTVUwOVg4WlpJZ0RDM3RLLVJJbHZDbGRPVTBMRXVIZW51QzZUQ1hsbUgxd2RzdHlHSWNJX3pzUnRDNUZ0V05JVw?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027: conheça as 8 cidades-sede - Remessa News - Notícias Sobre Transferências Internacionais e Câmbio",
-      "fonte": "Remessa News - Notícias Sobre Transferências Internacionais e Câmbio",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNc011aFZNMWhhTlhNS1ZYNjJSMlQ0a3A5NFF0dmFTSlpGNWhCbXU2eU91Q1BabFBiSUx4ekNyRl9ZeXp3cFNTSnJVS0xIaklkdWhNUFVGNjBqaFgteWdHN3JmTld4QzVkMi0tYzhwU2ZNdHJnM3diTFNheU9xdUZTcTdFMmNpSmlwRFZJb1U1VTZwMXR60gGUAUFVX3lxTE1zTXVoVk0xaGFOWE1LVlg2MlIyVDRrcDk0UXR2YVNKWkY1aEJtdTZ5T3VDUFpsUGJJTHh6Q3JGX1l5endwU1NKclVLTEhqSWR1aE1QVUY2MGpoWC15Z0c3cmZOV3hDNWQyLS1jOHBTZk10cmczd2JMU2F5T3F1RlNxN0UyY2lKaXBEVklvVTVVNnAxdHo?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -146,17 +146,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Seleção Brasileira reúne 57,8 mil torcedores em estádios da Copa do Mundo Feminina de 2027 em Porto Alegre e Recife - Jornal Grande Bahia",
-      "fonte": "Jornal Grande Bahia",
-      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPbkhXUHladEhPdVJWbVpCcDVRV0lLaVBHTWZuWTJHNFpEajR1Qi15dVE2RGdXZEJlUWtWQldmVUxONUFsSktSTVNFQ0hfUlN5R19KYjZQcklMWkprUnlQVWZmWWpEMDZhaTJ5azAtaDl0NzNUQlU0dWhnczhEV2Roa3JCWDgtb0haNUt2R3lnTTVzelBud1JaRmp2YkZCRzdVazJSNEppNzc5dlZNalBxRFk0X1hMdkFibGNIdlBOcE0xaUt0VTc4MUp0X3E5Z04yTHYyYkVPRTNzNTh5WmZTMHV5UnZCYjJzSEZnbw?oc=5",
+      "titulo": "Em preparação para 2027, Seleção Brasileira Feminina leva 57,8 mil torcedores a estádios da Copa separados por 3 mil km - AJN1",
+      "fonte": "AJN1",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQUWxlandhRTJoRFlOSmJIcDNOYmtTZWZXTFJ6ZngxNlVxWmI0ZGhVZ3lVb0ZRSV9FaE9qbWw1OWJwMUpSX3lJMWVDZGM3M0h4cGkxNVp2Yi1BVGVXdC1UV01ITzhyN2FhbVVvVFhlR0FXcEFwN2R2R2hDX05sMEtfMWs2aFNYVTc5V2hwYjNVTWY2NlY4aUpNRGRYNEJSMlE4VGR1TjRienFyeE1CT3BrRFY2MHBXa2pOMlFvTlZ0R3dXb0FVcVRxVk8xUFN0Q29NMTBBZg?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
     {
       "origem": "google-news",
-      "titulo": "Em preparação para 2027, Seleção Brasileira Feminina leva 57,8 mil torcedores a estádios da Copa separados por 3 mil km - AJN1",
-      "fonte": "AJN1",
-      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQUWxlandhRTJoRFlOSmJIcDNOYmtTZWZXTFJ6ZngxNlVxWmI0ZGhVZ3lVb0ZRSV9FaE9qbWw1OWJwMUpSX3lJMWVDZGM3M0h4cGkxNVp2Yi1BVGVXdC1UV01ITzhyN2FhbVVvVFhlR0FXcEFwN2R2R2hDX05sMEtfMWs2aFNYVTc5V2hwYjNVTWY2NlY4aUpNRGRYNEJSMlE4VGR1TjRienFyeE1CT3BrRFY2MHBXa2pOMlFvTlZ0R3dXb0FVcVRxVk8xUFN0Q29NMTBBZg?oc=5",
+      "titulo": "Seleção Brasileira reúne 57,8 mil torcedores em estádios da Copa do Mundo Feminina de 2027 em Porto Alegre e Recife - Jornal Grande Bahia",
+      "fonte": "Jornal Grande Bahia",
+      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPbkhXUHladEhPdVJWbVpCcDVRV0lLaVBHTWZuWTJHNFpEajR1Qi15dVE2RGdXZEJlUWtWQldmVUxONUFsSktSTVNFQ0hfUlN5R19KYjZQcklMWkprUnlQVWZmWWpEMDZhaTJ5azAtaDl0NzNUQlU0dWhnczhEV2Roa3JCWDgtb0haNUt2R3lnTTVzelBud1JaRmp2YkZCRzdVazJSNEppNzc5dlZNalBxRFk0X1hMdkFibGNIdlBOcE0xaUt0VTc4MUp0X3E5Z04yTHYyYkVPRTNzNTh5WmZTMHV5UnZCYjJzSEZnbw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -197,6 +197,14 @@
       "titulo": "Brasília entra em contagem regressiva para a Copa do Mundo feminina de 2027 - Brasil de Fato",
       "fonte": "Brasil de Fato",
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQUlJndVQ0RlB3SXdIcnM1Y0Jjb2hUcG45WlR3Nm1aZTlESlB1R1doSHB2WGJBTXVxRUdxZnNmRjUzMjVrQ3R0ZHdETVI3d2dSM2JncU1VZ1g2cDFvRXR0ZVdBaEpDa1ZYUzBDMjRiWEtQMHhjcHdXUWttaFNocnNTQzJnNmRDc2dFU3pnVnZ4dnFkdkN5N2l2SEcwSWwwOTV1TGNqcGZINzZ0Ql8xdU1WdUdub1NLWUtIUTFv?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa do Mundo Feminina 2027: conheça as 8 cidades-sede - Remessa News - Notícias Sobre Transferências Internacionais e Câmbio",
+      "fonte": "Remessa News - Notícias Sobre Transferências Internacionais e Câmbio",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNc011aFZNMWhhTlhNS1ZYNjJSMlQ0a3A5NFF0dmFTSlpGNWhCbXU2eU91Q1BabFBiSUx4ekNyRl9ZeXp3cFNTSnJVS0xIaklkdWhNUFVGNjBqaFgteWdHN3JmTld4QzVkMi0tYzhwU2ZNdHJnM3diTFNheU9xdUZTcTdFMmNpSmlwRFZJb1U1VTZwMXR60gGUAUFVX3lxTE1zTXVoVk0xaGFOWE1LVlg2MlIyVDRrcDk0UXR2YVNKWkY1aEJtdTZ5T3VDUFpsUGJJTHh6Q3JGX1l5endwU1NKclVLTEhqSWR1aE1QVUY2MGpoWC15Z0c3cmZOV3hDNWQyLS1jOHBTZk10cmczd2JMU2F5T3F1RlNxN0UyY2lKaXBEVklvVTVVNnAxdHo?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -293,14 +301,6 @@
       "titulo": "Cidades-sede da Copa do Mundo Feminina 2027 oferecem roteiros turísticos - Correio Braziliense",
       "fonte": "Correio Braziliense",
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOejIxX2pnMWkwRk9kWUFCYURFcEVaNVVOVGZxWTlTai1pTi0tNXdUb3QwYUNyNHo2c3Q0RkV0bFp1MEV1UW9BY01FM0ZzaWxqcU40VEhadFZldXlWeVlCVy0tUkphODF2S1VIemd3RldEQWc1RV9yYmFsRXdYbnpFNUh6ZmlmVVVBQV9lTHYtRndRTHNGZklEclJQTDRRemxuVXRTUHFvSGM2WXVBemtvaDdaeUNoTXZweUxSMENWYzBXMnVUU0E?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Copa Feminina de 2027 deve injetar R$ 8,8 bi no Brasil - Jornal Extra SC",
-      "fonte": "Jornal Extra SC",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNU3lpWktPTE1mWnlpek9kLTN6cURKWjNPR3BNcTNHcFFJZkF6QnRIanN5Z0ZlQ1Ntd0Q2S3BCMWxWUjVxMVZ0dlNGNGlYS0hvRDNZeU1KZk5jcWNyYmFfcTJIM0U2V09Fd3ZWQTNtMzhGOUZUbHhxODFGS3JrTHNhSkZqRzlqNmU3YmtGSndFM1FNV0Rp?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
     },
@@ -426,6 +426,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "MEC homologa parecer sobre calendário escolar durante a Copa do Mundo de 2027 - Quero Bolsa",
+      "fonte": "Quero Bolsa",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNeWw2RnpoUkpPcU5SRmp1dEZRTkc4UjRzdG1BbV9yMFFzS0JFclJZVDBsdTFBWWpIcXM5WkxPWDFSM3NSWmhMdF90V1RLOV9JNGNsR2psQ0JzRkhzWnBLS2lkSkdpc3piSG1hNW5BRkQ5YW5tVjBVdDVCa2NkWGJIbFlXTlI1Wm02OGdaTzRuaXZUaWlFYTBn?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Brasil permanece em sétimo em ranking da Fifa de futebol feminino - O Dia",
       "fonte": "O Dia",
       "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPMWZJVlh5RkNJUThMXzBHeG5kQllvc0JhX3A3elVJS09ZZU5HSDlYZ3JGc09Bdkc2UHRIMzFFRmRRSXQ4R1Q3MWhqeDl1RmZBM2FjUXFqaXV3RmpIb01PVF9IdGRjc2RZUmt6RUlib0dBd3ZyMngtVE14MjlvcTZIdUlkUmZEU2VoRXFFQldyVUthdmEwYzI3aWNEVEZQSUw0LXFfbU02R0J5cXVmMFVLUVNZQVF5ZGhV0gG-AUFVX3lxTE44TERNUUdCdlhyMTMyTkIwbW9XY0RGUkF2R3lkVWFhcmlIMmRseVNwS2V5QjNHdUU1eFlqRlBBYlJtc0lZcE9yc1lUaTFjY25NS04yUG9wSmQ4SGRXNUItVEFQcU5UOGIzcWpEMU1Zd0E1ZkVrQXN3NHpITGUxdGl5d0RUMUhtRkgwRDNRQWd6OFRSUkFNTENfYVZlRmYyNUQ1bkQ4RzIyMTJPblBtaWVSdzB2OWloWkpqRVVWaUE?oc=5",
@@ -447,6 +455,14 @@
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPM3NoY0M3OUFEUWV5ZHh6NWJhUzMwNTNyalUxQ2J6WEhtSGNzNTBNRzNzNWRadmFIamZvQlhHTXNPY1NsajhMTXdWYnVDNlVLdTk4MmRETU5SSkpLY0MzVkpocW5RODRuY0xGaHBxcGktQ3pEeUpyUXktQVJlMm0wN05QN3FYV3VGbTVNLUlMTS1Iek9WVlZuR2daNzBaWXBTTGRWTk01bE0xWXpZ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Resultado do Google News sem URL editorial direta validável nesta etapa."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "CazéTV, Neooh e Helloo levam Copa do Mundo Feminina 2027 para o OOH - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPSFlPb19OcGZDQVJLbGhvVDZQX18zSUoxdjZLTEdUbDRsZlp3N3pmdUw3bkQ4S0hjRDd2MndYYnJra0pwRzFCN0l1OWQ5YU5FakZ2UTl1OXh5dVJLR0JfbVVWcmJ2R3V1VjlON1VIbUR1MkJDck5kYzZyTnhOZHd2YVhXV0VTcUhfSHNvQVlmekp6cUVtUnJPSTBTVWVVTldQU2ZWc01kUHZyalVJZjBDMTJfMm55QW1BNm9BZmoxNDBUQQ?oc=5",
+      "decisao": "aprovado",
+      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
     {
       "origem": "google-news-trusted-source",
