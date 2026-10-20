@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-20T03:41:29-03:00",
-  "fim": "2026-10-20T03:43:26-03:00",
+  "inicio": "2026-10-20T09:17:23-03:00",
+  "fim": "2026-10-20T09:21:30-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -146,7 +146,8 @@
     },
     {
       "hub": "https://prefeitura.rio/esporte/",
-      "resultados": 4
+      "resultados": 0,
+      "erro": "TimeoutError:The read operation timed out"
     },
     {
       "hub": "https://womanifs.com/",
@@ -182,8 +183,7 @@
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 0,
-      "erro": "HTTPError:HTTP Error 403: Forbidden"
+      "resultados": 6
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -207,17 +207,20 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 57,
+  "oportunidades_validas_na_execucao": 54,
   "adicionadas": 0,
-  "atualizadas": 55,
+  "atualizadas": 1,
   "total_arquivo": 69,
   "erros": [
-    "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
+    "hub:https://prefeitura.rio/esporte/:TimeoutError:The read operation timed out",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/20-10-2026/19-03-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+    "page:https://prefeitura.rio/cidade/a-um-ano-da-copa-futebol-feminino-ja-e-realidade-em-projetos-da-secretaria-municipal-de-esportes:URLError:<urlopen error [Errno 104] Connection reset by peer>",
+    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>",
+    "page:https://www.cob.org.br/cultura-educacao/cursos-do-iob:TimeoutError:The read operation timed out",
+    "page:https://www.cob.org.br/cultura-educacao/cursos-do-iob?program=Programa+Esporte+Seguro&page=1:TimeoutError:The read operation timed out"
   ],
   "isolamento": {
     "noticias": "inalterado",
