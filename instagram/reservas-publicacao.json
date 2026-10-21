@@ -105,6 +105,18 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:oportunidade:opp-b16f2d8b013e",
+      "post_file": "instagram/fila/automatica/instagram-oportunidade-opp-b16f2d8b013e-8c42c5f273.json",
+      "reserved_at": "2026-10-21T04:40:17.881534+00:00",
+      "last_attempt_at": "2026-10-21T04:40:17.881534+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Nigeria_Japan_U-20_Women_2010_Fans.jpg/1920px-Nigeria_Japan_U-20_Women_2010_Fans.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "image_page_url": "https://commons.wikimedia.org/wiki/File:Nigeria_Japan_U-20_Women_2010_Fans.jpg",
+      "bank_image_id": "IMG0487",
+      "visual_mode": "opportunity_real_bank_v1"
     }
   ]
 }
