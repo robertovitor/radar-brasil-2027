@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-22T15:53:36-03:00",
-  "fim": "2026-10-22T15:55:48-03:00",
+  "inicio": "2026-10-22T19:48:50-03:00",
+  "fim": "2026-10-22T19:51:13-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -146,7 +146,7 @@
     },
     {
       "hub": "https://prefeitura.rio/esporte/",
-      "resultados": 4
+      "resultados": 0
     },
     {
       "hub": "https://womanifs.com/",
@@ -197,7 +197,7 @@
     {
       "hub": "https://cepe.usp.br/courses/",
       "resultados": 0,
-      "erro": "HTTPError:HTTP Error 500: Internal Server Error"
+      "erro": "URLError:<urlopen error timed out>"
     },
     {
       "hub": "https://www.guiafutfem.com.br/eventos/22-10-2026/21-03-2027",
@@ -206,14 +206,14 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 56,
+  "oportunidades_validas_na_execucao": 55,
   "adicionadas": 0,
   "atualizadas": 5,
   "total_arquivo": 75,
   "erros": [
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
-    "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
+    "hub:https://cepe.usp.br/courses/:URLError:<urlopen error timed out>",
     "hub:https://www.guiafutfem.com.br/eventos/22-10-2026/21-03-2027:HTTPError:HTTP Error 403: Forbidden",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
