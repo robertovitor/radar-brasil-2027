@@ -105,6 +105,18 @@
       "requires_strict_reconciliation": true,
       "uncertain_after_meta": true,
       "blocked_until": "2026-09-25T08:44:53.921680+00:00"
+    },
+    {
+      "key": "instagram:noticia:https://news.google.com/rss/articles/cbmiiajbvv95cuxqqwpgcxbcywtwvthtd0xaqxn2twdglwtnc1nweur3yvp5a0faa2vmuvfuwwn6awm5z0jgludlmkv1v0ltuwfvwehjvxnfb1zcste0ndvkawrwejrpaezpnvv5rxnqrmrdt3dmoednmmjatxrzy3dccdzkbvfltg9umjfdy3fxvup5tjvuwmvkvktgees5edbjnwtvd2rmb2pbam5iqxfsumw2q3nxdzjwn05dr3rsrgm0snfmsg9ey2d4dtnzlwc0vmtju2twewlcbfizeunusk9wt29es2c2n1pnbv9otthnmzlia1jszlnhowllcxpmcg1wq1doadhxmee0mwcwvmu?oc=5",
+      "post_file": "instagram/fila/automatica/9wt29es2c2n1pnbv9otthnmzlia1jszlnhowllcxpmcg1wq1doadhxmee0mwcwvmu-oc-5-3272812bd1.json",
+      "reserved_at": "2026-10-22T01:18:58.216295+00:00",
+      "last_attempt_at": "2026-10-22T01:18:58.216295+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/US_trophy_presentation_USA_vs_Japan_2015_WWC_Final_2015-07-05%2819506667982%29.jpg/1920px-US_trophy_presentation_USA_vs_Japan_2015_WWC_Final_2015-07-05%2819506667982%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "image_page_url": "https://commons.wikimedia.org/wiki/File:US_trophy_presentation_USA_vs_Japan_2015_WWC_Final_2015-07-05(19506667982).jpg",
+      "bank_image_id": "IMG0423",
+      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
