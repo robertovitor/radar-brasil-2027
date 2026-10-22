@@ -1211,6 +1211,71 @@ def public_research_v56(keys):
 
 pe.public_research = public_research_v56
 
+# Gate editorial final: termos genéricos (Brasil, Mundial, 2027, FIFA)
+# não comprovam vínculo com FUTEBOL feminino. Funciona offline, sem Airtable
+# ou novas chamadas de rede, e também cobre o fallback do Google News.
+_WOMENS_FOOTBALL_SIGNALS = (
+    'futebol feminino', 'futebol de mulheres', 'selecao feminina',
+    'selecao brasileira feminina', 'copa feminina', 'mundial feminino',
+    'copa do mundo feminina', 'women s world cup', 'womens world cup',
+    'women world cup', 'women s football', 'womens football',
+    'women s soccer', 'womens soccer', 'fifa women',
+    'brasileirao feminino', 'libertadores feminina', 'futebol de mulheres',
+)
+# Modalidades alheias com sinal explícito são rejeitadas apenas quando
+# o título NÃO traz contexto de futebol feminino (matérias comparativas).
+_OTHER_SPORTS_EXPLICIT = (
+    'ginastica', 'natacao', 'basquete', 'basketball', 'volei',
+    'voleibol', 'handebol', 'futsal', 'ciclismo', 'atletismo',
+    'judo', 'tenis de mesa', 'automobilismo', 'formula 1',
+)
+
+def _topic_normalize(value):
+    import unicodedata
+    value = unicodedata.normalize('NFKD', str(value or '').casefold())
+    return re.sub(r'\s+', ' ', ''.join(c for c in value if not unicodedata.combining(c)))
+
+def _has_womens_football_evidence(value):
+    value = _topic_normalize(value)
+    return any(signal in value for signal in _WOMENS_FOOTBALL_SIGNALS)
+
+def _editorial_scope_ok(item):
+    title = _topic_normalize(item.get('Titulo') or '')
+    if _has_womens_football_evidence(title):
+        return True
+    if any(re.search(r'(?<!\w)' + re.escape(term) + r'(?!\w)', title)
+           for term in _OTHER_SPORTS_EXPLICIT):
+        return False
+    # Resumos do fallback Google News podem conter somente a origem da fonte.
+    # Não transformar essa descrição técnica em evidência de relevância.
+    summary = str(item.get('Resumo') or '')
+    if ('descoberta via google news' in summary.casefold()
+            and 'url editorial direta nao resolvida' in _topic_normalize(summary)):
+        return False
+    return _has_womens_football_evidence(summary)
+
+_previous_public_research_scope = pe.public_research
+
+def public_research_with_scope(keys):
+    count, approved, rejected, duplicates, audit = _previous_public_research_scope(keys)
+    eligible = []
+    for item in approved:
+        if _editorial_scope_ok(item):
+            eligible.append(item)
+            continue
+        rejected += 1
+        title = str(item.get('Titulo') or '')
+        audit.append({
+            'origem': 'scope-gate-2026-10',
+            'titulo': title, 'fonte': item.get('Veiculo',''),
+            'url': item.get('Link',''), 'decisao': 'rejeitado',
+            'motivo': 'Sem evidência verificável de futebol feminino no título ou resumo editorial.',
+        })
+        print(f'editorial_scope_blocked={title[:180]}')
+    return count, eligible, rejected, duplicates, audit
+
+pe.public_research = public_research_with_scope
+
 # Mantido por compatibilidade; a persistência final abaixo não depende deste hook.
 def dump_v55(path,obj):
     if path==pe.INBOX and isinstance(obj,dict):
