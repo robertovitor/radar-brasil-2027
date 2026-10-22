@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-21T19:49:22-03:00",
-  "fim": "2026-10-21T19:51:31-03:00",
+  "inicio": "2026-10-21T22:55:48-03:00",
+  "fim": "2026-10-21T22:57:34-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -187,7 +187,7 @@
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
       "resultados": 0,
-      "erro": "HTTPError:HTTP Error 404: Not Found"
+      "erro": "HTTPError:HTTP Error 503: Service Unavailable"
     },
     {
       "hub": "https://www.futebolpaulista.com.br/Noticias",
@@ -211,7 +211,7 @@
   "atualizadas": 5,
   "total_arquivo": 75,
   "erros": [
-    "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
+    "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 503: Service Unavailable",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/21-10-2026/20-03-2027:HTTPError:HTTP Error 403: Forbidden",
