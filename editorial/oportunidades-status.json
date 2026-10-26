@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-26T05:10:46-03:00",
-  "fim": "2026-10-26T05:12:34-03:00",
+  "inicio": "2026-10-26T12:31:51-03:00",
+  "fim": "2026-10-26T12:33:57-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -174,8 +174,7 @@
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 0,
-      "erro": "TimeoutError:The read operation timed out"
+      "resultados": 3
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
@@ -209,10 +208,9 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 55,
   "adicionadas": 0,
-  "atualizadas": 54,
+  "atualizadas": 5,
   "total_arquivo": 77,
   "erros": [
-    "hub:https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer:TimeoutError:The read operation timed out",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
