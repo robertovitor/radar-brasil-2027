@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-27T16:02:52-03:00",
-  "fim": "2026-10-27T16:04:46-03:00",
+  "inicio": "2026-10-27T20:16:46-03:00",
+  "fim": "2026-10-27T20:18:41-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -112,7 +112,7 @@
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 38
+      "resultados": 39
     }
   ],
   "hubs": [
@@ -207,10 +207,10 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 57,
-  "adicionadas": 1,
-  "atualizadas": 6,
-  "total_arquivo": 82,
+  "oportunidades_validas_na_execucao": 58,
+  "adicionadas": 2,
+  "atualizadas": 5,
+  "total_arquivo": 84,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
