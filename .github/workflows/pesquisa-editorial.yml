@@ -1,6 +1,6 @@
 name: Pesquisa editorial Radar
 
-# 2026-10-09: pesquisa pública reativada; sugestões e alertas Airtable suspensos.
+# 2026-10-28: pesquisa pública horária preservada; retomada conservadora das sugestões em novembro.
 on:
   schedule:
     - cron: "45 * * * *"
@@ -47,9 +47,30 @@ jobs:
           echo "trigger_event=${{ github.event_name }}"
           echo "triggered_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
-      - name: Executar pesquisa pública sem Airtable
+      - name: Definir retomada controlada das sugestões Airtable
+        id: airtable_mode
+        shell: bash
+        run: |
+          # 04:00 UTC = 01:00 em Brasília (UTC-3). Uma única janela diária.
+          # Não consultar Airtable antes de 01/11/2026, quando o limite mensal pode reiniciar.
+          stamp="$(date -u +%Y%m%d%H)"
+          if [ "$stamp" -ge 2026110104 ] && [ "$(date -u +%H)" = "04" ]; then
+            echo 'public_only=0' >> "$GITHUB_OUTPUT"
+            echo 'airtable_allow=1' >> "$GITHUB_OUTPUT"
+            echo 'suggestions_window=enabled_once_daily' 
+          else
+            echo 'public_only=1' >> "$GITHUB_OUTPUT"
+            echo 'airtable_allow=0' >> "$GITHUB_OUTPUT"
+            echo 'suggestions_window=public_only' 
+          fi
+
+      - name: Executar pesquisa pública e sugestões na janela controlada
         id: pesquisa
         shell: bash
+        env:
+          RADAR_PUBLIC_ONLY: ${{ steps.airtable_mode.outputs.public_only }}
+          RADAR_AIRTABLE_ALLOW: ${{ steps.airtable_mode.outputs.airtable_allow }}
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
         run: |
           set +e
           python scripts/pesquisa_editorial_compat_v5_5.py
