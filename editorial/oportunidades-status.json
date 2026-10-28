@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-27T20:16:46-03:00",
-  "fim": "2026-10-27T20:18:41-03:00",
+  "inicio": "2026-10-27T23:37:59-03:00",
+  "fim": "2026-10-27T23:40:07-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -30,34 +30,34 @@
     },
     {
       "query": "\"futebol feminino\" curso inscrições Brasil 2026 2027",
-      "resultados": 0,
+      "resultados": 1,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": 1
       }
     },
     {
       "query": "\"futebol feminino\" summit congresso workshop inscrições Brasil 2026 2027",
-      "resultados": 0,
+      "resultados": 1,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": 1
       }
     },
     {
       "query": "site:sympla.com.br \"futebol feminino\" curso OR workshop OR congresso OR summit 2026 2027",
-      "resultados": 0,
+      "resultados": 1,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": 1
       }
     },
     {
       "query": "site:eventbrite.com.br \"futebol feminino\" curso OR workshop OR congresso 2026 2027",
-      "resultados": 0,
+      "resultados": 1,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": 1
       }
     },
     {
@@ -70,42 +70,42 @@
     },
     {
       "query": "site:gov.br/esporte \"futebol feminino\" inscrição OR curso OR capacitação OR edital 2026 2027",
-      "resultados": 0,
+      "resultados": 1,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": 1
       }
     },
     {
       "query": "\"futebol feminino\" inscrições \"São Paulo\" OR Fortaleza OR \"Belo Horizonte\" 2026 2027",
-      "resultados": 0,
+      "resultados": 1,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": 1
       }
     },
     {
       "query": "\"futebol feminino\" inscrições Recife OR Salvador OR \"Porto Alegre\" OR Brasília 2026 2027",
-      "resultados": 0,
+      "resultados": 1,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": 1
       }
     },
     {
       "query": "site:fferj.com.br \"futebol feminino\" inscrição OR curso OR workshop 2026 2027",
-      "resultados": 0,
+      "resultados": 1,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": 1
       }
     },
     {
       "query": "site:fpf.org.br \"futebol feminino\" inscrição OR curso OR workshop 2026 2027",
-      "resultados": 0,
+      "resultados": 1,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": 1
       }
     }
   ],
@@ -208,7 +208,7 @@
   ],
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 58,
-  "adicionadas": 2,
+  "adicionadas": 0,
   "atualizadas": 5,
   "total_arquivo": 84,
   "erros": [
