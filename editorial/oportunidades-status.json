@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-27T23:37:59-03:00",
-  "fim": "2026-10-27T23:40:07-03:00",
+  "inicio": "2026-10-28T06:02:59-03:00",
+  "fim": "2026-10-28T06:04:37-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -30,34 +30,34 @@
     },
     {
       "query": "\"futebol feminino\" curso inscrições Brasil 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     },
     {
       "query": "\"futebol feminino\" summit congresso workshop inscrições Brasil 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     },
     {
       "query": "site:sympla.com.br \"futebol feminino\" curso OR workshop OR congresso OR summit 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     },
     {
       "query": "site:eventbrite.com.br \"futebol feminino\" curso OR workshop OR congresso 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     },
     {
@@ -70,49 +70,49 @@
     },
     {
       "query": "site:gov.br/esporte \"futebol feminino\" inscrição OR curso OR capacitação OR edital 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     },
     {
       "query": "\"futebol feminino\" inscrições \"São Paulo\" OR Fortaleza OR \"Belo Horizonte\" 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     },
     {
       "query": "\"futebol feminino\" inscrições Recife OR Salvador OR \"Porto Alegre\" OR Brasília 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     },
     {
       "query": "site:fferj.com.br \"futebol feminino\" inscrição OR curso OR workshop 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     },
     {
       "query": "site:fpf.org.br \"futebol feminino\" inscrição OR curso OR workshop 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     }
   ],
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 39
+      "resultados": 37
     }
   ],
   "hubs": [
@@ -201,22 +201,22 @@
       "erro": "HTTPError:HTTP Error 500: Internal Server Error"
     },
     {
-      "hub": "https://www.guiafutfem.com.br/eventos/27-10-2026/26-03-2027",
+      "hub": "https://www.guiafutfem.com.br/eventos/28-10-2026/27-03-2027",
       "resultados": 0,
       "erro": "HTTPError:HTTP Error 403: Forbidden"
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 58,
+  "oportunidades_validas_na_execucao": 56,
   "adicionadas": 0,
-  "atualizadas": 5,
+  "atualizadas": 55,
   "total_arquivo": 84,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
-    "hub:https://www.guiafutfem.com.br/eventos/27-10-2026/26-03-2027:HTTPError:HTTP Error 403: Forbidden",
+    "hub:https://www.guiafutfem.com.br/eventos/28-10-2026/27-03-2027:HTTPError:HTTP Error 403: Forbidden",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
   ],
   "isolamento": {
