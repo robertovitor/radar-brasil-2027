@@ -104,8 +104,8 @@ jobs:
           git add editorial/inbox.json editorial/pesquisa-status.json noticias.json oportunidades.json editorial/oportunidades-status.json
 
           if git diff --cached --quiet; then
-            echo 'ERRO: pesquisa não alterou inbox, pesquisa-status.json nem resumos.'
-            exit 2
+            echo 'Pesquisa concluída sem mudanças publicáveis; não há commit a criar.'
+            exit 0
           fi
 
           git commit -m 'Atualiza resultado da pesquisa editorial nativa'
