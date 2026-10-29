@@ -1,7 +1,10 @@
-name: Importar planilha para JSON (manual)
+name: Importar planilha para JSON
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Sincronizar planilha do Radar"]
+    types: [completed]
 
 permissions:
   contents: write
@@ -12,12 +15,15 @@ concurrency:
 
 jobs:
   atualizar:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     steps:
       - name: Baixar o repositório
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
 
       - name: Preparar Python
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
@@ -35,11 +41,12 @@ jobs:
       - name: Publicar somente se houver mudança
         run: |
           if [ -z "$(git status --porcelain -- dados.json noticias.json)" ]; then
-            echo "Nenhuma alteração encontrada."
+            echo "Nenhuma alteração encontrada; site já está sincronizado."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- dados.json noticias.json
-          git commit -m "Importa dados e notícias da planilha manualmente"
-          git push
+          git commit -m "Publica dados do Radar a partir da planilha"
+          git pull --rebase origin main
+          git push origin main
