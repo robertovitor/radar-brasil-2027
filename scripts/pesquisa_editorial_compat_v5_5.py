@@ -218,6 +218,20 @@ _ADDITIONAL_TRUSTED_DOMAINS = (
     'diariodonordeste.verdesmares.com.br',
     'jc.ne10.uol.com.br',
     'mktesportivo.com',
+    # Domínios editoriais/oficiais usados pelos resultados recentes do Google News.
+    'jornalgrandebahia.com.br',
+    'embratur.com.br',
+    'olympics.com',
+    'conmebol.com',
+    'globo.com',
+    'ge.globo.com',
+    'agenciabrasil.ebc.com.br',
+    'agenciagov.ebc.com.br',
+    'lance.com.br',
+    'exame.com',
+    'veja.abril.com.br',
+    'prefeitura.poa.br',
+    'fortaleza.ce.gov.br',
 )
 pe.TRUSTED_DOMAINS = tuple(dict.fromkeys(tuple(pe.TRUSTED_DOMAINS) + _ADDITIONAL_TRUSTED_DOMAINS))
 v54.v2.SOURCE_DOMAIN_HINTS.update({
@@ -234,6 +248,22 @@ v54.v2.SOURCE_DOMAIN_HINTS.update({
     'jc': 'jc.ne10.uol.com.br',
     'jornal do commercio': 'jc.ne10.uol.com.br',
     'mkt esportivo': 'mktesportivo.com',
+    'jornal grande bahia': 'jornalgrandebahia.com.br',
+    'embratur': 'embratur.com.br',
+    'olympics': 'olympics.com',
+    'conmebol': 'conmebol.com',
+    'globo': 'globo.com',
+    'ge': 'ge.globo.com',
+    'agência brasil': 'agenciabrasil.ebc.com.br',
+    'agencia brasil': 'agenciabrasil.ebc.com.br',
+    'agência gov': 'agenciagov.ebc.com.br',
+    'agencia gov': 'agenciagov.ebc.com.br',
+    'lance!': 'lance.com.br',
+    'lance': 'lance.com.br',
+    'exame': 'exame.com',
+    'veja': 'veja.abril.com.br',
+    'prefeitura de porto alegre': 'prefeitura.poa.br',
+    'prefeitura de fortaleza': 'fortaleza.ce.gov.br',
 })
 
 _original_rss_candidates = pe.rss_candidates
@@ -1243,11 +1273,16 @@ def _editorial_scope_ok(item):
     title = _topic_normalize(item.get('Titulo') or '')
     if _has_womens_football_evidence(title):
         return True
+    # Algumas manchetes tratam do Mundial de Clubes Feminino e, na mesma pauta,
+    # dos valores/organização da Copa do Mundo de 2027. Aceita somente quando
+    # os dois sinais aparecem no próprio título; o resumo técnico do agregador
+    # nunca conta como prova temática.
+    if ('copa do mundo 2027' in title
+            and any(term in title for term in ('feminino', 'feminina', 'mulheres'))):
+        return True
     if any(re.search(r'(?<!\w)' + re.escape(term) + r'(?!\w)', title)
            for term in _OTHER_SPORTS_EXPLICIT):
         return False
-    # Resumos do fallback Google News podem conter somente a origem da fonte.
-    # Não transformar essa descrição técnica em evidência de relevância.
     summary = str(item.get('Resumo') or '')
     if ('descoberta via google news' in summary.casefold()
             and 'url editorial direta nao resolvida' in _topic_normalize(summary)):
