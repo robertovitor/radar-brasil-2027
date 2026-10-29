@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-28T18:23:25-03:00",
-  "fim": "2026-10-28T18:25:17-03:00",
+  "inicio": "2026-10-28T22:17:50-03:00",
+  "fim": "2026-10-28T22:19:32-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -112,7 +112,7 @@
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 28
+      "resultados": 27
     }
   ],
   "hubs": [
@@ -175,7 +175,8 @@
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 2
+      "resultados": 0,
+      "erro": "HTTPError:HTTP Error 500: Internal Server Error"
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
@@ -183,8 +184,7 @@
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 0,
-      "erro": "HTTPError:HTTP Error 403: Forbidden"
+      "resultados": 6
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -208,13 +208,13 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 47,
-  "adicionadas": 3,
+  "oportunidades_validas_na_execucao": 46,
+  "adicionadas": 0,
   "atualizadas": 3,
   "total_arquivo": 87,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
-    "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
+    "hub:https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://www.futebolpaulista.com.br/Noticias:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
