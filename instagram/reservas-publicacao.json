@@ -125,20 +125,20 @@
       "visual_mode": "fallback_visual"
     },
     {
-      "key": "instagram:oportunidade:opp-bcddb962a439",
-      "post_file": "instagram/fila/automatica/instagram-oportunidade-opp-bcddb962a439-7c82d8bba3.json",
-      "reserved_at": "2026-10-30T09:02:24.805068+00:00",
-      "last_attempt_at": "2026-10-30T09:02:24.805068+00:00",
-      "attempts": 8,
-      "requires_strict_reconciliation": true,
-      "visual_mode": "radar_opportunity_illustrated_bank_v1"
-    },
-    {
       "key": "instagram:oportunidade:opp-09e085cd9600",
       "post_file": "instagram/fila/automatica/instagram-oportunidade-opp-09e085cd9600-819a6b1282.json",
       "reserved_at": "2026-10-30T14:05:04.055386+00:00",
       "last_attempt_at": "2026-10-30T14:05:04.055386+00:00",
       "attempts": 14,
+      "requires_strict_reconciliation": true,
+      "visual_mode": "radar_opportunity_illustrated_bank_v1"
+    },
+    {
+      "key": "instagram:oportunidade:opp-bcddb962a439",
+      "post_file": "instagram/fila/automatica/instagram-oportunidade-opp-bcddb962a439-7c82d8bba3.json",
+      "reserved_at": "2026-10-30T15:39:15.788471+00:00",
+      "last_attempt_at": "2026-10-30T15:39:15.788471+00:00",
+      "attempts": 9,
       "requires_strict_reconciliation": true,
       "visual_mode": "radar_opportunity_illustrated_bank_v1"
     }
