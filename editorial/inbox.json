@@ -1,4 +1,64 @@
 {
-  "eventos": [],
-  "noticias": []
+  "eventos": [
+    {
+      "ID": "CBF-2026-11-29-JAPÃO",
+      "Titulo": "Brasil x Japão — amistoso da Seleção Feminina",
+      "Status": "Planejado",
+      "Data": "2026-11-29",
+      "DataBR": "29/11/2026",
+      "UF": "JP",
+      "Cidade": "Hiroshima",
+      "Categoria": "Amistoso da Seleção Feminina",
+      "Organizador": "CBF",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "Edion Peace Wing Hiroshima",
+      "Latitude": null,
+      "Longitude": null,
+      "Link": "https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/selecao-feminina-enfrenta-a-argentina-dias-10-e-13-de-outubro-em-porto-alegre-e-recife",
+      "Observacoes": "Amistoso Brasil x Japão confirmado; evento materializado independentemente da notícia.",
+      "Mes": "Nov",
+      "Ano": 2026,
+      "Regiao": "",
+      "Hora": "03:00",
+      "FusoHorario": "America/Sao_Paulo"
+    },
+    {
+      "ID": "CBF-2026-12-05-JAPÃO",
+      "Titulo": "Brasil x Japão — amistoso da Seleção Feminina",
+      "Status": "Planejado",
+      "Data": "2026-12-05",
+      "DataBR": "05/12/2026",
+      "UF": "JP",
+      "Cidade": "Okayama",
+      "Categoria": "Amistoso da Seleção Feminina",
+      "Organizador": "CBF",
+      "Publico": 0,
+      "Patrocinador": "",
+      "Local": "JFE Harenokuni Stadium",
+      "Latitude": null,
+      "Longitude": null,
+      "Link": "https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/selecao-feminina-enfrenta-a-argentina-dias-10-e-13-de-outubro-em-porto-alegre-e-recife",
+      "Observacoes": "Amistoso Brasil x Japão confirmado; evento materializado independentemente da notícia.",
+      "Mes": "Dez",
+      "Ano": 2026,
+      "Regiao": "",
+      "Hora": "03:00",
+      "FusoHorario": "America/Sao_Paulo"
+    }
+  ],
+  "noticias": [
+    {
+      "Data": "2026-10-06",
+      "DataBR": "06/10/2026",
+      "Titulo": "Nova geração de baianas é convocada para amistosos da Seleção Brasileira Feminina em outubro - ba.gov.br",
+      "Tema": "Copa Feminina 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "ba.gov.br",
+      "Link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPR2JHMUpQcTMxLWwwV1lyVmJfeGl2dW9peExXem5fTnlCUmx0bERUUzBzby1iVXBrTXV2aXJGVjdCOWM4MEprQk5jNk1fbllEeWJNa2FlVWdDcmtUdTZJRjJTRkg5OGJwbHhFSV9LMlBDTkJlaDk2Z2dfeXBhMF9iUXVqN3JxLWdIYmUyT2ZNMzRfODZxSGhjRDA3RDZGSFhmQ3VKa3U3NGtVcnVWMmpQLUpMdU9FNzRQLVNQbGVSYks?oc=5",
+      "Sentimento": "Neutro",
+      "Impacto": "Médio",
+      "Resumo": "Fonte: ba.gov.br. Descoberta via Google News; URL editorial direta não resolvida automaticamente."
+    }
+  ]
 }
