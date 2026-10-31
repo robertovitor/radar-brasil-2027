@@ -703,7 +703,7 @@ def _wifs_event_candidates():
         for m in re.finditer(r'(?is)<script\b[^>]*>(.*?)</script>',raw):
             body=html.unescape(m.group(1))
             if len(body)<=500000: units.append(pe.norm(body))
-        for m in re.finditer(r'(?is)<(?:article|section|li|div)\b[^>]*>(.*?)</(?:article|section|li|div)>,raw):
+        for m in re.finditer(r'(?is)<(?:article|section|li|div)\b[^>]*>(.*?)</(?:article|section|li|div)>',raw):
             body=html.unescape(re.sub(r'(?s)<[^>]+>',' ',m.group(1)))
             if body.strip(): units.append(pe.norm(re.sub(r'\s+',' ',body)))
         visible=re.sub(r'(?is)<(script|style)\b.*?</\1>',' ',raw)
