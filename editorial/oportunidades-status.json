@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-31T05:59:02-03:00",
-  "fim": "2026-10-31T06:00:58-03:00",
+  "inicio": "2026-10-31T11:42:41-03:00",
+  "fim": "2026-10-31T11:44:24-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -179,8 +179,7 @@
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
-      "resultados": 0,
-      "erro": "URLError:<urlopen error timed out>"
+      "resultados": 1
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
@@ -208,12 +207,11 @@
   ],
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 48,
-  "adicionadas": 1,
-  "atualizadas": 46,
+  "adicionadas": 0,
+  "atualizadas": 3,
   "total_arquivo": 89,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
-    "hub:https://jogasp.prefeitura.sp.gov.br/:URLError:<urlopen error timed out>",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/31-10-2026/30-03-2027:HTTPError:HTTP Error 403: Forbidden",
