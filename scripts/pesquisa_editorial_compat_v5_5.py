@@ -120,10 +120,10 @@ def _social_page_details(url):
 
         # Prioriza texto que contenha dados de evento, não o maior bloco JSON.
         def score(value):
-            normalized = re.sub(r'\\s+', ' ', value).casefold()
-            return (4 * bool(re.search(r'\\b(?:local|onde|endereço|auditório|teatro|sala|rua|avenida)\\b', normalized))
-                    + 3 * bool(re.search(r'\\b(?:horário|horas|às|\\d{1,2}h\\d{0,2}|\\d{1,2}:\\d{2})\\b', normalized))
-                    + 2 * bool(re.search(r'\\b(?:outubro|\\d{1,2}[/.-]\\d{1,2})\\b', normalized))
+            normalized = re.sub(r'\s+', ' ', value).casefold()
+            return (4 * bool(re.search(r'\b(?:local|onde|endereço|auditório|teatro|sala|rua|avenida)\b', normalized))
+                    + 3 * bool(re.search(r'\b(?:horário|horas|às|\d{1,2}h\d{0,2}|\d{1,2}:\d{2})\b', normalized))
+                    + 2 * bool(re.search(r'\b(?:outubro|\d{1,2}[/.-]\d{1,2})\b', normalized))
                     + bool('porto alegre' in normalized), min(len(value), 5000))
         result = max(values, key=score, default='')
         print(f'social_caption_capture=ok|sources={",".join(sorted(sources)) or "none"}'
@@ -407,7 +407,7 @@ def _trusted_search_results(query):
             timeout=10,
         )
         raw=data[:650000].decode('utf-8','ignore')
-        for m in re.finditer(r"<a\\b[^>]*href=[\\\"']([^\\\"']+)[\\\"'][^>]*>",raw,flags=re.I|re.S):
+        for m in re.finditer(r"<a\b[^>]*href=[\"']([^\"']+)[\"'][^>]*>",raw,flags=re.I|re.S):
             href=v54.v2._candidate_from_search_href(html.unescape(m.group(1)))
             add(href)
             if len(out)>=4:
@@ -649,9 +649,9 @@ def _validate_official_page(href,hint=''):
         if 'cbf.com.br' not in urllib.parse.urlparse(final_url).netloc.casefold(): return None
         raw=data[:900000].decode('utf-8','ignore'); title=v54.v2._clean_page_title(raw) or hint
         if not title or '<' in title: title=hint
-        visible=html.unescape(re.sub(r'(?is)<(script|style)\\b.*?</\\1>',' ',raw[:500000]))
+        visible=html.unescape(re.sub(r'(?is)<(script|style)\b.*?</\1>',' ',raw[:500000]))
         visible=html.unescape(re.sub(r'(?s)<[^>]+>',' ',visible))
-        visible=re.sub(r'\\s+',' ',visible).strip()
+        visible=re.sub(r'\s+',' ',visible).strip()
         combined=pe.norm(f'{title} {visible}')
         if any(x in combined for x in ('sub 17','sub17','sub 20','sub20')) and 'selecao feminina principal' not in combined: return None
         for rule in EVENT_RULES:
@@ -700,15 +700,15 @@ def _wifs_event_candidates():
         # Unidades independentes de evidência. Preservamos scripts JSON/configuração
         # porque agendas modernas frequentemente são hidratadas no cliente.
         units=[]
-        for m in re.finditer(r'(?is)<script\\b[^>]*>(.*?)</script>',raw):
+        for m in re.finditer(r'(?is)<script\b[^>]*>(.*?)</script>',raw):
             body=html.unescape(m.group(1))
             if len(body)<=500000: units.append(pe.norm(body))
-        for m in re.finditer(r'(?is)<(?:article|section|li|div)\\b[^>]*>(.*?)</(?:article|section|li|div)>',raw):
+        for m in re.finditer(r'(?is)<(?:article|section|li|div)\b[^>]*>(.*?)</(?:article|section|li|div)>,raw):
             body=html.unescape(re.sub(r'(?s)<[^>]+>',' ',m.group(1)))
-            if body.strip(): units.append(pe.norm(re.sub(r'\\s+',' ',body)))
-        visible=re.sub(r'(?is)<(script|style)\\b.*?</\\1>',' ',raw)
+            if body.strip(): units.append(pe.norm(re.sub(r'\s+',' ',body)))
+        visible=re.sub(r'(?is)<(script|style)\b.*?</\1>',' ',raw)
         visible=html.unescape(re.sub(r'(?s)<[^>]+>',' ',visible))
-        visible_text=re.sub(r'\\s+',' ',visible).strip()
+        visible_text=re.sub(r'\s+',' ',visible).strip()
         units.append(pe.norm(visible_text))
         # O HTML bruto normalizado é fallback final para atributos/data-* e blobs
         # de configuração. Não é suficiente sozinho: ainda exigimos data+cidade.
@@ -721,7 +721,7 @@ def _wifs_event_candidates():
             numeric=(d.strftime('%Y-%m-%d'),d.strftime('%d/%m/%Y'),d.strftime('%d/%m'),f'{d.day}/{d.month}')
             def has_date(u):
                 if any(pe.norm(x) in u for x in numeric): return True
-                return bool(re.search(rf'(?<!\\d)0?{d.day}(?!\\d)',u)) and any(m in u for m in months) and ('2027' in u or len(u)<800)
+                return bool(re.search(rf'(?<!\d)0?{d.day}(?!\d)',u)) and any(m in u for m in months) and ('2027' in u or len(u)<800)
             evidence=False
             for u in units:
                 if cityn not in u: continue
@@ -1043,7 +1043,7 @@ def _future_events_from_news(rss):
         if not body or not any(pe.norm(x) in nb for x in future_words): continue
         # A data precisa estar explicitamente no título OU corpo da fonte; pubDate nunca vira data do evento.
         evidence=f"{title} {body}"
-        m=re.search(r'(?<!\\d)([0-3]?\\d)[/.-]([01]?\\d)[/.-](20\\d{2})(?!\\d)',evidence)
+        m=re.search(r'(?<!\d)([0-3]?\d)[/.-]([01]?\d)[/.-](20\d{2})(?!\d)',evidence)
         date=''
         if m:
             try: date=pe.datetime(int(m.group(3)),int(m.group(2)),int(m.group(1))).date().isoformat()
@@ -1051,7 +1051,7 @@ def _future_events_from_news(rss):
         if not date:
             tn=pe.norm(evidence)
             for mon,num in months.items():
-                mm=re.search(rf'(?<!\\d)([0-3]?\\d) de {pe.norm(mon)}(?: de)? (20\\d{{2}})',tn)
+                mm=re.search(rf'(?<!\d)([0-3]?\d) de {pe.norm(mon)}(?: de)? (20\d{{2}})',tn)
                 if mm:
                     try: date=pe.datetime(int(mm.group(2)),num,int(mm.group(1))).date().isoformat()
                     except ValueError: date=''
