@@ -39,12 +39,14 @@ PUBLIC_QUERIES = [
   '"Copa Feminina 2027" patrocinador OR marca OR ativação',
   '"Copa Feminina 2027" fan zone OR fan festival OR torcida',
   '"Copa Feminina 2027" cidade-sede OR cidades-sede',
+  '"Copa Feminina 2027" workshop OR seminário OR congresso OR palestra OR feira OR encontro',
+  '"futebol feminino" evento Brasil 2026 cidades-sede',
   '"futebol feminino" 2027 Brasil FIFA'
 ]
 
 EXCLUDE_BASE = ('sub-15','sub 15','sub-17','sub 17','sub-20','sub 20','sub-23','sub 23','seleção de base','selecao de base','categoria de base')
 RELEVANT_TERMS = (
-    'copa feminina','copa do mundo feminina','mundial feminino','futebol feminino','selecao brasileira feminina',
+    'copa feminina','copa do mundo feminina','copa do mundo fifa feminina','mundial feminino','futebol feminino','selecao brasileira feminina',
     'seleção brasileira feminina','fifa 2027','2027'
 )
 
