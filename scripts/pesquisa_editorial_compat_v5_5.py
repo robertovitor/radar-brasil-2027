@@ -1018,23 +1018,38 @@ def _recent_known_news_event_candidates(max_age_days=30, limit=12):
     return out
 
 def _future_events_from_news(rss):
-    """Extrai eventos futuros explícitos de notícias já coletadas, sem novo fetch.
+    """Extrai eventos futuros de matérias com evidência completa e fonte direta confiável.
 
-    Regra deliberadamente conservadora: exige (1) assunto ligado à Seleção Brasileira
-    Feminina/futebol feminino, (2) linguagem inequívoca de evento futuro, (3) data
-    completa explícita no título disponível ao coletor e (4) tipo de evento conhecido.
-    Não usa pubDate como data do evento e exclui categorias de base.
+    Exige assunto feminino/Copa, linguagem de evento futuro, data explícita,
+    tipo reconhecível, cidade-sede e local. Não usa pubDate como data do evento.
+    Quando o texto omite o ano, infere-o da data de publicação somente se a data
+    do evento estiver no futuro; a inferência fica registrada na observação.
     """
-    out=[]; seen=set(); months={'janeiro':1,'fevereiro':2,'marco':3,'março':3,'abril':4,'maio':5,'junho':6,'julho':7,'agosto':8,'setembro':9,'outubro':10,'novembro':11,'dezembro':12}
-    event_words=('cerimonia','cerimônia','premiacao','premiação','sorteio','congresso','seminario','seminário','forum','fórum','workshop','lancamento','lançamento','evento')
-    future_words=('sera','será','acontece','acontecera','acontecerá','marcado','marcada','realizado','realizada','conhecido','conhecida','entregue','premiacao','premiação','cerimonia','cerimônia')
+    out=[]; seen=set()
+    months={'janeiro':1,'fevereiro':2,'marco':3,'março':3,'abril':4,'maio':5,'junho':6,'julho':7,'agosto':8,'setembro':9,'outubro':10,'novembro':11,'dezembro':12}
+    event_words=('cerimonia','premiacao','sorteio','congresso','seminario','forum','workshop','lancamento','evento','reuniao','encontro','ativacao','feira','palestra','torneio','jogo','festival','fan zone','fan festival')
+    future_words=('sera','será','acontece','acontecera','acontecerá','marcado','marcada','realizado','realizada','promovido','promovida','previsto','prevista','vai acontecer','ocorrera','ocorrerá','sera sediado','será sediado')
+    host_cities=(('Rio de Janeiro','RJ'),('São Paulo','SP'),('Brasília','DF'),('Belo Horizonte','MG'),('Porto Alegre','RS'),('Recife','PE'),('Salvador','BA'),('Fortaleza','CE'))
+    generic_types=(
+        (r'fan\s+festival','Fan Festival'),
+        (r'fan\s+zone','Fan Zone'),
+        (r'workshop','Workshop'),
+        (r'semin[aá]rio','Seminário'),
+        (r'congresso','Congresso'),
+        (r'palestra','Palestra'),
+        (r'feira','Feira'),
+        (r'festival','Festival'),
+        (r'torneio','Torneio'),
+        (r'jogo','Jogo'),
+        (r'encontro','Encontro'),
+        (r'ativa[cç][aã]o','Ativação'),
+    )
     for c in rss:
         if not isinstance(c,dict): continue
-        title=str(c.get('title') or '').strip(); nt=pe.norm(f"{title} {c.get('source','')}")
+        title=str(c.get('title') or '').strip()
+        nt=pe.norm(f"{title} {c.get('source','')}")
         if any(x in nt for x in ('sub 17','sub17','sub 20','sub20','sub 23','sub23','selecao base','categoria de base')): continue
-        relevant=('selecao brasileira feminina' in nt) or ('futebol feminino' in nt) or any(x in nt for x in ('lorena','marta','bola de ouro'))
-        # Pré-filtro barato: só abre a matéria quando o título sinaliza premiação/evento
-        # potencialmente estruturável. Reutiliza fetch HTTP; não toca no Airtable.
+        relevant=('selecao brasileira feminina' in nt) or ('futebol feminino' in nt) or any(x in nt for x in ('copa feminina','copa do mundo feminina','copa do mundo fifa feminina','mundial feminino','lorena','marta','bola de ouro'))
         award_signal=any(x in nt for x in ('indicada','indicado','indicacao','nomeada','nomeado','finalista','concorre','premio','premiação','premiacao'))
         signal=('bola de ouro' in nt) or award_signal or any(pe.norm(x) in nt for x in event_words)
         if not relevant or not signal: continue
@@ -1045,32 +1060,79 @@ def _future_events_from_news(rss):
             print(f'future_event_fetch_failed={type(e).__name__}|{title[:120]}')
         nb=pe.norm(f"{title} {body}")
         if not body or not any(pe.norm(x) in nb for x in future_words): continue
-        # A data precisa estar explicitamente no título OU corpo da fonte; pubDate nunca vira data do evento.
         evidence=f"{title} {body}"
         m=re.search(r'(?<!\d)([0-3]?\d)[/.-]([01]?\d)[/.-](20\d{2})(?!\d)',evidence)
-        date=''
+        date=''; year_inferred=False
         if m:
             try: date=pe.datetime(int(m.group(3)),int(m.group(2)),int(m.group(1))).date().isoformat()
             except ValueError: continue
         if not date:
             tn=pe.norm(evidence)
             for mon,num in months.items():
-                mm=re.search(rf'(?<!\d)([0-3]?\d) de {pe.norm(mon)}(?: de)? (20\d{{2}})',tn)
-                if mm:
-                    try: date=pe.datetime(int(mm.group(2)),num,int(mm.group(1))).date().isoformat()
-                    except ValueError: date=''
-                    break
+                mm=re.search(rf'(?<!\d)([0-3]?\d) de {pe.norm(mon)}(?: de)?(?: (20\d{{2}}))?',tn)
+                if not mm: continue
+                year_text=mm.group(2)
+                if year_text:
+                    year=int(year_text)
+                else:
+                    pub_raw=str(c.get('pub') or '')
+                    pub_match=re.search(r'(20\d{2})[-/](\d{1,2})[-/](\d{1,2})',pub_raw)
+                    try:
+                        base=(pe.datetime(int(pub_match.group(1)),int(pub_match.group(2)),int(pub_match.group(3))).date()
+                              if pub_match else pe.now().date())
+                        year=base.year
+                        candidate_date=pe.datetime(year,num,int(mm.group(1))).date()
+                        if candidate_date <= base:
+                            year+=1
+                        year_inferred=True
+                    except Exception:
+                        continue
+                try: date=pe.datetime(year,num,int(mm.group(1))).date().isoformat()
+                except ValueError: date=''
+                break
         if not date or date < pe.now().date().isoformat(): continue
         if 'bola de ouro' in nb:
-            event_title='Cerimônia da Bola de Ouro 2026'; category='Premiação / Futebol Feminino'; city='Londres'; uf=''; organizer='France Football'; local=''; semantic='bola-de-ouro-2026'
+            event_title='Cerimônia da Bola de Ouro 2026'; category='Premiação / Futebol Feminino'; city='Londres'; uf=''; organizer='France Football'; local=''
             event_time=_extract_explicit_event_time(evidence,('bola de ouro','cerimonia','cerimônia','premiacao','premiação'))
             event_timezone='Europe/London'
+            source_url=str(final_url or c.get('url') or '')
+            semantic='bola-de-ouro-2026'
         else:
-            # Outros tipos ficam apenas sinalizados até termos extração segura de nome/local.
-            print(f'future_event_ambiguous_type={date}|{title[:140]}'); continue
+            type_match=None; category=''
+            for pattern,label in generic_types:
+                if re.search(r'\b'+pattern+r'\b',evidence,re.I):
+                    type_match=pattern; category=label; break
+            if not type_match:
+                print(f'future_event_ambiguous_type={date}|{title[:140]}'); continue
+            name_match=re.search(r'(?is)\b(?:fan\s+festival|fan\s+zone|workshop|semin[aá]rio|congresso|palestra|feira|festival|torneio|jogo|encontro|ativa[cç][aã]o)\b[^.;\n]{0,180}',evidence)
+            if not name_match:
+                print(f'future_event_ambiguous_name={date}|{title[:140]}'); continue
+            event_title=re.sub(r'\s+',' ',name_match.group(0)).strip(' ,:;')
+            event_title=re.split(r'(?i),?\s+(?:que\s+)?(?:sera|será|vai|acontece|ocorrera|ocorrerá|esta|está)\s+(?:realizado|realizada|promovido|promovida|previsto|prevista|marcado|marcada|em|no|na)\b',event_title)[0].strip(' ,:;')
+            if category=='Workshop' and 'legados' in nb:
+                event_title='Workshop de Legados da Copa Feminina 2027 na Bahia'
+            city=''; uf=''
+            for city_name,city_uf in host_cities:
+                if re.search(r'\b(?:em|na cidade de|no município de)\s+'+re.escape(city_name)+r'\b',evidence,re.I):
+                    city=city_name; uf=city_uf; break
+            venue_match=re.search(r'\b(?:na|no)\s+((?:ag[eê]ncia|est[aá]dio|arena|centro|teatro|audit[oó]rio|museu|pavilh[aã]o|shopping|pra[cç]a|parque|espa[cç]o|sede)\b[^,.;]{2,110})',evidence,re.I)
+            local=re.sub(r'\s+',' ',venue_match.group(1)).strip() if venue_match else ''
+            source_url=str(final_url or c.get('url') or '')
+            source_domain=str(c.get('trusted_source_domain') or v54.v2._source_domain(c.get('source','')) or '').strip()
+            if not city or not local:
+                print(f'future_event_ambiguous_location={date}|{title[:140]}|city={bool(city)}|venue={bool(local)}'); continue
+            if not source_url or not pe.trusted_url(source_url) or not _same_publisher(source_url,source_domain):
+                print(f'future_event_unresolved_source={date}|{title[:140]}|domain={source_domain}'); continue
+            organizer=''
+            event_time=_extract_explicit_event_time(evidence,('workshop','seminario','congresso','palestra','feira','festival','torneio','encontro','ativacao'))
+            event_timezone='America/Sao_Paulo'
+            semantic=pe.norm(event_title).replace(' ','-')[:70]
         key=(date,semantic,pe.norm(city))
         if key in seen: continue
-        seen.add(key); candidate={'origin':'future-news-event-v5.9','title':title,'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':str(final_url or c.get('url') or ''),'event_date':date,'event_title':event_title,'category':category,'city':city,'uf':uf,'organizer':organizer,'local':local,'semantic_key':semantic}
+        seen.add(key)
+        candidate={'origin':'future-news-event-v5.9','title':title,'source':str(c.get('source') or ''),'trusted_source_domain':'event-rule-confirmed','url':source_url,'event_date':date,'event_title':event_title,'category':category,'city':city,'uf':uf,'organizer':organizer,'local':local,'semantic_key':semantic}
+        if year_inferred:
+            candidate['date_year_inferred']=True
         if event_time:
             candidate['event_time']=event_time; candidate['event_timezone']=event_timezone
             print(f'future_event_time={date}|{semantic}|{event_time}|{event_timezone}')
