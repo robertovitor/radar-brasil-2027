@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-30T23:47:20-03:00",
-  "fim": "2026-10-30T23:48:54-03:00",
+  "inicio": "2026-10-31T05:59:02-03:00",
+  "fim": "2026-10-31T06:00:58-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -30,10 +30,10 @@
     },
     {
       "query": "\"futebol feminino\" curso inscrições Brasil 2026 2027",
-      "resultados": 6,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 6
+        "bing_rss": 0
       }
     },
     {
@@ -179,12 +179,12 @@
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
-      "resultados": 1
+      "resultados": 0,
+      "erro": "URLError:<urlopen error timed out>"
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 0,
-      "erro": "HTTPError:HTTP Error 403: Forbidden"
+      "resultados": 6
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -201,22 +201,22 @@
       "erro": "HTTPError:HTTP Error 500: Internal Server Error"
     },
     {
-      "hub": "https://www.guiafutfem.com.br/eventos/30-10-2026/29-03-2027",
+      "hub": "https://www.guiafutfem.com.br/eventos/31-10-2026/30-03-2027",
       "resultados": 0,
       "erro": "HTTPError:HTTP Error 403: Forbidden"
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 47,
-  "adicionadas": 0,
-  "atualizadas": 3,
-  "total_arquivo": 88,
+  "oportunidades_validas_na_execucao": 48,
+  "adicionadas": 1,
+  "atualizadas": 46,
+  "total_arquivo": 89,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
-    "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
+    "hub:https://jogasp.prefeitura.sp.gov.br/:URLError:<urlopen error timed out>",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
-    "hub:https://www.guiafutfem.com.br/eventos/30-10-2026/29-03-2027:HTTPError:HTTP Error 403: Forbidden",
+    "hub:https://www.guiafutfem.com.br/eventos/31-10-2026/30-03-2027:HTTPError:HTTP Error 403: Forbidden",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:HTTPError:HTTP Error 404: Not Found"
   ],
   "isolamento": {
