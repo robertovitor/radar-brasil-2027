@@ -1251,7 +1251,9 @@ pe.public_research = public_research_v56
 _WOMENS_FOOTBALL_SIGNALS = (
     'futebol feminino', 'futebol de mulheres', 'selecao feminina',
     'selecao brasileira feminina', 'copa feminina', 'mundial feminino',
-    'copa do mundo feminina', 'women s world cup', 'womens world cup',
+    'copa do mundo feminina', 'copa do mundo fifa feminina',
+    'copa do mundo feminina da fifa', 'copa do mundo feminino da fifa',
+    'fifa feminina 2027', 'women s world cup', 'womens world cup',
     'women world cup', 'women s football', 'womens football',
     'women s soccer', 'womens soccer', 'fifa women',
     'brasileirao feminino', 'libertadores feminina', 'futebol de mulheres',
@@ -1274,6 +1276,12 @@ def _has_womens_football_evidence(value):
     return any(signal in value for signal in _WOMENS_FOOTBALL_SIGNALS)
 
 def _editorial_scope_ok(item):
+    # Nunca publica automaticamente um wrapper do Google News quando a URL
+    # editorial do veículo não foi resolvida, mesmo que o título pareça relevante.
+    summary = str(item.get('Resumo') or '')
+    if ('descoberta via google news' in summary.casefold()
+            and 'url editorial direta nao resolvida' in _topic_normalize(summary)):
+        return False
     title = _topic_normalize(item.get('Titulo') or '')
     if _has_womens_football_evidence(title):
         return True
@@ -1286,10 +1294,6 @@ def _editorial_scope_ok(item):
         return True
     if any(re.search(r'(?<!\w)' + re.escape(term) + r'(?!\w)', title)
            for term in _OTHER_SPORTS_EXPLICIT):
-        return False
-    summary = str(item.get('Resumo') or '')
-    if ('descoberta via google news' in summary.casefold()
-            and 'url editorial direta nao resolvida' in _topic_normalize(summary)):
         return False
     return _has_womens_football_evidence(summary)
 
@@ -1304,11 +1308,16 @@ def public_research_with_scope(keys):
             continue
         rejected += 1
         title = str(item.get('Titulo') or '')
+        summary = str(item.get('Resumo') or '')
+        unresolved = ('descoberta via google news' in summary.casefold()
+                      and 'url editorial direta nao resolvida' in _topic_normalize(summary))
         audit.append({
             'origem': 'scope-gate-2026-10',
             'titulo': title, 'fonte': item.get('Veiculo',''),
             'url': item.get('Link',''), 'decisao': 'rejeitado',
-            'motivo': 'Sem evidência verificável de futebol feminino no título ou resumo editorial.',
+            'motivo': ('URL editorial direta não resolvida; wrapper do Google News não será publicado.'
+                       if unresolved else
+                       'Sem evidência verificável de futebol feminino no título ou resumo editorial.'),
         })
         print(f'editorial_scope_blocked={title[:180]}')
     return count, eligible, rejected, duplicates, audit
