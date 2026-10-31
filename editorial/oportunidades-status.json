@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-10-31T12:32:22-03:00",
-  "fim": "2026-10-31T12:34:40-03:00",
+  "inicio": "2026-10-31T16:35:41-03:00",
+  "fim": "2026-10-31T16:37:09-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -146,8 +146,7 @@
     },
     {
       "hub": "https://prefeitura.rio/esporte/",
-      "resultados": 0,
-      "erro": "URLError:<urlopen error timed out>"
+      "resultados": 0
     },
     {
       "hub": "https://womanifs.com/",
@@ -184,8 +183,7 @@
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 0,
-      "erro": "HTTPError:HTTP Error 403: Forbidden"
+      "resultados": 6
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -208,20 +206,16 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 47,
+  "oportunidades_validas_na_execucao": 48,
   "adicionadas": 0,
   "atualizadas": 3,
   "total_arquivo": 89,
   "erros": [
-    "hub:https://prefeitura.rio/esporte/:URLError:<urlopen error timed out>",
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
-    "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 403: Forbidden",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/31-10-2026/30-03-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://prefeitura.rio/cidade/a-um-ano-da-copa-futebol-feminino-ja-e-realidade-em-projetos-da-secretaria-municipal-de-esportes:URLError:<urlopen error timed out>",
-    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:HTTPError:HTTP Error 404: Not Found",
-    "page:https://www.gov.br/esporte/pt-br/acesso-a-informacao:URLError:<urlopen error [Errno 101] Network is unreachable>"
+    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:HTTPError:HTTP Error 404: Not Found"
   ],
   "isolamento": {
     "noticias": "inalterado",
