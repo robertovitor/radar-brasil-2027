@@ -647,7 +647,12 @@ def _validate_official_page(href,hint=''):
     try:
         data,final_url,headers=_official_request_bytes(href,timeout=15)
         if 'cbf.com.br' not in urllib.parse.urlparse(final_url).netloc.casefold(): return None
-        raw=data[:900000].decode('utf-8','ignore'); title=v54.v2._clean_page_title(raw) or hint
+        raw=data[:900000].decode('utf-8','ignore')
+        h1_match=re.search(r'(?is)<h1\b[^>]*>(.*?)</h1>',raw)
+        title_match=re.search(r'(?is)<title\b[^>]*>(.*?)</title>',raw)
+        title_source=(h1_match.group(1) if h1_match else title_match.group(1) if title_match else '')
+        title=html.unescape(re.sub(r'(?s)<[^>]+>',' ',title_source))
+        title=re.sub(r'\s+',' ',title).strip() or v54.v2._clean_page_title(raw) or hint
         if not title or '<' in title: title=hint
         visible=html.unescape(re.sub(r'(?is)<(script|style)\b.*?</\1>',' ',raw[:500000]))
         visible=html.unescape(re.sub(r'(?s)<[^>]+>',' ',visible))
@@ -703,9 +708,8 @@ def _wifs_event_candidates():
         for m in re.finditer(r'(?is)<script\b[^>]*>(.*?)</script>',raw):
             body=html.unescape(m.group(1))
             if len(body)<=500000: units.append(pe.norm(body))
-        for m in re.finditer(r'(?is)<(?:article|section|li|div)\b[^>]*>(.*?)</(?:article|section|li|div)>',raw):
-            body=html.unescape(re.sub(r'(?s)<[^>]+>',' ',m.group(1)))
-            if body.strip(): units.append(pe.norm(re.sub(r'\s+',' ',body)))
+        # Evita regex ampla sobre divs aninhadas; JSON-LD e texto visível abaixo
+        # já preservam evidência suficiente sem custo quadrático em páginas grandes.
         visible=re.sub(r'(?is)<(script|style)\b.*?</\1>',' ',raw)
         visible=html.unescape(re.sub(r'(?s)<[^>]+>',' ',visible))
         visible_text=re.sub(r'\s+',' ',visible).strip()
