@@ -123,6 +123,15 @@
       "attempts": 6,
       "requires_strict_reconciliation": true,
       "visual_mode": "fallback_visual"
+    },
+    {
+      "key": "instagram:oportunidade:opp-b59a56fa7d9e",
+      "post_file": "instagram/fila/automatica/instagram-oportunidade-opp-b59a56fa7d9e-2d3e13b1dc.json",
+      "reserved_at": "2026-11-01T16:37:26.866550+00:00",
+      "last_attempt_at": "2026-11-01T16:37:26.866550+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "visual_mode": "radar_opportunity_illustrated_bank_v1"
     }
   ]
 }
