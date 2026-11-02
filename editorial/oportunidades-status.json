@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-02T06:57:54-03:00",
-  "fim": "2026-11-02T06:59:33-03:00",
+  "inicio": "2026-11-02T15:53:53-03:00",
+  "fim": "2026-11-02T15:55:28-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -62,10 +62,10 @@
     },
     {
       "query": "site:womanifs.com inscrição OR registration 2026 2027",
-      "resultados": 2,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 2
+        "bing_rss": 0
       }
     },
     {
@@ -112,7 +112,7 @@
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 26
+      "resultados": 25
     }
   ],
   "hubs": [
@@ -206,7 +206,7 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 45,
+  "oportunidades_validas_na_execucao": 44,
   "adicionadas": 0,
   "atualizadas": 3,
   "total_arquivo": 89,
@@ -216,7 +216,7 @@
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/02-11-2026/01-04-2027:HTTPError:HTTP Error 403: Forbidden",
     "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:HTTPError:HTTP Error 404: Not Found",
-    "page:https://www.gov.br/esporte/pt-br/acesso-a-informacao/institucional:URLError:<urlopen error [Errno 101] Network is unreachable>"
+    "page:https://www.gov.br/esporte/pt-br/acesso-a-informacao/transparencia-e-prestacao-de-contas:URLError:<urlopen error [Errno 101] Network is unreachable>"
   ],
   "isolamento": {
     "noticias": "inalterado",
