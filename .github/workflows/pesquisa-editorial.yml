@@ -47,22 +47,14 @@ jobs:
           echo "trigger_event=${{ github.event_name }}"
           echo "triggered_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
-      - name: Definir retomada controlada das sugestões Airtable
+      - name: Manter pesquisa editorial pública sem consumo Airtable
         id: airtable_mode
         shell: bash
         run: |
-          # 04:00 UTC = 01:00 em Brasília (UTC-3). Uma única janela diária.
-          # Não consultar Airtable antes de 01/11/2026, quando o limite mensal pode reiniciar.
-          stamp="$(date -u +%Y%m%d%H)"
-          if [ "$stamp" -ge 2026110104 ] && [ "$(date -u +%H)" = "04" ]; then
-            echo 'public_only=0' >> "$GITHUB_OUTPUT"
-            echo 'airtable_allow=1' >> "$GITHUB_OUTPUT"
-            echo 'suggestions_window=enabled_once_daily' 
-          else
-            echo 'public_only=1' >> "$GITHUB_OUTPUT"
-            echo 'airtable_allow=0' >> "$GITHUB_OUTPUT"
-            echo 'suggestions_window=public_only' 
-          fi
+          # As sugestões são processadas pelo workflow diário dedicado, com orçamento próprio.
+          echo 'public_only=1' >> "$GITHUB_OUTPUT"
+          echo 'airtable_allow=0' >> "$GITHUB_OUTPUT"
+          echo 'suggestions_window=separate_daily_workflow'
 
       - name: Executar pesquisa pública e sugestões na janela controlada
         id: pesquisa
