@@ -1,14 +1,16 @@
 name: Consumir sugestões Airtable (diário controlado)
 
 on:
-  # PAUSA POR LIMITE MENSAL AIRTABLE - sem disparos automaticos
+  # Uma única execução diária, com orçamento fixo: 2 leituras e até 4 atualizações.
+  schedule:
+    - cron: "15 4 * * *" # 01:15 em Brasília
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: consumir-sugestoes-airtable-diario
+  group: radar-editorial-shared-write
   cancel-in-progress: false
 
 jobs:
@@ -17,7 +19,8 @@ jobs:
     timeout-minutes: 12
     env:
       RADAR_PUBLIC_ONLY: '0'
-      RADAR_AIRTABLE_ALLOW: '0'
+      RADAR_AIRTABLE_ALLOW: '1'
+      AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with:
