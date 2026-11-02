@@ -3,7 +3,7 @@ name: Enfileirar alertas aos assinantes
 on:
   # Uma única rodada diária; o script enfileira no máximo um item por execução.
   schedule:
-    - cron: "0 5 * * *" # 02:00 em Brasília
+    - cron: "0 12 * * *" # 02:00 em Brasília
   workflow_dispatch:
 
 permissions:
