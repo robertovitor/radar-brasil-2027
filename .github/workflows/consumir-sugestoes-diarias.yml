@@ -3,7 +3,7 @@ name: Consumir sugestões Airtable (diário controlado)
 on:
   # Uma única execução diária, com orçamento fixo: 2 leituras e até 4 atualizações.
   schedule:
-    - cron: "15 4 * * *" # 01:15 em Brasília
+    - cron: "0 11 * * *" # 01:15 em Brasília
   workflow_dispatch:
 
 permissions:
