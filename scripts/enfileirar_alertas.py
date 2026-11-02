@@ -59,7 +59,7 @@ def load_json(path):
 
 # Verifica os mesmos arquivos públicos carregados pelo frontend antes de enfileirar.
 # Falha fechada: erro HTTP, JSON inválido ou item ausente => nenhum novo e-mail.
-PUBLIC_SITE=os.environ.get("RADAR_PUBLIC_SITE","https://radarfutebolfeminino2027.com.br").rstrip("/")
+PUBLIC_SITE=os.environ.get("RADAR_PUBLIC_SITE","https://radarcopafeminina2027.com.br").rstrip("/")
 
 def public_items(path):
     url=PUBLIC_SITE+"/"+path
@@ -243,7 +243,7 @@ if len(news_candidates)>1:
         lines=["Resumo de notícias do Radar Brasil 2027","",f"{len(items)} notícias ainda não enviadas individualmente:",""]
         for c in items:
             lines.extend(["• "+c[3],c[4],""])
-        lines.append("Radar: https://radarfutebolfeminino2027.com.br/")
+        lines.append("Radar: https://radarcopafeminina2027.com.br/")
         digest_records.append({"fields":{
             "Chave":"noticia:"+digest_id+":"+email,"Email":email,"Tipo":"Notícia",
             "Identidade":digest_id,"Título":"Resumo de notícias pendentes",
@@ -289,7 +289,7 @@ for email in recipients:
         vehicle=str(item.get("Veiculo") or "").strip()
         if vehicle: body+=f"Fonte: {vehicle}\n"
         body+=f"Leia mais: {ident}\n"
-    body+="\nRadar: https://radarfutebolfeminino2027.com.br/"
+    body+="\nRadar: https://radarcopafeminina2027.com.br/"
     records.append({"fields":{
         "Chave":key,"Email":email,"Tipo":kind,"Identidade":ident,"Título":title,
         "Assunto":"Radar Brasil 2027 — "+title,"Corpo":body,"Status":"Pendente",
