@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261017-10",
-  "started_at": "2026-10-17T10:02:00-03:00",
-  "completed_at": "2026-10-17T10:02:04-03:00",
+  "cycle_id": "20261102-17",
+  "started_at": "2026-11-02T17:36:42-03:00",
+  "completed_at": "2026-11-02T17:36:47-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -15,16 +15,25 @@
       "reads": 1
     }
   ],
-  "sugestoes_lidas": 1,
+  "sugestoes_lidas": 2,
   "sugestoes_noticias_lidas": 1,
   "candidatos_publicos": 0,
   "aprovados_novos": 0,
-  "pendentes_enriquecimento": 2,
+  "pendentes_enriquecimento": 3,
   "rejeitados": 0,
   "duplicados": 0,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "auditoria": [
+    {
+      "origem": "airtable",
+      "tabela": "Sugestões",
+      "record_id": "recZLYpUo2tqjE2FA",
+      "titulo": "Semifinal Copa do Mundo sub-17",
+      "url": "https://www.cnnbrasil.com.br/esportes/futebol/selecao-brasileira/brasil-vence-a-china-e-vai-a-semifinal-da-copa-do-mundo-feminina-sub-17/",
+      "decisao": "pendente_enriquecimento",
+      "motivo": "PENDENTE_VERIFICACAO: a sugestão possui título e fonte, mas não passou nas verificações automáticas; revisão editorial necessária."
+    },
     {
       "origem": "airtable",
       "tabela": "Sugestões",
