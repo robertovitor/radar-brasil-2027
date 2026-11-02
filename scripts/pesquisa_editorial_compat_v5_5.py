@@ -1279,19 +1279,39 @@ def public_research_v56(keys):
 
     prepared = []
     upgraded = 0
+    redirect_attempts = 0
+    max_redirect_attempts = 5  # teto por ciclo horário; não envolve Airtable
     for c0 in rss:
         c = dict(c0)
         if c.get('origin') in ('google-news','google-news-trusted-source'):
             title_key = _direct_title_key(c.get('title'))
             source_domain = str(c.get('trusted_source_domain') or v54.v2._source_domain(c.get('source','')) or '').strip()
             g = direct_by_title.get(title_key)
-            if g and _same_publisher(g.get('url'), source_domain):
+            direct_url = str(g.get('url') or '') if g else ''
+            if direct_url and _same_publisher(direct_url, source_domain):
                 c['google_news_url'] = c.get('url','')
-                c['url'] = str(g.get('url') or '')
+                c['url'] = direct_url
                 c['origin'] = 'google-news-gdelt-resolved-v5.6'
                 c['trusted_source_domain'] = source_domain
                 upgraded += 1
                 print(f"google_news_gdelt_resolved=v5.6|{source_domain}|{c['url']}")
+            elif source_domain and redirect_attempts < max_redirect_attempts:
+                # O wrapper do Google News só é aceito se o redirecionamento HTTP
+                # terminar em HTTPS, domínio confiável e no mesmo veículo indicado no RSS.
+                redirect_attempts += 1
+                try:
+                    _, final_url, _ = pe.request_bytes(str(c.get('url') or ''), timeout=12)
+                    final = urllib.parse.urlparse(final_url)
+                    if (final.scheme == 'https' and pe.trusted_url(final_url)
+                            and _same_publisher(final_url, source_domain)):
+                        c['google_news_url'] = c.get('url','')
+                        c['url'] = final_url
+                        c['origin'] = 'google-news-redirect-resolved-v5.7'
+                        c['trusted_source_domain'] = source_domain
+                        upgraded += 1
+                        print(f"google_news_redirect_resolved=v5.7|{source_domain}")
+                except Exception as exc:
+                    print(f"google_news_redirect_unresolved={type(exc).__name__}")
         prepared.append(c)
 
     saved_rss, saved_gdelt = pe.rss_candidates, pe.gdelt_candidates
@@ -1303,6 +1323,7 @@ def public_research_v56(keys):
         pe.rss_candidates, pe.gdelt_candidates = saved_rss, saved_gdelt
 
     print(f'google_news_gdelt_resolved_count={upgraded}')
+    print(f'google_news_redirect_attempts={redirect_attempts}|limit={max_redirect_attempts}')
     return result
 
 pe.public_research = public_research_v56
