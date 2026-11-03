@@ -305,13 +305,20 @@ def public_research(keys):
             duplicates+=1
             audit.append({**base,'decisao':'duplicado','motivo':'Já existe em dados.json, noticias.json ou editorial/inbox.json.'})
             continue
-        if c['origin']=='google-news':
-            rejected+=1
-            audit.append({**base,'decisao':'rejeitado','motivo':'Resultado do Google News sem URL editorial direta validável nesta etapa.'})
-            continue
+        # Resolve redirecionamentos antes de validar o domínio editorial.
+        # Isso permite validar links do Google News/GDELT que apontam para a
+        # matéria original, sem confiar no domínio agregador.
+        try:
+            _, resolved_url, _ = request_bytes(link, timeout=20)
+            resolved_host = (urllib.parse.urlparse(resolved_url).hostname or '').casefold()
+            if resolved_host and resolved_host not in ('news.google.com', 'google.com', 'www.google.com'):
+                link = resolved_url
+                base['url_resolvida'] = link
+        except Exception as e:
+            base['falha_resolucao_url'] = type(e).__name__
         if not trusted_url(link):
             rejected+=1
-            audit.append({**base,'decisao':'rejeitado','motivo':'Domínio fora da lista de fontes confiáveis para inclusão automática.'})
+            audit.append({**base,'decisao':'rejeitado','motivo':'Não foi possível resolver para uma URL editorial de domínio confiável.'})
             continue
         excerpt,final_url=fetch_article_excerpt(link)
         if final_url and final_url!=link and trusted_url(final_url): link=final_url
