@@ -71,8 +71,6 @@ def run():
                         continue
                     if kind=='noticias':
                         candidate['Resumo']=candidate.get('Resumo') or excerpt[:900]
-                elif kind=='noticias' and not candidate.get('Resumo'):
-                    candidate['Resumo']=str(pe.first(f,'Resultado da verificação') or '').strip()[:900]
                 inbox.setdefault(kind,[]).append(candidate)
                 keys.add('u:'+pe.urlnorm(candidate['Link']))
                 keys.add('t:'+pe.norm(candidate['Titulo']))
