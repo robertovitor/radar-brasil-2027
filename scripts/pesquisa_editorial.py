@@ -126,7 +126,7 @@ def pending_enrichment_reason(fields, kind):
     estão presentes e a validação rejeitou fonte, relevância, duplicidade ou frescor,
     o chamador mantém a rejeição normal.
     """
-    title=str(first(fields,'Título','Titulo','Título da notícia','Titulo da noticia','Nome','Evento','Evento sugerido')).strip()
+    title=str(first(fields,'Título','Titulo','Título da notícia','Titulo da noticia','Título ou assunto','Nome','Evento','Evento sugerido')).strip()
     desc=str(first(fields,'Descrição','Descricao','Resumo','Observações','Observacoes')).strip()
     link=str(first(fields,'Link','URL','Link da notícia','Link da noticia','Fonte ou link')).strip()
     source=str(first(fields,'Fonte','Veículo','Veiculo','Origem')).strip()
@@ -178,11 +178,11 @@ def normalize_event_time(value):
 
 def candidate_from_record(record, kind):
     f=record.get('fields',{})
-    title=str(first(f,'Título','Titulo','Título da notícia','Titulo da noticia','Nome','Evento','Evento sugerido')).strip()
+    title=str(first(f,'Título','Titulo','Título da notícia','Titulo da noticia','Título ou assunto','Nome','Evento','Evento sugerido')).strip()
     link=str(first(f,'Link','URL','Fonte','Link da notícia','Link da noticia','Fonte ou link')).strip()
     if not title or not link: return None
     if kind=='noticias':
-        date=str(first(f,'Data','Data da notícia','Data da noticia')).strip()[:10] or now().date().isoformat()
+        date=str(first(f,'Data','Data da notícia','Data da noticia')).strip()[:10] or str(record.get('createdTime',''))[:10] or now().date().isoformat()
         return {'Data':date,'DataBR':datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y') if re.fullmatch(r'\d{4}-\d{2}-\d{2}',date) else '',
                 'Titulo':title,'Tema':str(first(f,'Tema','Categoria')).strip() or 'Copa Feminina 2027',
                 'CidadeUF':str(first(f,'Cidade/UF','CidadeUF','Cidade','Local')).strip() or 'Brasil',
