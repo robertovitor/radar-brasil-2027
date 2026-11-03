@@ -1,9 +1,7 @@
 name: Consumir sugestões Airtable (diário controlado)
 
 on:
-  # Uma única execução diária, com orçamento fixo: 2 leituras e até 4 atualizações.
-  schedule:
-    - cron: "0 11 * * *" # 01:15 em Brasília
+  # Agendamento automático suspenso: a rotina sem escritas é a única diária.
   workflow_dispatch:
 
 permissions:
@@ -26,10 +24,6 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
 
       - name: Validar sintaxe antes de acessar Airtable
         run: |
