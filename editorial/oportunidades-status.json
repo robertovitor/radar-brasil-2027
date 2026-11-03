@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-03T16:46:34-03:00",
-  "fim": "2026-11-03T16:48:12-03:00",
+  "inicio": "2026-11-03T18:54:51-03:00",
+  "fim": "2026-11-03T18:56:40-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -166,13 +166,11 @@
     },
     {
       "hub": "https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas",
-      "resultados": 0,
-      "erro": "TimeoutError:The read operation timed out"
+      "resultados": 1
     },
     {
       "hub": "https://www.gov.br/esporte/pt-br/noticias",
-      "resultados": 0,
-      "erro": "HTTPError:HTTP Error 404: "
+      "resultados": 1
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
@@ -212,13 +210,10 @@
   "atualizadas": 3,
   "total_arquivo": 90,
   "erros": [
-    "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:TimeoutError:The read operation timed out",
-    "hub:https://www.gov.br/esporte/pt-br/noticias:HTTPError:HTTP Error 404: ",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/03-11-2026/02-04-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:HTTPError:HTTP Error 404: Not Found",
-    "page:https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?t=1353&conteudo=932:HTTPError:HTTP Error 403: Forbidden"
+    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:HTTPError:HTTP Error 404: Not Found"
   ],
   "isolamento": {
     "noticias": "inalterado",
