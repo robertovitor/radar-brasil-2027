@@ -34,42 +34,49 @@ def run():
                 rid=rec['id']; link=str(pe.first(f,'Fonte ou link','Link','URL') or '').strip()
                 title=str(pe.first(f,'Evento sugerido','Título ou assunto','Título','Titulo') or '').strip()
                 status=str(pe.first(f,'Status') or '')
-                if status.casefold()=='aprovado':
-                    # Approved items should go through existing reconciliation, never republish blindly.
-                    continue
+                editorialmente_aprovada=status.strip().casefold()=='aprovado'
                 item={'id':rid,'kind':kind,'title':title,'outcome':'pending'}
                 report['items'].append(item)
-                host=(urllib.parse.urlparse(link).hostname or '').casefold().removeprefix('www.')
-                if not title or not link or host in ('instagram.com','facebook.com','tiktok.com'):
-                    item['reason']='Needs verified caption/source and complete metadata'
-                    report['pending']+=1
-                    continue
-                if not pe.trusted_url(link):
-                    item['reason']='Source needs independent editorial verification'
+                if not title or not link:
+                    item['reason']='Título ou link ausente; completar a sugestão'
                     report['pending']+=1
                     continue
                 candidate=pe.candidate_from_record(rec,kind)
                 if not candidate:
-                    item['reason']='Missing mandatory event date or structure'
+                    item['reason']='Data ou estrutura obrigatória ausente'
                     report['pending']+=1
                     continue
                 if kind=='eventos' and candidate['Data'] < datetime.now(timezone.utc).date().isoformat():
-                    item['reason']='Past event cannot be newly published'
+                    item['reason']='Evento com data passada; não publicar como novidade'
                     report['pending']+=1
                     continue
-                if ('u:'+pe.urlnorm(candidate['Link'])) in keys or ('t:'+pe.norm(candidate['Titulo'])) in keys:
+                if (('u:'+pe.urlnorm(candidate['Link'])) in keys
+                    or ('t:'+pe.norm(candidate['Titulo'])) in keys
+                    or (kind=='eventos' and ('i:'+str(candidate.get('ID','')).strip().casefold()) in keys)):
                     item['outcome']='duplicate'; report['duplicates']+=1
                     continue
-                excerpt,_=pe.fetch_article_excerpt(link)
-                if not excerpt or not pe.article_is_relevant(title,excerpt):
-                    item['reason']='Source text/relevance not independently verified'
-                    report['pending']+=1
-                    continue
-                if kind=='noticias':
-                    candidate['Resumo']=candidate.get('Resumo') or excerpt[:900]
+                # Uma sugestão marcada como Aprovado já passou pela revisão editorial
+                # no Airtable. Não exigir que links de Instagram exponham HTML público
+                # novamente: isso bloqueava a publicação de sugestões já validadas.
+                if not editorialmente_aprovada:
+                    host=(urllib.parse.urlparse(link).hostname or '').casefold().removeprefix('www.')
+                    if host in ('instagram.com','facebook.com','tiktok.com') or not pe.trusted_url(link):
+                        item['reason']='Fonte social ou domínio ainda sem confirmação independente'
+                        report['pending']+=1
+                        continue
+                    excerpt,final_url=pe.fetch_article_excerpt(link)
+                    if not excerpt or not pe.trusted_url(final_url) or not pe.article_is_relevant(title,excerpt):
+                        item['reason']='Fonte/conteúdo ainda não verificado; permanece pendente'
+                        report['pending']+=1
+                        continue
+                    if kind=='noticias':
+                        candidate['Resumo']=candidate.get('Resumo') or excerpt[:900]
+                elif kind=='noticias' and not candidate.get('Resumo'):
+                    candidate['Resumo']=str(pe.first(f,'Resultado da verificação') or '').strip()[:900]
                 inbox.setdefault(kind,[]).append(candidate)
                 keys.add('u:'+pe.urlnorm(candidate['Link']))
                 keys.add('t:'+pe.norm(candidate['Titulo']))
+                if kind=='eventos': keys.add('i:'+str(candidate.get('ID','')).strip().casefold())
                 item['outcome']='queued'; report['queued']+=1
         if report['queued']:
             pe.dump(pe.INBOX,inbox)
