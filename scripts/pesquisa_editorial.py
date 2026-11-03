@@ -164,6 +164,7 @@ def existing_keys():
             if isinstance(x,dict):
                 if x.get('Link'): keys.add('u:'+urlnorm(x.get('Link')))
                 if x.get('Titulo'): keys.add('t:'+norm(x.get('Titulo')))
+                if x.get('ID'): keys.add('i:'+str(x.get('ID')).strip().casefold())
     return keys
 
 def normalize_event_time(value):
