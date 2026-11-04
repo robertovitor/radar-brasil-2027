@@ -1,0 +1,110 @@
+{
+  "at": "2026-11-04T17:15:32.763422+00:00",
+  "reads": 2,
+  "writes": 0,
+  "processed": 14,
+  "queued": 0,
+  "pending": 13,
+  "duplicates": 1,
+  "errors": [],
+  "items": [
+    {
+      "id": "rec4eMapL7s8mdGvv",
+      "kind": "eventos",
+      "title": "Lorena concorrendo a bola de ouro",
+      "outcome": "pending",
+      "reason": "Evento com data passada; não publicar como novidade"
+    },
+    {
+      "id": "rec6pxuy0Dd11NXhU",
+      "kind": "eventos",
+      "title": "Palestra Amistosos Seleção Feminina",
+      "outcome": "pending",
+      "reason": "Evento com data passada; não publicar como novidade"
+    },
+    {
+      "id": "rec9jg015qT9IrsOV",
+      "kind": "eventos",
+      "title": "",
+      "outcome": "pending",
+      "reason": "Título ou link ausente; completar a sugestão"
+    },
+    {
+      "id": "recBOv9f2SwHRbsum",
+      "kind": "eventos",
+      "title": "Jogo das Lendas",
+      "outcome": "duplicate"
+    },
+    {
+      "id": "recJ113mt4XIMqgLB",
+      "kind": "eventos",
+      "title": "",
+      "outcome": "pending",
+      "reason": "Título ou link ausente; completar a sugestão"
+    },
+    {
+      "id": "recKOCX6P9kHv3U03",
+      "kind": "eventos",
+      "title": "II Workshop de Cidades-Sede e Estádios da Copa do Mundo Feminina FIFA 2027",
+      "outcome": "pending",
+      "reason": "Data ou estrutura obrigatória ausente"
+    },
+    {
+      "id": "recQr314QltvNgbh6",
+      "kind": "eventos",
+      "title": "Summit Internacional das Estrelas",
+      "outcome": "pending",
+      "reason": "Evento com data passada; não publicar como novidade"
+    },
+    {
+      "id": "recRhcUk8BrBXSJxG",
+      "kind": "eventos",
+      "title": "",
+      "outcome": "pending",
+      "reason": "Título ou link ausente; completar a sugestão"
+    },
+    {
+      "id": "recTFPAx0lxJ5ZDYs",
+      "kind": "eventos",
+      "title": "Projeto Convocação de Goleiras - Etapa SP",
+      "outcome": "pending",
+      "reason": "Evento com data passada; não publicar como novidade"
+    },
+    {
+      "id": "recV8YLRy1CFuH9vh",
+      "kind": "eventos",
+      "title": "Esquenta MVA",
+      "outcome": "pending",
+      "reason": "Evento com data passada; não publicar como novidade"
+    },
+    {
+      "id": "reccRZhYLpL3w4tDD",
+      "kind": "eventos",
+      "title": "EcoFut Rio",
+      "outcome": "pending",
+      "reason": "Fonte social ou domínio ainda sem confirmação independente"
+    },
+    {
+      "id": "recdD2Ov4ONt0BPru",
+      "kind": "eventos",
+      "title": "",
+      "outcome": "pending",
+      "reason": "Título ou link ausente; completar a sugestão"
+    },
+    {
+      "id": "recnFh7R4un5b2BAK",
+      "kind": "eventos",
+      "title": "",
+      "outcome": "pending",
+      "reason": "Título ou link ausente; completar a sugestão"
+    },
+    {
+      "id": "recd17aegfgdrZoar",
+      "kind": "noticias",
+      "title": "Amistosos 2027",
+      "outcome": "pending",
+      "reason": "Fonte social ou domínio ainda sem confirmação independente"
+    }
+  ],
+  "status": "complete"
+}
