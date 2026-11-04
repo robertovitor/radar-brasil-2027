@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-04T08:38:32-03:00",
-  "fim": "2026-11-04T08:40:07-03:00",
+  "inicio": "2026-11-04T15:55:06-03:00",
+  "fim": "2026-11-04T15:56:34-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -166,11 +166,12 @@
     },
     {
       "hub": "https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas",
-      "resultados": 1
+      "resultados": 0,
+      "erro": "HTTPError:HTTP Error 401: "
     },
     {
       "hub": "https://www.gov.br/esporte/pt-br/noticias",
-      "resultados": 1
+      "resultados": 6
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
@@ -205,11 +206,12 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 40,
+  "oportunidades_validas_na_execucao": 43,
   "adicionadas": 0,
   "atualizadas": 3,
   "total_arquivo": 90,
   "erros": [
+    "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/04-11-2026/03-04-2027:HTTPError:HTTP Error 403: Forbidden",
