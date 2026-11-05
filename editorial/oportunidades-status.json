@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-05T12:52:42-03:00",
-  "fim": "2026-11-05T12:54:22-03:00",
+  "inicio": "2026-11-05T19:22:48-03:00",
+  "fim": "2026-11-05T19:24:38-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -207,8 +207,8 @@
   ],
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 44,
-  "adicionadas": 1,
-  "atualizadas": 7,
+  "adicionadas": 0,
+  "atualizadas": 3,
   "total_arquivo": 91,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
