@@ -1,17 +1,17 @@
 {
-  "cycle_id": "20261105-19",
-  "started_at": "2026-11-05T19:20:28-03:00",
-  "completed_at": "2026-11-05T19:22:48-03:00",
+  "cycle_id": "20261105-23",
+  "started_at": "2026-11-05T23:50:51-03:00",
+  "completed_at": "2026-11-05T23:53:03-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 97,
+  "candidatos_publicos": 100,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 97,
+  "rejeitados": 100,
   "duplicados": 0,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
@@ -21,6 +21,14 @@
       "titulo": "SALVADOR DEBATE ASSISTÊNCIA EM SAÚDE PARA A COPA DO MUNDO FEMININA DA FIFA 2027 - Bahia Econômica",
       "fonte": "Bahia Econômica",
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPZzR4SHpOWjNRTFpYZkM3aWwzbU9Ud2NMYjNtWnhPcVdFcGp6NDBPdVNwc1RxaF80NFNZNThmZ2piQjdvT0pZQ0c2WlpKMHNWM1ltcFZRSFVMdGo0N3oyUkpwZEhqSlRuZTZTQXhidW8zaDJMNmhiWEZKckg1RVNHcUpqT0lHNGZOMTIxdXNQWDZZTXVzQlNXREFCMkE2dFRULVF3Yzk4YmEzR0ZrSnNWYXNxUm96NjJ6TGNHelZzbWI2bVk?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Batux apresenta oportunidades para o São João 2027 em São Paulo - Movimento Econômico",
+      "fonte": "Movimento Econômico",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOYlB0Z29HbThrcUZ2MlJwVG01SExYYTY3THpyakVHckdBa2R6SDBEcmpYUVJUbmYteUFCUzFObVpiNU16RWh6LUs3Wk9NZTNma0JCOUZ3MXM1UlBuRl9kdUd2Q0J2ZHZ4VXN0bmJQSnZJMFRfdGhBQXJPbUoyUkViUjVpemFBUV96eUVqRktEV0pUVk9lZ09WWm9mTTA2c3NUMFR5cVJ0QmduSjNYQWRwa1lhRXp4SklC?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -37,6 +45,14 @@
       "titulo": "Copa Feminina 2027 deve injetar R$ 8,8 bi na economia, prevê ministério - viva.com.br",
       "fonte": "viva.com.br",
       "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPYWJLaWhJOVZxZ1ZBX0JQd1Vzbkh4a2RKZlhUMzRFVFc3WVVCRlAwU2pNTjZtY2tGcE1ZMXhBM2hfV0dINEZPZmV6ZHZKdmcwWWpxYVFtdFRBUHA1dmp1czNUa1NoZUlhOXNtMmFURVc4OFkyRkg4ZVpCa0hoQ21PSF9GSl82MGhVSVFMOUtuX1Q4aC1KZHBqN3RTam9IZ0YtWEE?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Cinebiografia de Marta ganha teaser e estreia em abril de 2027 - Academia Brasileira de Marketing",
+      "fonte": "Academia Brasileira de Marketing",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOb0FkajRxVjMxdk10S2tQQ1BwQTVVOHREeHdackE4ZjZBZjJ3dEl3RE9MaDFyUkdqZ21TUmc5NWItRzBtUE8tbWExRnIwTTF2R2pic0RMVklfMmljYXNoUDI4N3VGUU5hV2NuZ2tJbFpEOGhKaXNkdUszOEtmQXRRVnhhdk5lOW5XZVZLZTl0NGlkQWRIcWJGZmdpemVQRUl6M1dteExtMVZablJYOWc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -138,8 +154,8 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa Feminina 2027: transporte grátis aos jogos é obrigação das cidades - sportbuzz.com.br",
-      "fonte": "sportbuzz.com.br",
+      "titulo": "Copa Feminina 2027: transporte grátis aos jogos é obrigação das cidades - SportBuzz",
+      "fonte": "SportBuzz",
       "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQNHZYTDc3RWlnTXVURGJhVjlVaTdMM0E3TGMxdDRMQUdIVTdJLW1tX1NwWERscGdqWEo4bEhtRnZPMDJ5WHVNdlhmMmZNMmxOZGd1a2V2VzQxeU5LNG9uUEtDamR1dzd6Q3ZGRkZlSUV3LS1rYVlTTVZtR3ZxazROdlBqejFlMU9FdmVEVGtVaExLdE0tTWJxbjFSRnh0bm56azFTTGNJR0RmUDh1cmRhRE9xTnNHOHhuTlQ3YUgyQQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
@@ -354,14 +370,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Cinebiografia de Marta ganha teaser e estreia em abril de 2027 - Academia Brasileira de Marketing",
-      "fonte": "Academia Brasileira de Marketing",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOb0FkajRxVjMxdk10S2tQQ1BwQTVVOHREeHdackE4ZjZBZjJ3dEl3RE9MaDFyUkdqZ21TUmc5NWItRzBtUE8tbWExRnIwTTF2R2pic0RMVklfMmljYXNoUDI4N3VGUU5hV2NuZ2tJbFpEOGhKaXNkdUszOEtmQXRRVnhhdk5lOW5XZVZLZTl0NGlkQWRIcWJGZmdpemVQRUl6M1dteExtMVZablJYOWc?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Câmara aprova fim de férias obrigatórias na Copa Feminina de 2027 - Poder360",
       "fonte": "Poder360",
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxONnl1el9XajQ4eUxuYlFta0lrb1RHYmFoekhhcXVuc3JlazdNeS0wbFBUNVBtWC0xUG5ZLTNQYTY4UlBLdElhOWQ5OElDYWpaZEdFNHF0UXN3UHZsSVU1U2hVQUxxc05DQS1XMmc5cjktVThTSmFTNmExQXRfMVV6VjJiR3B4aXlJdmxENzNPQ1FSajQzbmZfSnJOaHJPNWFZREVsRFdsOEJjYk00ZTFv?oc=5",
@@ -394,6 +402,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Cidade com mais jogos, São Paulo receberá 10 partidas da Copa do Mundo Feminina 2027 - Prefeitura de São Paulo",
+      "fonte": "Prefeitura de São Paulo",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNMTEtRzNWZjZrcm1IM3hUeVF2a0tPSnhzRGRsMWlOMjZRM0k0alBrU0NXZDhfY3ZQLUFNXzNTQjNFTHpoVktnM1YwR19JdklRRElxRkxETTFMbjhZWTRPSzRWdHA5MmZoeVE0b1d5VWUxbUVyYndGODZEdDZFQ05kX09COWZybWtzb2ptaUludWw3dFpVcWRHS29xa2FqRXpvblNUZEJlRG1WNy14NjQ5NWh2YjdzWGtXcXhOWklleE9nZw?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
+    },
+    {
+      "origem": "google-news",
       "titulo": "O que esperar a 1 ano da Copa feminina no Brasil - Nexo Jornal",
       "fonte": "Nexo Jornal",
       "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNWW5JZERyNnA3TE5oU2xfc1FJMWk4Z20xOUVKVnd3OXVfV0xabWZVVEpHNjJYanBWaHhxb3p3emZJWUZVYTF1XzZ4QzMxMnEweXJER1dmN3dBN1JrVjFrUlEwMmtSMjNkN09ETU1nTTNaZTVkR2NMYTFuRFhHUkdyR0dfQmJjN0ducXdFdHNnZXg3VTFxc2c?oc=5",
@@ -418,17 +434,25 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "CT do Santos passa por inspeção da Fifa para tentar receber uma seleção na Copa do Mundo de 2027 - ge",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMijgJBVV95cUxQcERoMnljWm8xeDY0bTEzakxnSHFpUlJQc0lvUjY0NS1JbHVwdVQxVEJIWGt6ZTBoUGFKenZaTWdzNlRpVlE3VTdPVFZSSXBTQkdWbGRBeFF1R013c1RoQlo5YkZ3TElhOWFGN2laM210MWtPYXFPU1U2NXFTM2tQNFNsejRtbjhpMkU2YnNpcWJSYXBrS0dUdzJaVzRNLTVyTHJ3OUwzeE8yMVdXS3hRSjM5bkgxbWdRdU80MHI0STlZM0hpbVlzdzlKNTRsQmNZSjFDbjdDQnNITXo4Z2M2Vy1mbnJ6ZHppckxLMGdNb1hEbklaWWsyRnJFVkdPakZ2ZzdDOHQtRlU2V2c3alHSAZwCQVVfeXFMTmFwYmhsMUpfSVJKRjJxNi0yWEdfeFE5cEVKLWpyUnVPbERSMTliOFhUTV9xOTBXX2x5LTBWdXpvSkRzSUYzT0hxRnhIelI3LS1ac3Rad2hzQkJPN0hWelNLeHpiQzdGcG4xc2ZmZHM0SUhHcDBuakNscHBLb2V3a0M1SXExT0c5YU1mc2R5MXdyVC1TaF9yMl9mUFE0M1Z6YU5ReGwtZFE3cTN5M3hpMFRybGpGRHBpVjRUdVlmZlhXSi1meVdxVXVlV1Zab1E0bGFiZFB0Vmg1VzhjV2xDNWZ1dEZDdDhaZEFmZVhuTDNvRk03TzhwMTRzSkFSdXZzekhjUVJWMV9Uc1ZhSFlsMDQ5WTlvU1B6ZlI5WEQ?oc=5",
+      "titulo": "Terra e Flow Sport Club lançam parceria para Copa do Mundo Feminina de 2027 - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOa1dDREpaWWpLNkxuYTVaTmZsUU9FWGtqUG9ESnBaN3BZRjBWeXl2MW96ZmFfUmNYWjk5dnpPRFFGQnJpVU1tUlVoaE5NVlFmQ1VyelVsUDBlVUs0QnZlNUdGc2M4QlpiMU1keWxfbFZpWHpKci1FY3UzWjc3Nmo3Z2FvNzlvV3hxOTQ0SElKMjd3UGloWTlqYzNWYV8wWEtCQ3BsZkFCTWgxWE1NcmZ0Tg?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Terra e Flow Sport Club lançam parceria para Copa do Mundo Feminina de 2027 - Máquina do Esporte",
-      "fonte": "Máquina do Esporte",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOa1dDREpaWWpLNkxuYTVaTmZsUU9FWGtqUG9ESnBaN3BZRjBWeXl2MW96ZmFfUmNYWjk5dnpPRFFGQnJpVU1tUlVoaE5NVlFmQ1VyelVsUDBlVUs0QnZlNUdGc2M4QlpiMU1keWxfbFZpWHpKci1FY3UzWjc3Nmo3Z2FvNzlvV3hxOTQ0SElKMjd3UGloWTlqYzNWYV8wWEtCQ3BsZkFCTWgxWE1NcmZ0Tg?oc=5",
+      "titulo": "Fortaleza é candidata a receber repescagem da Copa do Mundo Feminina com jogos no PV - Diário do Nordeste",
+      "fonte": "Diário do Nordeste",
+      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPaWExUWpRcVRyb01panYyU1BkV2dsWkRXbnhGV19UVFAyd3VvMWx3Q3haNlFVSVdfbDZ2a2UyZXQzb1dHN0I2WWRsVXd4UEhvNGZMN3M5aHQ1VXhoSTNQOW9falBza21DT2ZpbUY1REtNYjFpZ2RHWlpid1BYLVc3UVlpUG50a3JoaUExaVFoTGdQVVFpT0FsMWF1b25KNEJPTHd1dlN2NXRQZ2xoTXVrbVlHbi1lNnBkU0RUY1p6eC1icnYwOUVnSWRPTmlTeF91U3FGZkRjdUNfMkViSnc?oc=5",
+      "decisao": "aprovado",
+      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "CT do Santos passa por inspeção da Fifa para tentar receber uma seleção na Copa do Mundo de 2027 - ge",
+      "fonte": "ge",
+      "url": "https://news.google.com/rss/articles/CBMijgJBVV95cUxQcERoMnljWm8xeDY0bTEzakxnSHFpUlJQc0lvUjY0NS1JbHVwdVQxVEJIWGt6ZTBoUGFKenZaTWdzNlRpVlE3VTdPVFZSSXBTQkdWbGRBeFF1R013c1RoQlo5YkZ3TElhOWFGN2laM210MWtPYXFPU1U2NXFTM2tQNFNsejRtbjhpMkU2YnNpcWJSYXBrS0dUdzJaVzRNLTVyTHJ3OUwzeE8yMVdXS3hRSjM5bkgxbWdRdU80MHI0STlZM0hpbVlzdzlKNTRsQmNZSjFDbjdDQnNITXo4Z2M2Vy1mbnJ6ZHppckxLMGdNb1hEbklaWWsyRnJFVkdPakZ2ZzdDOHQtRlU2V2c3alHSAZwCQVVfeXFMTmFwYmhsMUpfSVJKRjJxNi0yWEdfeFE5cEVKLWpyUnVPbERSMTliOFhUTV9xOTBXX2x5LTBWdXpvSkRzSUYzT0hxRnhIelI3LS1ac3Rad2hzQkJPN0hWelNLeHpiQzdGcG4xc2ZmZHM0SUhHcDBuakNscHBLb2V3a0M1SXExT0c5YU1mc2R5MXdyVC1TaF9yMl9mUFE0M1Z6YU5ReGwtZFE3cTN5M3hpMFRybGpGRHBpVjRUdVlmZlhXSi1meVdxVXVlV1Zab1E0bGFiZFB0Vmg1VzhjV2xDNWZ1dEZDdDhaZEFmZVhuTDNvRk03TzhwMTRzSkFSdXZzekhjUVJWMV9Uc1ZhSFlsMDQ5WTlvU1B6ZlI5WEQ?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
@@ -511,6 +535,14 @@
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOaEZYS0x3V2hlV2tvRjBWTGFkbGpwaVE3cTFIdWlZVi1nODEyOEQ4YTlFTG0zSDZOZlJ1NWFqOS1nbkl1UGpLMnhua0I1Q3UzZE5UNlpzOWNUNHhTZTdPZkNEZXpNWWhlUUtKbVU0UVh1UTJtSTI0YmVPN3RoaC1RY0pFUHhsN0xvN3N6ZkJnOUNvcnRSYWFTczNvbm9LZ3pYZl9tdGhYWUFQV1I0LW5CZk1famtfaTlWM1FDa1dsTEw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (966d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Jogadoras da primeira seleção brasileira feminina ganharão prêmio - Agência Brasil",
+      "fonte": "Agência Brasil",
+      "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQeGVqQ3h0Q0pSUDZiNjBUVVJEZl84V3ZQanM0dGtwTHhJTUVTUTNSLWgzYUQ0S081MzJiSF9TT004NF84ZEpkTlV1SkJtblMydTFFSzdoSGc2STVJVkw4eGhhdUJMY1R5NGM2aWdpbnpDNHdjcGtQRGUzVXE1ZVItaHBzTUdOeWRPOEtwVGpaU0xTcXhUUnh5a3Vyb01SZG1VMld0bWxKc0dqMFhUOXllbXM3aW1IUDFST0dwdFNWZ21DWmpxWExaYmRSVUh2QUxDZC1LZjVLUnhDQnc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (156d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -690,14 +722,6 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Netflix expande acordo com Fifa e também exibirá Copas do Mundo Femininas de 2027 e 2031 para o Canadá - Máquina do Esporte",
-      "fonte": "Máquina do Esporte",
-      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOLXYzN1NwVDdCaFdNd1dCYUlmSWU5dVhhRzRSaEQ2U1ZNZ1ZINGctb0RjdmwyT25WQ1F2R1R0dXBhQmdLbkh6Y3U5aXl5M2NyVWZQUzF3d2hhUWpZbGZUVEhTOFdVTkdkZThoemFNenlyTmd6eXRxMGJDcGNESk9VMW1JYWVBSjR2eDlJdlRmU3BoTGJVV3NWcmdja3BrV0wxc1Z6d29GM29WbDl2UDlNYXdKMXJWRF84eF9MMDdVYWhWLVdEc292anRYX2pzN1ct?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (451d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "Com métricas bilionárias, digital reforça sucesso da Copa do Mundo Feminina - Máquina do Esporte",
       "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOeGVnX1VQYnVzWGFyREl3S1ItSWRPQlltdWlNbkhnWDN0OWxhWkI4Z0VYZGlDRkFESzVjTUU3VEM5WW5OSXpoZ2JLZzE4MmJDZklsVzdzc05Lb3FlWWNYQm9ncWQ2ZUROVGlJNW5VRTc1dEEtaGV6YzQ2ZDYteXdGRDljdl9YMmg5a3hPTVV5ZjhLa2NmMVBrcDE2MW1UZUFJOVFaN001Si1xU0Jjd1dwQTJoV2dSZw?oc=5",
@@ -770,11 +794,11 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Com Fortaleza como cidade-sede, marca da Copa do Mundo Feminina da FIFA Brasil 2027™ é apresentada - Prefeitura de Fortaleza",
-      "fonte": "Prefeitura de Fortaleza",
-      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPZm1NNTc3MDNKLXFXWmtxTkxUeDZNQ3ZZWGJYbFBNUjg4WmlNdkJzaFBZMktDdGMyVEd2aHBLbE1UcjVNRlNVYWJQcHlTcGVOTFhyck40YmNrMjVaQUlRNGNWbFRMSjBmcjJFV2pCZnM1eEZUVkNMSkJoWEtWOVJrWE9fX3hGdjNUVlktc1h6ZFV2UmJwaTJFS1E1QzZPQWpXUnlSYmRCT0t6VlIyZEl0bDhwbzlET0pfdjZrb1hobjVmMFZvRVM3VWZacGM2VDJEcjZOX1FsNk9jSDhRMlE?oc=5",
+      "titulo": "Daqui a um ano, Brasil sediará décima edição da Copa do Mundo Feminina - Agência Brasil",
+      "fonte": "Agência Brasil",
+      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQdlFuUGZLZ0twWEFyaGg5bVVOMEVaMmtrTWhCdHBMRDU0YXcwZnl3NmNnUWRlTnBEN2lsYmY3RVh5VHZ0R09ZZGdvbERDSUs0UDZVQmE1ekc0YVNmcUt3bWVUdVV2ZDB4cUMzM29Ra0tUbUsyS1ZPSTNkT1Myc3pKQ3FJRDZwREFWbXlWQnJUOHB0a1hXTUIzSU13RUtVZjVWVlhzYjZxdHhRS0x0Qlp4TFY3WGhoQkx4Qnhac1VPSUtuQjU0ZE8wQ0ZIZ3Z1N2hybU40M1Iyd2gtTHZWX3c?oc=5",
       "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (284d)."
+      "motivo": "Notícia fora da janela de frescor (134d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -794,17 +818,25 @@
     },
     {
       "origem": "scope-gate-2026-10",
-      "titulo": "CT do Santos passa por inspeção da Fifa para tentar receber uma seleção na Copa do Mundo de 2027 - ge",
-      "fonte": "ge.globo.com",
-      "url": "https://news.google.com/rss/articles/CBMijgJBVV95cUxQcERoMnljWm8xeDY0bTEzakxnSHFpUlJQc0lvUjY0NS1JbHVwdVQxVEJIWGt6ZTBoUGFKenZaTWdzNlRpVlE3VTdPVFZSSXBTQkdWbGRBeFF1R013c1RoQlo5YkZ3TElhOWFGN2laM210MWtPYXFPU1U2NXFTM2tQNFNsejRtbjhpMkU2YnNpcWJSYXBrS0dUdzJaVzRNLTVyTHJ3OUwzeE8yMVdXS3hRSjM5bkgxbWdRdU80MHI0STlZM0hpbVlzdzlKNTRsQmNZSjFDbjdDQnNITXo4Z2M2Vy1mbnJ6ZHppckxLMGdNb1hEbklaWWsyRnJFVkdPakZ2ZzdDOHQtRlU2V2c3alHSAZwCQVVfeXFMTmFwYmhsMUpfSVJKRjJxNi0yWEdfeFE5cEVKLWpyUnVPbERSMTliOFhUTV9xOTBXX2x5LTBWdXpvSkRzSUYzT0hxRnhIelI3LS1ac3Rad2hzQkJPN0hWelNLeHpiQzdGcG4xc2ZmZHM0SUhHcDBuakNscHBLb2V3a0M1SXExT0c5YU1mc2R5MXdyVC1TaF9yMl9mUFE0M1Z6YU5ReGwtZFE3cTN5M3hpMFRybGpGRHBpVjRUdVlmZlhXSi1meVdxVXVlV1Zab1E0bGFiZFB0Vmg1VzhjV2xDNWZ1dEZDdDhaZEFmZVhuTDNvRk03TzhwMTRzSkFSdXZzekhjUVJWMV9Uc1ZhSFlsMDQ5WTlvU1B6ZlI5WEQ?oc=5",
+      "titulo": "Terra e Flow Sport Club lançam parceria para Copa do Mundo Feminina de 2027 - Máquina do Esporte",
+      "fonte": "machinadoesporte.com.br",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOa1dDREpaWWpLNkxuYTVaTmZsUU9FWGtqUG9ESnBaN3BZRjBWeXl2MW96ZmFfUmNYWjk5dnpPRFFGQnJpVU1tUlVoaE5NVlFmQ1VyelVsUDBlVUs0QnZlNUdGc2M4QlpiMU1keWxfbFZpWHpKci1FY3UzWjc3Nmo3Z2FvNzlvV3hxOTQ0SElKMjd3UGloWTlqYzNWYV8wWEtCQ3BsZkFCTWgxWE1NcmZ0Tg?oc=5",
       "decisao": "rejeitado",
       "motivo": "URL editorial direta não resolvida; wrapper do Google News não será publicado."
     },
     {
       "origem": "scope-gate-2026-10",
-      "titulo": "Terra e Flow Sport Club lançam parceria para Copa do Mundo Feminina de 2027 - Máquina do Esporte",
-      "fonte": "machinadoesporte.com.br",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOa1dDREpaWWpLNkxuYTVaTmZsUU9FWGtqUG9ESnBaN3BZRjBWeXl2MW96ZmFfUmNYWjk5dnpPRFFGQnJpVU1tUlVoaE5NVlFmQ1VyelVsUDBlVUs0QnZlNUdGc2M4QlpiMU1keWxfbFZpWHpKci1FY3UzWjc3Nmo3Z2FvNzlvV3hxOTQ0SElKMjd3UGloWTlqYzNWYV8wWEtCQ3BsZkFCTWgxWE1NcmZ0Tg?oc=5",
+      "titulo": "Fortaleza é candidata a receber repescagem da Copa do Mundo Feminina com jogos no PV - Diário do Nordeste",
+      "fonte": "diariodonordeste.verdesmares.com.br",
+      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPaWExUWpRcVRyb01panYyU1BkV2dsWkRXbnhGV19UVFAyd3VvMWx3Q3haNlFVSVdfbDZ2a2UyZXQzb1dHN0I2WWRsVXd4UEhvNGZMN3M5aHQ1VXhoSTNQOW9falBza21DT2ZpbUY1REtNYjFpZ2RHWlpid1BYLVc3UVlpUG50a3JoaUExaVFoTGdQVVFpT0FsMWF1b25KNEJPTHd1dlN2NXRQZ2xoTXVrbVlHbi1lNnBkU0RUY1p6eC1icnYwOUVnSWRPTmlTeF91U3FGZkRjdUNfMkViSnc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "URL editorial direta não resolvida; wrapper do Google News não será publicado."
+    },
+    {
+      "origem": "scope-gate-2026-10",
+      "titulo": "CT do Santos passa por inspeção da Fifa para tentar receber uma seleção na Copa do Mundo de 2027 - ge",
+      "fonte": "ge.globo.com",
+      "url": "https://news.google.com/rss/articles/CBMijgJBVV95cUxQcERoMnljWm8xeDY0bTEzakxnSHFpUlJQc0lvUjY0NS1JbHVwdVQxVEJIWGt6ZTBoUGFKenZaTWdzNlRpVlE3VTdPVFZSSXBTQkdWbGRBeFF1R013c1RoQlo5YkZ3TElhOWFGN2laM210MWtPYXFPU1U2NXFTM2tQNFNsejRtbjhpMkU2YnNpcWJSYXBrS0dUdzJaVzRNLTVyTHJ3OUwzeE8yMVdXS3hRSjM5bkgxbWdRdU80MHI0STlZM0hpbVlzdzlKNTRsQmNZSjFDbjdDQnNITXo4Z2M2Vy1mbnJ6ZHppckxLMGdNb1hEbklaWWsyRnJFVkdPakZ2ZzdDOHQtRlU2V2c3alHSAZwCQVVfeXFMTmFwYmhsMUpfSVJKRjJxNi0yWEdfeFE5cEVKLWpyUnVPbERSMTliOFhUTV9xOTBXX2x5LTBWdXpvSkRzSUYzT0hxRnhIelI3LS1ac3Rad2hzQkJPN0hWelNLeHpiQzdGcG4xc2ZmZHM0SUhHcDBuakNscHBLb2V3a0M1SXExT0c5YU1mc2R5MXdyVC1TaF9yMl9mUFE0M1Z6YU5ReGwtZFE3cTN5M3hpMFRybGpGRHBpVjRUdVlmZlhXSi1meVdxVXVlV1Zab1E0bGFiZFB0Vmg1VzhjV2xDNWZ1dEZDdDhaZEFmZVhuTDNvRk03TzhwMTRzSkFSdXZzekhjUVJWMV9Uc1ZhSFlsMDQ5WTlvU1B6ZlI5WEQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "URL editorial direta não resolvida; wrapper do Google News não será publicado."
     },
