@@ -123,6 +123,15 @@
       "attempts": 6,
       "requires_strict_reconciliation": true,
       "visual_mode": "fallback_visual"
+    },
+    {
+      "key": "instagram:evento:evt-20261110-ecofut-rio",
+      "post_file": "instagram/fila/automatica/instagram-evento-evt-20261110-ecofut-rio-afc652a553.json",
+      "reserved_at": "2026-11-07T19:40:16.731955+00:00",
+      "last_attempt_at": "2026-11-07T19:40:16.731955+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "visual_mode": "radar_event_text_art"
     }
   ]
 }
