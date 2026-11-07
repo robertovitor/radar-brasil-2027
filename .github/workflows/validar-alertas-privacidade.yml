@@ -1,4 +1,4 @@
-name: Validar privacidade dos alertas
+name: Validar privacidade e resumo diário dos alertas
 
 on:
   push:
@@ -6,12 +6,16 @@ on:
       - "alertas/**"
       - "scripts/alertas_ledger.py"
       - "scripts/validar_alertas_privacidade.py"
+      - "scripts/resumo_diario.py"
+      - "tests/test_resumo_diario.py"
       - ".github/workflows/validar-alertas-privacidade.yml"
   pull_request:
     paths:
       - "alertas/**"
       - "scripts/alertas_ledger.py"
       - "scripts/validar_alertas_privacidade.py"
+      - "scripts/resumo_diario.py"
+      - "tests/test_resumo_diario.py"
       - ".github/workflows/validar-alertas-privacidade.yml"
   workflow_dispatch:
 
@@ -29,3 +33,6 @@ jobs:
 
       - name: Validar ledgers
         run: python scripts/validar_alertas_privacidade.py
+
+      - name: Testar filtros do resumo diário
+        run: python -m unittest discover -s tests -p "test_resumo_diario.py" -v
