@@ -121,10 +121,24 @@ def safe_url(value):
     return value if parsed.scheme in ("http", "https") and parsed.netloc else ""
 
 
+def event_date(value):
+    value = str(value or "").strip()
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value[:10]).date()
+    except ValueError:
+        try:
+            return datetime.strptime(value[:10], "%d/%m/%Y").date()
+        except ValueError:
+            return None
+
+
 def observe(state, events, news, now, publication_times=None):
     if not isinstance(events, list) or not isinstance(news, list):
         raise ValueError("Fontes públicas devem ser listas completas")
     since = state["last_observed_at"]
+    today = instant(now).astimezone(TZ).date()
     seen = set(state["seen"])
     public_ids = set()
     for kind, rows in (("events", events), ("news", news)):
@@ -135,19 +149,35 @@ def observe(state, events, news, now, publication_times=None):
                 continue
             seen.add(key)
             published = (publication_times or {}).get(key)
+            # Fail closed: notícias só entram com data/hora de publicação
+            # comprovada e posterior ao início da rotina (sem backfill histórico).
+            if kind == "news" and not published:
+                continue
             if published and instant(published) < instant(state["started_at"]):
                 continue
+            date_value = str(row.get("DataBR") or row.get("Data") or "")
+            if kind == "events":
+                event_day = event_date(row.get("Data") or row.get("DataBR"))
+                if event_day is None or event_day < today:
+                    continue
             state["pending"][key] = {
                 "key": key, "kind": kind, "title": str(row.get("Titulo") or "").strip(),
                 "summary": str(row.get("Resumo") or row.get("Observacoes") or ""),
-                "url": safe_url(row.get("Link")), "date": str(row.get("DataBR") or row.get("Data") or ""),
+                "url": safe_url(row.get("Link")), "date": date_value,
                 "location": str(row.get("Local") or row.get("CidadeUF") or row.get("Cidade") or ""),
                 "published_at": published, "new_since": since, "observed_at": now,
             }
     state["seen"] = sorted(seen)
     state["last_observed_at"] = now
-    # Não divulgar itens removidos pela curadoria.
-    state["pending"] = {k: v for k, v in state["pending"].items() if k in public_ids}
+    # Não divulgar itens removidos pela curadoria nem eventos que venceram
+    # enquanto aguardavam a próxima rodada de envio.
+    state["pending"] = {
+        k: v for k, v in state["pending"].items()
+        if k in public_ids and (
+            v["kind"] != "events" or
+            (event_date(v.get("date")) is not None and event_date(v.get("date")) >= today)
+        )
+    }
 
 
 def allowed(state, email, kind):
