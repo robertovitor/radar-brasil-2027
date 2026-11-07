@@ -21,7 +21,8 @@ def state():
 
 def observe(s):
     m.observe(s, [{"ID": "evt-1", "Titulo": "Evento", "Data": "2027-06-24", "Link": "https://example.invalid/event"}],
-              [{"Titulo": "Notícia", "Link": "https://example.invalid/news", "Resumo": "Resumo"}], NOW)
+              [{"Titulo": "Notícia", "Link": "https://example.invalid/news", "Resumo": "Resumo"}], NOW,
+              {"news:https://example.invalid/news": "2026-10-12T03:00:00Z"})
 
 
 class DailyDigestTests(unittest.TestCase):
@@ -56,6 +57,27 @@ class DailyDigestTests(unittest.TestCase):
         m.observe(s, [], [{"Link": "https://example.invalid/old", "Titulo": "Antiga"}], NOW,
                   {"news:https://example.invalid/old": "2026-10-11T00:00:00Z"})
         self.assertEqual(m.plan(s, NOW), [])
+
+    def test_expired_events_and_unproven_or_old_news_are_never_planned(self):
+        s = state()
+        m.observe(s,
+                  [{"ID": "past", "Titulo": "Evento passado", "Data": "2026-10-11"}],
+                  [{"Titulo": "Sem data", "Link": "https://example.invalid/no-date"},
+                   {"Titulo": "Notícia antiga", "Link": "https://example.invalid/old"}],
+                  NOW,
+                  {"news:https://example.invalid/old": "2026-10-01T00:00:00Z"})
+        self.assertEqual(m.plan(s, NOW), [])
+
+    def test_event_that_expires_before_send_is_removed(self):
+        s = state()
+        m.observe(s,
+                  [{"ID": "today", "Titulo": "Evento de hoje", "Data": "2026-10-12"}],
+                  [], NOW)
+        later = "2026-10-13T00:00:00Z"
+        s["subscribers_refreshed_at"] = later
+        s["unsubscribes_checked_at"] = later
+        s["gmail_unsubscribes_checked_at"] = later
+        self.assertEqual(m.plan(s, later), [])
 
     def test_subscriber_confirmation_is_not_historical_debt(self):
         s = state(); observe(s)
