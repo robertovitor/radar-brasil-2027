@@ -1,9 +1,8 @@
-name: Enfileirar alertas aos assinantes
+name: Enfileirar alertas aos assinantes (legado bloqueado)
 
 on:
-  # Uma única rodada diária; o script enfileira no máximo um item por execução.
-  schedule:
-    - cron: "0 12 * * *" # 02:00 em Brasília
+  # Agendamento removido: o resumo diário é o único fluxo autorizado para assinantes.
+  # Disparo manual mantido apenas para diagnóstico, sem credenciais nem execução do enfileirador.
   workflow_dispatch:
 
 permissions:
@@ -14,24 +13,18 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  enfileirar:
+  bloqueado:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
-          fetch-depth: 0
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Registrar gatilho
-        run: |
-          echo "trigger_event=${{ github.event_name }}"
-          echo "trigger_schedule=${{ github.event.schedule || '' }}"
-          echo "triggered_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-      - name: Enfileirar no máximo um item pendente
-        env:
-          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
-          RADAR_AIRTABLE_ALLOW: '1'
-        run: python scripts/enfileirar_alertas.py
+      - name: Validar sintaxe sem acessar serviços externos
+        run: python -m py_compile scripts/enfileirar_alertas.py
+      - name: Confirmar bloqueio do fluxo legado
+        run: echo "Fluxo legado bloqueado: nenhum alerta enfileirado; nenhuma chamada Airtable; nenhum e-mail enviado."
