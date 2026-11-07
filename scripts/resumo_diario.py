@@ -212,6 +212,22 @@ def digest_html(items, day, token):
 
 
 def plan(state, now):
+    # Revalidação no instante do disparo: fila antiga não pode sobreviver
+    # ao vencimento de um evento ou envelhecimento de uma notícia.
+    current = instant(now)
+    today = current.astimezone(TZ).date()
+    state["pending"] = {
+        key: item for key, item in state["pending"].items()
+        if (
+            item.get("kind") == "events"
+            and event_date(item.get("date")) is not None
+            and event_date(item.get("date")) >= today
+        ) or (
+            item.get("kind") == "news"
+            and item.get("published_at")
+            and timedelta(0) <= current - instant(item["published_at"]) <= timedelta(hours=72)
+        )
+    }
     if not state["pending"]:
         return []
     if refresh_due(state, now):
