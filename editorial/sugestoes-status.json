@@ -1,10 +1,10 @@
 {
-  "at": "2026-11-07T15:40:05.420954+00:00",
+  "at": "2026-11-08T15:59:10.937724+00:00",
   "reads": 2,
   "writes": 0,
   "processed": 14,
-  "queued": 0,
-  "pending": 13,
+  "queued": 1,
+  "pending": 12,
   "duplicates": 1,
   "errors": [],
   "items": [
@@ -81,8 +81,7 @@
       "id": "reccRZhYLpL3w4tDD",
       "kind": "eventos",
       "title": "EcoFut Rio",
-      "outcome": "pending",
-      "reason": "Fonte social ou domínio ainda sem confirmação independente"
+      "outcome": "queued"
     },
     {
       "id": "recdD2Ov4ONt0BPru",
