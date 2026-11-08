@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-08T10:56:52-03:00",
-  "fim": "2026-11-08T10:58:42-03:00",
+  "inicio": "2026-11-08T16:13:22-03:00",
+  "fim": "2026-11-08T16:15:00-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -158,8 +158,7 @@
     },
     {
       "hub": "https://avai.com.br/categoria/futebol-feminino/",
-      "resultados": 0,
-      "erro": "URLError:<urlopen error timed out>"
+      "resultados": 5
     },
     {
       "hub": "https://mineirao.com.br/noticias",
@@ -176,7 +175,7 @@
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 1
+      "resultados": 2
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
@@ -207,12 +206,11 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 46,
+  "oportunidades_validas_na_execucao": 45,
   "adicionadas": 0,
-  "atualizadas": 6,
+  "atualizadas": 3,
   "total_arquivo": 92,
   "erros": [
-    "hub:https://avai.com.br/categoria/futebol-feminino/:URLError:<urlopen error timed out>",
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
