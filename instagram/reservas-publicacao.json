@@ -123,15 +123,6 @@
       "attempts": 6,
       "requires_strict_reconciliation": true,
       "visual_mode": "fallback_visual"
-    },
-    {
-      "key": "instagram:evento:sug-reccrzhylpl3w4tdd",
-      "post_file": "instagram/fila/automatica/instagram-evento-sug-reccrzhylpl3w4tdd-c03d2ef6b3.json",
-      "reserved_at": "2026-11-08T19:11:30.301980+00:00",
-      "last_attempt_at": "2026-11-08T19:11:30.301980+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "visual_mode": "radar_event_text_art"
     }
   ]
 }
