@@ -1,11 +1,11 @@
 {
-  "at": "2026-11-08T15:59:10.937724+00:00",
+  "at": "2026-11-09T19:50:26.706488+00:00",
   "reads": 2,
   "writes": 0,
-  "processed": 14,
-  "queued": 1,
-  "pending": 12,
-  "duplicates": 1,
+  "processed": 15,
+  "queued": 0,
+  "pending": 13,
+  "duplicates": 2,
   "errors": [],
   "items": [
     {
@@ -81,7 +81,7 @@
       "id": "reccRZhYLpL3w4tDD",
       "kind": "eventos",
       "title": "EcoFut Rio",
-      "outcome": "queued"
+      "outcome": "duplicate"
     },
     {
       "id": "recdD2Ov4ONt0BPru",
@@ -101,6 +101,13 @@
       "id": "recd17aegfgdrZoar",
       "kind": "noticias",
       "title": "Amistosos 2027",
+      "outcome": "pending",
+      "reason": "Fonte social ou domínio ainda sem confirmação independente"
+    },
+    {
+      "id": "recmgPVLo7mdTHGwg",
+      "kind": "noticias",
+      "title": "Petrobras - Ações Futebol Feminino",
       "outcome": "pending",
       "reason": "Fonte social ou domínio ainda sem confirmação independente"
     }
