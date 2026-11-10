@@ -9,6 +9,7 @@ on:
   push:
     paths:
       - '.github/dispatch/consumir-sugestoes-hoje'
+      - '.github/workflows/consumir-sugestoes-diarias.yml'
 
 permissions:
   contents: write
@@ -24,7 +25,7 @@ jobs:
     env:
       RADAR_PUBLIC_ONLY: '0'
       RADAR_AIRTABLE_ALLOW: '1'
-      RADAR_SUGGESTIONS_RETRY: ${{ github.event_name == 'push' && '1' || '0' }}
+      RADAR_SUGGESTIONS_RETRY: '1'
       AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
     steps:
       - uses: actions/checkout@v4
