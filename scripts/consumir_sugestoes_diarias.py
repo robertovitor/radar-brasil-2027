@@ -17,7 +17,7 @@ MAX_PATCHES = 4
 MAX_RECORDS_PER_TABLE = {"eventos": 1, "noticias": 3}  # reserva 1 evento e até 3 notícias
 APPROVALS_PATH = ROOT / "editorial" / "aprovacoes-manuais.json"
 APPROVALS = json.loads(APPROVALS_PATH.read_text(encoding="utf-8")) if APPROVALS_PATH.exists() else {"items": []}
-MANUAL_APPROVALS = {(" ".join(str(x.get("title", "")).casefold().split()), str(x.get("kind", ""))) for x in APPROVALS.get("items", []) if x.get("decision") == "approved_by_editor"}
+MANUAL_APPROVALS = {(" ".join(str(title).casefold().split()), str(x.get("kind", ""))) for x in APPROVALS.get("items", []) if x.get("decision") == "approved_by_editor" for title in [x.get("title", ""), *x.get("aliases", [])]}
 BRT = ZoneInfo("America/Sao_Paulo")
 today = datetime.now(BRT).date()
 
