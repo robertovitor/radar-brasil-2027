@@ -14,7 +14,7 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parents[1]
 STATUS_PATH = ROOT / "editorial" / "sugestoes-diarias-status.json"
 MAX_PATCHES = 4
-MAX_RECORDS_PER_TABLE = 2  # reserva capacidade para eventos e notícias
+MAX_RECORDS_PER_TABLE = {"eventos": 1, "noticias": 3}  # reserva 1 evento e até 3 notícias
 APPROVALS_PATH = ROOT / "editorial" / "aprovacoes-manuais.json"
 APPROVALS = json.loads(APPROVALS_PATH.read_text(encoding="utf-8")) if APPROVALS_PATH.exists() else {"items": []}
 MANUAL_APPROVALS = {(" ".join(str(x.get("title", "")).casefold().split()), str(x.get("kind", ""))) for x in APPROVALS.get("items", []) if x.get("decision") == "approved_by_editor"}
@@ -95,7 +95,7 @@ def daily_read(table_id):
     ready = []
     table_selected = 0
     for record in records:
-        if table_selected >= MAX_RECORDS_PER_TABLE or selected >= MAX_PATCHES:
+        if table_selected >= MAX_RECORDS_PER_TABLE[kind] or selected >= MAX_PATCHES:
             break
         fields = record.setdefault("fields", {})
         # O Airtable omite campos vazios no JSON; sem isto o núcleo não salva Status.
