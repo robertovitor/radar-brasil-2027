@@ -1,11 +1,14 @@
 name: Consumir sugestões Airtable (diário controlado)
 
 on:
-  # Uma execução diária, às 09h20 de Brasília. O script bloqueia reruns
-  # no mesmo dia e mantém o teto de duas leituras e quatro escritas.
+  # Agendamento diário às 09h20 de Brasília.
   schedule:
     - cron: '20 12 * * *'
   workflow_dispatch:
+  # Gatilho pontual para executar o lote pendente ainda hoje.
+  push:
+    paths:
+      - '.github/dispatch/consumir-sugestoes-hoje'
 
 permissions:
   contents: write
