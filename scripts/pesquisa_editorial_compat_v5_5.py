@@ -1263,6 +1263,44 @@ def _same_publisher(url, domain):
     except Exception:
         return False
 
+def _resolve_google_news_from_html(response_bytes, final_url, source_domain, title):
+    """Extract only same-publisher editorial URLs from a Google News wrapper."""
+    if final_url and pe.trusted_url(final_url) and _same_publisher(final_url, source_domain):
+        return final_url
+    try:
+        raw=response_bytes.decode('utf-8','ignore')
+    except Exception:
+        return ''
+    decoded=html.unescape(raw).replace(r'\u0026','&').replace(r'\/','/')
+    candidates=[]
+    patterns=(
+        r'''(?:href|url|canonical|articleUrl|article_url)\s*[=:]\s*["'](https?://[^"']+)["']''',
+        r'''https?://[^\s"'< >\\]+'''
+    )
+    for pattern in patterns:
+        for match in re.findall(pattern, decoded, flags=re.I):
+            value=match.strip().rstrip(r'\.,);]}')
+            for candidate in (value, urllib.parse.unquote(value)):
+                candidate=candidate.replace(r'\u0026','&').replace(r'\/','/')
+                parsed=urllib.parse.urlparse(candidate)
+                if parsed.scheme!='https' or not parsed.netloc:
+                    continue
+                if not pe.trusted_url(candidate) or not _same_publisher(candidate,source_domain):
+                    continue
+                if candidate not in candidates:
+                    candidates.append(candidate)
+    title_tokens={t for t in pe.norm(title).split() if len(t)>3}
+    for candidate in candidates[:8]:
+        excerpt,resolved=pe.fetch_article_excerpt(candidate)
+        if not excerpt or not pe.trusted_url(resolved) or not _same_publisher(resolved,source_domain):
+            continue
+        excerpt_tokens={t for t in pe.norm(excerpt).split() if len(t)>3}
+        overlap=len(title_tokens & excerpt_tokens)/max(1,len(title_tokens))
+        if overlap>=0.25 and pe.article_is_relevant(title,excerpt):
+            return resolved
+    return ''
+
+
 def public_research_v56(keys):
     rss = pe.rss_candidates()
     gdelt = _v55_gdelt_candidates()
@@ -1280,7 +1318,8 @@ def public_research_v56(keys):
     prepared = []
     upgraded = 0
     redirect_attempts = 0
-    max_redirect_attempts = 5  # teto por ciclo horário; não envolve Airtable
+    html_resolved = 0
+    max_redirect_attempts = 8  # teto por ciclo horário; não envolve Airtable
     for c0 in rss:
         c = dict(c0)
         if c.get('origin') in ('google-news','google-news-trusted-source'):
@@ -1300,18 +1339,24 @@ def public_research_v56(keys):
                 # terminar em HTTPS, domínio confiável e no mesmo veículo indicado no RSS.
                 redirect_attempts += 1
                 try:
-                    _, final_url, _ = pe.request_bytes(str(c.get('url') or ''), timeout=12)
+                    response_bytes, final_url, _ = pe.request_bytes(str(c.get('url') or ''), timeout=12)
                     final = urllib.parse.urlparse(final_url)
+                    resolved=''
                     if (final.scheme == 'https' and pe.trusted_url(final_url)
                             and _same_publisher(final_url, source_domain)):
+                        resolved=final_url
+                    else:
+                        resolved=_resolve_google_news_from_html(response_bytes,final_url,source_domain,str(c.get('title') or ''))
+                    if resolved:
                         c['google_news_url'] = c.get('url','')
-                        c['url'] = final_url
-                        c['origin'] = 'google-news-redirect-resolved-v5.7'
+                        c['url'] = resolved
+                        c['origin'] = 'google-news-html-resolved-v5.8'
                         c['trusted_source_domain'] = source_domain
                         upgraded += 1
-                        print(f"google_news_redirect_resolved=v5.7|{source_domain}")
+                        if resolved != final_url: html_resolved += 1
+                        print(f"google_news_resolved=v5.8|{source_domain}|{resolved}")
                 except Exception as exc:
-                    print(f"google_news_redirect_unresolved={type(exc).__name__}")
+                    print(f"google_news_resolve_unresolved={type(exc).__name__}")
         prepared.append(c)
 
     saved_rss, saved_gdelt = pe.rss_candidates, pe.gdelt_candidates
@@ -1324,6 +1369,7 @@ def public_research_v56(keys):
 
     print(f'google_news_gdelt_resolved_count={upgraded}')
     print(f'google_news_redirect_attempts={redirect_attempts}|limit={max_redirect_attempts}')
+    print(f'google_news_html_extractions={html_resolved}')
     return result
 
 pe.public_research = public_research_v56
