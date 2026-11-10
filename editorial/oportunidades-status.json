@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-10T01:24:10-03:00",
-  "fim": "2026-11-10T01:25:43-03:00",
+  "inicio": "2026-11-10T08:17:02-03:00",
+  "fim": "2026-11-10T08:18:39-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -206,17 +206,16 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 45,
+  "oportunidades_validas_na_execucao": 46,
   "adicionadas": 0,
-  "atualizadas": 45,
+  "atualizadas": 4,
   "total_arquivo": 92,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/10-11-2026/09-04-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:HTTPError:HTTP Error 404: Not Found",
-    "page:https://www.gov.br/esporte/pt-br/acesso-a-informacao/participacao-social:URLError:<urlopen error [Errno 101] Network is unreachable>"
+    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:HTTPError:HTTP Error 404: Not Found"
   ],
   "isolamento": {
     "noticias": "inalterado",
