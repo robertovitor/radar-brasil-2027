@@ -14,6 +14,10 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parents[1]
 STATUS_PATH = ROOT / "editorial" / "sugestoes-diarias-status.json"
 MAX_PATCHES = 4
+MAX_RECORDS_PER_TABLE = 2  # reserva capacidade para eventos e notícias
+APPROVALS_PATH = ROOT / "editorial" / "aprovacoes-manuais.json"
+APPROVALS = json.loads(APPROVALS_PATH.read_text(encoding="utf-8")) if APPROVALS_PATH.exists() else {"items": []}
+MANUAL_APPROVALS = {(" ".join(str(x.get("title", "")).casefold().split()), str(x.get("kind", ""))) for x in APPROVALS.get("items", []) if x.get("decision") == "approved_by_editor"}
 BRT = ZoneInfo("America/Sao_Paulo")
 today = datetime.now(BRT).date()
 
@@ -79,11 +83,19 @@ pe.pending_enrichment_reason = pending_instead_of_silent_reject
 def daily_read(table_id):
     global selected
     records = original_read(table_id)  # 1 GET; falha fechada se houver paginação.
-    records.sort(key=lambda x: x.get("createdTime", ""), reverse=True)
-    ready = []
     is_events = table_id == pe.TABLE_EVENTS
+    kind = "eventos" if is_events else "noticias"
+    def priority(record):
+        fields = record.get("fields", {})
+        title = " ".join(str(pe.first(fields, "Evento sugerido", "Título ou assunto", "Título", "Titulo")).casefold().split())
+        return (0 if (title, kind) in MANUAL_APPROVALS else 1, record.get("createdTime", ""))
+    # Registros com aprovação humana explícita entram primeiro, sem dispensar
+    # validação de data, duplicidade, integridade dos campos ou publicação.
+    records.sort(key=priority)
+    ready = []
+    table_selected = 0
     for record in records:
-        if selected >= MAX_PATCHES:
+        if table_selected >= MAX_RECORDS_PER_TABLE or selected >= MAX_PATCHES:
             break
         fields = record.setdefault("fields", {})
         # O Airtable omite campos vazios no JSON; sem isto o núcleo não salva Status.
@@ -106,6 +118,7 @@ def daily_read(table_id):
                     "Última verificação": pe.iso()
                 })
                 selected += 1
+            table_selected += 1
             continue
         if duplicated:
             limited_patch(table_id, rid, {
@@ -132,10 +145,12 @@ def daily_read(table_id):
                     "Última verificação": pe.iso()
                 })
                 selected += 1
+                table_selected += 1
                 continue
         # O núcleo ainda aplica o validador editorial v5.5 antes de enfileirar.
         ready.append(record)
         selected += 1
+        table_selected += 1
     print(f"sugestoes_diarias_tabela={table_id}|lidas={len(records)}|selecionadas={len(ready)}")
     return ready
 
