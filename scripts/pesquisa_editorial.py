@@ -19,7 +19,10 @@ TRUSTED_DOMAINS = (
     'folha.uol.com.br','estadao.com.br','oglobo.globo.com','valor.globo.com','exame.com','lance.com.br','terra.com.br',
     'prefeitura.poa.br','saopaulo.sp.gov.br','prefeitura.sp.gov.br','rio.rj.gov.br','salvador.ba.gov.br','fortaleza.ce.gov.br',
     'recife.pe.gov.br','belohorizonte.mg.gov.br','brasilia.df.gov.br','goias.gov.br','bahia.ba.gov.br','ceara.gov.br',
-    'pernambuco.gov.br','mg.gov.br','rs.gov.br','rj.gov.br','es.gov.br','sc.gov.br','pr.gov.br','sp.gov.br'
+    'pernambuco.gov.br','mg.gov.br','rs.gov.br','rj.gov.br','es.gov.br','sc.gov.br','pr.gov.br','sp.gov.br',
+    'jornaldaparaiba.com.br','esbrasil.com.br','trivela.com.br','poder360.com.br',
+    'forbes.com.br','brasildefato.com.br','tmc.com.br','diariodoturismo.com.br',
+    'folhadoestado.com.br','opiniaoce.com.br','bpmoney.com.br','sportbuzz.com.br',
 )
 
 PUBLIC_QUERIES = [
