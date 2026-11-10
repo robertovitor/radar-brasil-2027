@@ -127,6 +127,7 @@ def daily_read(table_id):
                 "Última verificação": pe.iso()
             })
             selected += 1
+            table_selected += 1
             continue
         # Eventos antigos não devem voltar como novidade; nunca republicá-los.
         if is_events:
