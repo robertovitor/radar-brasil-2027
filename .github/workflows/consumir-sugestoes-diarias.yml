@@ -5,10 +5,6 @@ on:
   schedule:
     - cron: '20 12 * * *'
   workflow_dispatch:
-  # Gatilho pontual para executar o lote pendente ainda hoje.
-  push:
-    paths:
-
 permissions:
   contents: write
 
