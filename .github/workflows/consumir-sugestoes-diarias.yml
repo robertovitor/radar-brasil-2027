@@ -19,7 +19,6 @@ concurrency:
 
 jobs:
   consumir:
-    if: github.event_name != 'push' || hashFiles('.github/dispatch/consumir-sugestoes-hoje') != ''
     runs-on: ubuntu-latest
     timeout-minutes: 12
     env:
