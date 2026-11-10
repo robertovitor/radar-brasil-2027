@@ -1,7 +1,7 @@
 name: Sugestoes Radar - diario limitado
 on:
-  schedule:
-    - cron: "15 9 * * *" # 06:15 em Brasília (UTC-3)
+  # A auditoria sem escrita fica disponível apenas para execução manual.
+  # O único agendamento diário de consumo está em consumir-sugestoes-diarias.yml.
   workflow_dispatch:
 permissions:
   contents: write
