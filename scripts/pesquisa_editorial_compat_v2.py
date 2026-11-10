@@ -61,6 +61,21 @@ SOURCE_DOMAIN_HINTS = {
     'prefeitura de fortaleza': 'fortaleza.ce.gov.br',
     'prefeitura de porto alegre': 'prefeitura.poa.br',
     'prefeitura poa br': 'prefeitura.poa.br',
+    'jornal da paraiba': 'jornaldaparaiba.com.br',
+    'ajn1': 'ajn1.com.br',
+    'expressao brasiliense': 'expressaobrasiliense.com.br',
+    'es brasil': 'esbrasil.com.br',
+    'trivela': 'trivela.com.br',
+    'brasil de fato': 'brasildefato.com.br',
+    'forbes brasil': 'forbes.com.br',
+    'forbes': 'forbes.com.br',
+    'poder360': 'poder360.com.br',
+    'folha do estado da bahia': 'folhadoestado.com.br',
+    'diario do turismo': 'diariodoturismo.com.br',
+    'opiniaoce': 'opiniaoce.com.br',
+    'tmc': 'tmc.com.br',
+    'bp money': 'bpmoney.com.br',
+    'sportbuzz': 'sportbuzz.com.br',
 }
 
 
