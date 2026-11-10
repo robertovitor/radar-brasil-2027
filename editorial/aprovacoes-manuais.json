@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-10",
+  "policy": "Aprovação editorial humana registrada pelo responsável do Radar. Não dispensa campos factuais mínimos, checagem de data passada, duplicidade nem fonte rastreável; apenas registra a decisão e prioriza os registros no lote controlado.",
+  "items": [
+    {
+      "title": "Petrobras - Ações Futebol Feminino",
+      "kind": "noticias",
+      "decision": "approved_by_editor",
+      "decision_date": "2026-11-10"
+    },
+    {
+      "title": "Exibição da Taça da Copa do Mundo Feminina 2027",
+      "kind": "noticias",
+      "decision": "approved_by_editor",
+      "decision_date": "2026-11-10"
+    },
+    {
+      "title": "Convocação",
+      "kind": "noticias",
+      "decision": "approved_by_editor",
+      "decision_date": "2026-11-10"
+    },
+    {
+      "title": "Tour Petrobras Elas no Jogo",
+      "kind": "eventos",
+      "decision": "approved_by_editor",
+      "decision_date": "2026-11-10"
+    }
+  ]
+}
