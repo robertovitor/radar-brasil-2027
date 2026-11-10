@@ -19,11 +19,13 @@ concurrency:
 
 jobs:
   consumir:
+    if: github.event_name != 'push' || hashFiles('.github/dispatch/consumir-sugestoes-hoje') != ''
     runs-on: ubuntu-latest
     timeout-minutes: 12
     env:
       RADAR_PUBLIC_ONLY: '0'
       RADAR_AIRTABLE_ALLOW: '1'
+      RADAR_SUGGESTIONS_RETRY: ${{ github.event_name == 'push' && '1' || '0' }}
       AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
     steps:
       - uses: actions/checkout@v4
