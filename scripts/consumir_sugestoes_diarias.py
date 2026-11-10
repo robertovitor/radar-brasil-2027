@@ -7,6 +7,9 @@ por execução. Nunca pesquisa fontes públicas em lote nem envia e-mails.
 import importlib.util
 import json
 import os
+import html
+import re
+import urllib.parse
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -47,8 +50,103 @@ pe.public_research = lambda keys: (0, [], 0, 0, [])
 original_read = pe.airtable_read
 original_patch = pe.airtable_patch
 original_pending = pe.pending_enrichment_reason
+original_candidate = pe.candidate_from_record
 patches = 0
 selected = 0
+
+# O título editorial é extraído da página vinculada à sugestão. Os formulários
+# podem trazer somente o link; não se deve exigir que o visitante repita o título.
+_SOURCE_TITLE_CACHE = {}
+
+def source_title(fields, kind):
+    link = str(pe.first(fields, "Fonte ou link", "Link", "URL")).strip()
+    if not link:
+        return ""
+    key = pe.urlnorm(link) or link
+    if key in _SOURCE_TITLE_CACHE:
+        return _SOURCE_TITLE_CACHE[key]
+    title = ""
+    try:
+        parsed = urllib.parse.urlparse(link)
+        if parsed.scheme not in ("http", "https") or not parsed.hostname:
+            return ""
+        data, final_url, headers = pe.request_bytes(
+            link,
+            headers={"User-Agent": "Mozilla/5.0 (compatible; RadarBrasil2027/3.2)",
+                     "Accept": "text/html,application/xhtml+xml"},
+            timeout=12,
+        )
+        final = urllib.parse.urlparse(final_url)
+        if final.scheme not in ("http", "https") or not final.hostname:
+            return ""
+        raw = data[:1000000].decode("utf-8", "ignore")
+        metas = {}
+        for tag in re.findall(r"<meta\\b[^>]*>", raw, flags=re.I):
+            attrs = {k.casefold(): html.unescape(v) for k, q, v in re.findall(
+                r"([\\w:-]+)\\s*=\\s*([\"\\'])(.*?)\\2", tag, flags=re.S)}
+            name = attrs.get("property", attrs.get("name", "")).casefold()
+            if name in ("og:title", "twitter:title", "title", "og:site_name"):
+                metas[name] = attrs.get("content", "")
+        match = re.search(r"<title\\b[^>]*>(.*?)</title>", raw, flags=re.I | re.S)
+        title = metas.get("og:title") or metas.get("twitter:title") or (match.group(1) if match else "")
+        title = html.unescape(re.sub(r"<[^>]+>", " ", title))
+        title = re.sub(r"\\s+", " ", title).strip(" -|•")
+        if not title or title.casefold() in ("instagram", "facebook", "tiktok"):
+            # Redes sociais podem expor a manchete/legenda somente nos metadados
+            # de descrição ou no JSON incorporado.
+            if (final.hostname or "").casefold().removeprefix("www.") in (
+                "instagram.com", "facebook.com", "tiktok.com"
+            ):
+                caption = compat._social_page_details(link)
+                if caption:
+                    chunks = re.split(r"(?<=[.!?])\\s+|\\n", caption)
+                    title = next((x.strip() for x in chunks if len(x.strip()) >= 18), caption[:180].strip())
+        if title and title.casefold() not in ("instagram", "facebook", "tiktok"):
+            title = title[:260]
+    except Exception as exc:
+        print(f"suggestion_source_title_unavailable={type(exc).__name__}")
+        title = ""
+    _SOURCE_TITLE_CACHE[key] = title
+    print(f"suggestion_source_title={'ok' if title else 'missing'}|kind={kind}")
+    return title
+
+def resolve_suggestion_title(fields, kind):
+    title = str(pe.first(fields, "Evento sugerido", "Título ou assunto", "Título", "Titulo")).strip()
+    if not title:
+        title = source_title(fields, kind)
+    if not title:
+        return ""
+    normalized = pe.norm(title)
+    # Associa uma manchete extraída à aprovação humana somente por correspondência
+    # textual clara; não atribui aprovação a uma sugestão sem relação.
+    for approval in APPROVALS.get("items", []):
+        if approval.get("decision") != "approved_by_editor" or approval.get("kind") != kind:
+            continue
+        canonical = str(approval.get("title", "")).strip()
+        variants = [canonical, *approval.get("aliases", [])]
+        for variant in variants:
+            v = pe.norm(variant)
+            tokens = [t for t in v.split() if len(t) >= 4]
+            if v and (v in normalized or (len(tokens) >= 2 and sum(t in normalized for t in tokens) >= max(2, len(tokens)-1))):
+                return canonical
+            if v == "convocacao" and re.search(r"convocad[ao]|convoca[cç][aã]o", normalized):
+                return canonical
+    return title
+
+def candidate_with_source_title(record, kind):
+    copied = dict(record)
+    fields = dict(copied.get("fields", {}) or {})
+    title = resolve_suggestion_title(fields, kind)
+    if title:
+        fields["Título"] = title
+        if kind == "eventos":
+            fields.setdefault("Evento sugerido", title)
+        else:
+            fields.setdefault("Título ou assunto", title)
+    copied["fields"] = fields
+    return original_candidate(copied, kind)
+
+pe.candidate_from_record = candidate_with_source_title
 
 published_events = pe.load(ROOT / "dados.json", [])
 published_news = pe.load(ROOT / "noticias.json", [])
@@ -71,7 +169,7 @@ def pending_instead_of_silent_reject(fields, kind):
     reason = original_pending(fields, kind)
     if reason:
         return reason
-    title = str(pe.first(fields, "Evento sugerido", "Título ou assunto", "Título", "Titulo")).strip()
+    title = resolve_suggestion_title(fields, kind)
     link = str(pe.first(fields, "Fonte ou link", "Link", "URL")).strip()
     if title and link:
         return ("PENDENTE_VERIFICACAO: a sugestão possui título e fonte, mas não "
@@ -87,7 +185,7 @@ def daily_read(table_id):
     kind = "eventos" if is_events else "noticias"
     def priority(record):
         fields = record.get("fields", {})
-        title = " ".join(str(pe.first(fields, "Evento sugerido", "Título ou assunto", "Título", "Titulo")).casefold().split())
+        title = " ".join(resolve_suggestion_title(fields, kind).casefold().split())
         return (0 if (title, kind) in MANUAL_APPROVALS else 1, record.get("createdTime", ""))
     # Registros com aprovação humana explícita entram primeiro, sem dispensar
     # validação de data, duplicidade, integridade dos campos ou publicação.
