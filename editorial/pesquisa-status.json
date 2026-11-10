@@ -1,17 +1,17 @@
 {
-  "cycle_id": "20261110-08",
-  "started_at": "2026-11-10T08:18:51-03:00",
-  "completed_at": "2026-11-10T08:21:37-03:00",
+  "cycle_id": "20261110-10",
+  "started_at": "2026-11-10T10:01:26-03:00",
+  "completed_at": "2026-11-10T10:03:33-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 99,
+  "candidatos_publicos": 98,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 99,
+  "rejeitados": 98,
   "duplicados": 0,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
@@ -274,9 +274,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Com Fortaleza entre as cidades-sede, FIFA lança marca oficial da Copa do Mundo Feminina da FIFA 2027™️ - Sesporte - Secretaria do Esporte",
-      "fonte": "Sesporte - Secretaria do Esporte",
-      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPd1k0YUxGRkQwbkdjZWR5MjNxcUE2YlZSN1FPTWVBQ0RHb3NUXzdyZ3ZQX3hVMUlxM01iMDNPMFM3R1RNcHdsMEVSbzFzVUhMNVV4alFSWi10SjF3TUp1OTFLREVkZEs0ODZFQXo0eFRSVHdoZHU4T0tXMUw3R1o3WXZRRHNMVzRLQW1SUVQzTHk1NTd1RzlTLW1hMVNDM0tpTjdGWWY0eDdIRnVic1E3SHM3OGlfZ3dDeXFPaUUyRC1HWVZoMEJqdjlxUDR1Q0tlMnBlNWFEM2xOVWN5bUQwRUVVaTE?oc=5",
+      "titulo": "Fortaleza recebe amistoso entre Brasil e Estados Unidos e registra maior público do futebol feminino no Nordeste - Prefeitura Municipal de Fortaleza/CE",
+      "fonte": "Prefeitura Municipal de Fortaleza/CE",
+      "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxNT2pJUFo4d2lwQXpXakdRUDhkaEhHbkJ0MmhTN1dhd2RMcm1nM21IZGJscWhpdjdQSmxrZDdEUFpJZzU4czIyUUpTd3hFM21iNE1DZW45UHN6UzF3S0pMR3NpRzBLQm9JZ1pqVWFnZ21ySnp5dzhJd0paYXVITFFQS21VZHMzdUNMa0RFS01hNWJHMml3RDRUSmRvN2NZWV8yZFBZSm9meVlsS1B4NXhadm90UkFWM3Y5UDJBd2p3WkR3dW5CeFhqQjJwbFdFQ2UtQmtSMWswMk9XVmdRSElfY3dhYzFVWmZ2?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -362,8 +362,8 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Calendário da Copa do Mundo Feminina 2027 será divulgado pela FIFA na próxima semana - www.gov.br",
-      "fonte": "www.gov.br",
+      "titulo": "Calendário da Copa do Mundo Feminina 2027 será divulgado pela FIFA na próxima semana - GOV.BR",
+      "fonte": "GOV.BR",
       "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQNmQtRXY5dUVpeFgyXzBGWG9IU19BcTZQQU5DLUpaWkRaS2Y2azdSVGRrQm54SWE1aERhVzZjenhEWDZ1Wi1LUmtQOFlnQjlnMERhaTgtbUttc3h5UWRRRkwzZV9mdFJ1NUxpX2lGYzh1S3NvNW02OXNvdEJaOGM3TkFEbjdnMk9yQjlyX0lrVDJpVlFWM0JZVU9UVGh6dlpIU2p1OWdVR1lmdzFJbXYwRnRLNkdHMkJLMG1FNXpPV0puYVVM?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (88d)."
@@ -498,19 +498,19 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "FIFA trata pausa no futebol com naturalidade por Copa Feminina 2027 - ge",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNTnMtN1hEdWZ2MmF5VW5jNjRjdDdBeEhOMURwWTFCS0psLUJ0WUFSQzJSWF92VEl6WlRkNXpQOGJzbHRXM3VPMmRya0I3OGh1SFF4VGtfSEJ4SXVmemh5c2xjYy1vUmNVTzNzbnVMVzhkVkI5OXEyZ3dBTDNvbVZoTjlKd2tFTWxSOF9MSGNtMGJuWGQ1OHVYOTItZ0thT2diQWU1dmRoeE5aanFYamZRazdpWGVBOElkajJKOTZ0T3QyVzhmd3M5akJaanpSZzdtMDNCME1mQlJFZFhWTTJmTThlaThlV0szdlVpTHd4Q2dJRGJFQW9hREtUQUVucTUxR1E?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (88d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "Mundial Feminino de 2027 será disputado em oito cidades brasileiras - Agência Brasil",
       "fonte": "Agência Brasil",
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxObjB1OTB1aFNOQ1haUC1USV9OVWFjMXZhbXA3UHh0S1I1dy1DZ2djQk0wdjJkYlNITkozR2pWdWVmXzhWN2VYSmtDblhUemZSY1hpZWhGQTlRWWFGdXFobnhKU0RDbjBMVGt1c09vbDljV2lNS0dmTk9qdy0zQ0pWQ0hnZ3lzZjl5TnU1WjJqeGhOemNmVVpkSHIxQjBFa0plQ2RiR0czMU1VNnlIdVRrUkhBMFVpR3R6VkdoUEhHdmN0bkE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (139d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Diretor da Fifa trata paralisação do futebol com naturalidade na Copa de 2027: \"É um projeto de país\" - ge",
+      "fonte": "ge",
+      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNTnMtN1hEdWZ2MmF5VW5jNjRjdDdBeEhOMURwWTFCS0psLUJ0WUFSQzJSWF92VEl6WlRkNXpQOGJzbHRXM3VPMmRya0I3OGh1SFF4VGtfSEJ4SXVmemh5c2xjYy1vUmNVTzNzbnVMVzhkVkI5OXEyZ3dBTDNvbVZoTjlKd2tFTWxSOF9MSGNtMGJuWGQ1OHVYOTItZ0thT2diQWU1dmRoeE5aanFYamZRazdpWGVBOElkajJKOTZ0T3QyVzhmd3M5akJaanpSZzdtMDNCME1mQlJFZFhWTTJmTThlaThlV0szdlVpTHd4Q2dJRGJFQW9hREtUQUVucTUxR1HSAZACQVVfeXFMTXUxM1V1TEZRcDVKVWhrOWkzc1hiQjlpYmpldUVqRUdxWjBGdUdwSS1IbUxoeEtGT2lwYk5xZVBXSk0zU010OGdYUFcweHczODhJZjROaDNOS3paWVJfYU1OT2gybHBIczFfb1AxVVVRU0wzbzhWcVpYNTEzTDJkLWhUZXlpSWRZb1BiNkViNTNLY19oQzQtU0tYVDAwUlZzQXJQMFV2YW9BSXJ1NEM3VGxuV3E4R3VIYWpCcTAxWnNyWXcwMGZfdnYzOVNWY2tUWUE1dXlaZnlITjNlcU1zTEhQRHpLblRNZUd3RjFPTXEwdzExc1MteVZ1S3ExTi1qbHJhdFBCMXJHRkl3R2NKQ1E?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (88d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -754,30 +754,6 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Falta 1 ano: Brasil se prepara para receber a Copa do Mundo Feminina da FIFA em 2027 - CBF",
-      "fonte": "CBF",
-      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNcXZRdmVHbEdGZ2l5bW9oVjE5eW13b09KSHdBMHVFdW9qU0ZINFR5ZUhwTHF0VmdxS3FscXdvWEU1UktOUVduQ0NaMUFDbnAwaE5kNXFsWkJfUjZTWXFPX244QXNURllvMjZRVW1WVGQ4M25KSkt1cmM4cUEydERUek0wTVljMC1xbTBmMjk4Z1pkUm94U3ZIQUw3V1pGWlN2YlpVRUlYbXcyWUtZNXVzbmQyUEZMUHd2dS1xVGVPMzV6X0tOZEVOTkRsU2syclhLQ3JkQmhuSkZEd2VsQm44S3BUODFhQ2pqZlVXNDdJZTVWM3B5Tmc?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (139d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Copa do Mundo Feminina 2027: Brasil marca 500 dias para o torneio com ilustrações das cidades-sede e reforça identidade cultural do evento - Jornal Grande Bahia",
-      "fonte": "Jornal Grande Bahia",
-      "url": "https://news.google.com/rss/articles/CBMiiwJBVV95cUxOeUVaWVotNWZfYVgzQ2I3dkhsTG5jeGluUjU0Y1BHaWZZVkJoSlVBYjUxU29fcmFpdktBSUFrd1J3cmJ6RWdfX2paUUJjR1NzbE5jNHJkcVk0bnBaNHFibXRka0E4OS1PSENMajV0Q19oWXRseU1odWxNTzlvWjVqTTJKUFdGc2t3YkhlNUlfQUdWblFFd2YybjNJcE9lX2FXOUtBVGRYbVdvZVRwd3M3bDN5bTNENE5uUUVlemJFMGloNUxaVVEydEFmMWxRRHRHNkR0SlR2THEtR2ZCUkxIS2U4ZXVnWlROYmhnTzlPMTZMZTZ2S1VWOUc5WnQ1eUJmOUs2b2RZNXlKeDQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (272d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Com Fortaleza como cidade-sede, marca da Copa do Mundo Feminina da FIFA Brasil 2027™ é apresentada - Prefeitura de Fortaleza",
-      "fonte": "Prefeitura de Fortaleza",
-      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPZm1NNTc3MDNKLXFXWmtxTkxUeDZNQ3ZZWGJYbFBNUjg4WmlNdkJzaFBZMktDdGMyVEd2aHBLbE1UcjVNRlNVYWJQcHlTcGVOTFhyck40YmNrMjVaQUlRNGNWbFRMSjBmcjJFV2pCZnM1eEZUVkNMSkJoWEtWOVJrWE9fX3hGdjNUVlktc1h6ZFV2UmJwaTJFS1E1QzZPQWpXUnlSYmRCT0t6VlIyZEl0bDhwbzlET0pfdjZrb1hobjVmMFZvRVM3VWZacGM2VDJEcjZOX1FsNk9jSDhRMlE?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (289d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "MEC aprova regras para as férias escolares na Copa do Mundo Feminina - Agência Brasil",
       "fonte": "Agência Brasil",
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQM0JXRWZJQmJIeTdjTlVGVTZ3a21Ld1owWk8wNWFBRklCN0MwdHhWcHdOSGlNSEktTmRiNWxNV3ZxNFAzSHdHa1ZFbTlYeVlQMzgzR0F4cnZacDRTaHpFTGdxdVBqalNKZHpYRE9PRHVwbXZTQWk2Wk10LXR5R2RERXdaOEJUTFRXV0twZGZuUW0wSHlzaFpLaGZsNjBWQkI3YllwUzlBSk9iQ0ZoZC01b3dZRUhfTVFBV0Y1eXZiamc?oc=5",
@@ -786,9 +762,25 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Fifa lança marca da Copa do Mundo Feminina 2027 com eventos em Copacabana - ge",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxORk1WTTZjdzctd0IyTUI3bTBKLVROTHpzTTIzM1dXX1FkNzRCQzRJQWxvRmplUEVLZ0FWbjd2NklrX1NhMzRHeFgtb3FwbDA3QWh5d0pIYnkyd1ZPaHZZU0VXemlRQ3ctZzY0czdGWUJyOTB5RExXQkk2djlnZmhoLXNWR3FnVHZVTlFJQXoyYVRxcm0wTWFVd2hyR3c3N1NhVm9xRU1wTUJjUVQzNVRlUHR0VXBqX0pXS2NZMkNqTVMwa1lqYzRXQ1liRV8tUzhydjJYSWVNdDFqWDBGWEdjQlBsb9IB8gFBVV95cUxOQVJCMnB0RHFfOUlDeDE5UWtVclg4RHFpLXNwVmg1TXdUbExyZk5YcnllTEl4WE9BazFZZ3hqQVBzRnlscnBIRmlqU2NXWW1lTS1yOXVQdmI5ZjhvNlY4WkZRdFlIWHVva0M5Um1ObmtNRHR4ank5VmdObkxwYXQ2cjlSSXVuZlRFS09kVHJ6eV9XRURQN1NSUTk1aTRjT3R3MnotME5TVkc4bWNmeWhUcXVRcGVEeDNkd2ZrbS13WUJKeGh0bkVHMlpMbzNRYWFZTWRCZUVJOWtMUEpvYkVoT2cyZ1ZGcDd4bFJXejlwbU5Cdw?oc=5",
+      "titulo": "Falta 1 ano: Brasil se prepara para receber a Copa do Mundo Feminina da FIFA em 2027 - CBF",
+      "fonte": "CBF",
+      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNcXZRdmVHbEdGZ2l5bW9oVjE5eW13b09KSHdBMHVFdW9qU0ZINFR5ZUhwTHF0VmdxS3FscXdvWEU1UktOUVduQ0NaMUFDbnAwaE5kNXFsWkJfUjZTWXFPX244QXNURllvMjZRVW1WVGQ4M25KSkt1cmM4cUEydERUek0wTVljMC1xbTBmMjk4Z1pkUm94U3ZIQUw3V1pGWlN2YlpVRUlYbXcyWUtZNXVzbmQyUEZMUHd2dS1xVGVPMzV6X0tOZEVOTkRsU2syclhLQ3JkQmhuSkZEd2VsQm44S3BUODFhQ2pqZlVXNDdJZTVWM3B5Tmc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (139d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Museu itinerante conta história do futebol feminino e passeia pelas cidades-sede da Copa do Mundo 2027 - O GLOBO",
+      "fonte": "O GLOBO",
+      "url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxOVnRHSm1wOXRNR1NqeGxZU0ZmbnVsLWFTU1lIVldWakU2cUxrR1lLVk1RSTAyV055QTJLMm1tN3VSMWJPV0RiMzhZRXdHNXBtNWc2dzk0NnlUN3Z5ZUYwOHN4VloyV2J4WmpONk8xb2Q5a01rdUNaOWdOVld0aU9lM3FORWc2X21MNzUweFZuUWZZWktuZEVJbXI2a0pWS21veG1CT0pEazkxMTFrSVdvZGJoSjZrelV1UnpGcWlnaVlqRzBXV3h1SFNTWWU2YTlIaTBUUUNHWnZOU2JFWkk2Nnc3SWFwMHU1UGJ6RTBEbVRxQdIBgAJBVV95cUxPeTlVMzllbUl5aGxYZVplMDJ0akNrTmFyRlEyelNHVFVVY0lyTmtiYjNlc2ZCLVF4ekN1Y01feTF2WmFwaFNDZ0J6TENCYm85blZPYnZEY1UwQlFsMGEtSjk4Z05rY1ZNY2NscXNKbXM1WVhZZk9Ka19MWkMzT2xrdmpqZDhuNURsWmFXVnVSdmJwLXRFb19XTkRETlpFTU4xQUhFXzZObUNFMGNGbDJ2dkgyVHFyclZqU19aY1FMODdfS2p6cl9rakt0c2JCV1F5ODR0TVNiWHRiN0hJejh6OWJMbjdWcWJZdDZnT1ZFRjNYOE9RQmhCcVI0cHUzODlW?oc=5",
+      "decisao": "aprovado",
+      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Com Fortaleza como cidade-sede, marca da Copa do Mundo Feminina da FIFA Brasil 2027™ é apresentada - Prefeitura de Fortaleza",
+      "fonte": "Prefeitura de Fortaleza",
+      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPZm1NNTc3MDNKLXFXWmtxTkxUeDZNQ3ZZWGJYbFBNUjg4WmlNdkJzaFBZMktDdGMyVEd2aHBLbE1UcjVNRlNVYWJQcHlTcGVOTFhyck40YmNrMjVaQUlRNGNWbFRMSjBmcjJFV2pCZnM1eEZUVkNMSkJoWEtWOVJrWE9fX3hGdjNUVlktc1h6ZFV2UmJwaTJFS1E1QzZPQWpXUnlSYmRCT0t6VlIyZEl0bDhwbzlET0pfdjZrb1hobjVmMFZvRVM3VWZacGM2VDJEcjZOX1FsNk9jSDhRMlE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (289d)."
     },
@@ -861,6 +853,14 @@
       "titulo": "Gecopa promove sexta reunião de trabalho e avança na preparação da Bahia para a Copa do Mundo FIFA Feminina 2027™ - ba.gov.br",
       "fonte": "ba.gov.br",
       "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOMWd6YkhJMjRKSHBFQ2ExZE9yTzR2VWw5Um5XTE9sVlFWLUdiVkNzOFpEMlFyVkhQQmo3WVI1NWdXVnRNWFA5LU5iRmtZVllxdnp6aU9HUklOZUJJdVpUSmVuWmJiWFItMThqYko1dWlDYlJVdmJtSW9vRURhNmdFRFZJdlhESDgwZ3hjLUFlNTVmdXpuYXQ4OE1QamVXYURmMnJ1enp4dG9sNzVNZGc0b1M5QnNxZHJ0QlVsTjROZ2dRWThXNzFyQw?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "URL editorial direta não resolvida; wrapper do Google News não será publicado."
+    },
+    {
+      "origem": "scope-gate-2026-10",
+      "titulo": "Museu itinerante conta história do futebol feminino e passeia pelas cidades-sede da Copa do Mundo 2027 - O GLOBO",
+      "fonte": "oglobo.globo.com",
+      "url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxOVnRHSm1wOXRNR1NqeGxZU0ZmbnVsLWFTU1lIVldWakU2cUxrR1lLVk1RSTAyV055QTJLMm1tN3VSMWJPV0RiMzhZRXdHNXBtNWc2dzk0NnlUN3Z5ZUYwOHN4VloyV2J4WmpONk8xb2Q5a01rdUNaOWdOVld0aU9lM3FORWc2X21MNzUweFZuUWZZWktuZEVJbXI2a0pWS21veG1CT0pEazkxMTFrSVdvZGJoSjZrelV1UnpGcWlnaVlqRzBXV3h1SFNTWWU2YTlIaTBUUUNHWnZOU2JFWkk2Nnc3SWFwMHU1UGJ6RTBEbVRxQdIBgAJBVV95cUxPeTlVMzllbUl5aGxYZVplMDJ0akNrTmFyRlEyelNHVFVVY0lyTmtiYjNlc2ZCLVF4ekN1Y01feTF2WmFwaFNDZ0J6TENCYm85blZPYnZEY1UwQlFsMGEtSjk4Z05rY1ZNY2NscXNKbXM1WVhZZk9Ka19MWkMzT2xrdmpqZDhuNURsWmFXVnVSdmJwLXRFb19XTkRETlpFTU4xQUhFXzZObUNFMGNGbDJ2dkgyVHFyclZqU19aY1FMODdfS2p6cl9rakt0c2JCV1F5ODR0TVNiWHRiN0hJejh6OWJMbjdWcWJZdDZnT1ZFRjNYOE9RQmhCcVI0cHUzODlW?oc=5",
       "decisao": "rejeitado",
       "motivo": "URL editorial direta não resolvida; wrapper do Google News não será publicado."
     },
