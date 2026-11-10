@@ -224,7 +224,19 @@ def daily_read(table_id):
         rid = record.get("id", "")
         link = pe.urlnorm(pe.first(fields, "Fonte ou link", "Link", "URL"))
         identity = "SUG-" + rid
-        published = (identity in event_ids) if is_events else (bool(link) and link in news_links)
+        resolved_title = resolve_suggestion_title(fields, kind)
+        if is_events:
+            published = identity in event_ids
+        else:
+            title_key = pe.norm(resolved_title)
+            published = bool(link and link in news_links) or bool(title_key and any(
+                pe.norm(item.get("Titulo", "")) == title_key
+                or (len([t for t in title_key.split() if len(t) >= 4]) >= 2
+                    and sum(t in pe.norm(item.get("Titulo", "")) for t in title_key.split() if len(t) >= 4)
+                    >= max(2, len([t for t in title_key.split() if len(t) >= 4]) - 1))
+                for item in published_news
+                if str(item.get("Data", "")) >= "2026-10-01"
+            ))
         duplicated = bool(link) and (link in event_links if is_events else link in news_links)
         if published:
             included_field = "Incluído no Radar" if is_events else "Publicada no Radar"
