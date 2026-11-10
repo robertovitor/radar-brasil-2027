@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import html, json, os, pathlib, re, urllib.parse, urllib.request, xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
+from email.utils import parsedate_to_datetime
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 INBOX = ROOT / 'editorial' / 'inbox.json'
@@ -331,10 +332,33 @@ def public_research(keys):
             rejected+=1
             audit.append({**base,'url_final':link,'decisao':'rejeitado','motivo':'Conteúdo sem relevância editorial suficiente ou relacionado a seleção de base.'})
             continue
-        date=now().date().isoformat()
-        m=re.search(r'(20\d{2})(\d{2})(\d{2})', c.get('pub',''))
-        if m: date=f'{m.group(1)}-{m.group(2)}-{m.group(3)}'
-        item={'Data':date,'DataBR':datetime.strptime(date,'%Y-%m-%d').strftime('%d/%m/%Y'),'Titulo':title,'Tema':'Copa Feminina 2027','CidadeUF':'Brasil','Veiculo':urllib.parse.urlparse(link).netloc.removeprefix('www.'),'Link':link,'Sentimento':'Neutro','Impacto':'Médio','Resumo':excerpt[:900]}
+        # A data do RSS é a data real da matéria (RFC 2822), não a data da coleta.
+        # Nunca carimbar notícia antiga como publicada hoje quando o formato muda.
+        pub_raw=str(c.get('pub','')).strip()
+        published=None
+        m=re.search(r'\b(20\d{2})(\d{2})(\d{2})\b', pub_raw)
+        if m:
+            try: published=datetime.strptime(''.join(m.groups()),'%Y%m%d').date()
+            except ValueError: published=None
+        if published is None:
+            try:
+                parsed=parsedate_to_datetime(pub_raw)
+                if parsed.tzinfo is None: parsed=parsed.replace(tzinfo=timezone.utc)
+                published=parsed.astimezone(BRT).date()
+            except Exception:
+                try: published=datetime.fromisoformat(pub_raw.replace('Z','+00:00')).astimezone(BRT).date()
+                except Exception: published=None
+        if published is None:
+            rejected+=1
+            audit.append({**base,'url_final':link,'decisao':'rejeitado','motivo':'Data de publicação ausente ou não verificável; não usar data da coleta.'})
+            continue
+        age=(now().date()-published).days
+        if age < -1 or age > 30:
+            rejected+=1
+            audit.append({**base,'url_final':link,'decisao':'rejeitado','motivo':f'Notícia fora da janela de frescor (idade={age} dias).'})
+            continue
+        date=published.isoformat()
+        item={'Data':date,'DataBR':published.strftime('%d/%m/%Y'),'Titulo':title,'Tema':'Copa Feminina 2027','CidadeUF':'Brasil','Veiculo':urllib.parse.urlparse(link).netloc.removeprefix('www.'),'Link':link,'Sentimento':'Neutro','Impacto':'Médio','Resumo':excerpt[:900]}
         approved.append(item)
         audit.append({**base,'url_final':link,'decisao':'aprovado','motivo':'Fonte confiável, conteúdo acessível, relevante e não duplicado.'})
         keys.add('u:'+urlnorm(link)); keys.add('t:'+norm(title))
