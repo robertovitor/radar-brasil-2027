@@ -32,7 +32,10 @@ if not os.environ.get("AIRTABLE_TOKEN", "").strip():
 # Commit do status impede nova leitura no mesmo dia, inclusive em reruns.
 if STATUS_PATH.exists():
     previous = json.loads(STATUS_PATH.read_text(encoding="utf-8"))
-    if previous.get("stage") == "completed" and str(previous.get("started_at", ""))[:10] == today.isoformat():
+    same_day_done = previous.get("stage") == "completed" and str(previous.get("started_at", ""))[:10] == today.isoformat()
+    retry_requested = os.environ.get("RADAR_SUGGESTIONS_RETRY") == "1"
+    previous_had_no_publications = int(previous.get("aprovados_novos", 0) or 0) == 0
+    if same_day_done and not (retry_requested and previous_had_no_publications):
         print("suggestions_daily_already_completed=true")
         raise SystemExit(0)
 
@@ -68,7 +71,9 @@ def source_title(fields, kind):
     title = ""
     try:
         parsed = urllib.parse.urlparse(link)
-        if parsed.scheme not in ("http", "https") or not parsed.hostname:
+        host = (parsed.hostname or "").casefold().removeprefix("www.")
+        social = host in ("instagram.com", "facebook.com", "tiktok.com")
+        if parsed.scheme != "https" or not parsed.hostname or (not social and not pe.trusted_url(link)):
             return ""
         data, final_url, headers = pe.request_bytes(
             link,
@@ -77,20 +82,23 @@ def source_title(fields, kind):
             timeout=12,
         )
         final = urllib.parse.urlparse(final_url)
-        if final.scheme not in ("http", "https") or not final.hostname:
+        final_host = (final.hostname or "").casefold().removeprefix("www.")
+        if final.scheme != "https" or not final.hostname or (not social and not pe.trusted_url(final_url)):
+            return ""
+        if social and final_host not in ("instagram.com", "facebook.com", "tiktok.com"):
             return ""
         raw = data[:1000000].decode("utf-8", "ignore")
         metas = {}
-        for tag in re.findall(r"<meta\\b[^>]*>", raw, flags=re.I):
+        for tag in re.findall(r"<meta\b[^>]*>", raw, flags=re.I):
             attrs = {k.casefold(): html.unescape(v) for k, q, v in re.findall(
-                r"([\\w:-]+)\\s*=\\s*([\"\\'])(.*?)\\2", tag, flags=re.S)}
+                r"([\w:-]+)\s*=\s*([\"\'])(.*?)\2", tag, flags=re.S)}
             name = attrs.get("property", attrs.get("name", "")).casefold()
             if name in ("og:title", "twitter:title", "title", "og:site_name"):
                 metas[name] = attrs.get("content", "")
-        match = re.search(r"<title\\b[^>]*>(.*?)</title>", raw, flags=re.I | re.S)
+        match = re.search(r"<title\b[^>]*>(.*?)</title>", raw, flags=re.I | re.S)
         title = metas.get("og:title") or metas.get("twitter:title") or (match.group(1) if match else "")
         title = html.unescape(re.sub(r"<[^>]+>", " ", title))
-        title = re.sub(r"\\s+", " ", title).strip(" -|•")
+        title = re.sub(r"\s+", " ", title).strip(" -|•")
         if not title or title.casefold() in ("instagram", "facebook", "tiktok"):
             # Redes sociais podem expor a manchete/legenda somente nos metadados
             # de descrição ou no JSON incorporado.
@@ -99,7 +107,7 @@ def source_title(fields, kind):
             ):
                 caption = compat._social_page_details(link)
                 if caption:
-                    chunks = re.split(r"(?<=[.!?])\\s+|\\n", caption)
+                    chunks = re.split(r"(?<=[.!?])\s+|\n", caption)
                     title = next((x.strip() for x in chunks if len(x.strip()) >= 18), caption[:180].strip())
         if title and title.casefold() not in ("instagram", "facebook", "tiktok"):
             title = title[:260]
