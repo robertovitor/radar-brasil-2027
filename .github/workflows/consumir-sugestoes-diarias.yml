@@ -1,7 +1,10 @@
 name: Consumir sugestões Airtable (diário controlado)
 
 on:
-  # Agendamento automático suspenso: a rotina sem escritas é a única diária.
+  # Uma execução diária, às 09h20 de Brasília. O script bloqueia reruns
+  # no mesmo dia e mantém o teto de duas leituras e quatro escritas.
+  schedule:
+    - cron: '20 12 * * *'
   workflow_dispatch:
 
 permissions:
