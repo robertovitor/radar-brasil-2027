@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import html, json, os, pathlib, re, urllib.parse, urllib.request, xml.etree.ElementTree as ET
+import html, json, os, pathlib, re, time, urllib.error, urllib.parse, urllib.request, xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 
@@ -276,11 +276,24 @@ def rss_candidates():
 def gdelt_candidates():
     out=[]; seen=set()
     queries=['"Copa Feminina 2027" OR "Copa do Mundo Feminina 2027"','"Seleção Brasileira feminina"','"futebol feminino" Brasil 2027','"convocação" "Seleção Brasileira Feminina"','"Arthur Elias" convocação "Seleção Feminina"']
-    for q in queries:
+    for query_index,q in enumerate(queries):
+        # O endpoint público do GDELT aplica rate limit por rajada. Espaçar as
+        # consultas evita que uma execução horária perca toda a fonte por HTTP 429.
+        if query_index:
+            time.sleep(2)
         params={'query':q,'mode':'ArtList','maxrecords':'50','format':'json','sort':'HybridRel'}
         url='https://api.gdeltproject.org/api/v2/doc/doc?'+urllib.parse.urlencode(params)
         try:
-            data,_,_=request_bytes(url,timeout=25)
+            for attempt in range(2):
+                try:
+                    data,_,_=request_bytes(url,timeout=25)
+                    break
+                except urllib.error.HTTPError as exc:
+                    if exc.code == 429 and attempt == 0:
+                        print('gdelt_rate_limited_retry=1|wait_seconds=5')
+                        time.sleep(5)
+                        continue
+                    raise
             obj=json.loads(data.decode('utf-8','ignore'))
             for a in obj.get('articles',[])[:50]:
                 title=str(a.get('title') or '').strip(); link=str(a.get('url') or '').strip()
