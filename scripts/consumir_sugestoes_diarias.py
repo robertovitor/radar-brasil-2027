@@ -231,9 +231,9 @@ def daily_read(table_id):
             title_key = pe.norm(resolved_title)
             published = bool(link and link in news_links) or bool(title_key and any(
                 pe.norm(item.get("Titulo", "")) == title_key
-                or (len([t for t in title_key.split() if len(t) >= 4]) >= 2
+                or (len([t for t in title_key.split() if len(t) >= 4]) >= 1
                     and sum(t in pe.norm(item.get("Titulo", "")) for t in title_key.split() if len(t) >= 4)
-                    >= max(2, len([t for t in title_key.split() if len(t) >= 4]) - 1))
+                    >= max(1, len([t for t in title_key.split() if len(t) >= 4]) - 1))
                 for item in published_news
                 if str(item.get("Data", "")) >= "2026-10-01"
             ))
