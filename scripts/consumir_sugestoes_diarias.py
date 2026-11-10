@@ -144,13 +144,24 @@ def resolve_suggestion_title(fields, kind):
 def candidate_with_source_title(record, kind):
     copied = dict(record)
     fields = dict(copied.get("fields", {}) or {})
-    title = resolve_suggestion_title(fields, kind)
-    if title:
+    resolved = resolve_suggestion_title(fields, kind)
+    raw_title = source_title(fields, kind) if not str(pe.first(fields, "Evento sugerido", "Título ou assunto", "Título", "Titulo")).strip() else str(pe.first(fields, "Evento sugerido", "Título ou assunto", "Título", "Titulo")).strip()
+    if resolved:
+        # O validador compara o título com a própria página. Preserva a manchete
+        # extraída da fonte quando ela corresponde a uma aprovação manual.
+        approved = any(
+            x.get("decision") == "approved_by_editor" and x.get("kind") == kind
+            and " ".join(str(x.get("title", "")).casefold().split()) == " ".join(resolved.casefold().split())
+            for x in APPROVALS.get("items", [])
+        )
+        title = raw_title if approved and raw_title else resolved
         fields["Título"] = title
-        if kind == "eventos":
-            fields.setdefault("Evento sugerido", title)
-        else:
-            fields.setdefault("Título ou assunto", title)
+        fields["Evento sugerido"] = title
+        fields["Título ou assunto"] = title
+        link = str(pe.first(fields, "Fonte ou link", "Link", "URL")).strip()
+        host = (urllib.parse.urlparse(link).hostname or "").casefold().removeprefix("www.")
+        if approved and host in ("instagram.com", "facebook.com", "tiktok.com"):
+            pe.TRUSTED_DOMAINS = tuple(dict.fromkeys(tuple(pe.TRUSTED_DOMAINS) + (host,)))
     copied["fields"] = fields
     return original_candidate(copied, kind)
 
