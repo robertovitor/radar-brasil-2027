@@ -123,6 +123,18 @@
       "attempts": 6,
       "requires_strict_reconciliation": true,
       "visual_mode": "fallback_visual"
+    },
+    {
+      "key": "instagram:noticia:https://www.correiobraziliense.com.br/cb-brands/brandedcontent/petrobras/2026/11/7534719-petrobras-amplia-apoio-ao-futebol-feminino-com-acoes-que-vao-da-base-ao-profissional.html",
+      "post_file": "instagram/fila/automatica/oio-ao-futebol-feminino-com-acoes-que-vao-da-base-ao-profissional-html-bf1db2e335.json",
+      "reserved_at": "2026-11-10T20:37:51.591521+00:00",
+      "last_attempt_at": "2026-11-10T20:37:51.591521+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/TEC-OVFC_X_IMPERIAL_CTBA_%2850%29.jpg/1920px-TEC-OVFC_X_IMPERIAL_CTBA_%2850%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "image_page_url": "https://commons.wikimedia.org/wiki/File:TEC-OVFC_X_IMPERIAL_CTBA_(50).jpg",
+      "bank_image_id": "IMG0124",
+      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
