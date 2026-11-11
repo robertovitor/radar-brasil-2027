@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261110-12",
-  "started_at": "2026-11-10T12:29:21-03:00",
-  "completed_at": "2026-11-10T12:29:46-03:00",
+  "cycle_id": "20261111-16",
+  "started_at": "2026-11-11T16:42:47-03:00",
+  "completed_at": "2026-11-11T16:43:13-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -15,53 +15,16 @@
       "reads": 1
     }
   ],
-  "sugestoes_lidas": 1,
-  "sugestoes_noticias_lidas": 3,
+  "sugestoes_lidas": 0,
+  "sugestoes_noticias_lidas": 0,
   "candidatos_publicos": 0,
   "aprovados_novos": 0,
-  "pendentes_enriquecimento": 4,
+  "pendentes_enriquecimento": 0,
   "rejeitados": 0,
   "duplicados": 0,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
-  "auditoria": [
-    {
-      "origem": "airtable",
-      "tabela": "Sugestões",
-      "record_id": "rec9jg015qT9IrsOV",
-      "titulo": "",
-      "url": "https://www.instagram.com/p/DefO0gKvCy6/?exln=azg5dmt1NTdjMnUw",
-      "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_ENRIQUECIMENTO: metadados públicos não confirmaram data, horário, local e cidade; requer leitura da legenda ou imagem."
-    },
-    {
-      "origem": "airtable",
-      "tabela": "Sugestões de Notícias",
-      "record_id": "recmgPVLo7mdTHGwg",
-      "titulo": "",
-      "url": "https://www.instagram.com/p/DfheNJ1R5xe/?xtok=MWh2ZmN0eXRsMjE3Mw==",
-      "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_VERIFICACAO: a sugestão possui título e fonte, mas não passou nas verificações automáticas; revisão editorial necessária."
-    },
-    {
-      "origem": "airtable",
-      "tabela": "Sugestões de Notícias",
-      "record_id": "recCbfU4JuvxZo7xv",
-      "titulo": "",
-      "url": "https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/cbf-recebe-a-taca-da-copa-do-mundo-feminina-da-fifa-2027?fbclid=PAb21jcAVfxQhleHRuA2FlbQIxMQBwZG9mAnNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABp2Kh42cms025WR87ZPOPOcy7pftnEJ0LF_gciGU5wtWSwVhTknKhdafPCAhA_aem_QwbSMoNgWXi5E96KpjDPrQ",
-      "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_VERIFICACAO: a sugestão possui título e fonte, mas não passou nas verificações automáticas; revisão editorial necessária."
-    },
-    {
-      "origem": "airtable",
-      "tabela": "Sugestões de Notícias",
-      "record_id": "rec3QIV2fucqHWfnD",
-      "titulo": "",
-      "url": "https://www.instagram.com/p/DfhhZGdO5OP/?exln=MXYya3huNWhzejRnbw==",
-      "decisao": "pendente_enriquecimento",
-      "motivo": "PENDENTE_VERIFICACAO: a sugestão possui título e fonte, mas não passou nas verificações automáticas; revisão editorial necessária."
-    }
-  ],
+  "auditoria": [],
   "observacoes_operacionais": "Execução nativa GitHub. Exatamente duas leituras Airtable; pendências estruturais são reavaliadas com os mesmos registros já lidos, sem leitura Airtable adicional. Pesquisa pública ampliada em múltiplos eixos via Google News RSS + GDELT, com deduplicação, filtro anti-base, confiança de domínio, validação de conteúdo e trilha de auditoria gravada no pesquisa-status.json.",
   "modo": "publico_e_sugestoes",
   "sugestoes_airtable_suspensas": false
