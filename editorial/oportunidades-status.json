@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-11T05:28:33-03:00",
-  "fim": "2026-11-11T05:30:18-03:00",
+  "inicio": "2026-11-11T13:41:40-03:00",
+  "fim": "2026-11-11T13:43:14-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -134,7 +134,7 @@
     },
     {
       "hub": "https://ludopedio.org.br/agenda-de-eventos/?pagina=2",
-      "resultados": 4
+      "resultados": 5
     },
     {
       "hub": "https://www.cob.org.br/cultura-educacao/cursos-do-iob",
@@ -206,9 +206,9 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 45,
+  "oportunidades_validas_na_execucao": 44,
   "adicionadas": 0,
-  "atualizadas": 45,
+  "atualizadas": 4,
   "total_arquivo": 92,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
