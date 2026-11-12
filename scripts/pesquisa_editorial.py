@@ -274,35 +274,75 @@ def rss_candidates():
     return out
 
 def gdelt_candidates():
+    """Uma consulta temática combinada por ciclo, com retry progressivo e métricas.
+
+    O endpoint DOC do GDELT limita rajadas. A implementação anterior fazia cinco
+    chamadas por execução; como o workflow roda de hora em hora, isso multiplicava
+    a chance de HTTP 429. Agora consolidamos os eixos em uma única consulta.
+    """
     out=[]; seen=set()
-    queries=['"Copa Feminina 2027" OR "Copa do Mundo Feminina 2027"','"Seleção Brasileira feminina"','"futebol feminino" Brasil 2027','"convocação" "Seleção Brasileira Feminina"','"Arthur Elias" convocação "Seleção Feminina"']
-    for query_index,q in enumerate(queries):
-        # O endpoint público do GDELT aplica rate limit por rajada. Espaçar as
-        # consultas evita que uma execução horária perca toda a fonte por HTTP 429.
-        if query_index:
-            time.sleep(2)
-        params={'query':q,'mode':'ArtList','maxrecords':'50','format':'json','sort':'HybridRel'}
-        url='https://api.gdeltproject.org/api/v2/doc/doc?'+urllib.parse.urlencode(params)
+    queries=[
+        '"Copa Feminina 2027" OR "Copa do Mundo Feminina 2027"',
+        '"Seleção Brasileira feminina"',
+        '"futebol feminino" Brasil 2027',
+        '"convocação" "Seleção Brasileira Feminina"',
+        '"Arthur Elias" convocação "Seleção Feminina"',
+    ]
+    q=' OR '.join(f'({term})' for term in queries)
+    params={'query':q,'mode':'ArtList','maxrecords':'250','format':'json','sort':'HybridRel'}
+    url='https://api.gdeltproject.org/api/v2/doc/doc?'+urllib.parse.urlencode(params)
+    data=None
+    for attempt in range(3):
         try:
-            for attempt in range(2):
+            data,_,_=request_bytes(url,timeout=35)
+            print(f'gdelt_request_success=1|attempt={attempt+1}|requests=1')
+            break
+        except urllib.error.HTTPError as exc:
+            if exc.code != 429 or attempt >= 2:
+                print(f'gdelt_request_failed=1|http={exc.code}|attempt={attempt+1}')
+                raise
+            retry_after=str(exc.headers.get('Retry-After','')).strip()
+            wait=None
+            if retry_after:
                 try:
-                    data,_,_=request_bytes(url,timeout=25)
-                    break
-                except urllib.error.HTTPError as exc:
-                    if exc.code == 429 and attempt == 0:
-                        print('gdelt_rate_limited_retry=1|wait_seconds=5')
-                        time.sleep(5)
-                        continue
-                    raise
-            obj=json.loads(data.decode('utf-8','ignore'))
-            for a in obj.get('articles',[])[:50]:
-                title=str(a.get('title') or '').strip(); link=str(a.get('url') or '').strip()
-                if not title or not link or not article_is_relevant(title): continue
-                k=urlnorm(link) or norm(title)
-                if k in seen: continue
-                seen.add(k); out.append({'title':title,'url':link,'pub':str(a.get('seendate') or ''),'source':str(a.get('domain') or ''),'origin':'gdelt'})
-        except Exception as e:
-            print(f'gdelt_warning={type(e).__name__}:{e}')
+                    wait=max(1.0,float(retry_after))
+                except ValueError:
+                    try:
+                        wait=max(1.0,(parsedate_to_datetime(retry_after)-datetime.now(timezone.utc)).total_seconds())
+                    except Exception:
+                        wait=None
+            if wait is None:
+                wait=8*(2**attempt)
+            wait=min(wait,45)
+            print(f'gdelt_rate_limited_retry={attempt+1}|wait_seconds={int(wait)}|retry_after={bool(retry_after)}')
+            time.sleep(wait)
+        except Exception as exc:
+            print(f'gdelt_request_failed=1|error={type(exc).__name__}|attempt={attempt+1}')
+            if attempt >= 2:
+                raise
+            wait=8*(2**attempt)
+            print(f'gdelt_retry={attempt+1}|wait_seconds={wait}')
+            time.sleep(wait)
+    if data is None:
+        print('gdelt_results_resolved=0|reason=no_response')
+        return out
+    try:
+        obj=json.loads(data.decode('utf-8','ignore'))
+    except (ValueError,TypeError) as exc:
+        print(f'gdelt_json_invalid={type(exc).__name__}')
+        return out
+    articles=obj.get('articles',[]) if isinstance(obj,dict) else []
+    resolved=0
+    for a in articles[:250]:
+        title=str(a.get('title') or '').strip(); link=str(a.get('url') or '').strip()
+        if not title or not link or not article_is_relevant(title): continue
+        k=urlnorm(link) or norm(title)
+        if k in seen: continue
+        seen.add(k)
+        out.append({'title':title,'url':link,'pub':str(a.get('seendate') or ''),
+                    'source':str(a.get('domain') or ''),'origin':'gdelt'})
+        resolved+=1
+    print(f'gdelt_articles_received={len(articles)}|gdelt_results_resolved={resolved}|gdelt_requests=1')
     return out
 
 def public_research(keys):
