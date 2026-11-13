@@ -325,7 +325,7 @@ try:
         "Estados pendentes/em análise são aceitos; recusados e duplicados permanecem bloqueados. "
         "Telemetria registra o total efetivamente retornado pelas duas tabelas."
     )
-    STATUS_PATH.write_text(json.dumps(status, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    STATUS_PATH.write_text(json.dumps(status, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 except Exception as exc:
     print(f"suggestions_telemetry_update=failed|{type(exc).__name__}")
 
