@@ -188,13 +188,24 @@ pe.airtable_patch = limited_patch
 # O núcleo antigo aceitava somente rótulos exatos e, por isso, ignorava sugestões
 # válidas mesmo depois de ler as duas tabelas. Mantém recusados/duplicados fora.
 def daily_processable(fields):
+    import unicodedata
     status = pe.norm(pe.first(fields, "Status", "status"))
+    status = "".join(ch for ch in unicodedata.normalize("NFKD", status)
+                     if not unicodedata.combining(ch))
+    status = " ".join(status.split())
+    # Estados finais nunca voltam à fila, mesmo que contenham palavras positivas.
+    if any(term in status for term in ("recusado", "rejeitado", "duplicado",
+                                       "publicado", "cancelado", "arquivado",
+                                       "nao aprovado", "encerrado")):
+        return False
     if not status:
         return True
-    if status in ("aprovado", "novo", "recebido"):
-        return True
-    return status.startswith(("pendente", "em verificacao", "em analise",
-                              "em revisao", "aguardando"))
+    # Aceita rótulos compostos dos formulários (ex.: "Em análise editorial",
+    # "Pendente de validação", "Aguardando revisão") sem exigir igualdade exata.
+    return any(term in status for term in (
+        "pendente", "analise", "revisao", "validacao", "aguardando",
+        "recebido", "novo", "andamento", "triagem", "aprovado"
+    ))
 
 pe.processable = daily_processable
 
