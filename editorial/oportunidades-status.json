@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-12T18:08:53-03:00",
-  "fim": "2026-11-12T18:10:18-03:00",
+  "inicio": "2026-11-12T23:12:05-03:00",
+  "fim": "2026-11-12T23:13:33-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -184,7 +184,8 @@
     },
     {
       "hub": "https://prefeitura.sp.gov.br/web/esportes",
-      "resultados": 6
+      "resultados": 0,
+      "erro": "HTTPError:HTTP Error 503: Service Unavailable"
     },
     {
       "hub": "https://prefeitura.pbh.gov.br/esportes",
@@ -214,6 +215,7 @@
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
     "hub:https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer:RemoteDisconnected:Remote end closed connection without response",
+    "hub:https://prefeitura.sp.gov.br/web/esportes:HTTPError:HTTP Error 503: Service Unavailable",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/12-11-2026/11-04-2027:HTTPError:HTTP Error 403: Forbidden",
