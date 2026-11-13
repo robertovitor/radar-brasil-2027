@@ -17,7 +17,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: pesquisa-editorial-radar
+  group: radar-editorial-shared-write
   cancel-in-progress: false
 
 jobs:
