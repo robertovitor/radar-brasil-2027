@@ -24,7 +24,7 @@ jobs:
     env:
       RADAR_PUBLIC_ONLY: '0'
       RADAR_AIRTABLE_ALLOW: '1'
-      RADAR_SUGGESTIONS_RETRY: '0'
+      RADAR_SUGGESTIONS_RETRY: ${{ github.event_name == 'push' && '1' || '0' }}
       AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
     steps:
       - uses: actions/checkout@v4
