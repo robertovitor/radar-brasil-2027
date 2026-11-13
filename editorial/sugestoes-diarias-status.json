@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261112-17",
-  "started_at": "2026-11-12T17:06:14-03:00",
-  "completed_at": "2026-11-12T17:06:46-03:00",
+  "cycle_id": "20261113-11",
+  "started_at": "2026-11-13T11:59:49-03:00",
+  "completed_at": "2026-11-13T12:00:08-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -15,8 +15,8 @@
       "reads": 1
     }
   ],
-  "sugestoes_lidas": 0,
-  "sugestoes_noticias_lidas": 0,
+  "sugestoes_lidas": 40,
+  "sugestoes_noticias_lidas": 31,
   "candidatos_publicos": 0,
   "aprovados_novos": 0,
   "pendentes_enriquecimento": 0,
@@ -25,7 +25,7 @@
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
   "auditoria": [],
-  "observacoes_operacionais": "Execução nativa GitHub. Exatamente duas leituras Airtable; pendências estruturais são reavaliadas com os mesmos registros já lidos, sem leitura Airtable adicional. Pesquisa pública ampliada em múltiplos eixos via Google News RSS + GDELT, com deduplicação, filtro anti-base, confiança de domínio, validação de conteúdo e trilha de auditoria gravada no pesquisa-status.json.",
+  "observacoes_operacionais": "Leitura diária limitada a exatamente 2 GETs Airtable (1 por tabela) e até 4 PATCHes. Estados pendentes/em análise são aceitos; recusados e duplicados permanecem bloqueados. Telemetria registra o total efetivamente retornado pelas duas tabelas.",
   "modo": "publico_e_sugestoes",
   "sugestoes_airtable_suspensas": false
 }
