@@ -184,6 +184,24 @@ def limited_patch(table_id, record_id, fields):
 
 pe.airtable_patch = limited_patch
 
+# Os formulários usam estados como "Pendente de análise" e "Em análise".
+# O núcleo antigo aceitava somente rótulos exatos e, por isso, ignorava sugestões
+# válidas mesmo depois de ler as duas tabelas. Mantém recusados/duplicados fora.
+def daily_processable(fields):
+    status = pe.norm(pe.first(fields, "Status", "status"))
+    if not status:
+        return True
+    if status in ("aprovado", "novo", "recebido"):
+        return True
+    return status.startswith(("pendente", "em verificacao", "em analise",
+                              "em revisao", "aguardando"))
+
+pe.processable = daily_processable
+
+daily_counts = {"eventos": 0, "noticias": 0}
+inbox_before = json.loads((ROOT / "editorial" / "inbox.json").read_text(encoding="utf-8")) if (ROOT / "editorial" / "inbox.json").exists() else {"eventos": [], "noticias": []}
+inbox_before_count = sum(len(inbox_before.get(k, []) or []) for k in ("eventos", "noticias"))
+
 def pending_instead_of_silent_reject(fields, kind):
     reason = original_pending(fields, kind)
     if reason:
@@ -202,6 +220,7 @@ def daily_read(table_id):
     records = original_read(table_id)  # 1 GET; falha fechada se houver paginação.
     is_events = table_id == pe.TABLE_EVENTS
     kind = "eventos" if is_events else "noticias"
+    daily_counts[kind] = len(records)
     def priority(record):
         fields = record.get("fields", {})
         title = " ".join(resolve_suggestion_title(fields, kind).casefold().split())
@@ -286,5 +305,29 @@ def daily_read(table_id):
 
 pe.airtable_read = daily_read
 result = pe.main()
+
+# Corrige a telemetria: o núcleo compatível não expõe as contagens das leituras
+# feitas pelo leitor diário. Registra os 2 GETs reais e a fila efetivamente acrescida.
+try:
+    status = json.loads(STATUS_PATH.read_text(encoding="utf-8"))
+    inbox_after = json.loads((ROOT / "editorial" / "inbox.json").read_text(encoding="utf-8")) if (ROOT / "editorial" / "inbox.json").exists() else {"eventos": [], "noticias": []}
+    inbox_after_count = sum(len(inbox_after.get(k, []) or []) for k in ("eventos", "noticias"))
+    status["airtable_reads_total"] = 2
+    status["airtable_reads"] = [
+        {"table": "Sugestões", "reads": 1},
+        {"table": "Sugestões de Notícias", "reads": 1},
+    ]
+    status["sugestoes_lidas"] = daily_counts["eventos"]
+    status["sugestoes_noticias_lidas"] = daily_counts["noticias"]
+    status["inbox_itens_adicionados"] = max(0, inbox_after_count - inbox_before_count)
+    status["observacoes_operacionais"] = (
+        "Leitura diária limitada a exatamente 2 GETs Airtable (1 por tabela) e até 4 PATCHes. "
+        "Estados pendentes/em análise são aceitos; recusados e duplicados permanecem bloqueados. "
+        "Telemetria registra o total efetivamente retornado pelas duas tabelas."
+    )
+    STATUS_PATH.write_text(json.dumps(status, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+except Exception as exc:
+    print(f"suggestions_telemetry_update=failed|{type(exc).__name__}")
+
 print(f"sugestoes_diarias_patches={patches}|maximo={MAX_PATCHES}|selecionados={selected}")
 raise SystemExit(result)
