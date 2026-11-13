@@ -1,7 +1,7 @@
 {
-  "cycle_id": "20261113-11",
-  "started_at": "2026-11-13T11:59:49-03:00",
-  "completed_at": "2026-11-13T12:00:08-03:00",
+  "cycle_id": "20261113-12",
+  "started_at": "2026-11-13T12:05:01-03:00",
+  "completed_at": "2026-11-13T12:05:30-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 2,
@@ -19,12 +19,22 @@
   "sugestoes_noticias_lidas": 31,
   "candidatos_publicos": 0,
   "aprovados_novos": 0,
-  "pendentes_enriquecimento": 0,
+  "pendentes_enriquecimento": 1,
   "rejeitados": 0,
   "duplicados": 0,
   "inbox_itens_adicionados": 0,
   "inbox_commit_needed": false,
-  "auditoria": [],
+  "auditoria": [
+    {
+      "origem": "airtable",
+      "tabela": "Sugestões",
+      "record_id": "recdD2Ov4ONt0BPru",
+      "titulo": "",
+      "url": "https://www.instagram.com/p/DcYckxwxgLH/?igsi=eHpuZzl2M21oNGE3",
+      "decisao": "pendente_enriquecimento",
+      "motivo": "PENDENTE_ENRIQUECIMENTO: metadados públicos não confirmaram data, horário, local e cidade; requer leitura da legenda ou imagem."
+    }
+  ],
   "observacoes_operacionais": "Leitura diária limitada a exatamente 2 GETs Airtable (1 por tabela) e até 4 PATCHes. Estados pendentes/em análise são aceitos; recusados e duplicados permanecem bloqueados. Telemetria registra o total efetivamente retornado pelas duas tabelas.",
   "modo": "publico_e_sugestoes",
   "sugestoes_airtable_suspensas": false
