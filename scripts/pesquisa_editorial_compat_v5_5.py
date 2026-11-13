@@ -1408,10 +1408,23 @@ def _editorial_scope_ok(item):
     # Nunca publica automaticamente um wrapper do Google News quando a URL
     # editorial do veículo não foi resolvida, mesmo que o título pareça relevante.
     summary = str(item.get('Resumo') or '')
-    if ('descoberta via google news' in summary.casefold()
-            and 'url editorial direta nao resolvida' in _topic_normalize(summary)):
-        return False
+    unresolved_google = ('descoberta via google news' in summary.casefold()
+                          and 'url editorial direta nao resolvida' in _topic_normalize(summary))
     title = _topic_normalize(item.get('Titulo') or '')
+    if unresolved_google:
+        # Restaura o fallback controlado da v5.4: o link do Google News só pode
+        # permanecer como ponte quando o veículo declarado é confiável e a própria
+        # manchete comprova o vínculo com futebol feminino. Nunca confia no agregador
+        # como fonte nem amplia a lista de domínios confiáveis.
+        source = str(item.get('Veiculo') or '').strip()
+        source_host = (urllib.parse.urlparse(
+            source if '://' in source else 'https://' + source
+        ).hostname or '').casefold().removeprefix('www.')
+        link_host = (urllib.parse.urlparse(str(item.get('Link') or '')).hostname or '').casefold()
+        source_trusted = bool(source_host and pe.trusted_url('https://' + source_host + '/'))
+        if link_host == 'news.google.com' and source_trusted and _has_womens_football_evidence(title):
+            return True
+        return False
     if _has_womens_football_evidence(title):
         return True
     # Algumas manchetes tratam do Mundial de Clubes Feminino e, na mesma pauta,
