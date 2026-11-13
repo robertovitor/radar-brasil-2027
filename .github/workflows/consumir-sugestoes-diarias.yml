@@ -5,6 +5,11 @@ on:
   schedule:
     - cron: '20 12 * * *'
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/consumir_sugestoes_diarias.py'
+      - '.github/workflows/consumir-sugestoes-diarias.yml'
 permissions:
   contents: write
 
