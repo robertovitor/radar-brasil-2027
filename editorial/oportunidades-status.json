@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-14T11:34:39-03:00",
-  "fim": "2026-11-14T11:36:20-03:00",
+  "inicio": "2026-11-14T16:31:26-03:00",
+  "fim": "2026-11-14T16:32:47-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -62,10 +62,10 @@
     },
     {
       "query": "site:womanifs.com inscrição OR registration 2026 2027",
-      "resultados": 3,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 3
+        "bing_rss": 0
       }
     },
     {
