@@ -123,6 +123,15 @@
       "attempts": 6,
       "requires_strict_reconciliation": true,
       "visual_mode": "fallback_visual"
+    },
+    {
+      "key": "instagram:noticia:https://news.google.com/rss/articles/cbmi0afbvv95cuxobuq0alboyzyzwlhyznn0dgdkeejitkxlede3uunorffpztzta2ljmedwbgi3mfrxm0i0rgvja1fev3fmlxk5b2ximjfktzvzy2zznl94u19rctzrm1v4bg5iczjkq3zvv1vzq3cwohnbewxbxzjfy0lncdfcn3bmvnbuuunbb3m3tdftb3liee1jt1zvawfzwvrgutq1odvqeuxuqkjwy1nvmmreamvibwu0rhy1zw5atvqtvxzalvvrcmj0dfffowlpdgdbaxnm0ghfaufvx3lxte9gwevirkjkburmbtdzqknubffiy2rzvdayb2e0umpybs02xzhhbwxpnha1lwk2bfbqbwj5ctfobu1deky2txliswjyq3fyylnpu3lgdxnrvexkvwpkujbpcnhja0nztuznwxjautv1vgftz3vhmkvkqv9gehlhalrur2vatefznxvrtdf5duc5eemtnzuwx0zabvrtaefmbc0xumzyt09jwklkynbynmrfc29rwuzczdmyee04rhhemflnr1cxqlvwu25todrfdefbnwvknexlr2paauziwtg?oc=5",
+      "post_file": "instagram/fila/automatica/rfc29rwuzczdmyee04rhhemflnr1cxqlvwu25todrfdefbnwvknexlr2paauziwtg-oc-5-5042b46a04.json",
+      "reserved_at": "2026-11-14T02:00:48.363573+00:00",
+      "last_attempt_at": "2026-11-14T02:00:48.363573+00:00",
+      "attempts": 1,
+      "requires_strict_reconciliation": false,
+      "visual_mode": "radar_news_illustrated_bank_v2"
     }
   ]
 }
