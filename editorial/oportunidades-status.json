@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-14T04:05:44-03:00",
-  "fim": "2026-11-14T04:07:02-03:00",
+  "inicio": "2026-11-14T11:34:39-03:00",
+  "fim": "2026-11-14T11:36:20-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -62,10 +62,10 @@
     },
     {
       "query": "site:womanifs.com inscrição OR registration 2026 2027",
-      "resultados": 0,
+      "resultados": 3,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 0
+        "bing_rss": 3
       }
     },
     {
@@ -209,7 +209,7 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 43,
   "adicionadas": 0,
-  "atualizadas": 43,
+  "atualizadas": 3,
   "total_arquivo": 93,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
