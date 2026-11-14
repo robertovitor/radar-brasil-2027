@@ -123,18 +123,6 @@
       "attempts": 6,
       "requires_strict_reconciliation": true,
       "visual_mode": "fallback_visual"
-    },
-    {
-      "key": "instagram:noticia:https://news.google.com/rss/articles/cbmi1gfbvv95cuxosv9yznvqohrcd051vxjjclrzyjr2rwk4t1dnwtrqmzqznefeuhfqwupwrtzdvdfbzjfrzvvxukngqujwumrfcdfpyjbfy2pydgz3tk9wdlzjqutczvpjv2dxdwlfa1vpbunrx2vwc2zxzkhivxhhn1ytltz0v2xvovhzq1fjshdos1hfcug5nmxfeekzwflvx2dauvvcswflymdhmm9da2rkwk5odf9ndf9ltnq4mdkxrdzquu9sm2p3cho3zdf0uhfhtkptztjybwo5znzr?oc=5",
-      "post_file": "instagram/fila/automatica/da2rkwk5odf9ndf9ltnq4mdkxrdzquu9sm2p3cho3zdf0uhfhtkptztjybwo5znzr-oc-5-afba906e5b.json",
-      "reserved_at": "2026-11-14T19:16:06.668204+00:00",
-      "last_attempt_at": "2026-11-14T19:16:06.668204+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/03/Secretary_Blinken_at_a_Youth_Soccer_Clinic_-_53088135127.jpg/1920px-Secretary_Blinken_at_a_Youth_Soccer_Clinic_-_53088135127.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "image_page_url": "https://commons.wikimedia.org/wiki/File:Secretary_Blinken_at_a_Youth_Soccer_Clinic_-_53088135127.jpg",
-      "bank_image_id": "IMG0293",
-      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
