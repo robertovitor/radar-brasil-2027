@@ -186,7 +186,7 @@ def semantic_news_event(item):
     # Agrupa apenas o anuncio da data de abertura; a abertura efetiva das vendas
     # e mudancas posteriores de fase continuam sendo fatos distintos.
     ticket=('ingresso' in text or 'ingressos' in text)
-    sale=any(x in text for x in ('venda','vender','vendidos','comercializacao'))
+    sale=any(x in text for x in ('venda','vender','vendidos','comercializacao','custara','preco','precos','r 30'))
     opened=any(x in text for x in (
         'vendas abertas','venda aberta','ja estao a venda','ja estao disponiveis',
         'comecou a venda','comecam as vendas','iniciou a venda','ingressos disponiveis'
@@ -194,7 +194,7 @@ def semantic_news_event(item):
     announced=any(x in text for x in (
         'abre venda','abertura da venda','comeca a venda','comecara a venda',
         'comecarao as vendas','a partir de dezembro','em dezembro',
-        'data anunciada','data e preco','preco para comecar'
+        'data anunciada','data e preco','preco para comecar','custarao','custara','a partir de r 30'
     ))
     if ticket and sale and opened:
         return 'copa-2027:ingressos:venda-aberta'
