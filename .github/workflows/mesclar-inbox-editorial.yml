@@ -11,6 +11,7 @@ on:
     paths:
       - 'editorial/inbox.json'
       - 'editorial/executar-automatico.txt'
+      - 'scripts/mesclar_inbox_editorial.py'
 
 permissions:
   actions: read
