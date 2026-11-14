@@ -1,19 +1,19 @@
 {
-  "cycle_id": "20261114-16",
-  "started_at": "2026-11-14T16:29:49-03:00",
-  "completed_at": "2026-11-14T16:31:25-03:00",
+  "cycle_id": "20261114-20",
+  "started_at": "2026-11-14T20:24:37-03:00",
+  "completed_at": "2026-11-14T20:26:38-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 118,
-  "aprovados_novos": 13,
+  "candidatos_publicos": 101,
+  "aprovados_novos": 6,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 105,
+  "rejeitados": 95,
   "duplicados": 0,
-  "inbox_itens_adicionados": 13,
+  "inbox_itens_adicionados": 6,
   "inbox_commit_needed": true,
   "auditoria": [
     {
@@ -26,49 +26,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Venda de ingressos para a Copa do Mundo Feminina 2027 começa em 1º de dezembro - Neo Química Arena",
-      "fonte": "Neo Química Arena",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPcUQ0NUItdDZnNlBSZktRNXpjZVliRjZJdDFVVTVQLVRlczEtWXVtSk53QVk5ajFxYWgzM0FBc25kSnhwcnVvNGxHZXRuY1NCQmxrVGdVdzlOOG9GLS1NUUJRRGRwdXllb2lZWWtzQ3RVazRfMzhZa3RFaHZEWnpUc3RZSEk0X0NPOGhON1B6cVFhNWpybGt2VDFDZElpMjVDSnNVeExiSHF6SThPM0ltMUJLUTc2RlhwRnZXTlZ3?oc=5",
+      "titulo": "Copa do Mundo Feminina 2027: veja preços, quando e onde comprar ingressos - Capricho",
+      "fonte": "Capricho",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOMW50NkFUVk5PN0JfdGNGZ2JJdzJhQjJYMWpGZXVZdEVlS1hNQ3ZEamlLOGhxX2hEVzJoQS1Hb0M3TjdVNkEyTGplbHB1elJvVWlsNWdtM193RVVBeFQ1WUNEaEpQU3dLam5tZGxZelZsa3E3SnlsWDJ0c2JsX2lKNEI1dUcyZVNmamZ6V0Y4akRsR3JSa0Rja0loa3JkcG1uTThlb3VKbUV4RzNYT3BfcEFB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027: ingressos começam a ser vendidos em dezembro, com preços a partir de R$ 30 - O Estado CE",
-      "fonte": "O Estado CE",
-      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNSWtPRHJmVmZQd2c3dUhyRGhTS2gtdnd3d281Y2tzS2hRME1HSnlzNGdDYWNPMWhXNkdHLVFyalJ2ODJzMGFpWWxXRkxSdWVBczlyVzhEUkY1Mk9rSjVwX0xDSGk2UUFMRl9iVDhWYXdFeFdQVTZRZ2o5ZkljNU1GZ1lQVUFqSk5xdlRZM184bTd4VVplZGZ6N1l1VFdSLTFxX0R1d1hjaVRCX2FUY3gtWDc4dURpMlVyOWdzalQzNEhzb0R3MlRRQzlWSGNwdVNT?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027: ingressos começam a ser vendidos em 1º de dezembro; veja preços - Cadê Brasília",
-      "fonte": "Cadê Brasília",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOak94bkIyZUFrVmJqNVJ6Y19kV3ZBWjR6X1FhOU1OWGpwak1xeUJSUXZscV9aVnJmRG9VV1BEWEt2WlVnNTR6NVBWb3hvQ3ZKYjZYbEtnVGZ3cHJLWkVqczJjdk1DdWZYQTE5NnJzcjFYRTdBRHNJaV9wOXU3MjFWRTl1bXF5OWgzcE9qbEVYMjREelltYVllbUQzQ0JlaGZqMkkxYnJBckFuOTNRd3dlTU5aVHhhQ0NRY1NseWxGOElxZkdmaVAzUzBR?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027: ingressos custam a partir de R$ 30; veja como comprar - InfoMoney",
-      "fonte": "InfoMoney",
-      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOZmhUaTdiOFJnTFg4YXUwb3ZDMVRKbWxSVjloOEJaNUptcDVjUlpoT3ZtckJTSjZTVjFOQ0NSUTJBMEtWbXRmaUMwUlZnMy1ZWFJoeVZoZnYycW1vdGREck5YbEJKTzFwaGxRRkxHZGN4UzB1Ymp4MnNIR2FrMDBIZGFhUnJIbkVQb2tNZ2E2a9IBlAFBVV95cUxOd3MzamdXcDZMYzNCTFM1eWZoT1BiQmRhX3Q4TzJhaEVPTUxHVURCTXBUamlvSnYtUDF2M2pMMXJUR0NzMEFjamFxNTdPS2E5LURTRG10TVQ4Ql9ySWVOb1dwRjl5Y09QV1lZQTduMXBKNktiYU1VOXRrcmFqSkI1QzlFa0FPbnNUUFR0OFNTV1hZb3BE?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027 terá ingressos a partir de R$ 30; saiba como comprar - GPS Brasília",
-      "fonte": "GPS Brasília",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBGbkxhdng0a2lqbGpRMWRhNmRnRHo5dUNNTTZGc0JqRDhfWjZGc1Q4ZzAxQkE5UFg2MHp1a3I4bDk0Q1duVzFuc0lFRnJNN3Z6cFB5QzMxdzhiMVlQTDU5QUxPbmJXeTdiRWZGaEVxZS1JcnFkMGttYnhhUDlNblE?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027: ingressos começam a ser vendidos em dezembro; veja preços - Portal Viu",
-      "fonte": "Portal Viu",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNYVl3YkFfTks2aV83Rm5OUDJuakZDSDJnSmcweVB5RzkwZlBWanltX3J2Z3Y5TTlKTF9EbXlUR0JKLXRfNWFRV0tjd19LZjFQdlFwbTB4WmtTOE5fakJDS2ltWkpiNDBZYzZPYmc3Y1oyRW94dVNOTkRmSmRMakp6NlN1RWJaSDlGMDNCR0h4NWhoSGxVU0hsOVdMeDlUS2hDV3FqRVZvN2E5WFhmVEt5dGZZQ25sWFBNMzJlWndB?oc=5",
+      "titulo": "Fifa anuncia venda de pacotes para Copa do Mundo Feminina 2027 - CBN São José dos Campos e Vale",
+      "fonte": "CBN São José dos Campos e Vale",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOdm96QlJOTG1EaTV1VkU0QXdGT09UalhhX2dMdlZnSVhJVVo0ZmxpdjhpOFB2cEcxV05kaHlGZ09QbllJbTc3eWhpTW51SmdaZER3OHlMZ09NUV92M3NJNWR6U2FqSVB5QVdrUEJGQjJ3eXFoUXBMU1p6dW5sTFRkQkxoLVFpbmFxWl9ENzVEdHVGalBq?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -77,6 +45,14 @@
       "titulo": "Copa Feminina de 2027 terá ingressos a partir de R$ 30; veja como comprar - IstoÉ",
       "fonte": "IstoÉ",
       "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1WWWUtcHlBS3ZmaVRxV25fN1hjTU54aEVGNXN2R0ptWDY4WHVSLUJVTWp2MFJ3MXJ3LUhrdU5ESE9wVV9TemEya0tGZUFBNVBJLWhWcXVsdEZ5Ry13dWktUEZ5d2FpQm0wSV9zRzd4dzRJdW10WElDTGpURQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa do Mundo Feminina 2027: ingressos custam a partir de R$ 30; veja como comprar - InfoMoney",
+      "fonte": "InfoMoney",
+      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOZmhUaTdiOFJnTFg4YXUwb3ZDMVRKbWxSVjloOEJaNUptcDVjUlpoT3ZtckJTSjZTVjFOQ0NSUTJBMEtWbXRmaUMwUlZnMy1ZWFJoeVZoZnYycW1vdGREck5YbEJKTzFwaGxRRkxHZGN4UzB1Ymp4MnNIR2FrMDBIZGFhUnJIbkVQb2tNZ2E2a9IBlAFBVV95cUxOd3MzamdXcDZMYzNCTFM1eWZoT1BiQmRhX3Q4TzJhaEVPTUxHVURCTXBUamlvSnYtUDF2M2pMMXJUR0NzMEFjamFxNTdPS2E5LURTRG10TVQ4Ql9ySWVOb1dwRjl5Y09QV1lZQTduMXBKNktiYU1VOXRrcmFqSkI1QzlFa0FPbnNUUFR0OFNTV1hZb3BE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -93,22 +69,6 @@
       "titulo": "Copa Feminina 2027 terá ingressos a partir de R$ 30; vendas começam em dezembro - A Crítica de Campo Grande",
       "fonte": "A Crítica de Campo Grande",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQTEJjUmlONFV0NVJOSWRSekpBOXhnOHFlV19DaEJBMHVhcjdpX0xXZV9tNU9YalBDaVNnaXUtN2NicHlXTWpRTTBTT01OclZJb0hCelUwZVQ3MTcxRkN2czdqZFpBQ2hZZTRhcTVkR1VVNnFfUE1XNFc2RU9WR2dGakxFeVd0QmdCV1AxSXROVU1nM2lqR1NWSVhlWEdSRU54ZUFEV0d2N3JpZnNR?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "COPA FEMININA 2027 NO BRASIL COM INGRESSOS A PARTIR DE R$ 30! - Jornal de Colombo",
-      "fonte": "Jornal de Colombo",
-      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNYzR4ZnBEMWxPSmlIblFndFFBQVhfc1hKc3pjcVZBdUVQa3V1em1ieTN4ZGt0Qk9uQ0tVQlliTEYxaGpTUXphWkJrWTZsdFprbnpYZG1icS1RaVE4WWQtTmtBdF9IallqX2pYcmpHZUxxZFhsMkNTV0dTZGd3N0p0ZG9lSG95U2NWVkt6V3BXb2EzdFhOVHc?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Taça da Copa do Mundo Feminina chega à CBF e aumenta expectativa para o Mundial de 2027 - A Crítica de Campo Grande",
-      "fonte": "A Crítica de Campo Grande",
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE94MUxrZGtDT0s0bEFxcW9yekcyQzBwcjVIcmNGR0F0OFcwbXhQUjJFS2NfUEJVQlFqeGRjaWh6NXFGY0hXOHBUVnFySkVkc3hzaG02VkNkdW5NdTJxTWhEbzJmVmJBd0RhdWF0RGpB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -162,14 +122,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Arthur Elias convoca Seleção Brasileira Feminina para amistosos; veja - Band",
-      "fonte": "Band",
-      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOM01nNmtYV0psSkI3bFhRM1ZidTN6OE9ycDlTbUdHcEFkRTBuQkFTM3UxZzVWYjViVmtncmYydlZNSXN1d1Y5cHA4Ml9Zem9fYng4enVNX3gtM29PcWhvZlVfeGttQmhvRHpadkhmbkMtLWpiYkpOZ1NwN1dwaHV4Yzg2Z3JfdnFvZGg3ZU94S043aTQ3SG5fcUJBNmdMWjU5aDh2ZGdqdjhGdzU0MDF1ZWNzT2ZRU09LdzBaeW1aSkl4b0ZoNWRz?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Arthur Elias convoca 26 jogadoras para amistosos da Seleção Brasileira feminina contra o Japão - Diário de Goiás",
       "fonte": "Diário de Goiás",
       "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNTGRwRmFKRkNDYzBSbDdjamFuQXYyRVJoNlNaWjI1VWYxZ0Z6aUcyVGFIU2dFLTJnZjBrTk1sUVQ4VnlFcjRPQVctY0luRjZDOXlPa2phSEg0dDU0Xzg1S0pfeG94dWFDNFhXZ3g5NDZQNF9xTHM1UUtoem1QRFc5Wm8yZXRQRmlSY0xHYjN3b3R6d2pZS1Y5V0dRSTNwUU13ekdmS2dVa2ktcFNMYlRFUUpnLW9ZYldjZ3lTWmFUVWdSQ3RYZUpxQXB1MA?oc=5",
@@ -178,17 +130,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Sem Kerolin, Arthur Elias convoca Seleção Brasileira Feminina - Metrópoles",
-      "fonte": "Metrópoles",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQZDB0TmdWeVpVbHhJMU5NUE8wWTNCdzlVT0pmR3pfR2J2SVpROVlwWFB5dlFHSk1CSFUwWlIxT0wyb2FCM2t1NVZhZnhyLXVXaW9Lc3RhNW0zcWlpV3pRMFZORkY0MHZ6ZERKOTV4NWVRWF9OSnNKOHRkUm1mOEFKTXQ3ZlBDZVgtV1FwOWEwckowVWRGTWhQNkhMaTc?oc=5",
+      "titulo": "Arthur Elias convoca Seleção Brasileira Feminina para amistosos; veja - Band",
+      "fonte": "Band",
+      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOM01nNmtYV0psSkI3bFhRM1ZidTN6OE9ycDlTbUdHcEFkRTBuQkFTM3UxZzVWYjViVmtncmYydlZNSXN1d1Y5cHA4Ml9Zem9fYng4enVNX3gtM29PcWhvZlVfeGttQmhvRHpadkhmbkMtLWpiYkpOZ1NwN1dwaHV4Yzg2Z3JfdnFvZGg3ZU94S043aTQ3SG5fcUJBNmdMWjU5aDh2ZGdqdjhGdzU0MDF1ZWNzT2ZRU09LdzBaeW1aSkl4b0ZoNWRz?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
     {
       "origem": "google-news",
-      "titulo": "Gisele será a quarta potiguar a defender a Seleção Brasileira Feminina; veja lista - Tribuna do Norte",
-      "fonte": "Tribuna do Norte",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOOXdEQzlXV3ljVFZYQ3ZJNnRXWnZNZWstZ2FVVXJudzg5MUNlVmlLT3JWQm1BeE5yU3pSRkJaVzFwOUJfZ2RHUlBDcG1iU20tb3U0c0VCYnlFTmpuQVlMM0I4RUJUWlNKb0xXZmZFZUFFRTNZc1NERHFJZWp1MVZBNjVsMXc2SFRxWW5wRVl6Z2tCZkZ2ZXhoeFhUdHc4aHljaW9aM1NocHhpdF9SZGhrang0LU9vVUJSNzY4WXVB?oc=5",
+      "titulo": "Sem Kerolin, Arthur Elias convoca Seleção Brasileira Feminina - Metrópoles",
+      "fonte": "Metrópoles",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQZDB0TmdWeVpVbHhJMU5NUE8wWTNCdzlVT0pmR3pfR2J2SVpROVlwWFB5dlFHSk1CSFUwWlIxT0wyb2FCM2t1NVZhZnhyLXVXaW9Lc3RhNW0zcWlpV3pRMFZORkY0MHZ6ZERKOTV4NWVRWF9OSnNKOHRkUm1mOEFKTXQ3ZlBDZVgtV1FwOWEwckowVWRGTWhQNkhMaTc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -250,14 +202,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Sorteio da Copa do Mundo Feminina 2027: veja data, horário, potes, regras e jogos do Brasil - Revista Oeste",
-      "fonte": "Revista Oeste",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPTG5YTVlNUXEtRV8yVXE1NF8yRVRfMzI0S05oMU9keEZ5UHdTTGdFdDJTcXF2V1dPb0M4aXNqNVZnTk9sZHVKSTNoOXR6V2d0QjZlNnpPMGxtM2txeTMwMnJuOHVTTGxRTUhQNk9DcjZmc0p2WXZYN3RqSWhpM0VSYnl3ZkkwRGk0MDMtdEdB?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Prefeitura participa de reunião de planejamento para a Copa do Mundo Feminina FIFA 2027 - Prefeitura de São Paulo",
       "fonte": "Prefeitura de São Paulo",
       "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNdkg0cXZPZWNERnVUMkRnUEpsX3NSVnE5UlBTOWo3Si1qOFdMeFFGbENUVGF1bVpvZ3N6TUQwVE5DQ01VdDJTU1ZvVVFwaTZYRWs0VUVYcUdkWGtvc2FBdEtWaVJYcU1hRmkwY1RCa1FLZi1LRklnM2x2Wl9zaEJkbHdDakpBbE1iOUJPVEdPelcxeUxtMFdEU2JQUlF4bExzLWEtaHpjczVObVJETkw2cEJTenU4ZzJRUUZ5dW54UXFLVWtGN01oSm04OTNLOVBu?oc=5",
@@ -314,14 +258,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa Feminina de 2027 deve movimentar R$ 8,8 bilhões no Brasil - iBand CE",
-      "fonte": "iBand CE",
-      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE91RndWYjJNdVc2clFNd0tKVDhZcGVwOVZHcUdqUUFuekxQMFRGcl9vXzZGOEc3aDd4Z2VaajZlcFdHMGk5LWhKRy1tRW92MlhSSlA3MGZ1NXhTUWs5dkQ0Qld1d3NVTXQ4clY5T0RLUFNBTFRJSnc?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Ingressos da Copa Feminina de 2027: como comprar e acompanhar as vendas - Remessa Online",
       "fonte": "Remessa Online",
       "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE9UTEVrdGRjUG9ndl94LXhSY2dKT3VWNGRrd0lLMzNjN281ZXJydXRWQ1F1UGl0RGI0QVU1MTFsdkozOGllM09fZFlmMzNnSHV4MGtIOUF4SVFXYTFtbWxZcXlUU1c4QkJYZXAyYi1aZGRhQQ?oc=5",
@@ -330,25 +266,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Em Copacabana, Elmano de Freitas participa do lançamento da Copa Feminina 2027 sediada no Brasil - Portal IN - Pompeu Vasconcelos",
-      "fonte": "Portal IN - Pompeu Vasconcelos",
-      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxONHh4R29VenFHQnVFdUx3WWQzWl9BdGR2d3ptaE9GWng2ZFQ3NDRZUG1FWkpQamZGVDRMdHplNUxvQTI0YUp6Y2NfNVNxaldEU1pVZFM4SFZ0SERYcFNQUE0tcWI1VzlvRS1iWGx1Y0FjbkFyRHktSTdSRENxTG1iQUUyaXR2Y0poRGtsNmNHNFNfOGVMOTZqU1VIelZ4Q2xzXzRiU0hvemxsU0Z0NmhyeldtT0I1Wl8yWWFKZ3pXTzQ5UlZXYVZiRGRYS1hZU21qOUl6cw?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Ingressos para Copa Feminina 2027 disponíveis a partir de 1º de dezembro - noticiasdoplanalto.com.br",
-      "fonte": "noticiasdoplanalto.com.br",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOa2tIY0h1X0xlWjE3b2k1aXF3YmlSZFQzbFNYbW44UGhycmVpR2VnOEVfTWIxX3otSG9LUjRuX1gtYlVrOU9McERPZkdaYk5fdDEzbHNkS0xqUElDVXV4T0t6ekFqV2hKd1hFaHM0MXVSb1ZlZmIyYzFqQURyVW9IUlg2T0FOVXJYQzREOU5FTGc2STQ4T3hpMy1FRGc5Y1laTDI1WVBsbXFpeUU?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Copa Feminina 2027: FIFA abre venda de ingressos no Brasil com pacotes a partir de R$ 100; saiba como garantir o seu - jornaldearuja.com",
-      "fonte": "jornaldearuja.com",
-      "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPQXhnWUU5WFR3N2x5NDJhOFFMWHM4Y2xsc1ZYNXdPdVRCWW95VlowMTREMEpON1NRQWNEamMwaTZjSHBYMG5GdjNnWFFLTFlRRjhkTlVWYjNhT0s0TXdBaVp3WkNqSTJVb3pDU0NqSk42Z3k0ZWwtMy1yQ255RUR6c0w0Y3NBNklwMXBhMnd4d0NwQ0dGQ0VUNkN4UHhzOURNNzkwZ0lhRzBnMnJKMExmUTlBajJzQS1XblVCeEJsX0phQk9iX2VuN0llREthNFU0ZmxFR2M3WQ?oc=5",
+      "titulo": "Copa Feminina de 2027 deve movimentar R$ 8,8 bilhões no Brasil - iBand CE",
+      "fonte": "iBand CE",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE91RndWYjJNdVc2clFNd0tKVDhZcGVwOVZHcUdqUUFuekxQMFRGcl9vXzZGOEc3aDd4Z2VaajZlcFdHMGk5LWhKRy1tRW92MlhSSlA3MGZ1NXhTUWs5dkQ0Qld1d3NVTXQ4clY5T0RLUFNBTFRJSnc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -410,14 +330,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027: conheça as 8 cidades-sede - Remessa News - Notícias Sobre Transferências Internacionais e Câmbio",
-      "fonte": "Remessa News - Notícias Sobre Transferências Internacionais e Câmbio",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNc011aFZNMWhhTlhNS1ZYNjJSMlQ0a3A5NFF0dmFTSlpGNWhCbXU2eU91Q1BabFBiSUx4ekNyRl9ZeXp3cFNTSnJVS0xIaklkdWhNUFVGNjBqaFgteWdHN3JmTld4QzVkMi0tYzhwU2ZNdHJnM3diTFNheU9xdUZTcTdFMmNpSmlwRFZJb1U1VTZwMXR60gGWAUFVX3lxTE5wYlFQYTNpdDlpdEU0V0pEb0ItZkZjNWpZMFU5V3ltUUxXRWpJQnpFaXF4NFFpb0xjU2VKU3RzMVNucTNPV1R2SVdJWUJvb0RRXzl1R3hFd0dLR2laLVRORW55TmJDMlA0ZnhYVlpQNS1GM2JZRm1hcDJJRVRWYi1ldENWWWRlVWRyd1BHMGRtcWFJRFZOdw?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Copa do Mundo Feminina de 2027 terá 32 seleções e oito cidades-sede no Brasil - A Crítica de Campo Grande",
       "fonte": "A Crítica de Campo Grande",
       "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMm5aTjFneUQxVG42MUxxUGJ1TjFmbWFDSVg1ZTlRWU5hLXZDYkpacXBNRU9nc1Rsb1IzaTRDLUZlS1V3QkhNV2J0ZU5rbzY0dVlKQk5KT29KdXpEWkNod1FGRGVkR0ZDeVhPYmFhWTFpOHpsQ1BuVlhBaExXZHY4dVRB?oc=5",
@@ -426,9 +338,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Congresso abre exceção fiscal para bancar a Copa Feminina de 2027 - TV Sim Brasil",
-      "fonte": "TV Sim Brasil",
-      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPNm14Z2FFNEJEdmVyM0hkZkpNQ2dtLVlQOXk4WWxJWFIwUG9FTWxDeXhBcGJ4bUV4TUwyNTNCZDBvYjdDdzNyVngta3BrYzM2UW03cDRzYlJhRHR5Uy1Wc0ZJVl8zOTlla3JVald6WjdOWl8xcS1sYS1Cal9kYTgxaTZzRDlaalVPZ05QekZBNkVrdEVrcnRsaGx5ZnVRZG9WRU5Db0NxLUFERy1uSkEwbkN5M1ktMEJS?oc=5",
+      "titulo": "Taça da Copa do Mundo Feminina chega à CBF e aumenta expectativa para o Mundial de 2027 - A Crítica de Campo Grande",
+      "fonte": "A Crítica de Campo Grande",
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE94MUxrZGtDT0s0bEFxcW9yekcyQzBwcjVIcmNGR0F0OFcwbXhQUjJFS2NfUEJVQlFqeGRjaWh6NXFGY0hXOHBUVnFySkVkc3hzaG02VkNkdW5NdTJxTWhEbzJmVmJBd0RhdWF0RGpB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -442,9 +354,33 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Sorteio da Copa do Mundo Feminina 2027: veja data, horário, potes, regras e jogos do Brasil - Revista Oeste",
+      "fonte": "Revista Oeste",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPTG5YTVlNUXEtRV8yVXE1NF8yRVRfMzI0S05oMU9keEZ5UHdTTGdFdDJTcXF2V1dPb0M4aXNqNVZnTk9sZHVKSTNoOXR6V2d0QjZlNnpPMGxtM2txeTMwMnJuOHVTTGxRTUhQNk9DcjZmc0p2WXZYN3RqSWhpM0VSYnl3ZkkwRGk0MDMtdEdB?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Fifa define critérios do sorteio da Copa do Mundo Feminina - TV Sim Brasil",
+      "fonte": "TV Sim Brasil",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOYkhwSUREdGNXX1JFMWFPQ0Jld2VSMVFSSU9LNHd4SXI4WlZjOGE2ZEtULUhtYWRZQ1FiYTRwbUxNRW9FVVllWkZ0clQ1OUFkbndLWEpISzBYbmE5aXAxUmo2d3lyT3l3cjFtU3dGZXg1R21sNXNoRFJ6RzhkYUVuc0htYjNDeVQyV2ViY3JzX3MwRGN1N2l6NXFrN2hDRGdUekktU1JCMnJyZmhuZlVHZw?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Troféu da Copa do Mundo Feminina chega ao Rio é exibido na sede da CBF - Diário do Rio",
       "fonte": "Diário do Rio",
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOOGpSMVNCaTRmc2xPbmI4Ri1qbEh4aGZvWDNPR01vb1JzeHZIcWg1OHEwRmtpbERxdndpWDB3LXBvdFZHcWRJZFJsX0tNN253YTRpeFlpZmdJOVFHSnU5d0d2Nk11eGw4T1JORDZRSUxkWml5RE5aY0x2RENqeDNlZFVnOGN5REo2d2lPQzJaU3FDRnhMTFUtSjgxRXJ1dVFRNXhlOWJzZEZld3h0TFlCR3lGODdEWU1hYXc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Congresso aprova flexibilização de regras fiscais para viabilizar a Copa Feminina de 2027 no Brasil - A Crítica de Campo Grande",
+      "fonte": "A Crítica de Campo Grande",
+      "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPSzU1Mm1DRkt2cW56Mnp0aHg3QkhDNDR1OXdOMFY4YTlmeksyWFdLQWxGOFE0XzZPbmo1N19kVjVpc0RXQ1BGMm9zMVJYMS1Ba1RXdW5WWFRZTkEwT091LUEwU3ZQdEp1VU05YThMVjFzM3ZHMUtneEd1Tmp0Q3UxcHB2NXZJMU5id2JQNEk5SmlocnczaDdocnhHVG01aE1GdFh3VGRSS1ptamZtZWhFTGFXa0RGVTQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -506,25 +442,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Saiba como comprar ingressos para a Copa do Mundo de Futebol Feminino que irá ocorrer no Brasil em 2027 - Portal ABC do ABC",
-      "fonte": "Portal ABC do ABC",
-      "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1GUjMwX0FYUjF5U1NyVHdOUHJHcDVzTjlZdXlTNjBlX2ZXQTRiSE1WNFZmQlg1M25xYlRPZ05GVGtBMVh1dTBkWGJJbW5yRFA5MmNtWVAteUxVRW5rQ0s0YlRfMkJZZ3R2eHRLRTFRWWNBa3RLRzZOdQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Copa do Mundo Feminina de 2027 terá ingressos a partir de R$ 30 - Brasil 247",
       "fonte": "Brasil 247",
       "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQLUdOVVNQMVRlY3RJWG1BaTlxeXJUc01nd05CdW9lZ1VlX1JvbzlSMUtpYVN1akVvV3V6N2pWOUNTTlo5VjJwXzVENUItVnAwaW9MVl9hRVgyZUtNOUVGSThkVXJjdXBaX1c1LTc0eHVWdFV2eHM4ZnlIT0FicGM4QnNTcFVJUDJMZ1loaTc5YTVmbW9EbjlnV2U1a1VoZw?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina: ingressos começam a ser vendidos em dezembro; veja preços - R7 Esportes",
-      "fonte": "R7 Esportes",
-      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxONjlqRm9xOXozeTZLWWZGaDM3NTlpZjN5UGhpNEI3LTZUQ25kQmhnSTRtNkMxVkNQeXFveGh2TWVaM1dsWDloeWVaa0VaRzFKXzhHN1hlbFZBekdBNWFfNlZIemp0SWNza29yVWhQb3Z0cEdTN1FTVE5pekMyZEExYjYwNDNkbmRYUDg5M2JZaDlzR1gwREtvRVczcUo0aWNOWTBJc1hNRE5CLUdTZWRBUVg2SEk1NHJod2FoWDBFalY?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -546,17 +466,17 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Venda de ingressos da Copa do Mundo Feminina 2027 começa em 1º de dezembro - OpiniãoCE",
-      "fonte": "OpiniãoCE",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNTFMtbEdydXY5akxPVk13MjR6TzhYZEk0UFdKZUdNc3RaeTB3SEtLUmNlOHlhdDcwczJ4a0tscklxRXBFcXQ4VG9ha0Q0TUk2S1FDR25wc1BfSk5MdjFHZmdSOUNJbTROb0lzZWJRZnpob2g0aVhPdkhjMmdXbzBMZV9GWUc0VDBpZW9Yam1oTDJKcDdQU0ZWbUkyMW1BNUs0MkFxR0dPZkJINGNpMjlsZmRDZEFZOXlsQzVMbERqcXgzUQ?oc=5",
+      "titulo": "Ingressos da Copa do Mundo Feminina custarão a partir de R$ 30; veja mais detalhes - ge",
+      "fonte": "ge",
+      "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPckdqWW5oZ05pTW5yelZrYm9kQ0NKd3laQVI0RHB3VEo0bnZMM3NHai1ITWlBQV85NDUzaEtrSkZXZ3VjV1VQUXVVWnNlUDBlV1p4YlFoYl9IOG83cVpPaUMwNDIzS0FPRkZ1TkFVclBVMmZvY0hIUmxXVk5nZmNEVnNLaWhXcEFIYW9JbHk4eW91TGdiRGVvZm45QjlyZFNWQ0lONVR0MmhtRDNnRWh0VTcyaVJEVDluejZZelc5UU9lRnBzcjQwQ2Q1MU85Mk9QTFh5Q0ZGNDlySHJqSFlGU2thOWF1NFpVUzUyWC13dWFCaDFQ0gGDAkFVX3lxTE90ZVp1U2pEVHRzWkhnOEdsMW04V3g2cl9mbURRVW55RktwVWstN20zODNsVkwxWUMydTJqcElsMlB3NEFYRXROWkxvVjhjTkszcF9tS0NUSTJERDBXSkFiWk11dXdnUEM3R3o4V0R0dXk2R1FpM211M1ZPRzR6RWt6VXZfaHZEaVlUOE5RQ21Vd1hNLTJDb3RwNXJ2bWtzSDg0WldaYnNHQmtoa2RrOFBaamZsaUZXU0RtNkFEcE1LYlpncmM2SmdRMFhsVmN2RTdvRjRTbHZ0TkJWX0xsajNpbDEtaGhGemV5b192MzJHTDZ0U2o2TnJtTldpTHc3WjFzXzQ?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Copa do Mundo Feminina 2027: Ingressos começam a ser vendidos em dezembro de 2026 - Jornal Grande Bahia",
-      "fonte": "Jornal Grande Bahia",
-      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQTUZuRG9UeE41VGxaMjA4YlhacVBVYmxVVy1tSlBBZnJkOElQc1dLUDRwZm1DS2xBd3Jtdl85c2dzSUhMYnp3RFFhYmNLVDVXNXJSS3VsVUhhdnpwS1luZFhxbmVUSjlrelhPZjFlRHNDVFhCWUlqdGhlQnNEU3B1dnFYNzdiTmtNMGpRSG5rT2hGWDNNUHRXVklaNTYybVN0bmJxakplQTg0Q19mMGhRZE5rX2ZyOTZWSnBRY2kzSQ?oc=5",
+      "titulo": "Sorteio da Copa do Mundo feminina: veja regras, formato e quem Brasil pode enfrentar na fase de grupos - ESPN Brasil",
+      "fonte": "ESPN Brasil",
+      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNdWN0RXdzRkNDY1oySmRDMmlyMmdHbHpHRWRmTWlVcmVSNVMxaUFrVnBvUDM1Z29XYTRtQXJUMnEwTTdsVmlEVzRIZ0xIQW85V29Dblgzdjh6dDU0NVFwdmx3QXhiTDI2aFE4VklidFVaRTBWLUhlbTRMbmh3NnhhQmhuN2plWExTMG1kdXJTdkNUanZEeVZ4MXF6ZlBGbHFkc2hFdWRxZXNRYk1Qck5mUzhObGVsSXNFZDdFZlVVaTZwUnNZQ1BVQmNORTJJZVE?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
@@ -565,22 +485,6 @@
       "titulo": "Copa do Mundo Feminina de 2027: Venda de ingressos começará em dezembro - Máquina do Esporte",
       "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQWmprejZWOV9uRlIyUlRGTktJS1B4QXpBWEhpVTJZclJTVks0V09OQmhpX0pXSzc5M3lobzVva0FFOXJmazVFcXdSZWVXSm8zWmZTdmc2YWh1TUNkWFY3dllRUEFPbDA1MTcwNWEweUc3YzNlTTVtczRyWG0wWEk1NGNuTU1rU0tmNlNoUTVmSUZvTGh0Z0cwN3RfNTJvVDBRS284NXdXc0RNNEtybm9hQjl6S3JiRWdpbVkyLXZ0ZEVJMkphUDRheWV3?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Ingressos da Copa Feminina começam a ser vendidos dia 1º - ES Brasil",
-      "fonte": "ES Brasil",
-      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5DRzdNVER2WFJEMDlBc0FKMUZSTEx0d25NdHFJSFhLUGJnZC0yUDhwREhFMEplZnBwRnpnTHA3NDJpdnZhZnBueElLdFcxMUY3MHp4cTNIaDdndFlSVzl6bVdGRHVYRlRod3NKNEpTYw?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Copa Feminina 2027: da bilheteria à TV, quanto vale o torneio no Brasil - Estadão",
-      "fonte": "Estadão",
-      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNVVUwVzgwNTA1dVhNN3JMTHdYM2xHTFJHbnhIYURGcFVNRFhEbWJjN2VtYkR6cHBsRm9PZWY3MnhGR1dDdnNCeUJ4Ny0wOVMtWXpkV3ZYaGgxVVRUSDRtN3pPSGNIY25IcVd6R25VZWMyWGxOYXpvc1ZVeHdJUG8xY1dUcU83TEdveG1hQV9yYmQ1dFhvRFZVTXUzX083c0pPZVdwSkx0OEFoYlFmcWV1Ty1KX1RaaVA3ekFJ0gHAAUFVX3lxTFBvN215OWU4SkVrbFlxeWo0RjBmREg3ZHRHZktfaXNLdzN3U3JtVFpSZGFTaTZnUVJkNUhMNHpXLV9tY3JHc0tZQ091cy1FTWJKMDZBeDNtTHB1TVpzSHNaZ0VycXhzd2UwejRNVDdON1FUT2x6dzlOeFMya0I3a202bTk5ZVc5cnpBcVh5SHNxUVJKNVpwWnoyZ1VwOERCbVc2U20xbTZkb2NIcjBYYUFFZnV1Qm0zNnpITFFWUFoxMA?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
@@ -645,22 +549,6 @@
       "titulo": "Sem Marta e Kerolin, Arthur Elias convoca Seleção Brasileira feminina com novidades - ESPN Brasil",
       "fonte": "ESPN Brasil",
       "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNcDhFcXlGd29iVUNCN3BuZFlkNlgyZ3IxOHF4R1RpTVJWeXI3elZVLW5fUmdLMVZIeW1NeGdUQU5nTlV3R3BOQUdwVlcwRDZtaG45d3hUODBfeV84UFhHeFROQ19PU19DTi1OWEVYQktKRGRJRkd3WHY1akowN3lUZHl3NEdVaWJKUnhCeExpRFB4amQ3RHlZUk52Y2c0aFptdTk2b1d4SXdzS2dFMHVhRHRqTVZFMWZHdjZwaHZTUjBxUXQzNFhER0NiZVQxNlJ2R2c?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Convocação da seleção brasileira feminina - Assista ao vivo | ge - ge",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOSE9GX0dXWlBkdXNXaHI5d1dBQjhFcjg0bDhab0F6V2pkQlBsMWptUE1kWGVBbnRQWjJuTGdkMm1KdktJNjVUM1AyOVk2RnJLSzNONWQ1amRxX09HQnhoTlRsUWlIZXh2YVZpZGxGUVhiLURaMjJlakozMC1xaHJMRV9RakJDRTlwUEJwRXV4alhxbHBGMVZ5Mnd3ZXBuTEVNLWphU2dsMmxxaGhSdDRqLWpWTnJRdGZ5SkZJ?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Arthur Elias convoca Seleção Brasileira Feminina sem Marta e Kerolin - Terra",
-      "fonte": "Terra",
-      "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxNczhhR3ZjVXRxVFEtb1kyR2VOV251QlFLVlBVNURadHlVQVp3bndMTTVFSWc0dWZUNS1HMjZneV9maWtwWVNkMXp3N01tUzkyRXdaWkRLVG1iOExmVGZYdmIwMWg2SmdfaW1OZlZjb3pKcHItM0N3b0pXTFFGcUptZjJ0aVo0ZGp5cGVqQkc5aG1zWEZ3dUcyNEJoTVloWm1oZWlNUUthZ1dHdDNINjRYZ3Y1eDRsRXUxZ05PbWt1U2hfb3dtSXFYWGRPb2NXT1RuYjJILWlXQUlpX0tsSHEzdEpB?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
@@ -810,11 +698,11 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Fifa apresenta marca oficial da Copa do Mundo Feminina de 2027 com evento em Copacabana - Máquina do Esporte",
-      "fonte": "Máquina do Esporte",
-      "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQLWJMa2RPZ1ZzVUJiVGZSdjZIbHp5SThlRm45MjRCcmZtemRWSkFiOFM1aENTNW85MnRsM3pKVHE5NjVJNm5mX2VmSUh4b0YybFhiR3pxRl9YdFNzcHFadFh1dFBabm11Rk9BNjBxbVhzRzJxRXdCZVBkdnNPMXJ3MEw0cW9fMVl3MnhCSHhzaklmQ3pYSnctbFkwdkVGbHlvMkhjalhWbS1pemxQbGdkNllVNWRpaE8xbThLemVSNEtndENiY0VrcnhYaHpyeFpmM3Q3SlQ2ajc1UQ?oc=5",
+      "titulo": "Saiba quais serão as cidades-sedes da Copa do Mundo Feminina 2027 - Poder360",
+      "fonte": "Poder360",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNUkFBRS1xcW9CZUE0M2NoXzJfRjUzUFFkU0tvUXdYbkRHcXI3UGFDTWZnZVVOdFdYeUN4T3FGSEt3OWhkei1NdHdSV2NvV2ttSnNZbU5YcDg0d3Q5cWxDYnNDaXZYaEhFNmpKMmdyZzJOZkZ2VFlEZVBkS2VGNklNS3N0YUNRWjJydXpONlJkay1Ma0pnRXNsTmRva253ajkxN1V3Z2dZTzdGWWNEdzlN?oc=5",
       "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (292d)."
+      "motivo": "Notícia fora da janela de frescor (289d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -930,33 +818,9 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Ingressos da Copa do Mundo Feminina custarão a partir de R$ 30; veja mais detalhes - ge",
-      "fonte": "ge",
-      "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPckdqWW5oZ05pTW5yelZrYm9kQ0NKd3laQVI0RHB3VEo0bnZMM3NHai1ITWlBQV85NDUzaEtrSkZXZ3VjV1VQUXVVWnNlUDBlV1p4YlFoYl9IOG83cVpPaUMwNDIzS0FPRkZ1TkFVclBVMmZvY0hIUmxXVk5nZmNEVnNLaWhXcEFIYW9JbHk4eW91TGdiRGVvZm45QjlyZFNWQ0lONVR0MmhtRDNnRWh0VTcyaVJEVDluejZZelc5UU9lRnBzcjQwQ2Q1MU85Mk9QTFh5Q0ZGNDlySHJqSFlGU2thOWF1NFpVUzUyWC13dWFCaDFQ0gGDAkFVX3lxTE90ZVp1U2pEVHRzWkhnOEdsMW04V3g2cl9mbURRVW55RktwVWstN20zODNsVkwxWUMydTJqcElsMlB3NEFYRXROWkxvVjhjTkszcF9tS0NUSTJERDBXSkFiWk11dXdnUEM3R3o4V0R0dXk2R1FpM211M1ZPRzR6RWt6VXZfaHZEaVlUOE5RQ21Vd1hNLTJDb3RwNXJ2bWtzSDg0WldaYnNHQmtoa2RrOFBaamZsaUZXU0RtNkFEcE1LYlpncmM2SmdRMFhsVmN2RTdvRjRTbHZ0TkJWX0xsajNpbDEtaGhGemV5b192MzJHTDZ0U2o2TnJtTldpTHc3WjFzXzQ?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Congresso muda orçamento em favor da Copa do Mundo de futebol feminino - Agência Brasil",
-      "fonte": "Agência Brasil",
-      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQSzl3aWxmOXJNVGROaVNEN2RCTXc5S0Zmbjh4TWJ2RFpQdDk2UFUtUW11MEtzc1BuUm1zM1BXTHB1RFR2a3lPR3QxSDZrbEZ4Wk9mTkE1Wlc0SW5CZlZnRFZDNUJuMEJESHR2cXdtekVKTU1QVHY0bXMyZWZRNzV5UG9QMG85ckRrU3ZaSHlnMWFNZzRzeWlhOWtxb1RuMTF5V21TSDlQYzVZQ1UtSDdTVTJKcGRxcHlfcEFTSklHbnBjMDg?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "Fifa divulga data e preço para começar a vender ingressos da Copa do Mundo feminina - Estadão",
       "fonte": "Estadão",
       "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNNU1xejZpbmZKTHVyU1RSbHlIVHFDS0Z0clptT0NTaWFuWUlkVU1WU2ZYc2NiSmpSZlptUlgteEJGNlFFQ2x6eTJTYUtHc2ktYjI2NEVqQkYxUmhOTktkU1MxVFZYcHRYb3EzMXYtQ2IyaE5rVlNoZEFxazhxT3R2cGhTaUp3TV9Wa0drQUhsSGJkNzJHaDdOYmwwT0dNWndXSFZkbmRXUm1rVXEtanc2N2dDYnhXWU15RE9WRlpPclU0S2g2dnFF0gHMAUFVX3lxTFB6WkdaM2NEZzlSS254ZkdyQzNTT2RkNlpQWnRQam92ZHFaMkJuMmlsendxRzRieVJqWXYzNDdVTEFoREh3dWVKN013SXJLMm4yWE1RVDk4SmtzX0VQV0xPRWlCNExNUmhvU3JGc1RjRTBtU0NtT053UTA0ZENHMW5KcTRIajlfX291SGp3eDZLYld1U0Nlb3FHSVVxTUZIMDdpNzluUUEySmlDU3hHelpYSFlSOE1lN0hzWnhhV3U3eU1KZl9sZ3Joa3Fmbw?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Início da venda de ingressos para a Copa do Mundo Feminina tem data anunciada - LANCE!",
-      "fonte": "LANCE!",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQa3JjTTlTYnltY2VxcHRtNnFDamdiaXNsNDE0N2psRlJvUEpiQWxxa3hMdVlkcUJSMVh3UHpCQjh1ZVNScXNqSkFCT2ZiYkQ0elZNbnhxLVVaT0VLdkw1TFZOYllnMEthQWdEem4tXzhnRVUzNmVoVTBxaXBnSUFCa04ya25UY1VIVlhLZVBDOHNKSXhILXczdHNpaDVwUXFDN0MyOXdVb25QMk9RNUJpWW14MTZSOHI2dzVLMzFnN1dCeWcxQmx0VmRB?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     }
