@@ -123,17 +123,6 @@
       "attempts": 6,
       "requires_strict_reconciliation": true,
       "visual_mode": "fallback_visual"
-    },
-    {
-      "key": "instagram:noticia:https://news.google.com/rss/articles/cbmivwfbvv95cuxqrkm5qmy3vuzgsjzin0s5xzvrwlvit3u2rw5mbg5pos1pyvfvzvn1mhdfbunbogy3uzlvbmnfm1dfqwgzv01lcdfkvhiyq3fdaffmx0f2elrtwdflstg4akj1ykjlqxlyn3p6zg0ttjnhstnbbgxlcwpbukhkwlh0m0d1amjysmdvnhz5nu1ibjfeqzllewnwn1q3quxtdvjmluzimvnydvpqa0dpz2roseh2unz0z0fqtvfuwjvryw?oc=5",
-      "post_file": "instagram/fila/automatica/jfeqzllewnwn1q3quxtdvjmluzimvnydvpqa0dpz2roseh2unz0z0fqtvfuwjvryw-oc-5-d7f56fb5ff.json",
-      "reserved_at": "2026-11-14T03:10:49.453313+00:00",
-      "last_attempt_at": "2026-11-14T03:10:49.453313+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/e/ea/2027_Women%27s_World_Cup_bid_election.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "image_page_url": "https://commons.wikimedia.org/wiki/File:2027_Women%27s_World_Cup_bid_election.png",
-      "visual_mode": "auto_commons_photo"
     }
   ]
 }
