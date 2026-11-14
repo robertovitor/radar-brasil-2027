@@ -181,6 +181,25 @@ def semantic_fact_signature(item):
 def semantic_news_event(item):
     """Assinatura conservadora do acontecimento jornalistico, nao da manchete."""
     text=norm(f"{item.get('Titulo','')} {str(item.get('Resumo',''))[:900]}")
+    # Uma mesma decisao da FIFA sobre a abertura da venda de ingressos para
+    # a Copa 2027 pode render varias manchetes e veiculos no mesmo dia.
+    # Agrupa apenas o anuncio da data de abertura; a abertura efetiva das vendas
+    # e mudancas posteriores de fase continuam sendo fatos distintos.
+    ticket=('ingresso' in text or 'ingressos' in text)
+    sale=any(x in text for x in ('venda','vender','vendidos','comercializacao'))
+    opened=any(x in text for x in (
+        'vendas abertas','venda aberta','ja estao a venda','ja estao disponiveis',
+        'comecou a venda','comecam as vendas','iniciou a venda','ingressos disponiveis'
+    ))
+    announced=any(x in text for x in (
+        'abre venda','abertura da venda','comeca a venda','comecara a venda',
+        'comecarao as vendas','a partir de dezembro','em dezembro',
+        'data anunciada','data e preco','preco para comecar'
+    ))
+    if ticket and sale and opened:
+        return 'copa-2027:ingressos:venda-aberta'
+    if ticket and sale and announced:
+        return 'copa-2027:ingressos:abertura-anunciada'
     # Convocacao da Selecao principal: ao vivo/onde assistir/lista/ausencias de uma
     # mesma convocacao sao o mesmo fato. A data ancora evita colapsar convocacoes
     # de janelas diferentes.
@@ -260,6 +279,15 @@ def main():
     state=load(IG_STATE,{'known':[],'pending_new':[]})
     original_events=list(events); original_news=list(news); original_state=json.loads(json.dumps(state))
     events,news,removed_events,removed_news=explicit_cleanup(events,news)
+    # Saneamento do acervo existente: deduplica fatos iguais mesmo quando
+    # foram cadastrados em dias próximos por veículos diferentes.
+    news_semantic=[]; semantic_removed=[]
+    for item in news:
+        if any(duplicate_incoming(item,kept,'noticias') for kept in news_semantic):
+            semantic_removed.append(item)
+        else:
+            news_semantic.append(item)
+    news=news_semantic
     inbox=load(INBOX,{'eventos':[],'noticias':[]})
 
     fresh_events=[]; pending_events=[]; enriched_events=0
@@ -351,7 +379,8 @@ def main():
 
     duplicate_discarded=(len(inbox.get('eventos',[]))-len(fresh_events)-len(pending_events)) + (len(inbox.get('noticias',[]))-len(fresh_news)-len(stale_news)-len(pending_news))
     print(f'eventos_duplicados_removidos={len(removed_events)}')
-    print(f'noticias_duplicadas_removidas={len(removed_news)}')
+    print(f'noticias_duplicadas_removidas={len(removed_news)+len(semantic_removed)}')
+    print(f'noticias_duplicadas_semanticas_removidas={len(semantic_removed)}')
     print(f'eventos_incluidos={len(fresh_events)}')
     print(f'eventos_enriquecidos_com_horario={enriched_events}')
     print(f'noticias_incluidas={len(fresh_news)}')
