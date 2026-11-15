@@ -1462,6 +1462,47 @@ def public_research_with_scope(keys):
                        'Sem evidência verificável de futebol feminino no título ou resumo editorial.'),
         })
         print(f'editorial_scope_blocked={title[:180]}')
+    # Consolida cobertura repetida do MESMO marco: anúncio de abertura
+    # da venda de ingressos da Copa Feminina em 1º de dezembro. Mantém uma
+    # única referência editorial (prioridade Agência Brasil/FIFA) e não
+    # bloqueia matérias futuras com informação material nova (preços finais,
+    # fases de venda, setores, cidades ou disponibilidade).
+    def _ticket_announcement(item):
+        title = _topic_normalize(item.get('Titulo') or '')
+        summary = _topic_normalize(item.get('Resumo') or '')
+        text = title + ' ' + summary
+        same_date = ('1 de dezembro' in text or '1º de dezembro' in text
+                     or '1 dezembro' in text or '01/12' in text)
+        return ('ingresso' in text and 'copa' in text and 'feminina' in text
+                and same_date and any(term in text for term in
+                    ('venda', 'vendidos', 'comeca', 'abertura', 'fifa abre')))
+
+    ticket_items = [x for x in eligible if _ticket_announcement(x)]
+    if len(ticket_items) > 1:
+        def _ticket_priority(item):
+            source = _topic_normalize(item.get('Veiculo') or '')
+            title = _topic_normalize(item.get('Titulo') or '')
+            if 'agenciabrasil' in source or 'agencia brasil' in source: return 0
+            if 'fifa.com' in source or 'fifa' in source: return 1
+            if 'cbf.com.br' in source or 'cbf' in source: return 2
+            return 3
+        canonical = min(ticket_items, key=_ticket_priority)
+        filtered = []
+        for item in eligible:
+            if _ticket_announcement(item) and item is not canonical:
+                duplicates += 1
+                audit.append({
+                    'origem': 'ticket-announcement-dedup-2026-11',
+                    'titulo': item.get('Titulo',''),
+                    'fonte': item.get('Veiculo',''),
+                    'url': item.get('Link',''),
+                    'decisao': 'duplicado',
+                    'motivo': 'Mesmo anúncio de abertura da venda em 1º de dezembro; mantida uma referência editorial canônica.',
+                })
+                print(f"ticket_announcement_duplicate_blocked={str(item.get('Titulo') or '')[:160]}")
+            else:
+                filtered.append(item)
+        eligible = filtered
     return count, eligible, rejected, duplicates, audit
 
 pe.public_research = public_research_with_scope
