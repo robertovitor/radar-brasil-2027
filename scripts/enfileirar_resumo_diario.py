@@ -71,7 +71,7 @@ def label(value):
 
 def valid_email(value):
     value = str(value or "").strip().lower()
-    return value if re.fullmatch(r"[^\\s<>@,;]+@[^\\s<>@,;]+\\.[^\\s<>@,;]+", value) else ""
+    return value if re.fullmatch(r"[^\s<>@,;]+@[^\s<>@,;]+\.[^\s<>@,;]+", value) else ""
 
 
 def utc(value):
@@ -115,7 +115,7 @@ def event_end_of_day(item):
         except ValueError:
             return None
     hour = str(item.get("Hora") or "").strip()
-    match = re.search(r"(\\d{1,2})[:hH](\\d{2})", hour)
+    match = re.search(r"(\d{1,2})[:hH](\d{2})", hour)
     if match:
         try:
             return datetime.combine(day, time(int(match.group(1)), int(match.group(2))), TZ)
@@ -204,7 +204,7 @@ def digest_body(events, news):
             lines.append("")
     lines += ["Acesse o Radar: https://radarfutebolfeminino2027.com.br/",
               "", "Para cancelar uma categoria de avisos, use o formulário de descadastro do Radar."]
-    return "\\n".join(lines)
+    return "\n".join(lines)
 
 
 def main():
