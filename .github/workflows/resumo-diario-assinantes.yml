@@ -1,0 +1,62 @@
+name: Resumo diário Radar — assinantes
+
+on:
+  # Usa o agendamento diário já existente; não adiciona outro cron.
+  workflow_run:
+    workflows: ["Consumir sugestões Airtable (diário controlado)"]
+    types: [completed]
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/enfileirar_resumo_diario.py"
+      - ".github/workflows/resumo-diario-assinantes.yml"
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: radar-resumo-diario-assinantes
+  cancel-in-progress: false
+
+jobs:
+  enfileirar-resumo:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.event == 'schedule' && github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+      RADAR_PUBLIC_SITE: "https://radarfutebolfeminino2027.com.br"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Baixar histórico editorial completo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validar sintaxe antes de acessar serviços
+        run: python -m py_compile scripts/enfileirar_resumo_diario.py
+
+      - name: Recuperar data do último resumo bem-sucedido
+        id: since
+        shell: bash
+        run: |
+          set -euo pipefail
+          previous="$(gh run list --repo "$GITHUB_REPOSITORY" --workflow resumo-diario-assinantes.yml --status success --limit 1 --json createdAt --jq '.[0].createdAt // empty')"
+          if [ -z "$previous" ]; then
+            previous="2026-11-06T19:08:15Z"
+          fi
+          echo "value=$previous" >> "$GITHUB_OUTPUT"
+          echo "Resumo incremental desde: $previous"
+
+      - name: Enfileirar um único resumo por assinante
+        env:
+          RADAR_SINCE: ${{ steps.since.outputs.value }}
+        run: python scripts/enfileirar_resumo_diario.py
