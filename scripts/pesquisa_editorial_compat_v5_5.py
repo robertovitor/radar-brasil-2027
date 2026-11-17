@@ -1503,6 +1503,50 @@ def public_research_with_scope(keys):
             else:
                 filtered.append(item)
         eligible = filtered
+
+    # Deduplicação persistente de marcos editoriais: evita que a mesma pauta
+    # comemorativa reapareça em rodadas diferentes só por vir de outro veículo.
+    # Escopo inicial: aniversário da Copa do Mundo Feminina.
+    # A comparação usa o histórico local noticias.json; não faz chamadas externas
+    # nem consome Airtable. Conteúdo novo sem o mesmo marco permanece elegível.
+    def _anniversary_milestone(item):
+        title = _topic_normalize(item.get('Titulo') or '')
+        summary = _topic_normalize(item.get('Resumo') or '')
+        text = title + ' ' + summary
+        if not any(term in text for term in ('copa do mundo feminina', 'copa feminina', 'mundial feminino')):
+            return None
+        match = re.search(r'\b(\d{1,3})\s*anos?\b', text)
+        if not match:
+            return None
+        if not any(term in title for term in ('completa', 'celebra', 'aniversario', 'relembre', 'marca')):
+            return None
+        return ('copa-do-mundo-feminina', int(match.group(1)))
+
+    history = pe.load(pe.ROOT / 'noticias.json', [])
+    if not isinstance(history, list):
+        history = []
+    known_milestones = {_anniversary_milestone(x) for x in history if isinstance(x, dict)}
+    known_milestones.discard(None)
+    seen_milestones = set()
+    filtered = []
+    for item in eligible:
+        milestone = _anniversary_milestone(item)
+        if milestone and (milestone in known_milestones or milestone in seen_milestones):
+            duplicates += 1
+            audit.append({
+                'origem': 'persistent-anniversary-dedup-2026-11',
+                'titulo': item.get('Titulo', ''),
+                'fonte': item.get('Veiculo', ''),
+                'url': item.get('Link', ''),
+                'decisao': 'duplicado',
+                'motivo': f'Marco comemorativo já presente no histórico: {milestone[1]} anos da Copa do Mundo Feminina.',
+            })
+            print(f'anniversary_duplicate_blocked={str(item.get("Titulo") or "")[:160]}')
+            continue
+        if milestone:
+            seen_milestones.add(milestone)
+        filtered.append(item)
+    eligible = filtered
     return count, eligible, rejected, duplicates, audit
 
 pe.public_research = public_research_with_scope
