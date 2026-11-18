@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-18T10:31:39-03:00",
-  "fim": "2026-11-18T10:34:20-03:00",
+  "inicio": "2026-11-18T18:39:07-03:00",
+  "fim": "2026-11-18T18:40:46-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -112,7 +112,7 @@
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 28
+      "resultados": 25
     }
   ],
   "hubs": [
@@ -122,13 +122,11 @@
     },
     {
       "hub": "https://plataforma.cbfacademy.com.br/pt-br/calendario",
-      "resultados": 0,
-      "erro": "TimeoutError:The read operation timed out"
+      "resultados": 0
     },
     {
       "hub": "https://plataforma.cbfacademy.com.br/pt-br/noticias/244-futebol-feminino-brasileiro",
-      "resultados": 0,
-      "erro": "TimeoutError:The read operation timed out"
+      "resultados": 5
     },
     {
       "hub": "https://ludopedio.org.br/agenda-de-eventos/",
@@ -177,7 +175,7 @@
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 3
+      "resultados": 4
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
@@ -208,18 +206,16 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 45,
-  "adicionadas": 0,
-  "atualizadas": 5,
-  "total_arquivo": 97,
+  "oportunidades_validas_na_execucao": 41,
+  "adicionadas": 1,
+  "atualizadas": 3,
+  "total_arquivo": 98,
   "erros": [
-    "hub:https://plataforma.cbfacademy.com.br/pt-br/calendario:TimeoutError:The read operation timed out",
-    "hub:https://plataforma.cbfacademy.com.br/pt-br/noticias/244-futebol-feminino-brasileiro:TimeoutError:The read operation timed out",
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/18-11-2026/17-04-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://plataforma.cbfacademy.com.br/pt-br/cursos/182-nutricao-no-futebol:TimeoutError:The read operation timed out",
+    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:HTTPError:HTTP Error 404: Not Found",
     "page:https://www.gov.br/esporte/pt-br/acesso-a-informacao/acoes-programas:URLError:<urlopen error [Errno 101] Network is unreachable>"
   ],
   "isolamento": {
