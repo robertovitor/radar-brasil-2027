@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-19T09:13:13-03:00",
-  "fim": "2026-11-19T09:15:21-03:00",
+  "inicio": "2026-11-19T18:01:43-03:00",
+  "fim": "2026-11-19T18:03:40-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -112,7 +112,7 @@
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 25
+      "resultados": 26
     }
   ],
   "hubs": [
@@ -130,11 +130,11 @@
     },
     {
       "hub": "https://ludopedio.org.br/agenda-de-eventos/",
-      "resultados": 12
+      "resultados": 10
     },
     {
       "hub": "https://ludopedio.org.br/agenda-de-eventos/?pagina=2",
-      "resultados": 4
+      "resultados": 7
     },
     {
       "hub": "https://www.cob.org.br/cultura-educacao/cursos-do-iob",
@@ -206,10 +206,10 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 42,
-  "adicionadas": 0,
-  "atualizadas": 42,
-  "total_arquivo": 98,
+  "oportunidades_validas_na_execucao": 43,
+  "adicionadas": 2,
+  "atualizadas": 3,
+  "total_arquivo": 100,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
