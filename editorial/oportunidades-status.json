@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-21T05:49:51-03:00",
-  "fim": "2026-11-21T05:51:37-03:00",
+  "inicio": "2026-11-21T14:00:04-03:00",
+  "fim": "2026-11-21T14:01:54-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -209,7 +209,7 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 40,
   "adicionadas": 0,
-  "atualizadas": 40,
+  "atualizadas": 3,
   "total_arquivo": 100,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:URLError:<urlopen error [Errno 104] Connection reset by peer>",
