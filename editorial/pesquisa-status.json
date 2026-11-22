@@ -1,19 +1,19 @@
 {
-  "cycle_id": "20261121-19",
-  "started_at": "2026-11-21T19:25:57-03:00",
-  "completed_at": "2026-11-21T19:27:52-03:00",
+  "cycle_id": "20261121-23",
+  "started_at": "2026-11-21T23:40:33-03:00",
+  "completed_at": "2026-11-21T23:42:48-03:00",
   "stage": "completed",
   "executor": "github-actions-native",
   "airtable_reads_total": 0,
   "airtable_reads": [],
   "sugestoes_lidas": 0,
   "sugestoes_noticias_lidas": 0,
-  "candidatos_publicos": 84,
-  "aprovados_novos": 4,
+  "candidatos_publicos": 83,
+  "aprovados_novos": 2,
   "pendentes_enriquecimento": 0,
-  "rejeitados": 78,
+  "rejeitados": 79,
   "duplicados": 2,
-  "inbox_itens_adicionados": 4,
+  "inbox_itens_adicionados": 2,
   "inbox_commit_needed": true,
   "auditoria": [
     {
@@ -26,9 +26,25 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Copa do Mundo Feminina 2027: ingressos custam a partir de R$ 30; veja como comprar - InfoMoney",
-      "fonte": "InfoMoney",
-      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOZmhUaTdiOFJnTFg4YXUwb3ZDMVRKbWxSVjloOEJaNUptcDVjUlpoT3ZtckJTSjZTVjFOQ0NSUTJBMEtWbXRmaUMwUlZnMy1ZWFJoeVZoZnYycW1vdGREck5YbEJKTzFwaGxRRkxHZGN4UzB1Ymp4MnNIR2FrMDBIZGFhUnJIbkVQb2tNZ2E2a9IBlAFBVV95cUxOd3MzamdXcDZMYzNCTFM1eWZoT1BiQmRhX3Q4TzJhaEVPTUxHVURCTXBUamlvSnYtUDF2M2pMMXJUR0NzMEFjamFxNTdPS2E5LURTRG10TVQ4Ql9ySWVOb1dwRjl5Y09QV1lZQTduMXBKNktiYU1VOXRrcmFqSkI1QzlFa0FPbnNUUFR0OFNTV1hZb3BE?oc=5",
+      "titulo": "BH será sede da Copa do Mundo Feminina de 2027, com ingressos a partir de R$ 30; veja quando começam as vendas - SouBH",
+      "fonte": "SouBH",
+      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPbnN5UWF5Sy1HY0hzSmE4Q0NYYlg0bHlIa0t1VmcwNVp3a25pbFRpcnE2X01zUmZ5UFpuYzJVbVVXSFBHUDJCaFB6dS1fYXZhMjJUaUtURzhIWmJUMmdxNXJMNU8yZVhSVmlOd0Z2cFBqOEM1MVFaV2pDV1hpS0ZPbFl4VC1mTEl5Q3A1M3hjR19lNHl4eTlCR085ZmpFcXl6OGhHdUFpYXhsbkRZQjFtNmZwQ2paT3ktMFFiQW5PMTJBWEUxbV95VW0wWFRrODN4YzduTGhmS09tdnI5aTdjUF96YzY?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Copa do Mundo Feminina: como comprar ingressos com preços populares - TVT News",
+      "fonte": "TVT News",
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE0xaTJKM3EwQ1YwUmF3MFFGaWlLczI4SWhpYnBtdmlLSElEUTJLR0o3RlhHRk55QjgxTkFINFR4aDNWSExaTGVqdWJYVGlEUDIwRkNqaTcxZEZQVmlqMzk1cV9EZGhqckQ1XzFTZUo3QlNSNG1EM0JrWUtOZEFMZw?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Ingressos da Copa Feminina terão opções a partir de R$ 30 - SBT News",
+      "fonte": "SBT News",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPbzNxaU1SaHFUX0djb0lVTklpQ05zbElyRVFWREtCQ19EX0Z4dEFQWnhjVExuSEI5ckNvVVBMMFFoWEVxSUw5THNITE9zbU1ST1gzQVRKSk5WWllyWVVJU19sa1hmTXBUeERvYXFtWFNWRHdrZFVxZ0dNaFFkTExBM1JHSjlKVHZiMDZiQUMzZHotRFR0cHduZ2dSMHp5dkU?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -74,14 +90,6 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Mundial 2027: FIFA revela regras do sorteio e já há data marcada - SAPO",
-      "fonte": "SAPO",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOVHJHeHVKMTdCay1mMDJ4QlE1dmRUOS1GblUtNUFteG44LVM1Mi1MVzlIYjV0Qllzc1k2X3kyemRIYXhDd1N2NnY3aEo2MC15bVBkb05YdTJwa0FXOEtrY01lLUhFcnNjTlhwSVBuTFZQU0lpTmltU1l4eGkyLU1XRVhxNFpsMUNhUGw0cnNsMWREaEFuTl8xbXBqNnB6SmlMRFJ4YXV5Sl8xTHQyUDBabA?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Debate aponta necessidade de investir no futebol feminino para Copa de 2027 - Senado",
       "fonte": "Senado",
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQWTltNXB3VkV5VkhmZ255d19hQ0tFUGZHUmxMNjZCdnJvb1Q4eVd6bkRQZVRJMGhqNlNoY1VLYlM1bkxZZHhoQXN0cUw0NE01SGJUZ1plMk10a2g1anY1UU1PRFJleTZDTEtTUGVQLV81TWt1NzhBSzdKQ1pzYjFabGR5NzdaY2lYNlB1M1NvZDdkTDdhclROZHNoaGVtY3ZPSDJ1akdtSkphS0xPWFNKYWdyS3phTXVnVW5CLTA0UExTVmxjVVE?oc=5",
@@ -90,9 +98,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Arthur Elias convoca Seleção Brasileira Feminina sem Marta e Kerolin - CartaCapital",
-      "fonte": "CartaCapital",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNdnM3bmxlRUM1angyQlBfTTJqT2M3MTBzc3VWem1uT0NIbFJoekNpcVJFd3hydEZmTU9fN3Y5QXNMcGtpdF9LR2FPdktRYy1vT3JodHFFbmN4a1JKRU91c3phLUVPQmdqTVVwUjdvSkx3bV84WHdVOXAwcU94aFptVk56cWtPdldWOXZlTFFsMXAxaW5fSE1IT2lnX09VQmFpQ3haUzUxclgtb3EwNVE?oc=5",
+      "titulo": "Espírito Santo vai receber seleções na Copa Feminina de Futebol em 2027 - Blog do Elimar Cortes",
+      "fonte": "Blog do Elimar Cortes",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQNE1ycGt0d1Z4cGxibTRIdEgzSzFIVW5EdDJYeHFQZkRKRjR6WjRiVXNFQ19uQVdfTEphRjNPMnl2a0lQVmplSXI1emxnVDdhUmN4OXItM2d4YjdUV3VpNXZ0LXAtenhYQ2xhRGFGVXY5aDMyenBYR0dyaUVlSzhILXZCTG12eU1XSVJNamJEekFhbTFSZTJaa0p4bzJZamdRUjBNeGc2SWNGQU1iTjBNQw?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -106,33 +114,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Ingressos da Copa Feminina 2027: venda abre em 1º/12 no DF - Rádio Corredor",
-      "fonte": "Rádio Corredor",
-      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPRG82c2dNMGhaX00yWURTS09zVFdmcWtPZExHUDhCNmZNQ05qT28yTmxCTU92QVlCTXduTEc4YzIwN1VheEFmQ3ZSb0w5ZDJUWm9XZktIVFE5TUxRa09NbnBjakhEVWRhUEF5WUhteFctR2JrTUdDRjl0dXI3QS1vLUVqa2JQVFZrQWw3bHd4dVQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "COPA FEMININA 2027: VEJA INÍCIO DAS VENDAS E JOGOS EM SALVADOR - Bahia Econômica",
-      "fonte": "Bahia Econômica",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOeUR1TUNXWERIM2tzXzdyVDV5TTFFMTRHOWd0QXJ4a2s4UTdSWmhTZEJaYjlLckU3eENPODR5ZVZBV3R0YmFnR012NnBHemhvY1g2RWh0emZfZVZncXgzUE9SNlQtMmdzclJHSGo1RTQ5VXBYWFZYOEZXakc4b1N1RlVMSi0zMTgyelZvRGF5eDZNT2o4YlFTTlhhTFRsVTZEeEpDbUlpZlZVdw?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Torcedores poderão acompanhar sete jogos da Copa Feminina 2027 em Salvador; veja preços - Aratu On",
-      "fonte": "Aratu On",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOWTVkbzItTHQxcUZJaC1FU0p3U3BCSjNsTkNPbElrUGR4SVZ5RUhzT2hPc19BZUZ3WnhWeFZUZWNzX054WjA1eVUxX1VQRXVfS2V3Y2lmWlJaRFUybFJ0d3E1MGdJTG52b3N5SmJmSHZJV1dmbmdKYkc3ZEgwUXFoNmZfbjJOcDk2bFI5Z2loZlBlTzR0X0ExSjlLcHE4ZnhkaUt6d1NMM1p2b0theHhYa2cyQUJqMGZUNzZ1dFF5SVpQUQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
       "titulo": "Copa Feminina 2027 deve injetar R$ 8,8 bi na economia, prevê ministério - viva.com.br",
       "fonte": "viva.com.br",
       "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPYWJLaWhJOVZxZ1ZBX0JQd1Vzbkh4a2RKZlhUMzRFVFc3WVVCRlAwU2pNTjZtY2tGcE1ZMXhBM2hfV0dINEZPZmV6ZHZKdmcwWWpxYVFtdFRBUHA1dmp1czNUa1NoZUlhOXNtMmFURVc4OFkyRkg4ZVpCa0hoQ21PSF9GSl82MGhVSVFMOUtuX1Q4aC1KZHBqN3RTam9IZ0YtWEE?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
+    },
+    {
+      "origem": "google-news",
+      "titulo": "Ingressos da Copa Feminina 2027: venda abre em 1º/12 no DF - Rádio Corredor",
+      "fonte": "Rádio Corredor",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPRG82c2dNMGhaX00yWURTS09zVFdmcWtPZExHUDhCNmZNQ05qT28yTmxCTU92QVlCTXduTEc4YzIwN1VheEFmQ3ZSb0w5ZDJUWm9XZktIVFE5TUxRa09NbnBjakhEVWRhUEF5WUhteFctR2JrTUdDRjl0dXI3QS1vLUVqa2JQVFZrQWw3bHd4dVQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -146,9 +138,9 @@
     },
     {
       "origem": "google-news",
-      "titulo": "Ingressos da Copa Feminina de 2027: como comprar e acompanhar as vendas - Remessa Online",
-      "fonte": "Remessa Online",
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE9UTEVrdGRjUG9ndl94LXhSY2dKT3VWNGRrd0lLMzNjN281ZXJydXRWQ1F1UGl0RGI0QVU1MTFsdkozOGllM09fZFlmMzNnSHV4MGtIOUF4SVFXYTFtbWxZcXlUU1c4QkJYZXAyYi1aZGRhQQ?oc=5",
+      "titulo": "Copa do Mundo Feminina 2027: ingressos custam a partir de R$ 30; veja como comprar - InfoMoney",
+      "fonte": "InfoMoney",
+      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOZmhUaTdiOFJnTFg4YXUwb3ZDMVRKbWxSVjloOEJaNUptcDVjUlpoT3ZtckJTSjZTVjFOQ0NSUTJBMEtWbXRmaUMwUlZnMy1ZWFJoeVZoZnYycW1vdGREck5YbEJKTzFwaGxRRkxHZGN4UzB1Ymp4MnNIR2FrMDBIZGFhUnJIbkVQb2tNZ2E2a9IBlAFBVV95cUxOd3MzamdXcDZMYzNCTFM1eWZoT1BiQmRhX3Q4TzJhaEVPTUxHVURCTXBUamlvSnYtUDF2M2pMMXJUR0NzMEFjamFxNTdPS2E5LURTRG10TVQ4Ql9ySWVOb1dwRjl5Y09QV1lZQTduMXBKNktiYU1VOXRrcmFqSkI1QzlFa0FPbnNUUFR0OFNTV1hZb3BE?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -173,14 +165,6 @@
       "titulo": "FIFA lança marca da Copa Feminina 2027 no Rio - CGTN",
       "fonte": "CGTN",
       "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFB6ejEzekx1SmJHOEk3cms0TG54bURwdlZBMUJ1YnlqbHRFM05UYVNBWi1GOGcwa1lzWWQ5SHVETlVfOGFEX3VEMnZCX20wdHhvX05fck5YelR4bTlFRTFSd1BmVlFvbXlR?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Fifa lança marca da Copa Feminina 2027 no Rio de Janeiro - Tribuna do Paraná",
-      "fonte": "Tribuna do Paraná",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNbUtKUUo5Z1dmMGVwQWJzaVNIWWhNTTRBQUJiTVN0QmtpVVZGVXZmV2dhNG5lUHlrSEJiTDdhaTBoRVF6QmVhREtNU2wtNDc3dGVUdGRCOEZXREZvdlE5d3VVRERRY19QMTJpNy1fMXM4c2lxLVZsYWRqVk1XSEJibHpubU9OTXhadTcxWGZvXzVuUzdaTHJJTWlvYzg5Tkpvbml5bENJSkhIM2p6QlHSAbMBQVVfeXFMTWhmMnJoRE55OGNjbW9KOUN1RTUxX25qUE9tMi1PRXZqMEp2WWhXSXhGaFV2bENIdkRURkxKeFZRcXpOS2p1NDJfUWRaSGdHVHJoN3dHOGhjZEZmdnpRZnJlSy1RWFcxemVleDdRcUhucVh6SHptbHROaFhKa18wbC0yN3Itektma0M4enYxeXEtVzFxRmNVbWt2OGhKNEJfWG9RQmRvOUUxeDlEWl93U09pYzQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -226,17 +210,17 @@
     },
     {
       "origem": "google-news",
-      "titulo": "MEC define regras para férias escolares durante Copa do Mundo Feminina 2027 - A Crítica de Campo Grande",
-      "fonte": "A Crítica de Campo Grande",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPaUs3cmNCaTF4bGlycWcteUVJNUNrTG1WSV9SU2VtWlg4eDlVU2lkdC1mYTVMUGQ5a2dwOU5mU0ZaOE1xUWFTVDd4ZXQ2RktINDQyOHFFVEpIT2Q2TVhISm5iVVF6QktoaVlkZlU0MlRFNlVKd0RqNi1yLV9QSm5tUXFDNjFxWkUxQkFQa0NaekJveVBvLVE5RDlFVWVZRlVJUmdRY0xiMzd3UVh1YmZObk0xd0Q?oc=5",
+      "titulo": "Copa Feminina 2027: final será no Maracanã; veja calendário - SBT News",
+      "fonte": "SBT News",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOX2hjbi1Jb0IxTVh2bkktWV9DZzV0VlJ2QS1JR29aaEZkSWFGM0JCXzRFampSY3d6TEFPWTZxM2pxQmRHTGVUdW1hdGNRUnBZQldsSjV0T0NHUFlGUnc5clJXa2hMbzBTUmdtTVlYSXRzZ3NDSUl6bDZrOXRyalVtZU5JemFMd1lZZVVtTnlyTEJaQ0hkQTVFeWtvN0lQb3Ru?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
     {
       "origem": "google-news",
-      "titulo": "Copa Feminina 2027: final será no Maracanã; veja calendário - SBT News",
-      "fonte": "SBT News",
-      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOX2hjbi1Jb0IxTVh2bkktWV9DZzV0VlJ2QS1JR29aaEZkSWFGM0JCXzRFampSY3d6TEFPWTZxM2pxQmRHTGVUdW1hdGNRUnBZQldsSjV0T0NHUFlGUnc5clJXa2hMbzBTUmdtTVlYSXRzZ3NDSUl6bDZrOXRyalVtZU5JemFMd1lZZVVtTnlyTEJaQ0hkQTVFeWtvN0lQb3Ru?oc=5",
+      "titulo": "MEC define regras para férias escolares durante Copa do Mundo Feminina 2027 - A Crítica de Campo Grande",
+      "fonte": "A Crítica de Campo Grande",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPaUs3cmNCaTF4bGlycWcteUVJNUNrTG1WSV9SU2VtWlg4eDlVU2lkdC1mYTVMUGQ5a2dwOU5mU0ZaOE1xUWFTVDd4ZXQ2RktINDQyOHFFVEpIT2Q2TVhISm5iVVF6QktoaVlkZlU0MlRFNlVKd0RqNi1yLV9QSm5tUXFDNjFxWkUxQkFQa0NaekJveVBvLVE5RDlFVWVZRlVJUmdRY0xiMzd3UVh1YmZObk0xd0Q?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -253,14 +237,6 @@
       "titulo": "Copa do Mundo Feminina de 2027 terá 32 seleções e oito cidades-sede no Brasil - A Crítica de Campo Grande",
       "fonte": "A Crítica de Campo Grande",
       "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMm5aTjFneUQxVG42MUxxUGJ1TjFmbWFDSVg1ZTlRWU5hLXZDYkpacXBNRU9nc1Rsb1IzaTRDLUZlS1V3QkhNV2J0ZU5rbzY0dVlKQk5KT29KdXpEWkNod1FGRGVkR0ZDeVhPYmFhWTFpOHpsQ1BuVlhBaExXZHY4dVRB?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
-    },
-    {
-      "origem": "google-news",
-      "titulo": "Congresso aprova flexibilização de regras fiscais para viabilizar a Copa Feminina de 2027 no Brasil - A Crítica de Campo Grande",
-      "fonte": "A Crítica de Campo Grande",
-      "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPSzU1Mm1DRkt2cW56Mnp0aHg3QkhDNDR1OXdOMFY4YTlmeksyWFdLQWxGOFE0XzZPbmo1N19kVjVpc0RXQ1BGMm9zMVJYMS1Ba1RXdW5WWFRZTkEwT091LUEwU3ZQdEp1VU05YThMVjFzM3ZHMUtneEd1Tmp0Q3UxcHB2NXZJMU5id2JQNEk5SmlocnczaDdocnhHVG01aE1GdFh3VGRSS1ptamZtZWhFTGFXa0RGVTQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
     },
@@ -290,6 +266,14 @@
     },
     {
       "origem": "google-news",
+      "titulo": "Copa do Mundo Feminina da FIFA celebra 35 anos de evolução e se prepara para estreia histórica na América do Sul em 2027 - Surto Olímpico",
+      "fonte": "Surto Olímpico",
+      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPVEVldHBtOU40c3Q4TmFSUWFnTFY3OXByZ0RreEhxOTMzNlJNdDFCaXpGUHpJOUVSeXl5aEhXQ2JTYUZGXzRSckZvOUZjekJRenRrRVpxaDNId0FmY2YwLThxcXhmbWtXVlhaOEs0UF9WYS1McWdDaktXc0E5VkFhRmFnTUhxV29YNzFiMjZ4MHd6V01hdGI2M3V6QXdQLU9IeFNHZDRXUVdRdGdSSG5CZDVOaDhyd1l6Um5TWmgxV0t5UHNVRk94MnNBdFBZcl9vbE50RExQUzkwSk9ZRFMyU0xvWEk1bGIzSEh1OQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Não foi possível resolver para uma URL editorial de domínio confiável."
+    },
+    {
+      "origem": "google-news",
       "titulo": "Copa do Mundo Futebol Feminino de 2027 - SóEsporte",
       "fonte": "SóEsporte",
       "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE9pZmJWZDdhSDdWS3JUVmhVMEpESWw0d19ZdVhKOTZLNmJmQTNoU0JVMk1hZlJIMV9rVFE2OWdGTWxPMllIeHdWMVRUOERldEZlYWFxdTVNRVFKcS1Fc3RrZnU2Y0NqZzJIeG4xVlUwOHhYUQ?oc=5",
@@ -298,25 +282,17 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Bahia suspenderá aulas durante jogos da Copa do Mundo Feminina de 2027 - ba.gov.br",
-      "fonte": "ba.gov.br",
-      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOb2ZlcGlLS29lc2ctTFppRVNVaXZKdW1wbUR6a1dRVDR1MTQyT3Jxc1B6OHJYa0F2Ujltb0s5NXZrZi0xMDBtZnYyeHlfRmt3d3NKMkFvdzVWdTFYcEd4d0RZZzFyV3JGaUQ2c1J6clhhT1A2NGFsRmZnelU0eTBOWENnTTVWYlZtamR6MjdFSWxNMVo2c0NHNHVTMmRVQXU5WW5ZOFl1T0Z5ZFR0dFN6amUwTmx2alRQeGJXQzBGWnhvNDBIaVUw?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
+      "titulo": "Definido o Calendário da Copa do Mundo Feminina Brasil 2027 - Conmebol",
+      "fonte": "Conmebol",
+      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPT016SHU5Z3YzS1gyNmhfWGZCcmVsLXlmNzlvTHhOSlNkQllrTERUeFFrTVROaURldFJRVXBYZmxaMndBc1pBTlZ2NEs2dkhzWUVwb2ZBMXJuZzEteE1wNVgybjJwV3FESl9RcXRQV3UzYkc4WFBDRkFXZElGS1MxWGFZb0dodERrbWJqRGZudTZBTlNxclppaC0tM3FiNEVMdXZHU1RLSnA1Zw?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (93d)."
     },
     {
       "origem": "google-news-trusted-source",
       "titulo": "Copa do Mundo Feminina da FIFA completa 35 anos e chega ao Brasil em 2027 - Prefeitura de Porto Alegre",
       "fonte": "Prefeitura de Porto Alegre",
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOcGsyeF9mTUdGOXlpOUJ2dWNoS0xQOVcxNlFGNEVmd0sxbVlTckJCLXFNV01pSlZMZjhpek5UQTNGX1hHMGEzQ0lWbjBuZldSUmN3aFpNNlBtZ1g4MnkzQVpHNVFsSXh2M0dwX2lIT2V1dTdocGE0dlgyX0p0d0d6a25rTWcxMkc4MWhoSDVkU0liT2dXYmdtazdSWFZ5Zk1jdmQ2bUY4eXF4YWMwM1QxUWhNV1EtaW1mdHVZ?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Copa do Mundo Feminina de 2027: Venda de ingressos começará em dezembro - Máquina do Esporte",
-      "fonte": "Máquina do Esporte",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQWmprejZWOV9uRlIyUlRGTktJS1B4QXpBWEhpVTJZclJTVks0V09OQmhpX0pXSzc5M3lobzVva0FFOXJmazVFcXdSZWVXSm8zWmZTdmc2YWh1TUNkWFY3dllRUEFPbDA1MTcwNWEweUc3YzNlTTVtczRyWG0wWEk1NGNuTU1rU0tmNlNoUTVmSUZvTGh0Z0cwN3RfNTJvVDBRS284NXdXc0RNNEtybm9hQjl6S3JiRWdpbVkyLXZ0ZEVJMkphUDRheWV3?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
@@ -370,14 +346,6 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Sem Marta e Kerolin, Arthur Elias convoca Seleção Brasileira feminina com novidades - ESPN Brasil",
-      "fonte": "ESPN Brasil",
-      "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNcDhFcXlGd29iVUNCN3BuZFlkNlgyZ3IxOHF4R1RpTVJWeXI3elZVLW5fUmdLMVZIeW1NeGdUQU5nTlV3R3BOQUdwVlcwRDZtaG45d3hUODBfeV84UFhHeFROQ19PU19DTi1OWEVYQktKRGRJRkd3WHY1akowN3lUZHl3NEdVaWJKUnhCeExpRFB4amQ3RHlZUk52Y2c0aFptdTk2b1d4SXdzS2dFMHVhRHRqTVZFMWZHdjZwaHZTUjBxUXQzNFhER0NiZVQxNlJ2R2c?oc=5",
-      "decisao": "aprovado",
-      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "Veja horário e onde assistir à convocação da Seleção Brasileira Feminina - CNN Brasil",
       "fonte": "CNN Brasil",
       "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOcU5EbzZsaVJjekg4ZXJvckp0QkFuQjlYd1VfT2ozQnFiTFFmdVZ2NUx5U0NUWDE2VjNUbnljalE2NTRtZUNNX3REYnlTZ3luUldHRmEwWUN5Q09zTWYzSWNCTnlYUkJ6a3hmODI4LUJ1aXZESEdUTmtWSGgxMjYzTURSMGNDMThFMDBtbjVoMGNvYlZjMnB6SmlNeHcybTBpd2FiQmVxMkg5MzRtMG1mbTF6c3dVUGw3UFBHdE0ycXVDdk5mdl9YYUdTdzBFaHk3YllMeks3UlM?oc=5",
@@ -402,6 +370,14 @@
     },
     {
       "origem": "google-news-trusted-source",
+      "titulo": "Copa do Mundo Feminina 2027: Fifa define onde seleção brasileira jogará na fase de grupos - VEJA",
+      "fonte": "VEJA",
+      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNdmNjYXNycGhVdzBCSG9CMmN4aXBWTHhkYTdncU1QOVJrcFN5eEJ5VnhmcUZpSmU5bGNDbmxLcDhTWWpUZk9WbVBrZk1DRy1scGxSeGRaM25WSnBaNzdmTjY4bnRGSThYQThSOEg2b283WU82LXBlR0p3M3U4ZVdIMHd5MXBZQ01fbjVpUW5YbXZBdDlVNlJhd0VCcmh3V1NjWm9nRkIxRDBpSlR4d2NDdHZyUVQ3RjFaNjdDMktZLTc?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (93d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
       "titulo": "Brasília entra em contagem regressiva para a Copa do Mundo feminina de 2027 - Brasil de Fato",
       "fonte": "Brasil de Fato",
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQUlJndVQ0RlB3SXdIcnM1Y0Jjb2hUcG45WlR3Nm1aZTlESlB1R1doSHB2WGJBTXVxRUdxZnNmRjUzMjVrQ3R0ZHdETVI3d2dSM2JncU1VZ1g2cDFvRXR0ZVdBaEpDa1ZYUzBDMjRiWEtQMHhjcHdXUWttaFNocnNTQzJnNmRDc2dFU3pnVnZ4dnFkdkN5N2l2SEcwSWwwOTV1TGNqcGZINzZ0Ql8xdU1WdUdub1NLWUtIUTFv?oc=5",
@@ -415,14 +391,6 @@
       "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQTnlDNjNiUmVrM2h1Y21ZVWotaVZZOG5OUWVPYjBBSnVGeExENGhvNU1KS01TMnc0TzE2azVSOFUtRE5oUDZYbzNuRDkxenUtS0xHQmExQXN2Zk9hbTFGNE1zXzlTeDZOaGh2dVdZZWxmX1RMYWpMSnpkdkhpRnE1NHlERnVnVDNwS0NFclByY1hMSzZZVEZOSUozeHhDakxMMGQxQnQ2SWJROHpoMk01T3pYbVhEaHJvWVh3TkZB?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (117d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Copa do Mundo Feminina 2027: Fifa define onde seleção brasileira jogará na fase de grupos - VEJA",
-      "fonte": "VEJA",
-      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNdmNjYXNycGhVdzBCSG9CMmN4aXBWTHhkYTdncU1QOVJrcFN5eEJ5VnhmcUZpSmU5bGNDbmxLcDhTWWpUZk9WbVBrZk1DRy1scGxSeGRaM25WSnBaNzdmTjY4bnRGSThYQThSOEg2b283WU82LXBlR0p3M3U4ZVdIMHd5MXBZQ01fbjVpUW5YbXZBdDlVNlJhd0VCcmh3V1NjWm9nRkIxRDBpSlR4d2NDdHZyUVQ3RjFaNjdDMktZLTc?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (93d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -466,6 +434,30 @@
     },
     {
       "origem": "google-news-trusted-source",
+      "titulo": "Copa do Mundo Feminina de 2027: Conheça os 38 locais que serão usados para treinamento - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
+      "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQSWFwRGhVdTJYRkFRNnBYQ3VXZFhLSk9HeXlsQ1U1YmxBOUJwal9QSUJXNVduUTlWdlQzWENNdHQ2WGlrVG1MLTNFMmU4U2dVLXZDZU5LVXZibWdUdllqTkx3bm1Gbk4zYmFjRGhyZENqS25qa1pKNmhwS2JMWE10T1gzc1ppcEtoOFdEUzcyYXI0dU9OTGthUGJTbzE2LWd2MnpoaFcyRDhhUUdiVzY2U1A4LUJXbGRjZjR3N1lPNWRVeF9FV0lCSE9vNk80TkppU2psWDZxSGQ3ZG9h?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (219d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Copa do Mundo Feminina no Brasil vai movimentar quase R$ 9 bilhões na economia, aponta estudo - Agência Gov",
+      "fonte": "Agência Gov",
+      "url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxPMTdxb2xtZ0tuckVSd1N5ZFpxOGdacTlQbUdiYTlHaVJ1dzdSZjdlc0E5dVg4YWNLczZMemhMYWZmam5XZFBMNGFIOTlFODd5LTVyc1VPUFpfckhRQXU2Nkt0WThFYXA2S2RMWG9ZUTI5cS1RUWp2WEwyVnJCakVFLS1vdHlVOERKbm5hNlpTNGhJUHRwUXFwMHNId0ZsNjhnYURkSGV3aEo1R2lmUjRRczlLaUY4RjhabG10eUZ1cnMwVlVQVDc2Sm1HNkRuOE5HeDgtNFV4akpBMGZEempBMl9oTHNxanNhbEU4TW5fNS1LUQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (122d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Mundial Feminino de 2027 será disputado em oito cidades brasileiras - Agência Brasil",
+      "fonte": "Agência Brasil",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxObjB1OTB1aFNOQ1haUC1USV9OVWFjMXZhbXA3UHh0S1I1dy1DZ2djQk0wdjJkYlNITkozR2pWdWVmXzhWN2VYSmtDblhUemZSY1hpZWhGQTlRWWFGdXFobnhKU0RDbjBMVGt1c09vbDljV2lNS0dmTk9qdy0zQ0pWQ0hnZ3lzZjl5TnU1WjJqeGhOemNmVVpkSHIxQjBFa0plQ2RiR0czMU1VNnlIdVRrUkhBMFVpR3R6VkdoUEhHdmN0bkE?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (150d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
       "titulo": "Lide RJ debate atração de investimentos e desenvolvimento do turismo com Copa Feminina de 2027 - Máquina do Esporte",
       "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxNQjRiQ0F5TV82U3R2VXl1VkxMd0RjWVI1SnpNSHdXLS1KWEdUa09rNzBEcHYtMW5zTkUzSzVZQXV2aXJOc0JxbS11eEJSNkZmcDBtSWZETmRfWnJYV2VSU3RmUVVsdE9FZGJoUlVZQmxWQ29vaFVrN0p1M3c1ZGJkc0FJV1Y0aWJXMG1xSmo1dU9BT2hwd3dhbzBNUmxaRmtGOXVOdmF3bEZmdjl5TU5Nd05FTjE4UjE2YWZTVThucjkwcVhwZEplaVJzYXljcm9Nd2lzZkdrd1Vsa2dC?oc=5",
@@ -490,14 +482,6 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Copa do Mundo Feminina no Brasil vai movimentar quase R$ 9 bilhões na economia, aponta estudo - Agência Gov",
-      "fonte": "Agência Gov",
-      "url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxPMTdxb2xtZ0tuckVSd1N5ZFpxOGdacTlQbUdiYTlHaVJ1dzdSZjdlc0E5dVg4YWNLczZMemhMYWZmam5XZFBMNGFIOTlFODd5LTVyc1VPUFpfckhRQXU2Nkt0WThFYXA2S2RMWG9ZUTI5cS1RUWp2WEwyVnJCakVFLS1vdHlVOERKbm5hNlpTNGhJUHRwUXFwMHNId0ZsNjhnYURkSGV3aEo1R2lmUjRRczlLaUY4RjhabG10eUZ1cnMwVlVQVDc2Sm1HNkRuOE5HeDgtNFV4akpBMGZEempBMl9oTHNxanNhbEU4TW5fNS1LUQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (122d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "Copa do Mundo Feminina de 2027 deve gerar R$ 8,8 bilhões para a economia do Brasil - Diário do Turismo",
       "fonte": "Diário do Turismo",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQTlBsS2gtMmNTVXBIbHVNQjN0UDBVV2Fka3h4S0lfaE0tSUYtLWU1MG8xUVZBUnpUeWJBN09pMGRZR0VYNS1DbmlhdU9QYmVDRGtFSE9DVXd2eWdHRDYwY0ZpaUs4b25CdGhreUtqTlU3YjExaF9aZ0hGRTNEWFlsMDRJNzNJZGNHZnhiR1JVOEZpRDU1VWJXOWR5U2pWemhLN3RHUC02R3RfTk9LTTNUUDJ3?oc=5",
@@ -506,17 +490,17 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Concluída missão técnica aos Estados Unidos para preparação da Copa Feminina 2027 - Prefeitura de Porto Alegre",
-      "fonte": "Prefeitura de Porto Alegre",
-      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOaTZvWlhRVUY2VW9nXzZpaEtaWHBlVk00dndvWl9Yb1ZvYkFfaXFTSDNxM3BlSWxyYU9Ia2paX204bkRKcHBIN1lUeDVhMHlmbzktcjFDek1IVTVzUGVNTzR6cEdwTE5qRUlxVzU1X2dubjNZT3JDenJVRmtuOXUwT0ZKUmZGcl9UX1lKVDJJZzFmZWt5bU5raF91SU9SeS0wdmw0MVFFdjhBVnQ3MERUa0tXWFdaSlI2b0hXN3VMTQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (148d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "Copa do Mundo Feminina terá ingresso a R$ 30; veja quando começa a venda - UOL",
       "fonte": "UOL",
       "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxPT01tdXlvYkZ4UHFQSXlhT3l3Qno1OE85V1lobUNodmxxUjk4QTdPd004QUV4SWRaVG4zYWFKZzNPSjZfYmpPT3puaHZCZ0k3N1RwWm9xcUtTZXByb0R6SURnU1o1QnpFYXB2czN1dDRUcjAtNVRVNWNfV2pIa2gzRDRTYVFKSUFkNXV3cUlEMXozNmVIdk9TMDlWRE0xVVZRczNtaWxCYVBIMjZZLWdqX3ZnUlZPLTJ4b0NGNjR0ZkxiNm12Q2tlZ2tKNmpFMmFLN1hhM0xSUks2dw?oc=5",
+      "decisao": "aprovado",
+      "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Copa do Mundo Feminina de 2027: Venda de ingressos começará em dezembro - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
+      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQWmprejZWOV9uRlIyUlRGTktJS1B4QXpBWEhpVTJZclJTVks0V09OQmhpX0pXSzc5M3lobzVva0FFOXJmazVFcXdSZWVXSm8zWmZTdmc2YWh1TUNkWFY3dllRUEFPbDA1MTcwNWEweUc3YzNlTTVtczRyWG0wWEk1NGNuTU1rU0tmNlNoUTVmSUZvTGh0Z0cwN3RfNTJvVDBRS284NXdXc0RNNEtybm9hQjl6S3JiRWdpbVkyLXZ0ZEVJMkphUDRheWV3?oc=5",
       "decisao": "aprovado",
       "motivo": "Fallback v5.4: fonte confiável, título relevante, data RSS recente e não duplicado."
     },
@@ -530,11 +514,11 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Comitê da Copa Feminina faz vistoria no Mané Garrincha nesta 4ª - Poder360",
+      "titulo": "Fifa lança identidade visual da Copa do Mundo Feminina de 2027 - Poder360",
       "fonte": "Poder360",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOanhyTURjc0J0LTl4cUhOT2dwODVIcHdIOGxLcUN6VzlDeTQwd3V3NTUtSno0cFB5QUh0N2tPYklDWFpKSEJ0Qk81OVZFbE1EamRQZ1VMd29yV01ON3JacW5CUnJTUXFoZ0ZaS0N3QlpILUlfUmJsUl9oSC14ZFNtMGpsSUFPNVg0T2h3aFFmRzluVVBXYzY2U3Y5b0VGWnZQQnVUU1AxS1ljSlpB?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQRmp0MFpTLXJ3eHRscnAycm9KTDdxdmpoOEtaMWdkU0llR2RRRlk3UmFuMk1HNHJoR0lLZExERHBQWHJDRUxfUVhIVTlvQk9MYUl2MDJwb2VOY05QMDVjWU9zeGRxcWZvT04xeDR2NzNjRDFUdENtT1doaTdkcXhtSG42Vmtkekl1RXhXbWNOYnkzbFNmSXdNMmZRTzFFSWxBa3JSeGdRazkyZEU?oc=5",
       "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (185d)."
+      "motivo": "Notícia fora da janela de frescor (300d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -546,17 +530,17 @@
     },
     {
       "origem": "google-news-trusted-source",
-      "titulo": "Fifa lança identidade visual da Copa do Mundo Feminina de 2027 - Poder360",
-      "fonte": "Poder360",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQRmp0MFpTLXJ3eHRscnAycm9KTDdxdmpoOEtaMWdkU0llR2RRRlk3UmFuMk1HNHJoR0lLZExERHBQWHJDRUxfUVhIVTlvQk9MYUl2MDJwb2VOY05QMDVjWU9zeGRxcWZvT04xeDR2NzNjRDFUdENtT1doaTdkcXhtSG42Vmtkekl1RXhXbWNOYnkzbFNmSXdNMmZRTzFFSWxBa3JSeGdRazkyZEU?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (300d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
       "titulo": "Visa acredita que Copa Feminina 2027 no Brasil deve potencializar geração de novos negócios - Máquina do Esporte",
       "fonte": "Máquina do Esporte",
       "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQQnVrNWswUW5BU1Z6LWR2YzhmODdEUFZua1lXeEVSUDVjZmU3UEo4ZlhkZ1pGNWN4TjBER3VEcUdIaXlWbDlDemMteE1EZVluQ0dtd0ZtZjdzc05nOTg2OE40M0dQd0MwMGxyQU9Fb0h2ZkxkRWZCaFlITFJTeWdTcTM2Z25tMUdkQWU4TUxSYWh3OXRLaGFuRWpIenVFYzhDSmw2ckdlRXpGVGdBMGRBb2F6Z2lVaHc0QlQ3RFA4YnY5MzhUSXFySzlGaDAtN1BFdEI2VE1JRTgwejFDc3pLODd0TQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (102d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Hyundai vê Copa Feminina 2027 como reforço de presença consistente na modalidade - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQZEU3V1Nad2xCSHBjT3A4NVM3YjkteXgzRnlEWTg5ZTRyckhTMG13VTdKRUlMMGlhUmpSWW9rZXg1VXU1U0RJdWVGc3ZOR3NncUNYQXZmOVRBYXprTTU0dVdoQVBXOUFrV0lOWXlzMXZMSndGQ2EzVmVWZ1B6OHh3UnRxMXdKcm1CSWtKLU9naGh5MnhjYlNfcERyRlBJSVV5RGxhTnB0T0lud0FtdnRDYU9aN0U5ejJWUTU0Y1NZalV4cnZXZXpXOWIzdnc4N3VnWWEyeQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (102d)."
     },
@@ -567,14 +551,6 @@
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNQi1DU1VCN29UT2NFaUFXUDhFMkdfb3pGZFlzOExOZHdlUkNPN0NEXzIxbHp3T1J2WGVjVDFFcERWTU5VazVaMWFqeGFnR2tGbUw3ZHZxcWJsWjNwdnpCVjRBYVBUaldMc1Atd3RHMVRXVm81Ty1GZW5ZMXRqZjVGTGpsV1lsamFLM3pldkJCWnZrVFFiR3R6N3RYVzlVYm42WXV3bmZ5Y3ZyNXFJc0prTncydzJjbWJvRVpLUkFSd2pYcHc?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (247d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Hyundai vê Copa Feminina 2027 como reforço de presença consistente na modalidade - Máquina do Esporte",
-      "fonte": "Máquina do Esporte",
-      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQZEU3V1Nad2xCSHBjT3A4NVM3YjkteXgzRnlEWTg5ZTRyckhTMG13VTdKRUlMMGlhUmpSWW9rZXg1VXU1U0RJdWVGc3ZOR3NncUNYQXZmOVRBYXprTTU0dVdoQVBXOUFrV0lOWXlzMXZMSndGQ2EzVmVWZ1B6OHh3UnRxMXdKcm1CSWtKLU9naGh5MnhjYlNfcERyRlBJSVV5RGxhTnB0T0lud0FtdnRDYU9aN0U5ejJWUTU0Y1NZalV4cnZXZXpXOWIzdnc4N3VnWWEyeQ?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (102d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -591,6 +567,30 @@
       "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOMXVoWnZJR0kydHgxQkpWQ3dLSWVaNkhPMHUtNnJJV1pOYjZVRE41RWdVSlBydTJzdFVWUFdRbzBzYUNMdUNjODV0akNHU3ZNXzNRd0ZBZldEcnNyVjFVTGUwOVllcDZ3T1ExbENWT3FTWnJsd3ZDYmZVVzRrX0FLYXlvRG1xQU9JSTM2eDRNUGJrVnAyUzh6aGsxYWswZWlaZEdLR2k5T3l0OXphVGFETDhLQVprMk1NQ2YtbHhwVmdTaVV6?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (150d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Fifa apresenta marca oficial da Copa do Mundo Feminina de 2027 com evento em Copacabana - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
+      "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQLWJMa2RPZ1ZzVUJiVGZSdjZIbHp5SThlRm45MjRCcmZtemRWSkFiOFM1aENTNW85MnRsM3pKVHE5NjVJNm5mX2VmSUh4b0YybFhiR3pxRl9YdFNzcHFadFh1dFBabm11Rk9BNjBxbVhzRzJxRXdCZVBkdnNPMXJ3MEw0cW9fMVl3MnhCSHhzaklmQ3pYSnctbFkwdkVGbHlvMkhjalhWbS1pemxQbGdkNllVNWRpaE8xbThLemVSNEtndENiY0VrcnhYaHpyeFpmM3Q3SlQ2ajc1UQ?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (299d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Cidade de São Paulo terá espaço para torcedores durante a Copa do Mundo Feminina de 2027 - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPTzJTVTQxQTJ3RFFWcnFZa1JWT3gydWtVaUNPaS1qLUR4bjJSUUFiRHhXTktIOGNsZUR3cHQwci1KekZoemVFaGl1OV85T2lWZnl6eGlNMFgyZEtRSHI0TmxMa0xOOHVBMFJSOEFUY3Y1MTM2a3hOTUlYQU5vTWJSOGt3NmhGM3ZTLTl6NHFpUEp5RVYyeFpxYnRwZ0xRU2pHNlQ0OEJKb3hJMDFkM1d4ZkxoME5BbXAyQmNvWW1fVlA2RktEQzVkUg?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (254d)."
+    },
+    {
+      "origem": "google-news-trusted-source",
+      "titulo": "Nike dá \"início\" à Copa de 2027 com ativação só para o futebol feminino - Máquina do Esporte",
+      "fonte": "Máquina do Esporte",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNRm1qRkhUMEt3NnByWW1wN3RBVnQwUkpjMnBQYU9QVWwycmJMQTB5N093Q3FTVl9URUtfdVJXaHFoQ2NkWnZsT0IyQ1JPQTFYOTlhdzJiclMyQzIxSHR1cVVtTWxVTDBEZW5QQ1hwZGFXRHNucnJpR1J6RWFqRVpNZk14bTlfazFxTDN4d0lzOExjOHYzZUdxV1hmWXdCb3lJaDdXY1IzRVA1cWozRjV0OWFPN0wtSjVhUV9KdGh5VVlIU2FpM1E?oc=5",
+      "decisao": "rejeitado",
+      "motivo": "Notícia fora da janela de frescor (489d)."
     },
     {
       "origem": "google-news-trusted-source",
@@ -639,14 +639,6 @@
       "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNem90MlJsV0huN0dpWnp3ZmhUOEpuNDR1REtSZDhvSEZkWlpYYlpZLTFBamplb2tCb0tGcnpZS1RDWUhwRmJUTWJhX3QtTnBQa2RzRmtGcnR5N3pHZ3FZLVhOUTNYTFNUd0Q1MWVxU0RTSGl3ZGVsY3FrUE0xWll4cWlQQ2VwMXdEdGpmWjhpSUMzcTcyR0M4UjRucU43YVIyOXNuOUR0TDVMU0NlaTJ4WmZhbld2dENTQ3pFSVpBQmRXWW0xcUhEeUt4X09BOE1wdDhRVHdJaEJyYzNTNmxpU3Z6SHpNUQ?oc=5",
       "decisao": "rejeitado",
       "motivo": "Notícia fora da janela de frescor (89d)."
-    },
-    {
-      "origem": "google-news-trusted-source",
-      "titulo": "Mundial Feminino de 2027 será disputado em oito cidades brasileiras - Agência Brasil",
-      "fonte": "Agência Brasil",
-      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxObjB1OTB1aFNOQ1haUC1USV9OVWFjMXZhbXA3UHh0S1I1dy1DZ2djQk0wdjJkYlNITkozR2pWdWVmXzhWN2VYSmtDblhUemZSY1hpZWhGQTlRWWFGdXFobnhKU0RDbjBMVGt1c09vbDljV2lNS0dmTk9qdy0zQ0pWQ0hnZ3lzZjl5TnU1WjJqeGhOemNmVVpkSHIxQjBFa0plQ2RiR0czMU1VNnlIdVRrUkhBMFVpR3R6VkdoUEhHdmN0bkE?oc=5",
-      "decisao": "rejeitado",
-      "motivo": "Notícia fora da janela de frescor (150d)."
     },
     {
       "origem": "google-news-trusted-source",

@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-21T19:27:52-03:00",
-  "fim": "2026-11-21T19:29:26-03:00",
+  "inicio": "2026-11-21T23:42:48-03:00",
+  "fim": "2026-11-21T23:44:45-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -62,10 +62,10 @@
     },
     {
       "query": "site:womanifs.com inscrição OR registration 2026 2027",
-      "resultados": 1,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 1
+        "bing_rss": 0
       }
     },
     {
@@ -167,11 +167,12 @@
     {
       "hub": "https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas",
       "resultados": 0,
-      "erro": "HTTPError:HTTP Error 401: "
+      "erro": "URLError:<urlopen error [Errno 104] Connection reset by peer>"
     },
     {
       "hub": "https://www.gov.br/esporte/pt-br/noticias",
-      "resultados": 6
+      "resultados": 0,
+      "erro": "URLError:<urlopen error [Errno 104] Connection reset by peer>"
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
@@ -206,12 +207,13 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 44,
+  "oportunidades_validas_na_execucao": 40,
   "adicionadas": 0,
-  "atualizadas": 7,
+  "atualizadas": 3,
   "total_arquivo": 100,
   "erros": [
-    "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:HTTPError:HTTP Error 401: ",
+    "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:URLError:<urlopen error [Errno 104] Connection reset by peer>",
+    "hub:https://www.gov.br/esporte/pt-br/noticias:URLError:<urlopen error [Errno 104] Connection reset by peer>",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
     "hub:https://www.guiafutfem.com.br/eventos/21-11-2026/20-04-2027:HTTPError:HTTP Error 403: Forbidden",
