@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-24T02:02:05-03:00",
-  "fim": "2026-11-24T02:03:46-03:00",
+  "inicio": "2026-11-24T13:31:36-03:00",
+  "fim": "2026-11-24T13:33:38-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -154,7 +154,7 @@
     },
     {
       "hub": "https://www.prefeitura.poa.br/secopa2027",
-      "resultados": 0
+      "resultados": 1
     },
     {
       "hub": "https://avai.com.br/categoria/futebol-feminino/",
@@ -207,10 +207,10 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 39,
-  "adicionadas": 0,
-  "atualizadas": 39,
-  "total_arquivo": 101,
+  "oportunidades_validas_na_execucao": 40,
+  "adicionadas": 1,
+  "atualizadas": 3,
+  "total_arquivo": 102,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:URLError:<urlopen error [Errno 104] Connection reset by peer>",
     "hub:https://www.gov.br/esporte/pt-br/noticias:URLError:<urlopen error [Errno 104] Connection reset by peer>",
