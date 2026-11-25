@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-24T22:08:23-03:00",
-  "fim": "2026-11-24T22:10:19-03:00",
+  "inicio": "2026-11-25T07:33:35-03:00",
+  "fim": "2026-11-25T07:35:30-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -154,8 +154,7 @@
     },
     {
       "hub": "https://www.prefeitura.poa.br/secopa2027",
-      "resultados": 0,
-      "erro": "URLError:<urlopen error [Errno 104] Connection reset by peer>"
+      "resultados": 0
     },
     {
       "hub": "https://avai.com.br/categoria/futebol-feminino/",
@@ -177,7 +176,7 @@
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 3
+      "resultados": 2
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
@@ -202,7 +201,7 @@
       "erro": "HTTPError:HTTP Error 500: Internal Server Error"
     },
     {
-      "hub": "https://www.guiafutfem.com.br/eventos/24-11-2026/23-04-2027",
+      "hub": "https://www.guiafutfem.com.br/eventos/25-11-2026/24-04-2027",
       "resultados": 0,
       "erro": "HTTPError:HTTP Error 403: Forbidden"
     }
@@ -210,16 +209,16 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 39,
   "adicionadas": 0,
-  "atualizadas": 3,
+  "atualizadas": 39,
   "total_arquivo": 102,
   "erros": [
-    "hub:https://www.prefeitura.poa.br/secopa2027:URLError:<urlopen error [Errno 104] Connection reset by peer>",
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:URLError:<urlopen error [Errno 104] Connection reset by peer>",
     "hub:https://www.gov.br/esporte/pt-br/noticias:URLError:<urlopen error [Errno 104] Connection reset by peer>",
     "hub:https://prefeitura.pbh.gov.br/esportes:HTTPError:HTTP Error 404: Not Found",
     "hub:https://cepe.usp.br/courses/:HTTPError:HTTP Error 500: Internal Server Error",
-    "hub:https://www.guiafutfem.com.br/eventos/24-11-2026/23-04-2027:HTTPError:HTTP Error 403: Forbidden",
-    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:HTTPError:HTTP Error 404: Not Found"
+    "hub:https://www.guiafutfem.com.br/eventos/25-11-2026/24-04-2027:HTTPError:HTTP Error 403: Forbidden",
+    "page:https://www.cbf.com.br/cbfacademy/pt-br/cursos/73-caracteristicas-do-treinamento-do-futebol-feminino-no-brasil:HTTPError:HTTP Error 404: Not Found",
+    "page:https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?t=1353&conteudo=932:HTTPError:HTTP Error 403: Forbidden"
   ],
   "isolamento": {
     "noticias": "inalterado",
