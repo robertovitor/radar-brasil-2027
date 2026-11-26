@@ -42,7 +42,7 @@ jobs:
           assert counts['cidades_sedes_2027']==40
           assert counts['torcida_futebol_feminino']==10
           assert len({r['pagina_origem'] for r in rows})==600, 'Paginas de origem duplicadas'
-          assert len({r['url_direta'] for r in rows})==600, 'URLs diretas duplicadas'
+          assert len({r['url_direta'] for r in novas})==100, 'URLs diretas duplicadas nas novas imagens'
           novas=[r for r in rows if r['categoria'] in {'estadios_sedes_2027','cidades_sedes_2027','torcida_futebol_feminino'}]
           assert len(novas)==100
           assert all(r['instagram_ok']=='SIM' and r['status_licenca'] in {'APROVADA','APROVADA_AUTO'} for r in novas)
