@@ -894,7 +894,7 @@ def _news_bank_score(item,row,topic,specific):
             score+=10
         return score,'brazil_women_selection_catalog'
 
-    if category=='futebol_feminino':
+    if category in ('futebol_feminino','futebol_feminino_brasil','futebol_feminino_internacional'):
         if not female_desc and not women_cup_desc:
             return -1,'female_metadata_required'
         score=8*overlap
@@ -904,7 +904,7 @@ def _news_bank_score(item,row,topic,specific):
             score+=5
         return score,'women_football_catalog'
 
-    if category.startswith('copa_feminina_'):
+    if category.startswith(('copa_feminina_','copas_femininas')):
         if not women_cup_desc and not female_desc:
             return -1,'womens_world_cup_metadata_required'
         score=8*overlap
@@ -914,7 +914,7 @@ def _news_bank_score(item,row,topic,specific):
             return -1,'foreign_team_without_context_match'
         return score,'womens_world_cup_catalog'
 
-    if category=='torcida':
+    if category in ('torcida','torcida_futebol_feminino'):
         if not context_fans or not desc_fans:
             return -1,'fan_context_required'
         if not female_desc and not women_cup_desc:
@@ -1015,7 +1015,7 @@ def _opportunity_bank_score(item,row):
     score=-1
     why='unsupported_opportunity_catalog_image'
 
-    if category.startswith('copa_feminina_'):
+    if category.startswith(('copa_feminina_','copas_femininas')):
         # Nunca usa atleta/equipe estrangeira como ilustração genérica de vaga.
         # Objetos, fan zones, museu, mascote e vistas gerais de estádio são seguros.
         if neutral:
@@ -1041,7 +1041,7 @@ def _opportunity_bank_score(item,row):
         if travel and (fan or stadium):
             score+=8; why='travel_venue_match'
 
-    elif category=='futebol_feminino':
+    elif category in ('futebol_feminino','futebol_feminino_brasil'):
         # Só permite imagens brasileiras e não individualizadas para vaga genérica.
         if brazil and not specific_subject and stadium:
             score=34
@@ -1057,7 +1057,7 @@ def _opportunity_bank_score(item,row):
         else:
             return -1,'selection_not_relevant_to_opportunity'
 
-    elif category=='torcida':
+    elif category in ('torcida','torcida_futebol_feminino'):
         if volunteer and fan and not specific_subject:
             score=38
             why='volunteer_fan_match'
@@ -1272,47 +1272,6 @@ def main():
             print(kind+'_catalog_failed='+type(exc).__name__)
         print(kind+'_catalog_fallback=illustrated_art')
 
-    owned_mode=policy_visual_mode(fallback_item.get('type'),visual_policy)
-    if render_owned_art is not None and owned_mode != 'legacy':
-        item=fallback_item
-        s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'
-        try:
-            readable,font_size,line_count,owned_meta=render_owned_art(
-                art,item,font=font,wrap=wrap,fit_title=fit_title,policy=visual_policy
-            )
-            title_ok=bool(readable and font_size>=MIN_TITLE_FONT and line_count<=MAX_TITLE_LINES)
-            if not title_ok:
-                raise RuntimeError('owned_art_title_readability_failed')
-            common={
-                'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],
-                'image_url':ROOT+art,'caption':item['caption'],'SEMANTIC_IMAGE_OK':True,
-                'TITLE_READABILITY_OK':True,'title_font_px':font_size,'title_lines':line_count,
-                'image_source_url':'','image_page_url':'',
-                'original_title':item['title'],
-                'art_title':clean(item.get('art_title') or item['title']),
-                'title_translated_to_pt':clean(item.get('art_title') or item['title']) != clean(item['title']),
-                'catalog_attempted':catalog_attempted,
-                'catalog_selected':False,
-                'catalog_reason':catalog_reason
-            }
-            common.update(owned_meta)
-            pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True)
-            pathlib.Path(post).write_text(json.dumps(common,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-            pathlib.Path(batch).write_text(json.dumps({'posts':[post]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-            print('visual_policy_mode='+owned_mode)
-            print('visual_mode='+clean(common.get('visual_mode')))
-            print('SEMANTIC_IMAGE_OK=true')
-            print('TITLE_READABILITY_OK=true')
-            print('title_font_px='+str(font_size))
-            print('title_lines='+str(line_count))
-            print('found=true')
-            print('batch_file='+batch)
-            return 0
-        except Exception as exc:
-            print('owned_art_failed='+item['key']+':'+type(exc).__name__)
-            if not visual_policy.get('fallback_to_legacy',True):
-                print('found=false'); print('reason=owned_art_failed'); return 1
-            print('owned_art_fallback_to_legacy=true')
     # Prioriza conteúdo que possua fotografia real válida. Só usa a arte textual
     # quando nenhum dos itens elegíveis tiver imagem segura e não repetida.
     fallback_item=ranked[0]; item=None; c=None
@@ -1347,6 +1306,49 @@ def main():
     if item is None:
         item=fallback_item
         print('fallback_visual_selected_after_exhausting_candidates='+item['key'])
+    # Arte própria é o último recurso: somente após esgotar banco, catálogo curado e Commons.
+    if c is None:
+        owned_mode=policy_visual_mode(fallback_item.get('type'),visual_policy)
+        if render_owned_art is not None and owned_mode != 'legacy':
+            item=fallback_item
+            s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'
+            try:
+                readable,font_size,line_count,owned_meta=render_owned_art(
+                    art,item,font=font,wrap=wrap,fit_title=fit_title,policy=visual_policy
+                )
+                title_ok=bool(readable and font_size>=MIN_TITLE_FONT and line_count<=MAX_TITLE_LINES)
+                if not title_ok:
+                    raise RuntimeError('owned_art_title_readability_failed')
+                common={
+                    'id':s,'idempotency_key':item['key'],'approved':True,'source_type':item['type'],
+                    'image_url':ROOT+art,'caption':item['caption'],'SEMANTIC_IMAGE_OK':True,
+                    'TITLE_READABILITY_OK':True,'title_font_px':font_size,'title_lines':line_count,
+                    'image_source_url':'','image_page_url':'',
+                    'original_title':item['title'],
+                    'art_title':clean(item.get('art_title') or item['title']),
+                    'title_translated_to_pt':clean(item.get('art_title') or item['title']) != clean(item['title']),
+                    'catalog_attempted':catalog_attempted,
+                    'catalog_selected':False,
+                    'catalog_reason':catalog_reason
+                }
+                common.update(owned_meta)
+                pathlib.Path(post).parent.mkdir(parents=True,exist_ok=True)
+                pathlib.Path(post).write_text(json.dumps(common,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+                pathlib.Path(batch).write_text(json.dumps({'posts':[post]},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+                print('visual_policy_mode='+owned_mode)
+                print('visual_mode='+clean(common.get('visual_mode')))
+                print('SEMANTIC_IMAGE_OK=true')
+                print('TITLE_READABILITY_OK=true')
+                print('title_font_px='+str(font_size))
+                print('title_lines='+str(line_count))
+                print('found=true')
+                print('batch_file='+batch)
+                return 0
+            except Exception as exc:
+                print('owned_art_failed='+item['key']+':'+type(exc).__name__)
+                if not visual_policy.get('fallback_to_legacy',True):
+                    print('found=false'); print('reason=owned_art_failed'); return 1
+                print('owned_art_fallback_to_legacy=true')
     s=slug(item['key']); art=f'instagram/artes/{s}.jpg'; post=f'instagram/fila/automatica/{s}.json'; batch='instagram/fila/automatica/lote-atual.json'; source_mode='fallback_visual'; semantic_ok=True; semantic_reason='text_art_no_external_photo'
     if c:
         try:
