@@ -123,18 +123,6 @@
       "attempts": 6,
       "requires_strict_reconciliation": true,
       "visual_mode": "fallback_visual"
-    },
-    {
-      "key": "instagram:noticia:https://news.google.com/rss/articles/cbmiiajbvv95cuxquhnwug9drdbetehdvwzwemlxafpyagjsx3vhtzmyshjjvurzunltvnatb2vmzm9aqtewylhxzjhys1rfv21yrmvca2hau2puvvmwexdfvllvz2hrc3bsmtvxekfom2pwc3vmrkz1avdodlnsrgnvethfdy1rylo0tmg5utbpbe1lbnlix0txuvphu2jhwdq4vmuxnem2m285alfudvg4s0riq1u2qnlqzdlhbdhlodrfcv9taezjyzn6ufl3smptd3nkz2hqbvhlclndwlvkz3lpqvn6u00zuenny0lym3j6ovjxc1l0m1zam1jxztntne9hrhvta3lyuehjbjzxa08?oc=5",
-      "post_file": "instagram/fila/automatica/lpqvn6u00zuenny0lym3j6ovjxc1l0m1zam1jxztntne9hrhvta3lyuehjbjzxa08-oc-5-e009af9276.json",
-      "reserved_at": "2026-11-26T11:05:08.487673+00:00",
-      "last_attempt_at": "2026-11-26T11:05:08.487673+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/3/38/Quinley_Quezada.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "image_page_url": "https://commons.wikimedia.org/wiki/File:Quinley_Quezada.jpg",
-      "bank_image_id": "IMG0216",
-      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
