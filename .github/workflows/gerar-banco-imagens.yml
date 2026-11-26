@@ -53,15 +53,17 @@ jobs:
           assert all(r['autor'] and r['licenca'] and r['url_licenca'] and r['atribuicao'] and r['pagina_origem'] and r['url_direta'] for r in novas), 'Metadados de licença/atribuição incompletos'
           cities=['Belo Horizonte','Brasília','Fortaleza','Porto Alegre','Recife','Rio de Janeiro','Salvador','São Paulo']
           stadiums={'Mineirão':7,'Mané Garrincha':6,'Castelão':6,'Beira-Rio':6,'Arena Pernambuco':6,'Maracanã':6,'Fonte Nova':6,'Neo Química Arena':7}
+          city_totals={'Belo Horizonte':12,'Brasília':11,'Fortaleza':11,'Porto Alegre':11,'Recife':11,'Rio de Janeiro':11,'Salvador':11,'São Paulo':12}
+          arena_city={'Mineirão':'Belo Horizonte','Mané Garrincha':'Brasília','Castelão':'Fortaleza','Beira-Rio':'Porto Alegre','Arena Pernambuco':'Recife','Maracanã':'Rio de Janeiro','Fonte Nova':'Salvador','Neo Química Arena':'São Paulo'}
           for city in cities:
               city_rows=[r for r in novas if f'CIDADE_SEDE={city}' in r['observacoes']]
-              expected=5+sum(n for arena,n in stadiums.items() if any(f'ARENA={arena}' in x['observacoes'] and f'CIDADE_SEDE={city}' in x['observacoes'] for x in novas))
-              assert len(city_rows)==expected, f'Distribuicao de {city}: {len(city_rows)}; esperado {expected}'
+              assert len(city_rows)==city_totals[city], f'Distribuicao de {city}: {len(city_rows)}; esperado {city_totals[city]}'
               city_only=[r for r in city_rows if r['categoria']=='cidades_sedes_2027']
               assert len(city_only)==5, f'Imagens da cidade {city}: {len(city_only)}; esperado 5'
           for arena, expected in stadiums.items():
               arena_rows=[r for r in novas if f'ARENA={arena}' in r['observacoes']]
               assert len(arena_rows)==expected, f'Arena {arena}: {len(arena_rows)}; esperado {expected}'
+              assert all(f"CIDADE_SEDE={arena_city[arena]}" in r['observacoes'] for r in arena_rows), f'Arena {arena} associada a cidade incorreta'
           bad=re.compile(r'NFL|NCAA|Badgers|Georgia Tech|Ole Miss|American football|gridiron|touchdown|quarterback|Super Bowl',re.I)
           torcida=[r for r in novas if r['categoria']=='torcida_futebol_feminino']
           assert not any(bad.search((r['titulo']+' '+r['pessoa_local'])) for r in torcida), 'Torcida de futebol americano detectada'
