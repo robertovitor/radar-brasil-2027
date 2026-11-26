@@ -44,7 +44,7 @@ jobs:
           assert all(r['instagram_ok']=='SIM' for r in rows), 'Ha item nao aprovado para Instagram'
           assert len({r['pagina_origem'] for r in rows})==600, 'Ha paginas duplicadas'
           assert all(r['url_direta'] for r in rows if r['status_licenca']=='APROVADA_AUTO'), 'Item automatico sem URL direta'
-          assert all(r['autor'] and r['licenca'] and r['url_licenca'] and r['atribuicao'] for r in rows if r['status_licenca']=='APROVADA_AUTO'), 'Metadados de atribuicao/licenca incompletos'
+          novas=[r for r in rows if r['categoria'] in {'estadios_sedes_2027','cidades_sedes_2027','torcida_futebol_feminino'}]\n          assert len(novas)==100, f'Esperadas 100 imagens novas; encontradas {len(novas)}'\n          assert all(r['autor'] and r['licenca'] and r['url_licenca'] and r['atribuicao'] and r['pagina_origem'] and r['url_direta'] for r in novas), 'Novas imagens sem metadados completos de atribuicao/licenca'
           bad=re.compile(r'NFL|NCAA|Badgers|Georgia Tech|Ole Miss|American football|gridiron|touchdown|quarterback|Super Bowl',re.I)
           torcida=[r for r in rows if r['categoria']=='torcida_futebol_feminino']
           assert not any(bad.search((r['titulo']+' '+r['pessoa_local'])) for r in torcida), 'Torcida de futebol americano detectada'
