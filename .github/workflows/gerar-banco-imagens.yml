@@ -6,6 +6,7 @@ on:
     paths:
       - 'scripts/gerar_banco_imagens_v3.py'
       - 'scripts/gerar_banco_imagens_v4.py'
+      - 'scripts/ampliar_banco_imagens.py'
       - '.github/workflows/gerar-banco-imagens.yml'
 
 permissions:
@@ -25,8 +26,8 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Gerar catálogo editorial de 500 imagens
-        run: python scripts/gerar_banco_imagens_v4.py
+      - name: Acrescentar 100 imagens ao catálogo existente
+        run: python scripts/ampliar_banco_imagens.py
 
       - name: Validar quantidade licenças e distribuição
         run: |
@@ -35,17 +36,19 @@ jobs:
           from collections import Counter
           from pathlib import Path
           rows=list(csv.DictReader(Path('banco_imagens/catalogo.csv').open(encoding='utf-8')))
-          expected={'selecao_brasileira':100,'futebol_feminino_brasil':70,'copas_femininas':80,'futebol_feminino_internacional':40,'estadios_sedes_2027':100,'cidades_sedes_2027':80,'torcida_futebol_feminino':30}
           counts=Counter(r['categoria'] for r in rows)
-          assert len(rows)==500, f'Esperadas 500; encontradas {len(rows)}'
-          assert dict(counts)==expected, f'Distribuicao incorreta: {dict(counts)}'
+          assert len(rows)==600, f'Esperadas 600; encontradas {len(rows)}'
+          assert counts['estadios_sedes_2027']==50, f"Cota de estadios incorreta: {counts['estadios_sedes_2027']}"
+          assert counts['cidades_sedes_2027']==40, f"Cota de cidades incorreta: {counts['cidades_sedes_2027']}"
+          assert counts['torcida_futebol_feminino']==10, f"Cota de torcida incorreta: {counts['torcida_futebol_feminino']}"
           assert all(r['instagram_ok']=='SIM' for r in rows), 'Ha item nao aprovado para Instagram'
-          assert len({r['pagina_origem'] for r in rows})==500, 'Ha paginas duplicadas'
+          assert len({r['pagina_origem'] for r in rows})==600, 'Ha paginas duplicadas'
           assert all(r['url_direta'] for r in rows if r['status_licenca']=='APROVADA_AUTO'), 'Item automatico sem URL direta'
+          assert all(r['autor'] and r['licenca'] and r['url_licenca'] and r['atribuicao'] for r in rows if r['status_licenca']=='APROVADA_AUTO'), 'Metadados de atribuicao/licenca incompletos'
           bad=re.compile(r'NFL|NCAA|Badgers|Georgia Tech|Ole Miss|American football|gridiron|touchdown|quarterback|Super Bowl',re.I)
           torcida=[r for r in rows if r['categoria']=='torcida_futebol_feminino']
           assert not any(bad.search((r['titulo']+' '+r['pessoa_local'])) for r in torcida), 'Torcida de futebol americano detectada'
-          print('Validacao OK: 500 imagens, cotas corretas, unicas e com licenca aberta')
+          print('Validacao OK: 600 imagens, 100 novas, categorias de estadios/cidades/torcida, unicas e licenciadas')
           PY
 
       - name: Commit do catálogo
