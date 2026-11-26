@@ -49,6 +49,10 @@ def main() -> None:
                     row = base.to_row(page, category)
                     if not row:
                         continue
+                    # Para as novas inclusões, exigir também URL explícita da licença,
+                    # autoria e atribuição; registros antigos são preservados como estão.
+                    if not all(row.get(field) for field in ("autor", "licenca", "url_licenca", "atribuicao")):
+                        continue
                     page_url = row.get("pagina_origem", "").strip()
                     direct_url = row.get("url_direta", "").strip()
                     if not page_url or not direct_url:
