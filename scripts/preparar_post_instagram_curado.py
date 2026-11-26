@@ -1049,6 +1049,22 @@ def _opportunity_bank_score(item,row):
         else:
             return -1,'women_football_image_too_specific_for_opportunity'
 
+    elif category=='estadios_sedes_2027':
+        specific_stadium=_specific_host_stadium(context)
+        if infrastructure and specific_stadium and _contains_phrase(desc,HOST_STADIUM_ALIASES.get(specific_stadium,(specific_stadium,))):
+            score=44
+            why='host_stadium_infrastructure_opportunity'
+        else:
+            return -1,'host_stadium_not_specific_to_opportunity'
+
+    elif category=='cidades_sedes_2027':
+        specific_city=_specific_host_city(context)
+        if travel and specific_city and _contains_phrase(desc,HOST_CITY_ALIASES.get(specific_city,(specific_city,))):
+            score=40
+            why='host_city_travel_opportunity'
+        else:
+            return -1,'host_city_not_specific_to_opportunity'
+
     elif category=='selecao_brasileira':
         # Seleção só ilustra oportunidade explicitamente ligada à Seleção.
         if 'selecao' in ncontext and _bank_selection_ok(row):

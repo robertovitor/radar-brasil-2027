@@ -9,14 +9,13 @@ Licenças preferidas: domínio público, CC0, CC BY e CC BY-SA. CC BY-SA exige a
 
 Imagens de sites da FIFA, CBF ou outras entidades **não são consideradas livres apenas por estarem publicamente acessíveis**. Só entram quando houver licença/autorização específica compatível.
 
-## Categorias-alvo (500 imagens)
-- 100 — estádios brasileiros / estádios ligados à Copa 2027
-- 80 — cidades-sede, paisagens e pontos turísticos
-- 100 — Seleção Brasileira feminina e jogadoras brasileiras
-- 70 — futebol feminino brasileiro, torcida e ambiente de estádio
-- 80 — Copas do Mundo Femininas anteriores
-- 40 — futebol feminino internacional
-- 30 — acervo histórico/institucional com licença comprovada
+## Catálogo ampliado (600 imagens)
+A base existente de 500 imagens é preservada. A primeira expansão acrescenta 100 registros:
+- 50 — estádios das cidades-sede / arenas relacionadas à Copa 2027
+- 40 — cidades-sede, paisagens e pontos turísticos
+- 10 — torcida de futebol feminino
+
+As categorias históricas existentes permanecem no catálogo. Novas imagens recebem IDs sequenciais, sem sobrescrever registros anteriores, e não entram se a página de origem ou a URL direta já estiver cadastrada.
 
 ## Fontes prioritárias
 - Wikimedia Commons — verificar a licença **de cada arquivo**.
@@ -27,4 +26,4 @@ Imagens de sites da FIFA, CBF ou outras entidades **não são consideradas livre
 O publicador deve selecionar apenas registros com `status_licenca=APROVADA` e `instagram_ok=SIM`, priorizar imagens com mulheres/jogadoras quando o assunto for futebol feminino e evitar imagens políticas/governamentais. Registrar `ultima_utilizacao` e `qtd_utilizacoes` para reduzir repetição.
 
 ## Catálogo
-O arquivo `catalogo.csv` contém os metadados. O acervo será preenchido em lotes, com validação individual de licença antes de liberar cada item.
+Os arquivos `catalogo.csv` e `catalogo.json` contêm os metadados. A expansão incremental preserva os registros existentes, evita páginas/URLs duplicadas e exige licença aberta, autor, atribuição, URL da licença e resolução mínima antes de liberar cada item.
