@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-26T10:14:00-03:00",
-  "fim": "2026-11-26T10:15:36-03:00",
+  "inicio": "2026-11-26T19:38:50-03:00",
+  "fim": "2026-11-26T19:40:46-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -112,7 +112,7 @@
   "feeds": [
     {
       "feed": "https://jobs.fifa.com/postings.json",
-      "resultados": 24
+      "resultados": 26
     }
   ],
   "hubs": [
@@ -207,10 +207,10 @@
     }
   ],
   "urls_avaliadas": 40,
-  "oportunidades_validas_na_execucao": 38,
-  "adicionadas": 0,
-  "atualizadas": 3,
-  "total_arquivo": 102,
+  "oportunidades_validas_na_execucao": 40,
+  "adicionadas": 1,
+  "atualizadas": 4,
+  "total_arquivo": 103,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:URLError:<urlopen error [Errno 104] Connection reset by peer>",
     "hub:https://www.gov.br/esporte/pt-br/noticias:URLError:<urlopen error [Errno 104] Connection reset by peer>",
