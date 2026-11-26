@@ -60,6 +60,6 @@ jobs:
           git config user.name 'radar-brasil-2027-bot'
           git config user.email 'actions@users.noreply.github.com'
           git add banco_imagens/catalogo.csv banco_imagens/catalogo.json
-          git commit -m 'data: refina banco editorial de 500 imagens abertas'
+          git commit -m 'data: amplia banco editorial para 600 imagens abertas'
           git pull --rebase origin "$GITHUB_REF_NAME"
           git push origin "HEAD:$GITHUB_REF_NAME"
