@@ -12,6 +12,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: banco-imagens-600-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   gerar:
     runs-on: ubuntu-latest
