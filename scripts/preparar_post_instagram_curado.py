@@ -1015,7 +1015,7 @@ def _opportunity_bank_score(item,row):
     score=-1
     why='unsupported_opportunity_catalog_image'
 
-    if category.startswith('copa_feminina_'):
+    if category.startswith(('copa_feminina_','copas_femininas')):
         # Nunca usa atleta/equipe estrangeira como ilustração genérica de vaga.
         # Objetos, fan zones, museu, mascote e vistas gerais de estádio são seguros.
         if neutral:
