@@ -72,39 +72,43 @@ def main() -> None:
     def collect(category: str, query: str, target: int, aliases: tuple[str, ...] = (),
                 city: str = "", venue: str = "", pages: int = 2) -> None:
         found = 0
-        print(f"Busca {category}: meta {target} — {query}", flush=True)
-        for page in base.candidates(query, pages=pages):
+        queries = query if isinstance(query, (list, tuple)) else [query]
+        for search_term in queries:
             if found >= target:
                 break
-            row = base.to_row(page, category)
-            if not row:
-                continue
-            if not all(row.get(field) for field in ("autor", "licenca", "url_licenca", "atribuicao")):
-                continue
-            if aliases and not matches_alias(row, aliases):
-                continue
-            page_url = row.get("pagina_origem", "").strip()
-            direct_url = row.get("url_direta", "").strip()
-            if not page_url or not direct_url or page_url in seen_pages or direct_url in seen_urls:
-                continue
-            tags = []
-            if city:
-                tags.append(f"CIDADE_SEDE={city}")
-            if venue:
-                tags.append(f"ARENA={venue}")
-            row["observacoes"] = (row.get("observacoes", "").rstrip() + " | " + " | ".join(tags)).strip(" |")
-            additions.append(row)
-            seen_pages.add(page_url)
-            seen_urls.add(direct_url)
-            found += 1
-            counts[category] += 1
-            if city:
-                distribution[f"cidade:{city}"] += 1
-            if venue:
-                distribution[f"arena:{venue}"] += 1
+            print(f"Busca {category}: meta {target}, coletadas {found} — {search_term}", flush=True)
+            for page in base.candidates(search_term, pages=pages):
+                if found >= target:
+                    break
+                row = base.to_row(page, category)
+                if not row:
+                    continue
+                if not all(row.get(field) for field in ("autor", "licenca", "url_licenca", "atribuicao")):
+                    continue
+                if aliases and not matches_alias(row, aliases):
+                    continue
+                page_url = row.get("pagina_origem", "").strip()
+                direct_url = row.get("url_direta", "").strip()
+                if not page_url or not direct_url or page_url in seen_pages or direct_url in seen_urls:
+                    continue
+                tags = []
+                if city:
+                    tags.append(f"CIDADE_SEDE={city}")
+                if venue:
+                    tags.append(f"ARENA={venue}")
+                row["observacoes"] = (row.get("observacoes", "").rstrip() + " | " + " | ".join(tags)).strip(" |")
+                additions.append(row)
+                seen_pages.add(page_url)
+                seen_urls.add(direct_url)
+                found += 1
+                counts[category] += 1
+                if city:
+                    distribution[f"cidade:{city}"] += 1
+                if venue:
+                    distribution[f"arena:{venue}"] += 1
         if found != target:
             raise SystemExit(
-                f"Variedade insuficiente em {category} / {query}: {found}/{target}. "
+                f"Variedade insuficiente em {category} / {queries}: {found}/{target}. "
                 "Catálogo original preservado; não gravado."
             )
 
@@ -126,14 +130,14 @@ def main() -> None:
             collect("estadios_sedes_2027", queries[1], total - 4, aliases, city, venue)
 
     city_plan = [
-        ("Belo Horizonte", "Belo Horizonte Brazil city landmark", ("belo horizonte",)),
-        ("Brasília", "Brasilia Brazil city landmark", ("brasilia", "brasília")),
-        ("Fortaleza", "Fortaleza Ceara Brazil landmark", ("fortaleza",)),
-        ("Porto Alegre", "Porto Alegre Brazil landmark", ("porto alegre",)),
-        ("Recife", "Recife Pernambuco Brazil landmark", ("recife",)),
-        ("Rio de Janeiro", "Rio de Janeiro Brazil landmark", ("rio de janeiro",)),
-        ("Salvador", "Salvador Bahia Brazil landmark", ("salvador",)),
-        ("São Paulo", "Sao Paulo Brazil landmark", ("sao paulo", "são paulo")),
+        ("Belo Horizonte", ["Belo Horizonte", "Belo Horizonte Brazil", "Belo Horizonte landmark"], ("belo horizonte",)),
+        ("Brasília", ["Brasília", "Brasilia city", "Brasilia Brazil", "Brasilia skyline", "Brasilia landmark"], ("brasilia", "brasília")),
+        ("Fortaleza", ["Fortaleza", "Fortaleza Ceara Brazil", "Fortaleza landmark"], ("fortaleza",)),
+        ("Porto Alegre", ["Porto Alegre", "Porto Alegre Brazil", "Porto Alegre landmark"], ("porto alegre",)),
+        ("Recife", ["Recife", "Recife Pernambuco", "Recife Brazil landmark"], ("recife",)),
+        ("Rio de Janeiro", ["Rio de Janeiro", "Rio de Janeiro Brazil", "Rio landmark"], ("rio de janeiro",)),
+        ("Salvador", ["Salvador Bahia", "Salvador Brazil", "Salvador landmark"], ("salvador",)),
+        ("São Paulo", ["Sao Paulo", "Sao Paulo Brazil", "Sao Paulo landmark"], ("sao paulo", "são paulo")),
     ]
     for city, query, aliases in city_plan:
         collect("cidades_sedes_2027", query, 5, aliases, city=city, pages=2)
