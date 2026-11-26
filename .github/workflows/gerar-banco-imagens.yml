@@ -29,7 +29,7 @@ jobs:
       - name: Acrescentar 100 imagens ao catálogo existente
         run: python scripts/ampliar_banco_imagens.py
 
-      - name: Validar quantidade licenças e distribuição
+      - name: Validar quantidade, licenças e distribuição geográfica
         run: |
           python - <<'PY'
           import csv, re
@@ -38,19 +38,30 @@ jobs:
           rows=list(csv.DictReader(Path('banco_imagens/catalogo.csv').open(encoding='utf-8')))
           counts=Counter(r['categoria'] for r in rows)
           assert len(rows)==600, f'Esperadas 600; encontradas {len(rows)}'
-          assert counts['estadios_sedes_2027']==50, f"Cota de estadios incorreta: {counts['estadios_sedes_2027']}"
-          assert counts['cidades_sedes_2027']==40, f"Cota de cidades incorreta: {counts['cidades_sedes_2027']}"
-          assert counts['torcida_futebol_feminino']==10, f"Cota de torcida incorreta: {counts['torcida_futebol_feminino']}"
-          assert all(r['instagram_ok']=='SIM' for r in rows), 'Ha item nao aprovado para Instagram'
-          assert len({r['pagina_origem'] for r in rows})==600, 'Ha paginas duplicadas'
-          assert all(r['url_direta'] for r in rows if r['status_licenca']=='APROVADA_AUTO'), 'Item automatico sem URL direta'
+          assert counts['estadios_sedes_2027']==50
+          assert counts['cidades_sedes_2027']==40
+          assert counts['torcida_futebol_feminino']==10
+          assert len({r['pagina_origem'] for r in rows})==600, 'Paginas de origem duplicadas'
+          assert len({r['url_direta'] for r in rows})==600, 'URLs diretas duplicadas'
           novas=[r for r in rows if r['categoria'] in {'estadios_sedes_2027','cidades_sedes_2027','torcida_futebol_feminino'}]
-          assert len(novas)==100, f'Esperadas 100 imagens novas; encontradas {len(novas)}'
-          assert all(r['autor'] and r['licenca'] and r['url_licenca'] and r['atribuicao'] and r['pagina_origem'] and r['url_direta'] for r in novas), 'Novas imagens sem metadados completos de atribuicao/licenca'
+          assert len(novas)==100
+          assert all(r['instagram_ok']=='SIM' and r['status_licenca'] in {'APROVADA','APROVADA_AUTO'} for r in novas)
+          assert all(r['autor'] and r['licenca'] and r['url_licenca'] and r['atribuicao'] and r['pagina_origem'] and r['url_direta'] for r in novas), 'Metadados de licença/atribuição incompletos'
+          cities=['Belo Horizonte','Brasília','Fortaleza','Porto Alegre','Recife','Rio de Janeiro','Salvador','São Paulo']
+          stadiums={'Mineirão':7,'Mané Garrincha':6,'Castelão':6,'Beira-Rio':6,'Arena Pernambuco':6,'Maracanã':6,'Fonte Nova':6,'Neo Química Arena':7}
+          for city in cities:
+              city_rows=[r for r in novas if f'CIDADE_SEDE={city}' in r['observacoes']]
+              expected=5+sum(n for arena,n in stadiums.items() if any(f'ARENA={arena}' in x['observacoes'] and f'CIDADE_SEDE={city}' in x['observacoes'] for x in novas))
+              assert len(city_rows)==expected, f'Distribuicao de {city}: {len(city_rows)}; esperado {expected}'
+              city_only=[r for r in city_rows if r['categoria']=='cidades_sedes_2027']
+              assert len(city_only)==5, f'Imagens da cidade {city}: {len(city_only)}; esperado 5'
+          for arena, expected in stadiums.items():
+              arena_rows=[r for r in novas if f'ARENA={arena}' in r['observacoes']]
+              assert len(arena_rows)==expected, f'Arena {arena}: {len(arena_rows)}; esperado {expected}'
           bad=re.compile(r'NFL|NCAA|Badgers|Georgia Tech|Ole Miss|American football|gridiron|touchdown|quarterback|Super Bowl',re.I)
-          torcida=[r for r in rows if r['categoria']=='torcida_futebol_feminino']
+          torcida=[r for r in novas if r['categoria']=='torcida_futebol_feminino']
           assert not any(bad.search((r['titulo']+' '+r['pessoa_local'])) for r in torcida), 'Torcida de futebol americano detectada'
-          print('Validacao OK: 600 imagens, 100 novas, categorias de estadios/cidades/torcida, unicas e licenciadas')
+          print('VALIDACAO_OK: 600 imagens; 100 novas; 5 imagens por cidade; cotas por arena; licencas, atribuicoes e URLs unicas.')
           PY
 
       - name: Commit do catálogo
