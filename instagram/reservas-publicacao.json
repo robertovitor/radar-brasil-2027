@@ -123,18 +123,6 @@
       "attempts": 6,
       "requires_strict_reconciliation": true,
       "visual_mode": "fallback_visual"
-    },
-    {
-      "key": "instagram:noticia:https://news.google.com/rss/articles/cbmi7gfbvv95cuxqt2lonlrutxpyuknkuxrjafu1wgvswfh3a0ttalflmkk0d0lxajrxwlr5wuz5zzlmdhnrx2duzs1sduxamm16s0habddqzkvtnurzrdbtwfdjcjmtytk1tfhzquv2a0pfvi1fzgtjedfuq2lrcehsby1gdzu3zwc2emnuegpywxfmbks4eejucgtdrkzomvhic1itemtueuxyx3rqumg2q3zmy3jnunhpv0lpzufqekt2atvgcjbmtzltevviwfhrszg2snjdufnmq2dptlhdvzzjy1dvmvvvvnbht3vqnmz0qxhmbgrr?oc=5",
-      "post_file": "instagram/fila/automatica/mtzltevviwfhrszg2snjdufnmq2dptlhdvzzjy1dvmvvvvnbht3vqnmz0qxhmbgrr-oc-5-5773c14984.json",
-      "reserved_at": "2026-11-27T02:57:31.483087+00:00",
-      "last_attempt_at": "2026-11-27T02:57:31.483087+00:00",
-      "attempts": 1,
-      "requires_strict_reconciliation": false,
-      "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Mapa_das_cidades_participantes_do_Campeonato_Catarinense_de_Futebol_Feminino_2012.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "image_page_url": "https://commons.wikimedia.org/wiki/File:Mapa_das_cidades_participantes_do_Campeonato_Catarinense_de_Futebol_Feminino_2012.png",
-      "bank_image_id": "IMG0123",
-      "visual_mode": "news_real_bank_v1"
     }
   ]
 }
