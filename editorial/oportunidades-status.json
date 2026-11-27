@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-27T01:37:09-03:00",
-  "fim": "2026-11-27T01:38:54-03:00",
+  "inicio": "2026-11-27T11:26:08-03:00",
+  "fim": "2026-11-27T11:27:41-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -62,10 +62,10 @@
     },
     {
       "query": "site:womanifs.com inscrição OR registration 2026 2027",
-      "resultados": 4,
+      "resultados": 0,
       "motores": {
         "duckduckgo": 0,
-        "bing_rss": 4
+        "bing_rss": 0
       }
     },
     {
@@ -209,7 +209,7 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 40,
   "adicionadas": 0,
-  "atualizadas": 40,
+  "atualizadas": 3,
   "total_arquivo": 103,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:URLError:<urlopen error [Errno 104] Connection reset by peer>",
