@@ -1,4 +1,53 @@
 {
   "eventos": [],
-  "noticias": []
+  "noticias": [
+    {
+      "Data": "2026-11-25",
+      "DataBR": "25/11/2026",
+      "Titulo": "Copa do Mundo Feminina de 2027 deverá movimentar R$ 8,8 bilhões no Brasil, diz estudo - Estadão",
+      "Tema": "Copa Feminina 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "estadao.com.br",
+      "Link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNZ0JvLXoweWNzVkVOT3FSYTNpdjRHN1RiNEhERmU4MUZlLTI3T2pTcGNUbFdpSTZZeDY0VUstR3EtTWZRWnZIVmFBN1pEUGFKRUtKVUJ0N3YwMl82Z3JQYVh1MXhaSXNTVlFFUkRSXy1QWjhuYjZEdFNWZmtvTEx6TlhkcDBGeGs3RzNXN0I5Vk02Mk52TklJa25hczlWYzFYbmpoSUhIQ05QTHBiVEJGRzFTMFJxb3dkMkt1dU0xa3dPdmNwQXfSAcsBQVVfeXFMUFFPNHJCd0tSQWlpTTd1S1Y5di1CR3JDS2VpZXpyNDlzTnlXZHVRRFV0dUNMZVFtUWtkdnE3RVRHeVBZbVBqYXBYUDBKcThtREhOMnV4ekRVTnZfZjB2NE1WMUEydTFnYnBEeXBIeTNHZUZ2UzRMVjVEZkE1RDlDRDJSSTJoV2V3X3NGQ25FRU4zYk5KVlZEaGNOTmxTR285blE5OHZhTTdZWHF1ZnpQU0k3eFZHclZXRnhkTDVOWUtpLUNsZFAwWWRVeTg?oc=5",
+      "Sentimento": "Neutro",
+      "Impacto": "Médio",
+      "Resumo": "Fonte: estadao.com.br. Descoberta via Google News; URL editorial direta não resolvida automaticamente."
+    },
+    {
+      "Data": "2026-11-10",
+      "DataBR": "10/11/2026",
+      "Titulo": "Sem Marta e Kerolin, Arthur Elias convoca Seleção Brasileira feminina com novidades - ESPN Brasil",
+      "Tema": "Copa Feminina 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "espn.com.br",
+      "Link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNcDhFcXlGd29iVUNCN3BuZFlkNlgyZ3IxOHF4R1RpTVJWeXI3elZVLW5fUmdLMVZIeW1NeGdUQU5nTlV3R3BOQUdwVlcwRDZtaG45d3hUODBfeV84UFhHeFROQ19PU19DTi1OWEVYQktKRGRJRkd3WHY1akowN3lUZHl3NEdVaWJKUnhCeExpRFB4amQ3RHlZUk52Y2c0aFptdTk2b1d4SXdzS2dFMHVhRHRqTVZFMWZHdjZwaHZTUjBxUXQzNFhER0NiZVQxNlJ2R2c?oc=5",
+      "Sentimento": "Neutro",
+      "Impacto": "Médio",
+      "Resumo": "Fonte: espn.com.br. Descoberta via Google News; URL editorial direta não resolvida automaticamente."
+    },
+    {
+      "Data": "2026-11-13",
+      "DataBR": "13/11/2026",
+      "Titulo": "Copa do Mundo Feminina terá ingresso a R$ 30; veja quando começa a venda - UOL",
+      "Tema": "Copa Feminina 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "uol.com.br",
+      "Link": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxPT01tdXlvYkZ4UHFQSXlhT3l3Qno1OE85V1lobUNodmxxUjk4QTdPd004QUV4SWRaVG4zYWFKZzNPSjZfYmpPT3puaHZCZ0k3N1RwWm9xcUtTZXByb0R6SURnU1o1QnpFYXB2czN1dDRUcjAtNVRVNWNfV2pIa2gzRDRTYVFKSUFkNXV3cUlEMXozNmVIdk9TMDlWRE0xVVZRczNtaWxCYVBIMjZZLWdqX3ZnUlZPLTJ4b0NGNjR0ZkxiNm12Q2tlZ2tKNmpFMmFLN1hhM0xSUks2dw?oc=5",
+      "Sentimento": "Neutro",
+      "Impacto": "Médio",
+      "Resumo": "Fonte: uol.com.br. Descoberta via Google News; URL editorial direta não resolvida automaticamente."
+    },
+    {
+      "Data": "2026-11-13",
+      "DataBR": "13/11/2026",
+      "Titulo": "Copa do Mundo Feminina de 2027: Venda de ingressos começará em dezembro - Máquina do Esporte",
+      "Tema": "Copa Feminina 2027",
+      "CidadeUF": "Brasil",
+      "Veiculo": "machinadoesporte.com.br",
+      "Link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQWmprejZWOV9uRlIyUlRGTktJS1B4QXpBWEhpVTJZclJTVks0V09OQmhpX0pXSzc5M3lobzVva0FFOXJmazVFcXdSZWVXSm8zWmZTdmc2YWh1TUNkWFY3dllRUEFPbDA1MTcwNWEweUc3YzNlTTVtczRyWG0wWEk1NGNuTU1rU0tmNlNoUTVmSUZvTGh0Z0cwN3RfNTJvVDBRS284NXdXc0RNNEtybm9hQjl6S3JiRWdpbVkyLXZ0ZEVJMkphUDRheWV3?oc=5",
+      "Sentimento": "Neutro",
+      "Impacto": "Médio",
+      "Resumo": "Fonte: machinadoesporte.com.br. Descoberta via Google News; URL editorial direta não resolvida automaticamente."
+    }
+  ]
 }
