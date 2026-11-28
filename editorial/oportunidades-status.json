@@ -1,7 +1,7 @@
 {
   "versao": "1.2.1",
-  "inicio": "2026-11-28T02:00:40-03:00",
-  "fim": "2026-11-28T02:02:18-03:00",
+  "inicio": "2026-11-28T11:34:33-03:00",
+  "fim": "2026-11-28T11:36:03-03:00",
   "consultas_airtable": 0,
   "queries": [
     {
@@ -176,7 +176,7 @@
     },
     {
       "hub": "https://fortaleza.ce.gov.br/noticias/categoria/esporte-e-lazer",
-      "resultados": 2
+      "resultados": 1
     },
     {
       "hub": "https://jogasp.prefeitura.sp.gov.br/",
@@ -209,7 +209,7 @@
   "urls_avaliadas": 40,
   "oportunidades_validas_na_execucao": 39,
   "adicionadas": 0,
-  "atualizadas": 39,
+  "atualizadas": 3,
   "total_arquivo": 103,
   "erros": [
     "hub:https://www.gov.br/esporte/pt-br/acoes-e-programas-1/acoes-e-programas:URLError:<urlopen error [Errno 104] Connection reset by peer>",
